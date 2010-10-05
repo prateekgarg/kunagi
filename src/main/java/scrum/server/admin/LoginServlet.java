@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.openid4java.consumer.VerificationResult;
+
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
 import scrum.server.ScrumConfig;
@@ -199,19 +201,23 @@ public class LoginServlet extends AHttpServlet {
 		String historyToken = (String) httpSession.getAttribute("openidHistoryToken");
 		boolean keepmeloggedin = httpSession.getAttribute("openidKeepmeloggedin") != null;
 
-		String openId;
+		VerificationResult openIdResult;
 		try {
-			openId = OpenId.getIdentifierFromCallbackWithoutSuffix(request);
+			openIdResult = OpenId.getVerificationFromCallback(request);
 		} catch (RuntimeException ex) {
 			log.error("OpenID authentication failed.", ex);
 			renderLoginPage(resp, null, null, historyToken,
 				"OpenID authentication failed: " + Str.format(Utl.getRootCause(ex)), false, false);
 			return;
 		}
+		String openId = OpenId.getOpenId(openIdResult);
 		if (openId == null) {
 			renderLoginPage(resp, null, null, historyToken, "OpenID authentication failed.", false, false);
 			return;
 		}
+
+		String email = OpenId.getEmail(openIdResult);
+		String nickname = OpenId.getNickname(openIdResult);
 
 		log.info("User authenticated by OpenID:", openId);
 
@@ -226,12 +232,28 @@ public class LoginServlet extends AHttpServlet {
 
 			if (userDao.getUserByOpenId(openId) != null) {
 				renderLoginPage(resp, null, null, historyToken, "Creating account failed. OpenID '" + openId
-						+ "' is already used.", false, true);
+						+ "' is already used.", false, false);
 				log.warn("Registration failed. OpenID already exists:", openId);
 				return;
 			}
 
-			user = userDao.postUserWithOpenId(openId);
+			if (email != null) {
+				if (userDao.getUserByEmail(email) != null) {
+					renderLoginPage(resp, null, null, historyToken, "Creating account failed. Email '" + email
+							+ "' is already used.", false, false);
+					log.warn("Registration failed. Email already exists:", email);
+					return;
+				}
+			}
+
+			if (email == null && webApplication.getSystemConfig().isUserEmailMandatory()) {
+				renderLoginPage(resp, null, null, historyToken,
+					"Creating account failed. Required email address was not included in OpenID response.", false,
+					false);
+				return;
+			}
+
+			user = userDao.postUserWithOpenId(openId, nickname, email);
 			webApplication.triggerRegisterNotification(user);
 		}
 
@@ -241,6 +263,7 @@ public class LoginServlet extends AHttpServlet {
 		}
 
 		user.setLastLoginDateAndTime(DateAndTime.now());
+		if (!user.isEmailSet()) user.setEmail(email);
 		session.setUser(user);
 
 		if (keepmeloggedin)
@@ -260,9 +283,15 @@ public class LoginServlet extends AHttpServlet {
 			return;
 		}
 
-		String url;
+		String returnUrl = webApplication.createUrl("login.html");
+		if (!returnUrl.startsWith("http")) {
+			returnUrl = request.getRequestURL().toString();
+		}
+
+		String openIdUrl;
 		try {
-			url = OpenId.createAuthenticationRequestUrl(openId, webApplication.createUrl("login.html"), httpSession);
+			openIdUrl = OpenId.createAuthenticationRequestUrl(openId, returnUrl, httpSession, true, false, false,
+				false, true, webApplication.getSystemConfig().isUserEmailMandatory());
 		} catch (RuntimeException ex) {
 			log.error("OpenID authentication failed.", ex);
 			renderLoginPage(resp, null, null, historyToken,
@@ -273,7 +302,7 @@ public class LoginServlet extends AHttpServlet {
 		httpSession.setAttribute("openidHistoryToken", historyToken);
 		httpSession.setAttribute("openidKeepmeloggedin", keepmeloggedin ? "true" : null);
 
-		resp.sendRedirect(url);
+		resp.sendRedirect(openIdUrl);
 	}
 
 	private void login(String username, String password, boolean keepmeloggedin, String historyToken,

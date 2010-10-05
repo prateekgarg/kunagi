@@ -1,6 +1,7 @@
 package scrum.server.admin;
 
 import ilarkesto.auth.OpenId;
+import ilarkesto.base.Str;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import scrum.server.ScrumWebApplication;
@@ -28,13 +29,32 @@ public class UserDao extends GUserDao {
 		return postUser(name, getDefaultPassword());
 	}
 
-	public User postUserWithOpenId(String openId) {
-		String name = OpenId.cutUsername(openId);
-		if (getUserByName(name) != null) name = openId;
+	public User postUserWithOpenId(String openId, String nickname, String email) {
+		String name = null;
+
+		if (nickname != null) {
+			if (getUserByName(nickname) == null) name = nickname;
+		}
+
+		if (name == null && email != null) {
+			name = Str.cutTo(email, "@");
+			if (getUserByName(name) != null) name = email;
+			if (getUserByName(name) != null) name = null;
+		}
+
+		if (name == null) {
+			name = OpenId.cutUsername(openId);
+			if (getUserByName(name) != null) name = openId;
+		}
 
 		User user = newEntityInstance();
 		user.setName(name);
 		user.setOpenId(openId);
+		if (!Str.isBlank(email)) {
+			user.setEmail(email);
+			user.setEmailVerified(true);
+		}
+		user.setPassword(Str.generatePassword(10));
 		saveEntity(user);
 		log.info("User created:", user);
 		return user;
