@@ -24,6 +24,7 @@ import scrum.client.files.File;
 import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.Change;
 import scrum.client.journal.ChangeHistoryManager;
 import scrum.client.pr.BlogEntry;
 import scrum.client.project.Quality;
@@ -170,6 +171,9 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof Comment) {
 			((Comment) entity).getParent().updateLocalModificationTime();
+		}
+		if (entity instanceof Change) {
+			((Change) entity).getParent().updateLocalModificationTime();
 		}
 	}
 
