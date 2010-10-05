@@ -31,7 +31,7 @@ public class ForumItemBlock extends ABlockWidget<ForumSupport> implements TrashS
 		Comment comment = ((AScrumGwtEntity) entity).getLatestComment();
 		if (comment != null) {
 			dateLabel.setText(comment.getDateAndTime().getPeriodToNow().toShortestString() + " ago by "
-					+ comment.getAuthor().getName());
+					+ comment.getAuthorName());
 		} else {
 			dateLabel.setText("");
 		}

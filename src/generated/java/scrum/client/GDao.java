@@ -48,7 +48,7 @@ public abstract class GDao
         entityCreated(blogEntry, null);
     }
 
-    private final void updateBlogEntry(Map data) {
+    private final scrum.client.pr.BlogEntry updateBlogEntry(Map data) {
         String id = (String) data.get("id");
         scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
         if (entity == null) {
@@ -59,7 +59,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("BlogEntry updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.pr.BlogEntry getBlogEntry(String id) {
@@ -160,7 +160,7 @@ public abstract class GDao
         entityCreated(change, null);
     }
 
-    private final void updateChange(Map data) {
+    private final scrum.client.journal.Change updateChange(Map data) {
         String id = (String) data.get("id");
         scrum.client.journal.Change entity = changes.get(id);
         if (entity == null) {
@@ -171,7 +171,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Change updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.journal.Change getChange(String id) {
@@ -278,7 +278,7 @@ public abstract class GDao
         entityCreated(chatMessage, null);
     }
 
-    private final void updateChatMessage(Map data) {
+    private final scrum.client.collaboration.ChatMessage updateChatMessage(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.ChatMessage entity = chatMessages.get(id);
         if (entity == null) {
@@ -289,7 +289,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("ChatMessage updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.collaboration.ChatMessage getChatMessage(String id) {
@@ -372,7 +372,7 @@ public abstract class GDao
         entityCreated(comment, null);
     }
 
-    private final void updateComment(Map data) {
+    private final scrum.client.collaboration.Comment updateComment(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Comment entity = comments.get(id);
         if (entity == null) {
@@ -383,7 +383,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Comment updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.collaboration.Comment getComment(String id) {
@@ -498,7 +498,7 @@ public abstract class GDao
         entityCreated(emoticon, null);
     }
 
-    private final void updateEmoticon(Map data) {
+    private final scrum.client.collaboration.Emoticon updateEmoticon(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Emoticon entity = emoticons.get(id);
         if (entity == null) {
@@ -509,7 +509,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Emoticon updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.collaboration.Emoticon getEmoticon(String id) {
@@ -584,7 +584,7 @@ public abstract class GDao
         entityCreated(file, null);
     }
 
-    private final void updateFile(Map data) {
+    private final scrum.client.files.File updateFile(Map data) {
         String id = (String) data.get("id");
         scrum.client.files.File entity = files.get(id);
         if (entity == null) {
@@ -595,7 +595,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("File updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.files.File getFile(String id) {
@@ -694,7 +694,7 @@ public abstract class GDao
         entityCreated(impediment, null);
     }
 
-    private final void updateImpediment(Map data) {
+    private final scrum.client.impediments.Impediment updateImpediment(Map data) {
         String id = (String) data.get("id");
         scrum.client.impediments.Impediment entity = impediments.get(id);
         if (entity == null) {
@@ -705,7 +705,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Impediment updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.impediments.Impediment getImpediment(String id) {
@@ -812,7 +812,7 @@ public abstract class GDao
         entityCreated(issue, null);
     }
 
-    private final void updateIssue(Map data) {
+    private final scrum.client.issues.Issue updateIssue(Map data) {
         String id = (String) data.get("id");
         scrum.client.issues.Issue entity = issues.get(id);
         if (entity == null) {
@@ -823,7 +823,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Issue updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.issues.Issue getIssue(String id) {
@@ -1028,7 +1028,7 @@ public abstract class GDao
         entityCreated(project, null);
     }
 
-    private final void updateProject(Map data) {
+    private final scrum.client.project.Project updateProject(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Project entity = projects.get(id);
         if (entity == null) {
@@ -1039,7 +1039,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Project updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.project.Project getProject(String id) {
@@ -1344,7 +1344,7 @@ public abstract class GDao
         entityCreated(projectEvent, null);
     }
 
-    private final void updateProjectEvent(Map data) {
+    private final scrum.client.journal.ProjectEvent updateProjectEvent(Map data) {
         String id = (String) data.get("id");
         scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
         if (entity == null) {
@@ -1355,7 +1355,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("ProjectEvent updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.journal.ProjectEvent getProjectEvent(String id) {
@@ -1438,7 +1438,7 @@ public abstract class GDao
         entityCreated(projectUserConfig, null);
     }
 
-    private final void updateProjectUserConfig(Map data) {
+    private final scrum.client.admin.ProjectUserConfig updateProjectUserConfig(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.ProjectUserConfig entity = projectUserConfigs.get(id);
         if (entity == null) {
@@ -1449,7 +1449,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("ProjectUserConfig updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.admin.ProjectUserConfig getProjectUserConfig(String id) {
@@ -1548,7 +1548,7 @@ public abstract class GDao
         entityCreated(quality, null);
     }
 
-    private final void updateQuality(Map data) {
+    private final scrum.client.project.Quality updateQuality(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Quality entity = qualitys.get(id);
         if (entity == null) {
@@ -1559,7 +1559,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Quality updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.project.Quality getQuality(String id) {
@@ -1650,7 +1650,7 @@ public abstract class GDao
         entityCreated(release, null);
     }
 
-    private final void updateRelease(Map data) {
+    private final scrum.client.release.Release updateRelease(Map data) {
         String id = (String) data.get("id");
         scrum.client.release.Release entity = releases.get(id);
         if (entity == null) {
@@ -1661,7 +1661,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Release updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.release.Release getRelease(String id) {
@@ -1785,7 +1785,7 @@ public abstract class GDao
         entityCreated(requirement, null);
     }
 
-    private final void updateRequirement(Map data) {
+    private final scrum.client.project.Requirement updateRequirement(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Requirement entity = requirements.get(id);
         if (entity == null) {
@@ -1796,7 +1796,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Requirement updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.project.Requirement getRequirement(String id) {
@@ -1953,7 +1953,7 @@ public abstract class GDao
         entityCreated(requirementEstimationVote, null);
     }
 
-    private final void updateRequirementEstimationVote(Map data) {
+    private final scrum.client.estimation.RequirementEstimationVote updateRequirementEstimationVote(Map data) {
         String id = (String) data.get("id");
         scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
         if (entity == null) {
@@ -1964,7 +1964,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("RequirementEstimationVote updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.estimation.RequirementEstimationVote getRequirementEstimationVote(String id) {
@@ -2039,7 +2039,7 @@ public abstract class GDao
         entityCreated(risk, null);
     }
 
-    private final void updateRisk(Map data) {
+    private final scrum.client.risks.Risk updateRisk(Map data) {
         String id = (String) data.get("id");
         scrum.client.risks.Risk entity = risks.get(id);
         if (entity == null) {
@@ -2050,7 +2050,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Risk updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.risks.Risk getRisk(String id) {
@@ -2165,7 +2165,7 @@ public abstract class GDao
         entityCreated(simpleEvent, null);
     }
 
-    private final void updateSimpleEvent(Map data) {
+    private final scrum.client.calendar.SimpleEvent updateSimpleEvent(Map data) {
         String id = (String) data.get("id");
         scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
         if (entity == null) {
@@ -2176,7 +2176,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("SimpleEvent updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.calendar.SimpleEvent getSimpleEvent(String id) {
@@ -2299,7 +2299,7 @@ public abstract class GDao
         entityCreated(sprint, null);
     }
 
-    private final void updateSprint(Map data) {
+    private final scrum.client.sprint.Sprint updateSprint(Map data) {
         String id = (String) data.get("id");
         scrum.client.sprint.Sprint entity = sprints.get(id);
         if (entity == null) {
@@ -2310,7 +2310,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Sprint updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.sprint.Sprint getSprint(String id) {
@@ -2452,7 +2452,7 @@ public abstract class GDao
         entityCreated(subject, null);
     }
 
-    private final void updateSubject(Map data) {
+    private final scrum.client.collaboration.Subject updateSubject(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Subject entity = subjects.get(id);
         if (entity == null) {
@@ -2463,7 +2463,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Subject updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.collaboration.Subject getSubject(String id) {
@@ -2546,7 +2546,7 @@ public abstract class GDao
         entityCreated(systemConfig, null);
     }
 
-    private final void updateSystemConfig(Map data) {
+    private final scrum.client.admin.SystemConfig updateSystemConfig(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
         if (entity == null) {
@@ -2557,7 +2557,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("SystemConfig updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.admin.SystemConfig getSystemConfig(String id) {
@@ -2744,7 +2744,7 @@ public abstract class GDao
         entityCreated(task, null);
     }
 
-    private final void updateTask(Map data) {
+    private final scrum.client.sprint.Task updateTask(Map data) {
         String id = (String) data.get("id");
         scrum.client.sprint.Task entity = tasks.get(id);
         if (entity == null) {
@@ -2755,7 +2755,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Task updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.sprint.Task getTask(String id) {
@@ -2870,7 +2870,7 @@ public abstract class GDao
         entityCreated(user, null);
     }
 
-    private final void updateUser(Map data) {
+    private final scrum.client.admin.User updateUser(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.User entity = users.get(id);
         if (entity == null) {
@@ -2881,7 +2881,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("User updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.admin.User getUser(String id) {
@@ -3136,7 +3136,7 @@ public abstract class GDao
         entityCreated(wikipage, null);
     }
 
-    private final void updateWikipage(Map data) {
+    private final scrum.client.collaboration.Wikipage updateWikipage(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Wikipage entity = wikipages.get(id);
         if (entity == null) {
@@ -3147,7 +3147,7 @@ public abstract class GDao
             entity.updateProperties(data);
             ilarkesto.core.logging.Log.DEBUG("Wikipage updated: " + entity);
         }
-        onEntityModifiedRemotely(entity);
+        return entity;
     }
 
     public final scrum.client.collaboration.Wikipage getWikipage(String id) {
@@ -3254,98 +3254,75 @@ public abstract class GDao
     }
 
     @Override
-    protected final void updateLocalEntity(String type, Map data) {
+    protected final ilarkesto.gwt.client.AGwtEntity updateLocalEntity(String type, Map data) {
         if (type.equals(scrum.client.pr.BlogEntry.ENTITY_TYPE)) {
-            updateBlogEntry(data);
-            return;
+            return updateBlogEntry(data);
         }
         if (type.equals(scrum.client.journal.Change.ENTITY_TYPE)) {
-            updateChange(data);
-            return;
+            return updateChange(data);
         }
         if (type.equals(scrum.client.collaboration.ChatMessage.ENTITY_TYPE)) {
-            updateChatMessage(data);
-            return;
+            return updateChatMessage(data);
         }
         if (type.equals(scrum.client.collaboration.Comment.ENTITY_TYPE)) {
-            updateComment(data);
-            return;
+            return updateComment(data);
         }
         if (type.equals(scrum.client.collaboration.Emoticon.ENTITY_TYPE)) {
-            updateEmoticon(data);
-            return;
+            return updateEmoticon(data);
         }
         if (type.equals(scrum.client.files.File.ENTITY_TYPE)) {
-            updateFile(data);
-            return;
+            return updateFile(data);
         }
         if (type.equals(scrum.client.impediments.Impediment.ENTITY_TYPE)) {
-            updateImpediment(data);
-            return;
+            return updateImpediment(data);
         }
         if (type.equals(scrum.client.issues.Issue.ENTITY_TYPE)) {
-            updateIssue(data);
-            return;
+            return updateIssue(data);
         }
         if (type.equals(scrum.client.project.Project.ENTITY_TYPE)) {
-            updateProject(data);
-            return;
+            return updateProject(data);
         }
         if (type.equals(scrum.client.journal.ProjectEvent.ENTITY_TYPE)) {
-            updateProjectEvent(data);
-            return;
+            return updateProjectEvent(data);
         }
         if (type.equals(scrum.client.admin.ProjectUserConfig.ENTITY_TYPE)) {
-            updateProjectUserConfig(data);
-            return;
+            return updateProjectUserConfig(data);
         }
         if (type.equals(scrum.client.project.Quality.ENTITY_TYPE)) {
-            updateQuality(data);
-            return;
+            return updateQuality(data);
         }
         if (type.equals(scrum.client.release.Release.ENTITY_TYPE)) {
-            updateRelease(data);
-            return;
+            return updateRelease(data);
         }
         if (type.equals(scrum.client.project.Requirement.ENTITY_TYPE)) {
-            updateRequirement(data);
-            return;
+            return updateRequirement(data);
         }
         if (type.equals(scrum.client.estimation.RequirementEstimationVote.ENTITY_TYPE)) {
-            updateRequirementEstimationVote(data);
-            return;
+            return updateRequirementEstimationVote(data);
         }
         if (type.equals(scrum.client.risks.Risk.ENTITY_TYPE)) {
-            updateRisk(data);
-            return;
+            return updateRisk(data);
         }
         if (type.equals(scrum.client.calendar.SimpleEvent.ENTITY_TYPE)) {
-            updateSimpleEvent(data);
-            return;
+            return updateSimpleEvent(data);
         }
         if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
-            updateSprint(data);
-            return;
+            return updateSprint(data);
         }
         if (type.equals(scrum.client.collaboration.Subject.ENTITY_TYPE)) {
-            updateSubject(data);
-            return;
+            return updateSubject(data);
         }
         if (type.equals(scrum.client.admin.SystemConfig.ENTITY_TYPE)) {
-            updateSystemConfig(data);
-            return;
+            return updateSystemConfig(data);
         }
         if (type.equals(scrum.client.sprint.Task.ENTITY_TYPE)) {
-            updateTask(data);
-            return;
+            return updateTask(data);
         }
         if (type.equals(scrum.client.admin.User.ENTITY_TYPE)) {
-            updateUser(data);
-            return;
+            return updateUser(data);
         }
         if (type.equals(scrum.client.collaboration.Wikipage.ENTITY_TYPE)) {
-            updateWikipage(data);
-            return;
+            return updateWikipage(data);
         }
        throw new RuntimeException("Unsupported type: " + type);
     }
