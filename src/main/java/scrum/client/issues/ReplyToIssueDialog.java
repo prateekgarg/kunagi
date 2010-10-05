@@ -30,6 +30,7 @@ public class ReplyToIssueDialog {
 
 	public void showDialog() {
 		dialogBox = new DialogBox(true, true);
+		dialogBox.setTitle("Reply by email");
 		dialogBox.add(createForm());
 		dialogBox.center();
 		dialogBox.show();
