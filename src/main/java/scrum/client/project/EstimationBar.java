@@ -33,6 +33,19 @@ public class EstimationBar {
 	}
 
 	@Override
+	public int hashCode() {
+		return workPerSprint.hashCode() * sprintOffset;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof EstimationBar)) return false;
+		EstimationBar other = (EstimationBar) obj;
+		if (sprintOffset != other.sprintOffset) return false;
+		return workPerSprint.equals(other.workPerSprint);
+	}
+
+	@Override
 	public String toString() {
 		return "EstimationBar(" + sprintOffset + ", " + Gwt.toString(workPerSprint) + ")";
 	}

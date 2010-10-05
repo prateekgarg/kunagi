@@ -80,6 +80,7 @@ public class CommentsWidget extends AScrumWidget {
 		text = text.trim();
 		Comment comment = new Comment(parent, getAuth().getUser(), text);
 		getDao().createComment(comment);
+		update();
 	}
 
 	private void activateEditor() {
@@ -107,6 +108,7 @@ public class CommentsWidget extends AScrumWidget {
 			@Override
 			public void onEditorActivated(AViewEditWidget widget) {}
 		});
+		update();
 	}
 
 	private class ActivateCommentEditorAction extends AAction {

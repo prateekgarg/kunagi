@@ -46,6 +46,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 	}
 
 	public void setCurrentUserEmoticon(String emotion) {
+		updateLocalModificationTime();
 		boolean delete = Str.isBlank(emotion);
 		Emoticon emoticon = getCurrentUserEmoticon();
 		if (emoticon == null) {

@@ -12,6 +12,7 @@ import scrum.client.admin.SystemConfig;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
 import scrum.client.collaboration.ChatMessage;
+import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.AScrumGwtEntity;
@@ -166,6 +167,9 @@ public class Dao extends GDao {
 		}
 		if (entity instanceof File) {
 			new FileUploadedEvent((File) entity).fireInCurrentScope();
+		}
+		if (entity instanceof Comment) {
+			((Comment) entity).getParent().updateLocalModificationTime();
 		}
 	}
 

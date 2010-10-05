@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProductBacklogWidget extends AScrumWidget {
 
 	private BlockListWidget<Requirement> list;
+	private boolean firstUpdate = true;
 
 	@Override
 	protected Widget onInitialization() {
@@ -31,7 +32,27 @@ public class ProductBacklogWidget extends AScrumWidget {
 		}
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addField("Assumed Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()));
+		tb.addField("Assumed Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()) {
+
+			@Override
+			protected void onEditorSubmit() {
+				super.onEditorSubmit();
+				getCurrentProject().updateRequirementsModificationTimes();
+			}
+
+			@Override
+			protected void onPlusClicked() {
+				super.onPlusClicked();
+				getCurrentProject().updateRequirementsModificationTimes();
+			}
+
+			@Override
+			protected void onMinusClicked() {
+				super.onMinusClicked();
+				getCurrentProject().updateRequirementsModificationTimes();
+			}
+
+		});
 		tb.addField("Velocity History", new AFieldValueWidget() {
 
 			@Override
@@ -59,7 +80,10 @@ public class ProductBacklogWidget extends AScrumWidget {
 		EstimationBarFactory.createEstimationBars(requirements, getCurrentProject().getVelocity());
 
 		list.setObjects(requirements);
-
+		if (firstUpdate) {
+			getCurrentProject().updateRequirementsModificationTimes();
+			firstUpdate = false;
+		}
 		super.onUpdate();
 	}
 
@@ -70,6 +94,7 @@ public class ProductBacklogWidget extends AScrumWidget {
 
 	class MoveObserver implements Runnable {
 
+		@Override
 		public void run() {
 			List<Requirement> requirements = list.getObjects();
 			getCurrentProject().updateRequirementsOrder(requirements);

@@ -15,6 +15,7 @@ public class QualityBacklogWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Quality>(QualityBlock.FACTORY);
+		list.setAutoSorter(Quality.LABEL_COMPARATOR);
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Quality Backlog", new ButtonWidget(new CreateQualityAction()));

@@ -65,6 +65,12 @@ public class Project extends GProject implements ForumSupport {
 		super(data);
 	}
 
+	public void updateRequirementsModificationTimes() {
+		for (Requirement requirement : getRequirements()) {
+			requirement.updateLocalModificationTime();
+		}
+	}
+
 	@Override
 	public boolean isEditable() {
 		User currentUser = Scope.get().getComponent(Auth.class).getUser();
@@ -248,6 +254,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
 		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
+		updateRequirementsModificationTimes();
 	}
 
 	public void updateUrgentIssuesOrder(List<Issue> issues) {

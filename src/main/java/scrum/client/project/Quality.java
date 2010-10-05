@@ -1,8 +1,10 @@
 package scrum.client.project;
 
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
+import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
@@ -32,6 +34,7 @@ public class Quality extends GQuality implements ReferenceSupport, ForumSupport 
 		super(data);
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -52,8 +55,17 @@ public class Quality extends GQuality implements ReferenceSupport, ForumSupport 
 		return true;
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
+
+	public static final Comparator<Quality> LABEL_COMPARATOR = new Comparator<Quality>() {
+
+		@Override
+		public int compare(Quality a, Quality b) {
+			return Utl.compare(a.getLabel(), b.getLabel());
+		}
+	};
 
 }

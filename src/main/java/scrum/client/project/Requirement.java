@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.Gwt;
@@ -106,6 +107,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 		if (vote == null) throw new IllegalStateException("vote == null");
 		vote.setEstimatedWork(estimatedWork);
 		if (estimatedWork != null && isWorkEstimationVotingComplete()) activateWorkEstimationVotingShowoff();
+		updateLocalModificationTime();
 	}
 
 	public boolean isWorkEstimationVotingComplete() {
@@ -133,7 +135,9 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 	}
 
 	public void setEstimationBar(EstimationBar estimationBar) {
+		if (Utl.equals(this.estimationBar, estimationBar)) return;
 		this.estimationBar = estimationBar;
+		updateLocalModificationTime();
 	}
 
 	public EstimationBar getEstimationBar() {
@@ -165,6 +169,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Forum
 		return getReference() + " " + getLabel();
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}

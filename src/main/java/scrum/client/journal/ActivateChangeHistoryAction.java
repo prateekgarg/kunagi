@@ -21,6 +21,7 @@ public class ActivateChangeHistoryAction extends AScrumAction {
 	@Override
 	protected void onExecute() {
 		Scope.get().getComponent(ChangeHistoryManager.class).activateChangeHistory(entity);
+		entity.updateLocalModificationTime();
 	}
 
 }

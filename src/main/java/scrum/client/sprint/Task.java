@@ -32,6 +32,13 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 		super(data);
 	}
 
+	@Override
+	public void updateLocalModificationTime() {
+		super.updateLocalModificationTime();
+		Requirement requirement = getRequirement();
+		if (requirement != null) requirement.updateLocalModificationTime();
+	}
+
 	public boolean isBlocked() {
 		if (!isImpedimentSet()) return false;
 		return getImpediment().isOpen();

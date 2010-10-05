@@ -79,14 +79,16 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
 				Sprint sprint = getCurrentProject().getCurrentSprint();
 				int sprints = previous.getEstimationBar().getEndSprintOffset() + 1;
-				sprintBorderIndicator.updateLabel(sprints, sprint.getLength().multiplyBy(sprints).subtract(
-					sprint.getBegin().getPeriodTo(Date.today()).abs()));
+				sprintBorderIndicator.updateLabel(sprints,
+					sprint.getLength().multiplyBy(sprints).subtract(sprint.getBegin().getPeriodTo(Date.today()).abs()));
 				getPreHeaderPanel().add(sprintBorderIndicator);
+				requirement.updateLocalModificationTime();
 			}
 		} else {
 			if (sprintBorderIndicator != null) {
 				getPreHeaderPanel().remove(sprintBorderIndicator);
 				sprintBorderIndicator = null;
+				requirement.updateLocalModificationTime();
 			}
 		}
 	}
@@ -96,12 +98,14 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		return new RequirementWidget(getObject(), true, true, false, true, true, true, false);
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteRequirementAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
+		@Override
 		public RequirementBlock createBlock() {
 			return new RequirementBlock();
 		}

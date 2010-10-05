@@ -1,6 +1,7 @@
 package scrum.client.common;
 
 import ilarkesto.core.logging.Log;
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.dnd.BlockDndMarkerWidget;
@@ -66,6 +67,24 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		header.addClickHandler(new SelectionClickHandler());
 
 		return outerPanel;
+	}
+
+	private long lastModificationTime;
+
+	public final void resetLastModificationTime() {
+		lastModificationTime = 0;
+	}
+
+	@Override
+	protected boolean isUpdateRequired() {
+		if (object instanceof AGwtEntity) {
+			AGwtEntity entity = (AGwtEntity) object;
+			long localModificationTime = entity.getLocalModificationTime();
+			if (localModificationTime == lastModificationTime) { return false; }
+			lastModificationTime = localModificationTime;
+			return true;
+		}
+		return super.isUpdateRequired();
 	}
 
 	@Override
@@ -160,6 +179,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			panel.removeStyleName("ABlockWidget-extended");
 		}
 
+		resetLastModificationTime();
 		update();
 	}
 
