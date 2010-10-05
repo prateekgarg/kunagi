@@ -22,6 +22,7 @@ import java.util.Set;
 
 import scrum.client.UsersStatusData;
 import scrum.server.ScrumConfig;
+import scrum.server.ScrumWebApplication;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
@@ -81,6 +82,11 @@ public class Project extends GProject {
 	private static SprintDaySnapshotDao sprintDaySnapshotDao;
 	private static SubjectDao subjectDao;
 	private static BlogEntryDao blogEntryDao;
+	private static ScrumWebApplication webApplication;
+
+	public static void setWebApplication(ScrumWebApplication webApplication) {
+		Project.webApplication = webApplication;
+	}
 
 	public static void setBlogEntryDao(BlogEntryDao blogEntryDao) {
 		Project.blogEntryDao = blogEntryDao;
@@ -242,18 +248,18 @@ public class Project extends GProject {
 		return true;
 	}
 
-	public void writeJournalAsRss(OutputStream out, String encoding, String baseUrl) {
+	public void writeJournalAsRss(OutputStream out, String encoding) {
 		Rss20Builder rss = new Rss20Builder();
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
-		rss.setLink(baseUrl + "#project=" + getId());
+		rss.setLink(webApplication.createUrl("#project=" + getId()));
 		for (ProjectEvent event : getLatestProjectEvents()) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
-			String link = baseUrl + "#project=" + getId();
+			String link = "#project=" + getId();
 			if (event.isSubjectSet()) link += "|entity=" + event.getSubjectId();
-			item.setLink(link);
+			item.setLink(webApplication.createUrl(link));
 			item.setGuid(event.getId());
 			item.setPubDate(event.getDateAndTime());
 		}
