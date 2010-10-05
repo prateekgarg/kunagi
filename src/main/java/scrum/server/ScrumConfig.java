@@ -65,4 +65,12 @@ public class ScrumConfig {
 		return p.getBoolean("logging.debug", false);
 	}
 
+	public String getHttpProxyHost() {
+		return p.get("http.proxy.host");
+	}
+
+	public int getHttpProxyPort() {
+		return p.getInt("http.proxy.port", 8080);
+	}
+
 }

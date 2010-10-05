@@ -17,6 +17,8 @@
 
 package scrum.server;
 
+import ilarkesto.auth.OpenId;
+import ilarkesto.base.Sys;
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.time.DateAndTime;
@@ -139,6 +141,14 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 		getProjectDao().scanFiles();
 		getTransactionService().commit();
+
+		String httpProxy = getConfig().getHttpProxyHost();
+		if (!Str.isBlank(httpProxy)) {
+			int httpProxyPort = getConfig().getHttpProxyPort();
+			log.info("Setting HTTP proxy:", httpProxy + ":" + httpProxyPort);
+			Sys.setHttpProxy(httpProxy, httpProxyPort);
+			OpenId.setHttpProxy(httpProxy, httpProxyPort);
+		}
 
 		// test data
 		if ((isDevelopmentMode() || getConfig().isStageIntegration()) && getProjectDao().getEntities().isEmpty())
