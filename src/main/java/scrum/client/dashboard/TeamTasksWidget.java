@@ -3,6 +3,7 @@ package scrum.client.dashboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,13 @@ public class TeamTasksWidget extends AScrumWidget {
 		sb.append("<div class='TeamTasksWidget'>");
 
 		List<User> lazyUsers = new ArrayList<User>();
-		for (User user : project.getTeamMembers()) {
+		List<User> team = new LinkedList<User>(project.getTeamMembers());
+		User currentUser = getCurrentUser();
+		if (team.contains(currentUser)) {
+			team.remove(currentUser);
+			team.add(0, currentUser);
+		}
+		for (User user : team) {
 			sb.append("<div class='TeamTasksWidget-user'>");
 
 			List<Task> tasks = project.getClaimedTasks(user);

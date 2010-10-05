@@ -491,6 +491,8 @@ public class LoginServlet extends AHttpServlet {
 		html.endTR();
 
 		html.endTABLE();
+		html.BR();
+		html.A("http://openid.net/get-an-openid/", "Don't have an OpenID?", true);
 		html.endFORM();
 	}
 
