@@ -35,7 +35,7 @@ public class DeleteOldProjectsTask extends ACollectionTask<Project> {
 	@Override
 	protected void perform(Project project) throws InterruptedException {
 		DateAndTime opened = project.getLastOpenedDateAndTime();
-		int timeToLiveInDays = project.containsParticipantWithVerifiedEmail() ? 14 : 3;
+		int timeToLiveInDays = project.containsParticipantWithVerifiedEmail() ? 7 : 3;
 		Date deadline = Date.beforeDays(timeToLiveInDays);
 		if (opened == null || opened.getDate().isAfter(deadline)) return;
 		log.info("Deleting old project:", project);

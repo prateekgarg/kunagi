@@ -49,6 +49,10 @@ public class ScrumConfig {
 		return p.getBoolean("disableUsersWithUnverifiedEmails", false);
 	}
 
+	public boolean isDisableInactiveUsers() {
+		return p.getBoolean("disableInactiveUsers", false);
+	}
+
 	public boolean isStageIntegration() {
 		return p.getBoolean("stage.integration", false);
 	}

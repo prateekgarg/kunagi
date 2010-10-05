@@ -209,8 +209,6 @@ public class BurndownChart {
 
 	static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay) {
-		if (snapshots.isEmpty()) throw new IllegalArgumentException("snapshots.isEmpty()");
-
 		List<Double> mainDates = new ArrayList<Double>();
 		List<Double> mainValues = new ArrayList<Double>();
 
@@ -283,41 +281,6 @@ public class BurndownChart {
 
 			remainingWork = newRemainingWork;
 			burnedWork = newBurnedWork;
-
-			// BurndownSnapshot snapshot = snapshots.get(i);
-			// Date snapshotDate = snapshot.getDate();
-			// double snapshotDateMillis = snapshotDate.toMillis();
-			// newBurnedWork = snapshot.getBurnedWork();
-			// newRemainingWork = snapshot.getRemainingWork();
-			// newWork = newBurnedWork + newRemainingWork;
-			//
-			// mainDates.add(snapshotDateMillis);
-			// mainValues.add(work - newBurnedWork);
-			//
-			// if (newWork != work) {
-			// mainDates.add(snapshotDateMillis);
-			// mainValues.add(newRemainingWork);
-			//
-			// idealWork -= (lastIdealDate.getPeriodTo(snapshotDate).toDays() * idealPerDayBurndown);
-			//
-			// idealDates.add(snapshotDateMillis);
-			// idealValues.add(idealWork);
-			//
-			// idealWork += (newWork - work);
-			//
-			// idealDates.add(snapshotDateMillis);
-			// idealValues.add(idealWork);
-			//
-			// idealPerDayBurndown = idealWork / (snapshotDate.getPeriodTo(lastDay).toDays());
-			//
-			// lastIdealDate = snapshotDate;
-			//
-			// work = newWork;
-			//
-			// }
-			//
-			// burnedWork = newBurnedWork;
-			// remainingWork = newRemainingWork;
 		}
 
 		idealWork -= (lastIdealDate.getPeriodTo(lastDay).toDays() * idealPerDayBurndown);
@@ -329,7 +292,7 @@ public class BurndownChart {
 
 		dataset.addSeries("Main", toArray(mainDates, mainValues));
 
-		Date d = snapshots.get(snapshots.size() - 1).getDate().addDays(1);
+		Date d = snapshots.isEmpty() ? Date.tomorrow() : snapshots.get(snapshots.size() - 1).getDate().addDays(1);
 		double extrapolationPerDayBurndown = burnedWork / (firstDay.getPeriodTo(d).toDays());
 		double remaining = remainingWork;
 
