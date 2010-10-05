@@ -216,6 +216,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 					projectWorkspaceWidgets.showPage(page);
 				} else {
 					projectWorkspaceWidgets.showDashboard();
+					setToken(project);
 				}
 				if (entityId != null) {
 					projectWorkspaceWidgets.showEntityById(entityId);
