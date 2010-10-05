@@ -1,7 +1,6 @@
 package scrum.client.collaboration;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import scrum.client.admin.User;
@@ -38,11 +37,11 @@ public class Chat extends GChat {
 	}
 
 	private void cleanupChatMessages() {
-		for (Iterator<ChatMessage> it = chatMessages.iterator(); it.hasNext();) {
-			ChatMessage message = it.next();
-			if (message.isOld()) it.remove();
-		}
-		while (chatMessages.size() > 50)
+		// for (Iterator<ChatMessage> it = chatMessages.iterator(); it.hasNext();) {
+		// ChatMessage message = it.next();
+		// if (message.isOld()) it.remove();
+		// }
+		while (chatMessages.size() > 100)
 			chatMessages.remove(0);
 		Collections.sort(chatMessages);
 	}
