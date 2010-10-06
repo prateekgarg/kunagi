@@ -40,6 +40,7 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 	@Override
 	protected void onExecute() {
 		new ActivateRequirementEstimationVotingServiceCall(requirement.getId()).execute();
+		requirement.updateLocalModificationTime();
 	}
 
 }
