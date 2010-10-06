@@ -1,13 +1,17 @@
 package scrum.client.collaboration;
 
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.EntityDoesNotExistException;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import scrum.client.DataTransferObject;
 import scrum.client.UsersStatusData;
+import scrum.client.UsersStatusData.UserStatus;
 import scrum.client.admin.User;
 import scrum.client.communication.ServerDataReceivedEvent;
 import scrum.client.communication.ServerDataReceivedHandler;
@@ -22,6 +26,7 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandl
 
 	private UsersStatusData usersStatus = new UsersStatusData();
 
+	@Override
 	public void onBlockExpanded(BlockExpandedEvent event) {
 		Object object = event.getObject();
 		if (object instanceof AGwtEntity) {
@@ -29,6 +34,7 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandl
 		}
 	}
 
+	@Override
 	public void onBlockCollapsed(BlockCollapsedEvent event) {
 		Object object = event.getObject();
 		if (object instanceof AGwtEntity) {
@@ -36,11 +42,15 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandl
 		}
 	}
 
+	@Override
 	public void onServerDataReceived(ServerDataReceivedEvent event) {
 		DataTransferObject data = event.getData();
 		if (data.usersStatus != null) {
 			usersStatus = data.usersStatus;
 			log.debug("usersStatus updated:", usersStatus);
+			for (AGwtEntity entity : getSelectedEntities()) {
+				entity.updateLocalModificationTime();
+			}
 			new VisibleDataChangedEvent().fireInCurrentScope();
 		}
 	}
@@ -59,6 +69,20 @@ public class UsersStatus extends GUsersStatus implements ServerDataReceivedHandl
 
 	public Set<String> getSelectedEntitysIds(User user) {
 		return usersStatus.get(user.getId()).getSelectedEntitysIds();
+	}
+
+	public Set<AGwtEntity> getSelectedEntities() {
+		Set<AGwtEntity> ret = new HashSet<AGwtEntity>();
+		for (UserStatus status : usersStatus.getAll()) {
+			Collection<String> ids = status.getSelectedEntitysIds();
+			for (String id : ids) {
+				try {
+					AGwtEntity entity = dao.getEntity(id);
+					ret.add(entity);
+				} catch (EntityDoesNotExistException ex) {}
+			}
+		}
+		return ret;
 	}
 
 	private void addSelectedEntityId(String id) {

@@ -1,6 +1,7 @@
 package scrum.client;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,6 +54,12 @@ public class UsersStatusData implements Serializable, IsSerializable {
 				statuses.put(userId, status);
 			}
 			return status;
+		}
+	}
+
+	public Collection<UserStatus> getAll() {
+		synchronized (statuses) {
+			return statuses.values();
 		}
 	}
 

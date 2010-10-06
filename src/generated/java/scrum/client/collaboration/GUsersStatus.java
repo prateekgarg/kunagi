@@ -10,6 +10,8 @@ public abstract class GUsersStatus {
 
     protected scrum.client.admin.Auth auth;
 
+    protected scrum.client.Dao dao;
+
     protected scrum.client.project.Project project;
 
     @Override

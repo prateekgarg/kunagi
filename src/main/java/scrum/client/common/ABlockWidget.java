@@ -51,7 +51,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		header = new BlockHeaderWidget();
 		header.initialize();
 		if (ScrumScopeManager.isProjectScope() && getObject() instanceof AScrumGwtEntity) {
-			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, false, false, null);
+			header.appendCell(new UsersOnBlockWidget((AScrumGwtEntity) getObject()), null, true, false, null);
 		}
 
 		if (list.dndManager != null) list.dndManager.makeDraggable(this, header.getDragHandle());

@@ -28,6 +28,7 @@ public class ResetRequirementEstimationVotingAction extends GResetRequirementEst
 	@Override
 	protected void onExecute() {
 		new ActivateRequirementEstimationVotingServiceCall(requirement.getId()).execute();
+		requirement.updateLocalModificationTime();
 	}
 
 }

@@ -190,6 +190,8 @@
 "c08a87d9-7638-4504-bf72-a2497fdb9a4c","e6c977af-5f92-4640-b272-01cc8a8422f6","Type","scrum.client.ScrumGwtApplication"
 "43d36290-0e0b-4ff7-acc2-e6a3ccbb81ee","65840326-1366-446b-aa13-0bca047c0806","Dependency","auth"
 "be1c6776-4832-4893-923f-8c12db6a34da","43d36290-0e0b-4ff7-acc2-e6a3ccbb81ee","Type","scrum.client.admin.Auth"
+"a84ce509-441d-4232-9986-7256c2fd6839","65840326-1366-446b-aa13-0bca047c0806","Dependency","dao"
+"9b4b047a-bc34-4dd6-b08f-a49cb77e4200","a84ce509-441d-4232-9986-7256c2fd6839","Type","scrum.client.Dao"
 "c1ee172a-a764-481b-85d4-b08b72041ebb","65840326-1366-446b-aa13-0bca047c0806","Dependency","project"
 "31ff454d-faae-4d2f-a12e-b33e268ea3bd","c1ee172a-a764-481b-85d4-b08b72041ebb","Type","scrum.client.project.Project"
 "945841cd-4126-4f3c-937e-a803725a9321","9fbffd41-4998-4d23-b9dd-734cc9334d8b","Component","Wiki"
