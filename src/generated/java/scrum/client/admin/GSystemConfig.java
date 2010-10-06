@@ -1016,6 +1016,7 @@ public abstract class GSystemConfig
         registrationDisabled  = (Boolean) props.get("registrationDisabled");
         projectCreationDisabled  = (Boolean) props.get("projectCreationDisabled");
         defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
+        updateLocalModificationTime();
     }
 
     @Override

@@ -2027,6 +2027,7 @@ public abstract class GProject
         issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastOpenedDateAndTimeAsString);
+        updateLocalModificationTime();
     }
 
     @Override

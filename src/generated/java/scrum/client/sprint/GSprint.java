@@ -795,6 +795,7 @@ public abstract class GSprint
         productOwnersIds = (Set<String>) props.get("productOwnersIds");
         scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
+        updateLocalModificationTime();
     }
 
     @Override

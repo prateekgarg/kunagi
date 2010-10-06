@@ -539,6 +539,7 @@ public abstract class GSimpleEvent
         duration  = (java.lang.Integer) props.get("duration");
         agenda  = (java.lang.String) props.get("agenda");
         note  = (java.lang.String) props.get("note");
+        updateLocalModificationTime();
     }
 
     @Override

@@ -427,6 +427,7 @@ public abstract class GBlogEntry
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
         releasesIds = (Set<String>) props.get("releasesIds");
         published  = (Boolean) props.get("published");
+        updateLocalModificationTime();
     }
 
     @Override

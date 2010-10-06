@@ -153,6 +153,7 @@ public abstract class GEmoticon
         parentId = (String) props.get("parentId");
         ownerId = (String) props.get("ownerId");
         emotion  = (java.lang.String) props.get("emotion");
+        updateLocalModificationTime();
     }
 
     @Override

@@ -749,6 +749,7 @@ public abstract class GRequirement
         workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
         workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
         tasksOrderIds  = (java.util.List<java.lang.String>) props.get("tasksOrderIds");
+        updateLocalModificationTime();
     }
 
     @Override

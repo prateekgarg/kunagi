@@ -222,6 +222,7 @@ public abstract class GProjectEvent
         subjectId = (String) props.get("subjectId");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
+        updateLocalModificationTime();
     }
 
     @Override

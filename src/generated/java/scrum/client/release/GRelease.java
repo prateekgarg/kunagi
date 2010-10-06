@@ -539,6 +539,7 @@ public abstract class GRelease
         released  = (Boolean) props.get("released");
         releaseNotes  = (java.lang.String) props.get("releaseNotes");
         scmTag  = (java.lang.String) props.get("scmTag");
+        updateLocalModificationTime();
     }
 
     @Override

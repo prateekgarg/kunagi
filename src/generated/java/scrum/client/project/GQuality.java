@@ -325,6 +325,7 @@ public abstract class GQuality
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
         testDescription  = (java.lang.String) props.get("testDescription");
+        updateLocalModificationTime();
     }
 
     @Override

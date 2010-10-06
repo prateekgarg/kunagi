@@ -214,6 +214,7 @@ public abstract class GChatMessage
         text  = (java.lang.String) props.get("text");
         String dateAndTimeAsString = (String) props.get("dateAndTime");
         dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(dateAndTimeAsString);
+        updateLocalModificationTime();
     }
 
     @Override

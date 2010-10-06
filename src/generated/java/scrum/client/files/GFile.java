@@ -379,6 +379,7 @@ public abstract class GFile
         label  = (java.lang.String) props.get("label");
         number  = (Integer) props.get("number");
         note  = (java.lang.String) props.get("note");
+        updateLocalModificationTime();
     }
 
     @Override

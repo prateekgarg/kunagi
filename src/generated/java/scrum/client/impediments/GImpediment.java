@@ -428,6 +428,7 @@ public abstract class GImpediment
         description  = (java.lang.String) props.get("description");
         solution  = (java.lang.String) props.get("solution");
         closed  = (Boolean) props.get("closed");
+        updateLocalModificationTime();
     }
 
     @Override

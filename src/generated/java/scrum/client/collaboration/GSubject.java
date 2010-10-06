@@ -258,6 +258,7 @@ public abstract class GSubject
         label  = (java.lang.String) props.get("label");
         text  = (java.lang.String) props.get("text");
         number  = (Integer) props.get("number");
+        updateLocalModificationTime();
     }
 
     @Override

@@ -187,6 +187,7 @@ public abstract class GWikipage
         projectId = (String) props.get("projectId");
         name  = (java.lang.String) props.get("name");
         text  = (java.lang.String) props.get("text");
+        updateLocalModificationTime();
     }
 
     @Override

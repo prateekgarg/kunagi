@@ -1,6 +1,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
@@ -35,8 +36,12 @@ public class Task extends GTask implements ReferenceSupport, ForumSupport {
 	@Override
 	public void updateLocalModificationTime() {
 		super.updateLocalModificationTime();
-		Requirement requirement = getRequirement();
-		if (requirement != null) requirement.updateLocalModificationTime();
+		try {
+			Requirement requirement = getRequirement();
+			if (requirement != null) requirement.updateLocalModificationTime();
+		} catch (EntityDoesNotExistException ex) {
+			return;
+		}
 	}
 
 	public boolean isBlocked() {

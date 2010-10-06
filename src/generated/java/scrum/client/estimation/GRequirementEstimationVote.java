@@ -153,6 +153,7 @@ public abstract class GRequirementEstimationVote
         requirementId = (String) props.get("requirementId");
         userId = (String) props.get("userId");
         estimatedWork  = (java.lang.Float) props.get("estimatedWork");
+        updateLocalModificationTime();
     }
 
     @Override

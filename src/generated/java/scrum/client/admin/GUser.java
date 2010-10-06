@@ -1432,6 +1432,7 @@ public abstract class GUser
         hideUserGuideWhiteboard  = (Boolean) props.get("hideUserGuideWhiteboard");
         loginToken  = (java.lang.String) props.get("loginToken");
         openId  = (java.lang.String) props.get("openId");
+        updateLocalModificationTime();
     }
 
     @Override

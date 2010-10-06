@@ -376,6 +376,7 @@ public abstract class GChange
         oldValue  = (java.lang.String) props.get("oldValue");
         newValue  = (java.lang.String) props.get("newValue");
         comment  = (java.lang.String) props.get("comment");
+        updateLocalModificationTime();
     }
 
     @Override

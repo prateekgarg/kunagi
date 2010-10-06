@@ -453,6 +453,7 @@ public abstract class GTask
         burnedWork  = (Integer) props.get("burnedWork");
         ownerId = (String) props.get("ownerId");
         impedimentId = (String) props.get("impedimentId");
+        updateLocalModificationTime();
     }
 
     @Override

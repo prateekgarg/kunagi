@@ -507,6 +507,7 @@ public abstract class GRisk
         impactMitigation  = (java.lang.String) props.get("impactMitigation");
         probability  = (Integer) props.get("probability");
         impact  = (Integer) props.get("impact");
+        updateLocalModificationTime();
     }
 
     @Override

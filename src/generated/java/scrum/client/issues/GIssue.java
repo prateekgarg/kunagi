@@ -1074,6 +1074,7 @@ public abstract class GIssue
         affectedReleasesIds = (Set<String>) props.get("affectedReleasesIds");
         fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
         published  = (Boolean) props.get("published");
+        updateLocalModificationTime();
     }
 
     @Override

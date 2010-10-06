@@ -330,6 +330,7 @@ public abstract class GProjectUserConfig
         misconducts  = (Integer) props.get("misconducts");
         richtextAutosaveText  = (java.lang.String) props.get("richtextAutosaveText");
         richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
+        updateLocalModificationTime();
     }
 
     @Override
