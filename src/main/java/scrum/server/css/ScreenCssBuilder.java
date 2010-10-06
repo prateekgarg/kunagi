@@ -342,7 +342,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace").height100();
 		css.style(".Workspace-header").height(25).background(cHeaderBackground, "../header-bg.png");
 		css.style(".Workspace-body").height100();
-		css.style(".Workspace-body-west").floatLeft().width(200).height100();
+		css.style(".Workspace-body-west").floatLeft().width(200).height100().backgroundUrl("../sidebar-bg.png");
 		css.style(".Workspace-body-center").height100();
 		css.style(".Workspace-body-center-content").padding(10).paddingBottom(1000);
 		css.style(".Workspace-body-west .PagePanel").padding(0);
@@ -391,11 +391,13 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void actions(CssRenderer css) {
-		css.style(".ActionsPanel").background(cActionsBackground).border(1, cActionsBorder).padding(7).borderRadius(10);
+		css.style(".ActionsPanel").background(cActionsBackground, "../specialarea-bg.png", "repeat-x")
+				.border(1, cActionsBorder).padding(7).borderRadius(10);
 	}
 
 	private void userGuide(CssRenderer css) {
-		css.style(".UserGuideWidget").color(cUserguide).background(cUserguideBackground).border(1, cUserguideBorder)
+		css.style(".UserGuideWidget").color(cUserguide)
+				.background(cUserguideBackground, "../specialarea-bg.png", "repeat-x").border(1, cUserguideBorder)
 				.borderRadius(10);
 		css.style(".UserGuideWidget-header").padding(7);
 		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder)
@@ -407,8 +409,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void comments(CssRenderer css) {
-		css.style(".CommentsWidget").background(cCommentsBackground).border(1, cCommentsBorder).padding(7)
-				.borderRadius(10);
+		css.style(".CommentsWidget").background(cCommentsBackground, "../specialarea-bg.png", "repeat-x")
+				.border(1, cCommentsBorder).padding(7).borderRadius(10);
 		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0).width100();
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
@@ -421,8 +423,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void changeHistory(CssRenderer css) {
-		css.style(".ChangeHistoryWidget").background(cChangesBackground).border(1, cChangesBorder).padding(7)
-				.borderRadius(10);
+		css.style(".ChangeHistoryWidget").background(cChangesBackground, "../specialarea-bg.png", "repeat-x")
+				.border(1, cChangesBorder).padding(7).borderRadius(10);
 		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
 		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
 		css.style(".ChangeWidget-header-author").floatLeft().marginRight(5);
@@ -438,11 +440,13 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
 
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
-		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground);
+		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground, "../blockheader-bg.png", "repeat-x");
 		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
 		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1)
-				.lineHeight(lineHeight - 2).textAlignCenter().cursorMove().background(cBlockHeaderDragHandleBackground)
+				.lineHeight(lineHeight - 2).textAlignCenter().cursorMove()
+				.background(cBlockHeaderDragHandleBackground, "../blockdraghandle-bg.png")
 				.border(1, cNavigatorSeparator).borderRadius(5);
+		css.style(".BlockHeaderWidget-dragHandle:hover").background("white", "../blockdraghandle-hover-bg.png");
 		css.style(".BlockHeaderWidget-center").padding(2).cursorPointer();
 		css.style(".BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground)
 				.lineHeight(lineHeight + 4);
