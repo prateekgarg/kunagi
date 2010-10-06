@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="scrum" default="package" basedir=".">
+<project name="kunagi" default="package" basedir=".">
 
     <target name="update">
         <exec executable="svn">
@@ -113,15 +113,6 @@
         </copy>
         <zip destfile="build/kunagi.zip" basedir="build/package" />
     </target>
-
-    <target name="sourceforge">
-        <exec executable="git" dir="sourceforge-svn" failonerror="true">
-            <arg line="svn rebase" />
-        </exec>
-        <exec executable="git" dir="sourceforge-svn" failonerror="true">
-            <arg line="svn dcommit" />
-        </exec>
-    </target>
 	
     <target name="continousIntegrationBuild" depends="webapp">
         <copy todir="/var/www/kunagi.org">
@@ -144,7 +135,7 @@
             <arg line="build/kunagi.war koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi.war" />
         </exec>
 
-                <mkdir dir="/var/www/kunagi.org/releases/${release.label}" />
+        <mkdir dir="/var/www/kunagi.org/releases/${release.label}" />
         <copy file="build/kunagi.war" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi.war" />
         <copy file="build/kunagi.zip" tofile="/var/www/kunagi.org/releases/${release.label}/kunagi-${release.label}.zip" />
 
