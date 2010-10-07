@@ -3,6 +3,7 @@ package scrum.server.project;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
+import ilarkesto.io.IO;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -70,6 +71,7 @@ public class HomepageUpdaterTest {
 
 		sprint.burndownTasksRandomly(sprint.getBegin(), Date.today().addDays(-1));
 
+		IO.copyFile("src/projectHomepage/html", "test-output/homepage");
 		new HomepageUpdater(project, "src/projectHomepage/velocity", "test-output/homepage").processAll();
 	}
 
