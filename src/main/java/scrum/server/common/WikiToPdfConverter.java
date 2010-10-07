@@ -33,6 +33,8 @@ public class WikiToPdfConverter extends APdfCreator {
 	private WikiModel model;
 	private PdfContext pdfContext;
 
+	private boolean firstParagraph = true;
+
 	public WikiToPdfConverter(WikiModel model, PdfContext pdfContext) {
 		this.model = model;
 		this.pdfContext = pdfContext;
@@ -45,28 +47,28 @@ public class WikiToPdfConverter extends APdfCreator {
 	}
 
 	private void processElement(AWikiElement element, APdfContainerElement parent) {
-		if (element instanceof Paragraph) {
+		if (firstParagraph) {
+			firstParagraph = false;
+		} else {
 			parent.nl(defaultFont);
+		}
+		if (element instanceof Paragraph) {
 			processParagraph((Paragraph) element, parent);
 			return;
 		}
 		if (element instanceof Header) {
-			parent.nl(defaultFont);
 			processHeader((Header) element, parent);
 			return;
 		}
 		if (element instanceof Pre) {
-			parent.nl(defaultFont);
 			processPre((Pre) element, parent);
 			return;
 		}
 		if (element instanceof ItemList) {
-			parent.nl(defaultFont);
 			processItemList((ItemList) element, parent);
 			return;
 		}
 		if (element instanceof Table) {
-			parent.nl(defaultFont);
 			processTable((Table) element, parent);
 			return;
 		}

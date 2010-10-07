@@ -1,9 +1,9 @@
 package scrum.server.sprint;
 
 import ilarkesto.pdf.APdfContainerElement;
-import ilarkesto.pdf.FieldList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import scrum.server.common.APdfCreator;
@@ -24,23 +24,17 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 	protected void build(APdfContainerElement pdf) {
 		Sprint sprint = project.getCurrentSprint();
 
-		pdf.paragraph().text("Sprint Backlog", headerFonts[0]);
+		reportHeader(pdf, "Sprint Backlog", project.getLabel());
 
 		pdf.nl();
-		pdf.paragraph().text("Burndown", headerFonts[1]);
 		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
 
 		pdf.nl();
-		pdf.paragraph().text("Stories", headerFonts[1]);
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
+		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement req : requirements) {
-			if (req.isClosed()) continue;
-			pdf.nl();
-			pdf.paragraph().text(req.getReferenceAndLabel(), headerFonts[3]);
-			wiki(pdf, req.getDescription());
-			FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
-			if (req.isTestDescriptionSet()) wiki(fields.field("Test"), req.getTestDescription());
-			if (req.isEstimatedWorkSet()) fields.field("Estimated work").text(req.getEstimatedWork());
+			requirement(pdf, req);
+			// TODO burned work, estimated work
 		}
 
 	}
