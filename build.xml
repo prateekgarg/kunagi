@@ -105,7 +105,7 @@
         <replace file="build/webapp/WEB-INF/classes/scrum/server/build.properties" token="@release-label@" value="${release.label}" />
         <war destfile="build/kunagi.war" basedir="build/webapp" />
         <mkdir dir="build/package/kunagi" />
-        <copy file="build/kunagi.war" tofile="package/kunagi/kunagi.war" />
+        <copy file="build/kunagi.war" tofile="build/package/kunagi/kunagi.war" />
         <copy todir="build/webapp" verbose="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
