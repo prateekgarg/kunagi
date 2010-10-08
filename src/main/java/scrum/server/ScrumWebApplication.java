@@ -305,6 +305,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return date;
 	}
 
+	@Override
+	public Properties getBuildProperties() {
+		if (buildProperties == null) buildProperties = IO.loadPropertiesFromClasspath("scrum/server/build.properties");
+		return buildProperties;
+	}
+
 	public void updateSystemMessage(SystemMessage systemMessage) {
 		this.systemMessage = systemMessage;
 		for (AGwtConversation conversation : getGwtConversations()) {
