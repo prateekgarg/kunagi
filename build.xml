@@ -112,6 +112,9 @@
             <fileset dir="." includes="license.*" />
         </copy>
         <zip destfile="build/kunagi.zip" basedir="build/package" />
+        <exec executable="tar" failonerror="true" dir="build/package">
+            <arg line="cjf ../kunagi.tar.bz kunagi" />
+        </exec>
     </target>
 	
     <target name="continousIntegrationBuild" depends="webapp">
@@ -128,6 +131,9 @@
     </target>
 
     <target name="continousIntegrationRelease" depends="package">
+        <exec executable="scp" failonerror="true">
+            <arg line="build/kunagi.tar.bz koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi-${release-label}.tar.bz" />
+        </exec>
         <exec executable="scp" failonerror="true">
             <arg line="build/kunagi.zip koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/${release.label}/kunagi-${release.label}.zip" />
         </exec>
