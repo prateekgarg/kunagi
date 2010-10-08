@@ -106,7 +106,7 @@
         <war destfile="build/kunagi.war" basedir="build/webapp" />
         <mkdir dir="build/package/kunagi" />
         <copy file="build/kunagi.war" tofile="build/package/kunagi/kunagi.war" />
-        <copy todir="build/webapp" verbose="true">
+        <copy todir="build/package/kunagi" verbose="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
             <fileset dir="." includes="license.*" />
