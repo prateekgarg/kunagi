@@ -22,7 +22,6 @@ import ilarkesto.base.Sys;
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.time.DateAndTime;
-import ilarkesto.base.time.Time;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
@@ -296,13 +295,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (isDevelopmentMode()) return ApplicationInfo.DEPLOYMENT_STAGE_DEVELOPMENT;
 		if (getConfig().isStageIntegration()) return ApplicationInfo.DEPLOYMENT_STAGE_INTEGRATION;
 		return ApplicationInfo.DEPLOYMENT_STAGE_PRODUCTION;
-	}
-
-	public String getBuild() {
-		Properties properties = IO.loadPropertiesFromClasspath("scrum/server/build.properties");
-		String date = properties.getProperty("date");
-		if ("@build-date@".equals(date)) date = Time.now().toString();
-		return date;
 	}
 
 	@Override
