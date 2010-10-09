@@ -42,6 +42,8 @@ public abstract class GProjectUserConfig
         properties.put("misconducts", this.misconducts);
         properties.put("richtextAutosaveText", this.richtextAutosaveText);
         properties.put("richtextAutosaveField", this.richtextAutosaveField);
+        properties.put("selectedEntitysIds", this.selectedEntitysIds);
+        properties.put("online", this.online);
     }
 
     public int compareTo(ProjectUserConfig other) {
@@ -288,6 +290,126 @@ public abstract class GProjectUserConfig
         setRichtextAutosaveField((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - selectedEntitysIds
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getSelectedEntitysIds() {
+        return new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
+    }
+
+    public final void setSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
+        selectedEntitysIds = prepareSelectedEntitysIds(selectedEntitysIds);
+        if (selectedEntitysIds == null) selectedEntitysIds = Collections.emptyList();
+        if (this.selectedEntitysIds.equals(selectedEntitysIds)) return;
+        this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
+        fireModified("selectedEntitysIds="+Str.format(selectedEntitysIds));
+    }
+
+    protected Collection<java.lang.String> prepareSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
+        return selectedEntitysIds;
+    }
+
+    public final boolean containsSelectedEntitysId(java.lang.String selectedEntitysId) {
+        if (selectedEntitysId == null) return false;
+        return this.selectedEntitysIds.contains(selectedEntitysId);
+    }
+
+    public final int getSelectedEntitysIdsCount() {
+        return this.selectedEntitysIds.size();
+    }
+
+    public final boolean isSelectedEntitysIdsEmpty() {
+        return this.selectedEntitysIds.isEmpty();
+    }
+
+    public final boolean addSelectedEntitysId(java.lang.String selectedEntitysId) {
+        if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
+        boolean added = this.selectedEntitysIds.add(selectedEntitysId);
+        if (added) fireModified("selectedEntitysIds+=" + selectedEntitysId);
+        return added;
+    }
+
+    public final boolean addSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
+        if (selectedEntitysIds == null) throw new IllegalArgumentException("selectedEntitysIds == null");
+        boolean added = false;
+        for (java.lang.String selectedEntitysId : selectedEntitysIds) {
+            added = added | this.selectedEntitysIds.add(selectedEntitysId);
+        }
+        if (added) fireModified("selectedEntitysIds+="+Str.format(selectedEntitysIds));
+        return added;
+    }
+
+    public final boolean removeSelectedEntitysId(java.lang.String selectedEntitysId) {
+        if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
+        if (this.selectedEntitysIds == null) return false;
+        boolean removed = this.selectedEntitysIds.remove(selectedEntitysId);
+        if (removed) fireModified("selectedEntitysIds-=" + selectedEntitysId);
+        return removed;
+    }
+
+    public final boolean removeSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
+        if (selectedEntitysIds == null) return false;
+        if (selectedEntitysIds.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: selectedEntitysIds) {
+            removed = removed | removeSelectedEntitysId(_element);
+        }
+        if (removed) fireModified("selectedEntitysIds-="+Str.format(selectedEntitysIds));
+        return removed;
+    }
+
+    public final boolean clearSelectedEntitysIds() {
+        if (this.selectedEntitysIds.isEmpty()) return false;
+        this.selectedEntitysIds.clear();
+        fireModified("selectedEntitysIds cleared");
+        return true;
+    }
+
+    public final String getSelectedEntitysIdsAsCommaSeparatedString() {
+        if (this.selectedEntitysIds.isEmpty()) return null;
+        return Str.concat(this.selectedEntitysIds,", ");
+    }
+
+    public final void setSelectedEntitysIdsAsCommaSeparatedString(String selectedEntitysIds) {
+        this.selectedEntitysIds = new java.util.ArrayList(Str.parseCommaSeparatedString(selectedEntitysIds));
+    }
+
+    protected final void updateSelectedEntitysIds(Object value) {
+        setSelectedEntitysIds((java.util.List<java.lang.String>) value);
+    }
+
+    // -----------------------------------------------------------
+    // - online
+    // -----------------------------------------------------------
+
+    private boolean online;
+
+    public final boolean isOnline() {
+        return online;
+    }
+
+    public final void setOnline(boolean online) {
+        online = prepareOnline(online);
+        if (isOnline(online)) return;
+        this.online = online;
+        fireModified("online="+online);
+    }
+
+    protected boolean prepareOnline(boolean online) {
+        return online;
+    }
+
+    public final boolean isOnline(boolean online) {
+        return this.online == online;
+    }
+
+    protected final void updateOnline(Object value) {
+        setOnline((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -299,6 +421,8 @@ public abstract class GProjectUserConfig
             if (property.equals("misconducts")) updateMisconducts(value);
             if (property.equals("richtextAutosaveText")) updateRichtextAutosaveText(value);
             if (property.equals("richtextAutosaveField")) updateRichtextAutosaveField(value);
+            if (property.equals("selectedEntitysIds")) updateSelectedEntitysIds(value);
+            if (property.equals("online")) updateOnline(value);
         }
     }
 
@@ -306,6 +430,7 @@ public abstract class GProjectUserConfig
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadUserReference(entityId);
+        if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
     }
 
     // --- ensure integrity ---
@@ -332,6 +457,7 @@ public abstract class GProjectUserConfig
             LOG.info("Repairing dead user reference");
             repairDeadUserReference(this.userId);
         }
+        if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
     }
 
 

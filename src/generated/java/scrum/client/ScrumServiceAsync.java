@@ -18,8 +18,6 @@ public interface ScrumServiceAsync {
 
     void requestForum(int conversationNumber, boolean all, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
-    void setSelectedEntitysIds(int conversationNumber, java.util.Set ids, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
     void ping(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void startConversation(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);

@@ -321,6 +321,74 @@ public abstract class GProjectUserConfig
 
     }
 
+    // --- selectedEntitysIds ---
+
+    private java.util.List<java.lang.String> selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getSelectedEntitysIds() {
+        return new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
+    }
+
+    public final void setSelectedEntitysIds(java.util.List<java.lang.String> selectedEntitysIds) {
+        if (selectedEntitysIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.selectedEntitysIds.equals(selectedEntitysIds)) return;
+        this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
+        propertyChanged("selectedEntitysIds", this.selectedEntitysIds);
+    }
+
+    // --- online ---
+
+    private boolean online ;
+
+    public final boolean isOnline() {
+        return this.online ;
+    }
+
+    public final ProjectUserConfig setOnline(boolean online) {
+        if (isOnline(online)) return (ProjectUserConfig)this;
+        this.online = online ;
+        propertyChanged("online", this.online);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isOnline(boolean online) {
+        return equals(this.online, online);
+    }
+
+    private transient OnlineModel onlineModel;
+
+    public OnlineModel getOnlineModel() {
+        if (onlineModel == null) onlineModel = createOnlineModel();
+        return onlineModel;
+    }
+
+    protected OnlineModel createOnlineModel() { return new OnlineModel(); }
+
+    protected class OnlineModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_online";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isOnline();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setOnline(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -330,6 +398,8 @@ public abstract class GProjectUserConfig
         misconducts  = (Integer) props.get("misconducts");
         richtextAutosaveText  = (java.lang.String) props.get("richtextAutosaveText");
         richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
+        selectedEntitysIds  = (java.util.List<java.lang.String>) props.get("selectedEntitysIds");
+        online  = (Boolean) props.get("online");
         updateLocalModificationTime();
     }
 
@@ -342,6 +412,8 @@ public abstract class GProjectUserConfig
         properties.put("misconducts", this.misconducts);
         properties.put("richtextAutosaveText", this.richtextAutosaveText);
         properties.put("richtextAutosaveField", this.richtextAutosaveField);
+        properties.put("selectedEntitysIds", this.selectedEntitysIds);
+        properties.put("online", this.online);
     }
 
 }

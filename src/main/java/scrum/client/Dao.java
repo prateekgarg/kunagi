@@ -3,11 +3,14 @@ package scrum.client;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.EntityDoesNotExistException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.SystemConfig;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
@@ -175,6 +178,32 @@ public class Dao extends GDao {
 		if (entity instanceof Change) {
 			((Change) entity).getParent().updateLocalModificationTime();
 		}
+	}
+
+	@Override
+	protected ProjectUserConfig updateProjectUserConfig(Map data) {
+		List<String> previouslySelectedIds = new ArrayList<String>();
+		ProjectUserConfig config = projectUserConfigs.get(data.get("id"));
+		if (config != null) {
+			previouslySelectedIds.addAll(config.getSelectedEntitysIds());
+		}
+
+		config = super.updateProjectUserConfig(data);
+
+		List<String> selectedIds = config.getSelectedEntitysIds();
+		previouslySelectedIds.removeAll(selectedIds);
+		selectedIds.removeAll(previouslySelectedIds);
+		for (String id : previouslySelectedIds) {
+			try {
+				getEntity(id).updateLocalModificationTime();
+			} catch (EntityDoesNotExistException ex) {}
+		}
+		for (String id : selectedIds) {
+			try {
+				getEntity(id).updateLocalModificationTime();
+			} catch (EntityDoesNotExistException ex) {}
+		}
+		return config;
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 	@Override
 	public void onServerDataReceived(ServerDataReceivedEvent event) {
 		DataTransferObject data = event.getData();
-		if (data.containsEntities() || data.usersStatus != null) {
+		if (data.containsEntities()) {
 			lastDataReceiveTime = System.currentTimeMillis();
 			reschedule();
 		}

@@ -20,7 +20,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import scrum.client.UsersStatusData;
 import scrum.server.ScrumConfig;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.ProjectUserConfigDao;
@@ -57,7 +56,6 @@ import scrum.server.sprint.TaskDao;
 
 public class Project extends GProject {
 
-	private transient UsersStatusData usersStatus;
 	private transient Comparator<Requirement> requirementsOrderComparator;
 
 	// --- dependencies ---
@@ -282,11 +280,6 @@ public class Project extends GProject {
 
 	public Set<ProjectEvent> getProjectEvents() {
 		return projectEventDao.getProjectEventsByProject(this);
-	}
-
-	public UsersStatusData getUsersStatus() {
-		if (usersStatus == null) usersStatus = new UsersStatusData();
-		return usersStatus;
 	}
 
 	public Set<ProjectUserConfig> getUserConfigs() {

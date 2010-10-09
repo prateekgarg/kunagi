@@ -27,10 +27,9 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.email.Eml;
-import ilarkesto.fp.FP;
-import ilarkesto.fp.Function;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
+import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
@@ -47,11 +46,11 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
-import scrum.client.UsersStatusData;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.DeleteDisabledUsersTask;
 import scrum.server.admin.DisableInactiveUsersTask;
 import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
+import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -153,6 +152,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if ((isDevelopmentMode() || getConfig().isStageIntegration()) && getProjectDao().getEntities().isEmpty())
 			createTestData();
 
+		for (ProjectUserConfig config : getProjectUserConfigDao().getEntities()) {
+			config.reset();
+		}
 	}
 
 	public String createUrl(String relativePath) {
@@ -234,6 +236,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
+	public void sendToOtherConversationsByProject(GwtConversation conversation, AEntity entity) {
+		for (AGwtConversation c : getConversationsByProject(conversation.getProject(), conversation)) {
+			c.sendToClient(entity);
+		}
+	}
+
 	public Set<GwtConversation> getConversationsByProject(Project project, GwtConversation exception) {
 		Set<GwtConversation> ret = new HashSet<GwtConversation>();
 		for (Object element : getGwtConversations()) {
@@ -251,37 +259,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			if (user != null) ret.add(user);
 		}
 		return ret;
-	}
-
-	public void updateOnlineTeamMembers(Project project, GwtConversation exclude) {
-		if (project == null) return;
-		Set<User> users = getConversationUsersByProject(project);
-		Set<String> userIds = new HashSet<String>(FP.foreach(users, new Function<User, String>() {
-
-			@Override
-			public String eval(User user) {
-				return user.getId();
-			}
-		}));
-		project.getUsersStatus().setOnlineUsers(userIds);
-		log.debug("Updated online team members on project:", project, "->", project.getUsersStatus());
-		sendUsersStatusToClients(project, exclude);
-	}
-
-	private void sendUsersStatusToClients(Project project, GwtConversation exclude) {
-		UsersStatusData status = project.getUsersStatus();
-		for (GwtConversation conversation : getConversationsByProject(project, exclude)) {
-			conversation.getNextData().usersStatus = status;
-		}
-	}
-
-	public void setUsersSelectedEntities(Project project, GwtConversation conversation, Set<String> ids) {
-		UsersStatusData usersStatus = project.getUsersStatus();
-		WebSession session = conversation.getSession();
-		User user = session.getUser();
-		String userId = user.getId();
-		usersStatus.setUsersSelectedEntities(userId, ids);
-		sendUsersStatusToClients(project, conversation);
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
-import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.EntityDoesNotExistException;
@@ -23,6 +22,7 @@ import java.util.Set;
 
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
@@ -162,13 +162,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User user = conversation.getSession().getUser();
 		if (user == null || user.isAdmin() == false) throw new PermissionDeniedException();
 		webApplication.updateSystemMessage(systemMessage);
-	}
-
-	@Override
-	public void onSetSelectedEntitysIds(GwtConversation conversation, Set ids) {
-		Project project = conversation.getProject();
-		if (project == null) return;
-		webApplication.setUsersSelectedEntities(project, conversation, ids);
 	}
 
 	@Override
@@ -382,23 +375,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 
 			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " rejected "
-						+ requirement.getReferenceAndLabel(), requirement);
+				postProjectEvent(conversation,
+					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " accepted "
-						+ requirement.getReferenceAndLabel(), requirement);
+				postProjectEvent(conversation,
+					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel(), requirement);
 			}
 
 			if (sprint != previousRequirementSprint) {
 				if (properties.containsKey("sprintId")) {
 					if (inCurrentSprint) {
-						postProjectEvent(conversation, currentUser.getName() + " pulled "
-								+ requirement.getReferenceAndLabel() + " to current sprint", requirement);
+						postProjectEvent(conversation,
+							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
+									+ " to current sprint", requirement);
 					} else {
-						postProjectEvent(conversation, currentUser.getName() + " kicked "
-								+ requirement.getReferenceAndLabel() + " from current sprint", requirement);
+						postProjectEvent(conversation,
+							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
+									+ " from current sprint", requirement);
 					}
 				}
 			}
@@ -456,8 +451,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(),
 						issue);
 				} else {
-					postProjectEvent(conversation, currentUser.getName() + " rejected fix for "
-							+ issue.getReferenceAndLabel(), issue);
+					postProjectEvent(conversation,
+						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel(), issue);
 				}
 			}
 
@@ -483,8 +478,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 			if (properties.containsKey("published")) {
 				if (blogEntry.isPublished()) {
-					postProjectEvent(conversation, currentUser.getName() + " published "
-							+ blogEntry.getReferenceAndLabel(), blogEntry);
+					postProjectEvent(conversation,
+						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
 				}
 				blogEntry.getProject().updateHomepage();
 			}
@@ -503,7 +498,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		conversation.clearRemoteEntitiesByType(Change.class);
-		sendToOtherConversationsByProject(conversation, entity);
+		sendToClients(conversation, entity);
 	}
 
 	@Override
@@ -516,6 +511,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		project.setLastOpenedDateAndTime(DateAndTime.now());
 		conversation.setProject(project);
 		user.setCurrentProject(project);
+		ProjectUserConfig config = project.getUserConfig(user);
+		config.setOnline(true);
 
 		conversation.sendToClient(project);
 		conversation.sendToClient(project.getSprints());
@@ -538,16 +535,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getReleases());
 		conversation.sendToClient(project.getBlogEntrys());
 
-		webApplication.updateOnlineTeamMembers(project, null);
+		sendToClients(conversation, config);
 	}
 
 	@Override
 	public void onCloseProject(GwtConversation conversation) {
 		Project project = conversation.getProject();
-		if (project != null) webApplication.setUsersSelectedEntities(project, conversation, new HashSet<String>(0));
+		if (project != null) {
+			ProjectUserConfig config = project.getUserConfig(conversation.getSession().getUser());
+			config.reset();
+			sendToClients(conversation, config);
+		}
 		conversation.clearRemoteEntities();
 		conversation.setProject(null);
-		if (project != null) webApplication.updateOnlineTeamMembers(project, conversation);
 	}
 
 	@Override
@@ -694,7 +694,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onPing(GwtConversation conversation) {
-	// nop
+		// nop
 	}
 
 	@Override
@@ -749,13 +749,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void sendToClients(GwtConversation conversation, AEntity entity) {
 		conversation.sendToClient(entity);
-		sendToOtherConversationsByProject(conversation, entity);
-	}
-
-	private void sendToOtherConversationsByProject(GwtConversation conversation, AEntity entity) {
-		for (AGwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), conversation)) {
-			c.sendToClient(entity);
-		}
+		webApplication.sendToOtherConversationsByProject(conversation, entity);
 	}
 
 	private void assertProjectSelected(GwtConversation conversation) {
@@ -782,8 +776,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sendToClients(conversation, story);
 		sendToClients(conversation, issue);
 		User currentUser = conversation.getSession().getUser();
-		postProjectEvent(conversation, currentUser.getName() + " created " + story.getReference() + " from "
-				+ issue.getReferenceAndLabel(), issue);
+		postProjectEvent(conversation,
+			currentUser.getName() + " created " + story.getReference() + " from " + issue.getReferenceAndLabel(), issue);
 		changeDao.postChange(issue, currentUser, "storyId", null, story.getId());
 		changeDao.postChange(story, currentUser, "issueId", null, issue.getId());
 	}
