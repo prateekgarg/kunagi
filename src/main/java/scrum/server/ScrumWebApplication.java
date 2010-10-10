@@ -118,6 +118,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			try {
 				Properties currentReleaseProperties = IO.loadPropertiesFromUrl(url, IO.UTF_8);
 				currentRelease = currentReleaseProperties.getProperty("currentRelease");
+				log.info("   ", currentRelease);
 			} catch (Throwable ex) {
 				return null;
 			}

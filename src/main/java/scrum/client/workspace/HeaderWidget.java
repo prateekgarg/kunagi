@@ -64,11 +64,15 @@ public class HeaderWidget extends AScrumWidget {
 		boolean projectOpen = ScrumScopeManager.isProjectScope();
 
 		undoButton.setUndoManager(null);
+		Widget upgrade = null;
 
 		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null) {
 			title.setText(applicationInfo.getName());
 			title.setTitle(applicationInfo.getVersionDescription());
+			if (applicationInfo.isNewReleaseAvailable()) {
+				upgrade = createUpgrade(applicationInfo);
+			}
 		}
 
 		if (projectOpen) {
@@ -97,14 +101,14 @@ public class HeaderWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 		tb.setCellPadding(2);
-		tb.setColumnWidths("70px", "", "", "", "200px", "60px", "100px", "50px");
+		tb.setColumnWidths("70px", "30px", "200px", "", "", "60px", "100px", "150px", "50px");
 		Widget searchWidget = projectOpen ? search : Gwt.createEmptyDiv();
 		Widget undoWidget = projectOpen ? undoButton : Gwt.createEmptyDiv();
 		// Widget changeProjectWidget = projectOpen ? new HyperlinkWidget(new ChangeProjectAction()) : Gwt
 		// .createEmptyDiv();
 		Widget changeProjectWidget = projectOpen ? switchProjectButton : Gwt.createEmptyDiv();
-		tb.add(createLogo(), status, createCurrentUserWidget(), searchWidget, feedback, undoWidget,
-			changeProjectWidget, new HyperlinkWidget(new LogoutAction()));
+		tb.add(createLogo(), status, upgrade, searchWidget, feedback, undoWidget, changeProjectWidget,
+			createCurrentUserWidget(), new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
 		super.onUpdate();
@@ -141,6 +145,14 @@ public class HeaderWidget extends AScrumWidget {
 		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null) div.setTitle(applicationInfo.getVersionDescription());
 		return div;
+	}
+
+	private Widget createUpgrade(ApplicationInfo ai) {
+		String info = "You are using Kunagi release " + ai.getRelease() + " while release " + ai.getCurrentRelease()
+				+ " is available.";
+		return new HTML(
+				"<a href=\"http://kunagi.org/download.html\" target=\"_blank\"><img src=\"newReleaseAvailable.png\" alt=\"Upgrade\" width=\"16px\" height=\"16px\" title=\""
+						+ info + "\"></a>");
 	}
 
 }

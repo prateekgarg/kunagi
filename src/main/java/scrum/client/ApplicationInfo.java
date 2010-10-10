@@ -46,6 +46,10 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 		return release;
 	}
 
+	public String getCurrentRelease() {
+		return currentRelease;
+	}
+
 	public String getBuild() {
 		return build;
 	}
