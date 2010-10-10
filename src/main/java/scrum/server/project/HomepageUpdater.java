@@ -398,6 +398,11 @@ public class HomepageUpdater {
 			return entity == null ? null : entity.toString();
 		}
 
+		@Override
+		public boolean isAnchorLinks() {
+			return true;
+		}
+
 	}
 
 }

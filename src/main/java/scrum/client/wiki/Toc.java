@@ -14,6 +14,7 @@ public class Toc extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
+		boolean anchorLinks = context.isAnchorLinks();
 		List<Header> headers = new ArrayList<Header>();
 		for (AWikiElement element : model.getElements()) {
 			appendHeaders(headers, element);
@@ -21,7 +22,8 @@ public class Toc extends AWikiElement {
 		if (headers.isEmpty()) return "";
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("<ul class=\"toc\">");
+		sb.append("<div class=\"toc\">");
+		sb.append("<ul>");
 		int currentDepth = 1;
 		for (Header h : headers) {
 
@@ -36,7 +38,9 @@ public class Toc extends AWikiElement {
 			currentDepth = depth;
 
 			sb.append("<li>");
+			if (anchorLinks) sb.append("<a href=\"#").append(h.getAnchor()).append("\">");
 			sb.append(escapeHtml(h.getText()));
+			if (anchorLinks) sb.append("</a>");
 			sb.append("</li>");
 		}
 		while (currentDepth > 1) {
@@ -44,6 +48,7 @@ public class Toc extends AWikiElement {
 			currentDepth--;
 		}
 		sb.append("</ul>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 

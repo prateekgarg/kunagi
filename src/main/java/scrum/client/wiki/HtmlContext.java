@@ -8,4 +8,6 @@ public interface HtmlContext {
 
 	String getEntityReferenceHrefOrOnclickAParameter(String reference);
 
+	boolean isAnchorLinks();
+
 }
