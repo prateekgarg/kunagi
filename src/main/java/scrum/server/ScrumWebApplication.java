@@ -102,9 +102,27 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public ApplicationInfo getApplicationInfo() {
 		User admin = getUserDao().getUserByName("admin");
 		boolean defaultAdminPassword = false;
-		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD))
+		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD)) {
 			defaultAdminPassword = true;
-		return new ApplicationInfo("kunagi", getReleaseLabel(), getBuild(), getDeploymentStage(), defaultAdminPassword);
+		}
+		return new ApplicationInfo("kunagi", getReleaseLabel(), getBuild(), getDeploymentStage(), defaultAdminPassword,
+				getCurrentRelease());
+	}
+
+	private String currentRelease;
+
+	public String getCurrentRelease() {
+		if (currentRelease == null) {
+			String url = "http://kunagi.org/current-release.properties";
+			log.info("Checking current release:", url);
+			try {
+				Properties currentReleaseProperties = IO.loadPropertiesFromUrl(url, IO.UTF_8);
+				currentRelease = currentReleaseProperties.getProperty("currentRelease");
+			} catch (Throwable ex) {
+				return null;
+			}
+		}
+		return currentRelease;
 	}
 
 	// --- ---
