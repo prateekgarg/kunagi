@@ -42,7 +42,7 @@ public class WikiTest extends Assert {
 	public void toc() {
 		Assert.assertEquals(
 			toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
-			"<ul class=\"toc\"><li><a href=\"#wiki_h1_1\">1</a></li><ul><li><a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li><a href=\"#wiki_h1_2\">2</a></li></ul><a name=\"wiki_h1_1\"></a><h1>1</h1><a name=\"wiki_h2_1_1\"></a><h2>1.1</h2><a name=\"wiki_h1_2\"></a><h1>2</h1>");
+			"<div class=\"toc\"><ul><li><a href=\"#wiki_h1_1\">1</a></li><ul><li><a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li><a href=\"#wiki_h1_2\">2</a></li></ul></div><a name=\"wiki_h1_1\"></a><h1>1</h1><a name=\"wiki_h2_1_1\"></a><h2>1.1</h2><a name=\"wiki_h1_2\"></a><h1>2</h1>");
 	}
 
 	@Test
