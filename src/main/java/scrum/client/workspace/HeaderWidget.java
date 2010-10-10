@@ -152,7 +152,7 @@ public class HeaderWidget extends AScrumWidget {
 				+ " is available.";
 		return new HTML(
 				"<a href=\"http://kunagi.org/download.html\" target=\"_blank\"><img src=\"newReleaseAvailable.png\" alt=\"Upgrade\" width=\"16px\" height=\"16px\" title=\""
-						+ info + "\"></a>");
+						+ info + "\" style=\"margin-top: 2px;\"></a>");
 	}
 
 }
