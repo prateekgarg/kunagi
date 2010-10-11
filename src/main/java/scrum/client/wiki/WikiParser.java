@@ -1,6 +1,10 @@
 package scrum.client.wiki;
 
 import ilarkesto.core.base.Str;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import scrum.client.ScrumGwtApplication;
 
 /**
@@ -11,6 +15,8 @@ public class WikiParser {
 	private String input;
 	private WikiModel model;
 	private boolean oneliner;
+
+	private Map<String, Integer> listIdentifierValues;
 
 	public WikiParser(String input) {
 		assert input != null;
@@ -309,26 +315,51 @@ public class WikiParser {
 		}
 
 		// list
-		if (input.startsWith("* ") || input.startsWith("# ")) {
+		if (input.startsWith("* ") || input.startsWith("# ") || input.startsWith("#=")) {
 			boolean ordered = input.startsWith("#");
+			int numberValue = -1;
 			ItemList list = new ItemList(ordered);
 			Paragraph item = null;
 			String line = getNextLine();
 			String leadingSpaces = Str.getLeadingSpaces(line);
 			String lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
+			String currentListIdentifier = null;
 			while (!line.startsWith("\n") && line.length() > 0) {
-				if (lineTrimmed.startsWith("# ") || lineTrimmed.startsWith("* ")) {
+				if (lineTrimmed.startsWith("# ") || lineTrimmed.startsWith("#=") || lineTrimmed.startsWith("* ")) {
 					item = new Paragraph(false);
-					appendText(item, lineTrimmed.substring(2));
-					list.add(item, leadingSpaces, lineTrimmed.startsWith("#"));
+					if (ordered) {
+						if (input.startsWith("#=")) {
+							String enumValueString = Str.cutFromTo(input, "#=", " ");
+							try {
+								if (!Str.isBlank(enumValueString)) {
+									numberValue = Integer.parseInt(enumValueString);
+								}
+							} catch (NumberFormatException e) {
+								if (listIdentifierValues == null)
+									listIdentifierValues = new HashMap<String, Integer>();
+								if (listIdentifierValues.containsKey(enumValueString)) {
+									numberValue = listIdentifierValues.get(enumValueString);
+								} else {
+									listIdentifierValues.put(enumValueString, 1);
+								}
+								currentListIdentifier = enumValueString;
+							}
+						}
+					}
+					appendText(item, Str.cutFrom(lineTrimmed, " "));
+					list.add(item, leadingSpaces, lineTrimmed.startsWith("#"), numberValue);
 				} else {
 					item.add(LineBreak.INSTANCE);
 					appendText(item, line);
 				}
+				if (currentListIdentifier != null)
+					listIdentifierValues.put(currentListIdentifier, (numberValue == -1) ? listIdentifierValues
+							.get(currentListIdentifier) + 1 : numberValue + 1);
 				burn(line.length() + 1);
 				line = getNextLine();
 				leadingSpaces = Str.getLeadingSpaces(line);
 				lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
+				numberValue = -1;
 			}
 			model.add(list);
 			return;

@@ -16,10 +16,10 @@ public class ItemList extends AWikiElement {
 	}
 
 	public void add(Paragraph item) {
-		items.add(new Item(item));
+		items.add(new Item(item, -1));
 	}
 
-	public void add(Paragraph item, String leadingSpaces, boolean ordered) {
+	public void add(Paragraph item, String leadingSpaces, boolean ordered, int numberValue) {
 		if (leadingSpaces.length() > 0) {
 			Item lastItem = items.get(items.size() - 1);
 			if (lastItem.list == null) {
@@ -30,7 +30,11 @@ public class ItemList extends AWikiElement {
 			}
 			return;
 		}
-		items.add(new Item(item));
+		items.add(new Item(item, numberValue));
+	}
+
+	public void add(Paragraph item, String leadingSpaces, boolean ordered) {
+		add(item, leadingSpaces, ordered, -1);
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class ItemList extends AWikiElement {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ordered ? "<ol>" : "<ul>");
 		for (Item item : items) {
-			sb.append("<li>");
+			sb.append((item.getNumberValue() > -1) ? "<li value=\"" + item.getNumberValue() + "\">" : "<li>");
 			sb.append(item.p.toHtml(context));
 			if (item.containsList()) {
 				sb.append(item.list.toHtml(context));
@@ -66,10 +70,16 @@ public class ItemList extends AWikiElement {
 
 		Paragraph p;
 		ItemList list;
+		int numberValue = -1;
 
-		public Item(Paragraph p) {
+		public Item(Paragraph p, int numberValue) {
 			super();
 			this.p = p;
+			this.numberValue = numberValue;
+		}
+
+		public int getNumberValue() {
+			return numberValue;
 		}
 
 		public Paragraph getParagraph() {
