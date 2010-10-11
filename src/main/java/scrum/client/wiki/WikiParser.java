@@ -1,6 +1,10 @@
 package scrum.client.wiki;
 
 import ilarkesto.core.base.Str;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import scrum.client.ScrumGwtApplication;
 
 /**
@@ -11,6 +15,8 @@ public class WikiParser {
 	private String input;
 	private WikiModel model;
 	private boolean oneliner;
+
+	private Map<String, Integer> listIdentifierValues;
 
 	public WikiParser(String input) {
 		assert input != null;
@@ -317,18 +323,26 @@ public class WikiParser {
 			String line = getNextLine();
 			String leadingSpaces = Str.getLeadingSpaces(line);
 			String lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
+			String currentListIdentifier = null;
 			while (!line.startsWith("\n") && line.length() > 0) {
 				if (lineTrimmed.startsWith("# ") || lineTrimmed.startsWith("#=") || lineTrimmed.startsWith("* ")) {
 					item = new Paragraph(false);
 					if (ordered) {
 						if (input.startsWith("#=")) {
+							String enumValueString = Str.cutFromTo(input, "#=", " ");
 							try {
-								String numberValueString = Str.cutFromTo(input, "#=", " ");
-								if (!Str.isBlank(numberValueString)) {
-									numberValue = Integer.parseInt(numberValueString);
+								if (!Str.isBlank(enumValueString)) {
+									numberValue = Integer.parseInt(enumValueString);
 								}
 							} catch (NumberFormatException e) {
-								// ignore; assume that starting number is -1 (not set)
+								if (listIdentifierValues == null)
+									listIdentifierValues = new HashMap<String, Integer>();
+								if (listIdentifierValues.containsKey(enumValueString)) {
+									numberValue = listIdentifierValues.get(enumValueString);
+								} else {
+									listIdentifierValues.put(enumValueString, 1);
+								}
+								currentListIdentifier = enumValueString;
 							}
 						}
 					}
@@ -338,6 +352,9 @@ public class WikiParser {
 					item.add(LineBreak.INSTANCE);
 					appendText(item, line);
 				}
+				if (currentListIdentifier != null)
+					listIdentifierValues.put(currentListIdentifier, (numberValue == -1) ? listIdentifierValues
+							.get(currentListIdentifier) + 1 : numberValue + 1);
 				burn(line.length() + 1);
 				line = getNextLine();
 				leadingSpaces = Str.getLeadingSpaces(line);
