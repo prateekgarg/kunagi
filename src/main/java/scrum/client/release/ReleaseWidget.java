@@ -3,6 +3,10 @@ package scrum.client.release;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.Collections;
+import java.util.List;
+
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.RequestReleaseIssuesServiceCall;
@@ -41,7 +45,9 @@ public class ReleaseWidget extends AScrumWidget {
 
 				@Override
 				protected void onEditorUpdate() {
-					setEditorItems(release.getProject().getSprints());
+					List<Sprint> sprints = release.getProject().getSprints();
+					Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
+					setEditorItems(sprints);
 					setEditorSelectedItems(release.getSprints());
 				}
 

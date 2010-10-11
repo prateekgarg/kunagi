@@ -54,6 +54,9 @@ public abstract class GProjectUserConfigDao
         richtextAutosaveTextsCache = null;
         projectUserConfigsByRichtextAutosaveFieldCache.clear();
         richtextAutosaveFieldsCache = null;
+        projectUserConfigsBySelectedEntitysIdCache.clear();
+        selectedEntitysIdsCache = null;
+        projectUserConfigsByOnlineCache.clear();
     }
 
     @Override
@@ -308,6 +311,75 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return e.isRichtextAutosaveField(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - selectedEntitysIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsBySelectedEntitysIdCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String selectedEntitysId) {
+                    return getEntities(new ContainsSelectedEntitysId(selectedEntitysId));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsBySelectedEntitysId(java.lang.String selectedEntitysId) {
+        return projectUserConfigsBySelectedEntitysIdCache.get(selectedEntitysId);
+    }
+    private Set<java.lang.String> selectedEntitysIdsCache;
+
+    public final Set<java.lang.String> getSelectedEntitysIds() {
+        if (selectedEntitysIdsCache == null) {
+            selectedEntitysIdsCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                selectedEntitysIdsCache.addAll(e.getSelectedEntitysIds());
+            }
+        }
+        return selectedEntitysIdsCache;
+    }
+
+    private static class ContainsSelectedEntitysId implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public ContainsSelectedEntitysId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.containsSelectedEntitysId(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - online
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<ProjectUserConfig>> projectUserConfigsByOnlineCache = new Cache<Boolean,Set<ProjectUserConfig>>(
+            new Cache.Factory<Boolean,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(Boolean online) {
+                    return getEntities(new IsOnline(online));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByOnline(boolean online) {
+        return projectUserConfigsByOnlineCache.get(online);
+    }
+
+    private static class IsOnline implements Predicate<ProjectUserConfig> {
+
+        private boolean value;
+
+        public IsOnline(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return value == e.isOnline();
         }
 
     }

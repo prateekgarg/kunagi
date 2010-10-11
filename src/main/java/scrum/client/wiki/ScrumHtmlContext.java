@@ -36,4 +36,9 @@ public class ScrumHtmlContext implements HtmlContext {
 		return GWT.getModuleBaseURL() + "fileDownload?reference=" + reference;
 	}
 
+	@Override
+	public boolean isAnchorLinks() {
+		return false;
+	}
+
 }

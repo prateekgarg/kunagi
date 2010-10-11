@@ -3,7 +3,6 @@ package scrum.server;
 import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
-import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.testng.ATest;
@@ -12,7 +11,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import org.testng.annotations.AfterMethod;
@@ -122,13 +120,6 @@ public class ScrumServiceImplTest extends ATest {
 		systemMessage.setActive(true);
 		service.onUpdateSystemMessage(conversationForAdmin, systemMessage);
 		assertConversationWithoutErrors(conversationForAdmin);
-	}
-
-	@Test
-	public void setSelectedEntitysIds() {
-		Set<String> ids = Utl.toSet("1", "2");
-		service.onSetSelectedEntitysIds(conversation, ids);
-		assertConversationWithoutErrors(conversation);
 	}
 
 	@Test

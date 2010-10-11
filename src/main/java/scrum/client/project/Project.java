@@ -26,7 +26,6 @@ import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
-import scrum.client.collaboration.UsersStatus;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.files.File;
@@ -615,14 +614,15 @@ public class Project extends GProject implements ForumSupport {
 	};
 
 	public Set<User> getUsersSelecting(AGwtEntity entity) {
-		UsersStatus usersStatus = Scope.get().getComponent(UsersStatus.class);
 		Set<User> users = new HashSet<User>();
-		for (User user : getParticipants()) {
-			if (usersStatus.getSelectedEntitysIds(user).contains(entity.getId())) {
-				users.add(user);
-			}
+		for (ProjectUserConfig config : getUserConfigs()) {
+			if (config.getSelectedEntitysIds().contains(entity.getId())) users.add(config.getUser());
 		}
 		return users;
+	}
+
+	public List<ProjectUserConfig> getUserConfigs() {
+		return getDao().getProjectUserConfigsByProject(this);
 	}
 
 	@Override

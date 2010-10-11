@@ -5,11 +5,9 @@ import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.persistence.AEntity;
-
-import java.util.HashSet;
-
 import scrum.client.DataTransferObject;
 import scrum.client.communication.Pinger;
+import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.collaboration.Emoticon;
@@ -80,10 +78,13 @@ public class GwtConversation extends AGwtConversation {
 
 	@Override
 	public void invalidate() {
+		User user = getSession().getUser();
+		if (user != null && project != null) {
+			ProjectUserConfig config = project.getUserConfig(user);
+			config.reset();
+			ScrumWebApplication.get().sendToOtherConversationsByProject(this, config);
+		}
 		super.invalidate();
-		ScrumWebApplication.get().updateOnlineTeamMembers(getProject(), this);
-		if (getSession().getUser() != null && project != null)
-			ScrumWebApplication.get().setUsersSelectedEntities(project, this, new HashSet<String>(0));
 	}
 
 	@Override

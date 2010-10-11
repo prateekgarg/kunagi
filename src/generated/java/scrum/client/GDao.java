@@ -22,7 +22,7 @@ public abstract class GDao
 
     // --- BlogEntry ---
 
-    private Map<String, scrum.client.pr.BlogEntry> blogEntrys = new HashMap<String, scrum.client.pr.BlogEntry>();
+    protected Map<String, scrum.client.pr.BlogEntry> blogEntrys = new HashMap<String, scrum.client.pr.BlogEntry>();
 
     public final void clearBlogEntrys() {
         ilarkesto.core.logging.Log.DEBUG("Clearing BlogEntrys");
@@ -48,7 +48,7 @@ public abstract class GDao
         entityCreated(blogEntry, null);
     }
 
-    private final scrum.client.pr.BlogEntry updateBlogEntry(Map data) {
+    protected scrum.client.pr.BlogEntry updateBlogEntry(Map data) {
         String id = (String) data.get("id");
         scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
         if (entity == null) {
@@ -134,7 +134,7 @@ public abstract class GDao
 
     // --- Change ---
 
-    private Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
+    protected Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
 
     public final void clearChanges() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Changes");
@@ -160,7 +160,7 @@ public abstract class GDao
         entityCreated(change, null);
     }
 
-    private final scrum.client.journal.Change updateChange(Map data) {
+    protected scrum.client.journal.Change updateChange(Map data) {
         String id = (String) data.get("id");
         scrum.client.journal.Change entity = changes.get(id);
         if (entity == null) {
@@ -252,7 +252,7 @@ public abstract class GDao
 
     // --- ChatMessage ---
 
-    private Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();
+    protected Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();
 
     public final void clearChatMessages() {
         ilarkesto.core.logging.Log.DEBUG("Clearing ChatMessages");
@@ -278,7 +278,7 @@ public abstract class GDao
         entityCreated(chatMessage, null);
     }
 
-    private final scrum.client.collaboration.ChatMessage updateChatMessage(Map data) {
+    protected scrum.client.collaboration.ChatMessage updateChatMessage(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.ChatMessage entity = chatMessages.get(id);
         if (entity == null) {
@@ -346,7 +346,7 @@ public abstract class GDao
 
     // --- Comment ---
 
-    private Map<String, scrum.client.collaboration.Comment> comments = new HashMap<String, scrum.client.collaboration.Comment>();
+    protected Map<String, scrum.client.collaboration.Comment> comments = new HashMap<String, scrum.client.collaboration.Comment>();
 
     public final void clearComments() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Comments");
@@ -372,7 +372,7 @@ public abstract class GDao
         entityCreated(comment, null);
     }
 
-    private final scrum.client.collaboration.Comment updateComment(Map data) {
+    protected scrum.client.collaboration.Comment updateComment(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Comment entity = comments.get(id);
         if (entity == null) {
@@ -472,7 +472,7 @@ public abstract class GDao
 
     // --- Emoticon ---
 
-    private Map<String, scrum.client.collaboration.Emoticon> emoticons = new HashMap<String, scrum.client.collaboration.Emoticon>();
+    protected Map<String, scrum.client.collaboration.Emoticon> emoticons = new HashMap<String, scrum.client.collaboration.Emoticon>();
 
     public final void clearEmoticons() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Emoticons");
@@ -498,7 +498,7 @@ public abstract class GDao
         entityCreated(emoticon, null);
     }
 
-    private final scrum.client.collaboration.Emoticon updateEmoticon(Map data) {
+    protected scrum.client.collaboration.Emoticon updateEmoticon(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Emoticon entity = emoticons.get(id);
         if (entity == null) {
@@ -558,7 +558,7 @@ public abstract class GDao
 
     // --- File ---
 
-    private Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
+    protected Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
 
     public final void clearFiles() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Files");
@@ -584,7 +584,7 @@ public abstract class GDao
         entityCreated(file, null);
     }
 
-    private final scrum.client.files.File updateFile(Map data) {
+    protected scrum.client.files.File updateFile(Map data) {
         String id = (String) data.get("id");
         scrum.client.files.File entity = files.get(id);
         if (entity == null) {
@@ -668,7 +668,7 @@ public abstract class GDao
 
     // --- Impediment ---
 
-    private Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
+    protected Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
 
     public final void clearImpediments() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Impediments");
@@ -694,7 +694,7 @@ public abstract class GDao
         entityCreated(impediment, null);
     }
 
-    private final scrum.client.impediments.Impediment updateImpediment(Map data) {
+    protected scrum.client.impediments.Impediment updateImpediment(Map data) {
         String id = (String) data.get("id");
         scrum.client.impediments.Impediment entity = impediments.get(id);
         if (entity == null) {
@@ -786,7 +786,7 @@ public abstract class GDao
 
     // --- Issue ---
 
-    private Map<String, scrum.client.issues.Issue> issues = new HashMap<String, scrum.client.issues.Issue>();
+    protected Map<String, scrum.client.issues.Issue> issues = new HashMap<String, scrum.client.issues.Issue>();
 
     public final void clearIssues() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Issues");
@@ -812,7 +812,7 @@ public abstract class GDao
         entityCreated(issue, null);
     }
 
-    private final scrum.client.issues.Issue updateIssue(Map data) {
+    protected scrum.client.issues.Issue updateIssue(Map data) {
         String id = (String) data.get("id");
         scrum.client.issues.Issue entity = issues.get(id);
         if (entity == null) {
@@ -1002,7 +1002,7 @@ public abstract class GDao
 
     // --- Project ---
 
-    private Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
+    protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
 
     public final void clearProjects() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Projects");
@@ -1028,7 +1028,7 @@ public abstract class GDao
         entityCreated(project, null);
     }
 
-    private final scrum.client.project.Project updateProject(Map data) {
+    protected scrum.client.project.Project updateProject(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Project entity = projects.get(id);
         if (entity == null) {
@@ -1318,7 +1318,7 @@ public abstract class GDao
 
     // --- ProjectEvent ---
 
-    private Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
+    protected Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
 
     public final void clearProjectEvents() {
         ilarkesto.core.logging.Log.DEBUG("Clearing ProjectEvents");
@@ -1344,7 +1344,7 @@ public abstract class GDao
         entityCreated(projectEvent, null);
     }
 
-    private final scrum.client.journal.ProjectEvent updateProjectEvent(Map data) {
+    protected scrum.client.journal.ProjectEvent updateProjectEvent(Map data) {
         String id = (String) data.get("id");
         scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
         if (entity == null) {
@@ -1412,7 +1412,7 @@ public abstract class GDao
 
     // --- ProjectUserConfig ---
 
-    private Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
+    protected Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
 
     public final void clearProjectUserConfigs() {
         ilarkesto.core.logging.Log.DEBUG("Clearing ProjectUserConfigs");
@@ -1438,7 +1438,7 @@ public abstract class GDao
         entityCreated(projectUserConfig, null);
     }
 
-    private final scrum.client.admin.ProjectUserConfig updateProjectUserConfig(Map data) {
+    protected scrum.client.admin.ProjectUserConfig updateProjectUserConfig(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.ProjectUserConfig entity = projectUserConfigs.get(id);
         if (entity == null) {
@@ -1520,9 +1520,18 @@ public abstract class GDao
         return ret;
     }
 
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByOnline(boolean online) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isOnline(online)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Quality ---
 
-    private Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();
+    protected Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();
 
     public final void clearQualitys() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Qualitys");
@@ -1548,7 +1557,7 @@ public abstract class GDao
         entityCreated(quality, null);
     }
 
-    private final scrum.client.project.Quality updateQuality(Map data) {
+    protected scrum.client.project.Quality updateQuality(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Quality entity = qualitys.get(id);
         if (entity == null) {
@@ -1624,7 +1633,7 @@ public abstract class GDao
 
     // --- Release ---
 
-    private Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();
+    protected Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();
 
     public final void clearReleases() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Releases");
@@ -1650,7 +1659,7 @@ public abstract class GDao
         entityCreated(release, null);
     }
 
-    private final scrum.client.release.Release updateRelease(Map data) {
+    protected scrum.client.release.Release updateRelease(Map data) {
         String id = (String) data.get("id");
         scrum.client.release.Release entity = releases.get(id);
         if (entity == null) {
@@ -1759,7 +1768,7 @@ public abstract class GDao
 
     // --- Requirement ---
 
-    private Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();
+    protected Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();
 
     public final void clearRequirements() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Requirements");
@@ -1785,7 +1794,7 @@ public abstract class GDao
         entityCreated(requirement, null);
     }
 
-    private final scrum.client.project.Requirement updateRequirement(Map data) {
+    protected scrum.client.project.Requirement updateRequirement(Map data) {
         String id = (String) data.get("id");
         scrum.client.project.Requirement entity = requirements.get(id);
         if (entity == null) {
@@ -1927,7 +1936,7 @@ public abstract class GDao
 
     // --- RequirementEstimationVote ---
 
-    private Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();
+    protected Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();
 
     public final void clearRequirementEstimationVotes() {
         ilarkesto.core.logging.Log.DEBUG("Clearing RequirementEstimationVotes");
@@ -1953,7 +1962,7 @@ public abstract class GDao
         entityCreated(requirementEstimationVote, null);
     }
 
-    private final scrum.client.estimation.RequirementEstimationVote updateRequirementEstimationVote(Map data) {
+    protected scrum.client.estimation.RequirementEstimationVote updateRequirementEstimationVote(Map data) {
         String id = (String) data.get("id");
         scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
         if (entity == null) {
@@ -2013,7 +2022,7 @@ public abstract class GDao
 
     // --- Risk ---
 
-    private Map<String, scrum.client.risks.Risk> risks = new HashMap<String, scrum.client.risks.Risk>();
+    protected Map<String, scrum.client.risks.Risk> risks = new HashMap<String, scrum.client.risks.Risk>();
 
     public final void clearRisks() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Risks");
@@ -2039,7 +2048,7 @@ public abstract class GDao
         entityCreated(risk, null);
     }
 
-    private final scrum.client.risks.Risk updateRisk(Map data) {
+    protected scrum.client.risks.Risk updateRisk(Map data) {
         String id = (String) data.get("id");
         scrum.client.risks.Risk entity = risks.get(id);
         if (entity == null) {
@@ -2139,7 +2148,7 @@ public abstract class GDao
 
     // --- SimpleEvent ---
 
-    private Map<String, scrum.client.calendar.SimpleEvent> simpleEvents = new HashMap<String, scrum.client.calendar.SimpleEvent>();
+    protected Map<String, scrum.client.calendar.SimpleEvent> simpleEvents = new HashMap<String, scrum.client.calendar.SimpleEvent>();
 
     public final void clearSimpleEvents() {
         ilarkesto.core.logging.Log.DEBUG("Clearing SimpleEvents");
@@ -2165,7 +2174,7 @@ public abstract class GDao
         entityCreated(simpleEvent, null);
     }
 
-    private final scrum.client.calendar.SimpleEvent updateSimpleEvent(Map data) {
+    protected scrum.client.calendar.SimpleEvent updateSimpleEvent(Map data) {
         String id = (String) data.get("id");
         scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
         if (entity == null) {
@@ -2273,7 +2282,7 @@ public abstract class GDao
 
     // --- Sprint ---
 
-    private Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
+    protected Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
 
     public final void clearSprints() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Sprints");
@@ -2299,7 +2308,7 @@ public abstract class GDao
         entityCreated(sprint, null);
     }
 
-    private final scrum.client.sprint.Sprint updateSprint(Map data) {
+    protected scrum.client.sprint.Sprint updateSprint(Map data) {
         String id = (String) data.get("id");
         scrum.client.sprint.Sprint entity = sprints.get(id);
         if (entity == null) {
@@ -2426,7 +2435,7 @@ public abstract class GDao
 
     // --- Subject ---
 
-    private Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();
+    protected Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();
 
     public final void clearSubjects() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Subjects");
@@ -2452,7 +2461,7 @@ public abstract class GDao
         entityCreated(subject, null);
     }
 
-    private final scrum.client.collaboration.Subject updateSubject(Map data) {
+    protected scrum.client.collaboration.Subject updateSubject(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Subject entity = subjects.get(id);
         if (entity == null) {
@@ -2520,7 +2529,7 @@ public abstract class GDao
 
     // --- SystemConfig ---
 
-    private Map<String, scrum.client.admin.SystemConfig> systemConfigs = new HashMap<String, scrum.client.admin.SystemConfig>();
+    protected Map<String, scrum.client.admin.SystemConfig> systemConfigs = new HashMap<String, scrum.client.admin.SystemConfig>();
 
     public final void clearSystemConfigs() {
         ilarkesto.core.logging.Log.DEBUG("Clearing SystemConfigs");
@@ -2546,7 +2555,7 @@ public abstract class GDao
         entityCreated(systemConfig, null);
     }
 
-    private final scrum.client.admin.SystemConfig updateSystemConfig(Map data) {
+    protected scrum.client.admin.SystemConfig updateSystemConfig(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
         if (entity == null) {
@@ -2718,7 +2727,7 @@ public abstract class GDao
 
     // --- Task ---
 
-    private Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
+    protected Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
 
     public final void clearTasks() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Tasks");
@@ -2744,7 +2753,7 @@ public abstract class GDao
         entityCreated(task, null);
     }
 
-    private final scrum.client.sprint.Task updateTask(Map data) {
+    protected scrum.client.sprint.Task updateTask(Map data) {
         String id = (String) data.get("id");
         scrum.client.sprint.Task entity = tasks.get(id);
         if (entity == null) {
@@ -2844,7 +2853,7 @@ public abstract class GDao
 
     // --- User ---
 
-    private Map<String, scrum.client.admin.User> users = new HashMap<String, scrum.client.admin.User>();
+    protected Map<String, scrum.client.admin.User> users = new HashMap<String, scrum.client.admin.User>();
 
     public final void clearUsers() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Users");
@@ -2870,7 +2879,7 @@ public abstract class GDao
         entityCreated(user, null);
     }
 
-    private final scrum.client.admin.User updateUser(Map data) {
+    protected scrum.client.admin.User updateUser(Map data) {
         String id = (String) data.get("id");
         scrum.client.admin.User entity = users.get(id);
         if (entity == null) {
@@ -3110,7 +3119,7 @@ public abstract class GDao
 
     // --- Wikipage ---
 
-    private Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();
+    protected Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();
 
     public final void clearWikipages() {
         ilarkesto.core.logging.Log.DEBUG("Clearing Wikipages");
@@ -3136,7 +3145,7 @@ public abstract class GDao
         entityCreated(wikipage, null);
     }
 
-    private final scrum.client.collaboration.Wikipage updateWikipage(Map data) {
+    protected scrum.client.collaboration.Wikipage updateWikipage(Map data) {
         String id = (String) data.get("id");
         scrum.client.collaboration.Wikipage entity = wikipages.get(id);
         if (entity == null) {

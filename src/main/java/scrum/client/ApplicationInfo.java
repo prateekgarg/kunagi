@@ -15,17 +15,24 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	private String build;
 	private String deploymentStage;
 	private boolean defaultAdminPassword;
+	private String currentRelease;
 
 	public ApplicationInfo(String name, String release, String build, String deploymentStage,
-			boolean defaultAdminPassword) {
+			boolean defaultAdminPassword, String currentRelease) {
 		this.name = name;
 		this.release = release;
 		this.build = build;
 		this.deploymentStage = deploymentStage;
 		this.defaultAdminPassword = defaultAdminPassword;
+		this.currentRelease = currentRelease;
 	}
 
 	protected ApplicationInfo() {}
+
+	public boolean isNewReleaseAvailable() {
+		if (currentRelease == null) return false;
+		return !currentRelease.equals(release);
+	}
 
 	public boolean isDefaultAdminPassword() {
 		return defaultAdminPassword;
@@ -37,6 +44,10 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 
 	public String getRelease() {
 		return release;
+	}
+
+	public String getCurrentRelease() {
+		return currentRelease;
 	}
 
 	public String getBuild() {
@@ -56,7 +67,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	}
 
 	public String getVersionDescription() {
-		return name + " | Release " + " | Build " + build + " | " + deploymentStage;
+		return name + " | Release " + release + " | Build " + build + " | " + deploymentStage;
 	}
 
 	@Override

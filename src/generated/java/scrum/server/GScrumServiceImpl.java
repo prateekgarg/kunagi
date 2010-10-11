@@ -20,8 +20,6 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestForum(GwtConversation conversation, boolean all);
 
-    public abstract void onSetSelectedEntitysIds(GwtConversation conversation, java.util.Set ids);
-
     public abstract void onPing(GwtConversation conversation);
 
     public abstract void onChangeProperties(GwtConversation conversation, String entityId, java.util.Map properties);
@@ -200,26 +198,6 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestForum(conversation, all);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestForum", ex);
-                throw new RuntimeException(ex);
-            }
-            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-            onServiceMethodExecuted(context);
-            return ret;
-        }
-    }
-
-    public scrum.client.DataTransferObject setSelectedEntitysIds(int conversationNumber, java.util.Set ids) {
-        log.debug("Handling service call: SetSelectedEntitysIds");
-        WebSession session = (WebSession) getSession();
-        synchronized (session) {
-            GwtConversation conversation = session.getGwtConversation(conversationNumber);
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:SetSelectedEntitysIds");
-            context.bindCurrentThread();
-            try {
-                onSetSelectedEntitysIds(conversation, ids);
-            } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "SetSelectedEntitysIds", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

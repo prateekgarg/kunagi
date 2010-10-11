@@ -696,6 +696,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addProperty("misconducts", int.class).setEditablePredicate("misconductsEditable");
 			projectUserConfigModel.addStringProperty("richtextAutosaveText");
 			projectUserConfigModel.addStringProperty("richtextAutosaveField");
+			projectUserConfigModel.addListProperty("selectedEntitysIds", String.class);
+			projectUserConfigModel.addProperty("online", boolean.class);
 		}
 		return projectUserConfigModel;
 	}
