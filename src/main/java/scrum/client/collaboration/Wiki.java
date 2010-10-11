@@ -35,6 +35,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 		return page == null ? null : page.getText();
 	}
 
+	@Override
 	public String richtextToHtml(String text) {
 		return toHtml(text);
 	}
@@ -57,11 +58,22 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 	class RichtextEditorEditInitializer implements Initializer<RichtextEditorWidget> {
 
+		@Override
 		public void initialize(final RichtextEditorWidget editor) {
 			final ToolbarWidget toolbar = editor.getEditorToolbar();
 
+			toolbar.insert(createToolbarButton(Img.bundle.toc().createImage(), "Table of contents", new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("TOC\n\n", "");
+				}
+			}), 0);
+
 			toolbar.insert(createToolbarButton(Img.bundle.upload().createImage(), "Upload file", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					int topPosition = textArea.getAbsoluteTop() + 20;
@@ -72,6 +84,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 			toolbar.insert(createToolbarButton(Img.bundle.formatTextCode().createImage(), "Code", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					textArea.wrapSelection("<code>", "</code>");
@@ -81,6 +94,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 			toolbar.insert(createToolbarButton(Img.bundle.image().createImage(), "Image", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					String selected = textArea.getSelectedText();
@@ -95,6 +109,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 			toolbar.insert(createToolbarButton(Img.bundle.table().createImage(), "Table", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					textArea.wrapSelection("\n{|\n! Header 1\n! Header 2\n|-\n| ", "\n| \n|}\n");
@@ -104,6 +119,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 			toolbar.insert(createToolbarButton(Img.bundle.hyperlink().createImage(), "Hyperlink", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					String selected = textArea.getSelectedText();
@@ -119,6 +135,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 			toolbar.insert(
 				createToolbarButton(Img.bundle.enumlist().createImage(), "Numbered list", new ClickHandler() {
 
+					@Override
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
 						textArea.wrapSelection("\n# ", "\n# ");
@@ -129,6 +146,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 			toolbar.insert(
 				createToolbarButton(Img.bundle.itemlist().createImage(), "Bulleted list", new ClickHandler() {
 
+					@Override
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
 						textArea.wrapSelection("\n* ", "\n* ");
@@ -136,8 +154,29 @@ public class Wiki extends GWiki implements RichtextFormater {
 					}
 				}), 0);
 
+			toolbar.insert(createToolbarButton(Img.bundle.h2().createImage(), "Heading 2", new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("== ", " ==\n\n");
+					textArea.setFocus(true);
+				}
+			}), 0);
+
+			toolbar.insert(createToolbarButton(Img.bundle.h1().createImage(), "Heading 1", new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					BetterTextArea textArea = editor.getEditor();
+					textArea.wrapSelection("= ", " =\n\n");
+					textArea.setFocus(true);
+				}
+			}), 0);
+
 			toolbar.insert(createToolbarButton(Img.bundle.formatTextBold().createImage(), "Bold", new ClickHandler() {
 
+				@Override
 				public void onClick(ClickEvent event) {
 					BetterTextArea textArea = editor.getEditor();
 					textArea.wrapSelection("'''", "'''");
@@ -148,6 +187,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 			toolbar.insert(
 				createToolbarButton(Img.bundle.formatTextItalic().createImage(), "Italic", new ClickHandler() {
 
+					@Override
 					public void onClick(ClickEvent event) {
 						BetterTextArea textArea = editor.getEditor();
 						textArea.wrapSelection("''", "''");
@@ -173,6 +213,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 			this.textArea = textArea;
 		}
 
+		@Override
 		public void onFileUploaded(File file) {
 			textArea.wrapSelection(file.getReference() + " ", "");
 			textArea.setFocus(true);

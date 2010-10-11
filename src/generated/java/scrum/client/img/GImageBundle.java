@@ -37,6 +37,12 @@ public interface GImageBundle
     @Resource(value="formatTextItalic.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype formatTextItalic();
 
+    @Resource(value="h1.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype h1();
+
+    @Resource(value="h2.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype h2();
+
     @Resource(value="home.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype home();
 
@@ -87,6 +93,9 @@ public interface GImageBundle
 
     @Resource(value="table.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype table();
+
+    @Resource(value="toc.png")
+    com.google.gwt.user.client.ui.AbstractImagePrototype toc();
 
     @Resource(value="trash32.png")
     com.google.gwt.user.client.ui.AbstractImagePrototype trash32();
