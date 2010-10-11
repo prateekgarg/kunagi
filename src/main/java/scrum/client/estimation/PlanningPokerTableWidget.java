@@ -95,6 +95,17 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
+
+		// ?-card
+		PlanningPokerCardWidget qCard = null;
+		if (!showoff && (voteValue == null || -1 != voteValue)) {
+			qCard = new PlanningPokerCardWidget(-1, true, new SetEstimationClickHandler(-1),
+					"Put this card on the table.");
+		}
+		tb.add(new PlanningPokerCardSlotWidget("I don't know.", qCard));
+		tb.add(Gwt.createSpacer(5, 1));
+
+		// value cards
 		for (String value : Requirement.WORK_ESTIMATION_VALUES) {
 			if (value.length() == 0) continue;
 			float estimation = Float.parseFloat(value);
@@ -106,6 +117,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			tb.add(new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(), card));
 			tb.add(Gwt.createSpacer(5, 1));
 		}
+
 		return tb.createTable();
 	}
 
@@ -155,8 +167,10 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		}
 
 		public void onClick(ClickEvent event) {
-			requirement.setEstimatedWork(estimation);
-			new VisibleDataChangedEvent().fireInCurrentScope();
+			if (estimation >= 0) {
+				requirement.setEstimatedWork(estimation);
+				new VisibleDataChangedEvent().fireInCurrentScope();
+			}
 		}
 	}
 
