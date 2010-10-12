@@ -27,7 +27,7 @@ public class PlanningPokerCardWidget extends AScrumWidget {
 		FocusPanel card = new FocusPanel();
 		card.setStyleName("PlanningPokerCardWidget");
 		if (visible) {
-			String label = value < 1 ? String.valueOf(value) : String.valueOf((int) value);
+			String label = (value < 0) ? "?" : ((value < 1) ? String.valueOf(value) : String.valueOf((int) value));
 			card.setWidget(Gwt.createDiv("PlanningPokerCardWidget-text", label));
 		} else {
 			card.setWidget(Gwt.createEmptyDiv("PlanningPokerCardWidget-back"));
