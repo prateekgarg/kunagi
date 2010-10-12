@@ -153,7 +153,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ARichtextViewEditWidget-viewer div.toc").border(1, cPagePanelBorder).background("#EEE")
 				.floatRight().padding(10, 10, 3, 5);
 		css.style(".codeBlock code, .codeBlock pre").margin(0, 0, 0, 0).padding(0, 0, 0, 0);
-		css.style(".ARichtextViewEditWidget-editor").height(100).width(96, "%");
+		css.style(".ARichtextViewEditWidget-editor .html-editor-toolbar").displayNone();
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
 		css.style(".AViewEditWidget-error").color(cError).background(cErrorBackground).border(1, cError).margin(2)

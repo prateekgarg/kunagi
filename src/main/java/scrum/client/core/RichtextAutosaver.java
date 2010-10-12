@@ -61,6 +61,7 @@ public class RichtextAutosaver extends GRichtextAutosaver implements Application
 	public void autosave() {
 		AViewEditWidget currentEditor = RichtextEditorWidget.getCurrentEditor();
 		if (currentEditor == null) return;
+		if (!currentEditor.isInitialized()) return;
 		ProjectUserConfig config = Scope.get().getComponent(ProjectUserConfig.class);
 		if (config == null) return;
 		if (!(currentEditor instanceof RichtextEditorWidget)) return;
