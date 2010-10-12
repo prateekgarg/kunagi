@@ -111,7 +111,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 			return;
 		}
 
-		if (page != null) {
+		if (page != null && !page.equals(this.page)) {
 			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showPage(page);
 		}
 
@@ -237,6 +237,20 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 	public static String getPageHref(Class<? extends Widget> pageClass) {
 		return getPageHref(Page.getPageName(pageClass));
+	}
+
+	public static String getEntityHref(AGwtEntity entity) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("#");
+
+		Project project = Scope.get().getComponent(Project.class);
+		if (project != null) sb.append("project=").append(project.getId()).append("|");
+
+		Navigator navigator = Scope.get().getComponent(Navigator.class);
+		if (navigator != null && navigator.page != null) sb.append("page=").append(navigator.page).append("|");
+
+		sb.append("entity=").append(entity.getId());
+		return sb.toString();
 	}
 
 }

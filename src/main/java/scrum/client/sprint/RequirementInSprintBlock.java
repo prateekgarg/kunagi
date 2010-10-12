@@ -22,10 +22,10 @@ import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,7 +38,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	private ChangeHistoryWidget changeHistoryWidget;
 
 	private SimplePanel statusIcon;
-	private Label statusLabel;
+	private Anchor statusLabel;
 
 	private boolean decidableOnInitialization;
 
@@ -129,6 +129,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	class MoveObserver implements Runnable {
 
+		@Override
 		public void run() {
 			List<Task> tasks = taskList.getObjects();
 			getObject().updateTasksOrder(tasks);
@@ -139,6 +140,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
+		@Override
 		public RequirementInSprintBlock createBlock() {
 			return new RequirementInSprintBlock();
 		}

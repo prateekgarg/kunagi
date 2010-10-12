@@ -9,8 +9,8 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,8 +18,8 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 	private SimplePanel statusIcon;
 	// private Label typeLabel;
-	private Label statusSuffix;
-	private Label severityPrefix;
+	private Anchor statusSuffix;
+	private Anchor severityPrefix;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {

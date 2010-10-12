@@ -11,15 +11,15 @@ import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.sprint.Sprint;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementBlock extends ABlockWidget<Requirement> implements TrashSupport {
 
 	private SimplePanel statusIcon;
-	private Label estimationLabel;
+	private Anchor estimationLabel;
 	private SprintSwitchIndicatorWidget sprintBorderIndicator;
 
 	@Override

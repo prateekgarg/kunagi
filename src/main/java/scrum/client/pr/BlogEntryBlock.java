@@ -8,15 +8,15 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class BlogEntryBlock extends ABlockWidget<BlogEntry> {
 
 	private SimplePanel statusIcon;
-	private Label dateLabel;
+	private Anchor dateLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -56,6 +56,7 @@ public class BlogEntryBlock extends ABlockWidget<BlogEntry> {
 
 	public static final BlockWidgetFactory<BlogEntry> FACTORY = new BlockWidgetFactory<BlogEntry>() {
 
+		@Override
 		public BlogEntryBlock createBlock() {
 			return new BlogEntryBlock();
 		}

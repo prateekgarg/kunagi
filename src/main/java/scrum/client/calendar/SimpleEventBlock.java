@@ -6,13 +6,13 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SimpleEventBlock extends ABlockWidget<SimpleEvent> implements TrashSupport {
 
-	private Label timeLabel;
-	private Label durationLabel;
+	private Anchor timeLabel;
+	private Anchor durationLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -37,12 +37,14 @@ public class SimpleEventBlock extends ABlockWidget<SimpleEvent> implements Trash
 		return new SimpleEventWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteSimpleEventAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<SimpleEvent> FACTORY = new BlockWidgetFactory<SimpleEvent>() {
 
+		@Override
 		public SimpleEventBlock createBlock() {
 			return new SimpleEventBlock();
 		}

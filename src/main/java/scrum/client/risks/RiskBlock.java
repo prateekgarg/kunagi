@@ -8,12 +8,12 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 
-	private Label priorityLabel;
+	private Anchor priorityLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -37,12 +37,14 @@ public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 		return new RiskWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteRiskAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<Risk> FACTORY = new BlockWidgetFactory<Risk>() {
 
+		@Override
 		public RiskBlock createBlock() {
 			return new RiskBlock();
 		}

@@ -6,12 +6,12 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FileBlock extends ABlockWidget<File> implements TrashSupport {
 
-	private Label age;
+	private Anchor age;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -33,12 +33,14 @@ public class FileBlock extends ABlockWidget<File> implements TrashSupport {
 		return new FileWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteFileAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<File> FACTORY = new BlockWidgetFactory<File>() {
 
+		@Override
 		public FileBlock createBlock() {
 			return new FileBlock();
 		}
