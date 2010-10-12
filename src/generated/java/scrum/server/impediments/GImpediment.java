@@ -91,6 +91,7 @@ public abstract class GImpediment
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -131,6 +132,7 @@ public abstract class GImpediment
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -160,6 +162,7 @@ public abstract class GImpediment
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -195,6 +198,7 @@ public abstract class GImpediment
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
+        updateLastModified();
         fireModified("date="+date);
     }
 
@@ -230,6 +234,7 @@ public abstract class GImpediment
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
+        updateLastModified();
         fireModified("description="+description);
     }
 
@@ -265,6 +270,7 @@ public abstract class GImpediment
         solution = prepareSolution(solution);
         if (isSolution(solution)) return;
         this.solution = solution;
+        updateLastModified();
         fireModified("solution="+solution);
     }
 
@@ -300,6 +306,7 @@ public abstract class GImpediment
         closed = prepareClosed(closed);
         if (isClosed(closed)) return;
         this.closed = closed;
+        updateLastModified();
         fireModified("closed="+closed);
     }
 

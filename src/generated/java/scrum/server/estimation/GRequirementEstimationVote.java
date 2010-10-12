@@ -74,6 +74,7 @@ public abstract class GRequirementEstimationVote
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
         requirementCache = requirement;
+        updateLastModified();
         fireModified("requirement="+requirement);
     }
 
@@ -125,6 +126,7 @@ public abstract class GRequirementEstimationVote
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
+        updateLastModified();
         fireModified("user="+user);
     }
 
@@ -165,6 +167,7 @@ public abstract class GRequirementEstimationVote
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
+        updateLastModified();
         fireModified("estimatedWork="+estimatedWork);
     }
 

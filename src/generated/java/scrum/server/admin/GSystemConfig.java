@@ -77,6 +77,7 @@ public abstract class GSystemConfig
         url = prepareUrl(url);
         if (isUrl(url)) return;
         this.url = url;
+        updateLastModified();
         fireModified("url="+url);
     }
 
@@ -112,6 +113,7 @@ public abstract class GSystemConfig
         adminEmail = prepareAdminEmail(adminEmail);
         if (isAdminEmail(adminEmail)) return;
         this.adminEmail = adminEmail;
+        updateLastModified();
         fireModified("adminEmail="+adminEmail);
     }
 
@@ -147,6 +149,7 @@ public abstract class GSystemConfig
         googleAnalyticsId = prepareGoogleAnalyticsId(googleAnalyticsId);
         if (isGoogleAnalyticsId(googleAnalyticsId)) return;
         this.googleAnalyticsId = googleAnalyticsId;
+        updateLastModified();
         fireModified("googleAnalyticsId="+googleAnalyticsId);
     }
 
@@ -182,6 +185,7 @@ public abstract class GSystemConfig
         smtpServer = prepareSmtpServer(smtpServer);
         if (isSmtpServer(smtpServer)) return;
         this.smtpServer = smtpServer;
+        updateLastModified();
         fireModified("smtpServer="+smtpServer);
     }
 
@@ -217,6 +221,7 @@ public abstract class GSystemConfig
         smtpPort = prepareSmtpPort(smtpPort);
         if (isSmtpPort(smtpPort)) return;
         this.smtpPort = smtpPort;
+        updateLastModified();
         fireModified("smtpPort="+smtpPort);
     }
 
@@ -251,6 +256,7 @@ public abstract class GSystemConfig
         smtpTls = prepareSmtpTls(smtpTls);
         if (isSmtpTls(smtpTls)) return;
         this.smtpTls = smtpTls;
+        updateLastModified();
         fireModified("smtpTls="+smtpTls);
     }
 
@@ -280,6 +286,7 @@ public abstract class GSystemConfig
         smtpUser = prepareSmtpUser(smtpUser);
         if (isSmtpUser(smtpUser)) return;
         this.smtpUser = smtpUser;
+        updateLastModified();
         fireModified("smtpUser="+smtpUser);
     }
 
@@ -315,6 +322,7 @@ public abstract class GSystemConfig
         smtpPassword = prepareSmtpPassword(smtpPassword);
         if (isSmtpPassword(smtpPassword)) return;
         this.smtpPassword = smtpPassword;
+        updateLastModified();
         fireModified("smtpPassword="+smtpPassword);
     }
 
@@ -350,6 +358,7 @@ public abstract class GSystemConfig
         smtpFrom = prepareSmtpFrom(smtpFrom);
         if (isSmtpFrom(smtpFrom)) return;
         this.smtpFrom = smtpFrom;
+        updateLastModified();
         fireModified("smtpFrom="+smtpFrom);
     }
 
@@ -385,6 +394,7 @@ public abstract class GSystemConfig
         loginPageLogoUrl = prepareLoginPageLogoUrl(loginPageLogoUrl);
         if (isLoginPageLogoUrl(loginPageLogoUrl)) return;
         this.loginPageLogoUrl = loginPageLogoUrl;
+        updateLastModified();
         fireModified("loginPageLogoUrl="+loginPageLogoUrl);
     }
 
@@ -420,6 +430,7 @@ public abstract class GSystemConfig
         loginPageMessage = prepareLoginPageMessage(loginPageMessage);
         if (isLoginPageMessage(loginPageMessage)) return;
         this.loginPageMessage = loginPageMessage;
+        updateLastModified();
         fireModified("loginPageMessage="+loginPageMessage);
     }
 
@@ -455,6 +466,7 @@ public abstract class GSystemConfig
         registerPageMessage = prepareRegisterPageMessage(registerPageMessage);
         if (isRegisterPageMessage(registerPageMessage)) return;
         this.registerPageMessage = registerPageMessage;
+        updateLastModified();
         fireModified("registerPageMessage="+registerPageMessage);
     }
 
@@ -490,6 +502,7 @@ public abstract class GSystemConfig
         aboutPageMessage = prepareAboutPageMessage(aboutPageMessage);
         if (isAboutPageMessage(aboutPageMessage)) return;
         this.aboutPageMessage = aboutPageMessage;
+        updateLastModified();
         fireModified("aboutPageMessage="+aboutPageMessage);
     }
 
@@ -525,6 +538,7 @@ public abstract class GSystemConfig
         userEmailMandatory = prepareUserEmailMandatory(userEmailMandatory);
         if (isUserEmailMandatory(userEmailMandatory)) return;
         this.userEmailMandatory = userEmailMandatory;
+        updateLastModified();
         fireModified("userEmailMandatory="+userEmailMandatory);
     }
 
@@ -554,6 +568,7 @@ public abstract class GSystemConfig
         registrationDisabled = prepareRegistrationDisabled(registrationDisabled);
         if (isRegistrationDisabled(registrationDisabled)) return;
         this.registrationDisabled = registrationDisabled;
+        updateLastModified();
         fireModified("registrationDisabled="+registrationDisabled);
     }
 
@@ -583,6 +598,7 @@ public abstract class GSystemConfig
         projectCreationDisabled = prepareProjectCreationDisabled(projectCreationDisabled);
         if (isProjectCreationDisabled(projectCreationDisabled)) return;
         this.projectCreationDisabled = projectCreationDisabled;
+        updateLastModified();
         fireModified("projectCreationDisabled="+projectCreationDisabled);
     }
 
@@ -612,6 +628,7 @@ public abstract class GSystemConfig
         defaultUserPassword = prepareDefaultUserPassword(defaultUserPassword);
         if (isDefaultUserPassword(defaultUserPassword)) return;
         this.defaultUserPassword = defaultUserPassword;
+        updateLastModified();
         fireModified("defaultUserPassword="+defaultUserPassword);
     }
 

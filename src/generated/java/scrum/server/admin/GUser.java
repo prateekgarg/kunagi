@@ -99,6 +99,7 @@ public abstract class GUser
         if (isName(name)) return;
         if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "name", name);
         this.name = name;
+        updateLastModified();
         fireModified("name="+name);
     }
 
@@ -134,6 +135,7 @@ public abstract class GUser
         admin = prepareAdmin(admin);
         if (isAdmin(admin)) return;
         this.admin = admin;
+        updateLastModified();
         fireModified("admin="+admin);
     }
 
@@ -163,6 +165,7 @@ public abstract class GUser
         emailVerified = prepareEmailVerified(emailVerified);
         if (isEmailVerified(emailVerified)) return;
         this.emailVerified = emailVerified;
+        updateLastModified();
         fireModified("emailVerified="+emailVerified);
     }
 
@@ -193,6 +196,7 @@ public abstract class GUser
         if (isEmail(email)) return;
         if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "email", email);
         this.email = email;
+        updateLastModified();
         fireModified("email="+email);
     }
 
@@ -239,6 +243,7 @@ public abstract class GUser
         if (isCurrentProject(currentProject)) return;
         this.currentProjectId = currentProject == null ? null : currentProject.getId();
         currentProjectCache = currentProject;
+        updateLastModified();
         fireModified("currentProject="+currentProject);
     }
 
@@ -279,6 +284,7 @@ public abstract class GUser
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
+        updateLastModified();
         fireModified("color="+color);
     }
 
@@ -314,6 +320,7 @@ public abstract class GUser
         lastLoginDateAndTime = prepareLastLoginDateAndTime(lastLoginDateAndTime);
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
         this.lastLoginDateAndTime = lastLoginDateAndTime;
+        updateLastModified();
         fireModified("lastLoginDateAndTime="+lastLoginDateAndTime);
     }
 
@@ -349,6 +356,7 @@ public abstract class GUser
         registrationDateAndTime = prepareRegistrationDateAndTime(registrationDateAndTime);
         if (isRegistrationDateAndTime(registrationDateAndTime)) return;
         this.registrationDateAndTime = registrationDateAndTime;
+        updateLastModified();
         fireModified("registrationDateAndTime="+registrationDateAndTime);
     }
 
@@ -384,6 +392,7 @@ public abstract class GUser
         disabled = prepareDisabled(disabled);
         if (isDisabled(disabled)) return;
         this.disabled = disabled;
+        updateLastModified();
         fireModified("disabled="+disabled);
     }
 
@@ -413,6 +422,7 @@ public abstract class GUser
         hideUserGuideBlog = prepareHideUserGuideBlog(hideUserGuideBlog);
         if (isHideUserGuideBlog(hideUserGuideBlog)) return;
         this.hideUserGuideBlog = hideUserGuideBlog;
+        updateLastModified();
         fireModified("hideUserGuideBlog="+hideUserGuideBlog);
     }
 
@@ -442,6 +452,7 @@ public abstract class GUser
         hideUserGuideCalendar = prepareHideUserGuideCalendar(hideUserGuideCalendar);
         if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
         this.hideUserGuideCalendar = hideUserGuideCalendar;
+        updateLastModified();
         fireModified("hideUserGuideCalendar="+hideUserGuideCalendar);
     }
 
@@ -471,6 +482,7 @@ public abstract class GUser
         hideUserGuideFiles = prepareHideUserGuideFiles(hideUserGuideFiles);
         if (isHideUserGuideFiles(hideUserGuideFiles)) return;
         this.hideUserGuideFiles = hideUserGuideFiles;
+        updateLastModified();
         fireModified("hideUserGuideFiles="+hideUserGuideFiles);
     }
 
@@ -500,6 +512,7 @@ public abstract class GUser
         hideUserGuideForum = prepareHideUserGuideForum(hideUserGuideForum);
         if (isHideUserGuideForum(hideUserGuideForum)) return;
         this.hideUserGuideForum = hideUserGuideForum;
+        updateLastModified();
         fireModified("hideUserGuideForum="+hideUserGuideForum);
     }
 
@@ -529,6 +542,7 @@ public abstract class GUser
         hideUserGuideImpediments = prepareHideUserGuideImpediments(hideUserGuideImpediments);
         if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
         this.hideUserGuideImpediments = hideUserGuideImpediments;
+        updateLastModified();
         fireModified("hideUserGuideImpediments="+hideUserGuideImpediments);
     }
 
@@ -558,6 +572,7 @@ public abstract class GUser
         hideUserGuideIssues = prepareHideUserGuideIssues(hideUserGuideIssues);
         if (isHideUserGuideIssues(hideUserGuideIssues)) return;
         this.hideUserGuideIssues = hideUserGuideIssues;
+        updateLastModified();
         fireModified("hideUserGuideIssues="+hideUserGuideIssues);
     }
 
@@ -587,6 +602,7 @@ public abstract class GUser
         hideUserGuideJournal = prepareHideUserGuideJournal(hideUserGuideJournal);
         if (isHideUserGuideJournal(hideUserGuideJournal)) return;
         this.hideUserGuideJournal = hideUserGuideJournal;
+        updateLastModified();
         fireModified("hideUserGuideJournal="+hideUserGuideJournal);
     }
 
@@ -616,6 +632,7 @@ public abstract class GUser
         hideUserGuideNextSprint = prepareHideUserGuideNextSprint(hideUserGuideNextSprint);
         if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
         this.hideUserGuideNextSprint = hideUserGuideNextSprint;
+        updateLastModified();
         fireModified("hideUserGuideNextSprint="+hideUserGuideNextSprint);
     }
 
@@ -645,6 +662,7 @@ public abstract class GUser
         hideUserGuideProductBacklog = prepareHideUserGuideProductBacklog(hideUserGuideProductBacklog);
         if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
         this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
+        updateLastModified();
         fireModified("hideUserGuideProductBacklog="+hideUserGuideProductBacklog);
     }
 
@@ -674,6 +692,7 @@ public abstract class GUser
         hideUserGuideCourtroom = prepareHideUserGuideCourtroom(hideUserGuideCourtroom);
         if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
         this.hideUserGuideCourtroom = hideUserGuideCourtroom;
+        updateLastModified();
         fireModified("hideUserGuideCourtroom="+hideUserGuideCourtroom);
     }
 
@@ -703,6 +722,7 @@ public abstract class GUser
         hideUserGuideQualityBacklog = prepareHideUserGuideQualityBacklog(hideUserGuideQualityBacklog);
         if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
         this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
+        updateLastModified();
         fireModified("hideUserGuideQualityBacklog="+hideUserGuideQualityBacklog);
     }
 
@@ -732,6 +752,7 @@ public abstract class GUser
         hideUserGuideReleases = prepareHideUserGuideReleases(hideUserGuideReleases);
         if (isHideUserGuideReleases(hideUserGuideReleases)) return;
         this.hideUserGuideReleases = hideUserGuideReleases;
+        updateLastModified();
         fireModified("hideUserGuideReleases="+hideUserGuideReleases);
     }
 
@@ -761,6 +782,7 @@ public abstract class GUser
         hideUserGuideRisks = prepareHideUserGuideRisks(hideUserGuideRisks);
         if (isHideUserGuideRisks(hideUserGuideRisks)) return;
         this.hideUserGuideRisks = hideUserGuideRisks;
+        updateLastModified();
         fireModified("hideUserGuideRisks="+hideUserGuideRisks);
     }
 
@@ -790,6 +812,7 @@ public abstract class GUser
         hideUserGuideSprintBacklog = prepareHideUserGuideSprintBacklog(hideUserGuideSprintBacklog);
         if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
         this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
+        updateLastModified();
         fireModified("hideUserGuideSprintBacklog="+hideUserGuideSprintBacklog);
     }
 
@@ -819,6 +842,7 @@ public abstract class GUser
         hideUserGuideWhiteboard = prepareHideUserGuideWhiteboard(hideUserGuideWhiteboard);
         if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
         this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
+        updateLastModified();
         fireModified("hideUserGuideWhiteboard="+hideUserGuideWhiteboard);
     }
 
@@ -849,6 +873,7 @@ public abstract class GUser
         if (isLoginToken(loginToken)) return;
         if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "loginToken", loginToken);
         this.loginToken = loginToken;
+        updateLastModified();
         fireModified("loginToken="+loginToken);
     }
 
@@ -885,6 +910,7 @@ public abstract class GUser
         if (isOpenId(openId)) return;
         if (openId != null && getDao().getUserByOpenId(openId) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "openId", openId);
         this.openId = openId;
+        updateLastModified();
         fireModified("openId="+openId);
     }
 

@@ -74,6 +74,7 @@ public abstract class GProjectSprintSnapshot
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
+        updateLastModified();
         fireModified("sprint="+sprint);
     }
 
@@ -114,6 +115,7 @@ public abstract class GProjectSprintSnapshot
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
+        updateLastModified();
         fireModified("remainingWork="+remainingWork);
     }
 
@@ -143,6 +145,7 @@ public abstract class GProjectSprintSnapshot
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
+        updateLastModified();
         fireModified("burnedWork="+burnedWork);
     }
 

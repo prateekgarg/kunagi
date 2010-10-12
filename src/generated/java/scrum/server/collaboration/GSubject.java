@@ -87,6 +87,7 @@ public abstract class GSubject
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -127,6 +128,7 @@ public abstract class GSubject
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -162,6 +164,7 @@ public abstract class GSubject
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
+        updateLastModified();
         fireModified("text="+text);
     }
 
@@ -197,6 +200,7 @@ public abstract class GSubject
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 

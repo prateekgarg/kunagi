@@ -74,6 +74,7 @@ public abstract class GEmoticon
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
+        updateLastModified();
         fireModified("parent="+parent);
     }
 
@@ -125,6 +126,7 @@ public abstract class GEmoticon
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
+        updateLastModified();
         fireModified("owner="+owner);
     }
 
@@ -165,6 +167,7 @@ public abstract class GEmoticon
         emotion = prepareEmotion(emotion);
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
+        updateLastModified();
         fireModified("emotion="+emotion);
     }
 

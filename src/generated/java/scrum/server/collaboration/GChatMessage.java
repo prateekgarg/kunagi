@@ -75,6 +75,7 @@ public abstract class GChatMessage
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -126,6 +127,7 @@ public abstract class GChatMessage
         if (isAuthor(author)) return;
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
+        updateLastModified();
         fireModified("author="+author);
     }
 
@@ -166,6 +168,7 @@ public abstract class GChatMessage
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
+        updateLastModified();
         fireModified("text="+text);
     }
 
@@ -201,6 +204,7 @@ public abstract class GChatMessage
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
+        updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
     }
 

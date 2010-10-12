@@ -75,6 +75,7 @@ public abstract class GSprintDaySnapshot
         if (isSprint(sprint)) return;
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
+        updateLastModified();
         fireModified("sprint="+sprint);
     }
 
@@ -115,6 +116,7 @@ public abstract class GSprintDaySnapshot
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
+        updateLastModified();
         fireModified("date="+date);
     }
 
@@ -150,6 +152,7 @@ public abstract class GSprintDaySnapshot
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
+        updateLastModified();
         fireModified("remainingWork="+remainingWork);
     }
 
@@ -179,6 +182,7 @@ public abstract class GSprintDaySnapshot
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
+        updateLastModified();
         fireModified("burnedWork="+burnedWork);
     }
 

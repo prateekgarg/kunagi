@@ -91,6 +91,7 @@ public abstract class GBlogEntry
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -131,6 +132,7 @@ public abstract class GBlogEntry
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -162,6 +164,7 @@ public abstract class GBlogEntry
         java.util.Set<String> ids = getIdsAsSet(authors);
         if (this.authorsIds.equals(ids)) return;
         this.authorsIds = ids;
+        updateLastModified();
         fireModified("authors="+Str.format(authors));
     }
 
@@ -189,6 +192,7 @@ public abstract class GBlogEntry
     public final boolean addAuthor(scrum.server.admin.User author) {
         if (author == null) throw new IllegalArgumentException("author == null");
         boolean added = this.authorsIds.add(author.getId());
+        if (added) updateLastModified();
         if (added) fireModified("authors+=" + author);
         return added;
     }
@@ -199,7 +203,6 @@ public abstract class GBlogEntry
         for (scrum.server.admin.User author : authors) {
             added = added | this.authorsIds.add(author.getId());
         }
-        if (added) fireModified("authors+="+Str.format(authors));
         return added;
     }
 
@@ -207,6 +210,7 @@ public abstract class GBlogEntry
         if (author == null) throw new IllegalArgumentException("author == null");
         if (this.authorsIds == null) return false;
         boolean removed = this.authorsIds.remove(author.getId());
+        if (removed) updateLastModified();
         if (removed) fireModified("authors-=" + author);
         return removed;
     }
@@ -218,13 +222,13 @@ public abstract class GBlogEntry
         for (scrum.server.admin.User _element: authors) {
             removed = removed | removeAuthor(_element);
         }
-        if (removed) fireModified("authors-="+Str.format(authors));
         return removed;
     }
 
     public final boolean clearAuthors() {
         if (this.authorsIds.isEmpty()) return false;
         this.authorsIds.clear();
+        updateLastModified();
         fireModified("authors cleared");
         return true;
     }
@@ -248,6 +252,7 @@ public abstract class GBlogEntry
         title = prepareTitle(title);
         if (isTitle(title)) return;
         this.title = title;
+        updateLastModified();
         fireModified("title="+title);
     }
 
@@ -283,6 +288,7 @@ public abstract class GBlogEntry
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
+        updateLastModified();
         fireModified("text="+text);
     }
 
@@ -318,6 +324,7 @@ public abstract class GBlogEntry
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
+        updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
     }
 
@@ -355,6 +362,7 @@ public abstract class GBlogEntry
         java.util.Set<String> ids = getIdsAsSet(releases);
         if (this.releasesIds.equals(ids)) return;
         this.releasesIds = ids;
+        updateLastModified();
         fireModified("releases="+Str.format(releases));
     }
 
@@ -382,6 +390,7 @@ public abstract class GBlogEntry
     public final boolean addRelease(scrum.server.release.Release release) {
         if (release == null) throw new IllegalArgumentException("release == null");
         boolean added = this.releasesIds.add(release.getId());
+        if (added) updateLastModified();
         if (added) fireModified("releases+=" + release);
         return added;
     }
@@ -392,7 +401,6 @@ public abstract class GBlogEntry
         for (scrum.server.release.Release release : releases) {
             added = added | this.releasesIds.add(release.getId());
         }
-        if (added) fireModified("releases+="+Str.format(releases));
         return added;
     }
 
@@ -400,6 +408,7 @@ public abstract class GBlogEntry
         if (release == null) throw new IllegalArgumentException("release == null");
         if (this.releasesIds == null) return false;
         boolean removed = this.releasesIds.remove(release.getId());
+        if (removed) updateLastModified();
         if (removed) fireModified("releases-=" + release);
         return removed;
     }
@@ -411,13 +420,13 @@ public abstract class GBlogEntry
         for (scrum.server.release.Release _element: releases) {
             removed = removed | removeRelease(_element);
         }
-        if (removed) fireModified("releases-="+Str.format(releases));
         return removed;
     }
 
     public final boolean clearReleases() {
         if (this.releasesIds.isEmpty()) return false;
         this.releasesIds.clear();
+        updateLastModified();
         fireModified("releases cleared");
         return true;
     }
@@ -441,6 +450,7 @@ public abstract class GBlogEntry
         published = preparePublished(published);
         if (isPublished(published)) return;
         this.published = published;
+        updateLastModified();
         fireModified("published="+published);
     }
 

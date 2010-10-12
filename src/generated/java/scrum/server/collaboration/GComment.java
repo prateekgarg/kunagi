@@ -90,6 +90,7 @@ public abstract class GComment
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
+        updateLastModified();
         fireModified("parent="+parent);
     }
 
@@ -141,6 +142,7 @@ public abstract class GComment
         if (isAuthor(author)) return;
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
+        updateLastModified();
         fireModified("author="+author);
     }
 
@@ -181,6 +183,7 @@ public abstract class GComment
         published = preparePublished(published);
         if (isPublished(published)) return;
         this.published = published;
+        updateLastModified();
         fireModified("published="+published);
     }
 
@@ -210,6 +213,7 @@ public abstract class GComment
         authorName = prepareAuthorName(authorName);
         if (isAuthorName(authorName)) return;
         this.authorName = authorName;
+        updateLastModified();
         fireModified("authorName="+authorName);
     }
 
@@ -245,6 +249,7 @@ public abstract class GComment
         authorEmail = prepareAuthorEmail(authorEmail);
         if (isAuthorEmail(authorEmail)) return;
         this.authorEmail = authorEmail;
+        updateLastModified();
         fireModified("authorEmail="+authorEmail);
     }
 
@@ -280,6 +285,7 @@ public abstract class GComment
         authorNameVisible = prepareAuthorNameVisible(authorNameVisible);
         if (isAuthorNameVisible(authorNameVisible)) return;
         this.authorNameVisible = authorNameVisible;
+        updateLastModified();
         fireModified("authorNameVisible="+authorNameVisible);
     }
 
@@ -309,6 +315,7 @@ public abstract class GComment
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
+        updateLastModified();
         fireModified("text="+text);
     }
 
@@ -344,6 +351,7 @@ public abstract class GComment
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
+        updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
     }
 

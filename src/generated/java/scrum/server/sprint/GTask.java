@@ -91,6 +91,7 @@ public abstract class GTask
         if (isRequirement(requirement)) return;
         this.requirementId = requirement == null ? null : requirement.getId();
         requirementCache = requirement;
+        updateLastModified();
         fireModified("requirement="+requirement);
     }
 
@@ -131,6 +132,7 @@ public abstract class GTask
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -160,6 +162,7 @@ public abstract class GTask
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -195,6 +198,7 @@ public abstract class GTask
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
+        updateLastModified();
         fireModified("description="+description);
     }
 
@@ -230,6 +234,7 @@ public abstract class GTask
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
+        updateLastModified();
         fireModified("remainingWork="+remainingWork);
     }
 
@@ -259,6 +264,7 @@ public abstract class GTask
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
+        updateLastModified();
         fireModified("burnedWork="+burnedWork);
     }
 
@@ -299,6 +305,7 @@ public abstract class GTask
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
+        updateLastModified();
         fireModified("owner="+owner);
     }
 
@@ -350,6 +357,7 @@ public abstract class GTask
         if (isImpediment(impediment)) return;
         this.impedimentId = impediment == null ? null : impediment.getId();
         impedimentCache = impediment;
+        updateLastModified();
         fireModified("impediment="+impediment);
     }
 
