@@ -46,7 +46,11 @@ public class Page {
 	}
 
 	public static String getPageName(Widget page) {
-		String name = Str.getSimpleName(page.getClass());
+		return getPageName(page.getClass());
+	}
+
+	public static String getPageName(Class<? extends Widget> pageClass) {
+		String name = Str.getSimpleName(pageClass);
 		return name.substring(0, name.length() - 6);
 	}
 
