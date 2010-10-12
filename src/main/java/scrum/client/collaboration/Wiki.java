@@ -153,7 +153,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 				@Override
 				public void onClick(ClickEvent event) {
 					CodemirrorEditorWidget textArea = editor.getEditor();
-					textArea.wrapSelection("== ", " ==\n\n");
+					textArea.wrapLine("== ", " ==\n");
 				}
 			}), 0);
 
@@ -162,7 +162,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 				@Override
 				public void onClick(ClickEvent event) {
 					CodemirrorEditorWidget textArea = editor.getEditor();
-					textArea.wrapSelection("= ", " =\n\n");
+					textArea.wrapLine("= ", " =\n");
 				}
 			}), 0);
 
