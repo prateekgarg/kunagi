@@ -9,16 +9,16 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.tasks.TaskWidget;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
-	private Label workLabel;
-	private Label ownerLabel;
+	private Anchor workLabel;
+	private Anchor ownerLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -63,12 +63,14 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 		return new TaskWidget(getObject(), false);
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteTaskAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<Task> FACTORY = new BlockWidgetFactory<Task>() {
 
+		@Override
 		public TaskInRequirementBlock createBlock() {
 			return new TaskInRequirementBlock();
 		}

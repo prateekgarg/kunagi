@@ -7,6 +7,7 @@ import scrum.client.ScrumScopeManager;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.workspace.BlockCollapsedEvent;
 import scrum.client.workspace.BlockExpandedEvent;
+import scrum.client.workspace.Navigator;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -90,6 +91,10 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected final void onUpdate() {
 		onUpdateHeader(header);
+		if (object instanceof AGwtEntity) {
+			AGwtEntity entity = (AGwtEntity) object;
+			header.setHref(Navigator.getEntityHref(entity));
+		}
 		header.update();
 		if (isExtended()) {
 			ensureExtendedInitialized();

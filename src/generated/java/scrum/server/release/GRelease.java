@@ -95,6 +95,7 @@ public abstract class GRelease
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -146,6 +147,7 @@ public abstract class GRelease
         if (isParentRelease(parentRelease)) return;
         this.parentReleaseId = parentRelease == null ? null : parentRelease.getId();
         parentReleaseCache = parentRelease;
+        updateLastModified();
         fireModified("parentRelease="+parentRelease);
     }
 
@@ -188,6 +190,7 @@ public abstract class GRelease
         java.util.Set<String> ids = getIdsAsSet(sprints);
         if (this.sprintsIds.equals(ids)) return;
         this.sprintsIds = ids;
+        updateLastModified();
         fireModified("sprints="+Str.format(sprints));
     }
 
@@ -215,6 +218,7 @@ public abstract class GRelease
     public final boolean addSprint(scrum.server.sprint.Sprint sprint) {
         if (sprint == null) throw new IllegalArgumentException("sprint == null");
         boolean added = this.sprintsIds.add(sprint.getId());
+        if (added) updateLastModified();
         if (added) fireModified("sprints+=" + sprint);
         return added;
     }
@@ -225,7 +229,6 @@ public abstract class GRelease
         for (scrum.server.sprint.Sprint sprint : sprints) {
             added = added | this.sprintsIds.add(sprint.getId());
         }
-        if (added) fireModified("sprints+="+Str.format(sprints));
         return added;
     }
 
@@ -233,6 +236,7 @@ public abstract class GRelease
         if (sprint == null) throw new IllegalArgumentException("sprint == null");
         if (this.sprintsIds == null) return false;
         boolean removed = this.sprintsIds.remove(sprint.getId());
+        if (removed) updateLastModified();
         if (removed) fireModified("sprints-=" + sprint);
         return removed;
     }
@@ -244,13 +248,13 @@ public abstract class GRelease
         for (scrum.server.sprint.Sprint _element: sprints) {
             removed = removed | removeSprint(_element);
         }
-        if (removed) fireModified("sprints-="+Str.format(sprints));
         return removed;
     }
 
     public final boolean clearSprints() {
         if (this.sprintsIds.isEmpty()) return false;
         this.sprintsIds.clear();
+        updateLastModified();
         fireModified("sprints cleared");
         return true;
     }
@@ -274,6 +278,7 @@ public abstract class GRelease
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -303,6 +308,7 @@ public abstract class GRelease
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -338,6 +344,7 @@ public abstract class GRelease
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
+        updateLastModified();
         fireModified("note="+note);
     }
 
@@ -373,6 +380,7 @@ public abstract class GRelease
         releaseDate = prepareReleaseDate(releaseDate);
         if (isReleaseDate(releaseDate)) return;
         this.releaseDate = releaseDate;
+        updateLastModified();
         fireModified("releaseDate="+releaseDate);
     }
 
@@ -408,6 +416,7 @@ public abstract class GRelease
         released = prepareReleased(released);
         if (isReleased(released)) return;
         this.released = released;
+        updateLastModified();
         fireModified("released="+released);
     }
 
@@ -437,6 +446,7 @@ public abstract class GRelease
         releaseNotes = prepareReleaseNotes(releaseNotes);
         if (isReleaseNotes(releaseNotes)) return;
         this.releaseNotes = releaseNotes;
+        updateLastModified();
         fireModified("releaseNotes="+releaseNotes);
     }
 
@@ -472,6 +482,7 @@ public abstract class GRelease
         scmTag = prepareScmTag(scmTag);
         if (isScmTag(scmTag)) return;
         this.scmTag = scmTag;
+        updateLastModified();
         fireModified("scmTag="+scmTag);
     }
 

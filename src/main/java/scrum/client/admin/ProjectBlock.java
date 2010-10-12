@@ -16,12 +16,12 @@ import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends ABlockWidget<Project> {
 
-	private Label lastOpenedLabel;
+	private Anchor lastOpenedLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {

@@ -1,6 +1,6 @@
 package scrum.client.collaboration;
 
-import ilarkesto.gwt.client.BetterTextArea;
+import ilarkesto.gwt.client.CodemirrorEditorWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.Initializer;
 import ilarkesto.gwt.client.RichtextFormater;
@@ -66,7 +66,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					textArea.wrapSelection("TOC\n\n", "");
 				}
 			}), 0);
@@ -75,7 +75,7 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					int topPosition = textArea.getAbsoluteTop() + 20;
 					ReferenceInserter refInserter = new ReferenceInserter(textArea);
 					uploader.showUploadDialog(topPosition, refInserter);
@@ -86,9 +86,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					textArea.wrapSelection("<code>", "</code>");
-					textArea.setFocus(true);
 				}
 			}), 0);
 
@@ -96,14 +95,13 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					String selected = textArea.getSelectedText();
 					if (selected != null && (selected.startsWith("http") || selected.startsWith("www."))) {
 						textArea.wrapSelection("[Image:", "|thumb]");
 					} else {
 						textArea.wrapSelection("[Image:http://", "|thumb]");
 					}
-					textArea.setFocus(true);
 				}
 			}), 0);
 
@@ -111,9 +109,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					textArea.wrapSelection("\n{|\n! Header 1\n! Header 2\n|-\n| ", "\n| \n|}\n");
-					textArea.setFocus(true);
 				}
 			}), 0);
 
@@ -121,14 +118,13 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					String selected = textArea.getSelectedText();
 					if (selected != null && (selected.startsWith("http") || selected.startsWith("www."))) {
 						textArea.wrapSelection("[", "]");
 					} else {
 						textArea.wrapSelection("[http:// ", "]");
 					}
-					textArea.setFocus(true);
 				}
 			}), 0);
 
@@ -137,9 +133,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						BetterTextArea textArea = editor.getEditor();
+						CodemirrorEditorWidget textArea = editor.getEditor();
 						textArea.wrapSelection("\n# ", "\n# ");
-						textArea.setFocus(true);
 					}
 				}), 0);
 
@@ -148,9 +143,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						BetterTextArea textArea = editor.getEditor();
+						CodemirrorEditorWidget textArea = editor.getEditor();
 						textArea.wrapSelection("\n* ", "\n* ");
-						textArea.setFocus(true);
 					}
 				}), 0);
 
@@ -158,9 +152,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("== ", " ==\n\n");
-					textArea.setFocus(true);
+					CodemirrorEditorWidget textArea = editor.getEditor();
+					textArea.wrapLine("== ", " ==\n");
 				}
 			}), 0);
 
@@ -168,9 +161,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
-					textArea.wrapSelection("= ", " =\n\n");
-					textArea.setFocus(true);
+					CodemirrorEditorWidget textArea = editor.getEditor();
+					textArea.wrapLine("= ", " =\n");
 				}
 			}), 0);
 
@@ -178,9 +170,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					BetterTextArea textArea = editor.getEditor();
+					CodemirrorEditorWidget textArea = editor.getEditor();
 					textArea.wrapSelection("'''", "'''");
-					textArea.setFocus(true);
 				}
 			}), 0);
 
@@ -189,9 +180,8 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						BetterTextArea textArea = editor.getEditor();
+						CodemirrorEditorWidget textArea = editor.getEditor();
 						textArea.wrapSelection("''", "''");
-						textArea.setFocus(true);
 					}
 				}), 0);
 
@@ -206,9 +196,9 @@ public class Wiki extends GWiki implements RichtextFormater {
 
 	private class ReferenceInserter implements Uploader.UploadedFileHandler {
 
-		private BetterTextArea textArea;
+		private CodemirrorEditorWidget textArea;
 
-		public ReferenceInserter(BetterTextArea textArea) {
+		public ReferenceInserter(CodemirrorEditorWidget textArea) {
 			super();
 			this.textArea = textArea;
 		}
@@ -216,7 +206,6 @@ public class Wiki extends GWiki implements RichtextFormater {
 		@Override
 		public void onFileUploaded(File file) {
 			textArea.wrapSelection(file.getReference() + " ", "");
-			textArea.setFocus(true);
 		}
 
 	}

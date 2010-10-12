@@ -78,6 +78,7 @@ public abstract class GChange
         if (isParent(parent)) return;
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
+        updateLastModified();
         fireModified("parent="+parent);
     }
 
@@ -129,6 +130,7 @@ public abstract class GChange
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
+        updateLastModified();
         fireModified("user="+user);
     }
 
@@ -169,6 +171,7 @@ public abstract class GChange
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
+        updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
     }
 
@@ -204,6 +207,7 @@ public abstract class GChange
         key = prepareKey(key);
         if (isKey(key)) return;
         this.key = key;
+        updateLastModified();
         fireModified("key="+key);
     }
 
@@ -239,6 +243,7 @@ public abstract class GChange
         oldValue = prepareOldValue(oldValue);
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
+        updateLastModified();
         fireModified("oldValue="+oldValue);
     }
 
@@ -274,6 +279,7 @@ public abstract class GChange
         newValue = prepareNewValue(newValue);
         if (isNewValue(newValue)) return;
         this.newValue = newValue;
+        updateLastModified();
         fireModified("newValue="+newValue);
     }
 
@@ -309,6 +315,7 @@ public abstract class GChange
         comment = prepareComment(comment);
         if (isComment(comment)) return;
         this.comment = comment;
+        updateLastModified();
         fireModified("comment="+comment);
     }
 

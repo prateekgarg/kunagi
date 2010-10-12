@@ -86,6 +86,7 @@ public abstract class GWikipage
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -126,6 +127,7 @@ public abstract class GWikipage
         name = prepareName(name);
         if (isName(name)) return;
         this.name = name;
+        updateLastModified();
         fireModified("name="+name);
     }
 
@@ -161,6 +163,7 @@ public abstract class GWikipage
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
+        updateLastModified();
         fireModified("text="+text);
     }
 

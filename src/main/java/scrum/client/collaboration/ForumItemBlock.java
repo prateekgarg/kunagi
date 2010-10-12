@@ -7,12 +7,12 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ForumItemBlock extends ABlockWidget<ForumSupport> implements TrashSupport {
 
-	private Label dateLabel;
+	private Anchor dateLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {

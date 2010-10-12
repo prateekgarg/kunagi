@@ -23,7 +23,6 @@ public class ChangeHistoryManager extends GChangeHistoryManager {
 	public void deactivateChangeHistory() {
 		currentChangeHistoryParent = null;
 		dao.clearChanges();
-		log.info("ChangeHistory deactivated.");
 	}
 
 	public boolean isChangeHistoryActive(AScrumGwtEntity entity) {

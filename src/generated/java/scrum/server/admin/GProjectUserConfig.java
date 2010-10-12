@@ -79,6 +79,7 @@ public abstract class GProjectUserConfig
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -130,6 +131,7 @@ public abstract class GProjectUserConfig
         if (isUser(user)) return;
         this.userId = user == null ? null : user.getId();
         userCache = user;
+        updateLastModified();
         fireModified("user="+user);
     }
 
@@ -170,6 +172,7 @@ public abstract class GProjectUserConfig
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
+        updateLastModified();
         fireModified("color="+color);
     }
 
@@ -205,6 +208,7 @@ public abstract class GProjectUserConfig
         misconducts = prepareMisconducts(misconducts);
         if (isMisconducts(misconducts)) return;
         this.misconducts = misconducts;
+        updateLastModified();
         fireModified("misconducts="+misconducts);
     }
 
@@ -234,6 +238,7 @@ public abstract class GProjectUserConfig
         richtextAutosaveText = prepareRichtextAutosaveText(richtextAutosaveText);
         if (isRichtextAutosaveText(richtextAutosaveText)) return;
         this.richtextAutosaveText = richtextAutosaveText;
+        updateLastModified();
         fireModified("richtextAutosaveText="+richtextAutosaveText);
     }
 
@@ -269,6 +274,7 @@ public abstract class GProjectUserConfig
         richtextAutosaveField = prepareRichtextAutosaveField(richtextAutosaveField);
         if (isRichtextAutosaveField(richtextAutosaveField)) return;
         this.richtextAutosaveField = richtextAutosaveField;
+        updateLastModified();
         fireModified("richtextAutosaveField="+richtextAutosaveField);
     }
 
@@ -305,7 +311,7 @@ public abstract class GProjectUserConfig
         if (selectedEntitysIds == null) selectedEntitysIds = Collections.emptyList();
         if (this.selectedEntitysIds.equals(selectedEntitysIds)) return;
         this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
-        fireModified("selectedEntitysIds="+Str.format(selectedEntitysIds));
+        updateLastModified();
     }
 
     protected Collection<java.lang.String> prepareSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
@@ -328,7 +334,7 @@ public abstract class GProjectUserConfig
     public final boolean addSelectedEntitysId(java.lang.String selectedEntitysId) {
         if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
         boolean added = this.selectedEntitysIds.add(selectedEntitysId);
-        if (added) fireModified("selectedEntitysIds+=" + selectedEntitysId);
+        if (added) updateLastModified();
         return added;
     }
 
@@ -338,7 +344,6 @@ public abstract class GProjectUserConfig
         for (java.lang.String selectedEntitysId : selectedEntitysIds) {
             added = added | this.selectedEntitysIds.add(selectedEntitysId);
         }
-        if (added) fireModified("selectedEntitysIds+="+Str.format(selectedEntitysIds));
         return added;
     }
 
@@ -346,7 +351,7 @@ public abstract class GProjectUserConfig
         if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
         if (this.selectedEntitysIds == null) return false;
         boolean removed = this.selectedEntitysIds.remove(selectedEntitysId);
-        if (removed) fireModified("selectedEntitysIds-=" + selectedEntitysId);
+        if (removed) updateLastModified();
         return removed;
     }
 
@@ -357,14 +362,13 @@ public abstract class GProjectUserConfig
         for (java.lang.String _element: selectedEntitysIds) {
             removed = removed | removeSelectedEntitysId(_element);
         }
-        if (removed) fireModified("selectedEntitysIds-="+Str.format(selectedEntitysIds));
         return removed;
     }
 
     public final boolean clearSelectedEntitysIds() {
         if (this.selectedEntitysIds.isEmpty()) return false;
         this.selectedEntitysIds.clear();
-        fireModified("selectedEntitysIds cleared");
+        updateLastModified();
         return true;
     }
 
@@ -395,7 +399,7 @@ public abstract class GProjectUserConfig
         online = prepareOnline(online);
         if (isOnline(online)) return;
         this.online = online;
-        fireModified("online="+online);
+        updateLastModified();
     }
 
     protected boolean prepareOnline(boolean online) {

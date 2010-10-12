@@ -5,10 +5,13 @@ import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.DropdownMenuButtonWidget;
-import ilarkesto.gwt.client.Gwt;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -20,9 +23,9 @@ public class BlockHeaderWidget extends AWidget {
 
 	private HorizontalPanel table;
 	private FocusPanel dragHandleWrapper;
-	private FocusPanel centerFocusPanel;
 	private FlowPanel centerWrapper;
-	private Label centerText;
+	private Anchor centerText;
+	private List<Anchor> anchors;
 
 	private DropdownMenuButtonWidget menu;
 	private int prefixCellCount = 0;
@@ -35,7 +38,7 @@ public class BlockHeaderWidget extends AWidget {
 		dragHandleWrapper.setStyleName("BlockHeaderWidget-dragHandle");
 		// dragHandleWrapper.setHeight("100%");
 
-		centerText = Gwt.createInline(null);
+		centerText = new Anchor();
 		centerText.setStyleName("BlockHeaderWidget-center-text");
 
 		centerWrapper = new FlowPanel();
@@ -43,15 +46,12 @@ public class BlockHeaderWidget extends AWidget {
 		centerWrapper.setWidth("100%");
 		centerWrapper.add(centerText);
 
-		centerFocusPanel = new FocusPanel(centerWrapper);
-		centerFocusPanel.setHeight("100%");
-
 		table = new HorizontalPanel();
 		table.setStyleName("BlockHeaderWidget");
 		table.setWidth("100%");
 		table.add(dragHandleWrapper);
 		table.setCellWidth(dragHandleWrapper, "50px");
-		table.add(centerFocusPanel);
+		table.add(centerWrapper);
 
 		return table;
 	}
@@ -59,21 +59,24 @@ public class BlockHeaderWidget extends AWidget {
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		centerFocusPanel.setFocus(false);
+		centerText.setFocus(false);
 	}
 
-	public Label appendCenterSuffix(String text) {
-		Label label = Gwt.createInline(text);
-		label.setStyleName("BlockHeaderWidget-centerSuffix");
-		centerWrapper.add(label);
-		return label;
+	public Anchor appendCenterSuffix(String text) {
+		Anchor a = new Anchor(text);
+		a.setStyleName("BlockHeaderWidget-centerSuffix");
+		centerWrapper.add(a);
+		if (anchors == null) anchors = new ArrayList<Anchor>(2);
+		anchors.add(a);
+		return a;
 	}
 
-	public Label insertPrefixLabel(String width, boolean secondary) {
-		Label label = new Label();
-		insertPrefixCell(label, width, true, "BlockHeaderWidget-prefixLabel", secondary);
-
-		return label;
+	public Anchor insertPrefixLabel(String width, boolean secondary) {
+		Anchor a = new Anchor();
+		insertPrefixCell(a, width, true, "BlockHeaderWidget-prefixLabel", secondary);
+		if (anchors == null) anchors = new ArrayList<Anchor>(2);
+		anchors.add(a);
+		return a;
 	}
 
 	public SimplePanel insertPrefixIcon() {
@@ -155,7 +158,21 @@ public class BlockHeaderWidget extends AWidget {
 	}
 
 	public void addClickHandler(ClickHandler handler) {
-		centerFocusPanel.addClickHandler(handler);
+		centerText.addClickHandler(handler);
+		if (anchors != null) {
+			for (Anchor a : anchors) {
+				a.addClickHandler(handler);
+			}
+		}
+	}
+
+	public void setHref(String href) {
+		centerText.setHref(href);
+		if (anchors != null) {
+			for (Anchor a : anchors) {
+				a.setHref(href);
+			}
+		}
 	}
 
 	public FocusPanel getDragHandle() {

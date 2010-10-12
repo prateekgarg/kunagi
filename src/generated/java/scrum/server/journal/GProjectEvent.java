@@ -86,6 +86,7 @@ public abstract class GProjectEvent
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -126,6 +127,7 @@ public abstract class GProjectEvent
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -172,6 +174,7 @@ public abstract class GProjectEvent
         if (isSubject(subject)) return;
         this.subjectId = subject == null ? null : subject.getId();
         subjectCache = subject;
+        updateLastModified();
         fireModified("subject="+subject);
     }
 
@@ -212,6 +215,7 @@ public abstract class GProjectEvent
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
+        updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
     }
 

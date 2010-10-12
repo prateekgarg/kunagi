@@ -105,6 +105,7 @@ public abstract class GIssue
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -156,6 +157,7 @@ public abstract class GIssue
         if (isStory(story)) return;
         this.storyId = story == null ? null : story.getId();
         storyCache = story;
+        updateLastModified();
         fireModified("story="+story);
     }
 
@@ -196,6 +198,7 @@ public abstract class GIssue
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -225,6 +228,7 @@ public abstract class GIssue
         type = prepareType(type);
         if (isType(type)) return;
         this.type = type;
+        updateLastModified();
         fireModified("type="+type);
     }
 
@@ -260,6 +264,7 @@ public abstract class GIssue
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
+        updateLastModified();
         fireModified("date="+date);
     }
 
@@ -306,6 +311,7 @@ public abstract class GIssue
         if (isCreator(creator)) return;
         this.creatorId = creator == null ? null : creator.getId();
         creatorCache = creator;
+        updateLastModified();
         fireModified("creator="+creator);
     }
 
@@ -346,6 +352,7 @@ public abstract class GIssue
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -381,6 +388,7 @@ public abstract class GIssue
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
+        updateLastModified();
         fireModified("description="+description);
     }
 
@@ -416,6 +424,7 @@ public abstract class GIssue
         statement = prepareStatement(statement);
         if (isStatement(statement)) return;
         this.statement = statement;
+        updateLastModified();
         fireModified("statement="+statement);
     }
 
@@ -451,6 +460,7 @@ public abstract class GIssue
         issuerName = prepareIssuerName(issuerName);
         if (isIssuerName(issuerName)) return;
         this.issuerName = issuerName;
+        updateLastModified();
         fireModified("issuerName="+issuerName);
     }
 
@@ -486,6 +496,7 @@ public abstract class GIssue
         issuerEmail = prepareIssuerEmail(issuerEmail);
         if (isIssuerEmail(issuerEmail)) return;
         this.issuerEmail = issuerEmail;
+        updateLastModified();
         fireModified("issuerEmail="+issuerEmail);
     }
 
@@ -521,6 +532,7 @@ public abstract class GIssue
         acceptDate = prepareAcceptDate(acceptDate);
         if (isAcceptDate(acceptDate)) return;
         this.acceptDate = acceptDate;
+        updateLastModified();
         fireModified("acceptDate="+acceptDate);
     }
 
@@ -556,6 +568,7 @@ public abstract class GIssue
         urgent = prepareUrgent(urgent);
         if (isUrgent(urgent)) return;
         this.urgent = urgent;
+        updateLastModified();
         fireModified("urgent="+urgent);
     }
 
@@ -585,6 +598,7 @@ public abstract class GIssue
         severity = prepareSeverity(severity);
         if (isSeverity(severity)) return;
         this.severity = severity;
+        updateLastModified();
         fireModified("severity="+severity);
     }
 
@@ -625,6 +639,7 @@ public abstract class GIssue
         if (isOwner(owner)) return;
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
+        updateLastModified();
         fireModified("owner="+owner);
     }
 
@@ -665,6 +680,7 @@ public abstract class GIssue
         fixDate = prepareFixDate(fixDate);
         if (isFixDate(fixDate)) return;
         this.fixDate = fixDate;
+        updateLastModified();
         fireModified("fixDate="+fixDate);
     }
 
@@ -700,6 +716,7 @@ public abstract class GIssue
         closeDate = prepareCloseDate(closeDate);
         if (isCloseDate(closeDate)) return;
         this.closeDate = closeDate;
+        updateLastModified();
         fireModified("closeDate="+closeDate);
     }
 
@@ -735,6 +752,7 @@ public abstract class GIssue
         suspendedUntilDate = prepareSuspendedUntilDate(suspendedUntilDate);
         if (isSuspendedUntilDate(suspendedUntilDate)) return;
         this.suspendedUntilDate = suspendedUntilDate;
+        updateLastModified();
         fireModified("suspendedUntilDate="+suspendedUntilDate);
     }
 
@@ -772,6 +790,7 @@ public abstract class GIssue
         java.util.Set<String> ids = getIdsAsSet(affectedReleases);
         if (this.affectedReleasesIds.equals(ids)) return;
         this.affectedReleasesIds = ids;
+        updateLastModified();
         fireModified("affectedReleases="+Str.format(affectedReleases));
     }
 
@@ -799,6 +818,7 @@ public abstract class GIssue
     public final boolean addAffectedRelease(scrum.server.release.Release affectedRelease) {
         if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
         boolean added = this.affectedReleasesIds.add(affectedRelease.getId());
+        if (added) updateLastModified();
         if (added) fireModified("affectedReleases+=" + affectedRelease);
         return added;
     }
@@ -809,7 +829,6 @@ public abstract class GIssue
         for (scrum.server.release.Release affectedRelease : affectedReleases) {
             added = added | this.affectedReleasesIds.add(affectedRelease.getId());
         }
-        if (added) fireModified("affectedReleases+="+Str.format(affectedReleases));
         return added;
     }
 
@@ -817,6 +836,7 @@ public abstract class GIssue
         if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
         if (this.affectedReleasesIds == null) return false;
         boolean removed = this.affectedReleasesIds.remove(affectedRelease.getId());
+        if (removed) updateLastModified();
         if (removed) fireModified("affectedReleases-=" + affectedRelease);
         return removed;
     }
@@ -828,13 +848,13 @@ public abstract class GIssue
         for (scrum.server.release.Release _element: affectedReleases) {
             removed = removed | removeAffectedRelease(_element);
         }
-        if (removed) fireModified("affectedReleases-="+Str.format(affectedReleases));
         return removed;
     }
 
     public final boolean clearAffectedReleases() {
         if (this.affectedReleasesIds.isEmpty()) return false;
         this.affectedReleasesIds.clear();
+        updateLastModified();
         fireModified("affectedReleases cleared");
         return true;
     }
@@ -860,6 +880,7 @@ public abstract class GIssue
         java.util.Set<String> ids = getIdsAsSet(fixReleases);
         if (this.fixReleasesIds.equals(ids)) return;
         this.fixReleasesIds = ids;
+        updateLastModified();
         fireModified("fixReleases="+Str.format(fixReleases));
     }
 
@@ -887,6 +908,7 @@ public abstract class GIssue
     public final boolean addFixRelease(scrum.server.release.Release fixRelease) {
         if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
         boolean added = this.fixReleasesIds.add(fixRelease.getId());
+        if (added) updateLastModified();
         if (added) fireModified("fixReleases+=" + fixRelease);
         return added;
     }
@@ -897,7 +919,6 @@ public abstract class GIssue
         for (scrum.server.release.Release fixRelease : fixReleases) {
             added = added | this.fixReleasesIds.add(fixRelease.getId());
         }
-        if (added) fireModified("fixReleases+="+Str.format(fixReleases));
         return added;
     }
 
@@ -905,6 +926,7 @@ public abstract class GIssue
         if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
         if (this.fixReleasesIds == null) return false;
         boolean removed = this.fixReleasesIds.remove(fixRelease.getId());
+        if (removed) updateLastModified();
         if (removed) fireModified("fixReleases-=" + fixRelease);
         return removed;
     }
@@ -916,13 +938,13 @@ public abstract class GIssue
         for (scrum.server.release.Release _element: fixReleases) {
             removed = removed | removeFixRelease(_element);
         }
-        if (removed) fireModified("fixReleases-="+Str.format(fixReleases));
         return removed;
     }
 
     public final boolean clearFixReleases() {
         if (this.fixReleasesIds.isEmpty()) return false;
         this.fixReleasesIds.clear();
+        updateLastModified();
         fireModified("fixReleases cleared");
         return true;
     }
@@ -946,6 +968,7 @@ public abstract class GIssue
         published = preparePublished(published);
         if (isPublished(published)) return;
         this.published = published;
+        updateLastModified();
         fireModified("published="+published);
     }
 

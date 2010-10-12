@@ -8,14 +8,14 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UserBlock extends ABlockWidget<User> {
 
-	private Label lastLoginLabel;
+	private Anchor lastLoginLabel;
 	private SimplePanel iconWrapper;
 
 	@Override

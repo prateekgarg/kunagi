@@ -44,6 +44,7 @@ public class StartServlet extends AHttpServlet {
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();
 		html.SCRIPTjavascript("scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js", null);
+		html.SCRIPTjavascript("codemirror/js/codemirror.js", null);
 		html.endHEAD();
 
 		html.startBODY();

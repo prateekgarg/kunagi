@@ -15,15 +15,15 @@ import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 import scrum.client.sprint.CreateTaskAction;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 
 	private SimplePanel statusIcon;
-	private Label statusLabel;
+	private Anchor statusLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
@@ -67,6 +67,7 @@ public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 
 	public static final BlockWidgetFactory<Requirement> FACTORY = new BlockWidgetFactory<Requirement>() {
 
+		@Override
 		public RequirementInWhiteboardBlock createBlock() {
 			return new RequirementInWhiteboardBlock();
 		}

@@ -90,6 +90,7 @@ public abstract class GFile
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -130,6 +131,7 @@ public abstract class GFile
         filename = prepareFilename(filename);
         if (isFilename(filename)) return;
         this.filename = filename;
+        updateLastModified();
         fireModified("filename="+filename);
     }
 
@@ -165,6 +167,7 @@ public abstract class GFile
         uploadTime = prepareUploadTime(uploadTime);
         if (isUploadTime(uploadTime)) return;
         this.uploadTime = uploadTime;
+        updateLastModified();
         fireModified("uploadTime="+uploadTime);
     }
 
@@ -200,6 +203,7 @@ public abstract class GFile
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -235,6 +239,7 @@ public abstract class GFile
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -264,6 +269,7 @@ public abstract class GFile
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
+        updateLastModified();
         fireModified("note="+note);
     }
 

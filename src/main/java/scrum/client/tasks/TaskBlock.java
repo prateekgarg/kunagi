@@ -16,16 +16,16 @@ import scrum.client.sprint.ReopenTaskAction;
 import scrum.client.sprint.Task;
 import scrum.client.sprint.UnclaimTaskAction;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
-	private Label requirementLabel;
-	private Label ownerLabel;
+	private Anchor requirementLabel;
+	private Anchor ownerLabel;
 
 	private TaskBlockContainer container;
 
@@ -77,6 +77,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		return new TaskWidget(getObject(), container.isWideMode());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteTaskAction(getObject());
 	}
@@ -93,6 +94,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 			this.container = container;
 		}
 
+		@Override
 		public ABlockWidget<Task> createBlock() {
 			return new TaskBlock(container);
 		}

@@ -93,6 +93,7 @@ public abstract class GRisk
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -133,6 +134,7 @@ public abstract class GRisk
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -162,6 +164,7 @@ public abstract class GRisk
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -197,6 +200,7 @@ public abstract class GRisk
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
+        updateLastModified();
         fireModified("description="+description);
     }
 
@@ -232,6 +236,7 @@ public abstract class GRisk
         probabilityMitigation = prepareProbabilityMitigation(probabilityMitigation);
         if (isProbabilityMitigation(probabilityMitigation)) return;
         this.probabilityMitigation = probabilityMitigation;
+        updateLastModified();
         fireModified("probabilityMitigation="+probabilityMitigation);
     }
 
@@ -267,6 +272,7 @@ public abstract class GRisk
         impactMitigation = prepareImpactMitigation(impactMitigation);
         if (isImpactMitigation(impactMitigation)) return;
         this.impactMitigation = impactMitigation;
+        updateLastModified();
         fireModified("impactMitigation="+impactMitigation);
     }
 
@@ -302,6 +308,7 @@ public abstract class GRisk
         probability = prepareProbability(probability);
         if (isProbability(probability)) return;
         this.probability = probability;
+        updateLastModified();
         fireModified("probability="+probability);
     }
 
@@ -331,6 +338,7 @@ public abstract class GRisk
         impact = prepareImpact(impact);
         if (isImpact(impact)) return;
         this.impact = impact;
+        updateLastModified();
         fireModified("impact="+impact);
     }
 

@@ -89,6 +89,7 @@ public abstract class GQuality
         if (isProject(project)) return;
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
+        updateLastModified();
         fireModified("project="+project);
     }
 
@@ -129,6 +130,7 @@ public abstract class GQuality
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
+        updateLastModified();
         fireModified("number="+number);
     }
 
@@ -158,6 +160,7 @@ public abstract class GQuality
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
+        updateLastModified();
         fireModified("label="+label);
     }
 
@@ -193,6 +196,7 @@ public abstract class GQuality
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
+        updateLastModified();
         fireModified("description="+description);
     }
 
@@ -228,6 +232,7 @@ public abstract class GQuality
         testDescription = prepareTestDescription(testDescription);
         if (isTestDescription(testDescription)) return;
         this.testDescription = testDescription;
+        updateLastModified();
         fireModified("testDescription="+testDescription);
     }
 
