@@ -15,6 +15,38 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
 
+	public static boolean isEntityReferenceOrWikiPage(String s) {
+		if (s == null) return false;
+		if (s.startsWith("[") && s.endsWith("]")) return true;
+		return isEntityReference(s);
+	}
+
+	public static boolean isEntityReference(String s) {
+		if (s.length() < 4) return false;
+		if (!Character.isDigit(s.charAt(3))) return false;
+
+		boolean prefixOk = false;
+		for (String prefix : ScrumGwtApplication.REFERENCE_PREFIXES) {
+			if (s.startsWith(prefix)) {
+				prefixOk = true;
+				break;
+			}
+		}
+		if (!prefixOk) return false;
+
+		int len = s.length();
+		for (int i = 3; i < len; i++) {
+			if (!Character.isDigit(s.charAt(i))) return false;
+		}
+		try {
+			String number = s.substring(3);
+			Integer.parseInt(number);
+		} catch (NumberFormatException ex) {
+			return false;
+		}
+		return true;
+	}
+
 	public static String getPeriodToAsShortestString(String prefix, DateAndTime dateAndTime, String suffix) {
 		if (dateAndTime == null) return null;
 		return prefix + getPeriodToAsShortestString(dateAndTime) + suffix;
