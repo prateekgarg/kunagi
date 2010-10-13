@@ -96,8 +96,8 @@ public class DayListWidget extends AScrumWidget {
 				Widget monthWidget = Gwt.createDiv("DayListWidget-month", Gwt.getMonthShort(month));
 				table.setWidget(row, 1, monthWidget);
 			}
-			table.setWidget(row, 2, Gwt.createDiv("DayListWidget-date", Gwt.DTF_DAY.format(d.toJavaDate())));
-			table.setWidget(row, 3, Gwt.createDiv("DayListWidget-date", Gwt.DTF_WEEKDAY_SHORT.format(d.toJavaDate())));
+			table.setWidget(row, 2, Gwt.createDiv("DayListWidget-date", Gwt.formatDay(d.toJavaDate())));
+			table.setWidget(row, 3, Gwt.createDiv("DayListWidget-date", Gwt.formatWeekdayShort(d.toJavaDate())));
 			table.setWidget(row, 4, createDayContent(d));
 
 			formatRow(table, row);
@@ -105,8 +105,8 @@ public class DayListWidget extends AScrumWidget {
 			row++;
 		}
 
-		Widget downloadLink = ScrumGwt.createPdfLink("Download as PDF", "calendar", "from", begin.toString(), "to", end
-				.toString());
+		Widget downloadLink = ScrumGwt.createPdfLink("Download as PDF", "calendar", "from", begin.toString(), "to",
+			end.toString());
 		wrapper.setWidget(Gwt.createFlowPanel(table, Gwt.createSpacer(1, 10), downloadLink));
 	}
 

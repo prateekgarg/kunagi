@@ -24,10 +24,10 @@ public class PublishSimpleEventAction extends GPublishSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		String suffix = Gwt.DTF_WEEKDAY_MONTH_DAY.format(simpleEvent.getDate().toJavaDate());
+		String suffix = Gwt.formatWeekdayMonthDay(simpleEvent.getDate().toJavaDate());
 		Time time = simpleEvent.getTime();
 		if (time != null)
-			suffix += ", " + Gwt.DTF_HOUR_MINUTE.format(new DateAndTime(simpleEvent.getDate(), time).toJavaDate());
+			suffix += ", " + Gwt.formatHourMinute(new DateAndTime(simpleEvent.getDate(), time).toJavaDate());
 		String location = simpleEvent.getLocation();
 		if (!Str.isBlank(location)) suffix += " @ " + location;
 		getDao().createProjectEvent(
