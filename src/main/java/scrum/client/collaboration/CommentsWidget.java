@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AScrumWidget {
 
-	private static final int COMMENTS_PER_PAGE = 2;
+	private static final int COMMENTS_PER_PAGE = 5;
 
 	private FlowPanel containerPanel;
 	private AScrumGwtEntity parent;
