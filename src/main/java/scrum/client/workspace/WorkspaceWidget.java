@@ -36,16 +36,13 @@ public class WorkspaceWidget extends AScrumWidget {
 		sidebar = new SwitcherWidget(true);
 		workarea.setStyleName("Workspace-body-center-content");
 
-		ScrollPanel sidebarScroller = new ScrollPanel(sidebar);
-		sidebarScroller.setHeight("100%");
-
 		ScrollPanel workareaScroller = new ScrollPanel(Gwt.createDiv("Workspace-body-center-content", workarea));
 		workareaScroller.setHeight("100%");
 		workarea.setScrollPanel(workareaScroller);
 
 		FlowPanel body = new FlowPanel();
 		body.setStyleName("Workspace-body");
-		body.add(Gwt.createDiv("Workspace-body-west", sidebarScroller));
+		body.add(Gwt.createDiv("Workspace-body-west", sidebar));
 		body.add(Gwt.createDiv("Workspace-body-center", workareaScroller));
 
 		FlowPanel workspace = Gwt.createFlowPanel(Gwt.createDiv("Workspace-header", header), body);
