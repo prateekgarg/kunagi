@@ -5,7 +5,7 @@ import ilarkesto.core.base.Str;
 import java.util.HashMap;
 import java.util.Map;
 
-import scrum.client.ScrumGwtApplication;
+import scrum.client.ScrumGwt;
 
 /**
  * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet http://en.wikipedia.org/wiki/Help:Table
@@ -45,7 +45,7 @@ public class WikiParser {
 		}
 		if (suffix != null) word = word.substring(0, word.length() - suffix.length());
 
-		if (isEntityReference(word)) {
+		if (ScrumGwt.isEntityReference(word)) {
 			p.add(new EntityReference(word));
 			if (suffix != null) p.add(new Text(suffix.toString()));
 			return;
@@ -353,8 +353,8 @@ public class WikiParser {
 					appendText(item, line);
 				}
 				if (currentListIdentifier != null)
-					listIdentifierValues.put(currentListIdentifier, (numberValue == -1) ? listIdentifierValues
-							.get(currentListIdentifier) + 1 : numberValue + 1);
+					listIdentifierValues.put(currentListIdentifier,
+						(numberValue == -1) ? listIdentifierValues.get(currentListIdentifier) + 1 : numberValue + 1);
 				burn(line.length() + 1);
 				line = getNextLine();
 				leadingSpaces = Str.getLeadingSpaces(line);
@@ -473,32 +473,6 @@ public class WikiParser {
 		if (s.startsWith("apt://")) return true;
 		if (s.startsWith("mailto://")) return true;
 		return false;
-	}
-
-	private boolean isEntityReference(String s) {
-		if (s.length() < 4) return false;
-		if (!Character.isDigit(s.charAt(3))) return false;
-
-		boolean prefixOk = false;
-		for (String prefix : ScrumGwtApplication.REFERENCE_PREFIXES) {
-			if (s.startsWith(prefix)) {
-				prefixOk = true;
-				break;
-			}
-		}
-		if (!prefixOk) return false;
-
-		int len = s.length();
-		for (int i = 3; i < len; i++) {
-			if (!Character.isDigit(s.charAt(i))) return false;
-		}
-		try {
-			String number = s.substring(3);
-			Integer.parseInt(number);
-		} catch (NumberFormatException ex) {
-			return false;
-		}
-		return true;
 	}
 
 	private String cutParagraph() {

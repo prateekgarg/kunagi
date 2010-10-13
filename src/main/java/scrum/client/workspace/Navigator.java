@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.core.ApplicationStartedEvent;
@@ -111,12 +112,17 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 			return;
 		}
 
+		ProjectWorkspaceWidgets workspace = Scope.get().getComponent(ProjectWorkspaceWidgets.class);
 		if (page != null && !page.equals(this.page)) {
-			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showPage(page);
+			workspace.showPage(page);
 		}
 
 		if (entityId != null) {
-			Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntityById(entityId);
+			if (ScrumGwt.isEntityReference(entityId)) {
+				workspace.showEntityByReference(entityId);
+			} else {
+				workspace.showEntityById(entityId);
+			}
 		}
 
 		String token = "project=" + projectId;
@@ -220,7 +226,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 					setToken(project);
 				}
 				if (entityId != null) {
-					projectWorkspaceWidgets.showEntityById(entityId);
+					gotoEntity(entityId);
 				}
 			}
 		});
@@ -240,6 +246,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	public static String getEntityHref(AGwtEntity entity) {
+		return getEntityHref(entity.getId());
+	}
+
+	public static String getEntityHref(String entityId) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("#");
 
@@ -249,7 +259,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		Navigator navigator = Scope.get().getComponent(Navigator.class);
 		if (navigator != null && navigator.page != null) sb.append("page=").append(navigator.page).append("|");
 
-		sb.append("entity=").append(entity.getId());
+		sb.append("entity=").append(entityId);
 		return sb.toString();
 	}
 

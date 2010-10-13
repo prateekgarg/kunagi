@@ -153,6 +153,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ARichtextViewEditWidget-viewer div.toc").border(1, cPagePanelBorder).background("#EEE")
 				.floatRight().padding(10, 10, 3, 5);
 		css.style(".codeBlock code, .codeBlock pre").margin(0, 0, 0, 0).padding(0, 0, 0, 0);
+		css.style(".ARichtextViewEditWidget-editor").border(1, cPagePanelBorder);
 		css.style(".ARichtextViewEditWidget-editor .html-editor-toolbar").displayNone();
 		css.style(".AEditableTextareaWidget-editorPanel").width100();
 		css.style(".Integer-editor").width(10, "%");
@@ -265,6 +266,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(
 			".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
+		css.style(".TeamTasksWidget-user").borderTop(1, cBlockHeaderBackground).margin(3, 0);
+		css.style(".TeamTasksWidget").borderBottom(1, cBlockHeaderBackground);
 		css.style(".LatestEventsWidget td").borderTop(1, cBlockHeaderBackground).padding(3);
 		css.style(".LatestEventsWidget table").borderBottom(1, cBlockHeaderBackground);
 		css.style(".LatestEventsWidget-time").whiteSpaceNowrap().color(cCommentDate);
@@ -413,13 +416,20 @@ public class ScreenCssBuilder implements CssBuilder {
 	private void comments(CssRenderer css) {
 		css.style(".CommentsWidget").background(cCommentsBackground, "../specialarea-bg.png", "repeat-x")
 				.border(1, cCommentsBorder).padding(7).borderRadius(10);
+		css.style(".CommentsWidget-pageNavigator").borderTop(1, cPagePanelBorder).paddingTop(3);
+		css.style(".CommentsWidget-pageNavigator-currentPage").border(1, cPagePanelBorder).padding(1, 5)
+				.background(Colors.darken(cCommentsBackground));
+		css.style(".CommentsWidget-pageNavigator-page a").displayBlock().border(1, cPagePanelBorder).padding(1, 5)
+				.textDecorationNone().fontWeightBold();
+		css.style(".CommentsWidget .AViewEditWidget-viewer").padding(0);
+		css.style(".CommentsWidget .AViewEditWidget-viewer-editable").padding(3);
+
 		css.style(".CommentWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
 		css.style(".CommentWidget-header").margin(4, 0, 2, 0).width100();
 		css.style(".CommentWidget-header-author").floatLeft().marginRight(5);
 		css.style(".CommentWidget-header-date").color(cCommentDate);
 		css.style(".CommentWidget-editor");
-		css.style(".CommentsWidget .AViewEditWidget-viewer").padding(0);
-		css.style(".CommentsWidget .AViewEditWidget-viewer-editable").padding(3);
+
 		css.style(".Comment-Widget-header-pub").floatRight();
 		css.style(".Comment-Widget-header-pub .gwt-Button").fontSize(fontSizeSmall);
 	}
