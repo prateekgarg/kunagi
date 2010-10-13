@@ -8,7 +8,10 @@ import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
+import scrum.client.admin.SystemConfigWidget;
+import scrum.client.admin.SystemMessageManagerWidget;
 import scrum.client.admin.User;
+import scrum.client.admin.UserListWidget;
 import scrum.client.calendar.CalendarWidget;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Chat;
@@ -75,8 +78,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	private PunishmentsWidget punishments;
 	private JournalWidget projectEventList;
 	private FileRepositoryWidget fileRepository;
-	private ProjectAdminWidget projectAdmin;
 	private BlogWidget blog;
+	private ProjectAdminWidget projectAdmin;
+	private SystemConfigWidget systemConfig;
+	private SystemMessageManagerWidget systemMessageManager;
+	private UserListWidget userList;
 
 	private PageSet pages = new PageSet();
 
@@ -84,8 +90,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	private User highlightedUser;
 
-	public ProjectWorkspaceWidgets() {
-
+	@Override
+	public void initialize() {
 		projectOverview = new ProjectOverviewWidget();
 		dashboard = new DashboardWidget();
 
@@ -138,6 +144,14 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		pages.addPage(new Page(projectUserConfig, "Personal Preferences", administrationKey));
 		projectAdmin = new ProjectAdminWidget();
 		pages.addPage(new Page(projectAdmin, "Project administration", administrationKey));
+		if (user.isAdmin()) {
+			systemMessageManager = new SystemMessageManagerWidget();
+			pages.addPage(new Page(systemMessageManager, "System Message", administrationKey));
+			systemConfig = new SystemConfigWidget();
+			pages.addPage(new Page(systemConfig, "System Configuration", administrationKey));
+			userList = new UserListWidget();
+			pages.addPage(new Page(userList, "User Management", administrationKey));
+		}
 
 		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Dashboard", dashboard);
@@ -193,6 +207,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		Scope.get().getComponent(Ui.class).lock("Searching for " + reference);
 		new RequestEntityByReferenceServiceCall(reference).execute(new Runnable() {
 
+			@Override
 			public void run() {
 				AGwtEntity entity = dao.getEntityByReference(reference);
 				Ui ui = Scope.get().getComponent(Ui.class);
@@ -229,6 +244,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		Scope.get().getComponent(Ui.class).lock("Searching for " + entityId);
 		new RequestEntityServiceCall(entityId).execute(new Runnable() {
 
+			@Override
 			public void run() {
 				AGwtEntity entity;
 				try {

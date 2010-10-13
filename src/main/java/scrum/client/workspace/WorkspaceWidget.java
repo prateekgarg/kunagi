@@ -63,7 +63,7 @@ public class WorkspaceWidget extends AScrumWidget {
 		Log.DEBUG("Locking UI for ABORT:", message);
 		lockInfo.showBug(message + " Restarting your session...");
 		locker.lock(lockInfo);
-		Gwt.runLater(5000, new Runnable() {
+		Gwt.runLater(20000, new Runnable() {
 
 			@Override
 			public void run() {

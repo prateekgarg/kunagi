@@ -36,7 +36,7 @@ public class UsersWorkspaceWidgets extends GUsersWorkspaceWidgets {
 			userList = new UserListWidget();
 			navigator.addItem("System Configuration", systemConfig);
 			navigator.addItem("User Management", userList);
-			navigator.addItem("System Message Management", messageManager);
+			navigator.addItem("System Message", messageManager);
 		}
 
 		sidebar = new FlowPanel();
