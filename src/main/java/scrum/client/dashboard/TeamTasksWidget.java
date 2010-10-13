@@ -41,8 +41,6 @@ public class TeamTasksWidget extends AScrumWidget {
 			team.add(0, currentUser);
 		}
 		for (User user : team) {
-			sb.append("<div class='TeamTasksWidget-user'>");
-
 			List<Task> tasks = project.getClaimedTasks(user);
 			List<Issue> issues = project.getClaimedBugs(user);
 			if (tasks.isEmpty() && issues.isEmpty()) {
@@ -50,6 +48,7 @@ public class TeamTasksWidget extends AScrumWidget {
 				continue;
 			}
 
+			sb.append("<div class='TeamTasksWidget-user'>");
 			sb.append("<span style='color: ").append(project.getUserConfig(user).getColor()).append(";'>");
 			sb.append(user.getName());
 			sb.append("</span> is working on");

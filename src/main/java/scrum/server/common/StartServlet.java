@@ -40,7 +40,7 @@ public class StartServlet extends AHttpServlet {
 		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
 		html.startHTMLstandard();
 
-		html.startHEAD(applicationInfo.getName(), "EN");
+		html.startHEAD("Kunagi", "EN");
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();
 		html.SCRIPTjavascript("scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js", null);

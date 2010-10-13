@@ -265,6 +265,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(
 			".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
+		css.style(".TeamTasksWidget-user").borderTop(1, cBlockHeaderBackground).margin(3, 0);
+		css.style(".TeamTasksWidget").borderBottom(1, cBlockHeaderBackground);
 		css.style(".LatestEventsWidget td").borderTop(1, cBlockHeaderBackground).padding(3);
 		css.style(".LatestEventsWidget table").borderBottom(1, cBlockHeaderBackground);
 		css.style(".LatestEventsWidget-time").whiteSpaceNowrap().color(cCommentDate);

@@ -1,7 +1,6 @@
 package scrum.client.dashboard;
 
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import ilarkesto.gwt.client.TableBuilder;
@@ -25,10 +24,13 @@ public class DashboardWidget extends AScrumWidget {
 		sprintBurndown.addSection(new SprintBurndownWidget());
 
 		PagePanel teamsTasks = new PagePanel();
-		teamsTasks.addHeader("Teams work", new HyperlinkWidget(nav.createSwitchAction(widgets.getWhiteboard())),
+		teamsTasks.addHeader("Teams current work",
+			new HyperlinkWidget(nav.createSwitchAction(widgets.getWhiteboard())),
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getIssueList())));
-		teamsTasks.addSection(Gwt.createFlowPanel(new TeamTasksWidget(), Gwt.createSpacer(1, 10),
-			new UpcomingTeamTasksWidget()));
+		teamsTasks.addSection(new TeamTasksWidget());
+		teamsTasks.addHeader("Teams next work", new HyperlinkWidget(nav.createSwitchAction(widgets.getWhiteboard())),
+			new HyperlinkWidget(nav.createSwitchAction(widgets.getIssueList())));
+		teamsTasks.addSection(new UpcomingTeamTasksWidget());
 
 		PagePanel posTasks = new PagePanel();
 		posTasks.addHeader("Product Owners work",
