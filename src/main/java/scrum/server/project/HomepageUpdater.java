@@ -232,10 +232,10 @@ public class HomepageUpdater {
 	private void fillIssue(ContextBuilder context, Issue issue) {
 		context.put("id", issue.getId());
 		context.put("reference", issue.getReference());
-		context.put("label", issue.getLabel());
-		context.put("description", wiki2html(issue.getDescription()));
-		context.put("statement", wiki2html(issue.getStatement()));
-		context.put("statusText", issue.getStatusText());
+		context.put("label", toHtml(issue.getLabel()));
+		context.put("description", wikiToHtml(issue.getDescription()));
+		context.put("statement", wikiToHtml(issue.getStatement()));
+		context.put("statusText", toHtml(issue.getStatusText()));
 		if (issue.isOwnerSet()) context.put("owner", issue.getOwner().getName());
 		if (issue.isFixed()) context.put("fixed", "true");
 		fillComments(context, issue);
@@ -252,8 +252,8 @@ public class HomepageUpdater {
 
 	private void fillComment(ContextBuilder context, Comment comment) {
 		context.put("id", comment.getId());
-		context.put("text", wiki2html(comment.getText()));
-		context.put("author", comment.getAuthorLabel());
+		context.put("text", wikiToHtml(comment.getText()));
+		context.put("author", toHtml(comment.getAuthorLabel()));
 		context.put("date", comment.getDateAndTime()
 				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
 	}
@@ -261,9 +261,9 @@ public class HomepageUpdater {
 	private void fillRelease(ContextBuilder context, Release release) {
 		context.put("id", release.getId());
 		context.put("reference", release.getReference());
-		context.put("label", release.getLabel());
-		context.put("note", wiki2html(release.getNote()));
-		context.put("releaseNotes", wiki2html(release.getReleaseNotes()));
+		context.put("label", toHtml(release.getLabel()));
+		context.put("note", wikiToHtml(release.getNote()));
+		context.put("releaseNotes", wikiToHtml(release.getReleaseNotes()));
 		context.put("releaseDate", release.getReleaseDate());
 		context.put("released", release.isReleased());
 		context.put("major", release.isMajor());
@@ -283,9 +283,10 @@ public class HomepageUpdater {
 	private void fillBlogEntry(ContextBuilder context, BlogEntry entry) {
 		context.put("id", entry.getId());
 		context.put("reference", entry.getReference());
-		context.put("title", entry.getTitle());
-		context.put("text", wiki2html(entry.getText()));
-		context.put("plainText", wiki2text(entry.getText()));
+		context.put("title", toHtml(entry.getTitle()));
+		context.put("text", wikiToHtml(entry.getText()));
+		context.put("textShort", wikiToHtml(Str.getFirstParagraph(entry.getText())));
+		context.put("plainText", wikiToText(entry.getText()));
 		DateAndTime date = entry.getDateAndTime();
 		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
@@ -294,8 +295,8 @@ public class HomepageUpdater {
 
 	private void fillSprintBacklog(ContextBuilder context) {
 		Sprint sprint = project.getCurrentSprint();
-		context.put("label", sprint.getLabel());
-		context.put("goal", wiki2html(sprint.getGoal()));
+		context.put("label", toHtml(sprint.getLabel()));
+		context.put("goal", wikiToHtml(sprint.getGoal()));
 		context.put("begin", sprint.getBegin().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		context.put("end", sprint.getEnd().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		Release release = sprint.getRelease();
@@ -326,9 +327,9 @@ public class HomepageUpdater {
 	private void fillStory(ContextBuilder context, Requirement requirement) {
 		context.put("id", requirement.getId());
 		context.put("reference", requirement.getReference());
-		context.put("label", requirement.getLabel());
-		context.put("description", wiki2html(requirement.getDescription()));
-		context.put("testDescription", wiki2html(requirement.getTestDescription()));
+		context.put("label", toHtml(requirement.getLabel()));
+		context.put("description", wikiToHtml(requirement.getDescription()));
+		context.put("testDescription", wikiToHtml(requirement.getTestDescription()));
 		if (requirement.isEstimatedWorkSet() && !requirement.isDirty())
 			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
 		fillComments(context, requirement);
@@ -336,31 +337,37 @@ public class HomepageUpdater {
 
 	private void fillWiki(ContextBuilder context) {
 		for (Wikipage page : project.getWikipages()) {
-			context.put(page.getName(), wiki2html(page.getText()));
+			context.put(page.getName(), wikiToHtml(page.getText()));
 		}
 	}
 
 	private void fillProject(ContextBuilder context) {
 		context.put("id", project.getId());
-		context.put("label", project.getLabel());
+		context.put("label", toHtml(project.getLabel()));
 		context.put("vision", project.getVision());
-		context.put("shortDescription", project.getShortDescription());
-		context.put("description", wiki2html(project.getDescription()));
-		context.put("longDescription", wiki2html(project.getLongDescription()));
+		context.put("shortDescription", toHtml(project.getShortDescription()));
+		context.put("description", wikiToHtml(project.getDescription()));
+		context.put("longDescription", wikiToHtml(project.getLongDescription()));
 		Release currentRelease = project.getCurrentRelease();
-		context.put("currentRelease", currentRelease == null ? "?" : currentRelease.getLabel());
+		context.put("currentRelease", currentRelease == null ? "?" : toHtml(currentRelease.getLabel()));
 	}
 
-	public String wiki2html(String wikitext) {
+	public String wikiToHtml(String wikitext) {
 		if (Str.isBlank(wikitext)) return null;
 		WikiParser wikiParser = new WikiParser(wikitext);
 		WikiModel model = wikiParser.parse(false);
 		return model.toHtml(htmlContext);
 	}
 
-	public static String wiki2text(String wikitext) {
+	public static String wikiToText(String wikitext) {
 		if (Str.isBlank(wikitext)) return null;
 		return wikitext;
+	}
+
+	public static String toHtml(String text) {
+		if (text == null) return null;
+		text = Str.toHtml(text);
+		return text;
 	}
 
 	private void loadProperties() {
