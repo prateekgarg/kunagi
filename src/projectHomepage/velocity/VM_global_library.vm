@@ -198,7 +198,7 @@ pageTracker._trackPageview();
     <div class="socialbuttons">
         <table border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td style="padding: 0 0 0 0;"> #facebookButton($url) </td>
+                #if($url) <td style="padding: 0 0 0 0;"> #facebookButton($url) </td> #end
                 <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
                 <td style="padding: 0 15px 0 0;"> #buzzButton() </td>
                 <td style="padding: 0 15px 0 0;"> #flattrButton() </td>
