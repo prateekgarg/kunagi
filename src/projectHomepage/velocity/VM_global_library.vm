@@ -3,14 +3,21 @@
 <html>
 
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-language" content="en">
 
     <title>$title</title>
     <meta name="description" content="$description">
     <meta name="author" content="Artjom Kochtchi, Witoslaw Koczewski">
     <meta name="keywords" content="$keywords">
 
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="content-language" content="en">
+    <meta property="og:title" content="$title">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://kunagi.org">
+    <meta property="og:image" content="http://kunagi.org/img/kunagi.png">
+    <meta property="og:site_name" content="Kunagi">
+    <meta property="fb:admins" content="kunagi">
+    <meta property="og:description" content="$description">
 
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
