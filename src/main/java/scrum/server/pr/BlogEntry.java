@@ -9,6 +9,14 @@ import scrum.server.common.Numbered;
 
 public class BlogEntry extends GBlogEntry implements Numbered, ReferenceSupport, LabelSupport, Comparable<BlogEntry> {
 
+	public String getUrl() {
+		String url = getProject().getHomepageUrl();
+		if (url == null) return null;
+		if (!url.endsWith("/")) url += "/";
+		url += getReference() + ".html";
+		return url;
+	}
+
 	@Override
 	public String getLabel() {
 		return getTitle();

@@ -283,6 +283,8 @@ public class HomepageUpdater {
 	private void fillBlogEntry(ContextBuilder context, BlogEntry entry) {
 		context.put("id", entry.getId());
 		context.put("reference", entry.getReference());
+		context.put("url", entry.getUrl());
+		context.put("urlEncodedForUrl", Str.encodeUrlParameter(entry.getUrl()));
 		context.put("title", toHtml(entry.getTitle()));
 		context.put("text", wikiToHtml(entry.getText()));
 		context.put("textShort", wikiToHtml(Str.getFirstParagraph(entry.getText())));

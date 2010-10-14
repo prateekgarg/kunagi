@@ -11,6 +11,9 @@
         $entry.date |
         <a href="http://kunagi.org/${entry.reference}.html" title="Permalink" rel="bookmark">Permalink</a>
     </div>
+    
+    #if($entry.urlEncodedForUrl) #socialbuttons($entry.urlEncodedForUrl) #end
+    
 </div>
 
 #commentsSection($entry)
