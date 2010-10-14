@@ -68,6 +68,16 @@
 
 
 
+#macro( spacer $width $height )
+    <div style="width: ${width}px; height: ${height}px;"></div>
+#end
+
+#macro( imagelinkbox $url $img $label )
+    <a href="$url" target="_blank" style="display: block;">
+        <img src="$img" alt="$label">
+    </a>
+#end
+
 
 #macro( navigLink $page $label $currentPage )
     <td><a class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="${page}.html">${label}</a></td>
@@ -187,11 +197,13 @@ pageTracker._trackPageview();
 #macro( socialbuttons $url )
     <div class="socialbuttons">
         <table border="0" cellspacing="0" cellpadding="0">
-            <td style="padding: 0 0 0 0;"> #facebookButton($url) </td>
-            <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
-            <td style="padding: 0 15px 0 0;"> #buzzButton() </td>
-            <td style="padding: 0 15px 0 0;"> #flattrButton() </td>
-            <td style="padding: 0 15px 0 0;"> #addthisButton() </td>
+            <tr>
+                <td style="padding: 0 0 0 0;"> #facebookButton($url) </td>
+                <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
+                <td style="padding: 0 15px 0 0;"> #buzzButton() </td>
+                <td style="padding: 0 15px 0 0;"> #flattrButton() </td>
+                <td style="padding: 0 15px 0 0;"> #addthisButton() </td>
+            </tr>
         </table>
     </div>
 #end
@@ -219,3 +231,98 @@ pageTracker._trackPageview();
 #macro( addthisButton )
     <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;username=kunagi"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=kunagi"></script>
 #end
+
+
+
+#macro( socialpages )
+    <div class="socialpages">
+        <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+                <td style="text-align: center;">
+                    #facebookBox() #socialspacer()
+                    #twitterBox() #socialspacer()
+                    #friendfeedBox() #socialspacer()
+                    #identicaBox() #socialspacer()
+                    #userstoriesBox() #socialspacer()
+                    #alternativetoBox() #socialspacer()
+                </td>
+                <td style="text-align: center;">
+                    #githubBox() #socialspacer()
+                    #sourceforgeBox() #socialspacer()
+                    #googlecodeBox() #socialspacer()
+                    #freshmeatBox() #socialspacer()
+                    #launchpadBox() #socialspacer()
+                    #flattrBox() #socialspacer()
+                    #heiseBox() #socialspacer()
+                </td>
+            </tr>
+        </table>
+    </div>
+#end
+
+#macro( socialspacer ) #spacer(1,20) #end
+
+#macro( facebookBox )
+    #imagelinkbox("http://www.facebook.com/pages/kunagi/106332836057762", "http://rutherfordcable.org/Resources/Pictures/facebook-logo.jpg", "Facebook")
+#end
+
+#macro( facebookBoxBig )
+    <iframe src="http://www.facebook.com/plugins/likebox.php?stream=false&width=190&colorscheme=light&connections=6&header=true&height=290&href=http%3A%2F%2Fwww.facebook.com%2Fpages%2Fkunagi%2F106332836057762" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:320px;" allowTransparency="true"></iframe>
+#end
+
+#macro( twitterBox )
+    #imagelinkbox("http://www.twitter.com/kunagipm", "http://twitter-badges.s3.amazonaws.com/follow_me-a.png", "Twitter")
+#end
+
+#macro( identicaBox )
+    #imagelinkbox("http://identi.ca/kunagi/", "http://theme.status.net/0.9.5/identica/logo.png", "identi.ca")
+#end
+
+#macro( friendfeedBox )
+    #imagelinkbox("http://friendfeed.com/kunagi", "http://friendfeed.com/static/images/nano-logo.png?v=5ff0", "FriendFeed")
+#end
+
+#macro( githubBox )
+    #imagelinkbox("http://github.com/Kunagi", "http://github.com/images/modules/header/logov3-hover.png", "GitHub")
+#end
+
+#macro( sourceforgeBox )
+    #imagelinkbox("http://sourceforge.net/projects/kunagi/", "http://mark.kiami.fr/wp-content/uploads/2010/02/sourceforge_logo.png", "SourceForge")
+#end
+
+#macro( googlecodeBox )
+    #imagelinkbox("https://code.google.com/p/kunagi/", "http://www.google.com/images/logos/code_logo.gif", "Google Code")
+#end
+
+#macro( launchpadBox )
+    #imagelinkbox("https://launchpad.net/kunagi/", "https://launchpad.net/@@/launchpad-logo-and-name.png", "launchpad")
+#end
+
+#macro( freshmeatBox )
+    #imagelinkbox("http://freshmeat.net/projects/kunagi/", "http://a.fsdn.com/fm//images/fm_logo.png", "FreshMeat")
+#end
+
+#macro( flattrBox )
+    #imagelinkbox("http://flattr.com/thing/2486/Kunagi", "https://flattr.com/_img/flattr-logo-beta-small.png", "Flattr")
+#end
+
+#macro( userstoriesBox )
+    #imagelinkbox("http://userstories.com/products/65-kunagi", "http://userstories.com/images/logo.gif?1281532759", "userStories")
+#end
+
+#macro( alternativetoBox )
+    #imagelinkbox("http://alternativeto.net/desktop/kunagi/", "http://c1784002.cdn.cloudfiles.rackspacecloud.com/alternativeto_logo_opt.png", "alternativeTo")
+#end
+
+#macro( heiseBox )
+    #imagelinkbox("http://www.heise.de/software/download/kunagi/74852", "http://www.heise.de/software/download/logo74852.png", "Heise Software")
+#end
+
+#macro( capterraBox )
+    #imagelinkbox("", "", "Capterra")
+#end
+
+#macro( softdevtoolsBox )
+    #imagelinkbox("", "", "Software Development Tools")
+#end
+
