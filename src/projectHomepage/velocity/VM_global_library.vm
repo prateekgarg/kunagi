@@ -113,7 +113,7 @@
         <input name="returnUrl" type="hidden" value="http://kunagi.org/message.html#{message}">
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
-                <td colspan="3">
+                <td colspan="5">
                     <label for="text">$textLabel:</label><br>
                     <textarea name="text" id="text" rows="10" cols="50" style="width: 687px;"></textarea><br>
                     #if ($visibilityCheckboxLabel)
@@ -126,11 +126,17 @@
             </tr>
             <tr>
                 <td>
+                    <div class="sublabel">optional</div>
                     <label for="name" class="optional">Name:</label>
+                </td>
+                <td>                 
                     <input type="text" name="name" id="name" class="textinput">
                 </td>
                 <td>
+                    <div class="sublabel">optional</div>
                     <label for="email" class="optional">E-Mail:</label>
+                </td>
+                <td>
                     <input type="text" name="email" id="email" class="textinput">
                 </td>
                 <td align="right">
