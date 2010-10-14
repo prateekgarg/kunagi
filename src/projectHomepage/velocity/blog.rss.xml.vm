@@ -25,7 +25,8 @@
 #foreach( $entry in $blog.entries )    
     <item>
       <title>$entry.title</title>
-      <description><![CDATA[$entry.plainText]]></description>
+      <description><![CDATA[$entry.text]]></description>
+      <content:encoded><![CDATA[$entry.text]]></content:encoded>
       <link>http://kunagi.org/${entry.reference}.html</link>
       <author>Kunagi Team</author>
       <guid>http://kunagi.org/blog.html#$entry.reference</guid>
