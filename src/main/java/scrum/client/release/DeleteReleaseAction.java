@@ -17,7 +17,7 @@ public class DeleteReleaseAction extends GDeleteReleaseAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Delete this Release permanently.");
 
-		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}
@@ -29,7 +29,7 @@ public class DeleteReleaseAction extends GDeleteReleaseAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
 
