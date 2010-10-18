@@ -384,15 +384,15 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void navigator(CssRenderer css) {
-		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator);
-		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator);
+		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator).overflowHidden();
+		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
-				.textDecorationNone();
+				.textDecorationNone().overflowHidden();
 		css.style(".NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
 		css.style(".NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
 		css.style(".NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
 
-		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30);
+		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30).overflowHidden();
 	}
 
 	private void actions(CssRenderer css) {
