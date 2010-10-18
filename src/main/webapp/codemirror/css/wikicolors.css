@@ -16,42 +16,14 @@ html {
   margin: 0;
 }
 
-span.xml-tagname {
-  color: #A0B;
-}
+.editbox span.wiki-normal {color: black;}
+.editbox span.wiki-keyword {font-weight: bold;}
 
-span.xml-attribute {
-  color: #281;
-}
+.editbox span.wiki-h1 {font-weight: bold; font-size: 18px;}
+.editbox span.wiki-h2 {font-weight: bold; font-size: 16px;}
+.editbox span.wiki-h3 {font-weight: bold; font-size: 14px;}
+.editbox span.wiki-h4 {font-weight: bold; font-size: 12px;}
 
-span.xml-punctuation {
-  color: black;
-}
+.editbox span.wiki-list {color: blue;}
 
-span.xml-attname {
-  color: #00F;
-}
-
-span.xml-comment {
-  color: #A70;
-}
-
-span.xml-cdata {
-  color: #48A;
-}
-
-span.xml-processing {
-  color: #999;
-}
-
-span.xml-entity {
-  color: #A22;
-}
-
-span.xml-error {
- color: #F00 !important;
-}
-
-span.xml-text {
-  color: black;
-}
+.editbox span.wiki-code {color: red;}
