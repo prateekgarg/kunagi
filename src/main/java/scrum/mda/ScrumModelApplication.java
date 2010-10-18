@@ -94,6 +94,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Activate this, to prevent users from creating projects.");
 			systemConfigModel.addStringProperty("defaultUserPassword").setTooltip(
 				"Default password, which is assigned to new users, which are created by the admin.");
+			systemConfigModel.addProperty("openIdDisabled", boolean.class).setTooltip(
+				"Activate this, if you want to disable logins with OpenID.");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

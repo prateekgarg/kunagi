@@ -53,6 +53,7 @@ public abstract class GSystemConfig
         properties.put("registrationDisabled", this.registrationDisabled);
         properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
+        properties.put("openIdDisabled", this.openIdDisabled);
     }
 
     public int compareTo(SystemConfig other) {
@@ -650,6 +651,36 @@ public abstract class GSystemConfig
         setDefaultUserPassword((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - openIdDisabled
+    // -----------------------------------------------------------
+
+    private boolean openIdDisabled;
+
+    public final boolean isOpenIdDisabled() {
+        return openIdDisabled;
+    }
+
+    public final void setOpenIdDisabled(boolean openIdDisabled) {
+        openIdDisabled = prepareOpenIdDisabled(openIdDisabled);
+        if (isOpenIdDisabled(openIdDisabled)) return;
+        this.openIdDisabled = openIdDisabled;
+        updateLastModified();
+        fireModified("openIdDisabled="+openIdDisabled);
+    }
+
+    protected boolean prepareOpenIdDisabled(boolean openIdDisabled) {
+        return openIdDisabled;
+    }
+
+    public final boolean isOpenIdDisabled(boolean openIdDisabled) {
+        return this.openIdDisabled == openIdDisabled;
+    }
+
+    protected final void updateOpenIdDisabled(Object value) {
+        setOpenIdDisabled((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -672,6 +703,7 @@ public abstract class GSystemConfig
             if (property.equals("registrationDisabled")) updateRegistrationDisabled(value);
             if (property.equals("projectCreationDisabled")) updateProjectCreationDisabled(value);
             if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
+            if (property.equals("openIdDisabled")) updateOpenIdDisabled(value);
         }
     }
 

@@ -72,6 +72,7 @@ public abstract class GSystemConfigDao
         systemConfigsByProjectCreationDisabledCache.clear();
         systemConfigsByDefaultUserPasswordCache.clear();
         defaultUserPasswordsCache = null;
+        systemConfigsByOpenIdDisabledCache.clear();
     }
 
     @Override
@@ -722,6 +723,35 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isDefaultUserPassword(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - openIdDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByOpenIdDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean openIdDisabled) {
+                    return getEntities(new IsOpenIdDisabled(openIdDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByOpenIdDisabled(boolean openIdDisabled) {
+        return systemConfigsByOpenIdDisabledCache.get(openIdDisabled);
+    }
+
+    private static class IsOpenIdDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsOpenIdDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isOpenIdDisabled();
         }
 
     }

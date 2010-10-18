@@ -996,6 +996,61 @@ public abstract class GSystemConfig
 
     }
 
+    // --- openIdDisabled ---
+
+    private boolean openIdDisabled ;
+
+    public final boolean isOpenIdDisabled() {
+        return this.openIdDisabled ;
+    }
+
+    public final SystemConfig setOpenIdDisabled(boolean openIdDisabled) {
+        if (isOpenIdDisabled(openIdDisabled)) return (SystemConfig)this;
+        this.openIdDisabled = openIdDisabled ;
+        propertyChanged("openIdDisabled", this.openIdDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isOpenIdDisabled(boolean openIdDisabled) {
+        return equals(this.openIdDisabled, openIdDisabled);
+    }
+
+    private transient OpenIdDisabledModel openIdDisabledModel;
+
+    public OpenIdDisabledModel getOpenIdDisabledModel() {
+        if (openIdDisabledModel == null) openIdDisabledModel = createOpenIdDisabledModel();
+        return openIdDisabledModel;
+    }
+
+    protected OpenIdDisabledModel createOpenIdDisabledModel() { return new OpenIdDisabledModel(); }
+
+    protected class OpenIdDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_openIdDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isOpenIdDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setOpenIdDisabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Activate this, if you want to disable logins with OpenID."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1016,6 +1071,7 @@ public abstract class GSystemConfig
         registrationDisabled  = (Boolean) props.get("registrationDisabled");
         projectCreationDisabled  = (Boolean) props.get("projectCreationDisabled");
         defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
+        openIdDisabled  = (Boolean) props.get("openIdDisabled");
         updateLocalModificationTime();
     }
 
@@ -1039,6 +1095,7 @@ public abstract class GSystemConfig
         properties.put("registrationDisabled", this.registrationDisabled);
         properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
+        properties.put("openIdDisabled", this.openIdDisabled);
     }
 
 }

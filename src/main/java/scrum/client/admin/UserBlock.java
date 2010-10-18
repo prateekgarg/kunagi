@@ -1,5 +1,6 @@
 package scrum.client.admin;
 
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
@@ -53,7 +54,9 @@ public class UserBlock extends ABlockWidget<User> {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", user.getNameModel());
 		tb.addFieldRow("E-Mail", user.getEmailModel());
-		tb.addFieldRow("OpenID", user.getOpenIdModel());
+		if (!Scope.get().getComponent(SystemConfig.class).isOpenIdDisabled()) {
+			tb.addFieldRow("OpenID", user.getOpenIdModel());
+		}
 		tb.addFieldRow("Projects", new AOutputViewEditWidget() {
 
 			@Override
