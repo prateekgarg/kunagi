@@ -1,6 +1,5 @@
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.SystemMessageWidget;
@@ -15,7 +14,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ProjectSidebarWidget extends AScrumWidget {
 
 	private SwitchingNavigatorWidget navigator;
-	// private ClipboardWidget clipboard;
 	private TrashWidget trash;
 	private ChatWidget chat;
 	private UsersStatusWidget usersStatus;
@@ -24,11 +22,6 @@ public class ProjectSidebarWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		setHeight100();
 		trash = new TrashWidget();
-		// clipboard = new ClipboardWidget();
-
-		FloatingFlowPanel usersTrashSplitter = new FloatingFlowPanel();
-		usersTrashSplitter.add(getUsersStatus());
-		usersTrashSplitter.add(trash, true);
 
 		FlowPanel sidebar = new FlowPanel();
 		sidebar.getElement().getStyle().setMarginTop(10, Unit.PX);
@@ -39,7 +32,9 @@ public class ProjectSidebarWidget extends AScrumWidget {
 		sidebar.add(Gwt.createSpacer(1, 10));
 		sidebar.add(getChat());
 		sidebar.add(Gwt.createSpacer(1, 10));
-		sidebar.add(usersTrashSplitter);
+		sidebar.add(getUsersStatus());
+		sidebar.add(Gwt.createSpacer(1, 10));
+		sidebar.add(trash);
 		sidebar.add(Gwt.createSpacer(1, 10));
 		return sidebar;
 	}

@@ -12,13 +12,14 @@ import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, ForumSupport {
+public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, LabelSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "rsk";
 	public static final List<Integer> IMPACTS = Gwt.toList(20, 40, 60, 80, 100);
@@ -42,6 +43,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 		return PROBABILITIES;
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -66,6 +68,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 		return getPriorityLabel() + " priority because " + getImpactLabel() + " and " + getProbabilityLabel();
 	}
 
+	@Override
 	public int compareTo(Risk o) {
 		return getPriority() - o.getPriority();
 	}
@@ -87,12 +90,14 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, F
 		return getReference() + " " + getLabel();
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Risk> PRIORITY_COMPARATOR = new Comparator<Risk>() {
 
+		@Override
 		public int compare(Risk a, Risk b) {
 			return b.getPriority() - a.getPriority();
 		}

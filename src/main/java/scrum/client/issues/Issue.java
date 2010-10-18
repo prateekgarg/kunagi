@@ -15,13 +15,14 @@ import java.util.Map;
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
+public class Issue extends GIssue implements ReferenceSupport, LabelSupport, ForumSupport {
 
 	private static Log log = Log.get(Issue.class);
 
@@ -163,6 +164,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		return Arrays.asList(SEVERITY_OPTIONS);
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
@@ -186,12 +188,14 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 		return getReference() + " (" + getType() + ") " + getLabel();
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
 	public static final Comparator<Issue> SEVERITY_COMPARATOR = new Comparator<Issue>() {
 
+		@Override
 		public int compare(Issue a, Issue b) {
 			int aSeverity = a.getSeverity();
 			int bSeverity = b.getSeverity();
@@ -202,6 +206,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final Comparator<Issue> ISSUE_DATE_COMPARATOR = new Comparator<Issue>() {
 
+		@Override
 		public int compare(Issue a, Issue b) {
 			return b.getDate().compareTo(a.getDate());
 		}
@@ -209,6 +214,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final Comparator<Issue> CLOSE_DATE_COMPARATOR = new Comparator<Issue>() {
 
+		@Override
 		public int compare(Issue a, Issue b) {
 			return b.getCloseDate().compareTo(a.getCloseDate());
 		}
@@ -216,6 +222,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static final Comparator<Issue> ACCEPT_DATE_COMPARATOR = new Comparator<Issue>() {
 
+		@Override
 		public int compare(Issue a, Issue b) {
 			return b.getAcceptDate().compareTo(a.getAcceptDate());
 		}
@@ -223,6 +230,7 @@ public class Issue extends GIssue implements ReferenceSupport, ForumSupport {
 
 	public static LabelProvider<Integer> SEVERITY_LABELS = new LabelProvider<Integer>() {
 
+		@Override
 		public String getLabel(Integer severity) {
 			switch (severity) {
 				case 2:

@@ -68,7 +68,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	}
 
 	public String getVersionDescription() {
-		return name + " | Release " + release + " | Build " + build + " | " + deploymentStage;
+		return "Kunagi " + release + " | Build " + build + " | " + deploymentStage;
 	}
 
 	@Override

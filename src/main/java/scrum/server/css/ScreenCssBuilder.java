@@ -475,8 +475,12 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".UsersOnBlockWidget").textAlignRight();
 
-		css.style(".UserStatusWidget").textDecorationLineThrough().fontStyleItalic();
-		css.style(".UserStatusWidget-online").textDecorationNone().fontStyleNormal();
+		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
+		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
+		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic();
+		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
+		css.style(".UserStatusWidget-selectedEntities").floatRight();
+		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
 
 	}
 
