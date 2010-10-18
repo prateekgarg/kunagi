@@ -134,7 +134,7 @@
                     <textarea name="text" id="text" rows="10" cols="50" style="width: 687px;"></textarea><br>
                     #if ($visibilityCheckboxLabel)
                         <br>
-                        <input type="checkbox" name="publish" id="publish" value="true">
+                        <input type="checkbox" name="publish" id="publish" value="true" checked="checked">
                         <label for="publish">$visibilityCheckboxLabel</label><br>
                     #end
                     <br>    
