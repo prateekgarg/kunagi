@@ -16,14 +16,14 @@ html {
   margin: 0;
 }
 
-.editbox span.wiki-normal {color: black;}
-.editbox span.wiki-keyword {font-weight: bold;}
+.editbox span.wiki-text {color: black;}
+.editbox span.wiki-keyword {font-weight: bold; color: blue;}
 
-.editbox span.wiki-h1 {font-weight: bold; font-size: 18px;}
-.editbox span.wiki-h2 {font-weight: bold; font-size: 16px;}
-.editbox span.wiki-h3 {font-weight: bold; font-size: 14px;}
-.editbox span.wiki-h4 {font-weight: bold; font-size: 12px;}
+.editbox span.wiki-h1 {color: blue; font-weight: bold; font-size: 18px;}
+.editbox span.wiki-h2 {color: blue; font-weight: bold; font-size: 16px;}
+.editbox span.wiki-h3 {color: blue; font-weight: bold; font-size: 14px;}
+.editbox span.wiki-h4 {color: blue; font-weight: bold; font-size: 12px;}
 
-.editbox span.wiki-list {color: blue;}
+.editbox span.wiki-list {color: green; font-weight: bold;}
 
 .editbox span.wiki-code {color: red;}
