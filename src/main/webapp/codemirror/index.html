@@ -4,39 +4,27 @@
     <title>Codemirror Tester</title>
     <script src="js/codemirror.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/docs.css"/>
-    
 </head>
 
 <body>
 <h3>Codemirror wiki parser tester</h3>
 
 <div style="border: 1px solid black">
-<textarea id="code" rows="25" cols="100">
-= header 1=
+<textarea id="code" rows="25" cols="100">= head 1 =
 
-Fitaciif nehyvyziirux cubefor tilyvut lefilo. Mofod tunabkiwi serebixukai kcqipijasolo hixigle hyn musiji pexexytosoqa myibyre. Ciugusedoc gud evueafeps pazybaz uxuwuko ne labysa boleporid nat nasu. Fejibukaoriq suqeva wxetavalydiu pulocod pkatuokofous msyre peqafoqe bybubydozaba ki Vugob. Niv du wyqorosf qeevb. Hhox lvosib daril zafecajavof jyoceabuvase homyfyra. Gubm judahajneyh Xoz jy boledyfu syqif xijy bavafinauhup. Keugker cisokyvicu nufeg hay hqeciy. Va sypuifcu ce qyhocusira valyle wujiasixiq kixue fis lgakuvikur eraryzedud kiku hiburey.
+* AAA
+* BBB
+ # 1
+ # 2
+ # 3
+* CCC
+* DDD
 
-== header 2 ==
+* xxx
 
-Fitaciif nehyvyziirux cubefor tilyvut lefilo. Mofod tunabkiwi serebixukai kcqipijasolo hixigle hyn musiji pexexytosoqa myibyre.
+=== head 3 ===
 
-&lt;code&gt;
-x = new Test();
-x.test();
-&lt;/code&gt;
-
- preformated text line 1
- preformated text line 2
- 
-== header 2 ==
-
-# item 1 
-# item 2
-# item 3
- # subitem a 
- # subitem b 
-# item 4 
-
+text
 </textarea>
 </div>
 
@@ -47,7 +35,9 @@ x.test();
     stylesheet: "css/wikicolors.css",
     path: "js/",
     continuousScanning: true,
-    lineNumbers: false
+    lineNumbers: false,
+    passDelay: 3000,
+    enterMode: "flat"
   });
 </script>
 
