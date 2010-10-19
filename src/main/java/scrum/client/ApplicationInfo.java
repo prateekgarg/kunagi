@@ -31,7 +31,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 
 	public boolean isNewReleaseAvailable() {
 		if (currentRelease == null) return false;
-		if (currentRelease.startsWith("dev")) return false;
+		if (release.startsWith("dev")) return false;
 		return !currentRelease.equals(release);
 	}
 
