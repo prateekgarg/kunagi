@@ -1,7 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.pdf.itext.PdfBuilder;
+import ilarkesto.integration.itext.PdfBuilder;
 
 import java.io.File;
 import java.util.Arrays;

@@ -1,8 +1,8 @@
 package scrum.server.common;
 
+import ilarkesto.integration.itext.PdfBuilder;
 import ilarkesto.pdf.AImage;
 import ilarkesto.pdf.AParagraph;
-import ilarkesto.pdf.itext.PdfBuilder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

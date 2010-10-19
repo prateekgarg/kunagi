@@ -2,7 +2,7 @@ package scrum.server.common;
 
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.time.Date;
-import ilarkesto.pdf.itext.PdfBuilder;
+import ilarkesto.integration.itext.PdfBuilder;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
