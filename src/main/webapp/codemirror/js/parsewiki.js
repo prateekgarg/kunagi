@@ -1,286 +1,235 @@
-/* This file defines an XML parser, with a few kludges to make it
- * useable for HTML. autoSelfClosers defines a set of tag names that
- * are expected to not have a closing tag, and doNotIndent specifies
- * the tags inside of which no indentation should happen (see Config
- * object). These can be disabled by passing the editor an object like
- * {useHTMLKludges: false} as parserConfig option.
- */
+var WikiParser = Editor.Parser = (function() {
 
-var XMLParser = Editor.Parser = (function() {
-  var Kludges = {
-    autoSelfClosers: {"br": true, "img": true, "hr": true, "link": true, "input": true,
-                      "meta": true, "col": true, "frame": true, "base": true, "area": true},
-    doNotIndent: {"pre": true, "!cdata": true}
-  };
-  var NoKludges = {autoSelfClosers: {}, doNotIndent: {"!cdata": true}};
-  var UseKludges = Kludges;
-  var alignCDATA = false;
+	var run = 0;
 
-  // Simple stateful tokenizer for XML documents. Returns a
-  // MochiKit-style iterator, with a state property that contains a
-  // function encapsulating the current state. See tokenize.js.
-  var tokenizeXML = (function() {
-    function inText(source, setState) {
-      var ch = source.next();
-      if (ch == "<") {
-        if (source.equals("!")) {
-          source.next();
-          if (source.equals("[")) {
-            if (source.lookAhead("[CDATA[", true)) {
-              setState(inBlock("xml-cdata", "]]>"));
-              return null;
-            }
-            else {
-              return "xml-text";
-            }
-          }
-          else if (source.lookAhead("--", true)) {
-            setState(inBlock("xml-comment", "-->"));
-            return null;
-          }
-          else {
-            return "xml-text";
-          }
-        }
-        else if (source.equals("?")) {
-          source.next();
-          source.nextWhileMatches(/[\w\._\-]/);
-          setState(inBlock("xml-processing", "?>"));
-          return "xml-processing";
-        }
-        else {
-          if (source.equals("/")) source.next();
-          setState(inTag);
-          return "xml-punctuation";
-        }
-      }
-      else if (ch == "&") {
-        while (!source.endOfLine()) {
-          if (source.next() == ";")
-            break;
-        }
-        return "xml-entity";
-      }
-      else {
-        source.nextWhileMatches(/[^&<\n]/);
-        return "xml-text";
-      }
-    }
+	function log(message) {
+		if (console && run <= 2)
+			console.log(message);
+	}
 
-    function inTag(source, setState) {
-      var ch = source.next();
-      if (ch == ">") {
-        setState(inText);
-        return "xml-punctuation";
-      }
-      else if (/[?\/]/.test(ch) && source.equals(">")) {
-        source.next();
-        setState(inText);
-        return "xml-punctuation";
-      }
-      else if (ch == "=") {
-        return "xml-punctuation";
-      }
-      else if (/[\'\"]/.test(ch)) {
-        setState(inAttribute(ch));
-        return null;
-      }
-      else {
-        source.nextWhileMatches(/[^\s\u00a0=<>\"\'\/?]/);
-        return "xml-name";
-      }
-    }
+	var tokenizeWiki = (function() {
 
-    function inAttribute(quote) {
-      return function(source, setState) {
-        while (!source.endOfLine()) {
-          if (source.next() == quote) {
-            setState(inTag);
-            break;
-          }
-        }
-        return "xml-attribute";
-      };
-    }
+		function next(source) {
+			if (source.endOfLine())
+				throw "end-of-line";
+			var ch = source.next();
+			//log("consumed: '" + ch + "'");
+			return ch;
+		}
 
-    function inBlock(style, terminator) {
-      return function(source, setState) {
-        while (!source.endOfLine()) {
-          if (source.lookAhead(terminator, true)) {
-            setState(inText);
-            break;
-          }
-          source.next();
-        }
-        return style;
-      };
-    }
+		function reset(source) {
+			var s = source.get();
+			log("reset: " + s);
+			source.push(s);
+		}
 
-    return function(source, startState) {
-      return tokenizer(source, startState || inText);
-    };
-  })();
+		function header(depth) {
+			var endmarker = ' ';
+			for (i = 0; i < depth; i++) {
+				endmarker += '=';
+			}
+			return function(source, setState) {
+				// log("header(" + source.peek() + ")")
+				for (i = 0; i < depth; i++) {
+					next(source);
+				}
+				next(source);
+				// log("header-1(" + source.peek() + ")")
+				var marker = '';
+				while (!source.endOfLine()) {
+					var ch = next(source);
+					if (ch == ' ') {
+						marker = ' ';
+						continue;
+					}
+					if (ch != '=') {
+						marker = '';
+						continue;
+					}
+					marker += ch;
+					if (source.endOfLine() && marker == endmarker) {
+						setState(begin);
+						return 'wiki-h' + depth;
+					}
+				}
+				reset(source);
+				setState(normal);
+				return null;
+			};
+		}
 
-  // The parser. The structure of this function largely follows that of
-  // parseJavaScript in parsejavascript.js (there is actually a bit more
-  // shared code than I'd like), but it is quite a bit simpler.
-  function parseXML(source) {
-    var tokens = tokenizeXML(source), token;
-    var cc = [base];
-    var tokenNr = 0, indented = 0;
-    var currentTag = null, context = null;
-    var consume;
-    
-    function push(fs) {
-      for (var i = fs.length - 1; i >= 0; i--)
-        cc.push(fs[i]);
-    }
-    function cont() {
-      push(arguments);
-      consume = true;
-    }
-    function pass() {
-      push(arguments);
-      consume = false;
-    }
+		function list(source, setState) {
+			// log("list(" + source.peek() + ")")
+			next(source);
+			next(source);
+			if (source.endOfLine()) {
+				setState(begin);
+			} else {
+				setState(normal);
+			}
+			return 'wiki-list';
+		}
 
-    function markErr() {
-      token.style += " xml-error";
-    }
-    function expect(text) {
-      return function(style, content) {
-        if (content == text) cont();
-        else {markErr(); cont(arguments.callee);}
-      };
-    }
+		function wrapper(prefix, suffix, style) {
+			return function(source, setState) {
+				log("wrapper(" + source.peek() + ")");
+				for (i = 0; i < prefix.length; i++) {
+					next(source);
+				}
+				while (!source.endOfLine()) {
+					if (source.lookAhead(suffix)) {
+						log("wrapper-1(" + source.peek() + "," + suffix + ")");
+						for (i = 0; i < suffix.length; i++) {
+							next(source);
+						}
+						log("wrapper-2(" + source.peek() + ")");
+						setState(normal);
+						return style;
+					}
+					next(source);
+				}
+				reset(source);
+				next(source);
+				setState(normal);
+				return null;
+			};
+		}
 
-    function pushContext(tagname, startOfLine) {
-      var noIndent = UseKludges.doNotIndent.hasOwnProperty(tagname) || (context && context.noIndent);
-      context = {prev: context, name: tagname, indent: indented, startOfLine: startOfLine, noIndent: noIndent};
-    }
-    function popContext() {
-      context = context.prev;
-    }
-    function computeIndentation(baseContext) {
-      return function(nextChars, current) {
-        var context = baseContext;
-        if (context && context.noIndent)
-          return current;
-        if (alignCDATA && /<!\[CDATA\[/.test(nextChars))
-          return 0;
-        if (context && /^<\//.test(nextChars))
-          context = context.prev;
-        while (context && !context.startOfLine)
-          context = context.prev;
-        if (context)
-          return context.indent + indentUnit;
-        else
-          return 0;
-      };
-    }
+		function code(source, setState) {
+			//log("code(" + source.peek() + ")");
+			while (!source.endOfLine()) {
+				var ch = source.peek();
+				if (ch == '<') {
+					if (source.lookAhead('</code>')) {
+						log("code-3(" + source.peek() + ")");
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						setState(normal);
+						return "wiki-code";
+					}
+				}
+				next(source);
+			}
+			return "wiki-code";
+		}
 
-    function base() {
-      return pass(element, base);
-    }
-    var harmlessTokens = {"xml-text": true, "xml-entity": true, "xml-comment": true, "xml-processing": true};
-    function element(style, content) {
-      if (content == "<") cont(tagname, attributes, endtag(tokenNr == 1));
-      else if (content == "</") cont(closetagname, expect(">"));
-      else if (style == "xml-cdata") {
-        if (!context || context.name != "!cdata") pushContext("!cdata");
-        if (/\]\]>$/.test(content)) popContext();
-        cont();
-      }
-      else if (harmlessTokens.hasOwnProperty(style)) cont();
-      else {markErr(); cont();}
-    }
-    function tagname(style, content) {
-      if (style == "xml-name") {
-        currentTag = content.toLowerCase();
-        token.style = "xml-tagname";
-        cont();
-      }
-      else {
-        currentTag = null;
-        pass();
-      }
-    }
-    function closetagname(style, content) {
-      if (style == "xml-name") {
-        token.style = "xml-tagname";
-        if (context && content.toLowerCase() == context.name) popContext();
-        else markErr();
-      }
-      cont();
-    }
-    function endtag(startOfLine) {
-      return function(style, content) {
-        if (content == "/>" || (content == ">" && UseKludges.autoSelfClosers.hasOwnProperty(currentTag))) cont();
-        else if (content == ">") {pushContext(currentTag, startOfLine); cont();}
-        else {markErr(); cont(arguments.callee);}
-      };
-    }
-    function attributes(style) {
-      if (style == "xml-name") {token.style = "xml-attname"; cont(attribute, attributes);}
-      else pass();
-    }
-    function attribute(style, content) {
-      if (content == "=") cont(value);
-      else if (content == ">" || content == "/>") pass(endtag);
-      else pass();
-    }
-    function value(style) {
-      if (style == "xml-attribute") cont(value);
-      else pass();
-    }
+		function normal(source, setState) {
+			//log("normal(" + source.peek() + ")");
+			var prev = ' ';
+			while (!source.endOfLine()) {
+				var prevIsAlphaNum
+				var ch = source.peek();
+				if (/\s/.test(prev)) {
+					if (ch == '<' && source.lookAhead('<code>')) {
+						setState(wrapper('<code>', '</code>', 'wiki-code'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("'''''")) {
+						setState(wrapper("'''''", "'''''", 'wiki-bold-italic'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("'''")) {
+						setState(wrapper("'''", "'''", 'wiki-bold'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("''")) {
+						setState(wrapper("''", "''", 'wiki-italic'));
+						return 'wiki-text';
+					}
+				}
+				prev = ch;
+				next(source);
+			}
+			setState(begin);
+			return 'wiki-text';
+		}
 
-    return {
-      indentation: function() {return indented;},
+		function begin(source, setState) {
+			//log("begin(" + source.peek() + ")")
+			var ch = source.peek();
 
-      next: function(){
-        token = tokens.next();
-        if (token.style == "whitespace" && tokenNr == 0)
-          indented = token.value.length;
-        else
-          tokenNr++;
-        if (token.content == "\n") {
-          indented = tokenNr = 0;
-          token.indentation = computeIndentation(context);
-        }
+			if (ch == '=') {
+				if (ch == '=' && source.lookAhead('= ')) {
+					setState(header(1));
+					return null;
+				}
+				if (source.lookAhead('== ')) {
+					setState(header(2));
+					return null;
+				}
+				if (source.lookAhead('=== ')) {
+					setState(header(3));
+					return null;
+				}
+				if (source.lookAhead('==== ')) {
+					setState(header(4));
+					return null;
+				}
+			}
 
-        if (token.style == "whitespace" || token.type == "xml-comment")
-          return token;
+			if (ch == '<' && source.lookAhead('<code>')) {
+				setState(code);
+				return null;
+			}
 
-        while(true){
-          consume = false;
-          cc.pop()(token.style, token.content);
-          if (consume) return token;
-        }
-      },
+			if ((ch == '*' && source.lookAhead('* ')) || (ch == '#' && source.lookAhead('# '))) {
+				setState(list);
+				return null;
+			}
 
-      copy: function(){
-        var _cc = cc.concat([]), _tokenState = tokens.state, _context = context;
-        var parser = this;
-        
-        return function(input){
-          cc = _cc.concat([]);
-          tokenNr = indented = 0;
-          context = _context;
-          tokens = tokenizeXML(input, _tokenState);
-          return parser;
-        };
-      }
-    };
-  }
+			setState(normal)
+			return null;
+		}
 
-  return {
-    make: parseXML,
-    electricChars: "/",
-    configure: function(config) {
-      if (config.useHTMLKludges != null)
-        UseKludges = config.useHTMLKludges ? Kludges : NoKludges;
-      if (config.alignCDATA)
-        alignCDATA = config.alignCDATA;
-    }
-  };
+		return function(source, startState) {
+			run++;
+			return tokenizer(source, startState || begin);
+		};
+
+	})();
+
+	function indentWiki(inBraces, inRule, base) {
+		return function(nextChars) {
+			return base;
+		};
+	}
+
+	function parseWiki(source, basecolumn) {
+		basecolumn = basecolumn || 0;
+		tokens = tokenizeWiki(source);
+
+		var iter = {
+			next : function() {
+				var token = tokens.next();
+				var style = token.style;
+				var content = token.content;
+
+				// console.log("content: "+content);
+
+				if (content == '\n') {
+					token.indentation = indentWiki(false, false, basecolumn);
+				}
+
+				return token;
+			},
+
+			copy : function() {
+				var _tokenState = tokens.state;
+				return function(source) {
+					tokens = tokenizeWiki(source, _tokenState);
+					return iter;
+				};
+			}
+		};
+		return iter;
+	}
+
+	return {
+		make : parseWiki
+	};
 })();

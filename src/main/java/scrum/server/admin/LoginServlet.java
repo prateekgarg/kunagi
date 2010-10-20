@@ -382,11 +382,13 @@ public class LoginServlet extends AHttpServlet {
 	}
 
 	private void renderLogin(HtmlRenderer html, String username, String historyToken) {
-		html.H2("Login with OpenID");
-		renderOpenIdLoginForm(html, historyToken);
+		if (!webApplication.getSystemConfig().isOpenIdDisabled()) {
+			html.H2("Login with OpenID");
+			renderOpenIdLoginForm(html, historyToken);
+			html.DIV("separator", null);
+			html.H2("Login with Password");
+		}
 
-		html.DIV("separator", null);
-		html.H2("Login with Password");
 		renderRetroLoginForm(html, username, historyToken);
 		html.BR();
 		html.A("login.html?showPasswordRequest=true", "Forgot your password?");

@@ -17,6 +17,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.estimation.RequirementEstimationVote;
@@ -27,7 +28,7 @@ import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Requirement extends GRequirement implements ReferenceSupport, ForumSupport {
+public class Requirement extends GRequirement implements ReferenceSupport, LabelSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",

@@ -158,6 +158,28 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public String getUsersRolesAsString(User user, String prefix, String suffix) {
+		StringBuilder sb = new StringBuilder();
+		List<String> roles = new ArrayList<String>();
+		if (containsProductOwner(user)) roles.add("PO");
+		if (containsScrumMaster(user)) roles.add("SM");
+		if (containsTeamMember(user)) roles.add("T");
+		boolean first = true;
+		if (!roles.isEmpty()) {
+			for (String role : roles) {
+				if (first) {
+					first = false;
+					if (prefix != null) sb.append(prefix);
+				} else {
+					sb.append(",");
+				}
+				sb.append(role);
+			}
+			if (suffix != null) sb.append(suffix);
+		}
+		return sb.toString();
+	}
+
 	public boolean containsParticipantWithVerifiedEmail() {
 		for (User user : getParticipants()) {
 			if (user.isEmailVerified()) return true;

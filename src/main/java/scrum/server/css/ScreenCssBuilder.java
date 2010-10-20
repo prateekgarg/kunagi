@@ -384,15 +384,15 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void navigator(CssRenderer css) {
-		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator);
-		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator);
+		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator).overflowHidden();
+		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
-				.textDecorationNone();
+				.textDecorationNone().overflowHidden();
 		css.style(".NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
 		css.style(".NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
 		css.style(".NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
 
-		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30);
+		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30).overflowHidden();
 	}
 
 	private void actions(CssRenderer css) {
@@ -475,8 +475,12 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".UsersOnBlockWidget").textAlignRight();
 
-		css.style(".UserStatusWidget").textDecorationLineThrough().fontStyleItalic();
-		css.style(".UserStatusWidget-online").textDecorationNone().fontStyleNormal();
+		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
+		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
+		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic();
+		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
+		css.style(".UserStatusWidget-selectedEntities").floatRight();
+		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
 
 	}
 

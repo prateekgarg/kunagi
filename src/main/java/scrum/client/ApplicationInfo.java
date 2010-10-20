@@ -31,6 +31,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 
 	public boolean isNewReleaseAvailable() {
 		if (currentRelease == null) return false;
+		if (release.startsWith("dev")) return false;
 		return !currentRelease.equals(release);
 	}
 
@@ -67,7 +68,7 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	}
 
 	public String getVersionDescription() {
-		return name + " | Release " + release + " | Build " + build + " | " + deploymentStage;
+		return "Kunagi " + release + " | Build " + build + " | " + deploymentStage;
 	}
 
 	@Override

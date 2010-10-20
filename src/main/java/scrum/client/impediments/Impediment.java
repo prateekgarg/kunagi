@@ -8,13 +8,14 @@ import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Impediment extends GImpediment implements ReferenceSupport, ForumSupport {
+public class Impediment extends GImpediment implements ReferenceSupport, LabelSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "imp";
 

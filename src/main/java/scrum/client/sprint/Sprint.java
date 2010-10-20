@@ -16,6 +16,7 @@ import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Wiki;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.impediments.Impediment;
@@ -26,7 +27,7 @@ import scrum.client.release.Release;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Sprint extends GSprint implements ForumSupport, ReferenceSupport {
+public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, LabelSupport {
 
 	public static final String REFERENCE_PREFIX = "spr";
 

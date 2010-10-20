@@ -2725,6 +2725,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByOpenIdDisabled(boolean openIdDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isOpenIdDisabled(openIdDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     protected Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();

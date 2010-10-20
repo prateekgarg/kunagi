@@ -11,6 +11,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
@@ -18,7 +19,7 @@ import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Task extends GTask implements ReferenceSupport, ForumSupport {
+public class Task extends GTask implements ReferenceSupport, LabelSupport, ForumSupport {
 
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";

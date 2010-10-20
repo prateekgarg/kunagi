@@ -20,6 +20,7 @@ import java.util.Properties;
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
+import scrum.server.admin.User;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.Wikipage;
@@ -254,6 +255,10 @@ public class HomepageUpdater {
 		context.put("id", comment.getId());
 		context.put("text", wikiToHtml(comment.getText()));
 		context.put("author", toHtml(comment.getAuthorLabel()));
+		User author = comment.getAuthor();
+		if (author != null) {
+			context.put("authorRoles", toHtml(project.getUsersRolesAsString(author, null, null)));
+		}
 		context.put("date", comment.getDateAndTime()
 				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
 	}

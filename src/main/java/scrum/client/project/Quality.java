@@ -10,13 +10,14 @@ import java.util.Map;
 import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.issues.Issue;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Quality extends GQuality implements ReferenceSupport, ForumSupport {
+public class Quality extends GQuality implements ReferenceSupport, LabelSupport, ForumSupport {
 
 	public static final String REFERENCE_PREFIX = "qlt";
 
