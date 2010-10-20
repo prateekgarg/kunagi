@@ -5,10 +5,10 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.integration.velocity.ContextBuilder;
+import ilarkesto.integration.velocity.Velocity;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.velocity.ContextBuilder;
-import ilarkesto.velocity.Velocity;
 
 import java.io.File;
 import java.util.ArrayList;

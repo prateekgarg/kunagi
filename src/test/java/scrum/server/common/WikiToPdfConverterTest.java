@@ -1,8 +1,8 @@
 package scrum.server.common;
 
+import ilarkesto.integration.itext.PdfBuilder;
 import ilarkesto.pdf.AImage;
 import ilarkesto.pdf.AParagraph;
-import ilarkesto.pdf.itext.PdfBuilder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -106,6 +106,7 @@ public class WikiToPdfConverterTest {
 
 	class TestPdfContext implements PdfContext {
 
+		@Override
 		public AImage appendImage(AParagraph p, Image wikiImage) {
 			AImage pdfImage = p.image(new File("src/artwork/kunagi-300x148.png"));
 			return pdfImage;
