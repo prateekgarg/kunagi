@@ -10,35 +10,24 @@
 <h3>Codemirror wiki parser tester</h3>
 
 <div style="border: 1px solid black">
-<textarea id="code" rows="25" cols="100">= head 1 =
-
-* AAA
-* BBB
- # 1
- # 2
- # 3
-* CCC
-* DDD
-
-* xxx
-
-=== head 3 ===
-
-text
-</textarea>
+<textarea id="code" rows="20" cols="60"></textarea>
 </div>
 
 <script type="text/javascript">
   var editor = CodeMirror.fromTextArea('code', {
     height: "400px",
+    width: "400px",
     parserfile: "parsewiki.js",
     stylesheet: "css/wikicolors.css",
     path: "js/",
-    continuousScanning: true,
     lineNumbers: false,
-    passDelay: 3000,
-    enterMode: "flat"
+    enterMode: "flat",
+    tabMode: "spaces"
   });
+  setTimeout(function() {
+      editor.setCode("= header 1 =\n\n* enum");
+      editor.focus();
+  }, 500);
 </script>
 
 <br><a href="http://codemirror.net/manual.html" target="_blank">Codemirror Manual</a>

@@ -1,7 +1,6 @@
 package scrum.client.collaboration;
 
 import ilarkesto.core.base.Str;
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 
@@ -75,7 +74,6 @@ public class UserStatusWidget extends AScrumWidget {
 			nameLabel.removeStyleDependentName("online");
 		}
 		List<AScrumGwtEntity> selectedEntities = usersStatus.getSelectedEntities(user);
-		Log.DEBUG("selected entities ->", user, "->", selectedEntities);
 		if (!this.selectedEntities.equals(selectedEntities)) {
 			this.selectedEntities = selectedEntities;
 			StringBuilder sb = new StringBuilder();
