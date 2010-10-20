@@ -13,7 +13,7 @@ var WikiParser = Editor.Parser = (function() {
 			if (source.endOfLine())
 				throw "end-of-line";
 			var ch = source.next();
-			// log("consumed: '" + ch + "'");
+			//log("consumed: '" + ch + "'");
 			return ch;
 		}
 
@@ -29,16 +29,15 @@ var WikiParser = Editor.Parser = (function() {
 				endmarker += '=';
 			}
 			return function(source, setState) {
-				//log("header(" + source.peek() + ")")
-				next(source);
+				// log("header(" + source.peek() + ")")
 				for (i = 0; i < depth; i++) {
 					next(source);
 				}
-				//log("header-1(" + source.peek() + ")")
+				next(source);
+				// log("header-1(" + source.peek() + ")")
 				var marker = '';
 				while (!source.endOfLine()) {
 					var ch = next(source);
-					ch;
 					if (ch == ' ') {
 						marker = ' ';
 						continue;
@@ -60,7 +59,7 @@ var WikiParser = Editor.Parser = (function() {
 		}
 
 		function list(source, setState) {
-			//log("list(" + source.peek() + ")")
+			// log("list(" + source.peek() + ")")
 			next(source);
 			next(source);
 			if (source.endOfLine()) {
@@ -71,9 +70,79 @@ var WikiParser = Editor.Parser = (function() {
 			return 'wiki-list';
 		}
 
-		function normal(source, setState) {
-			//log("normal(" + source.peek() + ")")
+		function wrapper(prefix, suffix, style) {
+			return function(source, setState) {
+				log("wrapper(" + source.peek() + ")");
+				for (i = 0; i < prefix.length; i++) {
+					next(source);
+				}
+				while (!source.endOfLine()) {
+					if (source.lookAhead(suffix)) {
+						log("wrapper-1(" + source.peek() + "," + suffix + ")");
+						for (i = 0; i < suffix.length; i++) {
+							next(source);
+						}
+						log("wrapper-2(" + source.peek() + ")");
+						setState(normal);
+						return style;
+					}
+					next(source);
+				}
+				reset(source);
+				next(source);
+				setState(normal);
+				return null;
+			};
+		}
+
+		function code(source, setState) {
+			//log("code(" + source.peek() + ")");
 			while (!source.endOfLine()) {
+				var ch = source.peek();
+				if (ch == '<') {
+					if (source.lookAhead('</code>')) {
+						log("code-3(" + source.peek() + ")");
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						next(source);
+						setState(normal);
+						return "wiki-code";
+					}
+				}
+				next(source);
+			}
+			return "wiki-code";
+		}
+
+		function normal(source, setState) {
+			//log("normal(" + source.peek() + ")");
+			var prev = ' ';
+			while (!source.endOfLine()) {
+				var prevIsAlphaNum
+				var ch = source.peek();
+				if (/\s/.test(prev)) {
+					if (ch == '<' && source.lookAhead('<code>')) {
+						setState(wrapper('<code>', '</code>', 'wiki-code'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("'''''")) {
+						setState(wrapper("'''''", "'''''", 'wiki-bold-italic'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("'''")) {
+						setState(wrapper("'''", "'''", 'wiki-bold'));
+						return 'wiki-text';
+					}
+					if (ch == "'" && source.lookAhead("''")) {
+						setState(wrapper("''", "''", 'wiki-italic'));
+						return 'wiki-text';
+					}
+				}
+				prev = ch;
 				next(source);
 			}
 			setState(begin);
@@ -84,26 +153,32 @@ var WikiParser = Editor.Parser = (function() {
 			//log("begin(" + source.peek() + ")")
 			var ch = source.peek();
 
-			if (source.lookAhead('= ')) {
-				setState(header(1));
-				return null;
+			if (ch == '=') {
+				if (ch == '=' && source.lookAhead('= ')) {
+					setState(header(1));
+					return null;
+				}
+				if (source.lookAhead('== ')) {
+					setState(header(2));
+					return null;
+				}
+				if (source.lookAhead('=== ')) {
+					setState(header(3));
+					return null;
+				}
+				if (source.lookAhead('==== ')) {
+					setState(header(4));
+					return null;
+				}
 			}
-			if (source.lookAhead('== ')) {
-				setState(header(2));
-				return null;
-			}
-			if (source.lookAhead('=== ')) {
-				setState(header(3));
-				return null;
-			}
-			if (source.lookAhead('==== ')) {
-				setState(header(4));
+
+			if (ch == '<' && source.lookAhead('<code>')) {
+				setState(code);
 				return null;
 			}
 
-			if ((ch == '*' && source.lookAhead('* '))
-							|| (ch == '#' && source.lookAhead('# '))) {
-				setState(list)
+			if ((ch == '*' && source.lookAhead('* ')) || (ch == '#' && source.lookAhead('# '))) {
+				setState(list);
 				return null;
 			}
 
