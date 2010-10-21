@@ -135,6 +135,7 @@ var WikiParser = Editor.Parser = (function() {
 					var prevIsAlphaNum;
 					var ch = source.peek();
 					if (breakTest && breakTest(ch)) {
+						log("normalBreak: "+ch);
 						setState(breakState);
 						return 'wiki-text';
 					}
@@ -190,16 +191,19 @@ var WikiParser = Editor.Parser = (function() {
 						if (source.endOfLine()) {
 							setState(begin);
 						} else {
-//							var test = function(ch) {return ch=='|' || ch=='!'};
-//							setState(normalUntil(test,table,table));
 							setState(normal());
 						}
 						return 'wiki-table';
 					}
 					return 'wiki-table';
 				}
+				if (ch == '!') {
+					return 'wiki-table';
+				}
+				var test = function(ch) {return ch=='|' || ch=='!'};
+				setState(normalUntil(test,table,table));
+				//setState(tableCell());
 				return 'wiki-text';
-				setState(tableCell());
 			}
 			return 'wiki-table';
 		}
