@@ -13,13 +13,13 @@ var WikiParser = Editor.Parser = (function() {
 			if (source.endOfLine())
 				throw "end-of-line";
 			var ch = source.next();
-			//log("consumed: '" + ch + "'");
+			log("consumed: '" + ch + "'");
 			return ch;
 		}
 
 		function reset(source) {
 			var s = source.get();
-			//log("reset: " + s);
+			// log("reset: " + s);
 			source.push(s);
 		}
 
@@ -29,7 +29,7 @@ var WikiParser = Editor.Parser = (function() {
 				endmarker += '=';
 			}
 			return function(source, setState) {
-				//log("header(" + source.peek() + ")")
+				// log("header(" + source.peek() + ")")
 				for (i = 0; i < depth; i++) {
 					next(source);
 				}
@@ -53,26 +53,26 @@ var WikiParser = Editor.Parser = (function() {
 					}
 				}
 				reset(source);
-				setState(normal);
+				setState(normal());
 				return null;
 			};
 		}
 
 		function list(source, setState) {
-			//log("list(" + source.peek() + ")")
+			// log("list(" + source.peek() + ")")
 			next(source);
 			next(source);
 			if (source.endOfLine()) {
 				setState(begin);
 			} else {
-				setState(normal);
+				setState(normal());
 			}
 			return 'wiki-list';
 		}
 
 		function wrapper(prefix, suffix, style) {
 			return function(source, setState) {
-				//log("wrapper(" + source.peek() + ")");
+				// log("wrapper(" + source.peek() + ")");
 				for (i = 0; i < prefix.length; i++) {
 					next(source);
 				}
@@ -81,10 +81,10 @@ var WikiParser = Editor.Parser = (function() {
 						for (i = 0; i < suffix.length; i++) {
 							next(source);
 						}
-						if (source.endOfLine()) {							
+						if (source.endOfLine()) {
 							setState(begin);
 						} else {
-							setState(normal);
+							setState(normal());
 						}
 						return style;
 					}
@@ -92,13 +92,13 @@ var WikiParser = Editor.Parser = (function() {
 				}
 				reset(source);
 				next(source);
-				setState(normal);
+				setState(normal());
 				return null;
 			};
 		}
 
 		function code(source, setState) {
-			//log("code(" + source.peek() + ")");
+			// log("code(" + source.peek() + ")");
 			while (!source.endOfLine()) {
 				var ch = source.peek();
 				if (ch == '<') {
@@ -110,10 +110,10 @@ var WikiParser = Editor.Parser = (function() {
 						next(source);
 						next(source);
 						next(source);
-						if (source.endOfLine()) {							
+						if (source.endOfLine()) {
 							setState(begin);
 						} else {
-							setState(normal);
+							setState(normal());
 						}
 						return "wiki-code";
 					}
@@ -123,45 +123,94 @@ var WikiParser = Editor.Parser = (function() {
 			return "wiki-code";
 		}
 
-		function normal(source, setState) {
-			//log("normal(" + source.peek() + ")");
-			var prev = ' ';
-			while (!source.endOfLine()) {
-				var prevIsAlphaNum
-				var ch = source.peek();
-				if (/\s/.test(prev)) {
-					if (ch == '<' && source.lookAhead('<code>')) {
-						setState(wrapper('<code>', '</code>', 'wiki-code'));
+		function normal() {
+			return normalUntil();
+		}
+		
+		function normalUntil(breakTest, breakState) {
+			return function(source, setState) {
+				log("normal(" + source.peek() + ")");
+				var prev = ' ';
+				while (!source.endOfLine()) {
+					var prevIsAlphaNum;
+					var ch = source.peek();
+					if (breakTest && breakTest(ch)) {
+						setState(breakState);
 						return 'wiki-text';
 					}
-					if (ch == "'" && source.lookAhead("'''''")) {
-						setState(wrapper("'''''", "'''''", 'wiki-bold-italic'));
-						return 'wiki-text';
+					if (/\s/.test(prev)) {
+						if (ch == '<' && source.lookAhead('<code>')) {
+							setState(wrapper('<code>', '</code>', 'wiki-code'));
+							return 'wiki-text';
+						}
+						if (ch == "'" && source.lookAhead("'''''")) {
+							setState(wrapper("'''''", "'''''", 'wiki-bold-italic'));
+							return 'wiki-text';
+						}
+						if (ch == "'" && source.lookAhead("'''")) {
+							setState(wrapper("'''", "'''", 'wiki-bold'));
+							return 'wiki-text';
+						}
+						if (ch == "'" && source.lookAhead("''")) {
+							setState(wrapper("''", "''", 'wiki-italic'));
+							return 'wiki-text';
+						}
 					}
-					if (ch == "'" && source.lookAhead("'''")) {
-						setState(wrapper("'''", "'''", 'wiki-bold'));
-						return 'wiki-text';
-					}
-					if (ch == "'" && source.lookAhead("''")) {
-						setState(wrapper("''", "''", 'wiki-italic'));
-						return 'wiki-text';
-					}
+					prev = ch;
+					next(source);
 				}
-				prev = ch;
-				next(source);
+				setState(begin);
+				return 'wiki-text';
 			}
-			setState(begin);
-			return 'wiki-text';
+		}
+
+		function tableCell() {
+			return function(source, setState) {
+				log("tableCell(" + source.peek() + ")");
+				while (!source.endOfLine()) {
+					var ch = source.peek();
+					if (ch == '|') {
+						setState(table);
+						return 'wiki-text';
+					}
+					next(source);
+				}
+				return 'wiki-text';
+			};
+		}
+
+		function table(source, setState) {
+			log("table(" + source.peek() + ")");
+			if (!source.endOfLine()) {
+				var ch = next(source);
+				if (ch == '|') {
+					if (source.lookAhead('}')) {
+						next(source);
+						if (source.endOfLine()) {
+							setState(begin);
+						} else {
+							var test = function(ch) {return ch=='|' || ch=='!'};
+							setState(normalUntil(test,table));
+						}
+						return 'wiki-table';
+					}
+					return 'wiki-table';
+				}
+				return 'wiki-text';
+				setState(tableCell());
+			}
+			return 'wiki-table';
 		}
 
 		function begin(source, setState) {
 			log("begin(" + source.peek() + ")");
-			
+
 			if (source.indented) {
-				while (!source.endOfLine()) source.next();
+				while (!source.endOfLine())
+					source.next();
 				return "wiki-preformated";
 			}
-			
+
 			var ch = source.peek();
 
 			if (ch == '=') {
@@ -193,7 +242,13 @@ var WikiParser = Editor.Parser = (function() {
 				return null;
 			}
 
-			setState(normal)
+			if (ch == '{' && source.lookAhead('{|')) {
+				next(source);
+				setState(table);
+				return null;
+			}
+
+			setState(normal())
 			return null;
 		}
 
