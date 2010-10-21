@@ -70,7 +70,7 @@ var WikiParser = Editor.Parser = (function() {
 			return 'wiki-list';
 		}
 
-		function wrapper(prefix, suffix, style) {
+		function wrapper(prefix, suffix, style, lineEndState) {
 			return function(source, setState) {
 				// log("wrapper(" + source.peek() + ")");
 				for (i = 0; i < prefix.length; i++) {
@@ -82,7 +82,7 @@ var WikiParser = Editor.Parser = (function() {
 							next(source);
 						}
 						if (source.endOfLine()) {
-							setState(begin);
+							setState(lineEndState);
 						} else {
 							setState(normal());
 						}
@@ -124,10 +124,10 @@ var WikiParser = Editor.Parser = (function() {
 		}
 
 		function normal() {
-			return normalUntil();
+			return normalUntil(null, null, begin);
 		}
 		
-		function normalUntil(breakTest, breakState) {
+		function normalUntil(breakTest, breakState, lineEndState) {
 			return function(source, setState) {
 				log("normal(" + source.peek() + ")");
 				var prev = ' ';
@@ -140,26 +140,26 @@ var WikiParser = Editor.Parser = (function() {
 					}
 					if (/\s/.test(prev)) {
 						if (ch == '<' && source.lookAhead('<code>')) {
-							setState(wrapper('<code>', '</code>', 'wiki-code'));
+							setState(wrapper('<code>', '</code>', 'wiki-code', lineEndState));
 							return 'wiki-text';
 						}
 						if (ch == "'" && source.lookAhead("'''''")) {
-							setState(wrapper("'''''", "'''''", 'wiki-bold-italic'));
+							setState(wrapper("'''''", "'''''", 'wiki-bold-italic', lineEndState));
 							return 'wiki-text';
 						}
 						if (ch == "'" && source.lookAhead("'''")) {
-							setState(wrapper("'''", "'''", 'wiki-bold'));
+							setState(wrapper("'''", "'''", 'wiki-bold', lineEndState));
 							return 'wiki-text';
 						}
 						if (ch == "'" && source.lookAhead("''")) {
-							setState(wrapper("''", "''", 'wiki-italic'));
+							setState(wrapper("''", "''", 'wiki-italic', lineEndState));
 							return 'wiki-text';
 						}
 					}
 					prev = ch;
 					next(source);
 				}
-				setState(begin);
+				setState(lineEndState);
 				return 'wiki-text';
 			}
 		}
@@ -189,8 +189,9 @@ var WikiParser = Editor.Parser = (function() {
 						if (source.endOfLine()) {
 							setState(begin);
 						} else {
-							var test = function(ch) {return ch=='|' || ch=='!'};
-							setState(normalUntil(test,table));
+//							var test = function(ch) {return ch=='|' || ch=='!'};
+//							setState(normalUntil(test,table,table));
+							setState(normal());
 						}
 						return 'wiki-table';
 					}
