@@ -115,6 +115,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		dashboard(css);
 		calendar(css);
 		planningPoker(css);
+		userStatus(css);
 
 		css.style(".EmoticonSelectorWidget-emoticon").border(1, "white").borderRadius(2).padding(2, 1, 0, 1)
 				.cursorPointer();
@@ -475,13 +476,15 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".UsersOnBlockWidget").textAlignRight();
 
+	}
+
+	private void userStatus(CssRenderer css) {
 		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
+
 		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
 		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic();
 		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
-		css.style(".UserStatusWidget-selectedEntities").floatRight();
-		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
-
+		css.style(".UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall);
 	}
 
 	private void pagePanel(CssRenderer css) {

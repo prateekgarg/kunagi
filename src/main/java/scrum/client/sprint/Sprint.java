@@ -143,6 +143,14 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		return ret;
 	}
 
+	public List<Task> getClaimedTasks(User user) {
+		List<Task> ret = new ArrayList<Task>();
+		for (Requirement requirement : getRequirements()) {
+			ret.addAll(requirement.getClaimedTasks(user));
+		}
+		return ret;
+	}
+
 	public int getBurnedWorkInClosedTasks() {
 		int sum = 0;
 		for (Requirement requirement : getRequirements()) {
