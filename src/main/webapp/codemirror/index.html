@@ -3,15 +3,14 @@
 <head>
     <title>Codemirror Tester</title>
     <script src="js/codemirror.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="css/docs.css"/>
 </head>
 
 <body>
 <h3>Codemirror wiki parser tester</h3>
 
-<div style="border: 1px solid black">
-<textarea id="code" rows="20" cols="60"></textarea>
-</div>
+<div style="border: 1px solid black; float: left;">
+<textarea id="code" rows="20" cols="40"></textarea>
+</div><div style="clear: both;"></div>
 
 <script type="text/javascript">
   var editor = CodeMirror.fromTextArea('code', {
@@ -25,7 +24,7 @@
     tabMode: "spaces"
   });
   setTimeout(function() {
-      editor.setCode("<code>\nc\n</code>\nx\nx");
+      editor.setCode("''i''\n= h =");
       editor.focus();
   }, 500);
 </script>

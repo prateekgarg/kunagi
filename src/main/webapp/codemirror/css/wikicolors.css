@@ -5,8 +5,9 @@ html {
 .editbox {
   margin: 5px;
   padding: 0;
-  line-height: 14px;
-  font-size: 12px;
+  line-height: 16px;
+  font-family: Arial Unicode MS, Arial, sans-serif;
+  font-size: 14px;
   color: black;
   background: #FAFAFF;
   border: 1px solid gray;
@@ -24,8 +25,8 @@ html {
 
 .editbox span.wiki-h1 {color: darkred; font-weight: bold; font-size: 18px;}
 .editbox span.wiki-h2 {color: darkred; font-weight: bold; font-size: 16px;}
-.editbox span.wiki-h3 {color: darkred; font-weight: bold; font-size: 14px;}
-.editbox span.wiki-h4 {color: darkred; font-weight: bold; font-size: 12px;}
+.editbox span.wiki-h3 {color: darkred; font-weight: bold; font-size: 15px;}
+.editbox span.wiki-h4 {color: darkred; font-weight: bold; font-size: 14px;}
 
 .editbox span.wiki-list {color: darkred; font-weight: bold; font-family: monospace;}
 

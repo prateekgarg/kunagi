@@ -3,8 +3,8 @@ var WikiParser = Editor.Parser = (function() {
 	var run = 0;
 
 	function log(message) {
-		if (console && run <= 2)
-			console.log(message);
+		//if (console && run <= 2)
+		//	console.log(message);
 	}
 
 	var tokenizeWiki = (function() {
@@ -19,7 +19,7 @@ var WikiParser = Editor.Parser = (function() {
 
 		function reset(source) {
 			var s = source.get();
-			log("reset: " + s);
+			//log("reset: " + s);
 			source.push(s);
 		}
 
@@ -29,7 +29,7 @@ var WikiParser = Editor.Parser = (function() {
 				endmarker += '=';
 			}
 			return function(source, setState) {
-				// log("header(" + source.peek() + ")")
+				//log("header(" + source.peek() + ")")
 				for (i = 0; i < depth; i++) {
 					next(source);
 				}
@@ -59,7 +59,7 @@ var WikiParser = Editor.Parser = (function() {
 		}
 
 		function list(source, setState) {
-			// log("list(" + source.peek() + ")")
+			//log("list(" + source.peek() + ")")
 			next(source);
 			next(source);
 			if (source.endOfLine()) {
@@ -72,18 +72,20 @@ var WikiParser = Editor.Parser = (function() {
 
 		function wrapper(prefix, suffix, style) {
 			return function(source, setState) {
-				log("wrapper(" + source.peek() + ")");
+				//log("wrapper(" + source.peek() + ")");
 				for (i = 0; i < prefix.length; i++) {
 					next(source);
 				}
 				while (!source.endOfLine()) {
 					if (source.lookAhead(suffix)) {
-						log("wrapper-1(" + source.peek() + "," + suffix + ")");
 						for (i = 0; i < suffix.length; i++) {
 							next(source);
 						}
-						log("wrapper-2(" + source.peek() + ")");
-						setState(normal);
+						if (source.endOfLine()) {							
+							setState(begin);
+						} else {
+							setState(normal);
+						}
 						return style;
 					}
 					next(source);
@@ -101,7 +103,6 @@ var WikiParser = Editor.Parser = (function() {
 				var ch = source.peek();
 				if (ch == '<') {
 					if (source.lookAhead('</code>')) {
-						log("code-3(" + source.peek() + ")");
 						next(source);
 						next(source);
 						next(source);
@@ -109,7 +110,11 @@ var WikiParser = Editor.Parser = (function() {
 						next(source);
 						next(source);
 						next(source);
-						setState(normal);
+						if (source.endOfLine()) {							
+							setState(begin);
+						} else {
+							setState(normal);
+						}
 						return "wiki-code";
 					}
 				}
