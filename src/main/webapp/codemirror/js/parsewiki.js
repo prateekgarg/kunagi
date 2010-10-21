@@ -13,7 +13,7 @@ var WikiParser = Editor.Parser = (function() {
 			if (source.endOfLine())
 				throw "end-of-line";
 			var ch = source.next();
-			log("consumed: '" + ch + "'");
+			// log("consumed: '" + ch + "'");
 			return ch;
 		}
 
@@ -126,16 +126,16 @@ var WikiParser = Editor.Parser = (function() {
 		function normal() {
 			return normalUntil(null, null, begin);
 		}
-		
+
 		function normalUntil(breakTest, breakState, lineEndState) {
 			var thisState = function(source, setState) {
-				log("normal(" + source.peek() + ")");
+				// log("normal(" + source.peek() + ")");
 				var prev = ' ';
 				while (!source.endOfLine()) {
 					var prevIsAlphaNum;
 					var ch = source.peek();
-					if (breakTest && breakTest(ch)) {
-						log("normalBreak: "+ch);
+					if (breakTest && breakTest(source)) {
+						// log("normalBreak: "+ch);
 						setState(breakState);
 						return 'wiki-text';
 					}
@@ -168,7 +168,7 @@ var WikiParser = Editor.Parser = (function() {
 
 		function tableCell() {
 			return function(source, setState) {
-				log("tableCell(" + source.peek() + ")");
+				// log("tableCell(" + source.peek() + ")");
 				while (!source.endOfLine()) {
 					var ch = source.peek();
 					if (ch == '|') {
@@ -182,11 +182,12 @@ var WikiParser = Editor.Parser = (function() {
 		}
 
 		function table(source, setState) {
-			log("table(" + source.peek() + ")");
+			// log("table(" + source.peek() + ")");
 			if (!source.endOfLine()) {
-				var ch = next(source);
+				var ch = source.peek();
 				if (ch == '|') {
-					if (source.lookAhead('}')) {
+					if (source.lookAhead('|}')) {
+						next(source);
 						next(source);
 						if (source.endOfLine()) {
 							setState(begin);
@@ -195,21 +196,25 @@ var WikiParser = Editor.Parser = (function() {
 						}
 						return 'wiki-table';
 					}
+					next(source);
 					return 'wiki-table';
 				}
 				if (ch == '!') {
+					next(source);
 					return 'wiki-table';
 				}
-				var test = function(ch) {return ch=='|' || ch=='!'};
-				setState(normalUntil(test,table,table));
-				//setState(tableCell());
-				return 'wiki-text';
+				var test = function(source) {
+					return source.lookAhead('||') || source.lookAhead('!!');
+				};
+				setState(normalUntil(test, table, table));
+				// setState(tableCell());
+				return null;
 			}
 			return 'wiki-table';
 		}
 
 		function begin(source, setState) {
-			log("begin(" + source.peek() + ")");
+			// log("begin(" + source.peek() + ")");
 
 			if (source.indented) {
 				while (!source.endOfLine())
@@ -250,8 +255,9 @@ var WikiParser = Editor.Parser = (function() {
 
 			if (ch == '{' && source.lookAhead('{|')) {
 				next(source);
+				next(source);
 				setState(table);
-				return null;
+				return 'wiki-table';
 			}
 
 			setState(normal())

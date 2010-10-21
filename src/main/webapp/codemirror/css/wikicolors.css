@@ -17,20 +17,20 @@ html {
 .editbox span.whitespace {font-family: monospace;}
 
 .editbox span.wiki-text {color: black; color: black;}
-.editbox span.wiki-keyword {font-weight: bold; color: darkred; font-family: monospace;}
+.editbox span.wiki-keyword {font-weight: bold; color: blue; font-family: monospace;}
 
 .editbox span.wiki-bold {font-weight: bold;}
 .editbox span.wiki-italic {font-style: italic;}
 .editbox span.wiki-bold-italic {font-weight: bold; font-style: italic;}
 
-.editbox span.wiki-h1 {color: darkred; font-weight: bold; font-size: 18px;}
-.editbox span.wiki-h2 {color: darkred; font-weight: bold; font-size: 16px;}
-.editbox span.wiki-h3 {color: darkred; font-weight: bold; font-size: 15px;}
-.editbox span.wiki-h4 {color: darkred; font-weight: bold; font-size: 14px;}
+.editbox span.wiki-h1 {color: blue; font-weight: bold; font-size: 18px;}
+.editbox span.wiki-h2 {color: blue; font-weight: bold; font-size: 16px;}
+.editbox span.wiki-h3 {color: blue; font-weight: bold; font-size: 15px;}
+.editbox span.wiki-h4 {color: blue; font-weight: bold; font-size: 14px;}
 
-.editbox span.wiki-list {color: darkred; font-weight: bold; font-family: monospace;}
+.editbox span.wiki-list {color: blue; font-weight: bold; font-family: monospace;}
 
-.editbox span.wiki-table {color: darkred; font-weight: bold; font-family: monospace;}
+.editbox span.wiki-table {color: blue; font-weight: bold; font-family: monospace;}
 
-.editbox span.wiki-code {color: blue; font-family: monospace;}
-.editbox span.wiki-preformated {color: blue; font-family: monospace;}
+.editbox span.wiki-code {color: green; font-family: monospace;}
+.editbox span.wiki-preformated {color: green; font-family: monospace;}
