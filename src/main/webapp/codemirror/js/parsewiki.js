@@ -3,8 +3,8 @@ var WikiParser = Editor.Parser = (function() {
 	var run = 0;
 
 	function log(message) {
-		//if (console && run <= 2)
-		//	console.log(message);
+		if (console && run <= 2)
+			console.log(message);
 	}
 
 	var tokenizeWiki = (function() {
@@ -155,7 +155,13 @@ var WikiParser = Editor.Parser = (function() {
 		}
 
 		function begin(source, setState) {
-			//log("begin(" + source.peek() + ")")
+			log("begin(" + source.peek() + ")");
+			
+			if (source.indented) {
+				while (!source.endOfLine()) source.next();
+				return "wiki-preformated";
+			}
+			
 			var ch = source.peek();
 
 			if (ch == '=') {

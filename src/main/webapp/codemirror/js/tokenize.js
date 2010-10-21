@@ -29,8 +29,14 @@ function tokenizer(source, state) {
         type = {style: type, type: type};
 
       type.content = (type.content || "") + source.get();
-      if (!/\n$/.test(type.content))
-        source.nextWhile(isWhiteSpace);
+      if (!/\n$/.test(type.content)) {
+    	if (source.applies(isWhiteSpace)) {
+    	  source.indented = true;
+    	  source.nextWhile(isWhiteSpace);
+    	} else {
+    	  source.indented = false;
+    	}
+      }
       type.value = type.content + source.get();
       return type;
     },
