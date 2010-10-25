@@ -44,6 +44,7 @@ public class UserDao extends GUserDao {
 
 		if (name == null) {
 			name = OpenId.cutUsername(openId);
+			name = Str.removePrefix(name, "AItOaw");
 			if (name.length() > 10) name = name.substring(0, 9);
 			if (getUserByName(name) != null) name = openId;
 		}
