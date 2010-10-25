@@ -1051,6 +1051,61 @@ public abstract class GSystemConfig
 
     }
 
+    // --- versionCheckEnabled ---
+
+    private boolean versionCheckEnabled ;
+
+    public final boolean isVersionCheckEnabled() {
+        return this.versionCheckEnabled ;
+    }
+
+    public final SystemConfig setVersionCheckEnabled(boolean versionCheckEnabled) {
+        if (isVersionCheckEnabled(versionCheckEnabled)) return (SystemConfig)this;
+        this.versionCheckEnabled = versionCheckEnabled ;
+        propertyChanged("versionCheckEnabled", this.versionCheckEnabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isVersionCheckEnabled(boolean versionCheckEnabled) {
+        return equals(this.versionCheckEnabled, versionCheckEnabled);
+    }
+
+    private transient VersionCheckEnabledModel versionCheckEnabledModel;
+
+    public VersionCheckEnabledModel getVersionCheckEnabledModel() {
+        if (versionCheckEnabledModel == null) versionCheckEnabledModel = createVersionCheckEnabledModel();
+        return versionCheckEnabledModel;
+    }
+
+    protected VersionCheckEnabledModel createVersionCheckEnabledModel() { return new VersionCheckEnabledModel(); }
+
+    protected class VersionCheckEnabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_versionCheckEnabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isVersionCheckEnabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setVersionCheckEnabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1072,6 +1127,7 @@ public abstract class GSystemConfig
         projectCreationDisabled  = (Boolean) props.get("projectCreationDisabled");
         defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
         openIdDisabled  = (Boolean) props.get("openIdDisabled");
+        versionCheckEnabled  = (Boolean) props.get("versionCheckEnabled");
         updateLocalModificationTime();
     }
 
@@ -1096,6 +1152,7 @@ public abstract class GSystemConfig
         properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
         properties.put("openIdDisabled", this.openIdDisabled);
+        properties.put("versionCheckEnabled", this.versionCheckEnabled);
     }
 
 }

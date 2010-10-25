@@ -32,6 +32,7 @@ public class SystemConfigWidget extends AScrumWidget {
 		tbKunagi.addFieldRow("Disable project creation", config.getProjectCreationDisabledModel());
 		tbKunagi.addFieldRow("Users email is mandatory", config.getUserEmailMandatoryModel());
 		tbKunagi.addFieldRow("Default user password", config.getDefaultUserPasswordModel());
+		tbKunagi.addFieldRow("Check for updates", config.getVersionCheckEnabledModel());
 		page.addSection(tbKunagi.createTable());
 
 		page.addHeader("Email", new ButtonWidget(new SendTestEmailAction()));

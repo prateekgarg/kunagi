@@ -112,6 +112,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private String currentRelease;
 
 	public String getCurrentRelease() {
+		if (!getSystemConfig().isVersionCheckEnabled()) return null;
 		if (currentRelease == null) {
 			String url = "http://kunagi.org/current-release.properties";
 			log.info("Checking current release:", url);

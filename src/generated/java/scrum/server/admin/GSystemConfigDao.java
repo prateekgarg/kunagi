@@ -73,6 +73,7 @@ public abstract class GSystemConfigDao
         systemConfigsByDefaultUserPasswordCache.clear();
         defaultUserPasswordsCache = null;
         systemConfigsByOpenIdDisabledCache.clear();
+        systemConfigsByVersionCheckEnabledCache.clear();
     }
 
     @Override
@@ -752,6 +753,35 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return value == e.isOpenIdDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - versionCheckEnabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByVersionCheckEnabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean versionCheckEnabled) {
+                    return getEntities(new IsVersionCheckEnabled(versionCheckEnabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByVersionCheckEnabled(boolean versionCheckEnabled) {
+        return systemConfigsByVersionCheckEnabledCache.get(versionCheckEnabled);
+    }
+
+    private static class IsVersionCheckEnabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsVersionCheckEnabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isVersionCheckEnabled();
         }
 
     }

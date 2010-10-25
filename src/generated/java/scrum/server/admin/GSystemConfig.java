@@ -54,6 +54,7 @@ public abstract class GSystemConfig
         properties.put("projectCreationDisabled", this.projectCreationDisabled);
         properties.put("defaultUserPassword", this.defaultUserPassword);
         properties.put("openIdDisabled", this.openIdDisabled);
+        properties.put("versionCheckEnabled", this.versionCheckEnabled);
     }
 
     public int compareTo(SystemConfig other) {
@@ -681,6 +682,36 @@ public abstract class GSystemConfig
         setOpenIdDisabled((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - versionCheckEnabled
+    // -----------------------------------------------------------
+
+    private boolean versionCheckEnabled;
+
+    public final boolean isVersionCheckEnabled() {
+        return versionCheckEnabled;
+    }
+
+    public final void setVersionCheckEnabled(boolean versionCheckEnabled) {
+        versionCheckEnabled = prepareVersionCheckEnabled(versionCheckEnabled);
+        if (isVersionCheckEnabled(versionCheckEnabled)) return;
+        this.versionCheckEnabled = versionCheckEnabled;
+        updateLastModified();
+        fireModified("versionCheckEnabled="+versionCheckEnabled);
+    }
+
+    protected boolean prepareVersionCheckEnabled(boolean versionCheckEnabled) {
+        return versionCheckEnabled;
+    }
+
+    public final boolean isVersionCheckEnabled(boolean versionCheckEnabled) {
+        return this.versionCheckEnabled == versionCheckEnabled;
+    }
+
+    protected final void updateVersionCheckEnabled(Object value) {
+        setVersionCheckEnabled((Boolean)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -704,6 +735,7 @@ public abstract class GSystemConfig
             if (property.equals("projectCreationDisabled")) updateProjectCreationDisabled(value);
             if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
             if (property.equals("openIdDisabled")) updateOpenIdDisabled(value);
+            if (property.equals("versionCheckEnabled")) updateVersionCheckEnabled(value);
         }
     }
 

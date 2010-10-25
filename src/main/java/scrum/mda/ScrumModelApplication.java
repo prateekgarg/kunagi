@@ -96,6 +96,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Default password, which is assigned to new users, which are created by the admin.");
 			systemConfigModel.addProperty("openIdDisabled", boolean.class).setTooltip(
 				"Activate this, if you want to disable logins with OpenID.");
+			systemConfigModel
+					.addProperty("versionCheckEnabled", boolean.class)
+					.setTooltip(
+						"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

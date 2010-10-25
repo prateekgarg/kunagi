@@ -98,6 +98,7 @@
 "b98217f8-7bad-4510-8025-d9cddcfc487e","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","url"
 "c9773376-c9d0-40da-80fb-32189cb8a676","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","BooleanProperty","userEmailMandatory"
 "f56b6291-f7b0-42a0-838a-27037eee1461","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","BooleanProperty","openIdDisabled"
+"6ef0a022-3d00-45c5-b5f0-66453a46cd29","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","BooleanProperty","versionCheckEnabled"
 "d019184f-1e5a-45ac-8466-9414bdfa1694","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","Component","SystemMessageManager"
 "4117c210-7cd1-45b6-a4d4-95f0618d231e","d019184f-1e5a-45ac-8466-9414bdfa1694","Dependency","app"
 "77e7fdc3-36ea-46df-9fe4-05381b465ba1","4117c210-7cd1-45b6-a4d4-95f0618d231e","Type","scrum.client.ScrumGwtApplication"
