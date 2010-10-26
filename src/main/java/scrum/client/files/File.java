@@ -19,13 +19,14 @@ public class File extends GFile implements ReferenceSupport {
 		return name.endsWith(".png") || name.endsWith(".gif") || name.endsWith(".jpg");
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class File extends GFile implements ReferenceSupport {
 
 	public static final Comparator<File> UPLOAD_TIME_COMPARATOR = new Comparator<File>() {
 
+		@Override
 		public int compare(File a, File b) {
 			return a.getUploadTime().compareTo(b.getUploadTime());
 		}
@@ -42,6 +44,7 @@ public class File extends GFile implements ReferenceSupport {
 
 	public static final Comparator<File> REVERSE_UPLOAD_TIME_COMPARATOR = new Comparator<File>() {
 
+		@Override
 		public int compare(File a, File b) {
 			return UPLOAD_TIME_COMPARATOR.compare(b, a);
 		}

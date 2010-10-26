@@ -3,6 +3,7 @@ package scrum.client.dashboard;
 import java.util.Collections;
 import java.util.List;
 
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
 import scrum.client.project.Project;
@@ -64,24 +65,15 @@ public class UpcomingTeamTasksWidget extends AScrumWidget {
 		if (!tasks.isEmpty()) {
 			sb.append("Next upcoming tasks:");
 			sb.append("<ul>");
-			Requirement req = null;
 			for (Task task : tasks) {
-				if (!task.isRequirement(req)) {
-					if (taskCount > 0) break;
-					boolean first = req != null;
-					if (first) sb.append("</ul></li>");
-					req = task.getRequirement();
-					sb.append("<li>");
-					sb.append(req.toHtml());
-					sb.append("<ul>");
-				}
-				sb.append("<li>");
-				sb.append(task.toHtml());
-				sb.append("</li>");
+				Requirement req = null;
+				if (!task.isRequirement(req) && taskCount > 0) break;
+				req = task.getRequirement();
+				sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.getReferenceAsHtmlLink(req))
+						.append(")</li>");
 				taskCount++;
 				if (taskCount == maxTasks) break;
 			}
-			sb.append("</ul></li>");
 			sb.append("</ul></div>");
 		}
 

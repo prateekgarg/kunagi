@@ -124,7 +124,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

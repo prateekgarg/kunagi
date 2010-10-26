@@ -21,15 +21,17 @@ public class Subject extends GSubject implements ForumSupport {
 		super(data);
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Title", getLabelModel());

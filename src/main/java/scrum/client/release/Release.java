@@ -124,7 +124,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

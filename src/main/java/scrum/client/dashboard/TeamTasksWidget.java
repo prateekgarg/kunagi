@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
@@ -60,15 +61,12 @@ public class TeamTasksWidget extends AScrumWidget {
 			List<Requirement> requirements = new ArrayList<Requirement>(getRequirements(tasks));
 			Collections.sort(requirements, project.getRequirementsOrderComparator());
 			for (Requirement req : requirements) {
-				sb.append("<li>");
-				sb.append(req.toHtml());
-				sb.append("<ul>");
 				List<Task> usersTasks = req.getClaimedTasks(user);
 				Collections.sort(usersTasks, Task.NUMBER_COMPARATOR);
 				for (Task task : usersTasks) {
-					sb.append("<li>").append(task.toHtml()).append("</li>");
+					sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.getReferenceAsHtmlLink(req))
+							.append(")</li>");
 				}
-				sb.append("</ul></li>");
 			}
 			sb.append("</ul></div>");
 		}

@@ -40,7 +40,7 @@ public class BlogEntry extends GBlogEntry implements ReferenceSupport, ForumSupp
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getTitle());
+		return ScrumGwt.toHtml(this, getTitle());
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class Quality extends GQuality implements ReferenceSupport, LabelSupport,
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

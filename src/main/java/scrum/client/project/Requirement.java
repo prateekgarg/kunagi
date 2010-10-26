@@ -325,7 +325,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

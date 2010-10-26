@@ -83,7 +83,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, L
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package scrum.client;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
@@ -7,7 +8,10 @@ import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumGwtEntity;
+import scrum.client.common.LabelSupport;
+import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
+import scrum.client.workspace.Navigator;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -102,9 +106,21 @@ public class ScrumGwt extends Gwt {
 			text);
 	}
 
-	public static String toHtml(String reference, String label) {
-		label = escapeHtml(label);
-		return ScrumJs.createShowEntityByReferenceLink(reference, label) + " " + label;
+	public static String toHtml(AScrumGwtEntity entity, String label) {
+		return getReferenceAsHtmlLink(entity) + " " + escapeHtml(label);
+	}
+
+	public static String getReferenceAsHtmlLink(AScrumGwtEntity entity) {
+		String reference = entity.getId();
+		if (entity instanceof ReferenceSupport) {
+			reference = ((ReferenceSupport) entity).getReference();
+		}
+		String label = entity.toString();
+		if (entity instanceof LabelSupport) {
+			label = ((LabelSupport) entity).getLabel();
+		}
+		label = Str.toHtml(label);
+		return "<a href='" + Navigator.getEntityHref(entity) + "' title='" + label + "'>" + reference + "</a>";
 	}
 
 }

@@ -189,7 +189,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override

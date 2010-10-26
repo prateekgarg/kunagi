@@ -181,7 +181,7 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 
 	@Override
 	public String toHtml() {
-		return ScrumGwt.toHtml(getReference(), getLabel());
+		return ScrumGwt.toHtml(this, getLabel());
 	}
 
 	@Override
