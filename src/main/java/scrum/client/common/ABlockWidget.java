@@ -91,7 +91,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected final void onUpdate() {
 		onUpdateHeader(header);
-		if (object instanceof AGwtEntity) {
+		if (getCurrentProject() != null && object instanceof AGwtEntity) {
 			AGwtEntity entity = (AGwtEntity) object;
 			header.setHref(Navigator.getEntityHref(entity));
 		}
