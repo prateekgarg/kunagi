@@ -762,6 +762,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
+			issueModel.addAction("UnclaimIssue");
 			issueModel.addAction("FixIssue");
 			issueModel.addAction("RejectFixIssue");
 			issueModel.addAction("DeleteIssue");
