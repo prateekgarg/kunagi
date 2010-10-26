@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.LabelProvider;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -193,6 +194,19 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
+	private AFieldModel<String> severityLabelModel;
+
+	public AFieldModel<String> getSeverityLabelModel() {
+		if (severityLabelModel == null) severityLabelModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getSeverityLabel();
+			}
+		};
+		return severityLabelModel;
+	}
+
 	public static final Comparator<Issue> SEVERITY_COMPARATOR = new Comparator<Issue>() {
 
 		@Override
@@ -256,5 +270,18 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		public static final String IDEA = "idea";
 
 		public static final List<String> ALL = Arrays.asList(ISSUE, BUG, REQUIREMENT, QUALITY, IDEA);
+	}
+
+	private transient AFieldModel<String> statusLabelModel;
+
+	public AFieldModel<String> getStatusLabelModel() {
+		if (statusLabelModel == null) statusLabelModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getStatusLabel();
+			}
+		};
+		return statusLabelModel;
 	}
 }

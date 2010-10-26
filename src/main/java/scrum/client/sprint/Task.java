@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -208,4 +209,30 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 		}
 	};
 
+	private transient AFieldModel<String> ownerModel;
+
+	public AFieldModel<String> getOwnerModel() {
+		if (ownerModel == null) ownerModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				User owner = getOwner();
+				return owner == null ? null : owner.getName();
+			}
+		};
+		return ownerModel;
+	}
+
+	private transient AFieldModel<String> workTextModel;
+
+	public AFieldModel<String> getWorkTextModel() {
+		if (workTextModel == null) workTextModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getWorkText();
+			}
+		};
+		return workTextModel;
+	}
 }

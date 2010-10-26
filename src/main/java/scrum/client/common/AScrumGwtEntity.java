@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HtmlLabelSupport;
+import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
 
 import java.util.ArrayList;
@@ -121,6 +122,38 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 		}
 		sb.append(Gwt.escapeHtml(label));
 		return sb.toString();
+	}
+
+	private transient AFieldModel<String> labelModel;
+
+	public AFieldModel<String> getLabelModel() {
+		if (labelModel == null) {
+			labelModel = new AFieldModel<String>() {
+
+				@Override
+				public String getValue() {
+					if (AScrumGwtEntity.this instanceof LabelSupport)
+						return ((LabelSupport) AScrumGwtEntity.this).getLabel();
+					return toString();
+				}
+			};
+		}
+		return labelModel;
+	}
+
+	private transient AFieldModel<String> lastCommentAgoModel;
+
+	public AFieldModel<String> getLastCommentAgoModel() {
+		if (lastCommentAgoModel == null) lastCommentAgoModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				Comment comment = (AScrumGwtEntity.this).getLatestComment();
+				return comment != null ? comment.getDateAndTime().getPeriodToNow().toShortestString() + " ago by "
+						+ comment.getAuthorName() : null;
+			}
+		};
+		return lastCommentAgoModel;
 	}
 
 	@Override

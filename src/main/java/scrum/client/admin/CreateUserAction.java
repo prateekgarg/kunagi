@@ -27,7 +27,7 @@ public class CreateUserAction extends GCreateUserAction {
 	protected void onExecute() {
 		User user = new User();
 		getDao().createUser(user);
-		Scope.get().getComponent(UsersWorkspaceWidgets.class).getUserList().showUser(user);
+		Scope.get().getComponent(UsersWorkspaceWidgets.class).getUserList().select(user);
 	}
 
 }

@@ -103,6 +103,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		loginPage(css);
 		systemMessage(css);
 		blockList(css);
+		usersStatus(css);
 		comments(css);
 		userGuide(css);
 		actions(css);
@@ -171,7 +172,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".RequirementEstimatedWorkWidget").marginLeft(3);
 		css.style(".RequirementEstimatedWorkWidget .gwt-Button").fontSize(fontSizeSmall);
 
-		css.style(".EstimationBarWidget").marginTop(7).border(1, cNavigatorSelectedItemBackground);
+		css.style(".EstimationBarWidget").marginTop(8).border(1, cNavigatorSelectedItemBackground);
 		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0).lineHeight(1).fontSize(1);
 		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1).lineHeight(1).fontSize(1);
 
@@ -458,30 +459,31 @@ public class ScreenCssBuilder implements CssBuilder {
 				.lineHeight(lineHeight - 2).textAlignCenter().cursorMove()
 				.background(cBlockHeaderDragHandleBackground, "../blockdraghandle-bg.png")
 				.border(1, cNavigatorSeparator).borderRadius(5);
+		css.style(".BlockHeaderWidget-anchor").displayBlock().floatLeft().width100().textDecorationNone();
 		css.style(".BlockHeaderWidget-dragHandle:hover").background("white", "../blockdraghandle-hover-bg.png");
-		css.style(".BlockHeaderWidget-center").padding(2);
-		css.style("a.BlockHeaderWidget-center-text").fontWeightBold().color(cHeaderBackground)
-				.lineHeight(lineHeight + 4).textDecorationNone();
-		css.style("a.BlockHeaderWidget-centerSuffix").marginLeft(5).color(cBlockHeaderCellSecondary)
-				.fontSize(fontSizeSmall).textDecorationNone();
-		css.style(".BlockHeaderWidget-cell").padding(2);
-		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary);
-		css.style(".BlockHeaderWidget-prefixLabel a").color(cBlockHeaderCellSecondary).textDecorationNone(); // .cursorPointer();
-		css.style(".BlockHeaderWidget-cell .gwt-Button").fontSize(fontSizeSmall).padding(2, 3, 2, 3).margin(0);
-		css.style(".BlockHeaderWidget-cell .EmoticonsWidget");
+		css.style(".BlockHeaderWidget-cell").color(cBlockHeaderCellSecondary).floatLeft().fontWeightBold()
+				.color(cHeaderBackground).padding(4, 5, 0, 5);
+		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary).fontWeightNormal();
+		css.style(".BlockHeaderWidget-cell-small").fontSize(fontSizeSmall).fontWeightNormal().paddingTop(6);
+
+		css.style(".BlockHeaderWidget .ButtonWidget").padding(2, 5, 0, 5).margin(0);
+		css.style(".BlockHeaderWidget .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
+		css.style(".BlockHeaderWidget .EmoticonsWidget").padding(3, 5, 0, 5);
+		css.style(".BlockHeaderWidget .DropdownMenuButtonWidget").padding(2, 3, 0, 5);
 
 		css.style(".BlockDndMarkerWidget").background("none");
 		css.style(".BlockDndMarkerWidget-active").background(cError);
 
-		css.style(".UsersOnBlockWidget").textAlignRight();
+		css.style(".UsersOnBlockWidget").padding(3, 5, 0, 5).textAlignRight();
+	}
 
+	private void usersStatus(CssRenderer css) {
 		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
 		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
 		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic();
 		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
 		css.style(".UserStatusWidget-selectedEntities").floatRight();
 		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
-
 	}
 
 	private void pagePanel(CssRenderer css) {

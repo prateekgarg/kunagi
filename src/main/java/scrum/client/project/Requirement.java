@@ -5,6 +5,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -368,6 +369,32 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			}
 		};
 		return tasksOrderComparator;
+	}
+
+	private AFieldModel<String> estimatedWorkWithUnitModel;
+
+	public AFieldModel<String> getEstimatedWorkWithUnitModel() {
+		if (estimatedWorkWithUnitModel == null) estimatedWorkWithUnitModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getEstimatedWorkWithUnit();
+			}
+		};
+		return estimatedWorkWithUnitModel;
+	}
+
+	private transient AFieldModel<String> taskStatusLabelModel;
+
+	public AFieldModel<String> getTaskStatusLabelModel() {
+		if (taskStatusLabelModel == null) taskStatusLabelModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getTaskStatusLabel();
+			}
+		};
+		return taskStatusLabelModel;
 	}
 
 }

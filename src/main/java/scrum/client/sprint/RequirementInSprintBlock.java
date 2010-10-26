@@ -22,7 +22,6 @@ import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -38,7 +37,6 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 	private ChangeHistoryWidget changeHistoryWidget;
 
 	private SimplePanel statusIcon;
-	private Anchor statusLabel;
 
 	private boolean decidableOnInitialization;
 
@@ -48,9 +46,10 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 
 		decidableOnInitialization = requirement.isDecidable();
 
-		statusIcon = header.insertPrefixIcon();
-		statusLabel = header.appendCenterSuffix("");
-		header.appendCell(new EmoticonsWidget(requirement), null, true, true, null);
+		statusIcon = header.addIconWrapper();
+		header.addText(requirement.getLabelModel());
+		header.addText(requirement.getTaskStatusLabelModel(), true);
+		header.appendCell(new EmoticonsWidget(requirement), null, true);
 		header.addMenuAction(new RejectRequirementAction(requirement));
 		header.addMenuAction(new FixRequirementAction(requirement));
 		header.addMenuAction(new CloseRequirementAction(requirement));
@@ -81,8 +80,6 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 			statusImage.setTitle("All tasks done.");
 		}
 		statusIcon.setWidget(statusImage);
-		statusLabel.setText(requirement.getTaskStatusLabel());
-		header.setCenter(requirement.getLabel());
 	}
 
 	@Override

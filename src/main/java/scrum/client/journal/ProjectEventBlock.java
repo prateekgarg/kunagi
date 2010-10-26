@@ -11,8 +11,8 @@ public class ProjectEventBlock extends ABlockWidget<ProjectEvent> {
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		header.setDragHandle("evt");
-		header.insertPrefixLabel("120px", true).setText(getObject().getDateAndTime().toString());
-		header.setCenter(getObject().getLabel());
+		header.addText(getObject().getDateAndTimeModel(), "120px", true, true);
+		header.addText(getObject().getLabelModel());
 	}
 
 	@Override
@@ -25,6 +25,7 @@ public class ProjectEventBlock extends ABlockWidget<ProjectEvent> {
 
 	public static final BlockWidgetFactory<ProjectEvent> FACTORY = new BlockWidgetFactory<ProjectEvent>() {
 
+		@Override
 		public ProjectEventBlock createBlock() {
 			return new ProjectEventBlock();
 		}

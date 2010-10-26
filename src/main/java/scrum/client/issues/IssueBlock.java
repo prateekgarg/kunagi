@@ -9,7 +9,6 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -17,19 +16,19 @@ import com.google.gwt.user.client.ui.Widget;
 public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 	private SimplePanel statusIcon;
+
 	// private Label typeLabel;
-	private Anchor statusSuffix;
-	private Anchor severityPrefix;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Issue issue = getObject();
 
-		if (issue.isBug()) statusIcon = header.insertPrefixIcon();
-		if (issue.isBug()) severityPrefix = header.insertPrefixLabel("50px", false);
-		statusSuffix = header.appendCenterSuffix("");
+		if (issue.isBug()) statusIcon = header.addIconWrapper();
+		if (issue.isBug()) header.addText(issue.getSeverityLabelModel(), "50px", false, false);
+		header.addText(issue.getLabelModel());
+		header.addText(issue.getStatusLabelModel(), true);
 
-		header.appendCell(new EmoticonsWidget(issue), null, true, true, null);
+		header.appendCell(new EmoticonsWidget(issue), null, true);
 
 		header.addMenuAction(new AcceptIssueAsBugAction(issue));
 		header.addMenuAction(new AcceptIssueAsIdeaAction(issue));
@@ -55,7 +54,6 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 
 		if (issue.isBug()) {
 			Image statusImage = null;
-			if (severityPrefix != null) severityPrefix.setText(issue.getSeverityLabel());
 			if (issue.isFixed()) {
 				statusImage = Img.bundle.issFixed().createImage();
 				statusImage.setTitle("Closed.");
@@ -65,9 +63,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 			}
 			if (statusIcon != null) statusIcon.setWidget(statusImage);
 		}
-		statusSuffix.setText(issue.getStatusLabel());
 		header.setDragHandle(issue.getReference());
-		header.setCenter(issue.getLabel());
 	}
 
 	@Override

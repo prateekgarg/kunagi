@@ -2,6 +2,7 @@ package scrum.client.release;
 
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -67,10 +68,12 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		return ret;
 	}
 
+	@Override
 	public String getReference() {
 		return REFERENCE_PREFIX + getNumber();
 	}
 
+	@Override
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
@@ -131,6 +134,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {
 
+		@Override
 		public int compare(Release ra, Release rb) {
 			Date a = ra.getReleaseDate();
 			Date b = rb.getReleaseDate();
@@ -143,6 +147,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public static final Comparator<Release> DATE_REVERSE_COMPARATOR = new Comparator<Release>() {
 
+		@Override
 		public int compare(Release ra, Release rb) {
 			return -DATE_COMPARATOR.compare(ra, rb);
 		}
@@ -154,6 +159,19 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 			ret.addAll(sprint.getRequirements());
 		}
 		return ret;
+	}
+
+	private transient AFieldModel<String> parentReleaseLabelModel;
+
+	public AFieldModel<String> getParentReleaseLabelModel() {
+		if (parentReleaseLabelModel == null) parentReleaseLabelModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return isBugfix() ? "Bugfix for " + getParentRelease().getLabel() : "";
+			};
+		};
+		return parentReleaseLabelModel;
 	}
 
 }

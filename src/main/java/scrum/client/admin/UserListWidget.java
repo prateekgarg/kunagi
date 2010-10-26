@@ -28,9 +28,9 @@ public class UserListWidget extends AScrumWidget {
 		super.onUpdate();
 	}
 
-	public void showUser(User user) {
-		update();
-		list.extendObject(user);
+	public boolean select(User user) {
+		if (!list.contains(user)) update();
+		return list.showObject(user);
 	}
 
 }

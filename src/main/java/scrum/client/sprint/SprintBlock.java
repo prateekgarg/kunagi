@@ -13,10 +13,10 @@ public class SprintBlock extends ABlockWidget<Sprint> {
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Sprint sprint = getObject();
 		header.setDragHandle(sprint.getReference());
-		header.insertPrefixLabel("150px", true).setText(sprint.getBegin() + " - " + sprint.getEnd());
-		header.setCenter(sprint.getLabel());
-		header.appendCenterSuffix(sprint.getVelocity() + " " + getCurrentProject().getEffortUnit());
-		header.appendCell(new EmoticonsWidget(sprint), null, true, true, null);
+		header.addText(sprint.getBeginModel(), "150px", true, true);
+		header.addText(sprint.getLabelModel());
+		header.addText(sprint.getVelocityModel(), true);
+		header.appendCell(new EmoticonsWidget(sprint), null, true);
 	}
 
 	@Override
@@ -29,6 +29,7 @@ public class SprintBlock extends ABlockWidget<Sprint> {
 
 	public static final BlockWidgetFactory<Sprint> FACTORY = new BlockWidgetFactory<Sprint>() {
 
+		@Override
 		public SprintBlock createBlock() {
 			return new SprintBlock();
 		}

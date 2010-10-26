@@ -16,28 +16,22 @@ import scrum.client.project.DeleteProjectAction;
 import scrum.client.project.OpenProjectAction;
 import scrum.client.project.Project;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectBlock extends ABlockWidget<Project> {
 
-	private Anchor lastOpenedLabel;
-
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Project project = getObject();
-		lastOpenedLabel = header.appendCenterSuffix("");
+		header.addText(project.getLabelModel());
+		header.addText(project.getLastOpenedAgoModel(), true);
 		header.addToolbarAction(new OpenProjectAction(project));
 		header.addMenuAction(new DeleteProjectAction(project));
 	}
 
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
-		Project project = getObject();
 		header.setDragHandle("prj");
-		header.setCenter(project.getLabel());
-		lastOpenedLabel.setText(ScrumGwt.getPeriodToAsShortestString("last opened ",
-			project.getLastOpenedDateAndTime(), " ago"));
 	}
 
 	@Override

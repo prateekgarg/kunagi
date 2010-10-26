@@ -22,7 +22,6 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
-import scrum.client.project.EstimationBarWidget;
 import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.workspace.PagePanel;
 
@@ -67,6 +66,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 		final TextArea ta = new TextArea();
 		Button btn = new Button("check", new ClickHandler() {
 
+			@Override
 			public void onClick(ClickEvent event) {
 				int cursorPos = ta.getCursorPos();
 				Gwt.confirm("cursorPos: " + cursorPos);
@@ -153,11 +153,8 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 		@Override
 		protected void onInitializationHeader(BlockHeaderWidget header) {
-			header.insertPrefixIcon().setWidget(Img.bundle.hyperlink().createImage());
+			header.addIconWrapper().setWidget(Img.bundle.hyperlink().createImage());
 			header.setDragHandle("dmy666");
-			header.setCenter(getObject());
-			header.appendCenterSuffix("Suffix");
-			header.insertSuffixCell(new EstimationBarWidget(null), "120px", true, null, false);
 			header.addToolbarAction(new DummyAction("Function 1"));
 			header.addToolbarAction(new DummyAction("Function 2"));
 			header.addMenuAction(new DummyAction("Function 3"));
@@ -179,6 +176,7 @@ public class WidgetsTesterWidget extends AScrumWidget {
 
 		public static BlockWidgetFactory<String> FACTORY = new BlockWidgetFactory<String>() {
 
+			@Override
 			public TestBlock createBlock() {
 				return new TestBlock();
 			}
@@ -275,10 +273,10 @@ public class WidgetsTesterWidget extends AScrumWidget {
 	private void testButtons() {
 		addTest("ButtonWidget:text-only", new ButtonWidget(createAction("text only")));
 		addTest("ButtonWidget:icon-only", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), null)));
-		addTest("ButtonWidget:icon-text", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(),
-			"icon and text")));
-		addTest("ButtonWidget:nonexecutable", new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(),
-			"icon and text", false)));
+		addTest("ButtonWidget:icon-text",
+			new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), "icon and text")));
+		addTest("ButtonWidget:nonexecutable",
+			new ButtonWidget(createAction(Img.bundle.hyperlink().createImage(), "icon and text", false)));
 
 		FlowPanel multipleButtons = new FlowPanel();
 		multipleButtons.add(new ButtonWidget(createAction("Button 1")).update());

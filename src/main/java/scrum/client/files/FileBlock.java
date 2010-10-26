@@ -6,17 +6,15 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FileBlock extends ABlockWidget<File> implements TrashSupport {
 
-	private Anchor age;
-
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		File file = getObject();
-		age = header.appendCenterSuffix("");
+		header.addText(file.getLabelModel());
+		header.addText(file.getUploadTimeModel(), true);
 		header.addMenuAction(new DeleteFileAction(file));
 	}
 
@@ -24,8 +22,6 @@ public class FileBlock extends ABlockWidget<File> implements TrashSupport {
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		File file = getObject();
 		header.setDragHandle(file.getReference());
-		header.setCenter(file.getLabel());
-		age.setText(file.getUploadTime().getPeriodToNow().toShortestString());
 	}
 
 	@Override

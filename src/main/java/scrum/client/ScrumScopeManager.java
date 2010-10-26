@@ -70,6 +70,7 @@ public class ScrumScopeManager {
 		Scope scope = scopeManager.setScope(userScope);
 
 		scope.putComponent(user);
+		scope.putComponent(appScope.getComponent(Dao.class).getSystemConfig());
 		scope.putComponent(new UsersWorkspaceWidgets());
 		scope.putComponent(new Localizer());
 

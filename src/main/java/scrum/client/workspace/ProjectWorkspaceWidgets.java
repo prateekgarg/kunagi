@@ -296,6 +296,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 			showRelease((Release) entity);
 		} else if (entity instanceof BlogEntry) {
 			showBlog((BlogEntry) entity);
+		} else if (entity instanceof User) {
+			showUserList((User) entity);
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
@@ -422,6 +424,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showIssueList(Issue issue) {
 		select(issueList);
 		issueList.select(issue);
+	}
+
+	public void showUserList(User user) {
+		select(userList);
+		userList.select(user);
 	}
 
 	public void showQualityBacklog(Quality quality) {

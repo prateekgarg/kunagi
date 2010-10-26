@@ -6,19 +6,16 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SimpleEventBlock extends ABlockWidget<SimpleEvent> implements TrashSupport {
 
-	private Anchor timeLabel;
-	private Anchor durationLabel;
-
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		SimpleEvent event = getObject();
-		timeLabel = header.insertPrefixLabel("35px", true);
-		durationLabel = header.appendCenterSuffix("");
+		header.addText(event.getTimeModel(), "35px", true, true);
+		header.addText(event.getLabelModel());
+		header.addText(event.getDurationModel(), true);
 		header.addMenuAction(new PublishSimpleEventAction(event));
 		header.addMenuAction(new DeleteSimpleEventAction(event));
 	}
@@ -27,9 +24,6 @@ public class SimpleEventBlock extends ABlockWidget<SimpleEvent> implements Trash
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		SimpleEvent event = getObject();
 		header.setDragHandle(event.getReference());
-		timeLabel.setText(event.getTimeAsString());
-		durationLabel.setText(event.getDurationAsString());
-		header.setCenter(event.getLabel());
 	}
 
 	@Override

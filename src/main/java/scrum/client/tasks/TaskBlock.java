@@ -7,7 +7,6 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
-import scrum.client.project.Requirement;
 import scrum.client.sprint.ClaimTaskAction;
 import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.CreateTaskImpedimentAction;
@@ -16,7 +15,6 @@ import scrum.client.sprint.ReopenTaskAction;
 import scrum.client.sprint.Task;
 import scrum.client.sprint.UnclaimTaskAction;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,8 +22,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	private SimplePanel statusIcon;
-	private Anchor requirementLabel;
-	private Anchor ownerLabel;
 
 	private TaskBlockContainer container;
 
@@ -36,10 +32,10 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Task task = getObject();
-		statusIcon = header.insertPrefixIcon();
-		if (container.isShowRequirement()) requirementLabel = header.appendCenterSuffix(null);
-		if (container.isShowOwner()) ownerLabel = header.appendCenterSuffix(null);
-		header.appendCell(new EmoticonsWidget(task), null, true, true, null);
+		statusIcon = header.addIconWrapper();
+		header.addText(task.getLabelModel());
+		if (container.isShowOwner()) header.addText(task.getOwnerModel(), true);
+		header.appendCell(new EmoticonsWidget(task), null, true);
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
@@ -64,12 +60,6 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 			statusImage.setTitle("Claimed by " + task.getOwner().getName() + ".");
 		}
 		statusIcon.setWidget(statusImage);
-		if (requirementLabel != null) {
-			Requirement req = task.getRequirement();
-			requirementLabel.setText(req.getReference() + " " + req.getLabel());
-		}
-		if (ownerLabel != null) ownerLabel.setText(task.isOwnerSet() ? task.getOwner().getName() : null);
-		header.setCenter(task.getLabel());
 	}
 
 	@Override

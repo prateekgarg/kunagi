@@ -14,7 +14,8 @@ public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Quality quality = getObject();
-		header.appendCell(new EmoticonsWidget(quality), null, true, true, null);
+		header.appendCell(new EmoticonsWidget(quality), null, true);
+		header.addText(quality.getLabelModel());
 		header.addMenuAction(new DeleteQualityAction(quality));
 	}
 
@@ -22,7 +23,6 @@ public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport 
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Quality quality = getObject();
 		header.setDragHandle(quality.getReference());
-		header.setCenter(quality.getLabel());
 	}
 
 	@Override
@@ -30,12 +30,14 @@ public class QualityBlock extends ABlockWidget<Quality> implements TrashSupport 
 		return new QualityWidget(getObject());
 	}
 
+	@Override
 	public AScrumAction getTrashAction() {
 		return new DeleteQualityAction(getObject());
 	}
 
 	public static final BlockWidgetFactory<Quality> FACTORY = new BlockWidgetFactory<Quality>() {
 
+		@Override
 		public QualityBlock createBlock() {
 			return new QualityBlock();
 		}

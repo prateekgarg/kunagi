@@ -1,6 +1,7 @@
 package scrum.client.release;
 
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.editor.AFieldModel;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
@@ -10,7 +11,6 @@ import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,16 +18,15 @@ import com.google.gwt.user.client.ui.Widget;
 public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport {
 
 	private SimplePanel typeIcon;
-	private Anchor dateLabel;
-	private Anchor parentLabel;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Release release = getObject();
-		typeIcon = header.insertPrefixIcon();
-		dateLabel = header.insertPrefixLabel("160px", true);
-		parentLabel = header.appendCenterSuffix("");
-		header.appendCell(new EmoticonsWidget(release), null, true, true, null);
+		typeIcon = header.addIconWrapper();
+		header.addText(release.getLabelModel());
+		header.addText(createDateSuffixModel(), true);
+		header.addText(release.getParentReleaseLabelModel(), true);
+		header.appendCell(new EmoticonsWidget(release), null, true);
 		header.addMenuAction(new CreateBugfixReleaseAction(release));
 		header.addMenuAction(new ReleaseReleaseAction(release));
 		header.addMenuAction(new UnreleaseReleaseAction(release));
@@ -40,10 +39,7 @@ public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport 
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Release release = getObject();
 		typeIcon.setWidget(createTypeIcon());
-		dateLabel.setText(getDateSuffix());
-		parentLabel.setText(release.isBugfix() ? "Bugfix for " + release.getParentRelease().getLabel() : "");
 		header.setDragHandle(release.getReference());
-		header.setCenter(release.getLabel());
 	}
 
 	private Image createTypeIcon() {
@@ -59,24 +55,30 @@ public class ReleaseBlock extends ABlockWidget<Release> implements TrashSupport 
 		return image;
 	}
 
-	private String getDateSuffix() {
-		Release release = getObject();
-		String dateSuffix = null;
-		Date date = release.getReleaseDate();
-		if (date != null) {
-			dateSuffix = date.toString();
-			Date today = Date.today();
-			if (date.isAfter(today)) {
-				dateSuffix += " (in " + today.getPeriodTo(date).toDays() + " days)";
-			} else if (date.isBefore(today)) {
-				dateSuffix += " (" + date.getPeriodTo(today).toShortestString() + " ago)";
-			} else {
-				dateSuffix += " (today)";
+	private AFieldModel<String> createDateSuffixModel() {
+		return new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				Release release = getObject();
+				String dateSuffix = null;
+				Date date = release.getReleaseDate();
+				if (date != null) {
+					dateSuffix = date.toString();
+					Date today = Date.today();
+					if (date.isAfter(today)) {
+						dateSuffix += " (in " + today.getPeriodTo(date).toDays() + " days)";
+					} else if (date.isBefore(today)) {
+						dateSuffix += " (" + date.getPeriodTo(today).toShortestString() + " ago)";
+					} else {
+						dateSuffix += " (today)";
+					}
+				} else {
+					dateSuffix = "unscheduled";
+				}
+				return dateSuffix;
 			}
-		} else {
-			dateSuffix = "unscheduled";
-		}
-		return dateSuffix;
+		};
 	}
 
 	@Override

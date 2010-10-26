@@ -11,7 +11,6 @@ import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.sprint.Sprint;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -19,17 +18,17 @@ import com.google.gwt.user.client.ui.Widget;
 public class RequirementBlock extends ABlockWidget<Requirement> implements TrashSupport {
 
 	private SimplePanel statusIcon;
-	private Anchor estimationLabel;
 	private SprintSwitchIndicatorWidget sprintBorderIndicator;
 
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Requirement requirement = getObject();
-		statusIcon = header.insertPrefixIcon();
-		estimationLabel = header.appendCenterSuffix(null);
+		statusIcon = header.addIconWrapper();
+		header.addText(requirement.getLabelModel());
+		header.addText(requirement.getEstimatedWorkWithUnitModel(), true);
 
-		header.appendCell(new EmoticonsWidget(requirement), null, true, true, null);
-		header.appendCell(new EstimationBarWidget(requirement), "150px", false, true, null);
+		header.appendCell(new EmoticonsWidget(requirement), null, true);
+		header.appendCell(new EstimationBarWidget(requirement), "150px", true);
 
 		header.addMenuAction(new AddRequirementToCurrentSprintAction(requirement));
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
@@ -58,9 +57,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			statusImage = Img.bundle.reqDirty().createImage();
 			statusImage.setTitle("Needs estimation.");
 		}
-		estimationLabel.setText(requirement.getEstimatedWorkWithUnit());
 		statusIcon.setWidget(statusImage);
-		header.setCenter(requirement.getLabel());
 
 		boolean sprintBorder = false;
 		Requirement previous = getList().getPrevious(requirement);

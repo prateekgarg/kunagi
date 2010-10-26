@@ -3,6 +3,7 @@ package scrum.client.risks;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.Comparator;
 import java.util.List;
@@ -88,6 +89,19 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, L
 	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
+	}
+
+	private AFieldModel<String> priorityLabelModel;
+
+	public AFieldModel<String> getPriorityLabelModel() {
+		if (priorityLabelModel == null) priorityLabelModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getPriorityLabel();
+			}
+		};
+		return priorityLabelModel;
 	}
 
 	@Override

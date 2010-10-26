@@ -8,18 +8,16 @@ import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.journal.ActivateChangeHistoryAction;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 
-	private Anchor priorityLabel;
-
 	@Override
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
-		priorityLabel = header.insertPrefixLabel("100px", true);
-		header.appendCell(new EmoticonsWidget(risk), null, true, true, null);
+		header.addText(risk.getPriorityLabelModel(), "100px", true, false);
+		header.addText(risk.getLabelModel());
+		header.appendCell(new EmoticonsWidget(risk), null, true);
 		header.addMenuAction(new ActivateChangeHistoryAction(risk));
 		header.addMenuAction(new DeleteRiskAction(risk));
 	}
@@ -27,9 +25,7 @@ public class RiskBlock extends ABlockWidget<Risk> implements TrashSupport {
 	@Override
 	protected void onUpdateHeader(BlockHeaderWidget header) {
 		Risk risk = getObject();
-		priorityLabel.setText(risk.getPriorityLabel());
 		header.setDragHandle(risk.getReference());
-		header.setCenter(risk.getLabel());
 	}
 
 	@Override

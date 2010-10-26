@@ -3,12 +3,14 @@ package scrum.client.admin;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.collaboration.UsersStatus;
 import scrum.client.project.Project;
@@ -96,5 +98,18 @@ public class User extends GUser {
 			return 1;
 		}
 	};
+
+	private AFieldModel<String> lastLoginAgoModel;
+
+	public AFieldModel<String> getLastLoginAgoModel() {
+		if (lastLoginAgoModel == null) lastLoginAgoModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return ScrumGwt.getPeriodToAsShortestString("login ", getLastLoginDateAndTime(), " ago");
+			}
+		};
+		return lastLoginAgoModel;
+	}
 
 }

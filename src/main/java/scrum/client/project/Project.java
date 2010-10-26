@@ -9,6 +9,7 @@ import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
@@ -633,6 +635,19 @@ public class Project extends GProject implements ForumSupport {
 	@Override
 	public String getReference() {
 		return "prj";
+	}
+
+	private transient AFieldModel<String> lastOpenedAgoModel;
+
+	public AFieldModel<String> getLastOpenedAgoModel() {
+		if (lastOpenedAgoModel == null) lastOpenedAgoModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return ScrumGwt.getPeriodToAsShortestString("last opened ", getLastOpenedDateAndTime(), " ago");
+			}
+		};
+		return lastOpenedAgoModel;
 	}
 
 }
