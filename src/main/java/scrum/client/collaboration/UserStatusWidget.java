@@ -1,26 +1,25 @@
 package scrum.client.collaboration;
 
-import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.Collections;
 import java.util.List;
 
+import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.LabelSupport;
-import scrum.client.common.ReferenceSupport;
-import scrum.client.workspace.Navigator;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,8 +31,10 @@ public class UserStatusWidget extends AScrumWidget {
 	private Label nameLabel;
 	private SimplePanel selectedEntitiesWrapper;
 	private FlowPanel wrapper;
+	private UserStatusDetailsWidget details;
 
 	private List<AScrumGwtEntity> selectedEntities = Collections.emptyList();
+	private FocusPanel focusPanel;
 
 	public UserStatusWidget(User user) {
 		this.user = user;
@@ -55,9 +56,12 @@ public class UserStatusWidget extends AScrumWidget {
 		headerPanel.add(selectedEntitiesWrapper);
 		headerPanel.add(Gwt.createFloatClear());
 
+		focusPanel = new FocusPanel(headerPanel);
+		focusPanel.addClickHandler(new ExpansionClickHandler());
+
 		wrapper = new FlowPanel();
 		wrapper.setStyleName("UserStatusWidget");
-		wrapper.add(headerPanel);
+		wrapper.add(focusPanel);
 		return wrapper;
 	}
 
@@ -76,16 +80,35 @@ public class UserStatusWidget extends AScrumWidget {
 		List<AScrumGwtEntity> selectedEntities = usersStatus.getSelectedEntities(user);
 		if (!this.selectedEntities.equals(selectedEntities)) {
 			this.selectedEntities = selectedEntities;
-			StringBuilder sb = new StringBuilder();
-			for (AScrumGwtEntity entity : selectedEntities) {
-				if (entity instanceof ReferenceSupport && entity instanceof LabelSupport) {
-					sb.append(" <a href='").append(Navigator.getEntityHref(entity)).append("' title='")
-							.append(Str.toHtml(((LabelSupport) entity).getLabel())).append("'>");
-					sb.append(((ReferenceSupport) entity).getReference());
-					sb.append("</a>");
-				}
-			}
-			selectedEntitiesWrapper.setWidget(new HTML(sb.toString()));
+			selectedEntitiesWrapper.setWidget(ScrumGwt.createReferencesWidget(selectedEntities));
+		}
+		Gwt.update(details);
+	}
+
+	public void expand() {
+		details = new UserStatusDetailsWidget(user);
+		wrapper.add(details.update());
+	}
+
+	public void collapse() {
+		wrapper.remove(details);
+		details = null;
+	}
+
+	public void toggle() {
+		if (details == null) {
+			expand();
+		} else {
+			collapse();
+		}
+	}
+
+	class ExpansionClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			toggle();
+			focusPanel.setFocus(false);
 		}
 	}
 

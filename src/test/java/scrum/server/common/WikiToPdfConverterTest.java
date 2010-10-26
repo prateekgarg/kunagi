@@ -106,6 +106,7 @@ public class WikiToPdfConverterTest {
 
 	class TestPdfContext implements PdfContext {
 
+		@Override
 		public AImage appendImage(AParagraph p, Image wikiImage) {
 			AImage pdfImage = p.image(new File("src/artwork/kunagi-300x148.png"));
 			return pdfImage;

@@ -3,8 +3,8 @@ var WikiParser = Editor.Parser = (function() {
 	var run = 0;
 
 	function log(message) {
-		if (console && run <= 2)
-			console.log(message);
+		//if (console && run <= 2)
+		//	console.log(message);
 	}
 
 	var tokenizeWiki = (function() {

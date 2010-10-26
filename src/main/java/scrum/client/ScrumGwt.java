@@ -5,6 +5,9 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.Collection;
+
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumGwtEntity;
@@ -18,6 +21,33 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
+
+	public static <E extends AScrumGwtEntity> Widget createReferencesWidget(Collection<E> entities) {
+		return new HTML(createHtmlReferences(entities));
+	}
+
+	public static <E extends AScrumGwtEntity> String createHtmlReferences(Collection<E> entities) {
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (AScrumGwtEntity entity : entities) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(", ");
+			}
+			sb.append(createHtmlReference(entity));
+		}
+		return sb.toString();
+	}
+
+	public static String createHtmlReference(AScrumGwtEntity entity) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" <a href='").append(Navigator.getEntityHref(entity)).append("' title='")
+				.append(Str.toHtml(((LabelSupport) entity).getLabel())).append("' class='reference'>");
+		sb.append(((ReferenceSupport) entity).getReference());
+		sb.append("</a>");
+		return sb.toString();
+	}
 
 	public static boolean isEntityReferenceOrWikiPage(String s) {
 		if (s == null) return false;
