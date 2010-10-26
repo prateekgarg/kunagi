@@ -68,7 +68,7 @@ public class LoginServlet extends AHttpServlet {
 
 		if (req.getParameter("createAccount") != null) {
 			createAccount(req.getParameter("username"), req.getParameter("email"), req.getParameter("password"),
-				historyToken, resp, session);
+				historyToken, req, resp, session);
 			return;
 		}
 
@@ -131,7 +131,8 @@ public class LoginServlet extends AHttpServlet {
 	}
 
 	private void createAccount(String username, String email, String password, String historyToken,
-			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
+			HttpServletRequest req, HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException,
+			IOException {
 
 		if (Str.isBlank(username)) username = null;
 		if (Str.isBlank(email)) email = null;
@@ -182,7 +183,7 @@ public class LoginServlet extends AHttpServlet {
 		User user = userDao.postUser(email, username, password);
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
-		webApplication.triggerRegisterNotification(user);
+		webApplication.triggerRegisterNotification(user, req.getRemoteHost());
 
 		session.setUser(user);
 		resp.sendRedirect(getStartPage(historyToken));
@@ -254,7 +255,7 @@ public class LoginServlet extends AHttpServlet {
 			}
 
 			user = userDao.postUserWithOpenId(openId, nickname, email);
-			webApplication.triggerRegisterNotification(user);
+			webApplication.triggerRegisterNotification(user, request.getRemoteHost());
 		}
 
 		if (user.isDisabled()) {

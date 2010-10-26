@@ -322,12 +322,14 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			Servlet.getContextPath(servletConfig));
 	}
 
-	public void triggerRegisterNotification(User user) {
+	public void triggerRegisterNotification(User user, String host) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Kunagi URL: ").append(getBaseUrl()).append("\n");
 		sb.append("Name: ").append(user.getName()).append("\n");
 		sb.append("Email: ").append(user.getEmail()).append("\n");
+		sb.append("OpenID: ").append(user.getOpenId()).append("\n");
 		sb.append("Date/Time: ").append(DateAndTime.now()).append("\n");
+		sb.append("Host: ").append(host).append("\n");
 		sendEmail(null, null, user.getLabel() + " registered on " + getBaseUrl(), sb.toString());
 	}
 
