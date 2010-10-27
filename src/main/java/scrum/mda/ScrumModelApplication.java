@@ -704,6 +704,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addStringProperty("richtextAutosaveField");
 			projectUserConfigModel.addListProperty("selectedEntitysIds", String.class).setFireModified(false);
 			projectUserConfigModel.addProperty("online", boolean.class).setFireModified(false);
+			projectUserConfigModel.addProperty("lastActivityDateAndTime", DateAndTime.class).setFireModified(false);
 		}
 		return projectUserConfigModel;
 	}

@@ -57,6 +57,8 @@ public abstract class GProjectUserConfigDao
         projectUserConfigsBySelectedEntitysIdCache.clear();
         selectedEntitysIdsCache = null;
         projectUserConfigsByOnlineCache.clear();
+        projectUserConfigsByLastActivityDateAndTimeCache.clear();
+        lastActivityDateAndTimesCache = null;
     }
 
     @Override
@@ -380,6 +382,46 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return value == e.isOnline();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - lastActivityDateAndTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.DateAndTime,Set<ProjectUserConfig>> projectUserConfigsByLastActivityDateAndTimeCache = new Cache<ilarkesto.base.time.DateAndTime,Set<ProjectUserConfig>>(
+            new Cache.Factory<ilarkesto.base.time.DateAndTime,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(ilarkesto.base.time.DateAndTime lastActivityDateAndTime) {
+                    return getEntities(new IsLastActivityDateAndTime(lastActivityDateAndTime));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByLastActivityDateAndTime(ilarkesto.base.time.DateAndTime lastActivityDateAndTime) {
+        return projectUserConfigsByLastActivityDateAndTimeCache.get(lastActivityDateAndTime);
+    }
+    private Set<ilarkesto.base.time.DateAndTime> lastActivityDateAndTimesCache;
+
+    public final Set<ilarkesto.base.time.DateAndTime> getLastActivityDateAndTimes() {
+        if (lastActivityDateAndTimesCache == null) {
+            lastActivityDateAndTimesCache = new HashSet<ilarkesto.base.time.DateAndTime>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isLastActivityDateAndTimeSet()) lastActivityDateAndTimesCache.add(e.getLastActivityDateAndTime());
+            }
+        }
+        return lastActivityDateAndTimesCache;
+    }
+
+    private static class IsLastActivityDateAndTime implements Predicate<ProjectUserConfig> {
+
+        private ilarkesto.base.time.DateAndTime value;
+
+        public IsLastActivityDateAndTime(ilarkesto.base.time.DateAndTime value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isLastActivityDateAndTime(value);
         }
 
     }

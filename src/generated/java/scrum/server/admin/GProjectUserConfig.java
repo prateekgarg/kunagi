@@ -44,6 +44,7 @@ public abstract class GProjectUserConfig
         properties.put("richtextAutosaveField", this.richtextAutosaveField);
         properties.put("selectedEntitysIds", this.selectedEntitysIds);
         properties.put("online", this.online);
+        properties.put("lastActivityDateAndTime", this.lastActivityDateAndTime == null ? null : this.lastActivityDateAndTime.toString());
     }
 
     public int compareTo(ProjectUserConfig other) {
@@ -414,6 +415,41 @@ public abstract class GProjectUserConfig
         setOnline((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - lastActivityDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.DateAndTime lastActivityDateAndTime;
+
+    public final ilarkesto.base.time.DateAndTime getLastActivityDateAndTime() {
+        return lastActivityDateAndTime;
+    }
+
+    public final void setLastActivityDateAndTime(ilarkesto.base.time.DateAndTime lastActivityDateAndTime) {
+        lastActivityDateAndTime = prepareLastActivityDateAndTime(lastActivityDateAndTime);
+        if (isLastActivityDateAndTime(lastActivityDateAndTime)) return;
+        this.lastActivityDateAndTime = lastActivityDateAndTime;
+        updateLastModified();
+    }
+
+    protected ilarkesto.base.time.DateAndTime prepareLastActivityDateAndTime(ilarkesto.base.time.DateAndTime lastActivityDateAndTime) {
+        return lastActivityDateAndTime;
+    }
+
+    public final boolean isLastActivityDateAndTimeSet() {
+        return this.lastActivityDateAndTime != null;
+    }
+
+    public final boolean isLastActivityDateAndTime(ilarkesto.base.time.DateAndTime lastActivityDateAndTime) {
+        if (this.lastActivityDateAndTime == null && lastActivityDateAndTime == null) return true;
+        return this.lastActivityDateAndTime != null && this.lastActivityDateAndTime.equals(lastActivityDateAndTime);
+    }
+
+    protected final void updateLastActivityDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
+        setLastActivityDateAndTime((ilarkesto.base.time.DateAndTime)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -427,6 +463,7 @@ public abstract class GProjectUserConfig
             if (property.equals("richtextAutosaveField")) updateRichtextAutosaveField(value);
             if (property.equals("selectedEntitysIds")) updateSelectedEntitysIds(value);
             if (property.equals("online")) updateOnline(value);
+            if (property.equals("lastActivityDateAndTime")) updateLastActivityDateAndTime(value);
         }
     }
 

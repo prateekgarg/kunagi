@@ -76,6 +76,7 @@
 "b84a0efe-a119-4b19-b89a-1cc915b193ec","d52e401a-be6d-41ab-b098-59e9afabf384","TextProperty","currentEntityId"
 "fcdd5a43-35ba-44db-9cad-5ec4c3c86658","d52e401a-be6d-41ab-b098-59e9afabf384","TextProperty","selectedEntityId"
 "df89ec7b-a2e1-4933-92ba-0c34b9ee1b68","d52e401a-be6d-41ab-b098-59e9afabf384","BooleanProperty","online"
+"03aead82-646c-4945-bdca-2bc408673725","d52e401a-be6d-41ab-b098-59e9afabf384","DateAndTimeProperty","lastActivityDateAndTime"
 "c68dd53d-79f0-4cbe-92f0-5f2b2f8cd2b5","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","ServiceCall","ResetPassword"
 "ba485f3d-1774-4438-902e-cfa29b7a1ee2","c68dd53d-79f0-4cbe-92f0-5f2b2f8cd2b5","Parameter","userId"
 "9e4c6c10-2cd2-4f1c-b681-0460e41bffe2","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","ServiceCall","SendTestEmail"

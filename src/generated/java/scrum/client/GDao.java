@@ -1529,6 +1529,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByLastActivityDateAndTime(ilarkesto.gwt.client.DateAndTime lastActivityDateAndTime) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isLastActivityDateAndTime(lastActivityDateAndTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Quality ---
 
     protected Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();

@@ -1,6 +1,8 @@
 package scrum.client.admin;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,20 @@ public class ProjectUserConfig extends GProjectUserConfig {
 
 	public ProjectUserConfig(Map data) {
 		super(data);
+	}
+
+	public String getIdleTimeAsString() {
+		TimePeriod idle = getIdleTime();
+		return idle == null ? "-" : idle.toShortestString();
+	}
+
+	public TimePeriod getIdleTime() {
+		if (!isOnline()) return null;
+		DateAndTime time = getLastActivityDateAndTime();
+		if (time == null) return null;
+		TimePeriod idle = time.getPeriodToNow();
+		if (idle.toSeconds() < 10) return null;
+		return idle;
 	}
 
 	public boolean addSelectedEntityId(String entityId) {

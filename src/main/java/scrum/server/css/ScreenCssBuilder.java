@@ -348,7 +348,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace").height100();
 		css.style(".Workspace-header").height(25).background(cHeaderBackground, "../header-bg.png");
 		css.style(".Workspace-body").height100();
-		css.style(".Workspace-body-west").floatLeft().width(200).height100().backgroundUrl("../sidebar-bg.png");
+		css.style(".Workspace-body-west").floatLeft().width(200).height100().backgroundUrl("../sidebar-bg.png")
+				.overflowHidden();
 		css.style(".Workspace-body-center").height100();
 		css.style(".Workspace-body-center-content").padding(10).paddingBottom(1000);
 		css.style(".Workspace-body-west .PagePanel").padding(0);
@@ -477,15 +478,15 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UsersOnBlockWidget").padding(3, 5, 0, 5).textAlignRight();
 	}
 
-
 	private void userStatus(CssRenderer css) {
 		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
 
 		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
-		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic();
+		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic().cursorPointer();
 		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
 		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
 		css.style(".UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall);
+		css.style(".UserStatusWidget .AFieldValueWidget").backgroundNone().borderNone();
 	}
 
 	private void pagePanel(CssRenderer css) {

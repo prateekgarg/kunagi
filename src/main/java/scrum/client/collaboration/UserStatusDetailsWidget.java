@@ -7,6 +7,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import java.util.List;
 
 import scrum.client.ScrumGwt;
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
@@ -29,6 +30,16 @@ public class UserStatusDetailsWidget extends AScrumWidget {
 		final Project project = Scope.get().getComponent(Project.class);
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.setColumnWidths(40);
+		if (user != getCurrentUser()) {
+			tb.addFieldRow("Idle", new AFieldValueWidget() {
+
+				@Override
+				protected void onUpdate() {
+					ProjectUserConfig config = project.getUserConfig(user);
+					setText(config.getIdleTimeAsString());
+				}
+			});
+		}
 		tb.addFieldRow("Tasks", new AFieldValueWidget() {
 
 			@Override
@@ -47,4 +58,5 @@ public class UserStatusDetailsWidget extends AScrumWidget {
 		});
 		return tb.createTable();
 	}
+
 }

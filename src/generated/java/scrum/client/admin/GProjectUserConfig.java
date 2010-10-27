@@ -389,6 +389,59 @@ public abstract class GProjectUserConfig
 
     }
 
+    // --- lastActivityDateAndTime ---
+
+    private ilarkesto.gwt.client.DateAndTime lastActivityDateAndTime ;
+
+    public final ilarkesto.gwt.client.DateAndTime getLastActivityDateAndTime() {
+        return this.lastActivityDateAndTime ;
+    }
+
+    public final ProjectUserConfig setLastActivityDateAndTime(ilarkesto.gwt.client.DateAndTime lastActivityDateAndTime) {
+        if (isLastActivityDateAndTime(lastActivityDateAndTime)) return (ProjectUserConfig)this;
+        this.lastActivityDateAndTime = lastActivityDateAndTime ;
+        propertyChanged("lastActivityDateAndTime", this.lastActivityDateAndTime);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isLastActivityDateAndTime(ilarkesto.gwt.client.DateAndTime lastActivityDateAndTime) {
+        return equals(this.lastActivityDateAndTime, lastActivityDateAndTime);
+    }
+
+    private transient LastActivityDateAndTimeModel lastActivityDateAndTimeModel;
+
+    public LastActivityDateAndTimeModel getLastActivityDateAndTimeModel() {
+        if (lastActivityDateAndTimeModel == null) lastActivityDateAndTimeModel = createLastActivityDateAndTimeModel();
+        return lastActivityDateAndTimeModel;
+    }
+
+    protected LastActivityDateAndTimeModel createLastActivityDateAndTimeModel() { return new LastActivityDateAndTimeModel(); }
+
+    protected class LastActivityDateAndTimeModel extends ilarkesto.gwt.client.editor.ADateAndTimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_lastActivityDateAndTime";
+        }
+
+        @Override
+        public ilarkesto.gwt.client.DateAndTime getValue() {
+            return getLastActivityDateAndTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+            setLastActivityDateAndTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -400,6 +453,8 @@ public abstract class GProjectUserConfig
         richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
         selectedEntitysIds  = (java.util.List<java.lang.String>) props.get("selectedEntitysIds");
         online  = (Boolean) props.get("online");
+        String lastActivityDateAndTimeAsString = (String) props.get("lastActivityDateAndTime");
+        lastActivityDateAndTime  =  lastActivityDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastActivityDateAndTimeAsString);
         updateLocalModificationTime();
     }
 
@@ -414,6 +469,7 @@ public abstract class GProjectUserConfig
         properties.put("richtextAutosaveField", this.richtextAutosaveField);
         properties.put("selectedEntitysIds", this.selectedEntitysIds);
         properties.put("online", this.online);
+        properties.put("lastActivityDateAndTime", this.lastActivityDateAndTime == null ? null : this.lastActivityDateAndTime.toString());
     }
 
 }

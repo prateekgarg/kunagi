@@ -363,10 +363,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
+		Project currentProject = conversation.getProject();
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
 			Sprint sprint = requirement.getSprint();
-			boolean inCurrentSprint = sprint != null && conversation.getProject().isCurrentSprint(sprint);
+			boolean inCurrentSprint = sprint != null && currentProject.isCurrentSprint(sprint);
 
 			if (properties.containsKey("description") || properties.containsKey("testDescription")
 					|| properties.containsKey("qualitysIds")) {
@@ -487,7 +488,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
-			conversation.getProject().updateHomepage(comment.getParent(), false);
+			currentProject.updateHomepage(comment.getParent(), false);
 		}
 
 		if (entity instanceof SystemConfig) {
@@ -495,6 +496,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (properties.containsKey("url")) {
 				webApplication.getConfig().setUrl(config.getUrl());
 			}
+		}
+
+		if (currentUser != null && currentProject != null) {
+			ProjectUserConfig config = currentProject.getUserConfig(currentUser);
+			config.setLastActivityDateAndTime(DateAndTime.now());
+			sendToClients(conversation, config);
 		}
 
 		conversation.clearRemoteEntitiesByType(Change.class);
@@ -513,6 +520,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		user.setCurrentProject(project);
 		ProjectUserConfig config = project.getUserConfig(user);
 		config.setOnline(true);
+		config.setLastActivityDateAndTime(DateAndTime.now());
 
 		conversation.sendToClient(project);
 		conversation.sendToClient(project.getSprints());
