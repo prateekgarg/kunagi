@@ -69,7 +69,7 @@ public class UpcomingTeamTasksWidget extends AScrumWidget {
 				Requirement req = null;
 				if (!task.isRequirement(req) && taskCount > 0) break;
 				req = task.getRequirement();
-				sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.getReferenceAsHtmlLink(req))
+				sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.createHtmlReference(req))
 						.append(")</li>");
 				taskCount++;
 				if (taskCount == maxTasks) break;

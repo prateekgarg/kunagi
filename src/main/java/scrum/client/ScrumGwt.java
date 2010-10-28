@@ -137,20 +137,7 @@ public class ScrumGwt extends Gwt {
 	}
 
 	public static String toHtml(AScrumGwtEntity entity, String label) {
-		return getReferenceAsHtmlLink(entity) + " " + escapeHtml(label);
-	}
-
-	public static String getReferenceAsHtmlLink(AScrumGwtEntity entity) {
-		String reference = entity.getId();
-		if (entity instanceof ReferenceSupport) {
-			reference = ((ReferenceSupport) entity).getReference();
-		}
-		String label = entity.toString();
-		if (entity instanceof LabelSupport) {
-			label = ((LabelSupport) entity).getLabel();
-		}
-		label = Str.toHtml(label);
-		return "<a href='" + Navigator.getEntityHref(entity) + "' title='" + label + "'>" + reference + "</a>";
+		return createHtmlReference(entity) + " " + escapeHtml(label);
 	}
 
 }

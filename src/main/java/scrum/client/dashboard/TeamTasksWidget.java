@@ -64,7 +64,7 @@ public class TeamTasksWidget extends AScrumWidget {
 				List<Task> usersTasks = req.getClaimedTasks(user);
 				Collections.sort(usersTasks, Task.NUMBER_COMPARATOR);
 				for (Task task : usersTasks) {
-					sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.getReferenceAsHtmlLink(req))
+					sb.append("<li>").append(task.toHtml()).append(" (").append(ScrumGwt.createHtmlReference(req))
 							.append(")</li>");
 				}
 			}

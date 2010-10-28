@@ -182,7 +182,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style("ul.toc");// .displayInline().floatRight();
 
-		css.style(".reference").fontFamilyMonospace().color(cLink);
+		css.style("a.reference, a.reference:visited").fontFamilyMonospace().color(cLink);
 
 		css.style("input.InputMandatory").border(1, "black");
 	}
