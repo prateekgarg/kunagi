@@ -187,8 +187,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						+ "shields the Team agains adverse influences and removies impediments.");
 			projectModel.addSetReference("teamMembers", getUserModel()).setTooltip(
 				"The Team ideally consists of around 7 members and is self-organized and cross-functional.");
-			projectModel.addReference("currentSprint", getSprintModel());
-			projectModel.addReference("nextSprint", getSprintModel());
+			projectModel.addReference("currentSprint", getSprintModel()).setBackReferenceName("currentSprintProject");
+			projectModel.addReference("nextSprint", getSprintModel()).setBackReferenceName("nextSprintProject");
 			projectModel.addIntegerProperty("velocity").setTooltip("Estimated velocity for the current sprint.");
 			projectModel.addListProperty("requirementsOrderIds", String.class);
 			projectModel.addListProperty("urgentIssuesOrderIds", String.class);
@@ -657,7 +657,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("emailVerified", boolean.class);
 			userModel.addStringProperty("email").setSearchable(true).setUnique(true);
-			userModel.addReference("currentProject", getProjectModel());
+			userModel.addReference("currentProject", getProjectModel()).setBackReferenceName("currentProjectUser");
 			userModel.addStringProperty("color");
 			userModel.addProperty("lastLoginDateAndTime", DateAndTime.class);
 			userModel.addProperty("registrationDateAndTime", DateAndTime.class);
@@ -758,8 +758,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			issueModel.addProperty("suspendedUntilDate", Date.class);
-			issueModel.addSetReference("affectedReleases", getReleaseModel());
-			issueModel.addSetReference("fixReleases", getReleaseModel());
+			issueModel.addSetReference("affectedReleases", getReleaseModel()).setBackReferenceName("affectedIssue");
+			issueModel.addSetReference("fixReleases", getReleaseModel()).setBackReferenceName("fixIssue");
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
@@ -940,13 +940,13 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		super.onBeanGeneration(beanModel);
 		if (beanModel instanceof DatobModel) {
 			DatobModel datobModel = (DatobModel) beanModel;
-			if (datobModel.isGwtSupport()) {
-				new GwtEntityGenerator(datobModel, getApplicationModel()).generate();
-				new GwtEntityTemplateGenerator(datobModel).generate();
-			}
 		}
 		if (beanModel instanceof EntityModel) {
 			EntityModel entityModel = (EntityModel) beanModel;
+			if (entityModel.isGwtSupport()) {
+				new GwtEntityGenerator(entityModel, getApplicationModel()).generate();
+				new GwtEntityTemplateGenerator(entityModel).generate();
+			}
 			generateActions(entityModel.getActions());
 		}
 	}

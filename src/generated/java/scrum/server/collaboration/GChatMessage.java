@@ -26,7 +26,7 @@ public abstract class GChatMessage
 
     // --- AEntity ---
 
-    public final ChatMessageDao getDao() {
+    public final scrum.server.collaboration.ChatMessageDao getDao() {
         return chatMessageDao;
     }
 
@@ -277,9 +277,9 @@ public abstract class GChatMessage
         GChatMessage.projectDao = projectDao;
     }
 
-    static ChatMessageDao chatMessageDao;
+    static scrum.server.collaboration.ChatMessageDao chatMessageDao;
 
-    public static final void setChatMessageDao(ChatMessageDao chatMessageDao) {
+    public static final void setChatMessageDao(scrum.server.collaboration.ChatMessageDao chatMessageDao) {
         GChatMessage.chatMessageDao = chatMessageDao;
     }
 

@@ -212,6 +212,11 @@ public abstract class GRequirement
         propertyChanged("qualitysIds", this.qualitysIds);
     }
 
+    public final boolean containsQuality(scrum.client.project.Quality quality) {
+        return qualitysIds.contains(quality.getId());
+    }
+
+
     // --- label ---
 
     private java.lang.String label ;
@@ -730,6 +735,11 @@ public abstract class GRequirement
         propertyChanged("tasksOrderIds", this.tasksOrderIds);
     }
 
+    public final boolean containsTasksOrderId(java.lang.String tasksOrderId) {
+        return tasksOrderIds.contains(tasksOrderId);
+    }
+
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -770,6 +780,18 @@ public abstract class GRequirement
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
         properties.put("tasksOrderIds", this.tasksOrderIds);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getIssues() {
+        return getDao().getIssuesByStory((Requirement)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Task> getTasks() {
+        return getDao().getTasksByRequirement((Requirement)this);
+    }
+
+    public final java.util.List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return getDao().getRequirementEstimationVotesByRequirement((Requirement)this);
     }
 
     @Override

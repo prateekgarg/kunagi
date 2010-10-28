@@ -26,7 +26,7 @@ public abstract class GIssue
 
     // --- AEntity ---
 
-    public final IssueDao getDao() {
+    public final scrum.server.issues.IssueDao getDao() {
         return issueDao;
     }
 
@@ -61,6 +61,10 @@ public abstract class GIssue
 
     public int compareTo(Issue other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByIssue((Issue)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GIssue.class);
@@ -1102,9 +1106,9 @@ public abstract class GIssue
         GIssue.releaseDao = releaseDao;
     }
 
-    static IssueDao issueDao;
+    static scrum.server.issues.IssueDao issueDao;
 
-    public static final void setIssueDao(IssueDao issueDao) {
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
         GIssue.issueDao = issueDao;
     }
 

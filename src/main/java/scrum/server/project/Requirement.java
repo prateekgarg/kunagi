@@ -9,26 +9,9 @@ import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
-import scrum.server.estimation.RequirementEstimationVoteDao;
 import scrum.server.sprint.Task;
-import scrum.server.sprint.TaskDao;
 
 public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
-
-	// --- dependencies ---
-
-	private static TaskDao taskDao;
-	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
-
-	public static void setRequirementEstimationVoteDao(RequirementEstimationVoteDao requirementEstimationVoteDao) {
-		Requirement.requirementEstimationVoteDao = requirementEstimationVoteDao;
-	}
-
-	public static void setTaskDao(TaskDao taskDao) {
-		Requirement.taskDao = taskDao;
-	}
-
-	// --- ---
 
 	public String getEstimatedWorkAsString() {
 		Float work = getEstimatedWork();
@@ -104,10 +87,6 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 		// delete when closed and older than 4 weeks
 		if (isClosed() && getLastModified().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
 
-	}
-
-	public Set<Task> getTasks() {
-		return taskDao.getTasksByRequirement(this);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public abstract class GRisk
 
     // --- AEntity ---
 
-    public final RiskDao getDao() {
+    public final scrum.server.risks.RiskDao getDao() {
         return riskDao;
     }
 
@@ -402,9 +402,9 @@ public abstract class GRisk
         GRisk.projectDao = projectDao;
     }
 
-    static RiskDao riskDao;
+    static scrum.server.risks.RiskDao riskDao;
 
-    public static final void setRiskDao(RiskDao riskDao) {
+    public static final void setRiskDao(scrum.server.risks.RiskDao riskDao) {
         GRisk.riskDao = riskDao;
     }
 

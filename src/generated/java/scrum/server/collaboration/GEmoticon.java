@@ -26,7 +26,7 @@ public abstract class GEmoticon
 
     // --- AEntity ---
 
-    public final EmoticonDao getDao() {
+    public final scrum.server.collaboration.EmoticonDao getDao() {
         return emoticonDao;
     }
 
@@ -228,9 +228,9 @@ public abstract class GEmoticon
         }
     }
 
-    static EmoticonDao emoticonDao;
+    static scrum.server.collaboration.EmoticonDao emoticonDao;
 
-    public static final void setEmoticonDao(EmoticonDao emoticonDao) {
+    public static final void setEmoticonDao(scrum.server.collaboration.EmoticonDao emoticonDao) {
         GEmoticon.emoticonDao = emoticonDao;
     }
 

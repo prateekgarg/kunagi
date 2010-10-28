@@ -26,7 +26,7 @@ public abstract class GSystemConfig
 
     // --- AEntity ---
 
-    public final SystemConfigDao getDao() {
+    public final scrum.server.admin.SystemConfigDao getDao() {
         return systemConfigDao;
     }
 
@@ -749,9 +749,9 @@ public abstract class GSystemConfig
         super.ensureIntegrity();
     }
 
-    static SystemConfigDao systemConfigDao;
+    static scrum.server.admin.SystemConfigDao systemConfigDao;
 
-    public static final void setSystemConfigDao(SystemConfigDao systemConfigDao) {
+    public static final void setSystemConfigDao(scrum.server.admin.SystemConfigDao systemConfigDao) {
         GSystemConfig.systemConfigDao = systemConfigDao;
     }
 

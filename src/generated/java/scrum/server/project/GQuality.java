@@ -26,7 +26,7 @@ public abstract class GQuality
 
     // --- AEntity ---
 
-    public final QualityDao getDao() {
+    public final scrum.server.project.QualityDao getDao() {
         return qualityDao;
     }
 
@@ -45,6 +45,10 @@ public abstract class GQuality
 
     public int compareTo(Quality other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByQuality((Quality)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GQuality.class);
@@ -299,10 +303,16 @@ public abstract class GQuality
         GQuality.projectDao = projectDao;
     }
 
-    static QualityDao qualityDao;
+    static scrum.server.project.QualityDao qualityDao;
 
-    public static final void setQualityDao(QualityDao qualityDao) {
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
         GQuality.qualityDao = qualityDao;
+    }
+
+    static scrum.server.project.RequirementDao requirementDao;
+
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        GQuality.requirementDao = requirementDao;
     }
 
 }

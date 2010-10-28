@@ -26,7 +26,7 @@ public abstract class GUser
 
     // --- AEntity ---
 
-    public final UserDao getDao() {
+    public final scrum.server.admin.UserDao getDao() {
         return userDao;
     }
 
@@ -994,9 +994,9 @@ public abstract class GUser
         GUser.projectDao = projectDao;
     }
 
-    static UserDao userDao;
+    static scrum.server.admin.UserDao userDao;
 
-    public static final void setUserDao(UserDao userDao) {
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
         GUser.userDao = userDao;
     }
 

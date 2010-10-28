@@ -26,7 +26,7 @@ public abstract class GProjectSprintSnapshot
 
     // --- AEntity ---
 
-    public final ProjectSprintSnapshotDao getDao() {
+    public final scrum.server.project.ProjectSprintSnapshotDao getDao() {
         return projectSprintSnapshotDao;
     }
 
@@ -204,9 +204,9 @@ public abstract class GProjectSprintSnapshot
         GProjectSprintSnapshot.sprintDao = sprintDao;
     }
 
-    static ProjectSprintSnapshotDao projectSprintSnapshotDao;
+    static scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
 
-    public static final void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
+    public static final void setProjectSprintSnapshotDao(scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao) {
         GProjectSprintSnapshot.projectSprintSnapshotDao = projectSprintSnapshotDao;
     }
 

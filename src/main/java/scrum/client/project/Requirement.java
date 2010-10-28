@@ -293,10 +293,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return ret;
 	}
 
-	public List<Task> getTasks() {
-		return getDao().getTasksByRequirement(this);
-	}
-
 	public static int sumBurnedWork(Iterable<Requirement> requirements) {
 		int sum = 0;
 		for (Requirement requirement : requirements) {

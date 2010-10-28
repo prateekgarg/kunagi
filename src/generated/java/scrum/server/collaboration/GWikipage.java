@@ -26,7 +26,7 @@ public abstract class GWikipage
 
     // --- AEntity ---
 
-    public final WikipageDao getDao() {
+    public final scrum.server.collaboration.WikipageDao getDao() {
         return wikipageDao;
     }
 
@@ -228,9 +228,9 @@ public abstract class GWikipage
         GWikipage.projectDao = projectDao;
     }
 
-    static WikipageDao wikipageDao;
+    static scrum.server.collaboration.WikipageDao wikipageDao;
 
-    public static final void setWikipageDao(WikipageDao wikipageDao) {
+    public static final void setWikipageDao(scrum.server.collaboration.WikipageDao wikipageDao) {
         GWikipage.wikipageDao = wikipageDao;
     }
 

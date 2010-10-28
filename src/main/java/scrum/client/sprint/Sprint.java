@@ -22,7 +22,6 @@ import scrum.client.common.ShowEntityAction;
 import scrum.client.impediments.Impediment;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
-import scrum.client.release.Release;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
@@ -59,14 +58,6 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		List<Task> ret = new ArrayList<Task>();
 		for (Requirement requirement : getRequirements()) {
 			ret.addAll(requirement.getTasksBlockedBy(impediment));
-		}
-		return ret;
-	}
-
-	public List<Release> getReleases() {
-		List<Release> ret = new ArrayList<Release>();
-		for (Release release : getDao().getReleasesByProject(getProject())) {
-			if (release.getSprints().contains(this)) ret.add(release);
 		}
 		return ret;
 	}
@@ -109,10 +100,6 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			if (requirement.isDecidable() && !requirement.isClosed()) ret.add(requirement);
 		}
 		return ret;
-	}
-
-	public List<Requirement> getRequirements() {
-		return getDao().getRequirementsBySprint(this);
 	}
 
 	public List<Task> getUnclaimedTasks(boolean sorted) {

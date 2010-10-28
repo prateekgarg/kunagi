@@ -523,6 +523,11 @@ public abstract class GProject
         propertyChanged("participantsIds", this.participantsIds);
     }
 
+    public final boolean containsParticipant(scrum.client.admin.User participant) {
+        return participantsIds.contains(participant.getId());
+    }
+
+
     // --- admins ---
 
     private Set<String> adminsIds = new HashSet<String>();
@@ -550,6 +555,11 @@ public abstract class GProject
         adminsIds.remove(id);
         propertyChanged("adminsIds", this.adminsIds);
     }
+
+    public final boolean containsAdmin(scrum.client.admin.User admin) {
+        return adminsIds.contains(admin.getId());
+    }
+
 
     // --- productOwners ---
 
@@ -579,6 +589,11 @@ public abstract class GProject
         propertyChanged("productOwnersIds", this.productOwnersIds);
     }
 
+    public final boolean containsProductOwner(scrum.client.admin.User productOwner) {
+        return productOwnersIds.contains(productOwner.getId());
+    }
+
+
     // --- scrumMasters ---
 
     private Set<String> scrumMastersIds = new HashSet<String>();
@@ -607,6 +622,11 @@ public abstract class GProject
         propertyChanged("scrumMastersIds", this.scrumMastersIds);
     }
 
+    public final boolean containsScrumMaster(scrum.client.admin.User scrumMaster) {
+        return scrumMastersIds.contains(scrumMaster.getId());
+    }
+
+
     // --- teamMembers ---
 
     private Set<String> teamMembersIds = new HashSet<String>();
@@ -634,6 +654,11 @@ public abstract class GProject
         teamMembersIds.remove(id);
         propertyChanged("teamMembersIds", this.teamMembersIds);
     }
+
+    public final boolean containsTeamMember(scrum.client.admin.User teamMember) {
+        return teamMembersIds.contains(teamMember.getId());
+    }
+
 
     // --- currentSprint ---
 
@@ -765,6 +790,11 @@ public abstract class GProject
         propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
     }
 
+    public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
+        return requirementsOrderIds.contains(requirementsOrderId);
+    }
+
+
     // --- urgentIssuesOrderIds ---
 
     private java.util.List<java.lang.String> urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
@@ -779,6 +809,11 @@ public abstract class GProject
         this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
         propertyChanged("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
     }
+
+    public final boolean containsUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        return urgentIssuesOrderIds.contains(urgentIssuesOrderId);
+    }
+
 
     // --- lastSprintNumber ---
 
@@ -2071,6 +2106,70 @@ public abstract class GProject
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
+    }
+
+    public final java.util.List<scrum.client.sprint.Sprint> getSprints() {
+        return getDao().getSprintsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getIssues() {
+        return getDao().getIssuesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.project.Quality> getQualitys() {
+        return getDao().getQualitysByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.impediments.Impediment> getImpediments() {
+        return getDao().getImpedimentsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return getDao().getProjectUserConfigsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return getDao().getBlogEntrysByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.risks.Risk> getRisks() {
+        return getDao().getRisksByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Wikipage> getWikipages() {
+        return getDao().getWikipagesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.journal.ProjectEvent> getProjectEvents() {
+        return getDao().getProjectEventsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.calendar.SimpleEvent> getSimpleEvents() {
+        return getDao().getSimpleEventsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Subject> getSubjects() {
+        return getDao().getSubjectsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.ChatMessage> getChatMessages() {
+        return getDao().getChatMessagesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.files.File> getFiles() {
+        return getDao().getFilesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.admin.User> getCurrentProjectUsers() {
+        return getDao().getUsersByCurrentProject((Project)this);
     }
 
     @Override

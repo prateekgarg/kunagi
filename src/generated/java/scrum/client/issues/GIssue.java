@@ -962,6 +962,11 @@ public abstract class GIssue
         propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
     }
 
+    public final boolean containsAffectedRelease(scrum.client.release.Release affectedRelease) {
+        return affectedReleasesIds.contains(affectedRelease.getId());
+    }
+
+
     // --- fixReleases ---
 
     private Set<String> fixReleasesIds = new HashSet<String>();
@@ -989,6 +994,11 @@ public abstract class GIssue
         fixReleasesIds.remove(id);
         propertyChanged("fixReleasesIds", this.fixReleasesIds);
     }
+
+    public final boolean containsFixRelease(scrum.client.release.Release fixRelease) {
+        return fixReleasesIds.contains(fixRelease.getId());
+    }
+
 
     // --- published ---
 
@@ -1101,6 +1111,10 @@ public abstract class GIssue
         properties.put("affectedReleasesIds", this.affectedReleasesIds);
         properties.put("fixReleasesIds", this.fixReleasesIds);
         properties.put("published", this.published);
+    }
+
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByIssue((Issue)this);
     }
 
     @Override

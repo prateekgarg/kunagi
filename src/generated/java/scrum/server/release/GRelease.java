@@ -26,7 +26,7 @@ public abstract class GRelease
 
     // --- AEntity ---
 
-    public final ReleaseDao getDao() {
+    public final scrum.server.release.ReleaseDao getDao() {
         return releaseDao;
     }
 
@@ -50,6 +50,22 @@ public abstract class GRelease
 
     public int compareTo(Release other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesByParentRelease((Release)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getAffectedIssues() {
+        return issueDao.getIssuesByAffectedRelease((Release)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getFixIssues() {
+        return issueDao.getIssuesByFixRelease((Release)this);
+    }
+
+    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
+        return blogEntryDao.getBlogEntrysByRelease((Release)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRelease.class);
@@ -579,10 +595,22 @@ public abstract class GRelease
         GRelease.sprintDao = sprintDao;
     }
 
-    static ReleaseDao releaseDao;
+    static scrum.server.release.ReleaseDao releaseDao;
 
-    public static final void setReleaseDao(ReleaseDao releaseDao) {
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
         GRelease.releaseDao = releaseDao;
+    }
+
+    static scrum.server.issues.IssueDao issueDao;
+
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        GRelease.issueDao = issueDao;
+    }
+
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
+        GRelease.blogEntryDao = blogEntryDao;
     }
 
 }

@@ -122,6 +122,11 @@ public abstract class GRelease
         propertyChanged("sprintsIds", this.sprintsIds);
     }
 
+    public final boolean containsSprint(scrum.client.sprint.Sprint sprint) {
+        return sprintsIds.contains(sprint.getId());
+    }
+
+
     // --- number ---
 
     private int number ;
@@ -555,6 +560,22 @@ public abstract class GRelease
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
         properties.put("scmTag", this.scmTag);
+    }
+
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesByParentRelease((Release)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getAffectedIssues() {
+        return getDao().getIssuesByAffectedRelease((Release)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getFixIssues() {
+        return getDao().getIssuesByFixRelease((Release)this);
+    }
+
+    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return getDao().getBlogEntrysByRelease((Release)this);
     }
 
     @Override

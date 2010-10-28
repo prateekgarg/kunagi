@@ -26,7 +26,7 @@ public abstract class GTask
 
     // --- AEntity ---
 
-    public final TaskDao getDao() {
+    public final scrum.server.sprint.TaskDao getDao() {
         return taskDao;
     }
 
@@ -452,9 +452,9 @@ public abstract class GTask
         GTask.impedimentDao = impedimentDao;
     }
 
-    static TaskDao taskDao;
+    static scrum.server.sprint.TaskDao taskDao;
 
-    public static final void setTaskDao(TaskDao taskDao) {
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
         GTask.taskDao = taskDao;
     }
 

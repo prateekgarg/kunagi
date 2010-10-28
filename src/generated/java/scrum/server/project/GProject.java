@@ -26,7 +26,7 @@ public abstract class GProject
 
     // --- AEntity ---
 
-    public final ProjectDao getDao() {
+    public final scrum.server.project.ProjectDao getDao() {
         return projectDao;
     }
 
@@ -78,6 +78,70 @@ public abstract class GProject
 
     public int compareTo(Project other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
+        return sprintDao.getSprintsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
+        return issueDao.getIssuesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
+        return qualityDao.getQualitysByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.impediments.Impediment> getImpediments() {
+        return impedimentDao.getImpedimentsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return projectUserConfigDao.getProjectUserConfigsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
+        return blogEntryDao.getBlogEntrysByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.risks.Risk> getRisks() {
+        return riskDao.getRisksByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Wikipage> getWikipages() {
+        return wikipageDao.getWikipagesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.journal.ProjectEvent> getProjectEvents() {
+        return projectEventDao.getProjectEventsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.calendar.SimpleEvent> getSimpleEvents() {
+        return simpleEventDao.getSimpleEventsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Subject> getSubjects() {
+        return subjectDao.getSubjectsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.ChatMessage> getChatMessages() {
+        return chatMessageDao.getChatMessagesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.files.File> getFiles() {
+        return fileDao.getFilesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.admin.User> getCurrentProjectUsers() {
+        return userDao.getUsersByCurrentProject((Project)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProject.class);
@@ -1945,10 +2009,100 @@ public abstract class GProject
         GProject.sprintDao = sprintDao;
     }
 
-    static ProjectDao projectDao;
+    static scrum.server.project.ProjectDao projectDao;
 
-    public static final void setProjectDao(ProjectDao projectDao) {
+    public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GProject.projectDao = projectDao;
+    }
+
+    static scrum.server.project.RequirementDao requirementDao;
+
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        GProject.requirementDao = requirementDao;
+    }
+
+    static scrum.server.issues.IssueDao issueDao;
+
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        GProject.issueDao = issueDao;
+    }
+
+    static scrum.server.release.ReleaseDao releaseDao;
+
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        GProject.releaseDao = releaseDao;
+    }
+
+    static scrum.server.project.QualityDao qualityDao;
+
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GProject.qualityDao = qualityDao;
+    }
+
+    static scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
+        GProject.impedimentDao = impedimentDao;
+    }
+
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
+
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
+        GProject.projectUserConfigDao = projectUserConfigDao;
+    }
+
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
+        GProject.blogEntryDao = blogEntryDao;
+    }
+
+    static scrum.server.risks.RiskDao riskDao;
+
+    public static final void setRiskDao(scrum.server.risks.RiskDao riskDao) {
+        GProject.riskDao = riskDao;
+    }
+
+    static scrum.server.collaboration.WikipageDao wikipageDao;
+
+    public static final void setWikipageDao(scrum.server.collaboration.WikipageDao wikipageDao) {
+        GProject.wikipageDao = wikipageDao;
+    }
+
+    static scrum.server.journal.ProjectEventDao projectEventDao;
+
+    public static final void setProjectEventDao(scrum.server.journal.ProjectEventDao projectEventDao) {
+        GProject.projectEventDao = projectEventDao;
+    }
+
+    static scrum.server.calendar.SimpleEventDao simpleEventDao;
+
+    public static final void setSimpleEventDao(scrum.server.calendar.SimpleEventDao simpleEventDao) {
+        GProject.simpleEventDao = simpleEventDao;
+    }
+
+    static scrum.server.collaboration.SubjectDao subjectDao;
+
+    public static final void setSubjectDao(scrum.server.collaboration.SubjectDao subjectDao) {
+        GProject.subjectDao = subjectDao;
+    }
+
+    static scrum.server.collaboration.ChatMessageDao chatMessageDao;
+
+    public static final void setChatMessageDao(scrum.server.collaboration.ChatMessageDao chatMessageDao) {
+        GProject.chatMessageDao = chatMessageDao;
+    }
+
+    static scrum.server.files.FileDao fileDao;
+
+    public static final void setFileDao(scrum.server.files.FileDao fileDao) {
+        GProject.fileDao = fileDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GProject.userDao = userDao;
     }
 
 }

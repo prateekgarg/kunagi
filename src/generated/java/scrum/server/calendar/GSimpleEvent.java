@@ -26,7 +26,7 @@ public abstract class GSimpleEvent
 
     // --- AEntity ---
 
-    public final SimpleEventDao getDao() {
+    public final scrum.server.calendar.SimpleEventDao getDao() {
         return simpleEventDao;
     }
 
@@ -451,9 +451,9 @@ public abstract class GSimpleEvent
         GSimpleEvent.projectDao = projectDao;
     }
 
-    static SimpleEventDao simpleEventDao;
+    static scrum.server.calendar.SimpleEventDao simpleEventDao;
 
-    public static final void setSimpleEventDao(SimpleEventDao simpleEventDao) {
+    public static final void setSimpleEventDao(scrum.server.calendar.SimpleEventDao simpleEventDao) {
         GSimpleEvent.simpleEventDao = simpleEventDao;
     }
 

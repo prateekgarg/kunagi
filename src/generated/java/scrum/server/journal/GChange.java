@@ -26,7 +26,7 @@ public abstract class GChange
 
     // --- AEntity ---
 
-    public final ChangeDao getDao() {
+    public final scrum.server.journal.ChangeDao getDao() {
         return changeDao;
     }
 
@@ -380,9 +380,9 @@ public abstract class GChange
         }
     }
 
-    static ChangeDao changeDao;
+    static scrum.server.journal.ChangeDao changeDao;
 
-    public static final void setChangeDao(ChangeDao changeDao) {
+    public static final void setChangeDao(scrum.server.journal.ChangeDao changeDao) {
         GChange.changeDao = changeDao;
     }
 

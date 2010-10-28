@@ -336,6 +336,11 @@ public abstract class GProjectUserConfig
         propertyChanged("selectedEntitysIds", this.selectedEntitysIds);
     }
 
+    public final boolean containsSelectedEntitysId(java.lang.String selectedEntitysId) {
+        return selectedEntitysIds.contains(selectedEntitysId);
+    }
+
+
     // --- online ---
 
     private boolean online ;

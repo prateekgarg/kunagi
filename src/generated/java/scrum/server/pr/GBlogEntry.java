@@ -26,7 +26,7 @@ public abstract class GBlogEntry
 
     // --- AEntity ---
 
-    public final BlogEntryDao getDao() {
+    public final scrum.server.pr.BlogEntryDao getDao() {
         return blogEntryDao;
     }
 
@@ -544,9 +544,9 @@ public abstract class GBlogEntry
         GBlogEntry.releaseDao = releaseDao;
     }
 
-    static BlogEntryDao blogEntryDao;
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
 
-    public static final void setBlogEntryDao(BlogEntryDao blogEntryDao) {
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
         GBlogEntry.blogEntryDao = blogEntryDao;
     }
 

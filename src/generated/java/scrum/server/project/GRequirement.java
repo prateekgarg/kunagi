@@ -26,7 +26,7 @@ public abstract class GRequirement
 
     // --- AEntity ---
 
-    public final RequirementDao getDao() {
+    public final scrum.server.project.RequirementDao getDao() {
         return requirementDao;
     }
 
@@ -55,6 +55,18 @@ public abstract class GRequirement
 
     public int compareTo(Requirement other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
+        return issueDao.getIssuesByStory((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
+        return taskDao.getTasksByRequirement((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement((Requirement)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRequirement.class);
@@ -843,10 +855,22 @@ public abstract class GRequirement
         GRequirement.qualityDao = qualityDao;
     }
 
-    static RequirementDao requirementDao;
+    static scrum.server.project.RequirementDao requirementDao;
 
-    public static final void setRequirementDao(RequirementDao requirementDao) {
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GRequirement.requirementDao = requirementDao;
+    }
+
+    static scrum.server.sprint.TaskDao taskDao;
+
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
+        GRequirement.taskDao = taskDao;
+    }
+
+    static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;
+
+    public static final void setRequirementEstimationVoteDao(scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao) {
+        GRequirement.requirementEstimationVoteDao = requirementEstimationVoteDao;
     }
 
 }

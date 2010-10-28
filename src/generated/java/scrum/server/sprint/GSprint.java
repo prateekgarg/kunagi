@@ -26,7 +26,7 @@ public abstract class GSprint
 
     // --- AEntity ---
 
-    public final SprintDao getDao() {
+    public final scrum.server.sprint.SprintDao getDao() {
         return sprintDao;
     }
 
@@ -54,6 +54,30 @@ public abstract class GSprint
 
     public int compareTo(Sprint other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getCurrentSprintProjects() {
+        return projectDao.getProjectsByCurrentSprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getNextSprintProjects() {
+        return projectDao.getProjectsByNextSprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsBySprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesBySprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.SprintDaySnapshot> getSprintDaySnapshots() {
+        return sprintDaySnapshotDao.getSprintDaySnapshotsBySprint((Sprint)this);
+    }
+
+    public final scrum.server.project.ProjectSprintSnapshot getProjectSprintSnapshot() {
+        return projectSprintSnapshotDao.getProjectSprintSnapshotBySprint((Sprint)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprint.class);
@@ -841,10 +865,34 @@ public abstract class GSprint
         GSprint.projectDao = projectDao;
     }
 
-    static SprintDao sprintDao;
+    static scrum.server.sprint.SprintDao sprintDao;
 
-    public static final void setSprintDao(SprintDao sprintDao) {
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
         GSprint.sprintDao = sprintDao;
+    }
+
+    static scrum.server.project.RequirementDao requirementDao;
+
+    public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        GSprint.requirementDao = requirementDao;
+    }
+
+    static scrum.server.release.ReleaseDao releaseDao;
+
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        GSprint.releaseDao = releaseDao;
+    }
+
+    static scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
+
+    public static final void setSprintDaySnapshotDao(scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao) {
+        GSprint.sprintDaySnapshotDao = sprintDaySnapshotDao;
+    }
+
+    static scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
+
+    public static final void setProjectSprintSnapshotDao(scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao) {
+        GSprint.projectSprintSnapshotDao = projectSprintSnapshotDao;
     }
 
 }

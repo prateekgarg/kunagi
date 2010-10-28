@@ -163,6 +163,11 @@ public abstract class GBlogEntry
         propertyChanged("authorsIds", this.authorsIds);
     }
 
+    public final boolean containsAuthor(scrum.client.admin.User author) {
+        return authorsIds.contains(author.getId());
+    }
+
+
     // --- title ---
 
     private java.lang.String title ;
@@ -361,6 +366,11 @@ public abstract class GBlogEntry
         releasesIds.remove(id);
         propertyChanged("releasesIds", this.releasesIds);
     }
+
+    public final boolean containsRelease(scrum.client.release.Release release) {
+        return releasesIds.contains(release.getId());
+    }
+
 
     // --- published ---
 

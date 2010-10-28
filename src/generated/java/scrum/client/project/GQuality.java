@@ -338,6 +338,10 @@ public abstract class GQuality
         properties.put("testDescription", this.testDescription);
     }
 
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByQuality((Quality)this);
+    }
+
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;

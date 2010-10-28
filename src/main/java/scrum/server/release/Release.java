@@ -10,19 +10,8 @@ import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
-import scrum.server.issues.IssueDao;
 
 public class Release extends GRelease implements Numbered, ReferenceSupport {
-
-	// --- dependencies ---
-
-	private static IssueDao issueDao;
-
-	public static void setIssueDao(IssueDao issueDao) {
-		Release.issueDao = issueDao;
-	}
-
-	// --- ---
 
 	public boolean isMajor() {
 		return !isBugfix();
@@ -34,8 +23,8 @@ public class Release extends GRelease implements Numbered, ReferenceSupport {
 
 	public List<Issue> getIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
-		ret.addAll(issueDao.getIssuesByAffectedRelease(this));
-		ret.addAll(issueDao.getIssuesByFixRelease(this));
+		ret.addAll(getAffectedIssues());
+		ret.addAll(getFixIssues());
 		return ret;
 	}
 

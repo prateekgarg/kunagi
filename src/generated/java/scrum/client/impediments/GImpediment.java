@@ -443,6 +443,10 @@ public abstract class GImpediment
         properties.put("closed", this.closed);
     }
 
+    public final java.util.List<scrum.client.sprint.Task> getTasks() {
+        return getDao().getTasksByImpediment((Impediment)this);
+    }
+
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;

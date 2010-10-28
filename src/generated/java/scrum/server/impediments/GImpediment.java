@@ -26,7 +26,7 @@ public abstract class GImpediment
 
     // --- AEntity ---
 
-    public final ImpedimentDao getDao() {
+    public final scrum.server.impediments.ImpedimentDao getDao() {
         return impedimentDao;
     }
 
@@ -47,6 +47,10 @@ public abstract class GImpediment
 
     public int compareTo(Impediment other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
+        return taskDao.getTasksByImpediment((Impediment)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GImpediment.class);
@@ -369,10 +373,16 @@ public abstract class GImpediment
         GImpediment.projectDao = projectDao;
     }
 
-    static ImpedimentDao impedimentDao;
+    static scrum.server.impediments.ImpedimentDao impedimentDao;
 
-    public static final void setImpedimentDao(ImpedimentDao impedimentDao) {
+    public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
         GImpediment.impedimentDao = impedimentDao;
+    }
+
+    static scrum.server.sprint.TaskDao taskDao;
+
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
+        GImpediment.taskDao = taskDao;
     }
 
 }

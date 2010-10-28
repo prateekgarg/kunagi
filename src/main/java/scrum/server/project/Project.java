@@ -22,35 +22,22 @@ import java.util.Set;
 
 import scrum.server.ScrumConfig;
 import scrum.server.admin.ProjectUserConfig;
-import scrum.server.admin.ProjectUserConfigDao;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
-import scrum.server.calendar.SimpleEventDao;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.Subject;
-import scrum.server.collaboration.SubjectDao;
 import scrum.server.collaboration.Wikipage;
-import scrum.server.collaboration.WikipageDao;
 import scrum.server.estimation.RequirementEstimationVote;
-import scrum.server.estimation.RequirementEstimationVoteDao;
 import scrum.server.files.File;
-import scrum.server.files.FileDao;
 import scrum.server.impediments.Impediment;
-import scrum.server.impediments.ImpedimentDao;
 import scrum.server.issues.Issue;
-import scrum.server.issues.IssueDao;
 import scrum.server.journal.ProjectEvent;
-import scrum.server.journal.ProjectEventDao;
 import scrum.server.pr.BlogEntry;
-import scrum.server.pr.BlogEntryDao;
 import scrum.server.release.Release;
-import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
-import scrum.server.risks.RiskDao;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDaySnapshot;
-import scrum.server.sprint.SprintDaySnapshotDao;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
@@ -60,96 +47,21 @@ public class Project extends GProject {
 
 	// --- dependencies ---
 
-	private static ProjectUserConfigDao projectUserConfigDao;
-	private static ImpedimentDao impedimentDao;
-	private static IssueDao issueDao;
-	private static RequirementDao requirementDao;
-	private static QualityDao qualityDao;
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
-	private static RiskDao riskDao;
 	private static TaskDao taskDao;
-	private static WikipageDao wikipageDao;
-	private static ProjectEventDao projectEventDao;
-	private static SimpleEventDao simpleEventDao;
-	private static FileDao fileDao;
 	private static ScrumConfig config;
 	private static CommentDao commentDao;
-	private static ReleaseDao releaseDao;
-	private static RequirementEstimationVoteDao requirementEstimationVoteDao;
-	private static SprintDaySnapshotDao sprintDaySnapshotDao;
-	private static SubjectDao subjectDao;
-	private static BlogEntryDao blogEntryDao;
-
-	public static void setBlogEntryDao(BlogEntryDao blogEntryDao) {
-		Project.blogEntryDao = blogEntryDao;
-	}
-
-	public static void setSubjectDao(SubjectDao subjectDao) {
-		Project.subjectDao = subjectDao;
-	}
 
 	public static void setCommentDao(CommentDao commentDao) {
 		Project.commentDao = commentDao;
-	}
-
-	public static void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
-		Project.sprintDaySnapshotDao = sprintDaySnapshotDao;
-	}
-
-	public static void setRequirementEstimationVoteDao(RequirementEstimationVoteDao requirementEstimationVoteDao) {
-		Project.requirementEstimationVoteDao = requirementEstimationVoteDao;
-	}
-
-	public static void setReleaseDao(ReleaseDao releaseDao) {
-		Project.releaseDao = releaseDao;
 	}
 
 	public static void setConfig(ScrumConfig config) {
 		Project.config = config;
 	}
 
-	public static void setFileDao(FileDao fileDao) {
-		Project.fileDao = fileDao;
-	}
-
-	public static void setSimpleEventDao(SimpleEventDao simpleEventDao) {
-		Project.simpleEventDao = simpleEventDao;
-	}
-
-	public static void setProjectEventDao(ProjectEventDao projectEventDao) {
-		Project.projectEventDao = projectEventDao;
-	}
-
-	public static void setWikipageDao(WikipageDao wikipageDao) {
-		Project.wikipageDao = wikipageDao;
-	}
-
-	public static void setProjectUserConfigDao(ProjectUserConfigDao projectUserConfigDao) {
-		Project.projectUserConfigDao = projectUserConfigDao;
-	}
-
-	public static void setIssueDao(IssueDao issueDao) {
-		Project.issueDao = issueDao;
-	}
-
 	public static void setTaskDao(TaskDao taskDao) {
 		Project.taskDao = taskDao;
-	}
-
-	public static void setRiskDao(RiskDao riskDao) {
-		Project.riskDao = riskDao;
-	}
-
-	public static void setImpedimentDao(ImpedimentDao impedimentDao) {
-		Project.impedimentDao = impedimentDao;
-	}
-
-	public static void setRequirementDao(RequirementDao storyDao) {
-		Project.requirementDao = storyDao;
-	}
-
-	public static void setQualityDao(QualityDao qualityDao) {
-		Project.qualityDao = qualityDao;
 	}
 
 	public static void setProjectSprintSnapshotDao(ProjectSprintSnapshotDao projectSprintSnapshotDao) {
@@ -300,10 +212,6 @@ public class Project extends GProject {
 		return events;
 	}
 
-	public Set<ProjectEvent> getProjectEvents() {
-		return projectEventDao.getProjectEventsByProject(this);
-	}
-
 	public Set<ProjectUserConfig> getUserConfigs() {
 		Set<ProjectUserConfig> configs = new HashSet<ProjectUserConfig>();
 		for (User user : getParticipants()) {
@@ -314,10 +222,6 @@ public class Project extends GProject {
 
 	public ProjectUserConfig getUserConfig(User user) {
 		return projectUserConfigDao.getProjectUserConfig(this, user);
-	}
-
-	public Set<Wikipage> getWikipages() {
-		return wikipageDao.getWikipagesByProject(this);
 	}
 
 	public Set<Task> getTasks() {
@@ -566,18 +470,6 @@ public class Project extends GProject {
 		return sprint;
 	}
 
-	public Set<Sprint> getSprints() {
-		return sprintDao.getSprintsByProject(this);
-	}
-
-	public Set<Impediment> getImpediments() {
-		return impedimentDao.getImpedimentsByProject(this);
-	}
-
-	public Set<Issue> getIssues() {
-		return issueDao.getIssuesByProject(this);
-	}
-
 	public Set<Issue> getAcceptedIssues() {
 		return issueDao.getAcceptedIssues(this);
 	}
@@ -614,30 +506,6 @@ public class Project extends GProject {
 		return issueDao.getOpenIdeas(this);
 	}
 
-	public Set<Risk> getRisks() {
-		return riskDao.getRisksByProject(this);
-	}
-
-	public Set<Requirement> getRequirements() {
-		return requirementDao.getRequirementsByProject(this);
-	}
-
-	public Set<File> getFiles() {
-		return fileDao.getFilesByProject(this);
-	}
-
-	public Set<Subject> getSubjects() {
-		return subjectDao.getSubjectsByProject(this);
-	}
-
-	public Set<Release> getReleases() {
-		return releaseDao.getReleasesByProject(this);
-	}
-
-	public Set<BlogEntry> getBlogEntrys() {
-		return blogEntryDao.getBlogEntrysByProject(this);
-	}
-
 	public Set<RequirementEstimationVote> getRequirementEstimationVotes() {
 		Set<RequirementEstimationVote> ret = new HashSet<RequirementEstimationVote>();
 		for (Requirement requirement : getRequirements()) {
@@ -660,10 +528,6 @@ public class Project extends GProject {
 			ret.addAll(sprint.getExistingDaySnapshots());
 		}
 		return ret;
-	}
-
-	public Set<SimpleEvent> getSimpleEvents() {
-		return simpleEventDao.getSimpleEventsByProject(this);
 	}
 
 	public Set<Comment> getAllComments() {
@@ -716,10 +580,6 @@ public class Project extends GProject {
 		}
 		assert latest != null;
 		return Utl.toSet(latest);
-	}
-
-	public Set<Quality> getQualitys() {
-		return qualityDao.getQualitysByProject(this);
 	}
 
 	@Override

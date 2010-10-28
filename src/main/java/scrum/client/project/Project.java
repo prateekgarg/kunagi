@@ -24,7 +24,6 @@ import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
-import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
@@ -144,14 +143,6 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<SimpleEvent> getSimpleEvents() {
-		return getDao().getSimpleEventsByProject(this);
-	}
-
-	public List<ProjectEvent> getProjectEvents() {
-		return getDao().getProjectEventsByProject(this);
-	}
-
 	public List<ProjectEvent> getLatestProjectEvents(int min) {
 		List<ProjectEvent> events = getProjectEvents();
 		Collections.sort(events, ProjectEvent.DATE_AND_TIME_COMPARATOR);
@@ -166,14 +157,6 @@ public class Project extends GProject implements ForumSupport {
 			if (count > min && dateAndTime.isBefore(deadline)) break;
 		}
 		return ret;
-	}
-
-	public List<Wikipage> getWikipages() {
-		return getDao().getWikipagesByProject(this);
-	}
-
-	public List<File> getFiles() {
-		return getDao().getFilesByProject(this);
 	}
 
 	public Wikipage getWikipage(String name) {
@@ -337,14 +320,6 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Impediment> getImpediments() {
-		return getDao().getImpedimentsByProject(this);
-	}
-
-	public List<Subject> getSubjects() {
-		return getDao().getSubjectsByProject(this);
-	}
-
 	public List<Issue> getOpenIssues(boolean includeSuspended) {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
@@ -393,18 +368,6 @@ public class Project extends GProject implements ForumSupport {
 			if (issue.isClosed()) ret.add(issue);
 		}
 		return ret;
-	}
-
-	public List<Issue> getIssues() {
-		return getDao().getIssuesByProject(this);
-	}
-
-	public List<Risk> getRisks() {
-		return getDao().getRisksByProject(this);
-	}
-
-	public List<Release> getReleases() {
-		return getDao().getReleasesByProject(this);
 	}
 
 	public List<Release> getReleasedReleases() {
@@ -496,10 +459,6 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Requirement> getRequirements() {
-		return getDao().getRequirementsByProject(this);
-	}
-
 	public List<Task> getTasks() {
 		return getDao().getTasks();
 	}
@@ -510,22 +469,10 @@ public class Project extends GProject implements ForumSupport {
 		return requirements;
 	}
 
-	public List<Quality> getQualitys() {
-		return getDao().getQualitysByProject(this);
-	}
-
-	public List<BlogEntry> getBlogEntrys() {
-		return getDao().getBlogEntrysByProject(this);
-	}
-
 	public Sprint createNewSprint() {
 		Sprint sprint = new Sprint(this, "New Sprint");
 		getDao().createSprint(sprint);
 		return sprint;
-	}
-
-	public List<Sprint> getSprints() {
-		return getDao().getSprintsByProject(this);
 	}
 
 	public boolean deleteTask(Task task) {

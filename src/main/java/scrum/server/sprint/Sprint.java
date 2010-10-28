@@ -12,9 +12,7 @@ import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
-import scrum.server.project.RequirementDao;
 import scrum.server.release.Release;
-import scrum.server.release.ReleaseDao;
 
 public class Sprint extends GSprint implements Numbered {
 
@@ -22,25 +20,10 @@ public class Sprint extends GSprint implements Numbered {
 
 	// --- dependencies ---
 
-	private static RequirementDao requirementDao;
 	private static TaskDao taskDao;
-	private static SprintDaySnapshotDao sprintDaySnapshotDao;
-	private static ReleaseDao releaseDao;
-
-	public static void setReleaseDao(ReleaseDao releaseDao) {
-		Sprint.releaseDao = releaseDao;
-	}
-
-	public static void setRequirementDao(RequirementDao storyDao) {
-		Sprint.requirementDao = storyDao;
-	}
 
 	public static void setTaskDao(TaskDao taskDao) {
 		Sprint.taskDao = taskDao;
-	}
-
-	public static void setSprintDaySnapshotDao(SprintDaySnapshotDao sprintDaySnapshotDao) {
-		Sprint.sprintDaySnapshotDao = sprintDaySnapshotDao;
 	}
 
 	// --- ---
@@ -48,10 +31,6 @@ public class Sprint extends GSprint implements Numbered {
 	public Release getRelease() {
 		Set<Release> releases = getReleases();
 		return releases.isEmpty() ? null : Utl.getElement(releases, 0);
-	}
-
-	public Set<Release> getReleases() {
-		return releaseDao.getReleasesBySprint(this);
 	}
 
 	public void close() {
@@ -131,10 +110,6 @@ public class Sprint extends GSprint implements Numbered {
 			sum += task.getBurnedWork();
 		}
 		return sum;
-	}
-
-	public Set<Requirement> getRequirements() {
-		return requirementDao.getRequirementsBySprint(this);
 	}
 
 	public Set<Task> getTasks() {

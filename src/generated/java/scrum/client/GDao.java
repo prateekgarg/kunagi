@@ -98,6 +98,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByAuthor(scrum.client.admin.User author) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.containsAuthor(author)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.pr.BlogEntry> getBlogEntrysByTitle(java.lang.String title) {
         List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
@@ -123,6 +130,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.pr.BlogEntry> getBlogEntrysByRelease(scrum.client.release.Release release) {
+        List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
+        for (scrum.client.pr.BlogEntry entity : blogEntrys.values()) {
+            if (entity.containsRelease(release)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.pr.BlogEntry> getBlogEntrysByPublished(boolean published) {
         List<scrum.client.pr.BlogEntry> ret = new ArrayList<scrum.client.pr.BlogEntry>();
@@ -990,7 +1004,21 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByAffectedRelease(scrum.client.release.Release affectedRelease) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.containsAffectedRelease(affectedRelease)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.issues.Issue> getIssuesByFixRelease(scrum.client.release.Release fixRelease) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.containsFixRelease(fixRelease)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.issues.Issue> getIssuesByPublished(boolean published) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
@@ -1125,10 +1153,45 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByParticipant(scrum.client.admin.User participant) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsParticipant(participant)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.project.Project> getProjectsByAdmin(scrum.client.admin.User admin) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsAdmin(admin)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.project.Project> getProjectsByProductOwner(scrum.client.admin.User productOwner) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsProductOwner(productOwner)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.project.Project> getProjectsByScrumMaster(scrum.client.admin.User scrumMaster) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsScrumMaster(scrumMaster)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.project.Project> getProjectsByTeamMember(scrum.client.admin.User teamMember) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsTeamMember(teamMember)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.project.Project> getProjectsByCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
@@ -1154,7 +1217,21 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByRequirementsOrderId(java.lang.String requirementsOrderId) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsRequirementsOrderId(requirementsOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.project.Project> getProjectsByUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.containsUrgentIssuesOrderId(urgentIssuesOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.project.Project> getProjectsByLastSprintNumber(int lastSprintNumber) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
@@ -1520,6 +1597,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsBySelectedEntitysId(java.lang.String selectedEntitysId) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.containsSelectedEntitysId(selectedEntitysId)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByOnline(boolean online) {
         List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
@@ -1717,6 +1801,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.release.Release> getReleasesBySprint(scrum.client.sprint.Sprint sprint) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.containsSprint(sprint)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.release.Release> getReleasesByNumber(int number) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
@@ -1868,6 +1959,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Requirement> getRequirementsByQuality(scrum.client.project.Quality quality) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.containsQuality(quality)) ret.add(entity);
+        }
+        return ret;
+    }
 
     public final List<scrum.client.project.Requirement> getRequirementsByLabel(java.lang.String label) {
         List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
@@ -1941,6 +2039,13 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Requirement> getRequirementsByTasksOrderId(java.lang.String tasksOrderId) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.containsTasksOrderId(tasksOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
 
     // --- RequirementEstimationVote ---
 
@@ -2438,8 +2543,29 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByProductOwner(scrum.client.admin.User productOwner) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsProductOwner(productOwner)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByScrumMaster(scrum.client.admin.User scrumMaster) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsScrumMaster(scrumMaster)) ret.add(entity);
+        }
+        return ret;
+    }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByTeamMember(scrum.client.admin.User teamMember) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsTeamMember(teamMember)) ret.add(entity);
+        }
+        return ret;
+    }
 
     // --- Subject ---
 

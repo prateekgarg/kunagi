@@ -26,7 +26,7 @@ public abstract class GFile
 
     // --- AEntity ---
 
-    public final FileDao getDao() {
+    public final scrum.server.files.FileDao getDao() {
         return fileDao;
     }
 
@@ -337,9 +337,9 @@ public abstract class GFile
         GFile.projectDao = projectDao;
     }
 
-    static FileDao fileDao;
+    static scrum.server.files.FileDao fileDao;
 
-    public static final void setFileDao(FileDao fileDao) {
+    public static final void setFileDao(scrum.server.files.FileDao fileDao) {
         GFile.fileDao = fileDao;
     }
 

@@ -26,7 +26,7 @@ public abstract class GRequirementEstimationVote
 
     // --- AEntity ---
 
-    public final RequirementEstimationVoteDao getDao() {
+    public final scrum.server.estimation.RequirementEstimationVoteDao getDao() {
         return requirementEstimationVoteDao;
     }
 
@@ -242,9 +242,9 @@ public abstract class GRequirementEstimationVote
         GRequirementEstimationVote.requirementDao = requirementDao;
     }
 
-    static RequirementEstimationVoteDao requirementEstimationVoteDao;
+    static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;
 
-    public static final void setRequirementEstimationVoteDao(RequirementEstimationVoteDao requirementEstimationVoteDao) {
+    public static final void setRequirementEstimationVoteDao(scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao) {
         GRequirementEstimationVote.requirementEstimationVoteDao = requirementEstimationVoteDao;
     }
 

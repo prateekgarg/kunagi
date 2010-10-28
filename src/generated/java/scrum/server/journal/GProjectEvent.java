@@ -26,7 +26,7 @@ public abstract class GProjectEvent
 
     // --- AEntity ---
 
-    public final ProjectEventDao getDao() {
+    public final scrum.server.journal.ProjectEventDao getDao() {
         return projectEventDao;
     }
 
@@ -288,9 +288,9 @@ public abstract class GProjectEvent
         GProjectEvent.projectDao = projectDao;
     }
 
-    static ProjectEventDao projectEventDao;
+    static scrum.server.journal.ProjectEventDao projectEventDao;
 
-    public static final void setProjectEventDao(ProjectEventDao projectEventDao) {
+    public static final void setProjectEventDao(scrum.server.journal.ProjectEventDao projectEventDao) {
         GProjectEvent.projectEventDao = projectEventDao;
     }
 

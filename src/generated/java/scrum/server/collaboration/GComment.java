@@ -26,7 +26,7 @@ public abstract class GComment
 
     // --- AEntity ---
 
-    public final CommentDao getDao() {
+    public final scrum.server.collaboration.CommentDao getDao() {
         return commentDao;
     }
 
@@ -417,9 +417,9 @@ public abstract class GComment
         }
     }
 
-    static CommentDao commentDao;
+    static scrum.server.collaboration.CommentDao commentDao;
 
-    public static final void setCommentDao(CommentDao commentDao) {
+    public static final void setCommentDao(scrum.server.collaboration.CommentDao commentDao) {
         GComment.commentDao = commentDao;
     }
 

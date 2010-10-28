@@ -26,7 +26,7 @@ public abstract class GSubject
 
     // --- AEntity ---
 
-    public final SubjectDao getDao() {
+    public final scrum.server.collaboration.SubjectDao getDao() {
         return subjectDao;
     }
 
@@ -260,9 +260,9 @@ public abstract class GSubject
         GSubject.projectDao = projectDao;
     }
 
-    static SubjectDao subjectDao;
+    static scrum.server.collaboration.SubjectDao subjectDao;
 
-    public static final void setSubjectDao(SubjectDao subjectDao) {
+    public static final void setSubjectDao(scrum.server.collaboration.SubjectDao subjectDao) {
         GSubject.subjectDao = subjectDao;
     }
 

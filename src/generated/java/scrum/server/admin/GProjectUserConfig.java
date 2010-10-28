@@ -26,7 +26,7 @@ public abstract class GProjectUserConfig
 
     // --- AEntity ---
 
-    public final ProjectUserConfigDao getDao() {
+    public final scrum.server.admin.ProjectUserConfigDao getDao() {
         return projectUserConfigDao;
     }
 
@@ -512,9 +512,9 @@ public abstract class GProjectUserConfig
         GProjectUserConfig.projectDao = projectDao;
     }
 
-    static ProjectUserConfigDao projectUserConfigDao;
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
 
-    public static final void setProjectUserConfigDao(ProjectUserConfigDao projectUserConfigDao) {
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
         GProjectUserConfig.projectUserConfigDao = projectUserConfigDao;
     }
 

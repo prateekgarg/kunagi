@@ -720,6 +720,11 @@ public abstract class GSprint
         propertyChanged("productOwnersIds", this.productOwnersIds);
     }
 
+    public final boolean containsProductOwner(scrum.client.admin.User productOwner) {
+        return productOwnersIds.contains(productOwner.getId());
+    }
+
+
     // --- scrumMasters ---
 
     private Set<String> scrumMastersIds = new HashSet<String>();
@@ -748,6 +753,11 @@ public abstract class GSprint
         propertyChanged("scrumMastersIds", this.scrumMastersIds);
     }
 
+    public final boolean containsScrumMaster(scrum.client.admin.User scrumMaster) {
+        return scrumMastersIds.contains(scrumMaster.getId());
+    }
+
+
     // --- teamMembers ---
 
     private Set<String> teamMembersIds = new HashSet<String>();
@@ -775,6 +785,11 @@ public abstract class GSprint
         teamMembersIds.remove(id);
         propertyChanged("teamMembersIds", this.teamMembersIds);
     }
+
+    public final boolean containsTeamMember(scrum.client.admin.User teamMember) {
+        return teamMembersIds.contains(teamMember.getId());
+    }
+
 
     // --- update properties by map ---
 
@@ -816,6 +831,24 @@ public abstract class GSprint
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
     }
+
+    public final java.util.List<scrum.client.project.Project> getCurrentSprintProjects() {
+        return getDao().getProjectsByCurrentSprint((Sprint)this);
+    }
+
+    public final java.util.List<scrum.client.project.Project> getNextSprintProjects() {
+        return getDao().getProjectsByNextSprint((Sprint)this);
+    }
+
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsBySprint((Sprint)this);
+    }
+
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesBySprint((Sprint)this);
+    }
+
+
 
     @Override
     public boolean matchesKey(String key) {
