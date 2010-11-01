@@ -69,6 +69,7 @@ public class BlockHeaderWidget extends AWidget {
 		SimplePanel cell = createCell(null, false, false, "BlockHeaderWidget-prefixIcon");
 		cell.setHeight("16px");
 		cell.getElement().getStyle().setMarginTop(2, Unit.PX);
+		centerWrapper.add(cell);
 		return cell;
 	}
 
