@@ -19,13 +19,15 @@ import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CommentsWidget extends AScrumWidget {
 
 	private static final int COMMENTS_PER_PAGE = 5;
 
-	private FlowPanel containerPanel;
+	private SimplePanel editorWrapper;
+	private FlowPanel commentListPanel;
 	private AScrumGwtEntity parent;
 	private Map<Comment, CommentWidget> widgets;
 
@@ -46,35 +48,43 @@ public class CommentsWidget extends AScrumWidget {
 
 		widgets = new HashMap<Comment, CommentWidget>();
 
-		containerPanel = new FlowPanel();
-		containerPanel.setStyleName("CommentsWidget");
+		editorWrapper = new SimplePanel();
+		editorWrapper.setWidget(activateCommentLink);
 
-		return containerPanel;
+		commentListPanel = new FlowPanel();
+
+		FlowPanel panel = new FlowPanel();
+		panel = new FlowPanel();
+		panel.setStyleName("CommentsWidget");
+		panel.add(editorWrapper);
+		panel.add(commentListPanel);
+		return panel;
 	}
 
 	@Override
 	protected void onUpdate() {
-		containerPanel.clear();
-
-		if (this.editor == null) {
-			containerPanel.add(activateCommentLink);
-		} else {
-			containerPanel.add(this.editor);
+		if (editor == null && editorWrapper.getWidget() != activateCommentLink) {
+			editorWrapper.setWidget(activateCommentLink);
+		} else if (editor != null && editorWrapper.getWidget() != editor) {
+			editorWrapper.setWidget(editor);
 		}
+		updateCommentList();
+		super.onUpdate();
+	}
 
+	private void updateCommentList() {
+		commentListPanel.clear();
 		List<Comment> comments = parent.getComments();
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
 		List<Comment> pageComments = filterCurrentPageComments(comments);
 		for (Comment comment : pageComments) {
 			CommentWidget widget = getWidget(comment);
-			containerPanel.add(widget);
+			commentListPanel.add(widget);
 		}
 
 		if (comments.size() > COMMENTS_PER_PAGE) {
-			containerPanel.add(createPageNavigator(comments.size()));
+			commentListPanel.add(createPageNavigator(comments.size()));
 		}
-
-		super.onUpdate();
 	}
 
 	private Widget createPageNavigator(int commentCount) {
