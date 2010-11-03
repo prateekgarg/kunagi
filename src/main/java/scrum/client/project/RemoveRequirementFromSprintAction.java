@@ -42,7 +42,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	@Override
 	protected void onExecute() {
 		Sprint sprint = requirement.getSprint();
-		requirement.setSprint(null);
+		requirement.removeFromSprint();
 		addUndo(new Undo(sprint));
 	}
 

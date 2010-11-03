@@ -296,8 +296,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
-			Task task = (Task) entity;
-			task.getRequirement().getSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		}
 
 		Sprint previousRequirementSprint = null;
@@ -340,27 +339,30 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Task) {
 			// update sprint day snapshot after change
+			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 			Task task = (Task) entity;
 			Requirement requirement = task.getRequirement();
-			requirement.getSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
-
-			if (task.isClosed() && properties.containsKey("remainingWork")) {
-				String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
-				if (requirement.isTasksClosed()) {
-					event += ", all tasks closed in " + requirement.getReferenceAndLabel();
+			if (requirement.isInCurrentSprint()) {
+				if (task.isClosed() && properties.containsKey("remainingWork")) {
+					String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
+					if (requirement.isTasksClosed()) {
+						event += ", all tasks closed in " + requirement.getReferenceAndLabel();
+					}
+					postProjectEvent(conversation, event, task);
+				} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
+					postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel(),
+						task);
 				}
-				postProjectEvent(conversation, event, task);
-			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel(), task);
+				if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
+					postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel(),
+						task);
+				}
+				if (!task.isClosed() && requirement.isRejectDateSet()) {
+					requirement.setRejectDate(null);
+					sendToClients(conversation, requirement);
+				}
 			}
-			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
-				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel(),
-					task);
-			}
-			if (!task.isClosed() && requirement.isRejectDateSet()) {
-				requirement.setRejectDate(null);
-				sendToClients(conversation, requirement);
-			}
+
 		}
 
 		Project currentProject = conversation.getProject();

@@ -53,6 +53,14 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		super(data);
 	}
 
+	public void removeFromSprint() {
+		setSprint(null);
+		for (Task task : getTasks()) {
+			task.setOwner(null);
+			task.setBurnedWork(0);
+		}
+	}
+
 	public boolean isDecidable() {
 		if (!isTasksClosed()) return false;
 		if (getRejectDate() != null) return false;
