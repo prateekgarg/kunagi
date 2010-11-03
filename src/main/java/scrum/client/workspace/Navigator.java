@@ -115,6 +115,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		ProjectWorkspaceWidgets workspace = Scope.get().getComponent(ProjectWorkspaceWidgets.class);
 		if (page != null && !page.equals(this.page)) {
 			workspace.showPage(page);
+			this.page = page;
 		}
 
 		if (entityId != null) {

@@ -81,20 +81,21 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (object instanceof AGwtEntity) {
 			AGwtEntity entity = (AGwtEntity) object;
 			long localModificationTime = entity.getLocalModificationTime();
-			if (localModificationTime == lastModificationTime) { return false; }
+			if (localModificationTime == lastModificationTime) {
+				updateHref();
+				return false;
+			}
 			lastModificationTime = localModificationTime;
 			return true;
 		}
+		updateHref();
 		return super.isUpdateRequired();
 	}
 
 	@Override
 	protected final void onUpdate() {
 		onUpdateHeader(header);
-		if (ScrumScopeManager.isProjectScope() && object instanceof AGwtEntity) {
-			AGwtEntity entity = (AGwtEntity) object;
-			header.setHref(Navigator.getEntityHref(entity));
-		}
+		updateHref();
 		header.update();
 		if (isExtended()) {
 			ensureExtendedInitialized();
@@ -110,6 +111,14 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			}
 		}
 		Gwt.update(preHeaderPanel);
+	}
+
+	private void updateHref() {
+		if (ScrumScopeManager.isProjectScope() && object instanceof AGwtEntity) {
+			AGwtEntity entity = (AGwtEntity) object;
+			String href = Navigator.getEntityHref(entity);
+			header.setHref(href);
+		}
 	}
 
 	protected void onUpdateBody() {
