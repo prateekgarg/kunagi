@@ -24,7 +24,9 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		Issue issue = getObject();
 
 		if (issue.isBug()) statusIcon = header.addIconWrapper();
-		if (issue.isBug()) header.addText(issue.getSeverityLabelModel(), "50px", false, false);
+
+		if (issue.isBug()) header.addText(issue.getSeverityLabelModel(), "40px", true, false);
+
 		header.addText(issue.getLabelModel());
 		header.addText(issue.getStatusLabelModel(), true);
 
