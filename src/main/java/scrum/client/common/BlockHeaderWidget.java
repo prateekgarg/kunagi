@@ -8,7 +8,6 @@ import ilarkesto.gwt.client.DropdownMenuButtonWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -21,6 +20,7 @@ public class BlockHeaderWidget extends AWidget {
 	private HorizontalPanel table;
 	private FocusPanel dragHandleWrapper;
 	private AnchorPanel centerWrapper;
+	private HorizontalPanel centerTable;
 
 	private DropdownMenuButtonWidget menu;
 	private Label dragHandle;
@@ -31,9 +31,12 @@ public class BlockHeaderWidget extends AWidget {
 		dragHandleWrapper.setStyleName("BlockHeaderWidget-dragHandle");
 		// dragHandleWrapper.setHeight("100%");
 
+		centerTable = new HorizontalPanel();
+
 		centerWrapper = new AnchorPanel();
 		centerWrapper.setStyleName("BlockHeaderWidget-anchor");
 		centerWrapper.setWidth("100%");
+		centerWrapper.add(centerTable);
 
 		table = new HorizontalPanel();
 		table.setStyleName("BlockHeaderWidget");
@@ -62,7 +65,7 @@ public class BlockHeaderWidget extends AWidget {
 	public void addText(AFieldModel<?> model, String width, boolean secondary, boolean small) {
 		SimplePanel cell = createCell(new TextOutputWidget(model), secondary, small, null);
 		if (width != null) cell.setWidth(width);
-		centerWrapper.add(cell);
+		centerTable.add(cell);
 	}
 
 	// ---
@@ -71,8 +74,7 @@ public class BlockHeaderWidget extends AWidget {
 		SimplePanel cell = createCell(null, false, false, "BlockHeaderWidget-prefixIcon");
 		cell.setHeight("16px");
 		cell.setWidth("16px");
-		cell.getElement().getStyle().setMarginTop(2, Unit.PX);
-		centerWrapper.add(cell);
+		centerTable.add(cell);
 		return cell;
 	}
 
