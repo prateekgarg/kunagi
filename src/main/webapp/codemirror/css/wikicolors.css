@@ -23,10 +23,10 @@ html {
 .editbox span.wiki-italic {font-style: italic;}
 .editbox span.wiki-bold-italic {font-weight: bold; font-style: italic;}
 
-.editbox span.wiki-h1 {color: blue; font-weight: bold; font-size: 18px;}
-.editbox span.wiki-h2 {color: blue; font-weight: bold; font-size: 16px;}
-.editbox span.wiki-h3 {color: blue; font-weight: bold; font-size: 15px;}
-.editbox span.wiki-h4 {color: blue; font-weight: bold; font-size: 14px;}
+.editbox span.wiki-h1 {color: navy; font-weight: bold; font-size: 18px;}
+.editbox span.wiki-h2 {color: navy; font-weight: bold; font-size: 16px;}
+.editbox span.wiki-h3 {color: navy; font-weight: bold; font-size: 15px;}
+.editbox span.wiki-h4 {color: navy; font-weight: bold; font-size: 14px;}
 
 .editbox span.wiki-list {color: blue; font-weight: bold; font-family: monospace;}
 
