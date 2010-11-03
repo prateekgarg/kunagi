@@ -45,12 +45,12 @@ public class UserStatusWidget extends AScrumWidget {
 		usersStatus = Scope.get().getComponent(UsersStatus.class);
 
 		nameLabel = new Label(user.getName() + getCurrentProject().getUsersRolesAsString(user, " (", ")"));
-		nameLabel.setStyleName("UserStatusWidget-name");
 
 		selectedEntitiesWrapper = new SimplePanel();
 		selectedEntitiesWrapper.setStyleName("UserStatusWidget-selectedEntities");
 
 		focusPanel = new FocusPanel(nameLabel);
+		focusPanel.setStyleName("UserStatusWidget-name");
 		focusPanel.addClickHandler(new ExpansionClickHandler());
 
 		FlowPanel headerPanel = new FlowPanel();

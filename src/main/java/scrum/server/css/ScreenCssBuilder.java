@@ -485,7 +485,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic().cursorPointer();
 		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
 		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
-		css.style(".UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall);
+		css.style(".UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall + 1);
 		css.style(".UserStatusWidget .AFieldValueWidget").backgroundNone().borderNone();
 	}
 
