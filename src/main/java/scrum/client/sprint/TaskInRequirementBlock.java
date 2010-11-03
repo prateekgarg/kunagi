@@ -21,8 +21,8 @@ public class TaskInRequirementBlock extends ABlockWidget<Task> implements TrashS
 	protected void onInitializationHeader(BlockHeaderWidget header) {
 		Task task = getObject();
 		statusIcon = header.addIconWrapper();
-		header.addText(task.getOwnerModel(), true);
 		header.addText(task.getLabelModel());
+		header.addText(task.getOwnerModel(), true);
 		header.appendCell(new EmoticonsWidget(task), null, true);
 		header.addMenuAction(new ClaimTaskAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
