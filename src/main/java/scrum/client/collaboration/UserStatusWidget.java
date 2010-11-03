@@ -50,18 +50,18 @@ public class UserStatusWidget extends AScrumWidget {
 		selectedEntitiesWrapper = new SimplePanel();
 		selectedEntitiesWrapper.setStyleName("UserStatusWidget-selectedEntities");
 
+		focusPanel = new FocusPanel(nameLabel);
+		focusPanel.addClickHandler(new ExpansionClickHandler());
+
 		FlowPanel headerPanel = new FlowPanel();
 		headerPanel.setStyleName("UserStatusWidget-header");
-		headerPanel.add(nameLabel);
+		headerPanel.add(focusPanel);
 		headerPanel.add(selectedEntitiesWrapper);
 		headerPanel.add(Gwt.createFloatClear());
 
-		focusPanel = new FocusPanel(headerPanel);
-		focusPanel.addClickHandler(new ExpansionClickHandler());
-
 		wrapper = new FlowPanel();
 		wrapper.setStyleName("UserStatusWidget");
-		wrapper.add(focusPanel);
+		wrapper.add(headerPanel);
 		return wrapper;
 	}
 
