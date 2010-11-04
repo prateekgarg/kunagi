@@ -65,7 +65,9 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		dndMarkerTop.setActive(false);
 
 		onInitializationHeader(header);
-		// header.addClickHandler(new SelectionClickHandler());
+		if (!ScrumScopeManager.isProjectScope() || !(object instanceof AGwtEntity)) {
+			header.addClickHandler(new SelectionClickHandler());
+		}
 
 		return outerPanel;
 	}

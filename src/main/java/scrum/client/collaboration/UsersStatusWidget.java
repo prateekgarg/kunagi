@@ -29,10 +29,14 @@ public class UsersStatusWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
+		if (containerPanel.getWidgetCount() > 0) {
+			super.onUpdate();
+			return;
+		}
 		Project project = getCurrentProject();
 		if (project == null) return;
 		List<User> users = new ArrayList<User>(project.getParticipants());
-		Collections.sort(users, User.ONLINE_OFFLINE_COMPARATOR);
+		Collections.sort(users, User.NAME_COMPARATOR);
 		containerPanel.clear();
 		for (User user : users) {
 			UserStatusWidget widget = userWidgets.get(user);

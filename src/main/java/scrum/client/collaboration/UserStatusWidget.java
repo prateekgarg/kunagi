@@ -73,9 +73,9 @@ public class UserStatusWidget extends AScrumWidget {
 		nameLabel.addMouseMoveHandler(highlighter);
 		nameLabel.addMouseOutHandler(highlighter);
 		if (usersStatus.isOnline(user) || user == getCurrentUser()) {
-			nameLabel.addStyleDependentName("online");
+			focusPanel.addStyleDependentName("online");
 		} else {
-			nameLabel.removeStyleDependentName("online");
+			focusPanel.removeStyleDependentName("online");
 		}
 		List<AScrumGwtEntity> selectedEntities = usersStatus.getSelectedEntities(user);
 		if (!this.selectedEntities.equals(selectedEntities)) {
