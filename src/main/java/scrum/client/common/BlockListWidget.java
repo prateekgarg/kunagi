@@ -14,6 +14,7 @@ import java.util.List;
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.workspace.DndManager;
+import scrum.client.workspace.Navigator;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -66,6 +67,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		list = new ObjectMappedFlowPanel<O, ABlockWidget<O>>(
 				new ObjectMappedFlowPanel.WidgetFactory<O, ABlockWidget<O>>() {
 
+					@Override
 					public ABlockWidget<O> createWidget(O object) {
 						ABlockWidget<O> block = blockWidgetFactory.createBlock();
 						block.setObject(object);
@@ -76,6 +78,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 				});
 		list.setMoveObserver(new ObjectMappedFlowPanel.MoveObserver<O, ABlockWidget<O>>() {
 
+			@Override
 			public void moved(O object, ABlockWidget<O> oldWidget, ABlockWidget<O> newWidget) {
 				newWidget.setExtended(oldWidget.isExtended());
 			}
@@ -204,6 +207,11 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final boolean showObject(O object) {
+		Navigator navigator = Scope.get().getComponent(Navigator.class);
+		if (navigator != null && navigator.isToggleMode() && isExtended(object)) {
+			collapseObject(object);
+			return false;
+		}
 		if (!extendObject(object)) return false;
 		scrollToObject(object);
 		return true;

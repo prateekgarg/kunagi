@@ -1,5 +1,6 @@
 package scrum.client.workspace;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 
@@ -29,6 +30,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 	private Mode currentMode;
 	private String page = "Dashboard";
+	private boolean toggleMode;
 
 	@Override
 	public void initialize() {
@@ -67,6 +69,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 			return;
 		}
 
+		toggleMode = Str.isTrue(tokens.get("toggle"));
 		gotoProject(projectId, tokens.get("page"), tokens.get("entity"));
 	}
 
@@ -248,6 +251,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 	public static String getEntityHref(AGwtEntity entity) {
 		return getEntityHref(entity.getId());
+	}
+
+	public boolean isToggleMode() {
+		return toggleMode;
 	}
 
 	public static String getEntityHref(String entityId) {

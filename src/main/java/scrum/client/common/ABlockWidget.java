@@ -65,7 +65,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		dndMarkerTop.setActive(false);
 
 		onInitializationHeader(header);
-		header.addClickHandler(new SelectionClickHandler());
+		// header.addClickHandler(new SelectionClickHandler());
 
 		return outerPanel;
 	}
@@ -117,6 +117,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (ScrumScopeManager.isProjectScope() && object instanceof AGwtEntity) {
 			AGwtEntity entity = (AGwtEntity) object;
 			String href = Navigator.getEntityHref(entity);
+			href += "|toggle=" + isExtended();
 			header.setHref(href);
 		}
 	}
