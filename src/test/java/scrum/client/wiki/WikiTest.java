@@ -40,9 +40,12 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void toc() {
-		Assert.assertEquals(
-			toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
-			"<div class=\"toc\"><ul><li><a href=\"#wiki_h1_1\">1</a></li><ul><li><a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li><a href=\"#wiki_h1_2\">2</a></li></ul></div><a name=\"wiki_h1_1\"></a><h1>1</h1><a name=\"wiki_h2_1_1\"></a><h2>1.1</h2><a name=\"wiki_h1_2\"></a><h1>2</h1>");
+		Assert.assertEquals(toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="), "<div class=\"toc\"><ul><li>"
+				+ "<a href=\"#wiki_h1_1\">1</a></li><ul><li>" + "<a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li>"
+				+ "<a href=\"#wiki_h1_2\">2</a></li></ul></div>"
+				+ "<a name=\"wiki_h1_1\" id=\"wiki_h1_1\"></a><h1>1</h1>"
+				+ "<a name=\"wiki_h2_1_1\" id=\"wiki_h2_1_1\"></a><h2>1.1</h2>"
+				+ "<a name=\"wiki_h1_2\" id=\"wiki_h1_2\"></a><h1>2</h1>");
 	}
 
 	@Test
@@ -133,16 +136,20 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void header() {
-		Assert.assertEquals(toHtml("= header ="), "<a name=\"wiki_h1_header\"></a><h1>header</h1>");
+		Assert.assertEquals(toHtml("= header ="),
+			"<a name=\"wiki_h1_header\" id=\"wiki_h1_header\"></a><h1>header</h1>");
 		Assert.assertEquals(toHtml("= ="), "= =");
 		Assert.assertEquals(toHtml("= header = dummy"), "= header = dummy");
 
-		Assert.assertEquals(toHtml("== header =="), "<a name=\"wiki_h2_header\"></a><h2>header</h2>");
+		Assert.assertEquals(toHtml("== header =="),
+			"<a name=\"wiki_h2_header\" id=\"wiki_h2_header\"></a><h2>header</h2>");
 		Assert.assertEquals(toHtml("== =="), "== ==");
 		Assert.assertEquals(toHtml("== header == dummy"), "== header == dummy");
 
-		Assert.assertEquals(toHtml("=== header ==="), "<a name=\"wiki_h3_header\"></a><h3>header</h3>");
-		Assert.assertEquals(toHtml("==== header ===="), "<a name=\"wiki_h4_header\"></a><h4>header</h4>");
+		Assert.assertEquals(toHtml("=== header ==="),
+			"<a name=\"wiki_h3_header\" id=\"wiki_h3_header\"></a><h3>header</h3>");
+		Assert.assertEquals(toHtml("==== header ===="),
+			"<a name=\"wiki_h4_header\" id=\"wiki_h4_header\"></a><h4>header</h4>");
 	}
 
 	@Test
@@ -163,7 +170,7 @@ public class WikiTest extends Assert {
 		// System.out.println("\n-----\n" + html + "\n-----\n");
 		Assert.assertEquals(
 			html,
-			"<a name=\"wiki_h1_header_1\"></a><h1>header 1</h1><p>my first paragraph<br>still first</p><p>second paragraph</p><p>third paragraph</p><a name=\"wiki_h2_header_2\"></a><h2>header 2</h2>");
+			"<a name=\"wiki_h1_header_1\" id=\"wiki_h1_header_1\"></a><h1>header 1</h1><p>my first paragraph<br>still first</p><p>second paragraph</p><p>third paragraph</p><a name=\"wiki_h2_header_2\" id=\"wiki_h2_header_2\"></a><h2>header 2</h2>");
 	}
 
 	private static String toHtml(String wiki) {
@@ -181,7 +188,7 @@ public class WikiTest extends Assert {
 
 		@Override
 		public String getTocHrefOrOnclickAParameter(Header h) {
-			return "href=\"#" + h.getAnchor() + ".html\"";
+			return "href=\"#" + h.getAnchor() + "\"";
 		}
 
 		@Override
