@@ -37,6 +37,7 @@ public class WorkspaceWidget extends AScrumWidget {
 		workarea.setStyleName("Workspace-body-center-content");
 
 		ScrollPanel workareaScroller = new ScrollPanel(Gwt.createDiv("Workspace-body-center-content", workarea));
+		workareaScroller.getElement().setId("workarea-scroller");
 		workareaScroller.setHeight("100%");
 		workarea.setScrollPanel(workareaScroller);
 

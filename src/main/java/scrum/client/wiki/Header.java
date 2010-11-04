@@ -14,7 +14,8 @@ public class Header extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
-		return "<a name=\"" + getAnchor() + "\"></a><h" + depth + ">" + escapeHtml(text) + "</h" + depth + ">";
+		return "<a name=\"" + getAnchor() + "\" id=\"" + getAnchor() + "\"></a><h" + depth + ">" + escapeHtml(text)
+				+ "</h" + depth + ">";
 	}
 
 	@Override

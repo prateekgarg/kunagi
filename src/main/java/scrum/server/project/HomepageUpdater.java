@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import scrum.client.wiki.Header;
 import scrum.client.wiki.HtmlContext;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
@@ -402,6 +403,11 @@ public class HomepageUpdater {
 		}
 
 		@Override
+		public String getTocHrefOrOnclickAParameter(Header h) {
+			return "href=\"#" + h.getAnchor() + ".html\"";
+		}
+
+		@Override
 		public String getDownloadUrlByReference(String reference) {
 			return reference;
 		}
@@ -410,11 +416,6 @@ public class HomepageUpdater {
 		public String getEntityLabelByReference(String reference) {
 			AEntity entity = project.getEntityByReference(reference);
 			return entity == null ? null : entity.toString();
-		}
-
-		@Override
-		public boolean isAnchorLinks() {
-			return true;
 		}
 
 	}

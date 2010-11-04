@@ -23,6 +23,12 @@ public class ScrumHtmlContext implements HtmlContext {
 	}
 
 	@Override
+	public String getTocHrefOrOnclickAParameter(Header h) {
+		return "onclick=\"document.getElementById('" + h.getAnchor() + "').scrollTop = document.getElementById('"
+				+ h.getAnchor() + "').offsetTop\"";
+	}
+
+	@Override
 	public String getEntityLabelByReference(String reference) {
 		AScrumGwtEntity entity = dao.getEntityByReference(reference);
 		if (entity == null) {
@@ -36,11 +42,6 @@ public class ScrumHtmlContext implements HtmlContext {
 	@Override
 	public String getDownloadUrlByReference(String reference) {
 		return GWT.getModuleBaseURL() + "fileDownload?reference=" + reference;
-	}
-
-	@Override
-	public boolean isAnchorLinks() {
-		return false;
 	}
 
 }

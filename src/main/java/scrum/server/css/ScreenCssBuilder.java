@@ -152,7 +152,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ARichtextViewEditWidget-viewer .codeBlock").padding(5).margin(0, 10, 10, 10).border(1, "#EEE")
 				.background(Colors.lighten(cFieldBackground)).maxWidth(400).maxHeight(400).overflowAuto();
 		css.style(".ARichtextViewEditWidget-viewer div.toc").border(1, cPagePanelBorder).background("#EEE")
-				.floatRight().padding(10, 10, 3, 5);
+				.floatRight().padding(10, 10, 3, 5).margin(10);
 		css.style(".codeBlock code, .codeBlock pre").margin(0, 0, 0, 0).padding(0, 0, 0, 0);
 		css.style(".ARichtextViewEditWidget-editor").border(1, cPagePanelBorder);
 		css.style(".ARichtextViewEditWidget-editor .html-editor-toolbar").displayNone();

@@ -33,18 +33,16 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void externalImg() {
-		Assert
-				.assertEquals(toHtml("[[Image:http://servisto.de/image.png]]"),
-					"<a href=\"http://servisto.de/image.png\" target=\"_blank\"><img src=\"http://servisto.de/image.png\"></a>");
+		Assert.assertEquals(toHtml("[[Image:http://servisto.de/image.png]]"),
+			"<a href=\"http://servisto.de/image.png\" target=\"_blank\"><img src=\"http://servisto.de/image.png\"></a>");
 
 	}
 
 	@Test
 	public void toc() {
-		Assert
-				.assertEquals(
-					toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
-					"<div class=\"toc\"><ul><li><a href=\"#wiki_h1_1\">1</a></li><ul><li><a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li><a href=\"#wiki_h1_2\">2</a></li></ul></div><a name=\"wiki_h1_1\"></a><h1>1</h1><a name=\"wiki_h2_1_1\"></a><h2>1.1</h2><a name=\"wiki_h1_2\"></a><h1>2</h1>");
+		Assert.assertEquals(
+			toHtml("TOC\n= 1 =\n== 1.1 ==\n= 2 ="),
+			"<div class=\"toc\"><ul><li><a href=\"#wiki_h1_1\">1</a></li><ul><li><a href=\"#wiki_h2_1_1\">1.1</a></li></ul><li><a href=\"#wiki_h1_2\">2</a></li></ul></div><a name=\"wiki_h1_1\"></a><h1>1</h1><a name=\"wiki_h2_1_1\"></a><h2>1.1</h2><a name=\"wiki_h1_2\"></a><h1>2</h1>");
 	}
 
 	@Test
@@ -114,9 +112,7 @@ public class WikiTest extends Assert {
 	@Test
 	public void code() {
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
-		Assert
-				.assertEquals(toHtml("here is <code>multiword code</code>."),
-					"here is <code>multiword&nbsp;code</code>.");
+		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiline\ncode</code>."),
 			"<p>here is <div class=\"codeBlock\"><code>multiline<br>code</code></div>.</p>");
 		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
@@ -165,10 +161,9 @@ public class WikiTest extends Assert {
 	public void complete() {
 		String html = toHtml("= header 1 =\nmy first paragraph\nstill first\n\nsecond paragraph\n\n\n\nthird paragraph\n\n== header 2 ==");
 		// System.out.println("\n-----\n" + html + "\n-----\n");
-		Assert
-				.assertEquals(
-					html,
-					"<a name=\"wiki_h1_header_1\"></a><h1>header 1</h1><p>my first paragraph<br>still first</p><p>second paragraph</p><p>third paragraph</p><a name=\"wiki_h2_header_2\"></a><h2>header 2</h2>");
+		Assert.assertEquals(
+			html,
+			"<a name=\"wiki_h1_header_1\"></a><h1>header 1</h1><p>my first paragraph<br>still first</p><p>second paragraph</p><p>third paragraph</p><a name=\"wiki_h2_header_2\"></a><h2>header 2</h2>");
 	}
 
 	private static String toHtml(String wiki) {
@@ -185,6 +180,11 @@ public class WikiTest extends Assert {
 		}
 
 		@Override
+		public String getTocHrefOrOnclickAParameter(Header h) {
+			return "href=\"#" + h.getAnchor() + ".html\"";
+		}
+
+		@Override
 		public String getDownloadUrlByReference(String reference) {
 			return reference;
 		}
@@ -192,11 +192,6 @@ public class WikiTest extends Assert {
 		@Override
 		public String getEntityLabelByReference(String reference) {
 			return null;
-		}
-
-		@Override
-		public boolean isAnchorLinks() {
-			return true;
 		}
 
 	}
