@@ -42,7 +42,7 @@ public class ScrumGwt extends Gwt {
 
 	public static String createHtmlReference(AScrumGwtEntity entity) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(" <a href='").append(Navigator.getEntityHref(entity)).append("' title='")
+		sb.append("<a href='").append(Navigator.getEntityHref(entity)).append("' title='")
 				.append(Str.toHtml(((LabelSupport) entity).getLabel())).append("' class='reference'>");
 		sb.append(((ReferenceSupport) entity).getReference());
 		sb.append("</a>");
