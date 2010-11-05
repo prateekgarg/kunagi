@@ -67,7 +67,12 @@ public class UserStatusWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		String color = getCurrentProject().getUserConfig(user).getColor();
+		String color;
+		if (usersStatus.isIdle(user)) {
+			color = "darkgray";
+		} else {
+			color = getCurrentProject().getUserConfig(user).getColor();
+		}
 		nameLabel.getElement().getStyle().setProperty("color", color);
 		Highlighter highlighter = new Highlighter();
 		nameLabel.addMouseMoveHandler(highlighter);

@@ -15,6 +15,14 @@ public class ProjectUserConfig extends GProjectUserConfig {
 		super(data);
 	}
 
+	public boolean isIdle() {
+		if (!isOnline()) return false;
+		DateAndTime time = getLastActivityDateAndTime();
+		if (time == null) return true;
+		TimePeriod idle = time.getPeriodToNow();
+		return (idle.toSeconds() > 30);
+	}
+
 	public String getIdleTimeAsString() {
 		TimePeriod idle = getIdleTime();
 		return idle == null ? "-" : idle.toShortestString();

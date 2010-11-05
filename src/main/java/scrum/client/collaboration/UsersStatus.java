@@ -44,6 +44,10 @@ public class UsersStatus extends GUsersStatus implements BlockCollapsedHandler, 
 		return project.getUserConfig(user).isOnline();
 	}
 
+	public boolean isIdle(User user) {
+		return project.getUserConfig(user).isIdle();
+	}
+
 	private void addSelectedEntity(AGwtEntity entity) {
 		project.getUserConfig(getCurrentUser()).addSelectedEntityId(entity.getId());
 	}
