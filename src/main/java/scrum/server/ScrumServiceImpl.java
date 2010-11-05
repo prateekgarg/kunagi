@@ -502,7 +502,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (currentUser != null && currentProject != null) {
 			ProjectUserConfig config = currentProject.getUserConfig(currentUser);
-			config.setLastActivityDateAndTime(DateAndTime.now());
+			config.touch();
 			sendToClients(conversation, config);
 		}
 
@@ -521,8 +521,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.setProject(project);
 		user.setCurrentProject(project);
 		ProjectUserConfig config = project.getUserConfig(user);
-		config.setOnline(true);
-		config.setLastActivityDateAndTime(DateAndTime.now());
+		config.touch();
 
 		conversation.sendToClient(project);
 		conversation.sendToClient(project.getSprints());
@@ -551,7 +550,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onCloseProject(GwtConversation conversation) {
 		Project project = conversation.getProject();
-		if (project != null) {
+		if (project != null && conversation.getSession().getGwtConversations().size() < 2) {
 			ProjectUserConfig config = project.getUserConfig(conversation.getSession().getUser());
 			config.reset();
 			sendToClients(conversation, config);

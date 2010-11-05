@@ -78,8 +78,9 @@ public class GwtConversation extends AGwtConversation {
 
 	@Override
 	public void invalidate() {
-		User user = getSession().getUser();
-		if (user != null && project != null) {
+		WebSession session = getSession();
+		User user = session.getUser();
+		if (user != null && project != null && session.getGwtConversations().size() < 2) {
 			ProjectUserConfig config = project.getUserConfig(user);
 			config.reset();
 			ScrumWebApplication.get().sendToOtherConversationsByProject(this, config);
