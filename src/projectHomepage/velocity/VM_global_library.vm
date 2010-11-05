@@ -11,13 +11,13 @@
     <meta name="author" content="Artjom Kochtchi, Witoslaw Koczewski">
     <meta name="keywords" content="$keywords">
 
-    <meta property="og:title" content="$title">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="http://kunagi.org">
-    <meta property="og:image" content="http://kunagi.org/img/kunagi.png">
-    <meta property="og:site_name" content="Kunagi">
-    <meta property="fb:admins" content="kunagi">
-    <meta property="og:description" content="$description">
+    <meta name="og:title" content="$title">
+    <meta name="og:type" content="website">
+    <meta name="og:url" content="http://kunagi.org">
+    <meta name="og:image" content="http://kunagi.org/img/kunagi.png">
+    <meta name="og:site_name" content="Kunagi">
+    <meta name="fb:admins" content="kunagi">
+    <meta name="og:description" content="$description">
 
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
