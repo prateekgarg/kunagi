@@ -22,7 +22,7 @@ public class BlockListSelectionManager {
 
 	public boolean select(Object object) {
 		for (BlockListWidget list : lists) {
-			if (list.showObject(object)) return true;
+			if (list.contains(object) && list.showObject(object)) return true;
 		}
 		return false;
 	}

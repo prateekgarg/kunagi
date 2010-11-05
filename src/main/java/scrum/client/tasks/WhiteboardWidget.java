@@ -32,6 +32,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private HTML ownedLabel;
 	private HTML doneLabel;
 
+	private Map<Requirement, BlockListWidget<Requirement>> requirementLists;
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
 	private Map<Requirement, TaskListWidget> closedTasks;
@@ -45,6 +46,8 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	@Override
 	protected Widget onInitialization() {
 		predicate = null;
+
+		requirementLists = new HashMap<Requirement, BlockListWidget<Requirement>>();
 
 		openLabel = new HTML();
 		openLabel.setStyleName("WhiteboardWidget-columnLabel");
@@ -118,7 +121,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement requirement = requirements.get(i);
 
-			grid.setWidget(row, 0, createRequirementWidget(requirement));
+			grid.setWidget(row, 0, getRequirementList(requirement));
 			grid.getCellFormatter().getElement(row, 0).setAttribute("colspan", "3");
 			row++;
 
@@ -135,7 +138,16 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		userGuide.update();
 	}
 
-	private Widget createRequirementWidget(Requirement requirement) {
+	private BlockListWidget<Requirement> getRequirementList(Requirement requirement) {
+		BlockListWidget<Requirement> list = requirementLists.get(requirement);
+		if (list == null) {
+			list = createRequirementList(requirement);
+			requirementLists.put(requirement, list);
+		}
+		return list;
+	}
+
+	private BlockListWidget<Requirement> createRequirementList(Requirement requirement) {
 		BlockListWidget<Requirement> list = new BlockListWidget<Requirement>(RequirementInWhiteboardBlock.FACTORY);
 		list.addAdditionalStyleName("WhiteboardWidget-requirement-list");
 		list.setDndSorting(false);
@@ -174,6 +186,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		}
 	}
 
+	@Override
 	public void highlightUser(User user) {
 		setTaskHighlighting(user == null ? null : new ByUserPredicate(user));
 	}
@@ -197,10 +210,19 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		}
 	}
 
+	@Override
 	public BlockListSelectionManager getSelectionManager() {
 		return selectionManager;
 	}
 
+	public void selectRequirement(Requirement requirement) {
+		if (requirement == null) return;
+		BlockListWidget<Requirement> list = getRequirementList(requirement);
+		if (list == null) return;
+		list.showObject(requirement);
+	}
+
+	@Override
 	public void selectTask(Task task) {
 		if (task == null) return;
 		Requirement requirement = task.getRequirement();
@@ -209,14 +231,17 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		update();
 	}
 
+	@Override
 	public boolean isShowOwner() {
 		return true;
 	}
 
+	@Override
 	public boolean isShowRequirement() {
 		return false;
 	}
 
+	@Override
 	public boolean isWideMode() {
 		return false;
 	}
@@ -233,8 +258,10 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			this.user = user;
 		}
 
+		@Override
 		public boolean contains(Task element) {
 			return element.getOwner() != null && element.getOwner().equals(user);
 		}
 	}
+
 }

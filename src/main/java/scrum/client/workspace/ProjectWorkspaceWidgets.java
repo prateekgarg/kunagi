@@ -369,6 +369,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		if (inCurrentSprint) {
 			if (getWorkarea().isShowing(productBacklog)) {
 				showProductBacklog(requirement);
+			} else if (getWorkarea().isShowing(whiteboard)) {
+				showWhiteboard(requirement);
 			} else {
 				showSprintBacklog(requirement);
 			}
@@ -394,6 +396,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 	public void showWhiteboard(Task task) {
 		select(whiteboard);
 		whiteboard.selectTask(task);
+	}
+
+	public void showWhiteboard(Requirement requirement) {
+		select(whiteboard);
+		whiteboard.selectRequirement(requirement);
 	}
 
 	public void showSprintBacklog(Task task) {
