@@ -122,7 +122,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		}
 
 		if (entityId != null) {
-			if (ScrumGwt.isEntityReference(entityId)) {
+			if (ScrumGwt.isEntityReferenceOrWikiPage(entityId)) {
 				workspace.showEntityByReference(entityId);
 			} else {
 				workspace.showEntityById(entityId);
