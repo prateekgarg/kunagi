@@ -423,6 +423,8 @@ public class ScreenCssBuilder implements CssBuilder {
 				.background(Colors.darken(cCommentsBackground));
 		css.style(".CommentsWidget-pageNavigator-page a").displayBlock().border(1, cPagePanelBorder).padding(1, 5)
 				.textDecorationNone().fontWeightBold();
+		css.style(".CommentsWidget-pageNavigator-page-disabled").displayBlock().border(1, cPagePanelBorder)
+				.padding(1, 5).textDecorationNone().fontWeightBold().color(cPagePanelBorder);
 		css.style(".CommentsWidget .AViewEditWidget-viewer").padding(0);
 		css.style(".CommentsWidget .AViewEditWidget-viewer-editable").padding(3);
 

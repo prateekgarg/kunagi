@@ -93,12 +93,14 @@ public class CommentsWidget extends AScrumWidget {
 		tb.addFieldLabel("Pages:");
 		int page = 1;
 		int endIdx = COMMENTS_PER_PAGE - 1;
+		tb.addSpacer(5, 1);
 		if (currentPage > 1) {
-			tb.addSpacer(5, 1);
 			tb.add(Gwt.createDiv("CommentsWidget-pageNavigator-page", new HyperlinkWidget(new ShowPageAction("<",
 					currentPage - 1))));
-			tb.addSpacer(5, 1);
+		} else {
+			tb.add(Gwt.createDiv("CommentsWidget-pageNavigator-page-disabled", "<"));
 		}
+		tb.addSpacer(5, 1);
 		while (true) {
 			tb.addSpacer(5, 1);
 			if (currentPage == page) {
@@ -111,10 +113,12 @@ public class CommentsWidget extends AScrumWidget {
 			page++;
 			endIdx += COMMENTS_PER_PAGE;
 		}
+		tb.addSpacer(10, 1);
 		if (page > currentPage) {
-			tb.addSpacer(10, 1);
 			tb.add(Gwt.createDiv("CommentsWidget-pageNavigator-page", new HyperlinkWidget(new ShowPageAction(">",
 					currentPage + 1))));
+		} else {
+			tb.add(Gwt.createDiv("CommentsWidget-pageNavigator-page-disabled", ">"));
 		}
 		return Gwt.createDiv("CommentsWidget-pageNavigator", tb.createTable());
 	}
