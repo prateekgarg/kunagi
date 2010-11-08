@@ -12,6 +12,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
+import scrum.client.communication.TouchLastActivityServiceCall;
 import scrum.client.core.ApplicationStartedEvent;
 import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
@@ -104,6 +105,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	private void gotoProject(String projectId, String page, String entityId) {
+		new TouchLastActivityServiceCall().execute();
+
 		Project project = Scope.get().getComponent(Project.class);
 		if (project != null && !projectId.equals(project.getId())) {
 			project = null;

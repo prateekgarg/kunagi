@@ -21,7 +21,7 @@ public class ProjectUserConfig extends GProjectUserConfig {
 		DateAndTime time = getLastActivityDateAndTime();
 		if (time == null) return true;
 		TimePeriod idle = time.getPeriodToNow();
-		return (idle.toSeconds() > 30);
+		return (idle.toSeconds() > 180);
 	}
 
 	public String getIdleTimeAsString() {

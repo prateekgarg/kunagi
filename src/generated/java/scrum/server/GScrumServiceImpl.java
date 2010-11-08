@@ -22,6 +22,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onPing(GwtConversation conversation);
 
+    public abstract void onTouchLastActivity(GwtConversation conversation);
+
     public abstract void onChangeProperties(GwtConversation conversation, String entityId, java.util.Map properties);
 
     public abstract void onCreateEntity(GwtConversation conversation, String type, java.util.Map properties);
@@ -217,6 +219,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onPing(conversation);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "Ping", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject touchLastActivity(int conversationNumber) {
+        log.debug("Handling service call: TouchLastActivity");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:TouchLastActivity");
+            context.bindCurrentThread();
+            try {
+                onTouchLastActivity(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "TouchLastActivity", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
