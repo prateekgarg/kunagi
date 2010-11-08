@@ -8,6 +8,7 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
@@ -33,6 +34,7 @@ public class WikiWidget extends AScrumWidget {
 	private FlowPanel panel;
 	private RichtextEditorWidget editor;
 	private Widget emoticonsAndComments;
+	private CommentsWidget commentsWidget;
 
 	@Override
 	protected Widget onInitialization() {
@@ -46,12 +48,13 @@ public class WikiWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		if (editor != null && editor.isEditMode()) return;
+		if (commentsWidget != null && commentsWidget.isEditorActive()) return;
 
 		if (pageName == null || pageName.trim().length() == 0) pageName = START_PAGE_NAME;
 
 		Wikipage newWikipage = getCurrentProject().getWikipage(pageName);
 		if (newWikipage != null && wikipage != newWikipage) {
-			emoticonsAndComments = ScrumGwt.createEmoticonsAndComments(newWikipage);
+			emoticonsAndComments = createEmoticonsAndComments(newWikipage);
 		}
 		wikipage = newWikipage;
 
@@ -83,6 +86,15 @@ public class WikiWidget extends AScrumWidget {
 		panel.clear();
 		panel.add(page);
 		Gwt.update(panel);
+	}
+
+	private Widget createEmoticonsAndComments(AScrumGwtEntity entity) {
+		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.addFieldRow("My emoticon", new EmoticonSelectorWidget(entity));
+		tb.addRow(Gwt.createSpacer(1, 5));
+		commentsWidget = new CommentsWidget(entity);
+		tb.addRow(commentsWidget, 2);
+		return tb.createTable();
 	}
 
 	private Widget createActionsDropdown() {
@@ -149,6 +161,7 @@ public class WikiWidget extends AScrumWidget {
 
 	class PageNameHandler implements KeyPressHandler, SelectionHandler<Suggestion> {
 
+		@Override
 		public void onKeyPress(KeyPressEvent event) {
 			SuggestBox pageNameBox = (SuggestBox) event.getSource();
 			if (pageNameBox.isSuggestionListShowing()) return;
@@ -158,6 +171,7 @@ public class WikiWidget extends AScrumWidget {
 			}
 		}
 
+		@Override
 		public void onSelection(SelectionEvent<Suggestion> event) {
 			showPage(event.getSelectedItem().getReplacementString());
 		}

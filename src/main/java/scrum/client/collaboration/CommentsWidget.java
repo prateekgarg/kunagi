@@ -148,6 +148,10 @@ public class CommentsWidget extends AScrumWidget {
 		update();
 	}
 
+	public boolean isEditorActive() {
+		return editor != null;
+	}
+
 	private void activateEditor() {
 		this.editor = new RichtextEditorWidget(new ATextEditorModel() {
 
