@@ -34,6 +34,7 @@ public class ForumWidget extends AScrumWidget {
 	}
 
 	public boolean select(ForumSupport entity) {
+		if (entity == null) return false;
 		if (!list.contains(entity)) update();
 		return list.showObject(entity);
 	}

@@ -81,7 +81,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected boolean isUpdateRequired() {
 		if (object instanceof AGwtEntity) {
-			AGwtEntity entity = (AGwtEntity) object;
+			AGwtEntity entity = getHrefEntity();
 			long localModificationTime = entity.getLocalModificationTime();
 			if (localModificationTime == lastModificationTime) {
 				updateHref();
@@ -117,11 +117,15 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 	private void updateHref() {
 		if (ScrumScopeManager.isProjectScope() && object instanceof AGwtEntity) {
-			AGwtEntity entity = (AGwtEntity) object;
+			AGwtEntity entity = getHrefEntity();
 			String href = Navigator.getEntityHref(entity);
 			href += "|toggle=" + isExtended();
 			header.setHref(href);
 		}
+	}
+
+	protected AGwtEntity getHrefEntity() {
+		return (AGwtEntity) object;
 	}
 
 	protected void onUpdateBody() {

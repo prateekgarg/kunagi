@@ -11,6 +11,7 @@ import java.util.Map;
 import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
+import scrum.client.collaboration.ForumSupport;
 import scrum.client.core.ApplicationStartedEvent;
 import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
@@ -125,7 +126,12 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 			if (ScrumGwt.isEntityReferenceOrWikiPage(entityId)) {
 				workspace.showEntityByReference(entityId);
 			} else {
-				workspace.showEntityById(entityId);
+				if ("Forum".equals(this.page)) {
+					ForumSupport entity = (ForumSupport) dao.getEntity(entityId);
+					workspace.showForum(entity);
+				} else {
+					workspace.showEntityById(entityId);
+				}
 			}
 		}
 
