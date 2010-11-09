@@ -13,9 +13,10 @@ import java.util.Map;
 import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.collaboration.UsersStatus;
+import scrum.client.common.LabelSupport;
 import scrum.client.project.Project;
 
-public class User extends GUser {
+public class User extends GUser implements LabelSupport {
 
 	public static final String INITIAL_NAME = "newuser";
 	public static final String INITIAL_PASSWORD = "geheim";
@@ -26,6 +27,11 @@ public class User extends GUser {
 
 	public User(Map data) {
 		super(data);
+	}
+
+	@Override
+	public String getLabel() {
+		return getName();
 	}
 
 	private String getNextNewUserName() {

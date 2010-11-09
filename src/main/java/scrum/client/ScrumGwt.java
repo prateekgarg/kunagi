@@ -30,6 +30,7 @@ public class ScrumGwt extends Gwt {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
 		for (AScrumGwtEntity entity : entities) {
+			if (!(entity instanceof ReferenceSupport)) continue;
 			if (first) {
 				first = false;
 			} else {
