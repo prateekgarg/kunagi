@@ -75,8 +75,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Activate this, if your SMTP email server requires TLS. Gmail requires this.");
 			systemConfigModel.addStringProperty("smtpUser").setTooltip(
 				"Username, if your SMTP email server requires authentication.");
-			systemConfigModel.addStringProperty("smtpPassword").setTooltip(
-				"Password, if your SMTP email server requires authentication.");
+			systemConfigModel.addStringProperty("smtpPassword").setMasked(true)
+					.setTooltip("Password, if your SMTP email server requires authentication.");
 			systemConfigModel.addStringProperty("smtpFrom").setTooltip(
 				"Email address, which is used as sender, when Kunagi sends Emails.");
 			systemConfigModel.addStringProperty("loginPageLogoUrl").setTooltip(
@@ -92,8 +92,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Acitviate this, if you want to disable the registration page for new users.");
 			systemConfigModel.addProperty("projectCreationDisabled", boolean.class).setTooltip(
 				"Activate this, to prevent users from creating projects.");
-			systemConfigModel.addStringProperty("defaultUserPassword").setTooltip(
-				"Default password, which is assigned to new users, which are created by the admin.");
+			systemConfigModel.addStringProperty("defaultUserPassword").setMasked(true)
+					.setTooltip("Default password, which is assigned to new users, which are created by the admin.");
 			systemConfigModel.addProperty("openIdDisabled", boolean.class).setTooltip(
 				"Activate this, if you want to disable logins with OpenID.");
 			systemConfigModel

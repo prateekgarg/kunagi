@@ -483,6 +483,9 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setSmtpPassword(value);
         }
+
+        @Override
+        public boolean isMasked() { return true; }
         @Override
         public String getTooltip() { return "Password, if your SMTP email server requires authentication."; }
 
@@ -985,6 +988,9 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setDefaultUserPassword(value);
         }
+
+        @Override
+        public boolean isMasked() { return true; }
         @Override
         public String getTooltip() { return "Default password, which is assigned to new users, which are created by the admin."; }
 
