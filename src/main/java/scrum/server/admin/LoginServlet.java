@@ -101,10 +101,9 @@ public class LoginServlet extends AHttpServlet {
 			return;
 		}
 
-		login = login.toLowerCase();
 		User user = null;
 		if (login.contains("@")) {
-			user = userDao.getUserByEmail(login);
+			user = userDao.getUserByEmail(login.toLowerCase());
 		}
 		if (user == null) {
 			user = userDao.getUserByName(login);
@@ -308,10 +307,9 @@ public class LoginServlet extends AHttpServlet {
 
 	private void login(String username, String password, boolean keepmeloggedin, String historyToken,
 			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
-		username = username.toLowerCase();
 		User user = null;
 		if (username.contains("@")) {
-			user = userDao.getUserByEmail(username);
+			user = userDao.getUserByEmail(username.toLowerCase());
 		}
 		if (user == null) {
 			user = userDao.getUserByName(username);

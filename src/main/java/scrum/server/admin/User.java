@@ -31,6 +31,11 @@ public class User extends GUser {
 
 	// --- ---
 
+	@Override
+	protected String prepareEmail(String email) {
+		return super.prepareEmail(email == null ? null : email.toLowerCase());
+	}
+
 	public String getLabel() {
 		if (isEmailSet()) return getName() + " (" + getEmail() + ")";
 		return getName();
