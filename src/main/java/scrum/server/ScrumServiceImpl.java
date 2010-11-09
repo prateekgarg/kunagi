@@ -201,6 +201,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
 		User currentUser = conversation.getSession().getUser();
+		Project currentProject = conversation.getProject();
 
 		if (entity instanceof Numbered) {
 			((Numbered) entity).updateNumber();
@@ -220,7 +221,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			comment.setDateAndTime(DateAndTime.now());
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
 				comment.getParent());
-			conversation.getProject().updateHomepage(comment.getParent(), true);
+			currentProject.updateHomepage(comment.getParent(), true);
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -265,12 +266,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			conversation.sendToClient(change);
 		}
 
+		if (currentUser != null && currentProject != null) {
+			ProjectUserConfig config = currentProject.getUserConfig(currentUser);
+			config.touch();
+			sendToClients(conversation, config);
+		}
 	}
 
 	@Override
 	public void onDeleteEntity(GwtConversation conversation, String entityId) {
 		AEntity entity = getDaoService().getEntityById(entityId);
-		if (!Auth.isDeletable(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
+		User user = conversation.getSession().getUser();
+		if (!Auth.isDeletable(entity, user)) throw new PermissionDeniedException();
 
 		if (entity instanceof File) {
 			File file = (File) entity;
@@ -285,6 +292,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
 				c.getNextData().addDeletedEntity(entityId);
 			}
+		}
+
+		if (user != null && project != null) {
+			ProjectUserConfig config = project.getUserConfig(user);
+			config.touch();
+			sendToClients(conversation, config);
 		}
 	}
 
@@ -697,6 +710,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
 		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
+	}
+
+	@Override
+	public void onTouchLastActivity(GwtConversation conversation) {
+		Project project = conversation.getProject();
+		if (project == null) return;
+		project.getUserConfig(conversation.getSession().getUser()).touch();
 	}
 
 	@Override

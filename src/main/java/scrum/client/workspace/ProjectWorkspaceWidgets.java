@@ -266,6 +266,9 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	public void showEntity(AGwtEntity entity) {
 		log.debug("Showing entity:", entity);
+		if (getWorkarea().isShowing(forum)) {
+
+		}
 		if (entity instanceof Task) {
 			showTask((Task) entity);
 		} else if (entity instanceof Requirement) {
