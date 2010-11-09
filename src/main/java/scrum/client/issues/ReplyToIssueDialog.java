@@ -47,6 +47,7 @@ public class ReplyToIssueDialog {
 		template = fillTemplate(template, "${issuer.email}", issue.getIssuerEmail());
 		template = fillTemplate(template, "${homepage.url}", project.getHomepageUrl());
 		template = fillTemplate(template, "${user.name}", user.getName());
+		template = fillTemplate(template, "${user.publicName}", user.getPublicName());
 		template = fillTemplate(template, "${user.email}", user.getEmail());
 
 		from = ScrumGwt.createTextBox("issueReplyFrom", project.getSupportEmail(), 400);

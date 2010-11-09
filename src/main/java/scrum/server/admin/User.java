@@ -133,6 +133,7 @@ public class User extends GUser {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
+		if (!isPublicNameSet()) setPublicName(getName());
 		if (!isColorSet()) setColor(getDefaultColor());
 		if (!isLoginTokenSet()) createLoginToken();
 	}

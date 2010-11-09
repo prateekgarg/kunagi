@@ -20,7 +20,7 @@ public class Issue extends GIssue implements Numbered, ReferenceSupport, LabelSu
 		if (isIdea()) return "Idea is accepted and the Product Owner needs to create a Story of it.";
 		if (isBug()) {
 			if (isFixed()) return "Bug is fixed" + releasesText + ". Needs to be tested.";
-			if (isOwnerSet()) return getOwner().getName() + " is working on the Bug" + releasesText + ".";
+			if (isOwnerSet()) return getOwner().getPublicName() + " is working on the Bug" + releasesText + ".";
 			return "Bug is accepted as '" + getSeverityLabel() + "' and the Team needs to fix it" + releasesText + ".";
 		}
 		return "Product Owner needs to review this Issue.";

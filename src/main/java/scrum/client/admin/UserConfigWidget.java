@@ -20,6 +20,7 @@ public class UserConfigWidget extends AScrumWidget {
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("Name", user.getNameModel());
+		tb.addFieldRow("Public Name", user.getPublicNameModel());
 		tb.addFieldRow("Email", user.getEmailModel());
 		tb.addFieldRow("OpenID", user.getOpenIdModel());
 		tb.addFieldRow("Password", new PasswordChangeWidget());

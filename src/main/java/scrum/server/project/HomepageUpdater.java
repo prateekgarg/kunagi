@@ -238,7 +238,7 @@ public class HomepageUpdater {
 		context.put("description", wikiToHtml(issue.getDescription()));
 		context.put("statement", wikiToHtml(issue.getStatement()));
 		context.put("statusText", toHtml(issue.getStatusText()));
-		if (issue.isOwnerSet()) context.put("owner", issue.getOwner().getName());
+		if (issue.isOwnerSet()) context.put("owner", issue.getOwner().getPublicName());
 		if (issue.isFixed()) context.put("fixed", "true");
 		fillComments(context, issue);
 	}

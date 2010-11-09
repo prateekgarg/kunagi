@@ -101,6 +101,59 @@ public abstract class GUser
 
     }
 
+    // --- publicName ---
+
+    private java.lang.String publicName ;
+
+    public final java.lang.String getPublicName() {
+        return this.publicName ;
+    }
+
+    public final User setPublicName(java.lang.String publicName) {
+        if (isPublicName(publicName)) return (User)this;
+        this.publicName = publicName ;
+        propertyChanged("publicName", this.publicName);
+        return (User)this;
+    }
+
+    public final boolean isPublicName(java.lang.String publicName) {
+        return equals(this.publicName, publicName);
+    }
+
+    private transient PublicNameModel publicNameModel;
+
+    public PublicNameModel getPublicNameModel() {
+        if (publicNameModel == null) publicNameModel = createPublicNameModel();
+        return publicNameModel;
+    }
+
+    protected PublicNameModel createPublicNameModel() { return new PublicNameModel(); }
+
+    protected class PublicNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_publicName";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getPublicName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setPublicName(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- admin ---
 
     private boolean admin ;
@@ -1405,6 +1458,7 @@ public abstract class GUser
 
     public void updateProperties(Map props) {
         name  = (java.lang.String) props.get("name");
+        publicName  = (java.lang.String) props.get("publicName");
         admin  = (Boolean) props.get("admin");
         emailVerified  = (Boolean) props.get("emailVerified");
         email  = (java.lang.String) props.get("email");
@@ -1439,6 +1493,7 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+        properties.put("publicName", this.publicName);
         properties.put("admin", this.admin);
         properties.put("emailVerified", this.emailVerified);
         properties.put("email", this.email);
@@ -1470,6 +1525,7 @@ public abstract class GUser
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getName(), key)) return true;
+        if (matchesKey(getPublicName(), key)) return true;
         if (matchesKey(getEmail(), key)) return true;
         return false;
     }

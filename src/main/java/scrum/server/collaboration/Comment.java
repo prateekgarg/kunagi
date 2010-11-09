@@ -8,7 +8,7 @@ import scrum.server.admin.User;
 public class Comment extends GComment implements Comparable<Comment> {
 
 	public String getAuthorLabel() {
-		if (isAuthorSet()) return getAuthor().getName();
+		if (isAuthorSet()) return getAuthor().getPublicName();
 		if (isAuthorNameSet()) return getAuthorName();
 		return "anonymous";
 	}
@@ -17,7 +17,7 @@ public class Comment extends GComment implements Comparable<Comment> {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		if (Utl.isEmpty(getText()) && getDateAndTime().getPeriodToNow().toHours() > 1) getDao().deleteEntity(this);
-		if (isAuthorSet()) setAuthorName(getAuthor().getName());
+		if (isAuthorSet()) setAuthorName(getAuthor().getPublicName());
 		if (!isDateAndTimeSet()) setDateAndTime(DateAndTime.now());
 	}
 

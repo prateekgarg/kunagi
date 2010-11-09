@@ -37,6 +37,7 @@ public abstract class GUser
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
         properties.put("name", this.name);
+        properties.put("publicName", this.publicName);
         properties.put("admin", this.admin);
         properties.put("emailVerified", this.emailVerified);
         properties.put("email", this.email);
@@ -80,6 +81,7 @@ public abstract class GUser
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;
         if (matchesKey(getName(), key)) return true;
+        if (matchesKey(getPublicName(), key)) return true;
         if (matchesKey(getEmail(), key)) return true;
         return false;
     }
@@ -119,6 +121,42 @@ public abstract class GUser
 
     protected final void updateName(Object value) {
         setName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - publicName
+    // -----------------------------------------------------------
+
+    private java.lang.String publicName;
+
+    public final java.lang.String getPublicName() {
+        return publicName;
+    }
+
+    public final void setPublicName(java.lang.String publicName) {
+        publicName = preparePublicName(publicName);
+        if (isPublicName(publicName)) return;
+        this.publicName = publicName;
+        updateLastModified();
+        fireModified("publicName="+publicName);
+    }
+
+    protected java.lang.String preparePublicName(java.lang.String publicName) {
+        publicName = Str.removeUnreadableChars(publicName);
+        return publicName;
+    }
+
+    public final boolean isPublicNameSet() {
+        return this.publicName != null;
+    }
+
+    public final boolean isPublicName(java.lang.String publicName) {
+        if (this.publicName == null && publicName == null) return true;
+        return this.publicName != null && this.publicName.equals(publicName);
+    }
+
+    protected final void updatePublicName(Object value) {
+        setPublicName((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -938,6 +976,7 @@ public abstract class GUser
             if (property.equals("id")) continue;
             Object value = entry.getValue();
             if (property.equals("name")) updateName(value);
+            if (property.equals("publicName")) updatePublicName(value);
             if (property.equals("admin")) updateAdmin(value);
             if (property.equals("emailVerified")) updateEmailVerified(value);
             if (property.equals("email")) updateEmail(value);
