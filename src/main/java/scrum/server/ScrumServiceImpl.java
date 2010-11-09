@@ -294,21 +294,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User currentUser = conversation.getSession().getUser();
 		if (!Auth.isEditable(entity, currentUser)) throw new PermissionDeniedException();
 
-		if (entity instanceof Task) {
-			// update sprint day snapshot before change
-			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
-		}
+		Sprint previousRequirementSprint = entity instanceof Requirement ? ((Requirement) entity).getSprint() : null;
 
-		Sprint previousRequirementSprint = null;
 		if (entity instanceof Requirement) {
-			Requirement requirement = (Requirement) entity;
-			previousRequirementSprint = requirement.getSprint();
-
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "testDescription");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "sprintId");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "closed");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "issueId");
+		}
+		if (entity instanceof Task) {
+			// update sprint day snapshot before change
+			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
@@ -337,169 +334,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		entity.updateProperties(properties);
 
-		if (entity instanceof Task) {
-			// update sprint day snapshot after change
-			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
-			Task task = (Task) entity;
-			Requirement requirement = task.getRequirement();
-			if (requirement.isInCurrentSprint()) {
-				if (task.isClosed() && properties.containsKey("remainingWork")) {
-					String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
-					if (requirement.isTasksClosed()) {
-						event += ", all tasks closed in " + requirement.getReferenceAndLabel();
-					}
-					postProjectEvent(conversation, event, task);
-				} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
-					postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel(),
-						task);
-				}
-				if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
-					postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel(),
-						task);
-				}
-				if (!task.isClosed() && requirement.isRejectDateSet()) {
-					requirement.setRejectDate(null);
-					sendToClients(conversation, requirement);
-				}
-			}
-
-		}
+		if (entity instanceof Task) onTaskChanged(conversation, (Task) entity, properties);
+		if (entity instanceof Requirement)
+			onRequirementChanged(conversation, (Requirement) entity, properties, previousRequirementSprint);
+		if (entity instanceof Impediment) onImpedimentChanged(conversation, (Impediment) entity, properties);
+		if (entity instanceof Issue) onIssueChanged(conversation, (Issue) entity, properties);
+		if (entity instanceof BlogEntry) onBlogEntryChanged(conversation, (BlogEntry) entity, properties);
+		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity);
+		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
 
 		Project currentProject = conversation.getProject();
-		if (entity instanceof Requirement) {
-			Requirement requirement = (Requirement) entity;
-			Sprint sprint = requirement.getSprint();
-			boolean inCurrentSprint = sprint != null && currentProject.isCurrentSprint(sprint);
-
-			if (properties.containsKey("description") || properties.containsKey("testDescription")
-					|| properties.containsKey("qualitysIds")) {
-				requirement.setDirty(true);
-				conversation.sendToClient(requirement);
-			}
-
-			if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation,
-					currentUser.getName() + " rejected " + requirement.getReferenceAndLabel(), requirement);
-			}
-
-			if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
-				postProjectEvent(conversation,
-					currentUser.getName() + " accepted " + requirement.getReferenceAndLabel(), requirement);
-			}
-
-			if (sprint != previousRequirementSprint) {
-				if (properties.containsKey("sprintId")) {
-					if (inCurrentSprint) {
-						postProjectEvent(conversation,
-							currentUser.getName() + " pulled " + requirement.getReferenceAndLabel()
-									+ " to current sprint", requirement);
-					} else {
-						postProjectEvent(conversation,
-							currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
-									+ " from current sprint", requirement);
-					}
-				}
-			}
-
-			if (properties.containsKey("estimatedWork")) {
-				requirement.initializeEstimationVotes();
-				requirement.setDirty(false);
-				requirement.setWorkEstimationVotingShowoff(false);
-				requirement.setWorkEstimationVotingActive(false);
-				conversation.sendToClient(requirement);
-			}
-
-			requirement.getProject().getCurrentSprintSnapshot().update();
-		}
-
-		if (entity instanceof Project) {
-			Project project = (Project) entity;
-		}
-
-		if (entity instanceof Impediment) {
-			Impediment impediment = (Impediment) entity;
-			if (impediment.isClosed() && properties.containsKey("closed")) {
-				postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel(),
-					impediment);
-			}
-		}
-
-		if (entity instanceof Issue) {
-			Issue issue = (Issue) entity;
-
-			if (properties.containsKey("closeDate")) {
-				if (issue.isClosed()) {
-					issue.setCloseDate(Date.today());
-					postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel(),
-						issue);
-				} else {
-					postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel(),
-						issue);
-				}
-			}
-
-			if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
-				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
-					issue);
-
-				Release nextRelease = issue.getProject().getNextRelease();
-				if (issue.isFixReleasesEmpty() && nextRelease != null) {
-					issue.setFixReleases(Collections.singleton(nextRelease));
-					sendToClients(conversation, issue);
-				}
-			}
-
-			if (properties.containsKey("fixDate")) {
-				if (issue.isFixed()) {
-					postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(),
-						issue);
-				} else {
-					postProjectEvent(conversation,
-						currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel(), issue);
-				}
-			}
-
-			if (properties.containsKey("urgent")) {
-				if (issue.isBug()) {
-					Release currentRelease = issue.getProject().getCurrentRelease();
-					if (issue.isAffectedReleasesEmpty() && currentRelease != null) {
-						issue.setAffectedReleases(Collections.singleton(currentRelease));
-						sendToClients(conversation, issue);
-					}
-				}
-			}
-
-			issue.getProject().updateHomepage(issue, false);
-		}
-
-		if (entity instanceof BlogEntry) {
-			BlogEntry blogEntry = (BlogEntry) entity;
-
-			if (properties.containsKey("text")) {
-				blogEntry.addAuthor(currentUser);
-			}
-
-			if (properties.containsKey("published")) {
-				if (blogEntry.isPublished()) {
-					postProjectEvent(conversation,
-						currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
-				}
-				blogEntry.getProject().updateHomepage();
-			}
-		}
-
-		if (entity instanceof Comment) {
-			Comment comment = (Comment) entity;
-			currentProject.updateHomepage(comment.getParent(), false);
-		}
-
-		if (entity instanceof SystemConfig) {
-			SystemConfig config = (SystemConfig) entity;
-			if (properties.containsKey("url")) {
-				webApplication.getConfig().setUrl(config.getUrl());
-			}
-		}
-
 		if (currentUser != null && currentProject != null) {
 			ProjectUserConfig config = currentProject.getUserConfig(currentUser);
 			config.touch();
@@ -508,6 +352,160 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.clearRemoteEntitiesByType(Change.class);
 		sendToClients(conversation, entity);
+	}
+
+	private void onSystemConfigChanged(GwtConversation conversation, SystemConfig config, Map properties) {
+		if (properties.containsKey("url")) {
+			webApplication.getConfig().setUrl(config.getUrl());
+		}
+	}
+
+	private void onCommentChanged(GwtConversation conversation, Comment comment) {
+		conversation.getProject().updateHomepage(comment.getParent(), false);
+	}
+
+	private void onBlogEntryChanged(GwtConversation conversation, BlogEntry blogEntry, Map properties) {
+		User currentUser = conversation.getSession().getUser();
+
+		if (properties.containsKey("text")) {
+			blogEntry.addAuthor(currentUser);
+		}
+
+		if (properties.containsKey("published")) {
+			if (blogEntry.isPublished()) {
+				postProjectEvent(conversation,
+					currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
+			}
+			blogEntry.getProject().updateHomepage();
+		}
+	}
+
+	private void onIssueChanged(GwtConversation conversation, Issue issue, Map properties) {
+		User currentUser = conversation.getSession().getUser();
+
+		if (properties.containsKey("closeDate")) {
+			if (issue.isClosed()) {
+				issue.setCloseDate(Date.today());
+				postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel(), issue);
+			} else {
+				postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel(),
+					issue);
+			}
+		}
+
+		if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
+			postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(), issue);
+
+			Release nextRelease = issue.getProject().getNextRelease();
+			if (issue.isFixReleasesEmpty() && nextRelease != null) {
+				issue.setFixReleases(Collections.singleton(nextRelease));
+				sendToClients(conversation, issue);
+			}
+		}
+
+		if (properties.containsKey("fixDate")) {
+			if (issue.isFixed()) {
+				postProjectEvent(conversation, currentUser.getName() + " fixed " + issue.getReferenceAndLabel(), issue);
+			} else {
+				postProjectEvent(conversation,
+					currentUser.getName() + " rejected fix for " + issue.getReferenceAndLabel(), issue);
+			}
+		}
+
+		if (properties.containsKey("urgent")) {
+			if (issue.isBug()) {
+				Release currentRelease = issue.getProject().getCurrentRelease();
+				if (issue.isAffectedReleasesEmpty() && currentRelease != null) {
+					issue.setAffectedReleases(Collections.singleton(currentRelease));
+					sendToClients(conversation, issue);
+				}
+			}
+		}
+
+		issue.getProject().updateHomepage(issue, false);
+	}
+
+	private void onImpedimentChanged(GwtConversation conversation, Impediment impediment, Map properties) {
+		User currentUser = conversation.getSession().getUser();
+		if (impediment.isClosed() && properties.containsKey("closed")) {
+			impediment.setDate(Date.today());
+			postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel(),
+				impediment);
+		}
+	}
+
+	private void onRequirementChanged(GwtConversation conversation, Requirement requirement, Map properties,
+			Sprint previousRequirementSprint) {
+		Project currentProject = conversation.getProject();
+		Sprint sprint = requirement.getSprint();
+		boolean inCurrentSprint = sprint != null && currentProject.isCurrentSprint(sprint);
+		User currentUser = conversation.getSession().getUser();
+
+		if (properties.containsKey("description") || properties.containsKey("testDescription")
+				|| properties.containsKey("qualitysIds")) {
+			requirement.setDirty(true);
+			conversation.sendToClient(requirement);
+		}
+
+		if (properties.containsKey("rejectDate") && requirement.isRejectDateSet()) {
+			postProjectEvent(conversation, currentUser.getName() + " rejected " + requirement.getReferenceAndLabel(),
+				requirement);
+		}
+
+		if (properties.containsKey("accepted") && requirement.isRejectDateSet()) {
+			postProjectEvent(conversation, currentUser.getName() + " accepted " + requirement.getReferenceAndLabel(),
+				requirement);
+		}
+
+		if (sprint != previousRequirementSprint) {
+			if (properties.containsKey("sprintId")) {
+				if (inCurrentSprint) {
+					postProjectEvent(conversation,
+						currentUser.getName() + " pulled " + requirement.getReferenceAndLabel() + " to current sprint",
+						requirement);
+				} else {
+					postProjectEvent(conversation,
+						currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
+								+ " from current sprint", requirement);
+				}
+			}
+		}
+
+		if (properties.containsKey("estimatedWork")) {
+			requirement.initializeEstimationVotes();
+			requirement.setDirty(false);
+			requirement.setWorkEstimationVotingShowoff(false);
+			requirement.setWorkEstimationVotingActive(false);
+			conversation.sendToClient(requirement);
+		}
+
+		requirement.getProject().getCurrentSprintSnapshot().update();
+	}
+
+	private void onTaskChanged(GwtConversation conversation, Task task, Map properties) {
+		// update sprint day snapshot after change
+		conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		Requirement requirement = task.getRequirement();
+		if (requirement.isInCurrentSprint()) {
+			User currentUser = conversation.getSession().getUser();
+			if (task.isClosed() && properties.containsKey("remainingWork")) {
+				String event = currentUser.getName() + " closed " + task.getReferenceAndLabel();
+				if (requirement.isTasksClosed()) {
+					event += ", all tasks closed in " + requirement.getReferenceAndLabel();
+				}
+				postProjectEvent(conversation, event, task);
+			} else if (task.isOwnerSet() && properties.containsKey("ownerId")) {
+				postProjectEvent(conversation, currentUser.getName() + " claimed " + task.getReferenceAndLabel(), task);
+			}
+			if (!task.isOwnerSet() && properties.containsKey("ownerId")) {
+				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + task.getReferenceAndLabel(),
+					task);
+			}
+			if (!task.isClosed() && requirement.isRejectDateSet()) {
+				requirement.setRejectDate(null);
+				sendToClients(conversation, requirement);
+			}
+		}
 	}
 
 	@Override
