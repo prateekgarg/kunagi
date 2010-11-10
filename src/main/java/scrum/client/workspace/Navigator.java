@@ -121,8 +121,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 		ProjectWorkspaceWidgets workspace = Scope.get().getComponent(ProjectWorkspaceWidgets.class);
 		if (page != null && !page.equals(this.page)) {
-			workspace.showPage(page);
 			this.page = page;
+			workspace.showPage(page);
 		}
 
 		if (entityId != null) {
@@ -153,13 +153,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		gotoProject(projectId, null, entityId);
 	}
 
-	public void setPageToken(String page) {
-		if (page.equals(this.page)) return;
+	public void setPage(String page) {
 		this.page = page;
-		if (!History.getToken().contains("page=" + page)) {
-			Project project = Scope.get().getComponent(Project.class);
-			History.newItem("project=" + project.getId() + "|page=" + page, false);
-		}
 	}
 
 	private void setToken(AGwtEntity entity) {

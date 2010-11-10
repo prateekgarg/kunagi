@@ -21,10 +21,10 @@ public class ScrumNavigatorWidget extends SwitchingNavigatorWidget {
 
 	@Override
 	protected void showItem(Widget widget) {
-		super.showItem(widget);
 		String page = Str.getSimpleName(widget.getClass());
-		page = page.substring(0, page.length() - 6);
-		Scope.get().getComponent(Navigator.class).setPageToken(page);
+		page = Str.removeSuffix(page, "Widget");
+		Scope.get().getComponent(Navigator.class).setPage(page);
+		super.showItem(widget);
 	}
 
 	@Override
