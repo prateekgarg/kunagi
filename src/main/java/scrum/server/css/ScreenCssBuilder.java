@@ -185,6 +185,9 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style("a.reference, a.reference:visited").fontFamilyMonospace().color(cLink);
 
 		css.style("input.InputMandatory").border(1, "black");
+
+		css.style(".CreateTaskButtonWrapper").marginTop(5);
+		css.style(".CreateTaskButtonWrapper .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
 	}
 
 	private void loginPage(CssRenderer css) {
