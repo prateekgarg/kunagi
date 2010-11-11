@@ -1,8 +1,5 @@
 package scrum.client.tasks;
 
-import ilarkesto.gwt.client.ButtonWidget;
-import ilarkesto.gwt.client.Gwt;
-
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -10,7 +7,6 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.ElementPredicate;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
-import scrum.client.sprint.CreateTaskAction;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -46,9 +42,9 @@ public class TaskListWidget extends AScrumWidget {
 
 		FlowPanel panel = new FlowPanel();
 		panel.add(list);
-		if (createTaskButton)
-			panel.add(Gwt.createDiv("CreateTaskButtonWrapper",
-				new ButtonWidget(new CreateTaskAction(requirement)).update()));
+		// if (createTaskButton)
+		// panel.add(Gwt.createDiv("CreateTaskButtonWrapper",
+		// new ButtonWidget(new CreateTaskAction(requirement)).update()));
 
 		return panel;
 	}
