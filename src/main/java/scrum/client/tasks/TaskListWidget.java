@@ -1,5 +1,8 @@
 package scrum.client.tasks;
 
+import ilarkesto.gwt.client.ButtonWidget;
+import ilarkesto.gwt.client.Gwt;
+
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -7,8 +10,10 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.ElementPredicate;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.CreateTaskAction;
 import scrum.client.sprint.Task;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TaskListWidget extends AScrumWidget {
@@ -18,15 +23,14 @@ public class TaskListWidget extends AScrumWidget {
 
 	private TaskBlockContainer container;
 	private Requirement requirement;
+	private boolean createTaskButton;
 
-	public TaskListWidget(Requirement requirement, TaskBlockContainer container) {
-		this(requirement, container, null);
-	}
-
-	public TaskListWidget(Requirement requirement, TaskBlockContainer container, BlockListDropAction<Task> dropAction) {
+	public TaskListWidget(Requirement requirement, TaskBlockContainer container, BlockListDropAction<Task> dropAction,
+			boolean createTaskButton) {
 		this.requirement = requirement;
 		this.container = container;
 		this.dropAction = dropAction;
+		this.createTaskButton = createTaskButton;
 	}
 
 	@Override
@@ -39,7 +43,14 @@ public class TaskListWidget extends AScrumWidget {
 			list.setDndSorting(true);
 			list.setMoveObserver(new MoveObserver());
 		}
-		return list;
+
+		FlowPanel panel = new FlowPanel();
+		panel.add(list);
+		if (createTaskButton)
+			panel.add(Gwt.createDiv("CreateTaskButtonWrapper",
+				new ButtonWidget(new CreateTaskAction(requirement)).update()));
+
+		return panel;
 	}
 
 	public boolean selectTask(Task task) {
@@ -62,6 +73,7 @@ public class TaskListWidget extends AScrumWidget {
 
 	class MoveObserver implements Runnable {
 
+		@Override
 		public void run() {
 			List<Task> tasks = list.getObjects();
 			requirement.updateTasksOrder(tasks);

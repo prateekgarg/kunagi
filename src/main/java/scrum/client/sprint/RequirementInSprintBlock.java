@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 
@@ -93,11 +94,13 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 			taskList.setDndSorting(true);
 			taskList.setMoveObserver(new MoveObserver());
 		}
+		createTaskButton = new ButtonWidget(new CreateTaskAction(requirement));
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
 		left.add(requirementWidget);
 		left.add(taskList);
+		left.add(Gwt.createDiv("CreateTaskButtonWrapper", createTaskButton));
 		left.add(changeHistoryWidget);
 
 		right = new FlowPanel();
@@ -116,7 +119,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		requirementWidget.update();
 		taskList.setObjects(getObject().getTasks());
 		taskList.update();
-		Gwt.update(right);
+		Gwt.update(right, createTaskButton);
 		changeHistoryWidget.update();
 	}
 
@@ -142,4 +145,5 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 			return new RequirementInSprintBlock();
 		}
 	};
+	private ButtonWidget createTaskButton;
 }
