@@ -7,6 +7,7 @@ import ilarkesto.core.logging.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -39,17 +40,21 @@ public class Sprint extends GSprint implements Numbered {
 		float velocity = 0;
 		Collection<Requirement> completedRequirements = new ArrayList<Requirement>();
 		Collection<Requirement> incompletedRequirements = new ArrayList<Requirement>();
-		for (Requirement requirement : getRequirements()) {
+		List<Requirement> requirements = new ArrayList<Requirement>(getRequirements());
+		Collections.sort(requirements, getProject().getRequirementsOrderComparator());
+		for (Requirement requirement : requirements) {
+			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
+			Collections.sort(tasks, requirement.getTasksOrderComparator());
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
-				for (Task task : requirement.getTasks()) {
+				for (Task task : tasks) {
 					taskDao.deleteEntity(task);
 				}
 			} else {
 				incompletedRequirements.add(requirement);
-				for (Task task : requirement.getTasks()) {
+				for (Task task : tasks) {
 					if (task.isClosed()) {
 						taskDao.deleteEntity(task);
 					} else {
