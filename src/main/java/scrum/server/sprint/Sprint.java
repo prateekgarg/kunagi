@@ -5,6 +5,8 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -35,18 +37,18 @@ public class Sprint extends GSprint implements Numbered {
 
 	public void close() {
 		float velocity = 0;
-		StringBuilder sb = new StringBuilder();
+		Collection<Requirement> completedRequirements = new ArrayList<Requirement>();
+		Collection<Requirement> incompletedRequirements = new ArrayList<Requirement>();
 		for (Requirement requirement : getRequirements()) {
 			if (requirement.isClosed()) {
+				completedRequirements.add(requirement);
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
-				sb.append("* ");
-				sb.append(requirement.getLabel());
-				sb.append("\n");
 				for (Task task : requirement.getTasks()) {
 					taskDao.deleteEntity(task);
 				}
 			} else {
+				incompletedRequirements.add(requirement);
 				for (Task task : requirement.getTasks()) {
 					if (task.isClosed()) {
 						taskDao.deleteEntity(task);
@@ -57,13 +59,14 @@ public class Sprint extends GSprint implements Numbered {
 			}
 			requirement.setSprint(null);
 		}
-		setCompletedRequirementLabels(sb.toString());
 		setVelocity(velocity);
+		setCompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(completedRequirements));
+		setIncompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(incompletedRequirements));
 		Project project = getProject();
-		project.setVelocity(Math.round(velocity));
 		setProductOwners(project.getProductOwners());
 		setScrumMasters(project.getScrumMasters());
 		setTeamMembers(project.getTeamMembers());
+		project.setVelocity(Math.round(velocity));
 	}
 
 	public String getProductOwnersAsString() {

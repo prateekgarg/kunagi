@@ -494,6 +494,112 @@ public abstract class GSprint
 
     }
 
+    // --- completedRequirementsData ---
+
+    private java.lang.String completedRequirementsData ;
+
+    public final java.lang.String getCompletedRequirementsData() {
+        return this.completedRequirementsData ;
+    }
+
+    public final Sprint setCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        if (isCompletedRequirementsData(completedRequirementsData)) return (Sprint)this;
+        this.completedRequirementsData = completedRequirementsData ;
+        propertyChanged("completedRequirementsData", this.completedRequirementsData);
+        return (Sprint)this;
+    }
+
+    public final boolean isCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        return equals(this.completedRequirementsData, completedRequirementsData);
+    }
+
+    private transient CompletedRequirementsDataModel completedRequirementsDataModel;
+
+    public CompletedRequirementsDataModel getCompletedRequirementsDataModel() {
+        if (completedRequirementsDataModel == null) completedRequirementsDataModel = createCompletedRequirementsDataModel();
+        return completedRequirementsDataModel;
+    }
+
+    protected CompletedRequirementsDataModel createCompletedRequirementsDataModel() { return new CompletedRequirementsDataModel(); }
+
+    protected class CompletedRequirementsDataModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_completedRequirementsData";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getCompletedRequirementsData();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setCompletedRequirementsData(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- incompletedRequirementsData ---
+
+    private java.lang.String incompletedRequirementsData ;
+
+    public final java.lang.String getIncompletedRequirementsData() {
+        return this.incompletedRequirementsData ;
+    }
+
+    public final Sprint setIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        if (isIncompletedRequirementsData(incompletedRequirementsData)) return (Sprint)this;
+        this.incompletedRequirementsData = incompletedRequirementsData ;
+        propertyChanged("incompletedRequirementsData", this.incompletedRequirementsData);
+        return (Sprint)this;
+    }
+
+    public final boolean isIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        return equals(this.incompletedRequirementsData, incompletedRequirementsData);
+    }
+
+    private transient IncompletedRequirementsDataModel incompletedRequirementsDataModel;
+
+    public IncompletedRequirementsDataModel getIncompletedRequirementsDataModel() {
+        if (incompletedRequirementsDataModel == null) incompletedRequirementsDataModel = createIncompletedRequirementsDataModel();
+        return incompletedRequirementsDataModel;
+    }
+
+    protected IncompletedRequirementsDataModel createIncompletedRequirementsDataModel() { return new IncompletedRequirementsDataModel(); }
+
+    protected class IncompletedRequirementsDataModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_incompletedRequirementsData";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getIncompletedRequirementsData();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setIncompletedRequirementsData(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- planningNote ---
 
     private java.lang.String planningNote ;
@@ -804,6 +910,8 @@ public abstract class GSprint
         end  =  endAsString == null ? null : new ilarkesto.gwt.client.Date(endAsString);
         velocity  = (java.lang.Float) props.get("velocity");
         completedRequirementLabels  = (java.lang.String) props.get("completedRequirementLabels");
+        completedRequirementsData  = (java.lang.String) props.get("completedRequirementsData");
+        incompletedRequirementsData  = (java.lang.String) props.get("incompletedRequirementsData");
         planningNote  = (java.lang.String) props.get("planningNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");
         retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
@@ -824,6 +932,8 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("completedRequirementsData", this.completedRequirementsData);
+        properties.put("incompletedRequirementsData", this.incompletedRequirementsData);
         properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
@@ -855,7 +965,6 @@ public abstract class GSprint
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getGoal(), key)) return true;
-        if (matchesKey(getCompletedRequirementLabels(), key)) return true;
         if (matchesKey(getPlanningNote(), key)) return true;
         if (matchesKey(getReviewNote(), key)) return true;
         if (matchesKey(getRetrospectiveNote(), key)) return true;

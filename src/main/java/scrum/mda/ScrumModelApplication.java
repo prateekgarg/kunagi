@@ -465,7 +465,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						"The date by which the Team will finish working on this Sprint. "
 								+ "A Sprint Review meeting should be scheduled to present results.");
 			sprintModel.addProperty("velocity", Float.class);
-			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true).setSearchable(true);
+			sprintModel.addStringProperty("completedRequirementLabels").setRichtext(true);
+			sprintModel.addStringProperty("completedRequirementsData");
+			sprintModel.addStringProperty("incompletedRequirementsData");
 			sprintModel
 					.addStringProperty("planningNote")
 					.setRichtext(true)
