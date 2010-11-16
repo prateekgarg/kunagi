@@ -47,13 +47,21 @@ public class Sprint extends GSprint implements Numbered {
 			Collections.sort(tasks, requirement.getTasksOrderComparator());
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
+			} else {
+				incompletedRequirements.add(requirement);
+			}
+		}
+		setCompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(completedRequirements));
+		setIncompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(incompletedRequirements));
+		for (Requirement requirement : requirements) {
+			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
+			if (requirement.isClosed()) {
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
 				for (Task task : tasks) {
 					taskDao.deleteEntity(task);
 				}
 			} else {
-				incompletedRequirements.add(requirement);
 				for (Task task : tasks) {
 					if (task.isClosed()) {
 						taskDao.deleteEntity(task);
@@ -65,8 +73,6 @@ public class Sprint extends GSprint implements Numbered {
 			requirement.setSprint(null);
 		}
 		setVelocity(velocity);
-		setCompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(completedRequirements));
-		setIncompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(incompletedRequirements));
 		Project project = getProject();
 		setProductOwners(project.getProductOwners());
 		setScrumMasters(project.getScrumMasters());
