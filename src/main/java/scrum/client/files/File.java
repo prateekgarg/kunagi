@@ -4,9 +4,10 @@ import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
+import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 
-public class File extends GFile implements ReferenceSupport {
+public class File extends GFile implements ReferenceSupport, LabelSupport {
 
 	public static final String REFERENCE_PREFIX = "fle";
 

@@ -28,6 +28,8 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
         #content .section p {margin-bottom: 10px;}
         h2 {font: 15pt/20pt "georgia",serif; color: #233C9B; margin-bottom: 10px;}
         h3 {font: 12pt/17pt "georgia",serif; color: black; margin-bottom: 10px;}
+        h4 {font: 11pt/16pt "georgia",serif; color: black; margin-bottom: 10px;}
+        h5 {font: 10pt/15pt "georgia",serif; color: black; margin-bottom: 10px;}
         .middle {float: left; width: 500px;}
         .sidebar {float: right;}
             #content .starter {background: orange url("img/button_bg.png") 0 0 repeat-x; border: 1px solid orange; width: 150px; padding: 5px; text-align: center; -moz-border-radius: 5px; margin-bottom: 5px;}

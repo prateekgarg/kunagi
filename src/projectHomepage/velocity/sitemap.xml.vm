@@ -41,6 +41,14 @@
       <priority>0.0</priority>
    </url>
 
+#foreach( $entry in $blog.entries )
+   <url>
+      <loc>http://kunagi.org/${entry.reference}.html</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
+   </url>
+#end
+
 #foreach ($issue in $issues)
    <url>
       <loc>http://kunagi.org/${issue.reference}.html</loc>
