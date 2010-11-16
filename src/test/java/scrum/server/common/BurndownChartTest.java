@@ -27,35 +27,36 @@ public class BurndownChartTest {
 
 	@Test
 	public void sprintBurndown() {
-		WeekdaySelector freeDays = new WeekdaySelector(65);
+		// WeekdaySelector freeDays = new WeekdaySelector(65);
+		WeekdaySelector freeDays = new WeekdaySelector(1);
 
 		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
+		shots.add(shot(new Date(2008, 7, 1), 0, 0));
+		shots.add(shot(new Date(2008, 7, 2), 0, 0));
+		shots.add(shot(new Date(2008, 7, 3), 0, 0));
+		shots.add(shot(new Date(2008, 7, 4), 5, 45));
+		shots.add(shot(new Date(2008, 7, 5), 10, 35));
+		shots.add(shot(new Date(2008, 7, 6), 0, 35));
+		shots.add(shot(new Date(2008, 7, 7), 18, 25));
+		shots.add(shot(new Date(2008, 7, 8), 10, 15));
+		shots.add(shot(new Date(2008, 7, 9), 2, 15));
+
 		// shots.add(shot(new Date(2008, 7, 1), 0, 0));
-		// shots.add(shot(new Date(2008, 7, 2), 0, 0));
-		// shots.add(shot(new Date(2008, 7, 3), 0, 0));
-		// shots.add(shot(new Date(2008, 7, 4), 5, 45));
-		// shots.add(shot(new Date(2008, 7, 5), 10, 40));
-		// shots.add(shot(new Date(2008, 7, 6), 15, 35));
-		// shots.add(shot(new Date(2008, 7, 7), 18, 40));
-		// shots.add(shot(new Date(2008, 7, 8), 25, 33));
-		// shots.add(shot(new Date(2008, 7, 9), 28, 30));
-		//
-		// DefaultXYDataset data = BurndownChart.createSprintBurndownChartDataset(shots, new Date(2008, 7, 1),
-		// new Date(
-		// 2008, 7, 31), freeDays);
+		// shots.add(shot(new Date(2008, 7, 2), 0, 5));
+		// shots.add(shot(new Date(2008, 7, 3), 1, 4));
+		// shots.add(shot(new Date(2008, 7, 4), 1, 5));
+		// shots.add(shot(new Date(2008, 7, 5), 2, 3));
+		// shots.add(shot(new Date(2008, 7, 6), 1, 2));
+		// shots.add(shot(new Date(2008, 7, 7), 2, 0));
+		// shots.add(shot(new Date(2008, 7, 8), 0, 0));
 
-		shots.add(shot(new Date(2008, 7, 1), 0, 5));
-		shots.add(shot(new Date(2008, 7, 2), 1, 4));
-		shots.add(shot(new Date(2008, 7, 3), 1, 4));
-		shots.add(shot(new Date(2008, 7, 4), 1, 5));
-		shots.add(shot(new Date(2008, 7, 5), 1, 4));
-		shots.add(shot(new Date(2008, 7, 6), 1, 4));
-		shots.add(shot(new Date(2008, 7, 7), 2, 3));
-		shots.add(shot(new Date(2008, 7, 8), 4, 0));
+		// shots.add(shot(new Date(2008, 7, 1), 0, 5));
+		// shots.add(shot(new Date(2008, 7, 2), 2, 3));
 
-		DefaultXYDataset data = BurndownChart.createSprintBurndownChartDataset(shots, shots.get(0).getDate(), shots
-				.get(shots.size() - 1).getDate(), freeDays);
+		Date sprintEndDate = shots.get(shots.size() - 1).getDate().addDays(10);
+		DefaultXYDataset data = BurndownChart.createSprintBurndownChartDataset(shots, shots.get(0).getDate(),
+			sprintEndDate, freeDays);
 
 		double tick = 1.0;
 		double max = BurndownChart.getMaximum(data);
@@ -67,13 +68,13 @@ public class BurndownChartTest {
 			if (max / tick <= 25) break;
 			tick *= 2;
 		}
-		JFreeChart chart = BurndownChart.createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1), shots
-				.get(shots.size() - 1).getDate().nextDay(), 1, 1, max * 1.1, tick, freeDays);
+		JFreeChart chart = BurndownChart.createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1),
+			sprintEndDate.nextDay(), 1, 1, max * 1.1, tick, freeDays);
 
 		File file = new File("test-output/sprintBurndownChart.png");
 		IO.createDirectory(file.getParentFile());
 		try {
-			ChartUtilities.saveChartAsPNG(file, chart, 500, 500);
+			ChartUtilities.saveChartAsPNG(file, chart, 1000, 500);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

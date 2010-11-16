@@ -167,7 +167,7 @@ public class BurndownChart {
 
 		DateAxis domainAxis1 = new DateAxis(dateAxisLabel);
 		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
-		domainAxis1.setDateFormatOverride(new SimpleDateFormat("         d.", Locale.US));
+		domainAxis1.setDateFormatOverride(new SimpleDateFormat("        EE d.", Locale.US));
 		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
 		domainAxis1.setAxisLineVisible(false);
 		Range range = new Range(firstDay.toMillis(), lastDay.toMillis());
@@ -214,217 +214,11 @@ public class BurndownChart {
 	}
 
 	static DefaultXYDataset createSprintBurndownChartDataset(final List<BurndownSnapshot> snapshots,
-			final Date firstDay, final Date lastDay, WeekdaySelector freeDays) {
+			final Date firstDay, final Date lastDay, final WeekdaySelector freeDays) {
 
-		DefaultXYDataset ret = new Object() {
-
-			List<Double> mainDates = new ArrayList<Double>();
-			List<Double> mainValues = new ArrayList<Double>();
-
-			List<Double> extrapolationDates = new ArrayList<Double>();
-			List<Double> extrapolationValues = new ArrayList<Double>();
-
-			List<Double> idealDates = new ArrayList<Double>();
-			List<Double> idealValues = new ArrayList<Double>();
-
-			Date date;
-			long millisBegin;
-			long millisEnd;
-			BurndownSnapshot snapshot;
-			boolean workStarted;
-			boolean workFinished;
-
-			int totalBurned;
-			int totalBefore;
-			int totalAfter;
-			int burned;
-			int jump;
-
-			DefaultXYDataset createDataset() {
-				setDate(firstDay);
-
-				while (true) {
-					burned = snapshot.getBurnedWork() - totalBurned;
-					totalBurned = snapshot.getBurnedWork();
-					totalAfter = snapshot.getRemainingWork();
-					jump = totalAfter - totalBefore + burned;
-
-					System.out.println(date + ": burned=" + burned + " totalBefore=" + totalBefore + " totalAfter="
-							+ totalAfter + " jump=" + jump);
-					if (workFinished) {
-						processPrefix();
-					} else if (workStarted) {
-						processSuffix();
-					} else {
-						processCenter();
-					}
-					if (date.equals(lastDay)) break;
-					setDate(date.nextDay());
-					totalBefore = totalAfter;
-				}
-
-				DefaultXYDataset dataset = new DefaultXYDataset();
-				dataset.addSeries("Main", toArray(mainDates, mainValues));
-				dataset.addSeries("Extrapolation", toArray(extrapolationDates, extrapolationValues));
-				dataset.addSeries("Ideal", toArray(idealDates, idealValues));
-				return dataset;
-			}
-
-			private void setDate(Date newDate) {
-				date = newDate;
-				snapshot = getSnapshot();
-				millisBegin = date.toMillis();
-				millisEnd = date.nextDay().toMillis();
-			}
-
-			private void processPrefix() {
-				if (totalAfter > 0 || totalBurned > 0) {
-					workStarted = true;
-					processCenter();
-					return;
-				}
-			}
-
-			private void processCenter() {
-				mainDates.add((double) millisBegin);
-				mainValues.add((double) totalBefore);
-				if (jump != 0) {
-					mainDates.add((double) millisBegin);
-					mainValues.add((double) totalBefore + jump);
-				}
-				mainDates.add((double) millisEnd);
-				mainValues.add((double) totalAfter);
-			}
-
-			private void processSuffix() {}
-
-			private BurndownSnapshot getSnapshot() {
-				for (BurndownSnapshot snapshot : snapshots) {
-					if (snapshot.getDate().equals(date)) return snapshot;
-				}
-				throw new RuntimeException("Missing snapshot for date: " + date);
-			}
-
-		}.createDataset();
-		if (true) return ret;
-
-		List<Double> mainDates = new ArrayList<Double>();
-		List<Double> mainValues = new ArrayList<Double>();
-
-		List<Double> extrapolationDates = new ArrayList<Double>();
-		List<Double> extrapolationValues = new ArrayList<Double>();
-
-		List<Double> idealDates = new ArrayList<Double>();
-		List<Double> idealValues = new ArrayList<Double>();
-
-		double burnedWork = 0;
-		double remainingWork = 0;
-		double work = 0;
-
-		double jump = 0;
-
-		double newBurnedWork;
-		double newRemainingWork;
-		double newWork;
-
-		double idealWork = 0;
-		double idealPerDayBurndown = 0;
-		Date lastIdealDate;
-
-		mainDates.add((double) firstDay.toMillis());
-		mainValues.add(0d);
-
-		idealDates.add((double) firstDay.toMillis());
-		idealValues.add(0d);
-
-		lastIdealDate = firstDay;
-
-		int freeDayCount = 0;
-		if (freeDays.isSelectedSome()) {
-			Date date = firstDay;
-			while (date.isBeforeOrSame(lastDay)) {
-				if (freeDays.isFree(date.getWeekday().getDayOfWeek())) freeDayCount++;
-				date = date.nextDay();
-			}
-		}
-
-		for (int i = 0; i < snapshots.size(); i++) {
-
-			BurndownSnapshot snapshot = snapshots.get(i);
-			Date snapshotDate = snapshot.getDate();
-			boolean free = freeDays.isFree(snapshotDate.getWeekday().getDayOfWeek());
-			if (free) System.out.println("------free: " + snapshotDate);
-			double snapshotDateMillis = snapshotDate.toMillis();
-			double snapshotDateNextMillis = snapshotDate.addDays(1).toMillis();
-			newBurnedWork = snapshot.getBurnedWork();
-			newRemainingWork = snapshot.getRemainingWork();
-			newWork = newBurnedWork + newRemainingWork;
-			jump = newWork - work;
-
-			mainDates.add(snapshotDateMillis);
-			mainValues.add(remainingWork + jump);
-
-			if (idealWork == 0) {
-				idealWork += jump;
-				idealDates.add(snapshotDateMillis);
-				idealValues.add(idealWork);
-				idealPerDayBurndown = idealWork / (snapshotDate.getPeriodTo(lastDay).toDays() - freeDayCount);
-			}
-
-			idealDates.add(snapshotDateMillis);
-			idealValues.add(idealWork);
-			if (!free) idealWork -= idealPerDayBurndown;
-
-			lastIdealDate = snapshotDate;
-
-			work = newWork;
-
-			mainDates.add(snapshotDateNextMillis);
-			mainValues.add(newRemainingWork);
-
-			remainingWork = newRemainingWork;
-			burnedWork = newBurnedWork;
-
-		}
-
-		Date extrapolationBeginDay = snapshots.isEmpty() ? Date.tomorrow() : snapshots.get(snapshots.size() - 1)
-				.getDate().addDays(1);
-		double extrapolationPerDayBurndown = burnedWork / (firstDay.getPeriodTo(extrapolationBeginDay).toDays());
-		double remaining = remainingWork;
-
-		Date date = lastIdealDate.nextDay();
-		while (date.isBeforeOrSame(lastDay)) {
-			boolean free = freeDays.isFree(date.getWeekday().getDayOfWeek());
-
-			if (!free) idealWork -= idealPerDayBurndown;
-			// idealDates.add((double) date.toMillis());
-			// idealValues.add(idealWork);
-
-			extrapolationDates.add((double) date.toMillis());
-			extrapolationValues.add(remaining);
-			if (!free) remaining -= extrapolationPerDayBurndown;
-
-			date = date.nextDay();
-		}
-
-		// idealWork -= (lastIdealDate.getPeriodTo(lastDay).toDays() * idealPerDayBurndown);
-		// idealDates.add((double) lastDay.toMillis());
-		// idealValues.add(idealWork);
-
-		// extrapolationDates.add((double) extrapolationBeginDay.toMillis());
-		// extrapolationValues.add(remaining);
-		//
-		// extrapolationDates.add((double) lastDay.toMillis());
-		// extrapolationValues.add(remaining - extrapolationBeginDay.getPeriodTo(lastDay).toDays()
-		// * extrapolationPerDayBurndown);
-
-		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("Main", toArray(mainDates, mainValues));
-		dataset.addSeries("Extrapolation", toArray(extrapolationDates, extrapolationValues));
-		dataset.addSeries("Ideal", toArray(idealDates, idealValues));
-
-		return dataset;
-
+		ChartDataFactory factory = new ChartDataFactory();
+		factory.createDataset(snapshots, firstDay, lastDay, freeDays);
+		return factory.getDataset();
 	}
 
 	private static double[][] toArray(List<Double> a, List<Double> b) {
@@ -435,6 +229,163 @@ public class BurndownChart {
 			array[1][i] = b.get(i);
 		}
 		return array;
+	}
+
+	static class ChartDataFactory {
+
+		List<Double> mainDates = new ArrayList<Double>();
+		List<Double> mainValues = new ArrayList<Double>();
+
+		List<Double> extrapolationDates = new ArrayList<Double>();
+		List<Double> extrapolationValues = new ArrayList<Double>();
+
+		List<Double> idealDates = new ArrayList<Double>();
+		List<Double> idealValues = new ArrayList<Double>();
+
+		List<BurndownSnapshot> snapshots;
+		WeekdaySelector freeDays;
+
+		Date date;
+		long millisBegin;
+		long millisEnd;
+		boolean freeDay;
+		BurndownSnapshot snapshot;
+		boolean workStarted;
+		boolean workFinished;
+
+		int totalBurned;
+		int totalBefore;
+		int totalAfter;
+		int burned;
+		int jump;
+		double totalRemaining;
+		int workDays;
+		double burnPerDay;
+		double idealRemaining;
+		double idealBurnPerDay;
+		int totalWorkDays = 0;
+		boolean extrapolationFinished;
+
+		DefaultXYDataset dataset;
+
+		public void createDataset(final List<BurndownSnapshot> snapshots, final Date firstDay, final Date lastDay,
+				final WeekdaySelector freeDays) {
+			this.snapshots = snapshots;
+			this.freeDays = freeDays;
+
+			date = firstDay;
+			while (date.isBeforeOrSame(lastDay)) {
+				if (!freeDays.isFree(date.getWeekday().getDayOfWeek())) totalWorkDays++;
+				date = date.nextDay();
+			}
+
+			setDate(firstDay);
+			while (true) {
+				if (!workFinished) {
+					burned = snapshot.getBurnedWork();
+					totalBurned += burned;
+					totalAfter = snapshot.getRemainingWork();
+					jump = totalAfter - totalBefore + burned;
+				}
+
+				System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter + " jump=" + jump
+						+ " burned=" + burned);
+				if (workFinished) {
+					processSuffix();
+				} else if (workStarted) {
+					processCenter();
+				} else {
+					processPrefix();
+				}
+				if (date.equals(lastDay)) break;
+				setDate(date.nextDay());
+				totalBefore = totalAfter;
+			}
+
+			dataset = new DefaultXYDataset();
+			dataset.addSeries("Main", toArray(mainDates, mainValues));
+			dataset.addSeries("Extrapolation", toArray(extrapolationDates, extrapolationValues));
+			dataset.addSeries("Ideal", toArray(idealDates, idealValues));
+		}
+
+		private void setDate(Date newDate) {
+			date = newDate;
+			millisBegin = date.toMillis();
+			millisEnd = date.nextDay().toMillis();
+			freeDay = freeDays.isFree(date.getWeekday().getDayOfWeek());
+			if (!workFinished) snapshot = getSnapshot();
+		}
+
+		private void processPrefix() {
+			if (totalAfter > 0 || totalBurned > 0) {
+				workStarted = true;
+				idealRemaining = totalAfter + burned;
+				idealDates.add((double) millisBegin);
+				idealValues.add(idealRemaining);
+
+				if (totalWorkDays > 0) {
+					idealBurnPerDay = (double) jump / (double) totalWorkDays;
+					System.out.println("*** jump:" + jump + " totalWorkDays:" + totalWorkDays + " idealBurnPerDay:"
+							+ idealBurnPerDay);
+				}
+
+				processCenter();
+				return;
+			}
+			totalWorkDays--;
+		}
+
+		private void processCenter() {
+			mainDates.add((double) millisBegin);
+			mainValues.add((double) totalBefore);
+			if (jump != 0) {
+				mainDates.add((double) millisBegin);
+				mainValues.add((double) totalBefore + jump);
+			}
+			mainDates.add((double) millisEnd);
+			mainValues.add((double) totalAfter);
+
+			if (!freeDay) {
+				workDays++;
+				idealRemaining -= idealBurnPerDay;
+			}
+
+			idealDates.add((double) millisEnd);
+			idealValues.add(idealRemaining);
+		}
+
+		private void processSuffix() {
+			if (!freeDay) {
+				totalRemaining -= burnPerDay;
+				idealRemaining -= idealBurnPerDay;
+			}
+			if (!extrapolationFinished) {
+				extrapolationDates.add((double) millisEnd);
+				extrapolationValues.add(totalRemaining);
+			}
+			idealDates.add((double) millisEnd);
+			idealValues.add(idealRemaining);
+			if (totalRemaining <= 0) extrapolationFinished = true;
+		}
+
+		private BurndownSnapshot getSnapshot() {
+			for (BurndownSnapshot snapshot : snapshots) {
+				if (snapshot.getDate().equals(date)) return snapshot;
+			}
+			workFinished = true;
+			totalRemaining = totalAfter;
+			burnPerDay = (double) totalBurned / (double) workDays;
+			System.out.println("***** totalBurned:" + totalBurned + " workDays:" + workDays + " burnPerDay:"
+					+ burnPerDay);
+			extrapolationDates.add((double) millisBegin);
+			extrapolationValues.add(totalRemaining);
+			return null;
+		}
+
+		public DefaultXYDataset getDataset() {
+			return dataset;
+		}
+
 	}
 
 }
