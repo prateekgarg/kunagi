@@ -1,5 +1,6 @@
 package scrum.server.common;
 
+import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
@@ -92,7 +93,7 @@ public class BurndownChart {
 
 		WeekdaySelector freeDays = sprint.getProject().getFreeDaysAsWeekdaySelector();
 
-		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd().addDays(1), freeDays, width, height);
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), freeDays, width, height);
 	}
 
 	// private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date
@@ -121,26 +122,22 @@ public class BurndownChart {
 	// }
 	// }
 
-	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
+	static void writeSprintBurndownChart(OutputStream out, List<? extends BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay, WeekdaySelector freeDays, int width, int height) {
 		LOG.debug("Creating burndown chart:", snapshots.size(), "snapshots from", firstDay, "to", lastDay, "(" + width
 				+ "x" + height + " px)");
 
-		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, freeDays);
-		double tick = 1.0;
-		double max = getMaximum(data);
-
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
+		int dayCount = firstDay.getPeriodTo(lastDay).toDays();
+		int dateMarkTickUnit = 1;
+		float widthPerDay = (float) width / (float) dayCount * dateMarkTickUnit;
+		while (widthPerDay < 20) {
+			dateMarkTickUnit++;
+			widthPerDay = (float) width / (float) dayCount * dateMarkTickUnit;
 		}
 
-		JFreeChart chart = createSprintBurndownChart(data, null, null, firstDay, lastDay, 1, 3, max * 1.1, tick,
-			freeDays);
+		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
+		JFreeChart chart = createSprintBurndownChart(burndownSnapshots, firstDay, lastDay, freeDays, dateMarkTickUnit,
+			widthPerDay);
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 			out.flush();
@@ -149,9 +146,23 @@ public class BurndownChart {
 		}
 	}
 
-	static JFreeChart createSprintBurndownChart(DefaultXYDataset data, String dateAxisLabel, String valueAxisLabel,
-			Date firstDay, Date lastDay, int dateMarkTickUnit, int dateLabelTickUnit, double upperBoundary,
-			double valueLabelTickUnit, WeekdaySelector freeDays) {
+	private static JFreeChart createSprintBurndownChart(List<BurndownSnapshot> snapshots, Date firstDay, Date lastDay,
+			WeekdaySelector freeDays, int dateMarkTickUnit, float widthPerDay) {
+		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, freeDays);
+
+		double tick = 1.0;
+		double max = BurndownChart.getMaximum(data);
+
+		while (max / tick > 25) {
+			tick *= 2;
+			if (max / tick <= 25) break;
+			tick *= 2.5;
+			if (max / tick <= 25) break;
+			tick *= 2;
+		}
+		double valueLabelTickUnit = tick;
+		double upperBoundary = Math.min(max * 1.1f, max + 3);
+
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
 			false);
 
@@ -165,16 +176,26 @@ public class BurndownChart {
 		renderer.setSeriesPaint(2, COLOR_OPTIMUM_LINE);
 		renderer.setSeriesStroke(2, new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
-		DateAxis domainAxis1 = new DateAxis(dateAxisLabel);
+		DateAxis domainAxis1 = new DateAxis();
 		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
-		domainAxis1.setDateFormatOverride(new SimpleDateFormat("        EE d.", Locale.US));
-		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
+		// String dateFormat = "        EE d.";
+		String dateFormat = "d.";
+		widthPerDay -= 5;
+		if (widthPerDay > 40) {
+			dateFormat = "EE " + dateFormat;
+		}
+		if (widthPerDay > 10) {
+			float spaces = widthPerDay / 2.7f;
+			dateFormat = Str.multiply(" ", (int) spaces) + dateFormat;
+		}
+		domainAxis1.setDateFormatOverride(new SimpleDateFormat(dateFormat, Locale.US));
+		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
 		domainAxis1.setAxisLineVisible(false);
-		Range range = new Range(firstDay.toMillis(), lastDay.toMillis());
+		Range range = new Range(firstDay.toMillis(), lastDay.nextDay().toMillis());
 		domainAxis1.setRange(range);
 
 		DateAxis domainAxis2 = new DateAxis();
-		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
+		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1));
 		domainAxis2.setTickMarksVisible(false);
 		domainAxis2.setTickLabelsVisible(false);
 		domainAxis2.setRange(range);
@@ -183,7 +204,7 @@ public class BurndownChart {
 		chart.getXYPlot().setDomainAxis(1, domainAxis1);
 		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
 
-		NumberAxis rangeAxis = new NumberAxis(valueAxisLabel);
+		NumberAxis rangeAxis = new NumberAxis();
 		rangeAxis.setLabelFont(new Font(rangeAxis.getLabelFont().getName(), Font.PLAIN, 6));
 		rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 		rangeAxis.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
@@ -288,8 +309,9 @@ public class BurndownChart {
 					jump = totalAfter - totalBefore + burned;
 				}
 
-				System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter + " jump=" + jump
-						+ " burned=" + burned);
+				// System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter +
+				// " jump=" + jump
+				// + " burned=" + burned);
 				if (workFinished) {
 					processSuffix();
 				} else if (workStarted) {
@@ -325,8 +347,9 @@ public class BurndownChart {
 
 				if (totalWorkDays > 0) {
 					idealBurnPerDay = (double) jump / (double) totalWorkDays;
-					System.out.println("*** jump:" + jump + " totalWorkDays:" + totalWorkDays + " idealBurnPerDay:"
-							+ idealBurnPerDay);
+					// System.out.println("*** jump:" + jump + " totalWorkDays:" + totalWorkDays +
+					// " idealBurnPerDay:"
+					// + idealBurnPerDay);
 				}
 
 				processCenter();
@@ -375,8 +398,9 @@ public class BurndownChart {
 			workFinished = true;
 			totalRemaining = totalAfter;
 			burnPerDay = (double) totalBurned / (double) workDays;
-			System.out.println("***** totalBurned:" + totalBurned + " workDays:" + workDays + " burnPerDay:"
-					+ burnPerDay);
+			// System.out.println("***** totalBurned:" + totalBurned + " workDays:" + workDays +
+			// " burnPerDay:"
+			// + burnPerDay);
 			extrapolationDates.add((double) millisBegin);
 			extrapolationValues.add(totalRemaining);
 			return null;
