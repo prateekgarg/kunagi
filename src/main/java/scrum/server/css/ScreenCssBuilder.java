@@ -91,8 +91,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	public static String cPlanningPokerTableLines = "#EEE";
 
-	public static String cBurndownLine = cHeaderBackground;
-	public static String cBurndownProjectionLine = cBurndownLine;
+	public static String cBurndownLine = Colors.darken(cHeaderBackground);
+	public static String cBurndownProjectionLine = Colors.lighten(Colors.lighten(cBurndownLine));
 	public static String cBurndownOptimalLine = cPagePanelBorder;
 
 	@Override
