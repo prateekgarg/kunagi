@@ -5,6 +5,9 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -35,19 +38,31 @@ public class Sprint extends GSprint implements Numbered {
 
 	public void close() {
 		float velocity = 0;
-		StringBuilder sb = new StringBuilder();
-		for (Requirement requirement : getRequirements()) {
+		Collection<Requirement> completedRequirements = new ArrayList<Requirement>();
+		Collection<Requirement> incompletedRequirements = new ArrayList<Requirement>();
+		List<Requirement> requirements = new ArrayList<Requirement>(getRequirements());
+		Collections.sort(requirements, getProject().getRequirementsOrderComparator());
+		for (Requirement requirement : requirements) {
+			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
+			Collections.sort(tasks, requirement.getTasksOrderComparator());
+			if (requirement.isClosed()) {
+				completedRequirements.add(requirement);
+			} else {
+				incompletedRequirements.add(requirement);
+			}
+		}
+		setCompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(completedRequirements));
+		setIncompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(incompletedRequirements));
+		for (Requirement requirement : requirements) {
+			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
 			if (requirement.isClosed()) {
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
-				sb.append("* ");
-				sb.append(requirement.getLabel());
-				sb.append("\n");
-				for (Task task : requirement.getTasks()) {
+				for (Task task : tasks) {
 					taskDao.deleteEntity(task);
 				}
 			} else {
-				for (Task task : requirement.getTasks()) {
+				for (Task task : tasks) {
 					if (task.isClosed()) {
 						taskDao.deleteEntity(task);
 					} else {
@@ -57,13 +72,12 @@ public class Sprint extends GSprint implements Numbered {
 			}
 			requirement.setSprint(null);
 		}
-		setCompletedRequirementLabels(sb.toString());
 		setVelocity(velocity);
 		Project project = getProject();
-		project.setVelocity(Math.round(velocity));
 		setProductOwners(project.getProductOwners());
 		setScrumMasters(project.getScrumMasters());
 		setTeamMembers(project.getTeamMembers());
+		project.setVelocity(Math.round(velocity));
 	}
 
 	public String getProductOwnersAsString() {

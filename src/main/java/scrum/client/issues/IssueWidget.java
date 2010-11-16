@@ -65,7 +65,7 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(issue.getAffectedReleases());
+				setViewerItemsAsHtml(issue.getAffectedReleases());
 			}
 
 			@Override
@@ -95,7 +95,7 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(issue.getFixReleases());
+				setViewerItemsAsHtml(issue.getFixReleases());
 			}
 
 			@Override

@@ -116,6 +116,8 @@ public abstract class GProjectDao
         issueReplyTemplatesCache = null;
         projectsByLastOpenedDateAndTimeCache.clear();
         lastOpenedDateAndTimesCache = null;
+        projectsByFreeDaysCache.clear();
+        freeDayssCache = null;
     }
 
     @Override
@@ -1632,6 +1634,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isLastOpenedDateAndTime(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - freeDays
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Project>> projectsByFreeDaysCache = new Cache<Integer,Set<Project>>(
+            new Cache.Factory<Integer,Set<Project>>() {
+                public Set<Project> create(Integer freeDays) {
+                    return getEntities(new IsFreeDays(freeDays));
+                }
+            });
+
+    public final Set<Project> getProjectsByFreeDays(int freeDays) {
+        return projectsByFreeDaysCache.get(freeDays);
+    }
+    private Set<Integer> freeDayssCache;
+
+    public final Set<Integer> getFreeDayss() {
+        if (freeDayssCache == null) {
+            freeDayssCache = new HashSet<Integer>();
+            for (Project e : getEntities()) {
+                freeDayssCache.add(e.getFreeDays());
+            }
+        }
+        return freeDayssCache;
+    }
+
+    private static class IsFreeDays implements Predicate<Project> {
+
+        private int value;
+
+        public IsFreeDays(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isFreeDays(value);
         }
 
     }

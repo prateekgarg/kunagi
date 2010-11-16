@@ -49,7 +49,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(project.getParticipants());
+				setViewerItemsAsHtml(project.getParticipants());
 			}
 
 			@Override
@@ -75,7 +75,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(project.getAdmins());
+				setViewerItemsAsHtml(project.getAdmins());
 			}
 
 			@Override
@@ -111,7 +111,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(project.getProductOwners());
+				setViewerItemsAsHtml(project.getProductOwners());
 			}
 
 			@Override
@@ -135,7 +135,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(project.getScrumMasters());
+				setViewerItemsAsHtml(project.getScrumMasters());
 			}
 
 			@Override
@@ -159,7 +159,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(project.getTeamMembers());
+				setViewerItemsAsHtml(project.getTeamMembers());
 			}
 
 			@Override

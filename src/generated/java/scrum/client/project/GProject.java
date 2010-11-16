@@ -2018,6 +2018,71 @@ public abstract class GProject
 
     }
 
+    // --- freeDays ---
+
+    private int freeDays ;
+
+    public final int getFreeDays() {
+        return this.freeDays ;
+    }
+
+    public final Project setFreeDays(int freeDays) {
+        if (isFreeDays(freeDays)) return (Project)this;
+        this.freeDays = freeDays ;
+        propertyChanged("freeDays", this.freeDays);
+        return (Project)this;
+    }
+
+    public final boolean isFreeDays(int freeDays) {
+        return equals(this.freeDays, freeDays);
+    }
+
+    private transient FreeDaysModel freeDaysModel;
+
+    public FreeDaysModel getFreeDaysModel() {
+        if (freeDaysModel == null) freeDaysModel = createFreeDaysModel();
+        return freeDaysModel;
+    }
+
+    protected FreeDaysModel createFreeDaysModel() { return new FreeDaysModel(); }
+
+    protected class FreeDaysModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_freeDays";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getFreeDays();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setFreeDays(value);
+        }
+
+            @Override
+            public void increment() {
+                setFreeDays(getFreeDays() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setFreeDays(getFreeDays() - 1);
+            }
+        @Override
+        public String getTooltip() { return "Weekdays, on which no work is done."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -2062,6 +2127,7 @@ public abstract class GProject
         issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastOpenedDateAndTimeAsString);
+        freeDays  = (Integer) props.get("freeDays");
         updateLocalModificationTime();
     }
 
@@ -2106,6 +2172,7 @@ public abstract class GProject
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
+        properties.put("freeDays", this.freeDays);
     }
 
     public final java.util.List<scrum.client.sprint.Sprint> getSprints() {

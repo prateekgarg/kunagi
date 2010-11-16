@@ -54,7 +54,7 @@ public class RequirementWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(requirement.getQualitys());
+				setViewerItemsAsHtml(requirement.getQualitys());
 			}
 
 			@Override

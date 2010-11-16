@@ -194,6 +194,13 @@ public class TestUtil {
 		return entry;
 	}
 
+	public static Requirement createRequirement(Sprint sprint, int number, float estimatedWork) {
+		Requirement req = createRequirement(sprint.getProject(), number);
+		req.setEstimatedWork(estimatedWork);
+		req.setSprint(sprint);
+		return req;
+	}
+
 	public static Requirement createRequirement(Project project, int number) {
 		return createRequirement(project, number, Str.generateRandomSentence(4, 5) + " (#" + number + ")",
 			Str.generateRandomParagraph(), Str.generateRandomParagraph());

@@ -94,7 +94,6 @@ public class PdfTest {
 		sprint.setBegin(sprint.getEnd().beforeDays(30));
 		sprint.setLabel("Productivity Boost Sprint");
 		sprint.setGoal("Boost productivity for users.");
-		sprint.setCompletedRequirementLabels("* req23 Boost 1\n* req42 Boost 2");
 		sprint.setPlanningNote("Planning was fun.");
 		sprint.setReviewNote("PO accepted everything.");
 		sprint.setRetrospectiveNote("Perfect sprint.");
@@ -102,6 +101,17 @@ public class PdfTest {
 		sprint.setProductOwners(Arrays.asList(TestUtil.createUser("Cartman")));
 		sprint.setScrumMasters(Arrays.asList(TestUtil.createUser("Homer")));
 		sprint.setTeamMembers(Arrays.asList(TestUtil.createUser("Alfred"), TestUtil.createUser("Duke")));
+
+		Requirement req1 = TestUtil.createRequirement(sprint, 1, 0.5f);
+		TestUtil.createTask(req1, 1, 0).setBurnedWork(1);
+		req1.setClosed(true);
+		Requirement req2 = TestUtil.createRequirement(sprint, 1, 1f);
+		Requirement req3 = TestUtil.createRequirement(sprint, 1, 5f);
+		TestUtil.createTask(req3, 2, 1).setBurnedWork(1);
+		TestUtil.createTask(req3, 3, 2).setBurnedWork(2);
+
+		sprint.close();
+
 		createPdf(new SprintReportPdfCreator(sprint));
 	}
 

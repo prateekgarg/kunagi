@@ -9,6 +9,7 @@ import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.Time;
+import ilarkesto.gwt.client.editor.AEditorModel;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.common.WeekdaySelector;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -597,4 +599,29 @@ public class Project extends GProject implements ForumSupport {
 		return lastOpenedAgoModel;
 	}
 
+	private transient AEditorModel<WeekdaySelector> freeDaysWeekdaySelectorModel;
+
+	public AEditorModel<WeekdaySelector> getFreeDaysWeekdaySelectorModel() {
+		if (freeDaysWeekdaySelectorModel == null) freeDaysWeekdaySelectorModel = new AEditorModel<WeekdaySelector>() {
+
+			@Override
+			public WeekdaySelector getValue() {
+				return new WeekdaySelector(getFreeDays());
+			}
+
+			@Override
+			public void setValue(WeekdaySelector value) {
+				if (value != null && value.isSelectedAll())
+					throw new RuntimeException("At least one work day required.");
+				setFreeDays(value == null ? 0 : value.createBitmask());
+			}
+
+			@Override
+			public String getId() {
+				return "freeDaysWeekdaySelector";
+			}
+
+		};
+		return freeDaysWeekdaySelectorModel;
+	}
 }

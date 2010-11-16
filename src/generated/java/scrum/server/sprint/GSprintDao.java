@@ -58,6 +58,10 @@ public abstract class GSprintDao
         velocitysCache = null;
         sprintsByCompletedRequirementLabelsCache.clear();
         completedRequirementLabelssCache = null;
+        sprintsByCompletedRequirementsDataCache.clear();
+        completedRequirementsDatasCache = null;
+        sprintsByIncompletedRequirementsDataCache.clear();
+        incompletedRequirementsDatasCache = null;
         sprintsByPlanningNoteCache.clear();
         planningNotesCache = null;
         sprintsByReviewNoteCache.clear();
@@ -404,6 +408,86 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isCompletedRequirementLabels(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - completedRequirementsData
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByCompletedRequirementsDataCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String completedRequirementsData) {
+                    return getEntities(new IsCompletedRequirementsData(completedRequirementsData));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        return sprintsByCompletedRequirementsDataCache.get(completedRequirementsData);
+    }
+    private Set<java.lang.String> completedRequirementsDatasCache;
+
+    public final Set<java.lang.String> getCompletedRequirementsDatas() {
+        if (completedRequirementsDatasCache == null) {
+            completedRequirementsDatasCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isCompletedRequirementsDataSet()) completedRequirementsDatasCache.add(e.getCompletedRequirementsData());
+            }
+        }
+        return completedRequirementsDatasCache;
+    }
+
+    private static class IsCompletedRequirementsData implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsCompletedRequirementsData(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isCompletedRequirementsData(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - incompletedRequirementsData
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByIncompletedRequirementsDataCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String incompletedRequirementsData) {
+                    return getEntities(new IsIncompletedRequirementsData(incompletedRequirementsData));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        return sprintsByIncompletedRequirementsDataCache.get(incompletedRequirementsData);
+    }
+    private Set<java.lang.String> incompletedRequirementsDatasCache;
+
+    public final Set<java.lang.String> getIncompletedRequirementsDatas() {
+        if (incompletedRequirementsDatasCache == null) {
+            incompletedRequirementsDatasCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                if (e.isIncompletedRequirementsDataSet()) incompletedRequirementsDatasCache.add(e.getIncompletedRequirementsData());
+            }
+        }
+        return incompletedRequirementsDatasCache;
+    }
+
+    private static class IsIncompletedRequirementsData implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public IsIncompletedRequirementsData(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isIncompletedRequirementsData(value);
         }
 
     }

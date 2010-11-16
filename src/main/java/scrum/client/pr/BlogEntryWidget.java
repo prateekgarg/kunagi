@@ -33,7 +33,7 @@ public class BlogEntryWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItems(blogEntry.getAuthors());
+				setViewerItemsAsHtml(blogEntry.getAuthors());
 			}
 
 			@Override

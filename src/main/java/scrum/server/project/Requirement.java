@@ -2,6 +2,8 @@ package scrum.server.project;
 
 import ilarkesto.core.base.Str;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import scrum.client.common.LabelSupport;
@@ -12,6 +14,8 @@ import scrum.server.estimation.RequirementEstimationVote;
 import scrum.server.sprint.Task;
 
 public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
+
+	private transient Comparator<Task> tasksOrderComparator;
 
 	public String getEstimatedWorkAsString() {
 		Float work = getEstimatedWork();
@@ -74,6 +78,29 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 	@Override
 	public void updateNumber() {
 		if (getNumber() == 0) setNumber(getProject().generateRequirementNumber());
+	}
+
+	public Comparator<Task> getTasksOrderComparator() {
+		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
+
+			@Override
+			public int compare(Task a, Task b) {
+				List<String> order = getTasksOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return tasksOrderComparator;
 	}
 
 	@Override

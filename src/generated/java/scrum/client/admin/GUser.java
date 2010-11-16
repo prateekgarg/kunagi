@@ -92,6 +92,8 @@ public abstract class GUser
 
         @Override
         public boolean isMandatory() { return true; }
+        @Override
+        public String getTooltip() { return "Login name."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -145,6 +147,8 @@ public abstract class GUser
         public void setValue(java.lang.String value) {
             setPublicName(value);
         }
+        @Override
+        public String getTooltip() { return "Name, which is displayed to the public on blog entries or emails."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

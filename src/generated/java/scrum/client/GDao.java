@@ -1393,6 +1393,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByFreeDays(int freeDays) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isFreeDays(freeDays)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectEvent ---
 
     protected Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
@@ -2515,6 +2523,22 @@ public abstract class GDao
         List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
         for (scrum.client.sprint.Sprint entity : sprints.values()) {
             if (entity.isCompletedRequirementLabels(completedRequirementLabels)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isCompletedRequirementsData(completedRequirementsData)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isIncompletedRequirementsData(incompletedRequirementsData)) ret.add(entity);
         }
         return ret;
     }

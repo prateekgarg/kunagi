@@ -44,6 +44,8 @@ public abstract class GSprint
         properties.put("end", this.end == null ? null : this.end.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementLabels", this.completedRequirementLabels);
+        properties.put("completedRequirementsData", this.completedRequirementsData);
+        properties.put("incompletedRequirementsData", this.incompletedRequirementsData);
         properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
@@ -93,7 +95,6 @@ public abstract class GSprint
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getGoal(), key)) return true;
-        if (matchesKey(getCompletedRequirementLabels(), key)) return true;
         if (matchesKey(getPlanningNote(), key)) return true;
         if (matchesKey(getReviewNote(), key)) return true;
         if (matchesKey(getRetrospectiveNote(), key)) return true;
@@ -395,6 +396,78 @@ public abstract class GSprint
 
     protected final void updateCompletedRequirementLabels(Object value) {
         setCompletedRequirementLabels((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - completedRequirementsData
+    // -----------------------------------------------------------
+
+    private java.lang.String completedRequirementsData;
+
+    public final java.lang.String getCompletedRequirementsData() {
+        return completedRequirementsData;
+    }
+
+    public final void setCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        completedRequirementsData = prepareCompletedRequirementsData(completedRequirementsData);
+        if (isCompletedRequirementsData(completedRequirementsData)) return;
+        this.completedRequirementsData = completedRequirementsData;
+        updateLastModified();
+        fireModified("completedRequirementsData="+completedRequirementsData);
+    }
+
+    protected java.lang.String prepareCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        completedRequirementsData = Str.removeUnreadableChars(completedRequirementsData);
+        return completedRequirementsData;
+    }
+
+    public final boolean isCompletedRequirementsDataSet() {
+        return this.completedRequirementsData != null;
+    }
+
+    public final boolean isCompletedRequirementsData(java.lang.String completedRequirementsData) {
+        if (this.completedRequirementsData == null && completedRequirementsData == null) return true;
+        return this.completedRequirementsData != null && this.completedRequirementsData.equals(completedRequirementsData);
+    }
+
+    protected final void updateCompletedRequirementsData(Object value) {
+        setCompletedRequirementsData((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - incompletedRequirementsData
+    // -----------------------------------------------------------
+
+    private java.lang.String incompletedRequirementsData;
+
+    public final java.lang.String getIncompletedRequirementsData() {
+        return incompletedRequirementsData;
+    }
+
+    public final void setIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        incompletedRequirementsData = prepareIncompletedRequirementsData(incompletedRequirementsData);
+        if (isIncompletedRequirementsData(incompletedRequirementsData)) return;
+        this.incompletedRequirementsData = incompletedRequirementsData;
+        updateLastModified();
+        fireModified("incompletedRequirementsData="+incompletedRequirementsData);
+    }
+
+    protected java.lang.String prepareIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        incompletedRequirementsData = Str.removeUnreadableChars(incompletedRequirementsData);
+        return incompletedRequirementsData;
+    }
+
+    public final boolean isIncompletedRequirementsDataSet() {
+        return this.incompletedRequirementsData != null;
+    }
+
+    public final boolean isIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
+        if (this.incompletedRequirementsData == null && incompletedRequirementsData == null) return true;
+        return this.incompletedRequirementsData != null && this.incompletedRequirementsData.equals(incompletedRequirementsData);
+    }
+
+    protected final void updateIncompletedRequirementsData(Object value) {
+        setIncompletedRequirementsData((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -788,6 +861,8 @@ public abstract class GSprint
             if (property.equals("end")) updateEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("completedRequirementLabels")) updateCompletedRequirementLabels(value);
+            if (property.equals("completedRequirementsData")) updateCompletedRequirementsData(value);
+            if (property.equals("incompletedRequirementsData")) updateIncompletedRequirementsData(value);
             if (property.equals("planningNote")) updatePlanningNote(value);
             if (property.equals("reviewNote")) updateReviewNote(value);
             if (property.equals("retrospectiveNote")) updateRetrospectiveNote(value);

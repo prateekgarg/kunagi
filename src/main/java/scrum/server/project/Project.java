@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import scrum.client.common.WeekdaySelector;
 import scrum.server.ScrumConfig;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.User;
@@ -69,6 +70,10 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public WeekdaySelector getFreeDaysAsWeekdaySelector() {
+		return new WeekdaySelector(getFreeDays());
+	}
 
 	public String getUsersRolesAsString(User user, String prefix, String suffix) {
 		StringBuilder sb = new StringBuilder();
