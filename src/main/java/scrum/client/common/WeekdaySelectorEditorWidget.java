@@ -14,7 +14,7 @@ public class WeekdaySelectorEditorWidget extends AMultiSelectionViewEditWidget<I
 
 	@Override
 	protected void onViewerUpdate() {
-		setViewerItems(model.getValue().getWeekdaysShort(), ", ");
+		setViewerItems(model.getValue().getWeekdaysLong(), ", ");
 	}
 
 	@Override

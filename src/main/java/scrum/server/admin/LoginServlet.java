@@ -344,7 +344,9 @@ public class LoginServlet extends AHttpServlet {
 		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
 		html.startHTMLstandard();
 
-		html.startHEAD("Kunagi Login", "EN");
+		String title = "Kunagi Login";
+		if (applicationInfo.isDevelopmentStage()) title += " [" + applicationInfo.getBuild() + "]";
+		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();
 		html.LINKcss("scrum.ScrumGwtApplication/screen.css");

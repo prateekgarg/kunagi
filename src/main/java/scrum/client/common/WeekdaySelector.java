@@ -113,6 +113,18 @@ public class WeekdaySelector {
 		return ret;
 	}
 
+	public List<String> getWeekdaysLong() {
+		List<String> ret = new ArrayList<String>(7);
+		if (mon) ret.add("Monday");
+		if (tue) ret.add("Tuesday");
+		if (wed) ret.add("Wednesday");
+		if (thu) ret.add("Thursday");
+		if (fri) ret.add("Friday");
+		if (sat) ret.add("Saturday");
+		if (sun) ret.add("Sunday");
+		return ret;
+	}
+
 	public List<Integer> getWeekdaysIndexes() {
 		List<Integer> ret = new ArrayList<Integer>(7);
 		if (mon) ret.add(IDX_MON);
@@ -184,5 +196,9 @@ public class WeekdaySelector {
 	@Override
 	public String toString() {
 		return Str.concat(getWeekdaysShort(), ", ");
+	}
+
+	public boolean isSelectedAll() {
+		return sun && mon && tue && wed && thu && fri && sat;
 	}
 }

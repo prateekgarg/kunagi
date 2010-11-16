@@ -611,6 +611,8 @@ public class Project extends GProject implements ForumSupport {
 
 			@Override
 			public void setValue(WeekdaySelector value) {
+				if (value != null && value.isSelectedAll())
+					throw new RuntimeException("At least one work day required.");
 				setFreeDays(value == null ? 0 : value.createBitmask());
 			}
 
