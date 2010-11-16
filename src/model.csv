@@ -350,6 +350,7 @@
 "112fb498-722e-46be-bf6e-c9f46aa641c0","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","TextProperty","homepageUrl"
 "be18f42b-1ad6-4e8a-849d-f7abb59c2a5b","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","TextProperty","supportEmail"
 "4fb6bdfa-1daf-451b-b50a-e1874c764204","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","TextProperty","issueReplyTemplate"
+"d111e40d-4c56-4932-93b1-43f4da3edc89","84cfdd0d-3949-4730-a7f6-a7ebdd3e8c0c","IntegerProperty","freeDays"
 "a9cd6400-f5fa-45c3-813d-52998ed7aa72","c829a32f-5300-49a9-983a-75bc0e214ae4","Event","ProjectDataReceived"
 "8606e237-4fa7-41d1-83d5-a70ecc54357f","c829a32f-5300-49a9-983a-75bc0e214ae4","Entity","Quality"
 "65df8af2-b7c4-4c07-98ee-431126da744c","8606e237-4fa7-41d1-83d5-a70ecc54357f","ReferenceProperty","project"

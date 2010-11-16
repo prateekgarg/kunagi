@@ -221,6 +221,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 								+ "The following variables can be used: "
 								+ "${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
+			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");

@@ -40,7 +40,7 @@ public class ReleaseWidget extends AScrumWidget {
 
 				@Override
 				protected void onViewerUpdate() {
-					setViewerItems(release.getSprints());
+					setViewerItemsAsHtml(release.getSprints());
 				}
 
 				@Override

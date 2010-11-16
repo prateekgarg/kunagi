@@ -6,6 +6,7 @@ import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.admin.ProjectBlock;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.WeekdaySelectorEditorWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -24,6 +25,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		tbPro.addFieldRow("Name", project.getLabelModel());
 		tbPro.addFieldRow("Vision", new RichtextEditorWidget(project.getVisionModel()));
 		ProjectBlock.addRolesFieldRows(project, tbPro);
+		tbPro.addFieldRow("Free days", new WeekdaySelectorEditorWidget(project.getFreeDaysWeekdaySelectorModel()));
 		page.addSection(tbPro.createTable());
 
 		page.addHeader("Product Descriptions");

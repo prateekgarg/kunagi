@@ -74,6 +74,7 @@ public abstract class GProject
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
+        properties.put("freeDays", this.freeDays);
     }
 
     public int compareTo(Project other) {
@@ -1864,6 +1865,36 @@ public abstract class GProject
         setLastOpenedDateAndTime((ilarkesto.base.time.DateAndTime)value);
     }
 
+    // -----------------------------------------------------------
+    // - freeDays
+    // -----------------------------------------------------------
+
+    private int freeDays;
+
+    public final int getFreeDays() {
+        return freeDays;
+    }
+
+    public final void setFreeDays(int freeDays) {
+        freeDays = prepareFreeDays(freeDays);
+        if (isFreeDays(freeDays)) return;
+        this.freeDays = freeDays;
+        updateLastModified();
+        fireModified("freeDays="+freeDays);
+    }
+
+    protected int prepareFreeDays(int freeDays) {
+        return freeDays;
+    }
+
+    public final boolean isFreeDays(int freeDays) {
+        return this.freeDays == freeDays;
+    }
+
+    protected final void updateFreeDays(Object value) {
+        setFreeDays((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1907,6 +1938,7 @@ public abstract class GProject
             if (property.equals("supportEmail")) updateSupportEmail(value);
             if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
+            if (property.equals("freeDays")) updateFreeDays(value);
         }
     }
 
