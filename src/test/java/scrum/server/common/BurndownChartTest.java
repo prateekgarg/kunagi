@@ -4,16 +4,17 @@ import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
 import ilarkesto.io.IO;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.DefaultXYDataset;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
+import scrum.client.common.WeekdaySelector;
 import scrum.server.sprint.SprintDaySnapshot;
 
 public class BurndownChartTest {
@@ -23,42 +24,43 @@ public class BurndownChartTest {
 		Sys.setHeadless(true);
 	}
 
-	// @Test
-	public void sprintBurndown() {
+	@Test
+	public void sprintBurndown() throws IOException {
+		// WeekdaySelector freeDays = new WeekdaySelector(65);
+		WeekdaySelector freeDays = new WeekdaySelector(1);
+
 		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
 		shots.add(shot(new Date(2008, 7, 1), 0, 0));
 		shots.add(shot(new Date(2008, 7, 2), 0, 0));
 		shots.add(shot(new Date(2008, 7, 3), 0, 0));
 		shots.add(shot(new Date(2008, 7, 4), 5, 45));
-		shots.add(shot(new Date(2008, 7, 5), 10, 40));
-		shots.add(shot(new Date(2008, 7, 6), 15, 35));
-		shots.add(shot(new Date(2008, 7, 7), 18, 40));
-		shots.add(shot(new Date(2008, 7, 8), 25, 33));
-		shots.add(shot(new Date(2008, 7, 9), 28, 30));
+		shots.add(shot(new Date(2008, 7, 5), 10, 35));
+		shots.add(shot(new Date(2008, 7, 6), 0, 35));
+		shots.add(shot(new Date(2008, 7, 7), 18, 25));
+		shots.add(shot(new Date(2008, 7, 8), 10, 15));
+		shots.add(shot(new Date(2008, 7, 9), 2, 15));
 
-		DefaultXYDataset data = BurndownChart.createSprintBurndownChartDataset(shots, new Date(2008, 7, 1), new Date(
-				2008, 7, 31));
-		double tick = 1.0;
-		double max = BurndownChart.getMaximum(data);
+		// shots.add(shot(new Date(2008, 7, 1), 0, 0));
+		// shots.add(shot(new Date(2008, 7, 2), 0, 5));
+		// shots.add(shot(new Date(2008, 7, 3), 1, 4));
+		// shots.add(shot(new Date(2008, 7, 4), 1, 5));
+		// shots.add(shot(new Date(2008, 7, 5), 2, 3));
+		// shots.add(shot(new Date(2008, 7, 6), 1, 2));
+		// shots.add(shot(new Date(2008, 7, 7), 2, 0));
+		// shots.add(shot(new Date(2008, 7, 8), 0, 0));
 
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
-		}
-		JFreeChart chart = BurndownChart.createSprintBurndownChart(data, "Date", "Work", new Date(2008, 7, 1),
-			new Date(2008, 7, 31), 1, 3, max * 1.1, tick);
+		// shots.add(shot(new Date(2008, 7, 1), 0, 5));
+		// shots.add(shot(new Date(2008, 7, 2), 2, 3));
+
+		Date sprintBeginDate = shots.get(0).getDate();
+		Date sprintEndDate = shots.get(shots.size() - 1).getDate().addDays(23);
 
 		File file = new File("test-output/sprintBurndownChart.png");
 		IO.createDirectory(file.getParentFile());
-		try {
-			ChartUtilities.saveChartAsPNG(file, chart, 500, 500);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+		BurndownChart.writeSprintBurndownChart(out, shots, sprintBeginDate, sprintEndDate, freeDays, 1000, 500);
+		out.close();
 	}
 
 	private static SprintDaySnapshot shot(Date d, int b, int r) {

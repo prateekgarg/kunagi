@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.project.ProjectOverviewWidget;
-import scrum.server.ScrumWebApplication;
 
 public class ProjectBurndownChartServlet extends HttpServlet {
 
@@ -28,8 +27,9 @@ public class ProjectBurndownChartServlet extends HttpServlet {
 		LOG.debug("Generating project burndown chart:", width + "x" + height, projectId);
 
 		resp.setContentType("image/png");
-		ScrumWebApplication.get().getBurndownChart().writeProjectBurndownChart(resp.getOutputStream(), projectId,
-			Integer.parseInt(width), Integer.parseInt(height));
+		// ScrumWebApplication.get().getBurndownChart().writeProjectBurndownChart(resp.getOutputStream(),
+		// projectId,
+		// Integer.parseInt(width), Integer.parseInt(height));
 	}
 
 }

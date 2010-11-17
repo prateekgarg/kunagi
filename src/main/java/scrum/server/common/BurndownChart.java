@@ -1,5 +1,6 @@
 package scrum.server.common;
 
+import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
@@ -29,10 +30,9 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
+import scrum.client.common.WeekdaySelector;
 import scrum.server.css.ScreenCssBuilder;
-import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
-import scrum.server.project.ProjectSprintSnapshot;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshot;
@@ -66,13 +66,14 @@ public class BurndownChart {
 		return out.toByteArray();
 	}
 
-	public void writeProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
-		Project project = projectDao.getById(projectId);
-		List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
-		project.getCurrentSprintSnapshot().update();
-
-		writeProjectBurndownChart(out, snapshots, project.getBegin(), project.getEnd().addDays(1), width, height);
-	}
+	// public void writeProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
+	// Project project = projectDao.getById(projectId);
+	// List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
+	// project.getCurrentSprintSnapshot().update();
+	//
+	// writeProjectBurndownChart(out, snapshots, project.getBegin(), project.getEnd().addDays(1),
+	// project.getFreeDaysAsWeekdaySelector(), width, height);
+	// }
 
 	public void writeSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
@@ -90,51 +91,53 @@ public class BurndownChart {
 			snapshots = sprint.getDaySnapshots();
 		}
 
-		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd().addDays(1), width, height);
+		WeekdaySelector freeDays = sprint.getProject().getFreeDaysAsWeekdaySelector();
+
+		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), freeDays, width, height);
 	}
 
-	private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date firstDay,
-			Date lastDay, int width, int height) {
-		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
-		double tick = 1.0;
-		double max = getMaximum(data);
+	// private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date
+	// firstDay,
+	// Date lastDay, WeekdaySelector freeDays, int width, int height) {
+	// List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
+	// DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
+	// double tick = 1.0;
+	// double max = getMaximum(data);
+	//
+	// while (max / tick > 25) {
+	// tick *= 2;
+	// if (max / tick <= 25) break;
+	// tick *= 2.5;
+	// if (max / tick <= 25) break;
+	// tick *= 2;
+	// }
+	//
+	// JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 10, 30, max *
+	// 1.1, tick,
+	// freeDays);
+	// try {
+	// ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
+	// } catch (IOException e) {
+	// throw new RuntimeException(e);
+	// }
+	// }
 
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
-		}
-
-		JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 10, 30, max * 1.1, tick);
-		try {
-			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void writeSprintBurndownChart(OutputStream out, List<SprintDaySnapshot> snapshots, Date firstDay,
-			Date lastDay, int width, int height) {
+	static void writeSprintBurndownChart(OutputStream out, List<? extends BurndownSnapshot> snapshots, Date firstDay,
+			Date lastDay, WeekdaySelector freeDays, int width, int height) {
 		LOG.debug("Creating burndown chart:", snapshots.size(), "snapshots from", firstDay, "to", lastDay, "(" + width
 				+ "x" + height + " px)");
 
-		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
-		double tick = 1.0;
-		double max = getMaximum(data);
-
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
+		int dayCount = firstDay.getPeriodTo(lastDay).toDays();
+		int dateMarkTickUnit = 1;
+		float widthPerDay = (float) width / (float) dayCount * dateMarkTickUnit;
+		while (widthPerDay < 20) {
+			dateMarkTickUnit++;
+			widthPerDay = (float) width / (float) dayCount * dateMarkTickUnit;
 		}
 
-		JFreeChart chart = createSprintBurndownChart(data, null, null, firstDay, lastDay, 1, 3, max * 1.1, tick);
+		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
+		JFreeChart chart = createSprintBurndownChart(burndownSnapshots, firstDay, lastDay, freeDays, dateMarkTickUnit,
+			widthPerDay);
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 			out.flush();
@@ -143,9 +146,23 @@ public class BurndownChart {
 		}
 	}
 
-	static JFreeChart createSprintBurndownChart(DefaultXYDataset data, String dateAxisLabel, String valueAxisLabel,
-			Date firstDay, Date lastDay, int dateMarkTickUnit, int dateLabelTickUnit, double upperBoundary,
-			double valueLabelTickUnit) {
+	private static JFreeChart createSprintBurndownChart(List<BurndownSnapshot> snapshots, Date firstDay, Date lastDay,
+			WeekdaySelector freeDays, int dateMarkTickUnit, float widthPerDay) {
+		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, freeDays);
+
+		double tick = 1.0;
+		double max = BurndownChart.getMaximum(data);
+
+		while (max / tick > 25) {
+			tick *= 2;
+			if (max / tick <= 25) break;
+			tick *= 2.5;
+			if (max / tick <= 25) break;
+			tick *= 2;
+		}
+		double valueLabelTickUnit = tick;
+		double upperBoundary = Math.min(max * 1.1f, max + 3);
+
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
 			false);
 
@@ -155,20 +172,30 @@ public class BurndownChart {
 		renderer.setSeriesStroke(0, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 		renderer.setSeriesPaint(1, COLOR_PROJECTION_LINE);
 		renderer.setSeriesStroke(1, new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 1.0f,
-				new float[] { 4, 8 }, 4));
+				new float[] { 3f }, 0));
 		renderer.setSeriesPaint(2, COLOR_OPTIMUM_LINE);
-		renderer.setSeriesStroke(2, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+		renderer.setSeriesStroke(2, new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
-		DateAxis domainAxis1 = new DateAxis(dateAxisLabel);
+		DateAxis domainAxis1 = new DateAxis();
 		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
-		domainAxis1.setDateFormatOverride(new SimpleDateFormat("d.", Locale.US));
-		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateLabelTickUnit));
+		// String dateFormat = "        EE d.";
+		String dateFormat = "d.";
+		widthPerDay -= 5;
+		if (widthPerDay > 40) {
+			dateFormat = "EE " + dateFormat;
+		}
+		if (widthPerDay > 10) {
+			float spaces = widthPerDay / 2.7f;
+			dateFormat = Str.multiply(" ", (int) spaces) + dateFormat;
+		}
+		domainAxis1.setDateFormatOverride(new SimpleDateFormat(dateFormat, Locale.US));
+		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
 		domainAxis1.setAxisLineVisible(false);
-		Range range = new Range(firstDay.toMillis(), lastDay.toMillis());
+		Range range = new Range(firstDay.toMillis(), lastDay.nextDay().toMillis());
 		domainAxis1.setRange(range);
 
 		DateAxis domainAxis2 = new DateAxis();
-		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
+		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1));
 		domainAxis2.setTickMarksVisible(false);
 		domainAxis2.setTickLabelsVisible(false);
 		domainAxis2.setRange(range);
@@ -177,7 +204,7 @@ public class BurndownChart {
 		chart.getXYPlot().setDomainAxis(1, domainAxis1);
 		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
 
-		NumberAxis rangeAxis = new NumberAxis(valueAxisLabel);
+		NumberAxis rangeAxis = new NumberAxis();
 		rangeAxis.setLabelFont(new Font(rangeAxis.getLabelFont().getName(), Font.PLAIN, 6));
 		rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 		rangeAxis.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
@@ -207,106 +234,12 @@ public class BurndownChart {
 		return max;
 	}
 
-	static DefaultXYDataset createSprintBurndownChartDataset(List<BurndownSnapshot> snapshots, Date firstDay,
-			Date lastDay) {
-		List<Double> mainDates = new ArrayList<Double>();
-		List<Double> mainValues = new ArrayList<Double>();
+	static DefaultXYDataset createSprintBurndownChartDataset(final List<BurndownSnapshot> snapshots,
+			final Date firstDay, final Date lastDay, final WeekdaySelector freeDays) {
 
-		List<Double> extrapolationDates = new ArrayList<Double>();
-		List<Double> extrapolationValues = new ArrayList<Double>();
-
-		List<Double> idealDates = new ArrayList<Double>();
-		List<Double> idealValues = new ArrayList<Double>();
-
-		double burnedWork = 0;
-		double remainingWork = 0;
-		double work = 0;
-
-		double jump = 0;
-
-		double newBurnedWork;
-		double newRemainingWork;
-		double newWork;
-
-		double idealWork = 0;
-		double idealPerDayBurndown = idealWork / (firstDay.getPeriodTo(lastDay).toDays());
-		Date lastIdealDate;
-
-		burnedWork = 0;
-		remainingWork = 0;
-		work = 0;
-
-		mainDates.add((double) firstDay.toMillis());
-		mainValues.add(0d);
-
-		idealDates.add((double) firstDay.toMillis());
-		idealValues.add(0d);
-
-		lastIdealDate = firstDay;
-
-		for (int i = 0; i < snapshots.size(); i++) {
-
-			BurndownSnapshot snapshot = snapshots.get(i);
-			Date snapshotDate = snapshot.getDate();
-			double snapshotDateMillis = snapshotDate.toMillis();
-			double snapshotDateNextMillis = snapshotDate.addDays(1).toMillis();
-			newBurnedWork = snapshot.getBurnedWork();
-			newRemainingWork = snapshot.getRemainingWork();
-			newWork = newBurnedWork + newRemainingWork;
-			jump = newWork - work;
-
-			if (jump != 0) {
-				mainDates.add(snapshotDateMillis);
-				mainValues.add(remainingWork + jump);
-
-				idealWork -= (lastIdealDate.getPeriodTo(snapshotDate).toDays() * idealPerDayBurndown);
-
-				idealDates.add(snapshotDateMillis);
-				idealValues.add(idealWork);
-
-				if (idealWork == 0) idealWork += (jump);
-
-				idealDates.add(snapshotDateMillis);
-				idealValues.add(idealWork);
-
-				idealPerDayBurndown = idealWork / (snapshotDate.getPeriodTo(lastDay).toDays());
-
-				lastIdealDate = snapshotDate;
-
-				work = newWork;
-			}
-
-			mainDates.add(snapshotDateNextMillis);
-			mainValues.add(newRemainingWork);
-
-			remainingWork = newRemainingWork;
-			burnedWork = newBurnedWork;
-		}
-
-		idealWork -= (lastIdealDate.getPeriodTo(lastDay).toDays() * idealPerDayBurndown);
-
-		idealDates.add((double) lastDay.toMillis());
-		idealValues.add(idealWork);
-
-		DefaultXYDataset dataset = new DefaultXYDataset();
-
-		dataset.addSeries("Main", toArray(mainDates, mainValues));
-
-		Date d = snapshots.isEmpty() ? Date.tomorrow() : snapshots.get(snapshots.size() - 1).getDate().addDays(1);
-		double extrapolationPerDayBurndown = burnedWork / (firstDay.getPeriodTo(d).toDays());
-		double remaining = remainingWork;
-
-		extrapolationDates.add((double) d.toMillis());
-		extrapolationValues.add(remaining);
-
-		extrapolationDates.add((double) lastDay.toMillis());
-		extrapolationValues.add(remaining - d.getPeriodTo(lastDay).toDays() * extrapolationPerDayBurndown);
-
-		dataset.addSeries("Extrapolation", toArray(extrapolationDates, extrapolationValues));
-		dataset.addSeries("Ideal", toArray(idealDates, idealValues));
-
-		return dataset;
-
+		ChartDataFactory factory = new ChartDataFactory();
+		factory.createDataset(snapshots, firstDay, lastDay, freeDays);
+		return factory.getDataset();
 	}
 
 	private static double[][] toArray(List<Double> a, List<Double> b) {
@@ -317,6 +250,166 @@ public class BurndownChart {
 			array[1][i] = b.get(i);
 		}
 		return array;
+	}
+
+	static class ChartDataFactory {
+
+		List<Double> mainDates = new ArrayList<Double>();
+		List<Double> mainValues = new ArrayList<Double>();
+
+		List<Double> extrapolationDates = new ArrayList<Double>();
+		List<Double> extrapolationValues = new ArrayList<Double>();
+
+		List<Double> idealDates = new ArrayList<Double>();
+		List<Double> idealValues = new ArrayList<Double>();
+
+		List<BurndownSnapshot> snapshots;
+		WeekdaySelector freeDays;
+
+		Date date;
+		long millisBegin;
+		long millisEnd;
+		boolean freeDay;
+		BurndownSnapshot snapshot;
+		boolean workStarted;
+		boolean workFinished;
+
+		int totalBurned;
+		int totalBefore;
+		int totalAfter;
+		int burned;
+		int jump;
+		double totalRemaining;
+		int workDays;
+		double burnPerDay;
+		double idealRemaining;
+		double idealBurnPerDay;
+		int totalWorkDays = 0;
+		boolean extrapolationFinished;
+
+		DefaultXYDataset dataset;
+
+		public void createDataset(final List<BurndownSnapshot> snapshots, final Date firstDay, final Date lastDay,
+				final WeekdaySelector freeDays) {
+			this.snapshots = snapshots;
+			this.freeDays = freeDays;
+
+			date = firstDay;
+			while (date.isBeforeOrSame(lastDay)) {
+				if (!freeDays.isFree(date.getWeekday().getDayOfWeek())) totalWorkDays++;
+				date = date.nextDay();
+			}
+
+			setDate(firstDay);
+			while (true) {
+				if (!workFinished) {
+					burned = snapshot.getBurnedWork();
+					totalBurned += burned;
+					totalAfter = snapshot.getRemainingWork();
+					jump = totalAfter - totalBefore + burned;
+				}
+
+				// System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter +
+				// " jump=" + jump
+				// + " burned=" + burned);
+				if (workFinished) {
+					processSuffix();
+				} else if (workStarted) {
+					processCenter();
+				} else {
+					processPrefix();
+				}
+				if (date.equals(lastDay)) break;
+				setDate(date.nextDay());
+				totalBefore = totalAfter;
+			}
+
+			dataset = new DefaultXYDataset();
+			dataset.addSeries("Main", toArray(mainDates, mainValues));
+			dataset.addSeries("Extrapolation", toArray(extrapolationDates, extrapolationValues));
+			dataset.addSeries("Ideal", toArray(idealDates, idealValues));
+		}
+
+		private void setDate(Date newDate) {
+			date = newDate;
+			millisBegin = date.toMillis();
+			millisEnd = date.nextDay().toMillis();
+			freeDay = freeDays.isFree(date.getWeekday().getDayOfWeek());
+			if (!workFinished) snapshot = getSnapshot();
+		}
+
+		private void processPrefix() {
+			if (totalAfter > 0 || totalBurned > 0) {
+				workStarted = true;
+				idealRemaining = totalAfter + burned;
+				idealDates.add((double) millisBegin);
+				idealValues.add(idealRemaining);
+
+				if (totalWorkDays > 0) {
+					idealBurnPerDay = (double) jump / (double) totalWorkDays;
+					// System.out.println("*** jump:" + jump + " totalWorkDays:" + totalWorkDays +
+					// " idealBurnPerDay:"
+					// + idealBurnPerDay);
+				}
+
+				processCenter();
+				return;
+			}
+			totalWorkDays--;
+		}
+
+		private void processCenter() {
+			mainDates.add((double) millisBegin);
+			mainValues.add((double) totalBefore);
+			if (jump != 0) {
+				mainDates.add((double) millisBegin);
+				mainValues.add((double) totalBefore + jump);
+			}
+			mainDates.add((double) millisEnd);
+			mainValues.add((double) totalAfter);
+
+			if (!freeDay) {
+				workDays++;
+				idealRemaining -= idealBurnPerDay;
+			}
+
+			idealDates.add((double) millisEnd);
+			idealValues.add(idealRemaining);
+		}
+
+		private void processSuffix() {
+			if (!freeDay) {
+				totalRemaining -= burnPerDay;
+				idealRemaining -= idealBurnPerDay;
+			}
+			if (!extrapolationFinished) {
+				extrapolationDates.add((double) millisEnd);
+				extrapolationValues.add(totalRemaining);
+			}
+			idealDates.add((double) millisEnd);
+			idealValues.add(idealRemaining);
+			if (totalRemaining <= 0) extrapolationFinished = true;
+		}
+
+		private BurndownSnapshot getSnapshot() {
+			for (BurndownSnapshot snapshot : snapshots) {
+				if (snapshot.getDate().equals(date)) return snapshot;
+			}
+			workFinished = true;
+			totalRemaining = totalAfter;
+			burnPerDay = (double) totalBurned / (double) workDays;
+			// System.out.println("***** totalBurned:" + totalBurned + " workDays:" + workDays +
+			// " burnPerDay:"
+			// + burnPerDay);
+			extrapolationDates.add((double) millisBegin);
+			extrapolationValues.add(totalRemaining);
+			return null;
+		}
+
+		public DefaultXYDataset getDataset() {
+			return dataset;
+		}
+
 	}
 
 }

@@ -201,4 +201,12 @@ public class WeekdaySelector {
 	public boolean isSelectedAll() {
 		return sun && mon && tue && wed && thu && fri && sat;
 	}
+
+	public boolean isSelectedSome() {
+		return sun || mon || tue || wed || thu || fri || sat;
+	}
+
+	public boolean isSelectedNone() {
+		return !isSelectedSome();
+	}
 }
