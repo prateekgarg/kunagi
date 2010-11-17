@@ -303,15 +303,14 @@ public class BurndownChart {
 			setDate(firstDay);
 			while (true) {
 				if (!workFinished) {
-					burned = snapshot.getBurnedWork();
-					totalBurned += burned;
+					burned = snapshot.getBurnedWork() - totalBurned;
+					totalBurned = snapshot.getBurnedWork();
 					totalAfter = snapshot.getRemainingWork();
 					jump = totalAfter - totalBefore + burned;
 				}
 
-				// System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter +
-				// " jump=" + jump
-				// + " burned=" + burned);
+				System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter + " jump=" + jump
+						+ " burned=" + burned + " -> " + snapshot);
 				if (workFinished) {
 					processSuffix();
 				} else if (workStarted) {

@@ -31,15 +31,15 @@ public class BurndownChartTest {
 
 		List<BurndownSnapshot> shots = new ArrayList<BurndownSnapshot>();
 
-		shots.add(shot(new Date(2008, 7, 1), 0, 0));
-		shots.add(shot(new Date(2008, 7, 2), 0, 0));
-		shots.add(shot(new Date(2008, 7, 3), 0, 0));
-		shots.add(shot(new Date(2008, 7, 4), 5, 45));
-		shots.add(shot(new Date(2008, 7, 5), 10, 35));
-		shots.add(shot(new Date(2008, 7, 6), 0, 35));
-		shots.add(shot(new Date(2008, 7, 7), 18, 25));
-		shots.add(shot(new Date(2008, 7, 8), 10, 15));
-		shots.add(shot(new Date(2008, 7, 9), 2, 15));
+		// shots.add(shot(new Date(2008, 7, 1), 0, 0));
+		// shots.add(shot(new Date(2008, 7, 2), 0, 0));
+		// shots.add(shot(new Date(2008, 7, 3), 0, 0));
+		// shots.add(shot(new Date(2008, 7, 4), 5, 45));
+		// shots.add(shot(new Date(2008, 7, 5), 10, 35));
+		// shots.add(shot(new Date(2008, 7, 6), 0, 35));
+		// shots.add(shot(new Date(2008, 7, 7), 18, 25));
+		// shots.add(shot(new Date(2008, 7, 8), 10, 15));
+		// shots.add(shot(new Date(2008, 7, 9), 2, 15));
 
 		// shots.add(shot(new Date(2008, 7, 1), 0, 0));
 		// shots.add(shot(new Date(2008, 7, 2), 0, 5));
@@ -52,6 +52,11 @@ public class BurndownChartTest {
 
 		// shots.add(shot(new Date(2008, 7, 1), 0, 5));
 		// shots.add(shot(new Date(2008, 7, 2), 2, 3));
+
+		shots.add(shot(new Date(2008, 7, 1), 0, 5));
+		shots.add(shot(new Date(2008, 7, 2), 2, 4));
+		shots.add(shot(new Date(2008, 7, 3), 2, 4));
+		shots.add(shot(new Date(2008, 7, 4), 2, 4));
 
 		Date sprintBeginDate = shots.get(0).getDate();
 		Date sprintEndDate = shots.get(shots.size() - 1).getDate().addDays(23);
