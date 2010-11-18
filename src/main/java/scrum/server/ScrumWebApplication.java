@@ -30,6 +30,7 @@ import ilarkesto.email.Eml;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.testng.ATest;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
@@ -220,7 +221,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	protected String getDevelopmentModeApplicationDataDir() {
-		if (testMode) return new File("build/tests/runtimedata").getAbsolutePath();
+		if (testMode) return new File(ATest.OUTPUT_DIR + "/runtimedata").getAbsolutePath();
 		return super.getDevelopmentModeApplicationDataDir();
 	}
 
