@@ -3,6 +3,11 @@
 <project name="kunagi" default="package" basedir=".">
 
 	<property name="build.dir" value="build" />
+	<property name="homepage.output.dir" value="/var/www/kunagi.org" />
+	
+	<property name="test.output.dir" value="test-output" />
+	<property name="ilarkesto.dir" value="../ilarkesto" />
+	<property name="classes.output.dir" value="${build.dir}/webapp/WEB-INF/classes" />
 	
     <target name="init">
         <tstamp>
@@ -12,29 +17,30 @@
 
     <target name="clean">
         <delete dir="${build.dir}" />
+        <delete dir="${test.output.dir}" />
     </target>
 
     <target name="compile-java" depends="init">
 
-        <mkdir dir="${build.dir}/webapp/WEB-INF/classes" />
-        <copy todir="${build.dir}/webapp/WEB-INF/classes" overwrite="true" preservelastmodified="true">
+        <mkdir dir="${classes.output.dir}" />
+        <copy todir="${classes.output.dir}" overwrite="true" preservelastmodified="true">
             <fileset dir="src/main/java" />
             <fileset dir="src/generated/java" />
-            <fileset dir="../ilarkesto/src/main/java" />
+            <fileset dir="${ilarkesto.dir}/src/main/java" />
         </copy>
-        <javac srcdir="${build.dir}/webapp/WEB-INF/classes" destdir="${build.dir}/webapp/WEB-INF/classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
-            <classpath> <fileset dir="../ilarkesto/lib" /> </classpath>
+        <javac srcdir="${classes.output.dir}" destdir="${classes.output.dir}" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
+            <classpath> <fileset dir="${ilarkesto.dir}/lib" /> </classpath>
         </javac>
 
         <mkdir dir="${build.dir}/test-classes" />
         <javac srcdir="src/test/java" destdir="${build.dir}/test-classes" encoding="UTF-8" nowarn="true" debug="true" debuglevel="lines,vars,source">
             <classpath>
-                <path location="${build.dir}/webapp/WEB-INF/classes" />
-                <fileset dir="../ilarkesto/lib" />
+                <path location="${classes.output.dir}" />
+                <fileset dir="${ilarkesto.dir}/lib" />
             </classpath>
         </javac>
 
-        <replace file="${build.dir}/webapp/WEB-INF/classes/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
+        <replace file="${classes.output.dir}/scrum/server/build.properties" token="@build-date@" value="${build.tstamp}" />
 
     </target>
 
@@ -46,24 +52,24 @@
             <arg value="scrum.ScrumGwtApplication" />
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
-            <classpath location="../ilarkesto/src/main/java" />
-            <classpath location="../ilarkesto/lib/gwtupload-0.6.1.jar" />
-            <classpath location="../ilarkesto/lib/gwt-dnd.jar" />
-            <classpath location="../ilarkesto/lib/gwt-user.jar" />
-            <classpath location="../ilarkesto/lib/gwt-dev.jar" />
+            <classpath location="${ilarkesto.dir}/src/main/java" />
+            <classpath location="${ilarkesto.dir}/lib/gwtupload-0.6.1.jar" />
+            <classpath location="${ilarkesto.dir}/lib/gwt-dnd.jar" />
+            <classpath location="${ilarkesto.dir}/lib/gwt-user.jar" />
+            <classpath location="${ilarkesto.dir}/lib/gwt-dev.jar" />
         </java>
 
     </target>
 
     <target name="test" depends="compile-java">
-        <delete dir="test-output" />
-        <taskdef name="testng" classpath="../ilarkesto/lib/testng-5.8.jar" classname="org.testng.TestNGAntTask" />
-        <testng outputDir="test-output" haltonfailure="true">
+        <delete dir="${test.output.dir}" />
+        <taskdef name="testng" classpath="${ilarkesto.dir}/lib/testng-5.8.jar" classname="org.testng.TestNGAntTask" />
+        <testng outputDir="${test.output.dir}" haltonfailure="true">
             <classfileset dir="${build.dir}/test-classes" includes="**/*.class" />
             <classpath>
-                <path location="${build.dir}/webapp/WEB-INF/classes" />
+                <path location="${classes.output.dir}" />
                 <path location="${build.dir}/test-classes" />
-                <fileset dir="../ilarkesto/lib" />
+                <fileset dir="${ilarkesto.dir}/lib" />
             </classpath>
         </testng>
     </target>
@@ -75,7 +81,7 @@
             <fileset dir="." includes="license.*" />
         </copy>
         <copy todir="${build.dir}/webapp/WEB-INF/lib" overwrite="true" preservelastmodified="true">
-            <fileset dir="../ilarkesto/lib">
+            <fileset dir="${ilarkesto.dir}/lib">
                 <exclude name="**/src/" />
                 <exclude name="**/javadoc/" />
                 <exclude name="**/gwt-dev.jar" />
@@ -108,18 +114,22 @@
         </exec>
     </target>
 	
-    <target name="continousIntegrationBuild" depends="package">
-        <copy todir="/var/www/kunagi.org" overwrite="true" preservelastmodified="true">
+	<target name="releaseHomepage">
+        <copy todir="${homepage.output.dir}" overwrite="true" preservelastmodified="true">
             <fileset dir="src/projectHomepage/html" />
         </copy>
-        <mkdir dir="/var/www/kunagi.org/velocity" />
-        <copy todir="/var/www/kunagi.org/velocity" overwrite="true" preservelastmodified="true">
+        <mkdir dir="${homepage.output.dir}/velocity" />
+        <copy todir="${homepage.output.dir}/velocity" overwrite="true" preservelastmodified="true">
             <fileset dir="src/projectHomepage/velocity" />
         </copy>
-
+	</target>
+	
+	<target name="deployToLatest">
         <copy file="${build.dir}/kunagi.war" tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war"
         	overwrite="true" preservelastmodified="true" />
-    </target>
+	</target>
+	
+    <target name="continousIntegrationBuild" depends="package,releaseHomepage,deployToLatest" />
 
 </project>
 
