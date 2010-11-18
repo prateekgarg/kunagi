@@ -25,10 +25,6 @@ public class ScrumConfig {
 		p.set("url", url);
 	}
 
-	public String getGoogleAnalyticsId() {
-		return p.get("google.analytics.id");
-	}
-
 	public String getFileRepositoryPath() {
 		return p.get("fileRepository.path", applicationDataDir + "/files");
 	}

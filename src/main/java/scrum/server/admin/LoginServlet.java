@@ -21,7 +21,6 @@ import org.openid4java.consumer.VerificationResult;
 
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
-import scrum.server.ScrumConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
@@ -35,7 +34,6 @@ public class LoginServlet extends AHttpServlet {
 
 	private static ScrumWebApplication webApplication;
 	private ApplicationInfo applicationInfo;
-	private ScrumConfig config;
 	private UserDao userDao;
 	private SystemConfig systemConfig;
 
@@ -375,7 +373,7 @@ public class LoginServlet extends AHttpServlet {
 
 		html.SCRIPTjavascript(null, "document.getElementById('username').focus();");
 
-		String analyticsId = config.getGoogleAnalyticsId();
+		String analyticsId = systemConfig.getGoogleAnalyticsId();
 		if (analyticsId != null) html.googleAnalytics(analyticsId);
 		html.endBODY();
 		html.endHTML();
@@ -611,7 +609,6 @@ public class LoginServlet extends AHttpServlet {
 		webApplication = ScrumWebApplication.get();
 		userDao = webApplication.getUserDao();
 		applicationInfo = webApplication.getApplicationInfo();
-		config = webApplication.getConfig();
 		systemConfig = webApplication.getSystemConfig();
 	}
 

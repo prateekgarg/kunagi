@@ -51,7 +51,7 @@ public class StartServlet extends AHttpServlet {
 
 		html.startBODY();
 		html.comment(applicationInfo.toString());
-		String analyticsId = config.getGoogleAnalyticsId();
+		String analyticsId = webApplication.getSystemConfig().getGoogleAnalyticsId();
 		if (analyticsId != null) html.googleAnalytics(analyticsId);
 		html.endBODY();
 
