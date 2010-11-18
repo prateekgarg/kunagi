@@ -2,6 +2,7 @@ package scrum.server.common;
 
 import ilarkesto.base.time.Date;
 import ilarkesto.integration.itext.PdfBuilder;
+import ilarkesto.testng.ATest;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,7 +22,7 @@ import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
-public class PdfTest {
+public class PdfTest extends ATest {
 
 	@Test
 	public void calendar() {
@@ -126,7 +127,7 @@ public class PdfTest {
 	private void createPdf(APdfCreator creator) {
 		PdfBuilder pdf = new PdfBuilder();
 		creator.build(pdf);
-		pdf.write(new File("test-output/" + creator.getFilename() + ".pdf"));
+		pdf.write(new File(OUTPUT_DIR + "/" + creator.getFilename() + ".pdf"));
 	}
 
 }

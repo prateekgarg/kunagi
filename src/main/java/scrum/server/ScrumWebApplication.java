@@ -220,7 +220,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	protected String getDevelopmentModeApplicationDataDir() {
-		if (testMode) return new File("test-output/runtimedata").getAbsolutePath();
+		if (testMode) return new File("build/tests/runtimedata").getAbsolutePath();
 		return super.getDevelopmentModeApplicationDataDir();
 	}
 
@@ -292,12 +292,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (isDevelopmentMode()) return ApplicationInfo.DEPLOYMENT_STAGE_DEVELOPMENT;
 		if (getConfig().isStageIntegration()) return ApplicationInfo.DEPLOYMENT_STAGE_INTEGRATION;
 		return ApplicationInfo.DEPLOYMENT_STAGE_PRODUCTION;
-	}
-
-	@Override
-	public Properties getBuildProperties() {
-		if (buildProperties == null) buildProperties = IO.loadPropertiesFromClasspath("scrum/server/build.properties");
-		return buildProperties;
 	}
 
 	public void updateSystemMessage(SystemMessage systemMessage) {

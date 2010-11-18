@@ -4,6 +4,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.io.IO;
+import ilarkesto.testng.ATest;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +15,7 @@ import scrum.TestUtil;
 import scrum.server.issues.Issue;
 import scrum.server.sprint.Sprint;
 
-public class HomepageUpdaterTest {
+public class HomepageUpdaterTest extends ATest {
 
 	Project project;
 
@@ -71,8 +72,8 @@ public class HomepageUpdaterTest {
 
 		sprint.burndownTasksRandomly(sprint.getBegin(), Date.today().addDays(-1));
 
-		IO.copyFile("src/projectHomepage/html", "test-output/homepage");
-		new HomepageUpdater(project, "src/projectHomepage/velocity", "test-output/homepage").processAll();
+		IO.copyFile("src/projectHomepage/html", OUTPUT_DIR + "/homepage");
+		new HomepageUpdater(project, "src/projectHomepage/velocity", OUTPUT_DIR + "/homepage").processAll();
 	}
 
 	@AfterClass

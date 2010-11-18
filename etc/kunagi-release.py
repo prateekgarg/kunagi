@@ -48,7 +48,7 @@ print 'Releasing Kunagi ' + releaseLabel
 
 # cleanup previous release
 print '  Clean'
-#TODO
+shutil.rmtree(repositoryDir)
 
 # checkout
 print '  Clone git repository ' + remoteRepository + ' -> ' + repositoryDir
@@ -58,7 +58,10 @@ execute('git checkout ' + branchName, repositoryDir)
 
 # write build.properties file
 print '  Update build.properties'
-#TODO
+buildPropertiesFilePath = repositoryDir+'/src/main/java/scrum/server/build.properties'
+buildPropertiesFile = f = open(buildPropertiesFilePath, 'a')
+f.write('release.label='+releaseLabel+'\n')
+f.close()
 
 # build
 print '  Build'

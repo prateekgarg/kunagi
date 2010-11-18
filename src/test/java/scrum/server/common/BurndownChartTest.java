@@ -3,6 +3,7 @@ package scrum.server.common;
 import ilarkesto.base.Sys;
 import ilarkesto.base.time.Date;
 import ilarkesto.io.IO;
+import ilarkesto.testng.ATest;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,7 +18,7 @@ import org.testng.annotations.Test;
 import scrum.client.common.WeekdaySelector;
 import scrum.server.sprint.SprintDaySnapshot;
 
-public class BurndownChartTest {
+public class BurndownChartTest extends ATest {
 
 	@BeforeSuite
 	public void init() {
@@ -61,7 +62,7 @@ public class BurndownChartTest {
 		Date sprintBeginDate = shots.get(0).getDate();
 		Date sprintEndDate = shots.get(shots.size() - 1).getDate().addDays(23);
 
-		File file = new File("test-output/sprintBurndownChart.png");
+		File file = new File(OUTPUT_DIR + "/sprintBurndownChart.png");
 		IO.createDirectory(file.getParentFile());
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
 		BurndownChart.writeSprintBurndownChart(out, shots, sprintBeginDate, sprintEndDate, freeDays, 1000, 500);

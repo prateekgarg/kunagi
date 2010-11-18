@@ -3,6 +3,7 @@ package scrum.server.common;
 import ilarkesto.integration.itext.PdfBuilder;
 import ilarkesto.pdf.AImage;
 import ilarkesto.pdf.AParagraph;
+import ilarkesto.testng.ATest;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -15,7 +16,7 @@ import scrum.client.wiki.Image;
 import scrum.client.wiki.WikiModel;
 import scrum.client.wiki.WikiParser;
 
-public class WikiToPdfConverterTest {
+public class WikiToPdfConverterTest extends ATest {
 
 	@Test
 	public void test() throws IOException {
@@ -94,7 +95,7 @@ public class WikiToPdfConverterTest {
 		WikiParser parser = new WikiParser(sb.toString());
 		WikiModel model = parser.parse(false);
 
-		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream("test-output/wiki.pdf"));
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(OUTPUT_DIR + "/wiki.pdf"));
 		PdfBuilder pdfBuilder = new PdfBuilder();
 
 		WikiToPdfConverter converter = new WikiToPdfConverter(model, new TestPdfContext());
