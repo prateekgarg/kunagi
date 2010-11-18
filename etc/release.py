@@ -79,6 +79,15 @@ if not os.path.exists(packageTar):
 # copy artifacts
 print '  Copy artifacts to ' + artifactsDestinationDir
 os.mkdir(artifactsDestinationDir)
-shutil.copy(packageWar, artifactsDestinationDir)
-shutil.copy(packageZip, artifactsDestinationDir)
-shutil.copy(packageTar, artifactsDestinationDir)
+shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
+shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
+shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.bz2')
+
+# upload to sourceforge
+print '  Upload artifacts to SourceForge'
+sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/' + releaseLabel
+execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
+execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
+execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.bz2')
+
+print 'Kunagi ' + releaseLabel + ' released'
