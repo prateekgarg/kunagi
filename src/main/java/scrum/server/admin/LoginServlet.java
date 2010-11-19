@@ -355,7 +355,7 @@ public class LoginServlet extends AHttpServlet {
 		html.startDIV("panel");
 		String logoUrl = webApplication.getSystemConfig().getLoginPageLogoUrl();
 		if (Str.isBlank(logoUrl)) logoUrl = "kunagi.png";
-		html.IMG(logoUrl, "Kunagi", null, null, null);
+		html.IMG(logoUrl, "Kunagi", null, null, null, null);
 		html.DIV("separator", null);
 		if (message != null) renderMessage(html, message);
 		if (!createAccount && !passwordRequest) renderLogin(html, username, historyToken);
