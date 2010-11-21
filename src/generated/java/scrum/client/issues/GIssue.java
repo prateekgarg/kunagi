@@ -1055,6 +1055,26 @@ public abstract class GIssue
 
     }
 
+    // --- themes ---
+
+    private java.util.List<java.lang.String> themes = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getThemes() {
+        return new java.util.ArrayList<java.lang.String>(themes);
+    }
+
+    public final void setThemes(java.util.List<java.lang.String> themes) {
+        if (themes == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.themes.equals(themes)) return;
+        this.themes = new java.util.ArrayList<java.lang.String>(themes);
+        propertyChanged("themes", this.themes);
+    }
+
+    public final boolean containsTheme(java.lang.String theme) {
+        return themes.contains(theme);
+    }
+
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1084,6 +1104,7 @@ public abstract class GIssue
         affectedReleasesIds = (Set<String>) props.get("affectedReleasesIds");
         fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
         published  = (Boolean) props.get("published");
+        themes  = (java.util.List<java.lang.String>) props.get("themes");
         updateLocalModificationTime();
     }
 
@@ -1111,6 +1132,7 @@ public abstract class GIssue
         properties.put("affectedReleasesIds", this.affectedReleasesIds);
         properties.put("fixReleasesIds", this.fixReleasesIds);
         properties.put("published", this.published);
+        properties.put("themes", this.themes);
     }
 
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {

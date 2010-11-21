@@ -57,6 +57,7 @@ public abstract class GIssue
         properties.put("affectedReleasesIds", this.affectedReleasesIds);
         properties.put("fixReleasesIds", this.fixReleasesIds);
         properties.put("published", this.published);
+        properties.put("themes", this.themes);
     }
 
     public int compareTo(Issue other) {
@@ -988,6 +989,99 @@ public abstract class GIssue
         setPublished((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - themes
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> themes = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getThemes() {
+        return new java.util.ArrayList<java.lang.String>(themes);
+    }
+
+    public final void setThemes(Collection<java.lang.String> themes) {
+        themes = prepareThemes(themes);
+        if (themes == null) themes = Collections.emptyList();
+        if (this.themes.equals(themes)) return;
+        this.themes = new java.util.ArrayList<java.lang.String>(themes);
+        updateLastModified();
+        fireModified("themes="+Str.format(themes));
+    }
+
+    protected Collection<java.lang.String> prepareThemes(Collection<java.lang.String> themes) {
+        return themes;
+    }
+
+    public final boolean containsTheme(java.lang.String theme) {
+        if (theme == null) return false;
+        return this.themes.contains(theme);
+    }
+
+    public final int getThemesCount() {
+        return this.themes.size();
+    }
+
+    public final boolean isThemesEmpty() {
+        return this.themes.isEmpty();
+    }
+
+    public final boolean addTheme(java.lang.String theme) {
+        if (theme == null) throw new IllegalArgumentException("theme == null");
+        boolean added = this.themes.add(theme);
+        if (added) updateLastModified();
+        if (added) fireModified("themes+=" + theme);
+        return added;
+    }
+
+    public final boolean addThemes(Collection<java.lang.String> themes) {
+        if (themes == null) throw new IllegalArgumentException("themes == null");
+        boolean added = false;
+        for (java.lang.String theme : themes) {
+            added = added | this.themes.add(theme);
+        }
+        return added;
+    }
+
+    public final boolean removeTheme(java.lang.String theme) {
+        if (theme == null) throw new IllegalArgumentException("theme == null");
+        if (this.themes == null) return false;
+        boolean removed = this.themes.remove(theme);
+        if (removed) updateLastModified();
+        if (removed) fireModified("themes-=" + theme);
+        return removed;
+    }
+
+    public final boolean removeThemes(Collection<java.lang.String> themes) {
+        if (themes == null) return false;
+        if (themes.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: themes) {
+            removed = removed | removeTheme(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearThemes() {
+        if (this.themes.isEmpty()) return false;
+        this.themes.clear();
+        updateLastModified();
+        fireModified("themes cleared");
+        return true;
+    }
+
+    public final String getThemesAsCommaSeparatedString() {
+        if (this.themes.isEmpty()) return null;
+        return Str.concat(this.themes,", ");
+    }
+
+    public final void setThemesAsCommaSeparatedString(String themes) {
+        this.themes = new java.util.ArrayList(Str.parseCommaSeparatedString(themes));
+    }
+
+    protected final void updateThemes(Object value) {
+        setThemes((java.util.List<java.lang.String>) value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1014,6 +1108,7 @@ public abstract class GIssue
             if (property.equals("affectedReleasesIds")) updateAffectedReleases(value);
             if (property.equals("fixReleasesIds")) updateFixReleases(value);
             if (property.equals("published")) updatePublished(value);
+            if (property.equals("themes")) updateThemes(value);
         }
     }
 
@@ -1027,6 +1122,7 @@ public abstract class GIssue
         repairDeadAffectedReleaseReference(entityId);
         if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
         repairDeadFixReleaseReference(entityId);
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
     }
 
     // --- ensure integrity ---
@@ -1081,6 +1177,7 @@ public abstract class GIssue
                 repairDeadFixReleaseReference(entityId);
             }
         }
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
     }
 
 

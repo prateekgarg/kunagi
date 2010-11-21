@@ -28,6 +28,7 @@ public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 		Requirement requirement = getObject();
 		statusIcon = header.addIconWrapper();
 		header.addText(requirement.getLabelModel());
+		header.addText(requirement.getThemesAsStringModel(), true, false);
 		header.addText(requirement.getTaskStatusLabelModel(), true);
 		header.appendCell(new EmoticonsWidget(requirement), null, true);
 		header.addMenuAction(new RejectRequirementAction(requirement));

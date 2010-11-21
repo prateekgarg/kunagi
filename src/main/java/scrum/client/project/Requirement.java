@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
@@ -352,6 +353,10 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		setTasksOrderIds(Gwt.getIdsAsList(tasks));
 	}
 
+	public String getThemesAsString() {
+		return Str.concat(getThemes(), ", ");
+	}
+
 	public Comparator<Task> getTasksOrderComparator() {
 		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
 
@@ -401,4 +406,16 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return taskStatusLabelModel;
 	}
 
+	private transient AFieldModel<String> themesAsStringModel;
+
+	public AFieldModel<String> getThemesAsStringModel() {
+		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getThemesAsString();
+			}
+		};
+		return themesAsStringModel;
+	}
 }

@@ -25,6 +25,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		Requirement requirement = getObject();
 		statusIcon = header.addIconWrapper();
 		header.addText(requirement.getLabelModel());
+		header.addText(requirement.getThemesAsStringModel(), true, false);
 		header.addText(requirement.getEstimatedWorkWithUnitModel(), true);
 
 		header.appendCell(new EmoticonsWidget(requirement), null, true);

@@ -123,6 +123,10 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		return "issued on " + getDate().getDate();
 	}
 
+	public String getThemesAsString() {
+		return Str.concat(getThemes(), ", ");
+	}
+
 	public void setFixed(User user) {
 		setOwner(user);
 		setFixDate(Date.today());
@@ -283,5 +287,18 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 			}
 		};
 		return statusLabelModel;
+	}
+
+	private transient AFieldModel<String> themesAsStringModel;
+
+	public AFieldModel<String> getThemesAsStringModel() {
+		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getThemesAsString();
+			}
+		};
+		return themesAsStringModel;
 	}
 }

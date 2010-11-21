@@ -740,6 +740,26 @@ public abstract class GRequirement
     }
 
 
+    // --- themes ---
+
+    private java.util.List<java.lang.String> themes = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getThemes() {
+        return new java.util.ArrayList<java.lang.String>(themes);
+    }
+
+    public final void setThemes(java.util.List<java.lang.String> themes) {
+        if (themes == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.themes.equals(themes)) return;
+        this.themes = new java.util.ArrayList<java.lang.String>(themes);
+        propertyChanged("themes", this.themes);
+    }
+
+    public final boolean containsTheme(java.lang.String theme) {
+        return themes.contains(theme);
+    }
+
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -759,6 +779,7 @@ public abstract class GRequirement
         workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
         workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
         tasksOrderIds  = (java.util.List<java.lang.String>) props.get("tasksOrderIds");
+        themes  = (java.util.List<java.lang.String>) props.get("themes");
         updateLocalModificationTime();
     }
 
@@ -780,6 +801,7 @@ public abstract class GRequirement
         properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
         properties.put("tasksOrderIds", this.tasksOrderIds);
+        properties.put("themes", this.themes);
     }
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {

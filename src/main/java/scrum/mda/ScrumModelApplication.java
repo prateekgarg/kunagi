@@ -367,6 +367,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("workEstimationVotingActive", boolean.class);
 			requirementModel.addProperty("workEstimationVotingShowoff", boolean.class);
 			requirementModel.addListProperty("tasksOrderIds", String.class);
+			requirementModel.addListProperty("themes", String.class);
 			getApplicationModel().addCreateAction(requirementModel);
 			requirementModel.addAction("DeleteRequirement");
 			requirementModel.addAction("AddRequirementToCurrentSprint");
@@ -767,6 +768,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addSetReference("affectedReleases", getReleaseModel()).setBackReferenceName("affectedIssue");
 			issueModel.addSetReference("fixReleases", getReleaseModel()).setBackReferenceName("fixIssue");
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
+			issueModel.addListProperty("themes", String.class);
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");

@@ -1028,6 +1028,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByTheme(java.lang.String theme) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.containsTheme(theme)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
@@ -2051,6 +2059,14 @@ public abstract class GDao
         List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
         for (scrum.client.project.Requirement entity : requirements.values()) {
             if (entity.containsTasksOrderId(tasksOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Requirement> getRequirementsByTheme(java.lang.String theme) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.containsTheme(theme)) ret.add(entity);
         }
         return ret;
     }
