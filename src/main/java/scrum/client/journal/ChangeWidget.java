@@ -1,7 +1,9 @@
 package scrum.client.journal;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ATextWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.admin.User;
 import scrum.client.collaboration.Wiki;
@@ -16,6 +18,7 @@ public class ChangeWidget extends AScrumWidget {
 
 	private Change change;
 	private Label date;
+	private FlowPanel payloadPanel;
 
 	public ChangeWidget(Change change) {
 		super();
@@ -53,6 +56,17 @@ public class ChangeWidget extends AScrumWidget {
 	}
 
 	private Widget createBody() {
+		payloadPanel = new FlowPanel();
+		payloadPanel.add(new HyperlinkWidget(new ExpandAction()));
+
+		FlowPanel panel = new FlowPanel();
+		panel.add(new HTML(Wiki.toHtml(change.getLabel())));
+		panel.add(payloadPanel);
+		return panel;
+	}
+
+	public void expand() {
+		payloadPanel.clear();
 		ATextWidget diffWidget = new ATextWidget() {
 
 			@Override
@@ -61,11 +75,21 @@ public class ChangeWidget extends AScrumWidget {
 			}
 		};
 		diffWidget.addStyleName("ChangeWidget-diff");
+		payloadPanel.add(diffWidget);
+		payloadPanel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
+		update();
+	}
 
-		FlowPanel panel = new FlowPanel();
-		panel.add(new HTML(Wiki.toHtml(change.getLabel())));
-		panel.add(diffWidget);
-		panel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
-		return panel;
+	class ExpandAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Show details";
+		}
+
+		@Override
+		protected void onExecute() {
+			expand();
+		}
 	}
 }
