@@ -63,9 +63,11 @@ buildPropertiesFile = f = open(buildPropertiesFilePath, 'a')
 f.write('release.label='+releaseLabel+'\n')
 f.close()
 
+
 # build
 print '  Build'
-execute('ant', repositoryDir)
+execute('ant package', repositoryDir)
+
 
 # check files and directories
 print '  Check artifacts'
@@ -79,12 +81,19 @@ if not os.path.exists(packageZip):
 if not os.path.exists(packageTar):
     fail('Missing tar package: ' + packageTar)
 
+
 # copy artifacts
 print '  Copy artifacts to ' + artifactsDestinationDir
 os.mkdir(artifactsDestinationDir)
 shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
 shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
 shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.bz2')
+
+
+# update homepage
+print '  Update homepage'
+execute('ant releaseHomepage', repositoryDir)
+
 
 # upload to sourceforge
 print '  Upload artifacts to SourceForge'
