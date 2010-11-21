@@ -465,6 +465,26 @@ public class Project extends GProject implements ForumSupport {
 		return getDao().getTasks();
 	}
 
+	public List<Issue> getIssuesByThemes(Collection<String> themes) {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			for (String theme : themes) {
+				if (issue.containsTheme(theme) && !ret.contains(issue)) ret.add(issue);
+			}
+		}
+		return ret;
+	}
+
+	public List<Requirement> getRequirementsByThemes(Collection<String> themes) {
+		List<Requirement> ret = new ArrayList<Requirement>();
+		for (Requirement requirement : getRequirements()) {
+			for (String theme : themes) {
+				if (requirement.containsTheme(theme) && !ret.contains(requirement)) ret.add(requirement);
+			}
+		}
+		return ret;
+	}
+
 	public List<Requirement> getRequirementsOrdered() {
 		List<Requirement> requirements = getRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());

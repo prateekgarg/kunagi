@@ -121,6 +121,23 @@ public class IssueWidget extends AScrumWidget {
 				return "Releases to which this issue is or will be fixed.";
 			}
 		});
+
+		left.addFieldRow("Related Issues", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(issue.getRelatedIssues()));
+			}
+		});
+
+		left.addFieldRow("Related Stories", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(issue.getRelatedRequirements()));
+			}
+		});
+
 		if (issue.getProject().getHomepageDir() != null) {
 			left.addFieldRow("Published", new AOutputViewEditWidget() {
 

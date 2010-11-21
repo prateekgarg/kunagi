@@ -20,6 +20,7 @@ import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
+import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -45,6 +46,16 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 
 	public Issue(Map data) {
 		super(data);
+	}
+
+	public List<Requirement> getRelatedRequirements() {
+		return getProject().getRequirementsByThemes(getThemes());
+	}
+
+	public List<Issue> getRelatedIssues() {
+		List<Issue> ret = getProject().getIssuesByThemes(getThemes());
+		ret.remove(this);
+		return ret;
 	}
 
 	public String getIssuer() {

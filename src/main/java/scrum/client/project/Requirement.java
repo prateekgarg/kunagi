@@ -54,6 +54,16 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		super(data);
 	}
 
+	public List<Requirement> getRelatedRequirements() {
+		List<Requirement> ret = getProject().getRequirementsByThemes(getThemes());
+		ret.remove(this);
+		return ret;
+	}
+
+	public List<Issue> getRelatedIssues() {
+		return getProject().getIssuesByThemes(getThemes());
+	}
+
 	public void removeFromSprint() {
 		setSprint(null);
 		for (Task task : getTasks()) {
