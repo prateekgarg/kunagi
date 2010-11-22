@@ -10,6 +10,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.ThemesWidget;
 import scrum.client.estimation.PlanningPokerWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 
@@ -47,7 +48,10 @@ public class RequirementWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 
-		if (showLabel) left.addFieldRow("Label", requirement.getLabelModel());
+		if (showLabel) {
+			left.addFieldRow("Label", requirement.getLabelModel());
+			left.addFieldRow("Themes", new ThemesWidget(requirement));
+		}
 
 		left.addFieldRow("Description", requirement.getDescriptionModel());
 

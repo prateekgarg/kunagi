@@ -17,6 +17,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.ThemesWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.release.Release;
 
@@ -40,6 +41,7 @@ public class IssueWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", issue.getLabelModel());
+		left.addFieldRow("Themes", new ThemesWidget(issue));
 		if (issue.isBug()) {
 			left.addFieldRow("Severity", new DropdownEditorWidget<Integer>(issue.getSeverityModel(),
 					Issue.SEVERITY_LABELS));
