@@ -23,7 +23,7 @@
     <target name="compile-java" depends="init">
 
         <mkdir dir="${classes.output.dir}" />
-        <copy todir="${classes.output.dir}" overwrite="true" preservelastmodified="true">
+        <copy todir="${classes.output.dir}" preservelastmodified="true">
             <fileset dir="src/main/java" />
             <fileset dir="src/generated/java" />
             <fileset dir="${ilarkesto.dir}/src/main/java" />
@@ -75,12 +75,12 @@
     </target>
 
     <target name="webapp" depends="compile-java, test, compile-gwt">
-        <copy todir="${build.dir}/webapp" overwrite="true" preservelastmodified="true">
+        <copy todir="${build.dir}/webapp" preservelastmodified="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
             <fileset dir="." includes="license.*" />
         </copy>
-        <copy todir="${build.dir}/webapp/WEB-INF/lib" overwrite="true" preservelastmodified="true">
+        <copy todir="${build.dir}/webapp/WEB-INF/lib" preservelastmodified="true">
             <fileset dir="${ilarkesto.dir}/lib">
                 <exclude name="**/src/" />
                 <exclude name="**/javadoc/" />
@@ -104,7 +104,7 @@
         <war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
         <mkdir dir="${build.dir}/package/kunagi" />
         <copy file="${build.dir}/kunagi.war" tofile="${build.dir}/package/kunagi/kunagi.war" />
-        <copy todir="${build.dir}/package/kunagi" overwrite="true" preservelastmodified="true">
+        <copy todir="${build.dir}/package/kunagi" preservelastmodified="true">
             <fileset file="README" />
             <fileset dir="." includes="license.*" />
         </copy>
@@ -115,18 +115,18 @@
     </target>
 	
 	<target name="releaseHomepage">
-        <copy todir="${homepage.output.dir}" overwrite="true" preservelastmodified="true">
+        <copy todir="${homepage.output.dir}" preservelastmodified="true">
             <fileset dir="src/projectHomepage/html" />
         </copy>
         <mkdir dir="${homepage.output.dir}/velocity" />
-        <copy todir="${homepage.output.dir}/velocity" overwrite="true" preservelastmodified="true">
+        <copy todir="${homepage.output.dir}/velocity" preservelastmodified="true">
             <fileset dir="src/projectHomepage/velocity" />
         </copy>
 	</target>
 	
 	<target name="deployToLatest">
         <copy file="${build.dir}/kunagi.war" tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war"
-        	overwrite="true" preservelastmodified="true" />
+        	preservelastmodified="true" />
 	</target>
 	
     <target name="continousIntegrationBuild" depends="package,releaseHomepage,deployToLatest" />
