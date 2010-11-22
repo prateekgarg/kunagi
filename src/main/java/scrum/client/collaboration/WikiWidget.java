@@ -10,6 +10,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.AScrumWidget;
+import scrum.client.communication.TouchLastActivityServiceCall;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.workspace.PagePanel;
@@ -125,11 +126,11 @@ public class WikiWidget extends AScrumWidget {
 	public void showPage(String name) {
 		this.pageName = name;
 		update();
+		new TouchLastActivityServiceCall().execute();
 	}
 
 	public void showPage(Wikipage page) {
-		this.pageName = page == null ? null : page.getName();
-		update();
+		showPage(page == null ? null : page.getName());
 	}
 
 	class ShowPageAction extends AScrumAction {
