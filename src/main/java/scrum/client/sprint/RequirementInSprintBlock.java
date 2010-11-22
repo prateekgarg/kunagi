@@ -100,7 +100,7 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		FlowPanel left = new FlowPanel();
 		left.add(requirementWidget);
 		left.add(taskList);
-		// left.add(Gwt.createDiv("CreateTaskButtonWrapper", createTaskButton));
+		left.add(Gwt.createDiv("CreateTaskButtonWrapper", createTaskButton));
 		left.add(changeHistoryWidget);
 
 		right = new FlowPanel();
