@@ -82,6 +82,8 @@ public abstract class GIssueDao
         issuesByFixReleaseCache.clear();
         fixReleasesCache = null;
         issuesByPublishedCache.clear();
+        issuesByThemeCache.clear();
+        themesCache = null;
     }
 
     @Override
@@ -914,6 +916,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return value == e.isPublished();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - themes
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByThemeCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String theme) {
+                    return getEntities(new ContainsTheme(theme));
+                }
+            });
+
+    public final Set<Issue> getIssuesByTheme(java.lang.String theme) {
+        return issuesByThemeCache.get(theme);
+    }
+    private Set<java.lang.String> themesCache;
+
+    public final Set<java.lang.String> getThemes() {
+        if (themesCache == null) {
+            themesCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                themesCache.addAll(e.getThemes());
+            }
+        }
+        return themesCache;
+    }
+
+    private static class ContainsTheme implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public ContainsTheme(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.containsTheme(value);
         }
 
     }

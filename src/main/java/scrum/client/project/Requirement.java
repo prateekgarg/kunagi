@@ -1,5 +1,6 @@
 package scrum.client.project;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
@@ -21,6 +23,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.common.ThemesContainer;
 import scrum.client.estimation.RequirementEstimationVote;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -29,7 +32,7 @@ import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Requirement extends GRequirement implements ReferenceSupport, LabelSupport, ForumSupport {
+public class Requirement extends GRequirement implements ReferenceSupport, LabelSupport, ForumSupport, ThemesContainer {
 
 	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",
@@ -51,6 +54,26 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	@Override
+	public Set<String> getAvailableThemes() {
+		return getProject().getThemes();
+	}
+
+	@Override
+	public boolean isThemesEditable() {
+		return getLabelModel().isEditable();
+	}
+
+	public List<Requirement> getRelatedRequirements() {
+		List<Requirement> ret = getProject().getRequirementsByThemes(getThemes());
+		ret.remove(this);
+		return ret;
+	}
+
+	public List<Issue> getRelatedIssues() {
+		return getProject().getIssuesByThemes(getThemes());
 	}
 
 	public void removeFromSprint() {
@@ -352,6 +375,10 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		setTasksOrderIds(Gwt.getIdsAsList(tasks));
 	}
 
+	public String getThemesAsString() {
+		return Str.concat(getThemes(), ", ");
+	}
+
 	public Comparator<Task> getTasksOrderComparator() {
 		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
 
@@ -401,4 +428,16 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return taskStatusLabelModel;
 	}
 
+	private transient AFieldModel<String> themesAsStringModel;
+
+	public AFieldModel<String> getThemesAsStringModel() {
+		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getThemesAsString();
+			}
+		};
+		return themesAsStringModel;
+	}
 }

@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
@@ -19,11 +20,13 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.common.ThemesContainer;
 import scrum.client.project.Project;
+import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Issue extends GIssue implements ReferenceSupport, LabelSupport, ForumSupport {
+public class Issue extends GIssue implements ReferenceSupport, LabelSupport, ForumSupport, ThemesContainer {
 
 	private static Log log = Log.get(Issue.class);
 
@@ -45,6 +48,26 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 
 	public Issue(Map data) {
 		super(data);
+	}
+
+	@Override
+	public Set<String> getAvailableThemes() {
+		return getProject().getThemes();
+	}
+
+	@Override
+	public boolean isThemesEditable() {
+		return getLabelModel().isEditable();
+	}
+
+	public List<Requirement> getRelatedRequirements() {
+		return getProject().getRequirementsByThemes(getThemes());
+	}
+
+	public List<Issue> getRelatedIssues() {
+		List<Issue> ret = getProject().getIssuesByThemes(getThemes());
+		ret.remove(this);
+		return ret;
 	}
 
 	public String getIssuer() {
@@ -121,6 +144,10 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		if (isIdea()) return "accepted on " + getAcceptDate();
 		if (isSuspended()) return "suspended until " + getSuspendedUntilDate();
 		return "issued on " + getDate().getDate();
+	}
+
+	public String getThemesAsString() {
+		return Str.concat(getThemes(), ", ");
 	}
 
 	public void setFixed(User user) {
@@ -283,5 +310,18 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 			}
 		};
 		return statusLabelModel;
+	}
+
+	private transient AFieldModel<String> themesAsStringModel;
+
+	public AFieldModel<String> getThemesAsStringModel() {
+		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getThemesAsString();
+			}
+		};
+		return themesAsStringModel;
 	}
 }

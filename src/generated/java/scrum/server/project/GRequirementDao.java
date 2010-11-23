@@ -68,6 +68,8 @@ public abstract class GRequirementDao
         requirementsByWorkEstimationVotingShowoffCache.clear();
         requirementsByTasksOrderIdCache.clear();
         tasksOrderIdsCache = null;
+        requirementsByThemeCache.clear();
+        themesCache = null;
     }
 
     @Override
@@ -638,6 +640,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.containsTasksOrderId(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - themes
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByThemeCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String theme) {
+                    return getEntities(new ContainsTheme(theme));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByTheme(java.lang.String theme) {
+        return requirementsByThemeCache.get(theme);
+    }
+    private Set<java.lang.String> themesCache;
+
+    public final Set<java.lang.String> getThemes() {
+        if (themesCache == null) {
+            themesCache = new HashSet<java.lang.String>();
+            for (Requirement e : getEntities()) {
+                themesCache.addAll(e.getThemes());
+            }
+        }
+        return themesCache;
+    }
+
+    private static class ContainsTheme implements Predicate<Requirement> {
+
+        private java.lang.String value;
+
+        public ContainsTheme(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.containsTheme(value);
         }
 
     }

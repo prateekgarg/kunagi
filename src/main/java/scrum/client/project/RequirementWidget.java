@@ -2,6 +2,7 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -9,6 +10,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.ThemesWidget;
 import scrum.client.estimation.PlanningPokerWidget;
 import scrum.client.journal.ChangeHistoryWidget;
 
@@ -46,7 +48,10 @@ public class RequirementWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 
-		if (showLabel) left.addFieldRow("Label", requirement.getLabelModel());
+		if (showLabel) {
+			left.addFieldRow("Label", requirement.getLabelModel());
+			left.addFieldRow("Themes", new ThemesWidget(requirement));
+		}
 
 		left.addFieldRow("Description", requirement.getDescriptionModel());
 
@@ -96,6 +101,22 @@ public class RequirementWidget extends AScrumWidget {
 			}
 		});
 
+		left.addFieldRow("Related Stories", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(requirement.getRelatedRequirements()));
+			}
+		});
+
+		left.addFieldRow("Related Issues", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(ScrumGwt.createToHtmlItemsWidget(requirement.getRelatedIssues()));
+			}
+		});
+
 		if (showChangeHistory) left.addRow(new ChangeHistoryWidget(requirement), 2);
 
 		TableBuilder right = ScrumGwt.createFieldTable();
@@ -110,8 +131,8 @@ public class RequirementWidget extends AScrumWidget {
 			right.addRow(new CommentsWidget(requirement), 2);
 		}
 
-		return showComments || planningPoker || acceptReject ? TableBuilder.row(20, left.createTable(), right
-				.createTable()) : left.createTable();
+		return showComments || planningPoker || acceptReject ? TableBuilder.row(20, left.createTable(),
+			right.createTable()) : left.createTable();
 	}
 
 	@Override

@@ -735,6 +735,7 @@ public class Project extends GProject {
 
 		// Unsurpassed Concept
 		req = requirementDao.postRequirement(this, "Unsurpassed Concept", 3f);
+		req.addTheme("Vision");
 		req.setDescription("As a Product Owner I want the concept to be unsurpassable so I don't have to worry about ROI anymore.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
@@ -743,6 +744,7 @@ public class Project extends GProject {
 
 		// Amazing Product Backlog
 		req = requirementDao.postRequirement(this, "Amazing Product Backlog", 2f);
+		req.addTheme("Vision");
 		req.setDescription("As a Product Owner I want my Backlog to be amazing so that people stand in awe.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
@@ -760,6 +762,7 @@ public class Project extends GProject {
 
 		// Groundbraking Scrum Backlog
 		req = requirementDao.postRequirement(this, "Groundbraking Scrum Backlog", 1f);
+		req.addTheme("Vision");
 		req.setDescription("As a Team member I want the Scrum Backlog to be groundbreaking, so that everybody can see that I am the most important here.");
 		reqOrder.add(req);
 		req.setSprint(getCurrentSprint());
@@ -768,6 +771,8 @@ public class Project extends GProject {
 
 		// Breathtaking Whiteboard
 		req = requirementDao.postRequirement(this, "Breathtaking Whiteboard", 8f);
+		req.addTheme("Vision");
+		req.addTheme("Whiteboard");
 		req.setDescription("As a Team member I want the current state of things to be displayed on a Whiteboard, so I can play around when I am bored.");
 		reqOrder.add(req);
 

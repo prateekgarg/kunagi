@@ -62,6 +62,10 @@ public class BlockHeaderWidget extends AWidget {
 		addText(model, null, secondary, secondary);
 	}
 
+	public void addText(AFieldModel<?> model, boolean secondary, boolean small) {
+		addText(model, null, secondary, small);
+	}
+
 	public void addText(AFieldModel<?> model, String width, boolean secondary, boolean small) {
 		SimplePanel cell = createCell(new TextOutputWidget(model), secondary, small, null);
 		if (width != null) cell.setWidth(width);

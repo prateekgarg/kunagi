@@ -67,7 +67,14 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 	}
 
 	public String getReferenceAndLabel() {
-		return getReference() + " " + getLabel();
+		StringBuilder sb = new StringBuilder();
+		sb.append(getReference());
+		sb.append(" ");
+		sb.append(getLabel());
+		if (!isThemesEmpty()) {
+			sb.append(" (").append(getThemesAsCommaSeparatedString()).append(")");
+		}
+		return sb.toString();
 	}
 
 	@Override

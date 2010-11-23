@@ -28,6 +28,7 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 		if (issue.isBug()) header.addText(issue.getSeverityLabelModel(), "40px", true, false);
 
 		header.addText(issue.getLabelModel());
+		header.addText(issue.getThemesAsStringModel(), true, false);
 		header.addText(issue.getStatusLabelModel(), true);
 
 		header.appendCell(new EmoticonsWidget(issue), null, true);

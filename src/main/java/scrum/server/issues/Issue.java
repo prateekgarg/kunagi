@@ -92,7 +92,14 @@ public class Issue extends GIssue implements Numbered, ReferenceSupport, LabelSu
 	}
 
 	public String getReferenceAndLabel() {
-		return getReference() + " " + getLabel();
+		StringBuilder sb = new StringBuilder();
+		sb.append(getReference());
+		sb.append(" ");
+		sb.append(getLabel());
+		if (!isThemesEmpty()) {
+			sb.append(" (").append(getThemesAsCommaSeparatedString()).append(")");
+		}
+		return sb.toString();
 	}
 
 	public boolean isClosed() {

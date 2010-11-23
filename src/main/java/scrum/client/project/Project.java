@@ -67,6 +67,17 @@ public class Project extends GProject implements ForumSupport {
 		super(data);
 	}
 
+	public Set<String> getThemes() {
+		Set<String> ret = new HashSet<String>();
+		for (Requirement requirement : getRequirements()) {
+			ret.addAll(requirement.getThemes());
+		}
+		for (Issue issue : getIssues()) {
+			ret.addAll(issue.getThemes());
+		}
+		return ret;
+	}
+
 	public void updateRequirementsModificationTimes() {
 		for (Requirement requirement : getRequirements()) {
 			requirement.updateLocalModificationTime();
@@ -463,6 +474,26 @@ public class Project extends GProject implements ForumSupport {
 
 	public List<Task> getTasks() {
 		return getDao().getTasks();
+	}
+
+	public List<Issue> getIssuesByThemes(Collection<String> themes) {
+		List<Issue> ret = new ArrayList<Issue>();
+		for (Issue issue : getIssues()) {
+			for (String theme : themes) {
+				if (issue.containsTheme(theme) && !ret.contains(issue)) ret.add(issue);
+			}
+		}
+		return ret;
+	}
+
+	public List<Requirement> getRequirementsByThemes(Collection<String> themes) {
+		List<Requirement> ret = new ArrayList<Requirement>();
+		for (Requirement requirement : getRequirements()) {
+			for (String theme : themes) {
+				if (requirement.containsTheme(theme) && !ret.contains(requirement)) ret.add(requirement);
+			}
+		}
+		return ret;
 	}
 
 	public List<Requirement> getRequirementsOrdered() {
