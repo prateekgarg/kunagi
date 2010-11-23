@@ -41,7 +41,7 @@ public class StartServlet extends AHttpServlet {
 		html.startHTMLstandard();
 
 		String title = "Kunagi";
-		if (applicationInfo.isDevelopmentStage()) title += " [" + applicationInfo.getBuild() + "]";
+		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();

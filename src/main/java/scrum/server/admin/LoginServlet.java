@@ -343,7 +343,7 @@ public class LoginServlet extends AHttpServlet {
 		html.startHTMLstandard();
 
 		String title = "Kunagi Login";
-		if (applicationInfo.isDevelopmentStage()) title += " [" + applicationInfo.getBuild() + "]";
+		if (webApplication.getConfig().isShowRelease()) title += " " + applicationInfo.getRelease();
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();

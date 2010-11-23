@@ -100,8 +100,12 @@ public class KunagiRootConfig {
 		return props.getBoolean("disableInactiveUsers", false);
 	}
 
-	public boolean isStageIntegration() {
-		return props.getBoolean("stage.integration", false);
+	public boolean isShowRelease() {
+		return props.getBoolean("showRelease", Sys.isDevelopmentMode());
+	}
+
+	public boolean isCreateTestData() {
+		return props.getBoolean("createTestData", Sys.isDevelopmentMode());
 	}
 
 	public String getInitialPassword() {

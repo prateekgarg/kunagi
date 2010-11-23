@@ -108,8 +108,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD)) {
 			defaultAdminPassword = true;
 		}
-		return new ApplicationInfo("kunagi", getReleaseLabel(), getBuild(), getDeploymentStage(), defaultAdminPassword,
-				getCurrentRelease());
+		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease());
 	}
 
 	private String currentRelease;
@@ -172,8 +171,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 
 		// test data
-		if ((isDevelopmentMode() || getConfig().isStageIntegration()) && getProjectDao().getEntities().isEmpty())
-			createTestData();
+		if (getConfig().isCreateTestData() && getProjectDao().getEntities().isEmpty()) createTestData();
 
 		for (ProjectUserConfig config : getProjectUserConfigDao().getEntities()) {
 			config.reset();
@@ -235,7 +233,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String getBaseUrl() {
-		return getConfig().isStageIntegration() ? "https://servisto.de/scrum-latest/" : getSystemConfig().getUrl();
+		return getSystemConfig().getUrl();
 	}
 
 	private UserDao userDao;
@@ -284,12 +282,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		WebSession session = new WebSession(context, httpRequest);
 		autowire(session);
 		return session;
-	}
-
-	public String getDeploymentStage() {
-		if (isDevelopmentMode()) return ApplicationInfo.DEPLOYMENT_STAGE_DEVELOPMENT;
-		if (getConfig().isStageIntegration()) return ApplicationInfo.DEPLOYMENT_STAGE_INTEGRATION;
-		return ApplicationInfo.DEPLOYMENT_STAGE_PRODUCTION;
 	}
 
 	public void updateSystemMessage(SystemMessage systemMessage) {
