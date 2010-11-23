@@ -11,14 +11,16 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 	private String build;
 	private boolean defaultAdminPassword;
 	private String currentRelease;
+	private String dataPath;
 
 	public ApplicationInfo(String name, String release, String build, boolean defaultAdminPassword,
-			String currentRelease) {
+			String currentRelease, String dataPath) {
 		this.name = name;
 		this.release = release;
 		this.build = build;
 		this.defaultAdminPassword = defaultAdminPassword;
 		this.currentRelease = currentRelease;
+		this.dataPath = dataPath;
 	}
 
 	protected ApplicationInfo() {}
@@ -51,6 +53,10 @@ public class ApplicationInfo implements Serializable, IsSerializable {
 
 	public String getVersionDescription() {
 		return name + " " + release + " | Build " + build;
+	}
+
+	public String getDataPath() {
+		return dataPath;
 	}
 
 	@Override

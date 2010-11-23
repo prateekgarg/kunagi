@@ -108,7 +108,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD)) {
 			defaultAdminPassword = true;
 		}
-		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease());
+		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease(),
+				getApplicationDataDir());
 	}
 
 	private String currentRelease;
@@ -180,7 +181,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public String createUrl(String relativePath) {
 		if (relativePath == null) relativePath = "";
-		String prefix = getSystemConfig().getUrl();
+		String prefix = getBaseUrl();
 		if (Str.isBlank(prefix)) return relativePath;
 		if (prefix.endsWith("/")) {
 			if (relativePath.startsWith("/")) return prefix.substring(0, prefix.length() - 1) + relativePath;

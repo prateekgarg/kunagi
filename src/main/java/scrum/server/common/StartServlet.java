@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
@@ -18,6 +19,8 @@ import scrum.server.WebSession;
 
 public class StartServlet extends AHttpServlet {
 
+	private static Log log = Log.get(StartServlet.class);
+
 	private static String webappUrl = "http://localhost:8080/kunagi/";
 	private static ScrumWebApplication webApplication;
 
@@ -30,7 +33,9 @@ public class StartServlet extends AHttpServlet {
 			String url = "login.html";
 			String token = Str.cutFrom(req.getRequestURI(), "#");
 			if (!Str.isBlank(token)) url += "?historyToken=" + Str.encodeUrlParameter(token);
-			resp.sendRedirect(webApplication.createUrl(url));
+			url = webApplication.createUrl(url);
+			log.debug("Redirecting to", url);
+			resp.sendRedirect(url);
 			return;
 		}
 

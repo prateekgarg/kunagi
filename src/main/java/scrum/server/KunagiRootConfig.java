@@ -69,7 +69,7 @@ public class KunagiRootConfig {
 	}
 
 	public String getUrl() {
-		return props.get("url");
+		return props.get("url", Sys.isDevelopmentMode() ? "http://localhost:8888/" : null);
 	}
 
 	public void setUrl(String url) {
