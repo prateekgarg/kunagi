@@ -53,6 +53,7 @@ public abstract class AHttpServlet extends HttpServlet {
 			onInit(config);
 		} catch (Throwable ex) {
 			LOG.fatal("Init failed:", getClass().getName(), "->", ex);
+			throw new ServletException(ex);
 		}
 	}
 

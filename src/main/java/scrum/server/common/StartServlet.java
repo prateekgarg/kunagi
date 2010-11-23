@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.ApplicationInfo;
-import scrum.server.ScrumRootConfig;
+import scrum.server.KunagiRootConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 
@@ -21,7 +21,7 @@ public class StartServlet extends AHttpServlet {
 	private static String webappUrl = "http://localhost:8080/kunagi/";
 	private static ScrumWebApplication webApplication;
 
-	private ScrumRootConfig config;
+	private KunagiRootConfig config;
 	private ApplicationInfo applicationInfo;
 
 	@Override
