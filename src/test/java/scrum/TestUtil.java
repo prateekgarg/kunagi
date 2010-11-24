@@ -8,6 +8,11 @@ import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.testng.ATest;
+
+import java.io.File;
+
+import scrum.server.KunagiRootConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
@@ -34,8 +39,8 @@ public class TestUtil {
 		Log.setDebugEnabled(false);
 		Sys.setHeadless(true);
 
-		app = new ScrumWebApplication();
-		app.setTestMode(true);
+		KunagiRootConfig config = new KunagiRootConfig(new File(ATest.OUTPUT_DIR + "/runtimedata"), null);
+		app = new ScrumWebApplication(config);
 		app.start();
 
 	}

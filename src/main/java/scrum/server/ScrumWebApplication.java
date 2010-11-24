@@ -30,13 +30,11 @@ import ilarkesto.email.Eml;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.testng.ATest;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
 import ilarkesto.webapp.Servlet;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -64,11 +62,18 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
-	private boolean testMode;
 	private BurndownChart burndownChart;
-	private ScrumRootConfig config;
+	private KunagiRootConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
 	private SystemMessage systemMessage;
+
+	public ScrumWebApplication(KunagiRootConfig config) {
+		this.config = config;
+	}
+
+	public ScrumWebApplication() {
+		this(new KunagiRootConfig());
+	}
 
 	// --- composites ---
 
@@ -85,10 +90,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return getSystemConfigDao().getSystemConfig();
 	}
 
-	public ScrumRootConfig getConfig() {
-		if (config == null) {
-			config = new ScrumRootConfig(getApplicationDataDir());
-		}
+	public KunagiRootConfig getConfig() {
 		return config;
 	}
 
@@ -106,8 +108,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD)) {
 			defaultAdminPassword = true;
 		}
-		return new ApplicationInfo("kunagi", getReleaseLabel(), getBuild(), getDeploymentStage(), defaultAdminPassword,
-				getCurrentRelease());
+		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease(),
+				getApplicationDataDir());
 	}
 
 	private String currentRelease;
@@ -170,8 +172,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 
 		// test data
-		if ((isDevelopmentMode() || getConfig().isStageIntegration()) && getProjectDao().getEntities().isEmpty())
-			createTestData();
+		if (getConfig().isCreateTestData() && getProjectDao().getEntities().isEmpty()) createTestData();
 
 		for (ProjectUserConfig config : getProjectUserConfigDao().getEntities()) {
 			config.reset();
@@ -180,7 +181,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public String createUrl(String relativePath) {
 		if (relativePath == null) relativePath = "";
-		String prefix = getSystemConfig().getUrl();
+		String prefix = getBaseUrl();
 		if (Str.isBlank(prefix)) return relativePath;
 		if (prefix.endsWith("/")) {
 			if (relativePath.startsWith("/")) return prefix.substring(0, prefix.length() - 1) + relativePath;
@@ -220,13 +221,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	protected String getDevelopmentModeApplicationDataDir() {
-		if (testMode) return new File(ATest.OUTPUT_DIR + "/runtimedata").getAbsolutePath();
-		return super.getDevelopmentModeApplicationDataDir();
-	}
-
-	public void setTestMode(boolean testMode) {
-		this.testMode = testMode;
+	public String getApplicationDataDir() {
+		return getConfig().getDataPath();
 	}
 
 	@Override
@@ -238,7 +234,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String getBaseUrl() {
-		return getConfig().isStageIntegration() ? "https://servisto.de/scrum-latest/" : getSystemConfig().getUrl();
+		return getSystemConfig().getUrl();
 	}
 
 	private UserDao userDao;
@@ -287,12 +283,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		WebSession session = new WebSession(context, httpRequest);
 		autowire(session);
 		return session;
-	}
-
-	public String getDeploymentStage() {
-		if (isDevelopmentMode()) return ApplicationInfo.DEPLOYMENT_STAGE_DEVELOPMENT;
-		if (getConfig().isStageIntegration()) return ApplicationInfo.DEPLOYMENT_STAGE_INTEGRATION;
-		return ApplicationInfo.DEPLOYMENT_STAGE_PRODUCTION;
 	}
 
 	public void updateSystemMessage(SystemMessage systemMessage) {

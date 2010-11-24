@@ -1,11 +1,13 @@
 package scrum.client.admin;
 
+import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.workspace.PagePanel;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SystemConfigWidget extends AScrumWidget {
@@ -33,6 +35,13 @@ public class SystemConfigWidget extends AScrumWidget {
 		tbKunagi.addFieldRow("Users email is mandatory", config.getUserEmailMandatoryModel());
 		tbKunagi.addFieldRow("Default user password", config.getDefaultUserPasswordModel());
 		tbKunagi.addFieldRow("Check for updates", config.getVersionCheckEnabledModel());
+		tbKunagi.addFieldRow("Data path", new AOutputViewEditWidget() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewer(new Label(getApp().getApplicationInfo().getDataPath()));
+			}
+		});
 		page.addSection(tbKunagi.createTable());
 
 		page.addHeader("Email", new ButtonWidget(new SendTestEmailAction()));

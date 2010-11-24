@@ -68,7 +68,6 @@ public class HeaderWidget extends AScrumWidget {
 
 		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null) {
-			title.setText(applicationInfo.getName());
 			title.setTitle(applicationInfo.getVersionDescription());
 			if (applicationInfo.isNewReleaseAvailable()) {
 				upgrade = createUpgrade(applicationInfo);

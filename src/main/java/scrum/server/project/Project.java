@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.client.common.WeekdaySelector;
-import scrum.server.ScrumRootConfig;
+import scrum.server.KunagiRootConfig;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
@@ -50,14 +50,14 @@ public class Project extends GProject {
 
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
 	private static TaskDao taskDao;
-	private static ScrumRootConfig config;
+	private static KunagiRootConfig config;
 	private static CommentDao commentDao;
 
 	public static void setCommentDao(CommentDao commentDao) {
 		Project.commentDao = commentDao;
 	}
 
-	public static void setConfig(ScrumRootConfig config) {
+	public static void setConfig(KunagiRootConfig config) {
 		Project.config = config;
 	}
 

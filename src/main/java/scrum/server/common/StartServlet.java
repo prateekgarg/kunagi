@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
@@ -12,16 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.ApplicationInfo;
-import scrum.server.ScrumRootConfig;
+import scrum.server.KunagiRootConfig;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 
 public class StartServlet extends AHttpServlet {
 
+	private static Log log = Log.get(StartServlet.class);
+
 	private static String webappUrl = "http://localhost:8080/kunagi/";
 	private static ScrumWebApplication webApplication;
 
-	private ScrumRootConfig config;
+	private KunagiRootConfig config;
 	private ApplicationInfo applicationInfo;
 
 	@Override
@@ -30,7 +33,9 @@ public class StartServlet extends AHttpServlet {
 			String url = "login.html";
 			String token = Str.cutFrom(req.getRequestURI(), "#");
 			if (!Str.isBlank(token)) url += "?historyToken=" + Str.encodeUrlParameter(token);
-			resp.sendRedirect(webApplication.createUrl(url));
+			url = webApplication.createUrl(url);
+			log.debug("Redirecting to", url);
+			resp.sendRedirect(url);
 			return;
 		}
 
@@ -41,7 +46,7 @@ public class StartServlet extends AHttpServlet {
 		html.startHTMLstandard();
 
 		String title = "Kunagi";
-		if (applicationInfo.isDevelopmentStage()) title += " [" + applicationInfo.getBuild() + "]";
+		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "chrome=1");
 		html.LINKfavicon();
