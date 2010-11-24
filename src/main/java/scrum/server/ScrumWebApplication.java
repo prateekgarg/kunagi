@@ -66,7 +66,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	private boolean testMode;
 	private BurndownChart burndownChart;
-	private ScrumConfig config;
+	private ScrumRootConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
 	private SystemMessage systemMessage;
 
@@ -85,9 +85,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return getSystemConfigDao().getSystemConfig();
 	}
 
-	public ScrumConfig getConfig() {
+	public ScrumRootConfig getConfig() {
 		if (config == null) {
-			config = new ScrumConfig(getApplicationDataDir());
+			config = new ScrumRootConfig(getApplicationDataDir());
 		}
 		return config;
 	}
@@ -180,7 +180,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public String createUrl(String relativePath) {
 		if (relativePath == null) relativePath = "";
-		String prefix = getConfig().getUrl();
+		String prefix = getSystemConfig().getUrl();
 		if (Str.isBlank(prefix)) return relativePath;
 		if (prefix.endsWith("/")) {
 			if (relativePath.startsWith("/")) return prefix.substring(0, prefix.length() - 1) + relativePath;
