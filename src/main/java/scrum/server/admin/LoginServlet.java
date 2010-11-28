@@ -131,6 +131,12 @@ public class LoginServlet extends AHttpServlet {
 			HttpServletRequest req, HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException,
 			IOException {
 
+		if (webApplication.getSystemConfig().isRegistrationDisabled()) {
+			renderLoginPage(resp, username, email, historyToken, "Creating account failed. Feature is disabled.",
+				false, false);
+			return;
+		}
+
 		if (Str.isBlank(username)) username = null;
 		if (Str.isBlank(email)) email = null;
 		if (Str.isBlank(password)) password = null;
@@ -336,6 +342,8 @@ public class LoginServlet extends AHttpServlet {
 	private void renderLoginPage(HttpServletResponse resp, String username, String email, String historyToken,
 			String message, boolean passwordRequest, boolean createAccount) throws UnsupportedEncodingException,
 			IOException {
+		if (webApplication.getSystemConfig().isRegistrationDisabled()) createAccount = false;
+
 		String charset = IO.UTF_8;
 		resp.setContentType("text/html");
 
