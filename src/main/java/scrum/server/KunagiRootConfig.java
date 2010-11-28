@@ -16,13 +16,20 @@ public class KunagiRootConfig {
 
 	private APropertiesStore props;
 
+	private String webappName;
 	private String dataPath;
 
-	public KunagiRootConfig() {
-		this(new File(determineUsedDataPath() + "/config.properties"), determineDefaultConfigFile());
+	public KunagiRootConfig(File configFile, File defaultsFile) {
+		this(configFile, defaultsFile, "kunagi");
 	}
 
-	public KunagiRootConfig(File configFile, File defaultsFile) {
+	public KunagiRootConfig(String webappName) {
+		this(new File(determineUsedDataPath(webappName) + "/config.properties"),
+				determineDefaultConfigFile(webappName), webappName);
+	}
+
+	private KunagiRootConfig(File configFile, File defaultsFile, String webappName) {
+		this.webappName = webappName;
 		log.info("\n\n     CONFIGURATION FILE:", configFile.getAbsolutePath(), "\n\n");
 		props = new FilePropertiesStore(configFile, true).setLabel("Kunag Configuration");
 		if (defaultsFile != null && defaultsFile.exists()) {
@@ -36,7 +43,7 @@ public class KunagiRootConfig {
 		if (dataPath == null) {
 			dataPath = props.get("data.path");
 			if (dataPath == null) {
-				dataPath = determineUsedDataPath();
+				dataPath = determineUsedDataPath(webappName);
 			} else {
 				dataPath = new File(dataPath).getAbsolutePath();
 			}
@@ -45,27 +52,28 @@ public class KunagiRootConfig {
 		return dataPath;
 	}
 
-	private static File determineDefaultConfigFile() {
-		return Sys.isWindows() ? new File(Sys.getUsersHomePath() + "/kunagi.properties") : new File(
-				"/etc/kunagi.properties");
+	private static File determineDefaultConfigFile(String webappName) {
+		return Sys.isWindows() ? new File(Sys.getUsersHomePath() + "/" + webappName + ".properties") : new File("/etc/"
+				+ webappName + ".properties");
 	}
 
-	private static String determineUsedDataPath() {
+	private static String determineUsedDataPath(String webappName) {
 		if (Sys.isDevelopmentMode()) return new File("runtimedata").getAbsolutePath();
-		File legacyDataDir = determineLegacyDataDir();
+		File legacyDataDir = determineLegacyDataDir(webappName);
 		return legacyDataDir != null && legacyDataDir.exists() ? legacyDataDir.getAbsolutePath()
-				: determineDefaultDataPath();
+				: determineDefaultDataPath(webappName);
 	}
 
-	private static String determineDefaultDataPath() {
-		String path = Sys.isWindows() ? Sys.getUsersHomePath() + "/Kunagi" : Sys.getWorkDir().getAbsolutePath()
-				+ "/webapps/kunagi";
+	private static String determineDefaultDataPath(String webappName) {
+		String path = Sys.isWindows() ? Sys.getUsersHomePath() + "/" + webappName : Sys.getWorkDir().getAbsolutePath()
+				+ "/webapps/" + webappName;
 		return new File(path).getAbsolutePath();
 	}
 
-	private static File determineLegacyDataDir() {
-		return Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/kunagi", Sys.getUsersHomePath()
-				+ "/webapps/kunagi", Sys.getWorkDir() + "/webapp-data/kunagi", Sys.getWorkDir() + "/webapps/kunagi");
+	private static File determineLegacyDataDir(String webappName) {
+		return Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/" + webappName, Sys.getUsersHomePath()
+				+ "/webapps/" + webappName, Sys.getWorkDir() + "/webapp-data/" + webappName, Sys.getWorkDir()
+				+ "/webapps/" + webappName);
 	}
 
 	public String getUrl() {

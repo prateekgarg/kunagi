@@ -71,10 +71,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		this.config = config;
 	}
 
-	public ScrumWebApplication() {
-		this(new KunagiRootConfig());
-	}
-
 	// --- composites ---
 
 	public BurndownChart getBurndownChart() {
@@ -91,6 +87,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public KunagiRootConfig getConfig() {
+		if (config == null) config = new KunagiRootConfig(getApplicationName());
 		return config;
 	}
 
