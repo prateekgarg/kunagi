@@ -2,6 +2,7 @@ package scrum.client.tasks;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.undo.AUndoOperation;
+import scrum.client.admin.User;
 import scrum.client.dnd.BlockListDropAction;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -15,7 +16,9 @@ public class UnclaimTaskDropAction implements BlockListDropAction<Task> {
 		this.requirement = requirement;
 	}
 
+	@Override
 	public boolean onDrop(Task task) {
+		if (!task.isOwner(Scope.get().getComponent(User.class))) return false;
 		Requirement requirement = task.getRequirement();
 		task.setRequirement(this.requirement);
 		task.setUnOwned();

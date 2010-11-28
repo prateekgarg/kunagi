@@ -16,7 +16,6 @@ public class ClaimTaskAction extends GClaimTaskAction {
 
 	@Override
 	public String getTooltip() {
-
 		TooltipBuilder tb = new TooltipBuilder(
 				"Claim ownership for this Task, stating that you are working on this Task.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {

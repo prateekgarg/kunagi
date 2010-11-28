@@ -16,7 +16,10 @@ public class ClaimTaskDropAction implements BlockListDropAction<Task> {
 		this.requirement = requirement;
 	}
 
+	@Override
 	public boolean onDrop(Task task) {
+		if (!task.getProject().isTeamMember(Scope.get().getComponent(User.class))) return false;
+
 		Requirement requirement = task.getRequirement();
 		User owner = task.getOwner();
 		task.setRequirement(this.requirement);
