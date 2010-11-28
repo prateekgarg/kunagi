@@ -70,7 +70,8 @@ public class IssueServlet extends AHttpServlet {
 	private String submitIssue(String projectId, String text, String name, String email, boolean publish) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
-		Issue issue = issueDao.postIssue(project, "Message from the Internets", text, name, email, publish);
+		Issue issue = issueDao.postIssue(project, "Message from the Internets", "<nowiki>" + text + "</nowiki>", name,
+			email, publish);
 		if (publish) {
 			project.updateHomepage(issue, true);
 		}

@@ -113,6 +113,13 @@ public class WikiTest extends Assert {
 	}
 
 	@Test
+	public void nowiki() {
+		Assert.assertEquals(toHtml("here is <nowiki>'''plain'''</nowiki>."), "here is '''plain'''.");
+		Assert.assertEquals(toHtml("<nowiki>\n= header 1 =\n\nparagraph...</nowiki>"),
+			"<p><br>= header 1 =<br><br>paragraph...</p>");
+	}
+
+	@Test
 	public void code() {
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");

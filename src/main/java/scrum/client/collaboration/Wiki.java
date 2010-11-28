@@ -98,9 +98,9 @@ public class Wiki extends GWiki implements RichtextFormater {
 					CodemirrorEditorWidget textArea = editor.getEditor();
 					String selected = textArea.getSelectedText();
 					if (selected != null && (selected.startsWith("http") || selected.startsWith("www."))) {
-						textArea.wrapSelection("[Image:", "|thumb]");
+						textArea.wrapSelection("[[Image:", "|thumb]]");
 					} else {
-						textArea.wrapSelection("[Image:http://", "|thumb]");
+						textArea.wrapSelection("[[Image:http://", "|thumb]]");
 					}
 				}
 			}), 0);

@@ -11,7 +11,7 @@ public class Text extends AWikiElement {
 
 	@Override
 	String toHtml(HtmlContext context) {
-		return escapeHtml(text);
+		return escapeHtml(text).replace("\n", "<br>");
 	}
 
 	public String getText() {

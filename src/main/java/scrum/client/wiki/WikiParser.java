@@ -8,7 +8,7 @@ import java.util.Map;
 import scrum.client.ScrumGwt;
 
 /**
- * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet http://en.wikipedia.org/wiki/Help:Table
+ * http://en.wikipedia.org/wiki/Wikipedia:Cheatsheet http://en.wikipedia.org/wiki/Help:Wiki_markup
  */
 public class WikiParser {
 
@@ -69,6 +69,23 @@ public class WikiParser {
 				if (content.trim().length() > 0) {
 					appendText(p, prefix);
 					p.add(new Code(content));
+					appendText(p, suffix);
+					return p;
+				}
+			}
+		}
+
+		// nowiki
+		begin = text.indexOf("<nowiki>");
+		if (begin >= 0 && begin < text.length() - 9) {
+			int end = text.indexOf("</nowiki>", begin);
+			if (end > begin) {
+				String prefix = text.substring(0, begin);
+				String content = text.substring(begin + 8, end);
+				String suffix = text.substring(end + 9);
+				if (content.trim().length() > 0) {
+					appendText(p, prefix);
+					p.add(new Text(content));
 					appendText(p, suffix);
 					return p;
 				}
@@ -291,6 +308,19 @@ public class WikiParser {
 				p.add(new Code(code));
 				model.add(p);
 				burn(endIdx + 8);
+				return;
+			}
+		}
+
+		// nowiki
+		if (input.startsWith("<nowiki>")) {
+			int endIdx = input.indexOf("</nowiki>");
+			if (endIdx > 0) {
+				String content = input.substring(8, endIdx);
+				Paragraph p = new Paragraph(true);
+				p.add(new Text(content));
+				model.add(p);
+				burn(endIdx + 10);
 				return;
 			}
 		}
