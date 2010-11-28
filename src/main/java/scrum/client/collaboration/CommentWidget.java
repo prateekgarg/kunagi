@@ -20,6 +20,8 @@ public class CommentWidget extends AScrumWidget {
 
 	private Comment comment;
 
+	private RichtextEditorWidget editor;
+
 	public CommentWidget(Comment comment) {
 		this.comment = comment;
 	}
@@ -61,14 +63,9 @@ public class CommentWidget extends AScrumWidget {
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("CommentWidget");
 		panel.add(header);
-		// panel.add(new ATextWidget() {
-		//
-		// @Override
-		// protected void onUpdate() {
-		// setHtml(Wiki.toHtml(comment.getText()));
-		// }
-		// });
-		panel.add(new RichtextEditorWidget(comment.getTextModel()));
+
+		editor = new RichtextEditorWidget(comment.getTextModel());
+		panel.add(editor);
 
 		return panel;
 	}
@@ -77,6 +74,10 @@ public class CommentWidget extends AScrumWidget {
 	protected void onUpdate() {
 		date.setText(comment.getDateAndTime().getPeriodToNow().toShortestString() + " ago");
 		super.onUpdate();
+	}
+
+	public boolean isEditMode() {
+		return editor != null && editor.isEditMode();
 	}
 
 }

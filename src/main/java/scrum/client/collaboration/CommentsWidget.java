@@ -73,6 +73,9 @@ public class CommentsWidget extends AScrumWidget {
 	}
 
 	private void updateCommentList() {
+		for (CommentWidget widget : widgets.values()) {
+			if (widget.isEditMode()) return;
+		}
 		commentListPanel.clear();
 		List<Comment> comments = parent.getComments();
 		Collections.sort(comments, Comment.REVERSE_DATEANDTIME_COMPARATOR);
