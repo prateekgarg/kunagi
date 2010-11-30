@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
@@ -49,7 +50,10 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public void setLengthInDays(Integer lenght) {
 		if (lenght == null || lenght <= 0) return;
 		Date begin = getBegin();
-		if (begin == null) return;
+		if (begin == null) {
+			begin = getProject().getCurrentSprint().getEnd();
+			setBegin(begin);
+		}
 		Date end = begin.addDays(lenght);
 		setEnd(end);
 	}
@@ -252,7 +256,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 		@Override
 		public int compare(Sprint a, Sprint b) {
-			return b.getEnd().compareTo(a.getEnd());
+			return Utl.compare(b.getEnd(), a.getEnd());
 		}
 
 	};
