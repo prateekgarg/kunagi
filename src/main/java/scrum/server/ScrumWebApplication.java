@@ -71,6 +71,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		this.config = config;
 	}
 
+	public ScrumWebApplication() {
+		this(null);
+	}
+
 	// --- composites ---
 
 	public BurndownChart getBurndownChart() {

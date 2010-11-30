@@ -284,7 +284,8 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 		@Override
 		public java.lang.Integer getValue() {
-			return getLengthInDays();
+			Integer length = getLengthInDays();
+			return length == null ? 0 : length;
 		}
 
 		@Override
@@ -294,12 +295,14 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 		@Override
 		public void increment() {
-			setLengthInDays(getLengthInDays() + 1);
+			setLengthInDays(getValue() + 1);
 		}
 
 		@Override
 		public void decrement() {
-			setLengthInDays(getLengthInDays() - 1);
+			Integer lenght = getValue();
+			if (lenght == null || lenght < 2) return;
+			setLengthInDays(lenght - 1);
 		}
 
 		@Override
