@@ -2,6 +2,7 @@ package scrum.client;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -21,6 +22,19 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
+
+	public static String getReferenceAndLabel(AGwtEntity entity) {
+		StringBuilder sb = new StringBuilder();
+		if (entity instanceof ReferenceSupport) {
+			sb.append(((ReferenceSupport) entity).getReference()).append(" ");
+		}
+		if (entity instanceof LabelSupport) {
+			sb.append(((LabelSupport) entity).getLabel());
+		} else {
+			sb.append(entity.toString());
+		}
+		return sb.toString();
+	}
 
 	public static <E extends AScrumGwtEntity> Widget createReferencesWidget(Collection<E> entities) {
 		return new HTML(createHtmlReferences(entities));

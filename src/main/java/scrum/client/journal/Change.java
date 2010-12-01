@@ -4,10 +4,13 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.diff.HtmlDiffMarker;
 import ilarkesto.core.diff.TokenDiff;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.EntityDoesNotExistException;
 
 import java.util.Comparator;
 import java.util.Map;
 
+import scrum.client.ScrumGwt;
+import scrum.client.core.RequestEntityServiceCall;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
@@ -39,20 +42,28 @@ public class Change extends GChange {
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return Str.isBlank(newValue) ? "reopened issue" : "closed issue";
-			if (key.equals("storyId"))
-				return "converted issue to story " + getDao().getRequirement(newValue).getReference();
+			if (key.equals("storyId")) return "converted issue to story " + getEntityReferenceAndLabel(newValue);
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		} else if (parent instanceof Requirement) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed story" : "reopened story";
 			if (key.equals("sprintId"))
 				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
-			if (key.equals("issueId")) return "created story from issue " + getDao().getIssue(newValue).getReference();
+			if (key.equals("issueId")) return "created story from issue " + getEntityReferenceAndLabel(newValue);
 		}
 
 		if (Str.isBlank(oldValue)) return "created " + getFieldLabel();
 		if (Str.isBlank(newValue)) return "deleted " + getFieldLabel();
 		return "changed " + getFieldLabel();
+	}
+
+	private String getEntityReferenceAndLabel(String id) {
+		try {
+			return ScrumGwt.getReferenceAndLabel(getDao().getEntity(id));
+		} catch (EntityDoesNotExistException ex) {
+			new RequestEntityServiceCall(id).execute();
+			return id;
+		}
 	}
 
 	public String getDiff() {
