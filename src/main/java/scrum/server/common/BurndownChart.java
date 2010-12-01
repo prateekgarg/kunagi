@@ -32,7 +32,6 @@ import org.jfree.data.xy.DefaultXYDataset;
 
 import scrum.client.common.WeekdaySelector;
 import scrum.server.css.ScreenCssBuilder;
-import scrum.server.project.ProjectDao;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshot;
@@ -47,12 +46,7 @@ public class BurndownChart {
 
 	// --- dependencies ---
 
-	private ProjectDao projectDao;
 	private SprintDao sprintDao;
-
-	public void setProjectDao(ProjectDao projectDao) {
-		this.projectDao = projectDao;
-	}
 
 	public void setSprintDao(SprintDao sprintDao) {
 		this.sprintDao = sprintDao;
@@ -309,8 +303,9 @@ public class BurndownChart {
 					jump = totalAfter - totalBefore + burned;
 				}
 
-				System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter + " jump=" + jump
-						+ " burned=" + burned + " -> " + snapshot);
+				// System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter +
+				// " jump=" + jump
+				// + " burned=" + burned + " -> " + snapshot);
 				if (workFinished) {
 					processSuffix();
 				} else if (workStarted) {

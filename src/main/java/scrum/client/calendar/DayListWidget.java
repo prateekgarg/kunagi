@@ -1,5 +1,6 @@
 package scrum.client.calendar;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.Gwt;
@@ -28,6 +29,7 @@ public class DayListWidget extends AScrumWidget {
 	private SimplePanel wrapper;
 	private BlockListSelectionManager selectionManager;
 	private Map<Date, BlockListWidget<SimpleEvent>> lists;
+	private Map<Date, Widget> eventLists = new HashMap<Date, Widget>();
 
 	private Date date;
 	private Date begin;
@@ -68,7 +70,8 @@ public class DayListWidget extends AScrumWidget {
 		updateBeginAndEnd();
 
 		lists.clear();
-		selectionManager.clear();
+		// selectionManager.clear();
+		// eventLists.clear();
 
 		FlexTable table = new FlexTable();
 		table.setWidth("100%");
@@ -134,11 +137,21 @@ public class DayListWidget extends AScrumWidget {
 		for (String info : calendar.getInfos(date)) {
 			panel.add(Gwt.createDiv("DayListWidget-date-info", info));
 		}
-		panel.add(createEventList(date));
+		panel.add(getEventList(date));
 		return panel;
 	}
 
+	private Widget getEventList(Date date) {
+		Widget eventList = eventLists.get(date);
+		if (eventList == null) {
+			eventList = createEventList(date);
+			eventLists.put(date, eventList);
+		}
+		return eventList;
+	}
+
 	private Widget createEventList(Date date) {
+		Log.DEBUG("-------------------------------------- createEventList ->", date);
 		BlockListWidget<SimpleEvent> list = new BlockListWidget<SimpleEvent>(SimpleEventBlock.FACTORY,
 				new ChangeSimpleEventDateDropAction(date));
 		list.setSelectionManager(selectionManager);
