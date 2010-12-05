@@ -103,13 +103,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
 			systemConfigModel.addProperty("ldapEnabled", boolean.class).setTooltip(
 				"Enable LDAP authentication. Kunagi will check username and password against a LDAP server.");
-			systemConfigModel.addStringProperty("ldapUrl").setTooltip("URL for the LDAP server.");
+			systemConfigModel.addStringProperty("ldapUrl").setTooltip(
+				"URL for the LDAP server. Example: ldap://127.0.0.1:389/");
 			systemConfigModel.addStringProperty("ldapUser").setTooltip(
 				"Username which is required to connect to the LDAP server.");
 			systemConfigModel.addStringProperty("ldapPassword").setMasked(true)
 					.setTooltip("Password which is required to connect to the LDAP server.");
-			systemConfigModel.addStringProperty("ldapBaseDn");
-			systemConfigModel.addStringProperty("ldapUserFilterRegex");
+			systemConfigModel.addStringProperty("ldapBaseDn").setTooltip("Example: dc=mydomain,dc=com");
+			systemConfigModel.addStringProperty("ldapUserFilterRegex").setTooltip(
+				"Example: (&(objectClass=user)(sAMAccountName=%u))");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

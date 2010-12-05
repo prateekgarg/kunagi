@@ -1212,7 +1212,7 @@ public abstract class GSystemConfig
             setLdapUrl(value);
         }
         @Override
-        public String getTooltip() { return "URL for the LDAP server."; }
+        public String getTooltip() { return "URL for the LDAP server. Example: ldap://127.0.0.1:389/"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -1379,6 +1379,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setLdapBaseDn(value);
         }
+        @Override
+        public String getTooltip() { return "Example: dc=mydomain,dc=com"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
@@ -1432,6 +1434,8 @@ public abstract class GSystemConfig
         public void setValue(java.lang.String value) {
             setLdapUserFilterRegex(value);
         }
+        @Override
+        public String getTooltip() { return "Example: (&(objectClass=user)(sAMAccountName=%u))"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
