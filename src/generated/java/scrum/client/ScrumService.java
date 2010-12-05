@@ -12,6 +12,8 @@ public interface ScrumService extends com.google.gwt.user.client.rpc.RemoteServi
 
     scrum.client.DataTransferObject sendTestEmail(int conversationNumber);
 
+    scrum.client.DataTransferObject testLdap(int conversationNumber);
+
     scrum.client.DataTransferObject updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage);
 
     scrum.client.DataTransferObject requestComments(int conversationNumber, String parentId);

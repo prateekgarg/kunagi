@@ -1,6 +1,7 @@
 package scrum.server;
 
 import ilarkesto.auth.Auth;
+import ilarkesto.auth.AuthenticationFailedException;
 import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
@@ -8,6 +9,7 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.EntityDoesNotExistException;
@@ -710,6 +712,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
 		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
+	}
+
+	@Override
+	public void onTestLdap(GwtConversation conversation) {
+		SystemConfig config = webApplication.getSystemConfig();
+		try {
+			Ldap.authenticateUserGetEmail(config.getLdapUrl(), config.getLdapUser(), config.getLdapPassword(),
+				config.getLdapBaseDn(), config.getLdapUserFilterRegex(), "dummyUser", "dummyPassword");
+		} catch (AuthenticationFailedException ex) {}
 	}
 
 	@Override

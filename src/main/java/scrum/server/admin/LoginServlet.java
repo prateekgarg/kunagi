@@ -1,10 +1,12 @@
 package scrum.server.admin;
 
+import ilarkesto.auth.AuthenticationFailedException;
 import ilarkesto.auth.OpenId;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.io.IO;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
@@ -84,7 +86,7 @@ public class LoginServlet extends AHttpServlet {
 		String username = req.getParameter("username");
 		if (username != null) {
 			login(username, req.getParameter("password"), req.getParameter("keepmeloggedin") != null, historyToken,
-				resp, session);
+				req, resp, session);
 			return;
 		}
 
@@ -310,16 +312,47 @@ public class LoginServlet extends AHttpServlet {
 	}
 
 	private void login(String username, String password, boolean keepmeloggedin, String historyToken,
-			HttpServletResponse resp, WebSession session) throws UnsupportedEncodingException, IOException {
+			HttpServletRequest request, HttpServletResponse resp, WebSession session)
+			throws UnsupportedEncodingException, IOException {
 		User user = null;
-		if (username.contains("@")) {
-			user = userDao.getUserByEmail(username.toLowerCase());
-		}
-		if (user == null) {
-			user = userDao.getUserByName(username);
+		if (username.contains("@")) user = userDao.getUserByEmail(username.toLowerCase());
+		if (user == null) user = userDao.getUserByName(username);
+
+		boolean authenticated;
+		String email = null;
+		if (systemConfig.isLdapEnabled(true)) {
+			// LDAP authentication
+			try {
+				email = Ldap.authenticateUserGetEmail(systemConfig.getLdapUrl(), systemConfig.getLdapUser(),
+					systemConfig.getLdapPassword(), systemConfig.getLdapBaseDn(),
+					systemConfig.getLdapUserFilterRegex(), username, password);
+				authenticated = true;
+			} catch (AuthenticationFailedException ex) {
+				authenticated = false;
+			} catch (Exception ex) {
+				log.error("LDAP authentication failed.", ex);
+				renderLoginPage(resp, username, null, historyToken,
+					"LDAP authentication failed: " + Str.getRootCauseMessage(ex), false, false);
+				return;
+			}
+
+			if (user == null) {
+				if (webApplication.getSystemConfig().isRegistrationDisabled()) {
+					renderLoginPage(resp, null, null, historyToken, "There is no user " + username
+							+ " and creating new users is disabled.", false, false);
+					return;
+				}
+				user = userDao.postUser(email, username, Str.generatePassword(23));
+				if (Str.isEmail(email)) user.setEmail(email);
+				webApplication.triggerRegisterNotification(user, request.getRemoteHost());
+			}
+
+		} else {
+			// default password authentication
+			authenticated = user != null && user.matchesPassword(password);
 		}
 
-		if (user == null || user.matchesPassword(password) == false) {
+		if (!authenticated || user == null) {
 			renderLoginPage(resp, username, null, historyToken, "Login failed.", false, false);
 			return;
 		}

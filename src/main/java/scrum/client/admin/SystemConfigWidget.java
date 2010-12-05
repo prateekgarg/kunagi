@@ -18,14 +18,24 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 
-		page.addHeader("Login Page");
+		page.addHeader("Login page");
 		TableBuilder tbLogin = ScrumGwt.createFieldTable();
-		tbLogin.addFieldRow("Custom Logo", config.getLoginPageLogoUrlModel());
-		tbLogin.addFieldRow("Login Message", config.getLoginPageMessageModel());
-		tbLogin.addFieldRow("Register Message", config.getRegisterPageMessageModel());
-		tbLogin.addFieldRow("Disable OpenID", config.getOpenIdDisabledModel());
+		tbLogin.addFieldRow("Custom logo", config.getLoginPageLogoUrlModel());
+		tbLogin.addFieldRow("Login message", config.getLoginPageMessageModel());
+		tbLogin.addFieldRow("Register message", config.getRegisterPageMessageModel());
 		// tbMessages.addFieldRow("About Page", config.getAboutPageMessageModel());
 		page.addSection(tbLogin.createTable());
+
+		page.addHeader("Authentication", new ButtonWidget(new TestLdapAction()));
+		TableBuilder tbAuth = ScrumGwt.createFieldTable();
+		tbAuth.addFieldRow("OpenID disabled", config.getOpenIdDisabledModel());
+		tbAuth.addFieldRow("LDAP authentication enabled", config.getLdapEnabledModel());
+		tbAuth.addFieldRow("LDAP URL", config.getLdapUrlModel());
+		tbAuth.addFieldRow("LDAP user", config.getLdapUserModel());
+		tbAuth.addFieldRow("LDAP password", config.getLdapPasswordModel());
+		tbAuth.addFieldRow("LDAP base DN", config.getLdapBaseDnModel());
+		tbAuth.addFieldRow("LDAP user filter RegEx", config.getLdapUserFilterRegexModel());
+		page.addSection(tbAuth.createTable());
 
 		page.addHeader("Installation");
 		TableBuilder tbKunagi = ScrumGwt.createFieldTable();
@@ -46,11 +56,11 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		page.addHeader("Email", new ButtonWidget(new SendTestEmailAction()));
 		TableBuilder tbEmail = ScrumGwt.createFieldTable();
-		tbEmail.addFieldRow("SMTP Server", config.getSmtpServerModel());
-		tbEmail.addFieldRow("SMTP Port", config.getSmtpPortModel());
+		tbEmail.addFieldRow("SMTP server", config.getSmtpServerModel());
+		tbEmail.addFieldRow("SMTP port", config.getSmtpPortModel());
 		tbEmail.addFieldRow("SMTP TLS", config.getSmtpTlsModel());
-		tbEmail.addFieldRow("SMTP User", config.getSmtpUserModel());
-		tbEmail.addFieldRow("SMTP Password", config.getSmtpPasswordModel());
+		tbEmail.addFieldRow("SMTP user", config.getSmtpUserModel());
+		tbEmail.addFieldRow("SMTP password", config.getSmtpPasswordModel());
 		tbEmail.addFieldRow("Sender email", config.getSmtpFromModel());
 		tbEmail.addFieldRow("Administrator email", config.getAdminEmailModel());
 		page.addSection(tbEmail.createTable());

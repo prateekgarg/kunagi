@@ -55,6 +55,12 @@ public abstract class GSystemConfig
         properties.put("defaultUserPassword", this.defaultUserPassword);
         properties.put("openIdDisabled", this.openIdDisabled);
         properties.put("versionCheckEnabled", this.versionCheckEnabled);
+        properties.put("ldapEnabled", this.ldapEnabled);
+        properties.put("ldapUrl", this.ldapUrl);
+        properties.put("ldapUser", this.ldapUser);
+        properties.put("ldapPassword", this.ldapPassword);
+        properties.put("ldapBaseDn", this.ldapBaseDn);
+        properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
     }
 
     public int compareTo(SystemConfig other) {
@@ -712,6 +718,216 @@ public abstract class GSystemConfig
         setVersionCheckEnabled((Boolean)value);
     }
 
+    // -----------------------------------------------------------
+    // - ldapEnabled
+    // -----------------------------------------------------------
+
+    private boolean ldapEnabled;
+
+    public final boolean isLdapEnabled() {
+        return ldapEnabled;
+    }
+
+    public final void setLdapEnabled(boolean ldapEnabled) {
+        ldapEnabled = prepareLdapEnabled(ldapEnabled);
+        if (isLdapEnabled(ldapEnabled)) return;
+        this.ldapEnabled = ldapEnabled;
+        updateLastModified();
+        fireModified("ldapEnabled="+ldapEnabled);
+    }
+
+    protected boolean prepareLdapEnabled(boolean ldapEnabled) {
+        return ldapEnabled;
+    }
+
+    public final boolean isLdapEnabled(boolean ldapEnabled) {
+        return this.ldapEnabled == ldapEnabled;
+    }
+
+    protected final void updateLdapEnabled(Object value) {
+        setLdapEnabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUrl
+    // -----------------------------------------------------------
+
+    private java.lang.String ldapUrl;
+
+    public final java.lang.String getLdapUrl() {
+        return ldapUrl;
+    }
+
+    public final void setLdapUrl(java.lang.String ldapUrl) {
+        ldapUrl = prepareLdapUrl(ldapUrl);
+        if (isLdapUrl(ldapUrl)) return;
+        this.ldapUrl = ldapUrl;
+        updateLastModified();
+        fireModified("ldapUrl="+ldapUrl);
+    }
+
+    protected java.lang.String prepareLdapUrl(java.lang.String ldapUrl) {
+        ldapUrl = Str.removeUnreadableChars(ldapUrl);
+        return ldapUrl;
+    }
+
+    public final boolean isLdapUrlSet() {
+        return this.ldapUrl != null;
+    }
+
+    public final boolean isLdapUrl(java.lang.String ldapUrl) {
+        if (this.ldapUrl == null && ldapUrl == null) return true;
+        return this.ldapUrl != null && this.ldapUrl.equals(ldapUrl);
+    }
+
+    protected final void updateLdapUrl(Object value) {
+        setLdapUrl((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUser
+    // -----------------------------------------------------------
+
+    private java.lang.String ldapUser;
+
+    public final java.lang.String getLdapUser() {
+        return ldapUser;
+    }
+
+    public final void setLdapUser(java.lang.String ldapUser) {
+        ldapUser = prepareLdapUser(ldapUser);
+        if (isLdapUser(ldapUser)) return;
+        this.ldapUser = ldapUser;
+        updateLastModified();
+        fireModified("ldapUser="+ldapUser);
+    }
+
+    protected java.lang.String prepareLdapUser(java.lang.String ldapUser) {
+        ldapUser = Str.removeUnreadableChars(ldapUser);
+        return ldapUser;
+    }
+
+    public final boolean isLdapUserSet() {
+        return this.ldapUser != null;
+    }
+
+    public final boolean isLdapUser(java.lang.String ldapUser) {
+        if (this.ldapUser == null && ldapUser == null) return true;
+        return this.ldapUser != null && this.ldapUser.equals(ldapUser);
+    }
+
+    protected final void updateLdapUser(Object value) {
+        setLdapUser((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - ldapPassword
+    // -----------------------------------------------------------
+
+    private java.lang.String ldapPassword;
+
+    public final java.lang.String getLdapPassword() {
+        return ldapPassword;
+    }
+
+    public final void setLdapPassword(java.lang.String ldapPassword) {
+        ldapPassword = prepareLdapPassword(ldapPassword);
+        if (isLdapPassword(ldapPassword)) return;
+        this.ldapPassword = ldapPassword;
+        updateLastModified();
+        fireModified("ldapPassword="+ldapPassword);
+    }
+
+    protected java.lang.String prepareLdapPassword(java.lang.String ldapPassword) {
+        ldapPassword = Str.removeUnreadableChars(ldapPassword);
+        return ldapPassword;
+    }
+
+    public final boolean isLdapPasswordSet() {
+        return this.ldapPassword != null;
+    }
+
+    public final boolean isLdapPassword(java.lang.String ldapPassword) {
+        if (this.ldapPassword == null && ldapPassword == null) return true;
+        return this.ldapPassword != null && this.ldapPassword.equals(ldapPassword);
+    }
+
+    protected final void updateLdapPassword(Object value) {
+        setLdapPassword((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - ldapBaseDn
+    // -----------------------------------------------------------
+
+    private java.lang.String ldapBaseDn;
+
+    public final java.lang.String getLdapBaseDn() {
+        return ldapBaseDn;
+    }
+
+    public final void setLdapBaseDn(java.lang.String ldapBaseDn) {
+        ldapBaseDn = prepareLdapBaseDn(ldapBaseDn);
+        if (isLdapBaseDn(ldapBaseDn)) return;
+        this.ldapBaseDn = ldapBaseDn;
+        updateLastModified();
+        fireModified("ldapBaseDn="+ldapBaseDn);
+    }
+
+    protected java.lang.String prepareLdapBaseDn(java.lang.String ldapBaseDn) {
+        ldapBaseDn = Str.removeUnreadableChars(ldapBaseDn);
+        return ldapBaseDn;
+    }
+
+    public final boolean isLdapBaseDnSet() {
+        return this.ldapBaseDn != null;
+    }
+
+    public final boolean isLdapBaseDn(java.lang.String ldapBaseDn) {
+        if (this.ldapBaseDn == null && ldapBaseDn == null) return true;
+        return this.ldapBaseDn != null && this.ldapBaseDn.equals(ldapBaseDn);
+    }
+
+    protected final void updateLdapBaseDn(Object value) {
+        setLdapBaseDn((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUserFilterRegex
+    // -----------------------------------------------------------
+
+    private java.lang.String ldapUserFilterRegex;
+
+    public final java.lang.String getLdapUserFilterRegex() {
+        return ldapUserFilterRegex;
+    }
+
+    public final void setLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        ldapUserFilterRegex = prepareLdapUserFilterRegex(ldapUserFilterRegex);
+        if (isLdapUserFilterRegex(ldapUserFilterRegex)) return;
+        this.ldapUserFilterRegex = ldapUserFilterRegex;
+        updateLastModified();
+        fireModified("ldapUserFilterRegex="+ldapUserFilterRegex);
+    }
+
+    protected java.lang.String prepareLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        ldapUserFilterRegex = Str.removeUnreadableChars(ldapUserFilterRegex);
+        return ldapUserFilterRegex;
+    }
+
+    public final boolean isLdapUserFilterRegexSet() {
+        return this.ldapUserFilterRegex != null;
+    }
+
+    public final boolean isLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        if (this.ldapUserFilterRegex == null && ldapUserFilterRegex == null) return true;
+        return this.ldapUserFilterRegex != null && this.ldapUserFilterRegex.equals(ldapUserFilterRegex);
+    }
+
+    protected final void updateLdapUserFilterRegex(Object value) {
+        setLdapUserFilterRegex((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -736,6 +952,12 @@ public abstract class GSystemConfig
             if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
             if (property.equals("openIdDisabled")) updateOpenIdDisabled(value);
             if (property.equals("versionCheckEnabled")) updateVersionCheckEnabled(value);
+            if (property.equals("ldapEnabled")) updateLdapEnabled(value);
+            if (property.equals("ldapUrl")) updateLdapUrl(value);
+            if (property.equals("ldapUser")) updateLdapUser(value);
+            if (property.equals("ldapPassword")) updateLdapPassword(value);
+            if (property.equals("ldapBaseDn")) updateLdapBaseDn(value);
+            if (property.equals("ldapUserFilterRegex")) updateLdapUserFilterRegex(value);
         }
     }
 

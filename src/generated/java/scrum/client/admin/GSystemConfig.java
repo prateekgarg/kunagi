@@ -1112,6 +1112,335 @@ public abstract class GSystemConfig
 
     }
 
+    // --- ldapEnabled ---
+
+    private boolean ldapEnabled ;
+
+    public final boolean isLdapEnabled() {
+        return this.ldapEnabled ;
+    }
+
+    public final SystemConfig setLdapEnabled(boolean ldapEnabled) {
+        if (isLdapEnabled(ldapEnabled)) return (SystemConfig)this;
+        this.ldapEnabled = ldapEnabled ;
+        propertyChanged("ldapEnabled", this.ldapEnabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapEnabled(boolean ldapEnabled) {
+        return equals(this.ldapEnabled, ldapEnabled);
+    }
+
+    private transient LdapEnabledModel ldapEnabledModel;
+
+    public LdapEnabledModel getLdapEnabledModel() {
+        if (ldapEnabledModel == null) ldapEnabledModel = createLdapEnabledModel();
+        return ldapEnabledModel;
+    }
+
+    protected LdapEnabledModel createLdapEnabledModel() { return new LdapEnabledModel(); }
+
+    protected class LdapEnabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapEnabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isLdapEnabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setLdapEnabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Enable LDAP authentication. Kunagi will check username and password against a LDAP server."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- ldapUrl ---
+
+    private java.lang.String ldapUrl ;
+
+    public final java.lang.String getLdapUrl() {
+        return this.ldapUrl ;
+    }
+
+    public final SystemConfig setLdapUrl(java.lang.String ldapUrl) {
+        if (isLdapUrl(ldapUrl)) return (SystemConfig)this;
+        this.ldapUrl = ldapUrl ;
+        propertyChanged("ldapUrl", this.ldapUrl);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapUrl(java.lang.String ldapUrl) {
+        return equals(this.ldapUrl, ldapUrl);
+    }
+
+    private transient LdapUrlModel ldapUrlModel;
+
+    public LdapUrlModel getLdapUrlModel() {
+        if (ldapUrlModel == null) ldapUrlModel = createLdapUrlModel();
+        return ldapUrlModel;
+    }
+
+    protected LdapUrlModel createLdapUrlModel() { return new LdapUrlModel(); }
+
+    protected class LdapUrlModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapUrl";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLdapUrl();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLdapUrl(value);
+        }
+        @Override
+        public String getTooltip() { return "URL for the LDAP server."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- ldapUser ---
+
+    private java.lang.String ldapUser ;
+
+    public final java.lang.String getLdapUser() {
+        return this.ldapUser ;
+    }
+
+    public final SystemConfig setLdapUser(java.lang.String ldapUser) {
+        if (isLdapUser(ldapUser)) return (SystemConfig)this;
+        this.ldapUser = ldapUser ;
+        propertyChanged("ldapUser", this.ldapUser);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapUser(java.lang.String ldapUser) {
+        return equals(this.ldapUser, ldapUser);
+    }
+
+    private transient LdapUserModel ldapUserModel;
+
+    public LdapUserModel getLdapUserModel() {
+        if (ldapUserModel == null) ldapUserModel = createLdapUserModel();
+        return ldapUserModel;
+    }
+
+    protected LdapUserModel createLdapUserModel() { return new LdapUserModel(); }
+
+    protected class LdapUserModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapUser";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLdapUser();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLdapUser(value);
+        }
+        @Override
+        public String getTooltip() { return "Username which is required to connect to the LDAP server."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- ldapPassword ---
+
+    private java.lang.String ldapPassword ;
+
+    public final java.lang.String getLdapPassword() {
+        return this.ldapPassword ;
+    }
+
+    public final SystemConfig setLdapPassword(java.lang.String ldapPassword) {
+        if (isLdapPassword(ldapPassword)) return (SystemConfig)this;
+        this.ldapPassword = ldapPassword ;
+        propertyChanged("ldapPassword", this.ldapPassword);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapPassword(java.lang.String ldapPassword) {
+        return equals(this.ldapPassword, ldapPassword);
+    }
+
+    private transient LdapPasswordModel ldapPasswordModel;
+
+    public LdapPasswordModel getLdapPasswordModel() {
+        if (ldapPasswordModel == null) ldapPasswordModel = createLdapPasswordModel();
+        return ldapPasswordModel;
+    }
+
+    protected LdapPasswordModel createLdapPasswordModel() { return new LdapPasswordModel(); }
+
+    protected class LdapPasswordModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapPassword";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLdapPassword();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLdapPassword(value);
+        }
+
+        @Override
+        public boolean isMasked() { return true; }
+        @Override
+        public String getTooltip() { return "Password which is required to connect to the LDAP server."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- ldapBaseDn ---
+
+    private java.lang.String ldapBaseDn ;
+
+    public final java.lang.String getLdapBaseDn() {
+        return this.ldapBaseDn ;
+    }
+
+    public final SystemConfig setLdapBaseDn(java.lang.String ldapBaseDn) {
+        if (isLdapBaseDn(ldapBaseDn)) return (SystemConfig)this;
+        this.ldapBaseDn = ldapBaseDn ;
+        propertyChanged("ldapBaseDn", this.ldapBaseDn);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapBaseDn(java.lang.String ldapBaseDn) {
+        return equals(this.ldapBaseDn, ldapBaseDn);
+    }
+
+    private transient LdapBaseDnModel ldapBaseDnModel;
+
+    public LdapBaseDnModel getLdapBaseDnModel() {
+        if (ldapBaseDnModel == null) ldapBaseDnModel = createLdapBaseDnModel();
+        return ldapBaseDnModel;
+    }
+
+    protected LdapBaseDnModel createLdapBaseDnModel() { return new LdapBaseDnModel(); }
+
+    protected class LdapBaseDnModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapBaseDn";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLdapBaseDn();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLdapBaseDn(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- ldapUserFilterRegex ---
+
+    private java.lang.String ldapUserFilterRegex ;
+
+    public final java.lang.String getLdapUserFilterRegex() {
+        return this.ldapUserFilterRegex ;
+    }
+
+    public final SystemConfig setLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        if (isLdapUserFilterRegex(ldapUserFilterRegex)) return (SystemConfig)this;
+        this.ldapUserFilterRegex = ldapUserFilterRegex ;
+        propertyChanged("ldapUserFilterRegex", this.ldapUserFilterRegex);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        return equals(this.ldapUserFilterRegex, ldapUserFilterRegex);
+    }
+
+    private transient LdapUserFilterRegexModel ldapUserFilterRegexModel;
+
+    public LdapUserFilterRegexModel getLdapUserFilterRegexModel() {
+        if (ldapUserFilterRegexModel == null) ldapUserFilterRegexModel = createLdapUserFilterRegexModel();
+        return ldapUserFilterRegexModel;
+    }
+
+    protected LdapUserFilterRegexModel createLdapUserFilterRegexModel() { return new LdapUserFilterRegexModel(); }
+
+    protected class LdapUserFilterRegexModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_ldapUserFilterRegex";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getLdapUserFilterRegex();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setLdapUserFilterRegex(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1134,6 +1463,12 @@ public abstract class GSystemConfig
         defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
         openIdDisabled  = (Boolean) props.get("openIdDisabled");
         versionCheckEnabled  = (Boolean) props.get("versionCheckEnabled");
+        ldapEnabled  = (Boolean) props.get("ldapEnabled");
+        ldapUrl  = (java.lang.String) props.get("ldapUrl");
+        ldapUser  = (java.lang.String) props.get("ldapUser");
+        ldapPassword  = (java.lang.String) props.get("ldapPassword");
+        ldapBaseDn  = (java.lang.String) props.get("ldapBaseDn");
+        ldapUserFilterRegex  = (java.lang.String) props.get("ldapUserFilterRegex");
         updateLocalModificationTime();
     }
 
@@ -1159,6 +1494,12 @@ public abstract class GSystemConfig
         properties.put("defaultUserPassword", this.defaultUserPassword);
         properties.put("openIdDisabled", this.openIdDisabled);
         properties.put("versionCheckEnabled", this.versionCheckEnabled);
+        properties.put("ldapEnabled", this.ldapEnabled);
+        properties.put("ldapUrl", this.ldapUrl);
+        properties.put("ldapUser", this.ldapUser);
+        properties.put("ldapPassword", this.ldapPassword);
+        properties.put("ldapBaseDn", this.ldapBaseDn);
+        properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
     }
 
 }

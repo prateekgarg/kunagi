@@ -14,6 +14,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onSendTestEmail(GwtConversation conversation);
 
+    public abstract void onTestLdap(GwtConversation conversation);
+
     public abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
 
     public abstract void onRequestComments(GwtConversation conversation, String parentId);
@@ -140,6 +142,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSendTestEmail(conversation);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "SendTestEmail", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject testLdap(int conversationNumber) {
+        log.debug("Handling service call: TestLdap");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:TestLdap");
+            context.bindCurrentThread();
+            try {
+                onTestLdap(conversation);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "TestLdap", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

@@ -12,6 +12,8 @@ public interface ScrumServiceAsync {
 
     void sendTestEmail(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void testLdap(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void requestComments(int conversationNumber, String parentId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);

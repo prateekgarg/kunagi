@@ -74,6 +74,17 @@ public abstract class GSystemConfigDao
         defaultUserPasswordsCache = null;
         systemConfigsByOpenIdDisabledCache.clear();
         systemConfigsByVersionCheckEnabledCache.clear();
+        systemConfigsByLdapEnabledCache.clear();
+        systemConfigsByLdapUrlCache.clear();
+        ldapUrlsCache = null;
+        systemConfigsByLdapUserCache.clear();
+        ldapUsersCache = null;
+        systemConfigsByLdapPasswordCache.clear();
+        ldapPasswordsCache = null;
+        systemConfigsByLdapBaseDnCache.clear();
+        ldapBaseDnsCache = null;
+        systemConfigsByLdapUserFilterRegexCache.clear();
+        ldapUserFilterRegexsCache = null;
     }
 
     @Override
@@ -782,6 +793,235 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return value == e.isVersionCheckEnabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapEnabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByLdapEnabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean ldapEnabled) {
+                    return getEntities(new IsLdapEnabled(ldapEnabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapEnabled(boolean ldapEnabled) {
+        return systemConfigsByLdapEnabledCache.get(ldapEnabled);
+    }
+
+    private static class IsLdapEnabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsLdapEnabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isLdapEnabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUrl
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLdapUrlCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String ldapUrl) {
+                    return getEntities(new IsLdapUrl(ldapUrl));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapUrl(java.lang.String ldapUrl) {
+        return systemConfigsByLdapUrlCache.get(ldapUrl);
+    }
+    private Set<java.lang.String> ldapUrlsCache;
+
+    public final Set<java.lang.String> getLdapUrls() {
+        if (ldapUrlsCache == null) {
+            ldapUrlsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLdapUrlSet()) ldapUrlsCache.add(e.getLdapUrl());
+            }
+        }
+        return ldapUrlsCache;
+    }
+
+    private static class IsLdapUrl implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLdapUrl(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLdapUrl(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUser
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLdapUserCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String ldapUser) {
+                    return getEntities(new IsLdapUser(ldapUser));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapUser(java.lang.String ldapUser) {
+        return systemConfigsByLdapUserCache.get(ldapUser);
+    }
+    private Set<java.lang.String> ldapUsersCache;
+
+    public final Set<java.lang.String> getLdapUsers() {
+        if (ldapUsersCache == null) {
+            ldapUsersCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLdapUserSet()) ldapUsersCache.add(e.getLdapUser());
+            }
+        }
+        return ldapUsersCache;
+    }
+
+    private static class IsLdapUser implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLdapUser(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLdapUser(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapPassword
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLdapPasswordCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String ldapPassword) {
+                    return getEntities(new IsLdapPassword(ldapPassword));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapPassword(java.lang.String ldapPassword) {
+        return systemConfigsByLdapPasswordCache.get(ldapPassword);
+    }
+    private Set<java.lang.String> ldapPasswordsCache;
+
+    public final Set<java.lang.String> getLdapPasswords() {
+        if (ldapPasswordsCache == null) {
+            ldapPasswordsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLdapPasswordSet()) ldapPasswordsCache.add(e.getLdapPassword());
+            }
+        }
+        return ldapPasswordsCache;
+    }
+
+    private static class IsLdapPassword implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLdapPassword(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLdapPassword(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapBaseDn
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLdapBaseDnCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String ldapBaseDn) {
+                    return getEntities(new IsLdapBaseDn(ldapBaseDn));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapBaseDn(java.lang.String ldapBaseDn) {
+        return systemConfigsByLdapBaseDnCache.get(ldapBaseDn);
+    }
+    private Set<java.lang.String> ldapBaseDnsCache;
+
+    public final Set<java.lang.String> getLdapBaseDns() {
+        if (ldapBaseDnsCache == null) {
+            ldapBaseDnsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLdapBaseDnSet()) ldapBaseDnsCache.add(e.getLdapBaseDn());
+            }
+        }
+        return ldapBaseDnsCache;
+    }
+
+    private static class IsLdapBaseDn implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLdapBaseDn(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLdapBaseDn(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - ldapUserFilterRegex
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByLdapUserFilterRegexCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String ldapUserFilterRegex) {
+                    return getEntities(new IsLdapUserFilterRegex(ldapUserFilterRegex));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
+        return systemConfigsByLdapUserFilterRegexCache.get(ldapUserFilterRegex);
+    }
+    private Set<java.lang.String> ldapUserFilterRegexsCache;
+
+    public final Set<java.lang.String> getLdapUserFilterRegexs() {
+        if (ldapUserFilterRegexsCache == null) {
+            ldapUserFilterRegexsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isLdapUserFilterRegexSet()) ldapUserFilterRegexsCache.add(e.getLdapUserFilterRegex());
+            }
+        }
+        return ldapUserFilterRegexsCache;
+    }
+
+    private static class IsLdapUserFilterRegex implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsLdapUserFilterRegex(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isLdapUserFilterRegex(value);
         }
 
     }

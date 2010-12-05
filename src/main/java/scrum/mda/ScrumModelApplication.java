@@ -42,6 +42,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addAction("Logout", getBasePackageName() + ".admin");
 			applicationModel.addAction("RequestNewPassword", getBasePackageName() + ".admin");
 			applicationModel.addAction("SendTestEmail", getBasePackageName() + ".admin");
+			applicationModel.addAction("TestLdap", getBasePackageName() + ".admin");
 			applicationModel.addAction("ChangeProject", getBasePackageName() + ".project");
 			applicationModel.addAction("CreateExampleProject", getBasePackageName() + ".project");
 			applicationModel.addAction("RequestClosedIssues", getBasePackageName() + ".issues");
@@ -100,6 +101,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.addProperty("versionCheckEnabled", boolean.class)
 					.setTooltip(
 						"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
+			systemConfigModel.addProperty("ldapEnabled", boolean.class).setTooltip(
+				"Enable LDAP authentication. Kunagi will check username and password against a LDAP server.");
+			systemConfigModel.addStringProperty("ldapUrl").setTooltip("URL for the LDAP server.");
+			systemConfigModel.addStringProperty("ldapUser").setTooltip(
+				"Username which is required to connect to the LDAP server.");
+			systemConfigModel.addStringProperty("ldapPassword").setMasked(true)
+					.setTooltip("Password which is required to connect to the LDAP server.");
+			systemConfigModel.addStringProperty("ldapBaseDn");
+			systemConfigModel.addStringProperty("ldapUserFilterRegex");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;
