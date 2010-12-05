@@ -11,7 +11,7 @@ public class ReopenIssueAction extends GReopenIssueAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!issue.getProject().isProductOwner(getCurrentUser())) return false;
+		if (!issue.getProject().isProductOwnerOrScrumMaster(getCurrentUser())) return false;
 		return true;
 	}
 
