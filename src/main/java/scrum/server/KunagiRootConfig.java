@@ -24,8 +24,7 @@ public class KunagiRootConfig {
 	}
 
 	public KunagiRootConfig(String webappName) {
-		this(new File(determineUsedDataPath(webappName) + "/config.properties"),
-				determineDefaultConfigFile(webappName), webappName);
+		this(determineConfigFile(webappName), determineDefaultConfigFile(webappName), webappName);
 	}
 
 	private KunagiRootConfig(File configFile, File defaultsFile, String webappName) {
@@ -52,6 +51,12 @@ public class KunagiRootConfig {
 		return dataPath;
 	}
 
+	private static File determineConfigFile(String webappName) {
+		String configPath = System.getProperty("kunagi.config");
+		if (configPath != null) return new File(configPath);
+		return new File(determineUsedDataPath(webappName) + "/config.properties");
+	}
+
 	private static File determineDefaultConfigFile(String webappName) {
 		return Sys.isWindows() ? new File(Sys.getUsersHomePath() + "/" + webappName + ".properties") : new File("/etc/"
 				+ webappName + ".properties");
@@ -65,9 +70,11 @@ public class KunagiRootConfig {
 	}
 
 	private static String determineDefaultDataPath(String webappName) {
-		String path = Sys.isWindows() ? Sys.getUsersHomePath() + "/" + webappName : Sys.getWorkDir().getAbsolutePath()
-				+ "/webapps/" + webappName;
-		return new File(path).getAbsolutePath();
+		if (Sys.isWindows()) return Sys.getUsersHomePath() + "/" + webappName;
+
+		String webappsDir = Sys.getWorkDir().getAbsolutePath() + "/webapps";
+		if (new File(webappsDir).exists()) return new File(webappsDir + "/" + webappName).getAbsolutePath();
+		return new File(Sys.getWorkDir().getAbsolutePath() + "/" + webappName + "-data").getAbsolutePath();
 	}
 
 	private static File determineLegacyDataDir(String webappName) {
