@@ -318,9 +318,10 @@ public class LoginServlet extends AHttpServlet {
 		if (username.contains("@")) user = userDao.getUserByEmail(username.toLowerCase());
 		if (user == null) user = userDao.getUserByName(username);
 
+		boolean admin = user != null && user.isAdmin();
 		boolean authenticated;
 		String email = null;
-		if (systemConfig.isLdapEnabled(true)) {
+		if (systemConfig.isLdapEnabled(true) && !admin) {
 			// LDAP authentication
 			try {
 				email = Ldap.authenticateUserGetEmail(systemConfig.getLdapUrl(), systemConfig.getLdapUser(),
@@ -346,7 +347,6 @@ public class LoginServlet extends AHttpServlet {
 				if (Str.isEmail(email)) user.setEmail(email);
 				webApplication.triggerRegisterNotification(user, request.getRemoteHost());
 			}
-
 		} else {
 			// default password authentication
 			authenticated = user != null && user.matchesPassword(password);
