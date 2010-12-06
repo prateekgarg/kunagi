@@ -13,11 +13,9 @@
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a href="http://sourceforge.net/projects/kunagi/files/">Download</a>
+            <a href="http://sourceforge.net/projects/kunagi/files/$project.currentRelease">Download</a>
         </div>
-        #if( $project.currentRelease )
-            <div class="smallText" style="text-align: center;">Current release is $project.currentRelease</div>
-        #end
+        <div class="smallText" style="text-align: center;">Current release is $project.currentRelease</div>
     </div>
     <div class="clear"></div>
 </div>
