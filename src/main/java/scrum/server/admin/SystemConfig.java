@@ -1,7 +1,5 @@
 package scrum.server.admin;
 
-import scrum.server.common.StartServlet;
-
 public class SystemConfig extends GSystemConfig {
 
 	@Override
@@ -16,10 +14,14 @@ public class SystemConfig extends GSystemConfig {
 	}
 
 	@Override
+	protected String prepareUrl(String url) {
+		if (url != null && !url.endsWith("/")) url += "/";
+		return super.prepareUrl(url);
+	}
+
+	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (!isUrlSet()) setUrl(StartServlet.getWebappUrl());
-		if (!getUrl().endsWith("/")) setUrl(getUrl() + "/");
 		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
