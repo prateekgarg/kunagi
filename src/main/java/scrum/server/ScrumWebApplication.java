@@ -234,7 +234,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String getBaseUrl() {
-		return getSystemConfig().getUrl();
+		String url = getSystemConfig().getUrl();
+		return url == null ? "http://localhost:8080/kunagi/" : url;
 	}
 
 	private UserDao userDao;
