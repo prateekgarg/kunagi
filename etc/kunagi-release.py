@@ -1,4 +1,4 @@
-#!env python
+#!/usr/bin/env python
 
 # Script for releasing Kunagi
 
@@ -30,13 +30,14 @@ def execute(cmd, dir=None):
 # ------------ main -----------------
 
 # configuration
-artifactsDestinationHomeDir = 'build/releases' #'/var/www/kunagi.org/releases'
-remoteRepository = 'git://github.com/Kunagi/kunagi.git'
-repositoryDir = 'kunagi-repo'
-buildDir = repositoryDir + '/build'
+artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
+githubUser = 'git://github.com/Kunagi'
+workDir = 'kunagi-release-workdir'
+buildDir = workDir + '/kunagi/build'
 packageWar = buildDir + '/kunagi.war'
 packageZip = buildDir + '/kunagi.zip'
 packageTar = buildDir + '/kunagi.tar.bz2'
+
 
 # check parameters
 if len(sys.argv) < 2:
@@ -46,27 +47,37 @@ releaseLabel = sys.argv[1]
 branchName = 'r' + releaseLabel
 print 'Releasing Kunagi ' + releaseLabel
 
+
 # cleanup previous release
 print '  Clean'
-shutil.rmtree(repositoryDir)
+if os.path.exists(workDir):
+    shutil.rmtree(workDir)
+
 
 # checkout
-print '  Clone git repository ' + remoteRepository + ' -> ' + repositoryDir
-execute('git clone ' + remoteRepository + ' ' + repositoryDir)
-print '  Checkout branch ' + branchName
-execute('git checkout ' + branchName, repositoryDir)
+print '  Clone git repositories from ' + githubUser
+execute('git clone ' + githubUser + '/kunagi.git ' + workDir + '/kunagi')
+execute('git checkout ' + branchName, workDir + '/kunagi')
+execute('git clone ' + githubUser + '/ilarkesto.git ' + workDir + '/ilarkesto')
+execute('git checkout kunagi-' + branchName, workDir + '/ilarkesto')
+
+
+#update libs
+print '  Updating libs'
+execute('./update-libs.bsh', workDir + '/ilarkesto')
+
 
 # write build.properties file
 print '  Update build.properties'
-buildPropertiesFilePath = repositoryDir+'/src/main/java/scrum/server/build.properties'
+buildPropertiesFilePath = workDir + '/kunagi/src/main/java/scrum/server/build.properties'
 buildPropertiesFile = f = open(buildPropertiesFilePath, 'a')
-f.write('release.label='+releaseLabel+'\n')
+f.write('release.label=' + releaseLabel + '\n')
 f.close()
 
 
 # build
 print '  Build'
-execute('ant package', repositoryDir)
+execute('ant package', workDir + '/kunagi')
 
 
 # check files and directories
@@ -92,7 +103,7 @@ shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel 
 
 # update homepage
 print '  Update homepage'
-execute('ant releaseHomepage', repositoryDir)
+execute('ant releaseHomepage', workDir + '/kunagi')
 
 
 # upload to sourceforge
@@ -101,5 +112,6 @@ sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/k
 execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
 execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
 execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.bz2')
+
 
 print 'Kunagi ' + releaseLabel + ' released'
