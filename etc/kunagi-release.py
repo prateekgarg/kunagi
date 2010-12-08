@@ -93,14 +93,6 @@ if not os.path.exists(packageTar):
     fail('Missing tar package: ' + packageTar)
 
 
-# copy artifacts
-print '  Copy artifacts to ' + artifactsDestinationDir
-os.mkdir(artifactsDestinationDir)
-shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
-shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
-shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.bz2')
-
-
 # update homepage
 print '  Update homepage'
 execute('ant releaseHomepage', workDir + '/kunagi')
@@ -110,8 +102,16 @@ execute('ant releaseHomepage', workDir + '/kunagi')
 print '  Upload artifacts to SourceForge'
 sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/' + releaseLabel
 execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
-execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
 execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.bz2')
+execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
+
+
+# copy artifacts
+print '  Copy artifacts to ' + artifactsDestinationDir
+os.mkdir(artifactsDestinationDir)
+shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
+shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.bz2')
+shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
 
 
 print 'Kunagi ' + releaseLabel + ' released'
