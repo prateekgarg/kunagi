@@ -78,7 +78,7 @@ public class KunagiRootConfig {
 	}
 
 	private static File determineLegacyDataDir(String webappName) {
-		return Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/" + webappName + "/entities", Sys.getUsersHomePath()
+		File file = Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/" + webappName + "/entities", Sys.getUsersHomePath()
 				+ "/webapps/" + webappName + "/entities", Sys.getWorkDir() + "/webapp-data/" + webappName + "/entities", Sys.getWorkDir()
 				+ "/webapps/" + webappName + "/entities");
 		return file == null ? null : file.getParentFile();
