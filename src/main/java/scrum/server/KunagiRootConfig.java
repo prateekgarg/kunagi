@@ -30,7 +30,7 @@ public class KunagiRootConfig {
 	private KunagiRootConfig(File configFile, File defaultsFile, String webappName) {
 		this.webappName = webappName;
 		log.info("\n\n     CONFIGURATION FILE:", configFile.getAbsolutePath(), "\n\n");
-		props = new FilePropertiesStore(configFile, true).setLabel("Kunag Configuration");
+		props = new FilePropertiesStore(configFile, true).setLabel("Kunagi Configuration");
 		if (defaultsFile != null && defaultsFile.exists()) {
 			log.info("\n\n     Including configuration defaults from:", defaultsFile.getAbsolutePath(), "\n\n");
 			Properties defaults = IO.loadProperties(defaultsFile, IO.UTF_8);
@@ -73,14 +73,15 @@ public class KunagiRootConfig {
 		if (Sys.isWindows()) return Sys.getUsersHomePath() + "/" + webappName;
 
 		String webappsDir = Sys.getWorkDir().getAbsolutePath() + "/webapps";
-		if (new File(webappsDir).exists()) return new File(webappsDir + "/" + webappName).getAbsolutePath();
+		if (new File(webappsDir).exists()) return new File(webappsDir + "/" + webappName + "-data").getAbsolutePath();
 		return new File(Sys.getWorkDir().getAbsolutePath() + "/" + webappName + "-data").getAbsolutePath();
 	}
 
 	private static File determineLegacyDataDir(String webappName) {
-		return Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/" + webappName, Sys.getUsersHomePath()
-				+ "/webapps/" + webappName, Sys.getWorkDir() + "/webapp-data/" + webappName, Sys.getWorkDir()
-				+ "/webapps/" + webappName);
+		return Utl.getFirstExistingFile(Sys.getUsersHomePath() + "/webapp-data/" + webappName + "/entities", Sys.getUsersHomePath()
+				+ "/webapps/" + webappName + "/entities", Sys.getWorkDir() + "/webapp-data/" + webappName + "/entities", Sys.getWorkDir()
+				+ "/webapps/" + webappName + "/entities");
+		return file == null ? null : file.getParentFile();
 	}
 
 	public String getUrl() {
