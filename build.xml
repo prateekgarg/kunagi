@@ -85,6 +85,7 @@
                 <exclude name="**/src/" />
                 <exclude name="**/javadoc/" />
                 <exclude name="**/gwt-dev.jar" />
+            	<exclude name="**/gwt-user.jar" />
                 <exclude name="**/servlet-api-*.jar" />
                 <exclude name="**/google-collect-*.jar" />
                 <exclude name="**/junit-*.jar" />
