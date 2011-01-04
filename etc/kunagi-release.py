@@ -34,9 +34,10 @@ artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
 githubUser = 'git://github.com/Kunagi'
 workDir = 'kunagi-release-workdir'
 buildDir = workDir + '/kunagi/build'
+packageDir = buildDir + '/package/kunagi'
 packageWar = buildDir + '/kunagi.war'
-packageZip = buildDir + '/kunagi.zip'
-packageTar = buildDir + '/kunagi.tar.bz2'
+packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
+packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
 
 
 # check parameters
@@ -80,6 +81,17 @@ print '  Build'
 execute('ant package', workDir + '/kunagi')
 
 
+# pack
+print '  Pack'
+if not os.path.exists(packageDir):
+    fail('Missing package directory: ' + packageDir)
+newPackageDir = packageDir + '/' + releaseLabel
+shutil.move(packageDir, newPackageDir)
+packageDir = newPackageDir
+execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, buildDir + '/package')
+execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, buildDir + '/package')
+
+
 # check files and directories
 print '  Check artifacts'
 artifactsDestinationDir = artifactsDestinationHomeDir + '/' + releaseLabel
@@ -102,7 +114,7 @@ execute('ant releaseHomepage', workDir + '/kunagi')
 print '  Upload artifacts to SourceForge'
 sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/' + releaseLabel
 execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
-execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.bz2')
+execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.gz')
 execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
 
 
@@ -110,7 +122,7 @@ execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel 
 print '  Copy artifacts to ' + artifactsDestinationDir
 os.mkdir(artifactsDestinationDir)
 shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
-shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.bz2')
+shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.gz')
 shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
 
 
