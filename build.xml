@@ -74,7 +74,7 @@
         </testng>
     </target>
 
-    <target name="webapp" depends="compile-java, test, compile-gwt">
+    <target name="webapp" depends="compile-java, compile-gwt">
         <copy todir="${build.dir}/webapp" preservelastmodified="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
@@ -142,7 +142,7 @@
 		<copy file="etc/kunagi-release.py" tofile="/home/cad/bin/kunagi-release" preservelastmodified="true" />
 	</target>
 	
-    <target name="continousIntegrationBuild" depends="package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
+    <target name="continousIntegrationBuild" depends="test,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
 
 </project>
 
