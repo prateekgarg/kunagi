@@ -176,8 +176,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onResetPassword(GwtConversation conversation, String userId) {
 		if (!conversation.getSession().getUser().isAdmin()) throw new PermissionDeniedException();
 		User user = userDao.getById(userId);
-		if (user.isEmailSet()) {
-			user.triggerEmailVerification();
+		if (webApplication.getSystemConfig().isSmtpServerSet() && user.isEmailSet()) {
 			user.triggerPasswordReset();
 		} else {
 			user.setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
@@ -187,11 +186,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
 		User user = conversation.getSession().getUser();
-		if (user.matchesPassword(oldPassword) == false) throw new WrongPasswordException();
+		if (!user.isAdmin() && user.matchesPassword(oldPassword) == false) throw new WrongPasswordException();
 
 		user.setPassword(newPassword);
 
-		LOG.info("password changed by user");
+		LOG.info("password changed by", user);
 	}
 
 	@Override

@@ -12,6 +12,8 @@ public class ResetUserPasswordAction extends GResetUserPasswordAction {
 	}
 
 	@Override
-	protected void onExecute() {}
+	protected void onExecute() {
+		new ResetPasswordServiceCall(user.getId());
+	}
 
 }
