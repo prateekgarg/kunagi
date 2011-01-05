@@ -99,18 +99,18 @@
                 <exclude name="**/jcip-annotations.jar" />
             </fileset>
         </copy>
+        <war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
     </target>
 
     <target name="package" depends="webapp">
-        <war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
-        <mkdir dir="${build.dir}/package/kunagi" />
-        <copy file="${build.dir}/kunagi.war" tofile="${build.dir}/package/kunagi/kunagi.war" />
-        <copy todir="${build.dir}/package/kunagi" preservelastmodified="true">
+        <mkdir dir="${build.dir}/package-content/kunagi" />
+        <copy file="${build.dir}/kunagi.war" tofile="${build.dir}/package-content/kunagi/kunagi.war" />
+        <copy todir="${build.dir}/package-content/kunagi" preservelastmodified="true">
             <fileset file="README" />
             <fileset dir="." includes="license.*" />
         </copy>
-        <zip destfile="${build.dir}/kunagi.zip" basedir="${build.dir}/package" />
-        <exec executable="tar" failonerror="true" dir="${build.dir}/package">
+        <zip destfile="${build.dir}/kunagi.zip" basedir="${build.dir}/package-content" />
+        <exec executable="tar" failonerror="true" dir="${build.dir}/package-content">
             <arg line="cjf ../kunagi.tar.bz2 kunagi" />
         </exec>
 	</target>
