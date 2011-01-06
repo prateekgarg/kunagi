@@ -118,8 +118,6 @@
 	<target name="publishPackages">
 		<copy todir="${homepage.output.dir}/latest" preservelastmodified="true">
 			<fileset file="${build.dir}/kunagi.war" />
-			<fileset file="${build.dir}/kunagi.zip" />
-			<fileset file="${build.dir}/kunagi.tar.bz2" />
 		</copy>
 	</target>
 	
