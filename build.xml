@@ -74,7 +74,7 @@
         </testng>
     </target>
 
-    <target name="webapp" depends="compile-java, test, compile-gwt">
+    <target name="webapp" depends="compile-java, compile-gwt">
         <copy todir="${build.dir}/webapp" preservelastmodified="true">
             <fileset dir="src/main/webapp" />
             <fileset file="README" />
@@ -99,21 +99,27 @@
                 <exclude name="**/jcip-annotations.jar" />
             </fileset>
         </copy>
+        <war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
     </target>
 
     <target name="package" depends="webapp">
-        <war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
         <mkdir dir="${build.dir}/package/kunagi" />
         <copy file="${build.dir}/kunagi.war" tofile="${build.dir}/package/kunagi/kunagi.war" />
         <copy todir="${build.dir}/package/kunagi" preservelastmodified="true">
             <fileset file="README" />
             <fileset dir="." includes="license.*" />
         </copy>
+        <zip destfile="${build.dir}/kunagi.zip" basedir="${build.dir}/package" />
+        <exec executable="tar" failonerror="true" dir="${build.dir}/package">
+            <arg line="cjf ../kunagi.tar.bz2 kunagi" />
+        </exec>
 	</target>
 
 	<target name="publishPackages">
 		<copy todir="${homepage.output.dir}/latest" preservelastmodified="true">
 			<fileset file="${build.dir}/kunagi.war" />
+			<fileset file="${build.dir}/kunagi.zip" />
+			<fileset file="${build.dir}/kunagi.tar.bz2" />
 		</copy>
 	</target>
 	
@@ -136,7 +142,7 @@
 		<copy file="etc/kunagi-release.py" tofile="/home/cad/bin/kunagi-release" preservelastmodified="true" />
 	</target>
 	
-    <target name="continousIntegrationBuild" depends="package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
+    <target name="continousIntegrationBuild" depends="test,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
 
 </project>
 
