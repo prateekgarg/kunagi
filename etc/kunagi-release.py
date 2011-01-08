@@ -85,11 +85,12 @@ execute('ant package', workDir + '/kunagi')
 print '  Pack'
 if not os.path.exists(packageDir):
     fail('Missing package directory: ' + packageDir)
-newPackageDir = packageDir + '/' + releaseLabel
+newPackageDir = packageDir + '-' + releaseLabel
 shutil.move(packageDir, newPackageDir)
 packageDir = newPackageDir
-execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, os.path.pardir(packageDir))
-execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, os.path.pardir(packageDir))
+packageDirParentDir = os.path.abspath(packageDir)
+execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, packageDirParentDir)
+execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, packageDirParentDir)
 
 
 # check files and directories
