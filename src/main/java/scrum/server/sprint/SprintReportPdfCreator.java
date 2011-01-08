@@ -37,6 +37,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 		fields.field("Period").text(
 			sprint.getBegin() + " - " + sprint.getEnd() + " / " + sprint.getLengthInDays() + " days");
 		fields.field("Velocity").text(sprint.getVelocity() + " StoryPoints");
+		fields.field("Burned work").text(getBurnedWork(sprint.getCompletedRequirementsData()) + " hours");
 		fields.field("Product Owner").text(sprint.getProductOwnersAsString());
 		fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
 		fields.field("Team").text(sprint.getTeamMembersAsString());
@@ -67,6 +68,16 @@ public class SprintReportPdfCreator extends APdfCreator {
 			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), new ScrumPdfContext());
 		}
 
+	}
+
+	private int getBurnedWork(String requirementsData) {
+		List<StoryInfo> requirements = SprintReportHelper.parseRequirementsAndTasks(requirementsData);
+		if (requirements.isEmpty()) return 0;
+		int sum = 0;
+		for (StoryInfo req : requirements) {
+			sum += req.getBurnedWork();
+		}
+		return sum;
 	}
 
 	private void requirements(APdfContainerElement pdf, String title, String requirementsData) {
