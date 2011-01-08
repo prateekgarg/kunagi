@@ -1,6 +1,7 @@
 package scrum.client.release;
 
 import ilarkesto.gwt.client.Date;
+import scrum.client.common.TooltipBuilder;
 
 public class UnreleaseReleaseAction extends GUnreleaseReleaseAction {
 
@@ -11,6 +12,21 @@ public class UnreleaseReleaseAction extends GUnreleaseReleaseAction {
 	@Override
 	public String getLabel() {
 		return "Mark as planned";
+	}
+
+	@Override
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Mark this release as not published and not available to the users.");
+
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
+
+		return tb.getTooltip();
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!release.getProject().isScrumTeamMember(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override
