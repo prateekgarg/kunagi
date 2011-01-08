@@ -43,7 +43,7 @@ artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
 githubUser = 'git://github.com/Kunagi'
 workDir = 'kunagi-release-workdir'
 buildDir = workDir + '/kunagi/build'
-packageDir = buildDir + '/package/kunagi'
+packageDir = buildDir + '/package/kunagi-content'
 packageWar = buildDir + '/kunagi.war'
 packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
 packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
@@ -88,8 +88,8 @@ if not os.path.exists(packageDir):
 newPackageDir = packageDir + '/' + releaseLabel
 shutil.move(packageDir, newPackageDir)
 packageDir = newPackageDir
-execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, buildDir + '/package')
-execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, buildDir + '/package')
+execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, os.path.pardir(packageDir))
+execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, os.path.pardir(packageDir))
 
 
 # check files and directories
