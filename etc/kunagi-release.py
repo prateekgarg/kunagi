@@ -29,6 +29,15 @@ def execute(cmd, dir=None):
 
 # ------------ main -----------------
 
+# check parameters
+if len(sys.argv) < 2:
+    fail('Missing parameter: release-label')
+
+releaseLabel = sys.argv[1]
+branchName = 'r' + releaseLabel
+print 'Releasing Kunagi ' + releaseLabel
+
+
 # configuration
 artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
 githubUser = 'git://github.com/Kunagi'
@@ -38,15 +47,6 @@ packageDir = buildDir + '/package/kunagi'
 packageWar = buildDir + '/kunagi.war'
 packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
 packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
-
-
-# check parameters
-if len(sys.argv) < 2:
-    fail('Missing parameter: release-label')
-
-releaseLabel = sys.argv[1]
-branchName = 'r' + releaseLabel
-print 'Releasing Kunagi ' + releaseLabel
 
 
 # cleanup previous release
@@ -77,7 +77,7 @@ f.close()
 
 
 # build
-print '  Build'
+print '  Build & Test'
 execute('ant package', workDir + '/kunagi')
 
 
