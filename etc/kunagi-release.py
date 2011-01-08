@@ -23,8 +23,11 @@ def execute(cmd, dir=None):
         os.chdir(previousDir)
     if sts is None: sts = 0
     if text[-1:] == '\n': text = text[:-1]
+    dirinfo = ''
+    if dir:
+        dirinfo = '\n  work-dir: ' + dir
     if sts != 0:
-        fail('Executing command failed: ' + cmd + '\n' + text)
+        fail('Executing command failed: ' + cmd + dirinfo + '\n' + text)
     return text
 
 # ------------ main -----------------
@@ -88,7 +91,7 @@ if not os.path.exists(packageDir):
 newPackageDir = packageDir + '-' + releaseLabel
 shutil.move(packageDir, newPackageDir)
 packageDir = newPackageDir
-packageDirParentDir = os.path.abspath(packageDir)
+packageDirParentDir = os.path.abspath(packageDir + '/../')
 execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, packageDirParentDir)
 execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, packageDirParentDir)
 
