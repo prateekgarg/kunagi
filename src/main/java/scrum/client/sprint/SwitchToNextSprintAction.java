@@ -34,10 +34,22 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	protected void onExecute() {
-		if (!Gwt.confirm("Switch to next Sprint?")) return;
+		Requirement undecidedRequirement = getCurrentProject().getCurrentSprint()
+				.getFirstCompletedUnclosedRequirement();
+		if (undecidedRequirement != null) {
+			if (!Gwt.confirm("Story "
+					+ undecidedRequirement.getReference()
+					+ " \""
+					+ undecidedRequirement.getLabel()
+					+ "\"  is completed and should be either accepted or rejected. Switch to next Sprint and reject all undecided Stories?"))
+				return;
+		} else {
+			if (!Gwt.confirm("Switch to next Sprint?")) return;
+		}
 		Scope.get().getComponent(Ui.class).lock("Switching to next Sprint");
 		new SwitchToNextSprintServiceCall().execute(new Runnable() {
 
+			@Override
 			public void run() {
 				Scope.get().getComponent(ProjectWorkspaceWidgets.class).showSprintBacklog((Requirement) null);
 				Scope.get().getComponent(Ui.class).unlock();

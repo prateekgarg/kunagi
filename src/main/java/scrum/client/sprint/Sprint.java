@@ -40,6 +40,13 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		super(data);
 	}
 
+	public Requirement getFirstCompletedUnclosedRequirement() {
+		for (Requirement req : getRequirements()) {
+			if (req.isTasksClosed() && !req.isClosed() && !req.isRejected()) return req;
+		}
+		return null;
+	}
+
 	public Integer getLengthInDays() {
 		Date begin = getBegin();
 		Date end = getEnd();
