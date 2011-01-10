@@ -31,6 +31,8 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	public static final String REFERENCE_PREFIX = "spr";
 
+	private transient Comparator<Task> tasksOrderComparator;
+
 	public Sprint(Project project, String label) {
 		setProject(project);
 		setLabel(label);
@@ -284,6 +286,32 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public LengthInDaysModel getLengthInDaysModel() {
 		if (lengthInDaysModel == null) lengthInDaysModel = new LengthInDaysModel();
 		return lengthInDaysModel;
+	}
+
+	public Comparator<Task> getTasksOrderComparator() {
+		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
+
+			@Override
+			public int compare(Task a, Task b) {
+				Requirement ar = a.getRequirement();
+				Requirement br = b.getRequirement();
+				if (ar != br) return ar.getProject().getRequirementsOrderComparator().compare(ar, br);
+				List<String> order = ar.getTasksOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return tasksOrderComparator;
 	}
 
 	protected class LengthInDaysModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {

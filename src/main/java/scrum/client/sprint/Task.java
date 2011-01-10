@@ -5,7 +5,6 @@ import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
-import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
@@ -189,25 +188,6 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	public Widget createForumItemWidget() {
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
-
-	public static final Comparator<Task> NUMBER_COMPARATOR = new Comparator<Task>() {
-
-		@Override
-		public int compare(Task a, Task b) {
-			return a.getNumber() - b.getNumber();
-		}
-	};
-
-	public static final Comparator<Task> REQUIREMENT_ORDER_THEN_NUMBER_COMPARATOR = new Comparator<Task>() {
-
-		@Override
-		public int compare(Task a, Task b) {
-			Requirement ar = a.getRequirement();
-			Requirement br = b.getRequirement();
-			int reqOrder = ar.getProject().getRequirementsOrderComparator().compare(ar, br);
-			return reqOrder == 0 ? a.getNumber() - b.getNumber() : reqOrder;
-		}
-	};
 
 	private transient AFieldModel<String> ownerModel;
 

@@ -8,6 +8,7 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.issues.Issue;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.HTML;
@@ -60,8 +61,9 @@ public class UpcomingTeamTasksWidget extends AScrumWidget {
 		int minTasks = 10 - criticalBugs.size();
 		if (maxTasks < minTasks) maxTasks = minTasks;
 		int taskCount = 0;
-		List<Task> tasks = project.getCurrentSprint().getUnclaimedTasks(false);
-		Collections.sort(tasks, Task.REQUIREMENT_ORDER_THEN_NUMBER_COMPARATOR);
+		Sprint sprint = project.getCurrentSprint();
+		List<Task> tasks = sprint.getUnclaimedTasks(false);
+		Collections.sort(tasks, sprint.getTasksOrderComparator());
 		if (!tasks.isEmpty()) {
 			sb.append("Next upcoming tasks:");
 			sb.append("<ul>");

@@ -39,7 +39,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			"40", "100" };
 
 	private transient EstimationBar estimationBar;
-	private transient Comparator<Task> tasksOrderComparator;
 
 	public Requirement(Project project) {
 		setProject(project);
@@ -380,26 +379,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public Comparator<Task> getTasksOrderComparator() {
-		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
-
-			@Override
-			public int compare(Task a, Task b) {
-				List<String> order = getTasksOrderIds();
-				int additional = order.size();
-				int ia = order.indexOf(a.getId());
-				if (ia < 0) {
-					ia = additional;
-					additional++;
-				}
-				int ib = order.indexOf(b.getId());
-				if (ib < 0) {
-					ib = additional;
-					additional++;
-				}
-				return ia - ib;
-			}
-		};
-		return tasksOrderComparator;
+		return getSprint().getTasksOrderComparator();
 	}
 
 	private AFieldModel<String> estimatedWorkWithUnitModel;
