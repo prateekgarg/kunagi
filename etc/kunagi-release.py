@@ -23,22 +23,14 @@ def execute(cmd, dir=None):
         os.chdir(previousDir)
     if sts is None: sts = 0
     if text[-1:] == '\n': text = text[:-1]
+    dirinfo = ''
+    if dir:
+        dirinfo = '\n  work-dir: ' + dir
     if sts != 0:
-        fail('Executing command failed: ' + cmd + '\n' + text)
+        fail('Executing command failed: ' + cmd + dirinfo + '\n' + text)
     return text
 
 # ------------ main -----------------
-
-# configuration
-artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
-githubUser = 'git://github.com/Kunagi'
-workDir = 'kunagi-release-workdir'
-buildDir = workDir + '/kunagi/build'
-packageDir = buildDir + '/package/kunagi'
-packageWar = buildDir + '/kunagi.war'
-packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
-packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
-
 
 # check parameters
 if len(sys.argv) < 2:
@@ -47,6 +39,17 @@ if len(sys.argv) < 2:
 releaseLabel = sys.argv[1]
 branchName = 'r' + releaseLabel
 print 'Releasing Kunagi ' + releaseLabel
+
+
+# configuration
+artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
+githubUser = 'git://github.com/Kunagi'
+workDir = 'kunagi-release-workdir'
+buildDir = workDir + '/kunagi/build'
+packageDir = buildDir + '/package-content/kunagi'
+packageWar = buildDir + '/kunagi.war'
+packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
+packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
 
 
 # cleanup previous release
@@ -77,7 +80,7 @@ f.close()
 
 
 # build
-print '  Build'
+print '  Build & Test'
 execute('ant package', workDir + '/kunagi')
 
 
@@ -85,11 +88,12 @@ execute('ant package', workDir + '/kunagi')
 print '  Pack'
 if not os.path.exists(packageDir):
     fail('Missing package directory: ' + packageDir)
-newPackageDir = packageDir + '/' + releaseLabel
+newPackageDir = packageDir + '-' + releaseLabel
 shutil.move(packageDir, newPackageDir)
 packageDir = newPackageDir
-execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, buildDir + '/package')
-execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, buildDir + '/package')
+packageDirParentDir = os.path.abspath(packageDir + '/../')
+execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel, packageDirParentDir)
+execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, packageDirParentDir)
 
 
 # check files and directories

@@ -1,6 +1,7 @@
 package scrum.client.release;
 
 import ilarkesto.gwt.client.Date;
+import scrum.client.common.TooltipBuilder;
 
 public class ReleaseReleaseAction extends GReleaseReleaseAction {
 
@@ -14,17 +15,32 @@ public class ReleaseReleaseAction extends GReleaseReleaseAction {
 	}
 
 	@Override
-	protected void onExecute() {
-		Date previousDate = release.getReleaseDate();
-		release.setReleaseDate(Date.today());
-		release.setReleased(true);
-		addUndo(new Undo(previousDate));
+	public String getTooltip() {
+		TooltipBuilder tb = new TooltipBuilder("Mark this release as published and available to the users.");
+
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
+
+		return tb.getTooltip();
+	}
+
+	@Override
+	public boolean isPermitted() {
+		if (!release.getProject().isScrumTeamMember(getCurrentUser())) return false;
+		return true;
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (release.isReleased()) return false;
 		return true;
+	}
+
+	@Override
+	protected void onExecute() {
+		Date previousDate = release.getReleaseDate();
+		release.setReleaseDate(Date.today());
+		release.setReleased(true);
+		addUndo(new Undo(previousDate));
 	}
 
 	class Undo extends ALocalUndo {
