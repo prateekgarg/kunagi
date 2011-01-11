@@ -348,10 +348,10 @@ public class WikiParser {
 		if (input.startsWith("* ") || input.startsWith("# ") || input.startsWith("#=")) {
 			boolean ordered = input.startsWith("#");
 			int numberValue = -1;
-			ItemList list = new ItemList(ordered);
-			Paragraph item = null;
 			String line = getNextLine();
 			String leadingSpaces = Str.getLeadingSpaces(line);
+			ItemList list = new ItemList(ordered, leadingSpaces.length());
+			Paragraph item = null;
 			String lineTrimmed = leadingSpaces.length() == 0 ? line : line.substring(leadingSpaces.length());
 			String currentListIdentifier = null;
 			while (!line.startsWith("\n") && line.length() > 0) {

@@ -9,10 +9,12 @@ public class ItemList extends AWikiElement {
 
 	private List<Item> items = new ArrayList<Item>();
 	boolean ordered;
+	private int leadingSpacesLength;
 
-	public ItemList(boolean ordered) {
+	public ItemList(boolean ordered, int leadingSpacesLenght) {
 		super();
 		this.ordered = ordered;
+		this.leadingSpacesLength = leadingSpacesLenght;
 	}
 
 	public void add(Paragraph item) {
@@ -20,13 +22,13 @@ public class ItemList extends AWikiElement {
 	}
 
 	public void add(Paragraph item, String leadingSpaces, boolean ordered, int numberValue) {
-		if (leadingSpaces.length() > 0) {
+		if (leadingSpaces.length() > 0 && leadingSpaces.length() > leadingSpacesLength) {
 			Item lastItem = items.get(items.size() - 1);
 			if (lastItem.list == null) {
-				lastItem.list = new ItemList(ordered);
+				lastItem.list = new ItemList(ordered, leadingSpaces.length());
 				lastItem.list.add(item);
 			} else {
-				lastItem.list.add(item, leadingSpaces.substring(1), ordered);
+				lastItem.list.add(item, leadingSpaces.substring(leadingSpacesLength), ordered);
 			}
 			return;
 		}
@@ -35,6 +37,10 @@ public class ItemList extends AWikiElement {
 
 	public void add(Paragraph item, String leadingSpaces, boolean ordered) {
 		add(item, leadingSpaces, ordered, -1);
+	}
+
+	public void setLeadingSpacesLength(int leadingSpacesLength) {
+		this.leadingSpacesLength = leadingSpacesLength;
 	}
 
 	@Override

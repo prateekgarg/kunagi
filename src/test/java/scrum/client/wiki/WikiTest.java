@@ -99,10 +99,19 @@ public class WikiTest extends Assert {
 	@Test
 	public void nestedItemList() {
 		Assert.assertEquals(toHtml("* item\n # subitem"), "<ul><li>item<ol><li>subitem</li></ol></li></ul>");
-		Assert.assertEquals(toHtml("* item\n # subitem\n # subitem"),
-			"<ul><li>item<ol><li>subitem</li><li>subitem</li></ol></li></ul>");
+		Assert.assertEquals(
+			toHtml("* topitem 1\n * subitem 1.1\n * subitem 1.2\n  * subsubitem 1.2.1\n * subitem 1.3\n* topitem 2"),
+			"<ul><li>topitem 1<ul><li>subitem 1.1</li><li>subitem 1.2<ul><li>subsubitem 1.2.1</li></ul></li><li>subitem 1.3</li></ul></li><li>topitem 2</li></ul>");
+		Assert.assertEquals(toHtml("* topitem 1\n  * subitem 1.1\n  * subitem 1.2\n    * subsubitem 1.2.1"),
+			"<ul><li>topitem 1<ul><li>subitem 1.1</li><li>subitem 1.2<ul><li>subsubitem 1.2.1</li></ul></li></ul></li></ul>");
 		Assert.assertEquals(toHtml("* item\n # subitem\n  * subsubitem"),
 			"<ul><li>item<ol><li>subitem<ul><li>subsubitem</li></ul></li></ol></li></ul>");
+	}
+
+	@Test
+	public void nestedItemListDirty() {
+		Assert.assertEquals(toHtml("* topitem\n    * A\n * B\n    * C"),
+			"<ul><li>topitem<ul><li>A</li><li>B</li><li>C</li></ul></li></ul>");
 	}
 
 	@Test
