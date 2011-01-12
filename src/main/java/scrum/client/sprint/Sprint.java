@@ -50,10 +50,15 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	}
 
 	public Integer getLengthInDays() {
+		TimePeriod lenght = getLength();
+		return lenght == null ? null : lenght.toDays();
+	}
+
+	public TimePeriod getLength() {
 		Date begin = getBegin();
 		Date end = getEnd();
 		if (begin == null || end == null) return null;
-		return begin.getPeriodTo(end).toDays();
+		return getBegin().getPeriodTo(getEnd()).addDays(1);
 	}
 
 	public void setLengthInDays(Integer lenght) {
@@ -63,7 +68,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			begin = getProject().getCurrentSprint().getEnd();
 			setBegin(begin);
 		}
-		Date end = begin.addDays(lenght);
+		Date end = begin.addDays(lenght - 1);
 		setEnd(end);
 	}
 
@@ -78,10 +83,6 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public String getChartUrl(int width, int height) {
 		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + getId() + "&width=" + width + "&height="
 				+ height;
-	}
-
-	public TimePeriod getLength() {
-		return getBegin().getPeriodTo(getEnd());
 	}
 
 	public boolean isCompleted() {
@@ -324,7 +325,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		@Override
 		public java.lang.Integer getValue() {
 			Integer length = getLengthInDays();
-			return length == null ? 0 : length;
+			return length == null || length <= 0 ? null : length;
 		}
 
 		@Override
@@ -334,7 +335,9 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 		@Override
 		public void increment() {
-			setLengthInDays(getValue() + 1);
+			Integer length = getValue();
+			if (length == null) length = 0;
+			setLengthInDays(length + 1);
 		}
 
 		@Override
