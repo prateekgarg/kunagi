@@ -16,7 +16,7 @@ import scrum.client.collaboration.UsersStatus;
 import scrum.client.common.LabelSupport;
 import scrum.client.project.Project;
 
-public class User extends GUser implements LabelSupport {
+public class User extends GUser implements LabelSupport, Comparable<User> {
 
 	public static final String INITIAL_NAME = "newuser";
 	public static final String INITIAL_PASSWORD = "geheim";
@@ -55,6 +55,7 @@ public class User extends GUser implements LabelSupport {
 		return ret;
 	}
 
+	@Override
 	public int compareTo(User u) {
 		return getName().compareTo(u.getName());
 	}

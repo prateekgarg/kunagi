@@ -5,7 +5,9 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import scrum.client.Dao;
 import scrum.client.ScrumGwt;
@@ -55,9 +57,13 @@ public class ProjectBlock extends ABlockWidget<Project> {
 			@Override
 			protected void onEditorUpdate() {
 				List<User> users = Dao.get().getUsersByDisabled(false);
-				users.addAll(project.getParticipants());
+				Set<User> participants = project.getParticipants();
+				for (User participant : participants) {
+					if (!users.contains(participant)) users.add(participant);
+				}
+				Collections.sort(users);
 				setEditorItems(users);
-				setEditorSelectedItems(project.getParticipants());
+				setEditorSelectedItems(participants);
 			}
 
 			@Override
