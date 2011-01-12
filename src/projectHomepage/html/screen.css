@@ -46,7 +46,8 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
         label.optional {}
         div.sublabel {color: #AAA; font-size: 9px; line-height: 9px;}
         div.socialbuttons {}
-            .buzz-small-1, .buzz-small-2, .buzz-small-3 {display: block; float: left;} 
+            .buzz-small-1, .buzz-small-2, .buzz-small-3 {display: block; float: left;}
+        #content .section .toc {background: #eee; width: 50%; float: right; margin: 0 0 10px 10px;} 
     #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
 
 #footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}

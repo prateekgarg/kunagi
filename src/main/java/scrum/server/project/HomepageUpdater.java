@@ -404,7 +404,7 @@ public class HomepageUpdater {
 
 		@Override
 		public String getTocHrefOrOnclickAParameter(Header h) {
-			return "href=\"#" + h.getAnchor() + ".html\"";
+			return "href=\"#" + h.getAnchor() + "\"";
 		}
 
 		@Override
