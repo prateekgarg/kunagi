@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
@@ -51,7 +50,7 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	}
 
 	@Override
-	public Set<String> getAvailableThemes() {
+	public List<String> getAvailableThemes() {
 		return getProject().getThemes();
 	}
 

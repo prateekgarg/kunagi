@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
@@ -56,7 +55,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	@Override
-	public Set<String> getAvailableThemes() {
+	public List<String> getAvailableThemes() {
 		return getProject().getThemes();
 	}
 

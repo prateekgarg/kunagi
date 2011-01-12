@@ -67,14 +67,16 @@ public class Project extends GProject implements ForumSupport {
 		super(data);
 	}
 
-	public Set<String> getThemes() {
-		Set<String> ret = new HashSet<String>();
+	public List<String> getThemes() {
+		Set<String> themes = new HashSet<String>();
 		for (Requirement requirement : getRequirements()) {
-			ret.addAll(requirement.getThemes());
+			themes.addAll(requirement.getThemes());
 		}
 		for (Issue issue : getIssues()) {
-			ret.addAll(issue.getThemes());
+			themes.addAll(issue.getThemes());
 		}
+		List<String> ret = new ArrayList<String>(themes);
+		Collections.sort(ret);
 		return ret;
 	}
 
