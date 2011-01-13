@@ -149,7 +149,7 @@ public class Sprint extends GSprint implements Numbered {
 			if (!isEndSet()) setEnd(getBegin().addDays(14));
 		}
 
-		if (getBegin().isAfter(getEnd())) setEnd(getBegin());
+		if (isBeginSet() && isEndSet() && getBegin().isAfter(getEnd())) setEnd(getBegin());
 
 		// delete when not current and end date older than 4 weeks
 		// if (isEndSet() && !getProject().isCurrentSprint(this) && getEnd().isPast()
