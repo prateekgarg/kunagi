@@ -724,6 +724,14 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addListProperty("selectedEntitysIds", String.class).setFireModified(false);
 			projectUserConfigModel.addProperty("online", boolean.class).setFireModified(false);
 			projectUserConfigModel.addProperty("lastActivityDateAndTime", DateAndTime.class).setFireModified(false);
+			projectUserConfigModel.addListProperty("pblFilterThemes", String.class);
+			projectUserConfigModel.addSetReference("pblFilterQualitys", getQualityModel());
+			projectUserConfigModel.addProperty("pblFilterDateFrom", Date.class);
+			projectUserConfigModel.addProperty("pblFilterDateTo", Date.class);
+			projectUserConfigModel.addProperty("pblFilterEstimationFrom", Float.class);
+			projectUserConfigModel.addProperty("pblFilterEstimationTo", Float.class);
+			projectUserConfigModel.addStringProperty("pblFilterText");
+
 		}
 		return projectUserConfigModel;
 	}

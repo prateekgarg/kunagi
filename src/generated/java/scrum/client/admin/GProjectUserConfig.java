@@ -447,6 +447,324 @@ public abstract class GProjectUserConfig
 
     }
 
+    // --- pblFilterThemes ---
+
+    private java.util.List<java.lang.String> pblFilterThemes = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getPblFilterThemes() {
+        return new java.util.ArrayList<java.lang.String>(pblFilterThemes);
+    }
+
+    public final void setPblFilterThemes(java.util.List<java.lang.String> pblFilterThemes) {
+        if (pblFilterThemes == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.pblFilterThemes.equals(pblFilterThemes)) return;
+        this.pblFilterThemes = new java.util.ArrayList<java.lang.String>(pblFilterThemes);
+        propertyChanged("pblFilterThemes", this.pblFilterThemes);
+    }
+
+    public final boolean containsPblFilterTheme(java.lang.String pblFilterTheme) {
+        return pblFilterThemes.contains(pblFilterTheme);
+    }
+
+
+    // --- pblFilterQualitys ---
+
+    private Set<String> pblFilterQualitysIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.project.Quality> getPblFilterQualitys() {
+        if ( pblFilterQualitysIds.isEmpty()) return Collections.emptySet();
+        return getDao().getQualitys(this.pblFilterQualitysIds);
+    }
+
+    public final void setPblFilterQualitys(Collection<scrum.client.project.Quality> values) {
+        pblFilterQualitysIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("pblFilterQualitysIds", this.pblFilterQualitysIds);
+    }
+
+    public final void addPblFilterQuality(scrum.client.project.Quality pblFilterQuality) {
+        String id = pblFilterQuality.getId();
+        if (pblFilterQualitysIds.contains(id)) return;
+        pblFilterQualitysIds.add(id);
+        propertyChanged("pblFilterQualitysIds", this.pblFilterQualitysIds);
+    }
+
+    public final void removePblFilterQuality(scrum.client.project.Quality pblFilterQuality) {
+        String id = pblFilterQuality.getId();
+        if (!pblFilterQualitysIds.contains(id)) return;
+        pblFilterQualitysIds.remove(id);
+        propertyChanged("pblFilterQualitysIds", this.pblFilterQualitysIds);
+    }
+
+    public final boolean containsPblFilterQuality(scrum.client.project.Quality pblFilterQuality) {
+        return pblFilterQualitysIds.contains(pblFilterQuality.getId());
+    }
+
+
+    // --- pblFilterDateFrom ---
+
+    private ilarkesto.gwt.client.Date pblFilterDateFrom ;
+
+    public final ilarkesto.gwt.client.Date getPblFilterDateFrom() {
+        return this.pblFilterDateFrom ;
+    }
+
+    public final ProjectUserConfig setPblFilterDateFrom(ilarkesto.gwt.client.Date pblFilterDateFrom) {
+        if (isPblFilterDateFrom(pblFilterDateFrom)) return (ProjectUserConfig)this;
+        this.pblFilterDateFrom = pblFilterDateFrom ;
+        propertyChanged("pblFilterDateFrom", this.pblFilterDateFrom);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isPblFilterDateFrom(ilarkesto.gwt.client.Date pblFilterDateFrom) {
+        return equals(this.pblFilterDateFrom, pblFilterDateFrom);
+    }
+
+    private transient PblFilterDateFromModel pblFilterDateFromModel;
+
+    public PblFilterDateFromModel getPblFilterDateFromModel() {
+        if (pblFilterDateFromModel == null) pblFilterDateFromModel = createPblFilterDateFromModel();
+        return pblFilterDateFromModel;
+    }
+
+    protected PblFilterDateFromModel createPblFilterDateFromModel() { return new PblFilterDateFromModel(); }
+
+    protected class PblFilterDateFromModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_pblFilterDateFrom";
+        }
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getPblFilterDateFrom();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setPblFilterDateFrom(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- pblFilterDateTo ---
+
+    private ilarkesto.gwt.client.Date pblFilterDateTo ;
+
+    public final ilarkesto.gwt.client.Date getPblFilterDateTo() {
+        return this.pblFilterDateTo ;
+    }
+
+    public final ProjectUserConfig setPblFilterDateTo(ilarkesto.gwt.client.Date pblFilterDateTo) {
+        if (isPblFilterDateTo(pblFilterDateTo)) return (ProjectUserConfig)this;
+        this.pblFilterDateTo = pblFilterDateTo ;
+        propertyChanged("pblFilterDateTo", this.pblFilterDateTo);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isPblFilterDateTo(ilarkesto.gwt.client.Date pblFilterDateTo) {
+        return equals(this.pblFilterDateTo, pblFilterDateTo);
+    }
+
+    private transient PblFilterDateToModel pblFilterDateToModel;
+
+    public PblFilterDateToModel getPblFilterDateToModel() {
+        if (pblFilterDateToModel == null) pblFilterDateToModel = createPblFilterDateToModel();
+        return pblFilterDateToModel;
+    }
+
+    protected PblFilterDateToModel createPblFilterDateToModel() { return new PblFilterDateToModel(); }
+
+    protected class PblFilterDateToModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_pblFilterDateTo";
+        }
+
+        @Override
+        public ilarkesto.gwt.client.Date getValue() {
+            return getPblFilterDateTo();
+        }
+
+        @Override
+        public void setValue(ilarkesto.gwt.client.Date value) {
+            setPblFilterDateTo(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.gwt.client.Date oldValue, ilarkesto.gwt.client.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- pblFilterEstimationFrom ---
+
+    private java.lang.Float pblFilterEstimationFrom ;
+
+    public final java.lang.Float getPblFilterEstimationFrom() {
+        return this.pblFilterEstimationFrom ;
+    }
+
+    public final ProjectUserConfig setPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        if (isPblFilterEstimationFrom(pblFilterEstimationFrom)) return (ProjectUserConfig)this;
+        this.pblFilterEstimationFrom = pblFilterEstimationFrom ;
+        propertyChanged("pblFilterEstimationFrom", this.pblFilterEstimationFrom);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        return equals(this.pblFilterEstimationFrom, pblFilterEstimationFrom);
+    }
+
+    private transient PblFilterEstimationFromModel pblFilterEstimationFromModel;
+
+    public PblFilterEstimationFromModel getPblFilterEstimationFromModel() {
+        if (pblFilterEstimationFromModel == null) pblFilterEstimationFromModel = createPblFilterEstimationFromModel();
+        return pblFilterEstimationFromModel;
+    }
+
+    protected PblFilterEstimationFromModel createPblFilterEstimationFromModel() { return new PblFilterEstimationFromModel(); }
+
+    protected class PblFilterEstimationFromModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_pblFilterEstimationFrom";
+        }
+
+        @Override
+        public java.lang.Float getValue() {
+            return getPblFilterEstimationFrom();
+        }
+
+        @Override
+        public void setValue(java.lang.Float value) {
+            setPblFilterEstimationFrom(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Float oldValue, java.lang.Float newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- pblFilterEstimationTo ---
+
+    private java.lang.Float pblFilterEstimationTo ;
+
+    public final java.lang.Float getPblFilterEstimationTo() {
+        return this.pblFilterEstimationTo ;
+    }
+
+    public final ProjectUserConfig setPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        if (isPblFilterEstimationTo(pblFilterEstimationTo)) return (ProjectUserConfig)this;
+        this.pblFilterEstimationTo = pblFilterEstimationTo ;
+        propertyChanged("pblFilterEstimationTo", this.pblFilterEstimationTo);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        return equals(this.pblFilterEstimationTo, pblFilterEstimationTo);
+    }
+
+    private transient PblFilterEstimationToModel pblFilterEstimationToModel;
+
+    public PblFilterEstimationToModel getPblFilterEstimationToModel() {
+        if (pblFilterEstimationToModel == null) pblFilterEstimationToModel = createPblFilterEstimationToModel();
+        return pblFilterEstimationToModel;
+    }
+
+    protected PblFilterEstimationToModel createPblFilterEstimationToModel() { return new PblFilterEstimationToModel(); }
+
+    protected class PblFilterEstimationToModel extends ilarkesto.gwt.client.editor.AFloatEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_pblFilterEstimationTo";
+        }
+
+        @Override
+        public java.lang.Float getValue() {
+            return getPblFilterEstimationTo();
+        }
+
+        @Override
+        public void setValue(java.lang.Float value) {
+            setPblFilterEstimationTo(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Float oldValue, java.lang.Float newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- pblFilterText ---
+
+    private java.lang.String pblFilterText ;
+
+    public final java.lang.String getPblFilterText() {
+        return this.pblFilterText ;
+    }
+
+    public final ProjectUserConfig setPblFilterText(java.lang.String pblFilterText) {
+        if (isPblFilterText(pblFilterText)) return (ProjectUserConfig)this;
+        this.pblFilterText = pblFilterText ;
+        propertyChanged("pblFilterText", this.pblFilterText);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isPblFilterText(java.lang.String pblFilterText) {
+        return equals(this.pblFilterText, pblFilterText);
+    }
+
+    private transient PblFilterTextModel pblFilterTextModel;
+
+    public PblFilterTextModel getPblFilterTextModel() {
+        if (pblFilterTextModel == null) pblFilterTextModel = createPblFilterTextModel();
+        return pblFilterTextModel;
+    }
+
+    protected PblFilterTextModel createPblFilterTextModel() { return new PblFilterTextModel(); }
+
+    protected class PblFilterTextModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_pblFilterText";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getPblFilterText();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setPblFilterText(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -460,6 +778,15 @@ public abstract class GProjectUserConfig
         online  = (Boolean) props.get("online");
         String lastActivityDateAndTimeAsString = (String) props.get("lastActivityDateAndTime");
         lastActivityDateAndTime  =  lastActivityDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastActivityDateAndTimeAsString);
+        pblFilterThemes  = (java.util.List<java.lang.String>) props.get("pblFilterThemes");
+        pblFilterQualitysIds = (Set<String>) props.get("pblFilterQualitysIds");
+        String pblFilterDateFromAsString = (String) props.get("pblFilterDateFrom");
+        pblFilterDateFrom  =  pblFilterDateFromAsString == null ? null : new ilarkesto.gwt.client.Date(pblFilterDateFromAsString);
+        String pblFilterDateToAsString = (String) props.get("pblFilterDateTo");
+        pblFilterDateTo  =  pblFilterDateToAsString == null ? null : new ilarkesto.gwt.client.Date(pblFilterDateToAsString);
+        pblFilterEstimationFrom  = (java.lang.Float) props.get("pblFilterEstimationFrom");
+        pblFilterEstimationTo  = (java.lang.Float) props.get("pblFilterEstimationTo");
+        pblFilterText  = (java.lang.String) props.get("pblFilterText");
         updateLocalModificationTime();
     }
 
@@ -475,6 +802,13 @@ public abstract class GProjectUserConfig
         properties.put("selectedEntitysIds", this.selectedEntitysIds);
         properties.put("online", this.online);
         properties.put("lastActivityDateAndTime", this.lastActivityDateAndTime == null ? null : this.lastActivityDateAndTime.toString());
+        properties.put("pblFilterThemes", this.pblFilterThemes);
+        properties.put("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        properties.put("pblFilterDateFrom", this.pblFilterDateFrom == null ? null : this.pblFilterDateFrom.toString());
+        properties.put("pblFilterDateTo", this.pblFilterDateTo == null ? null : this.pblFilterDateTo.toString());
+        properties.put("pblFilterEstimationFrom", this.pblFilterEstimationFrom);
+        properties.put("pblFilterEstimationTo", this.pblFilterEstimationTo);
+        properties.put("pblFilterText", this.pblFilterText);
     }
 
 }

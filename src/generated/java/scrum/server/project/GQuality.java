@@ -51,6 +51,10 @@ public abstract class GQuality
         return requirementDao.getRequirementsByQuality((Quality)this);
     }
 
+    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return projectUserConfigDao.getProjectUserConfigsByPblFilterQuality((Quality)this);
+    }
+
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GQuality.class);
 
     public static final String TYPE = "quality";
@@ -313,6 +317,12 @@ public abstract class GQuality
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GQuality.requirementDao = requirementDao;
+    }
+
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
+
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
+        GQuality.projectUserConfigDao = projectUserConfigDao;
     }
 
 }

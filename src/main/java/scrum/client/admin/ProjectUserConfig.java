@@ -1,14 +1,22 @@
 package scrum.client.admin;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.TimePeriod;
+import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import scrum.client.common.ThemesContainer;
+
 public class ProjectUserConfig extends GProjectUserConfig {
+
+	private transient AFieldModel<String> themesAsStringModel;
+	private transient PblFilter pblFilter = new PblFilter();
 
 	public ProjectUserConfig() {}
 
@@ -66,4 +74,46 @@ public class ProjectUserConfig extends GProjectUserConfig {
 		return getProject() + " " + getUser();
 	}
 
+	public PblFilter getPblFilter() {
+		return pblFilter;
+	}
+
+	public String getPblFilterThemesAsString() {
+		return Str.concat(getPblFilterThemes(), ", ");
+	}
+
+	public AFieldModel<String> getThemesAsStringModel() {
+		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getPblFilterThemesAsString();
+			}
+		};
+		return themesAsStringModel;
+	}
+
+	public class PblFilter implements ThemesContainer {
+
+		@Override
+		public List<String> getThemes() {
+			return getPblFilterThemes();
+		}
+
+		@Override
+		public void setThemes(java.util.List<String> editorSelectedItems) {
+			setPblFilterThemes(editorSelectedItems);
+		}
+
+		@Override
+		public List<String> getAvailableThemes() {
+			return getProject().getThemes();
+		}
+
+		@Override
+		public boolean isThemesEditable() {
+			return true;
+		}
+
+	}
 }

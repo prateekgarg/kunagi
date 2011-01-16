@@ -45,6 +45,13 @@ public abstract class GProjectUserConfig
         properties.put("selectedEntitysIds", this.selectedEntitysIds);
         properties.put("online", this.online);
         properties.put("lastActivityDateAndTime", this.lastActivityDateAndTime == null ? null : this.lastActivityDateAndTime.toString());
+        properties.put("pblFilterThemes", this.pblFilterThemes);
+        properties.put("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        properties.put("pblFilterDateFrom", this.pblFilterDateFrom == null ? null : this.pblFilterDateFrom.toString());
+        properties.put("pblFilterDateTo", this.pblFilterDateTo == null ? null : this.pblFilterDateTo.toString());
+        properties.put("pblFilterEstimationFrom", this.pblFilterEstimationFrom);
+        properties.put("pblFilterEstimationTo", this.pblFilterEstimationTo);
+        properties.put("pblFilterText", this.pblFilterText);
     }
 
     public int compareTo(ProjectUserConfig other) {
@@ -450,6 +457,367 @@ public abstract class GProjectUserConfig
         setLastActivityDateAndTime((ilarkesto.base.time.DateAndTime)value);
     }
 
+    // -----------------------------------------------------------
+    // - pblFilterThemes
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> pblFilterThemes = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getPblFilterThemes() {
+        return new java.util.ArrayList<java.lang.String>(pblFilterThemes);
+    }
+
+    public final void setPblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
+        pblFilterThemes = preparePblFilterThemes(pblFilterThemes);
+        if (pblFilterThemes == null) pblFilterThemes = Collections.emptyList();
+        if (this.pblFilterThemes.equals(pblFilterThemes)) return;
+        this.pblFilterThemes = new java.util.ArrayList<java.lang.String>(pblFilterThemes);
+        updateLastModified();
+        fireModified("pblFilterThemes="+Str.format(pblFilterThemes));
+    }
+
+    protected Collection<java.lang.String> preparePblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
+        return pblFilterThemes;
+    }
+
+    public final boolean containsPblFilterTheme(java.lang.String pblFilterTheme) {
+        if (pblFilterTheme == null) return false;
+        return this.pblFilterThemes.contains(pblFilterTheme);
+    }
+
+    public final int getPblFilterThemesCount() {
+        return this.pblFilterThemes.size();
+    }
+
+    public final boolean isPblFilterThemesEmpty() {
+        return this.pblFilterThemes.isEmpty();
+    }
+
+    public final boolean addPblFilterTheme(java.lang.String pblFilterTheme) {
+        if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
+        boolean added = this.pblFilterThemes.add(pblFilterTheme);
+        if (added) updateLastModified();
+        if (added) fireModified("pblFilterThemes+=" + pblFilterTheme);
+        return added;
+    }
+
+    public final boolean addPblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
+        if (pblFilterThemes == null) throw new IllegalArgumentException("pblFilterThemes == null");
+        boolean added = false;
+        for (java.lang.String pblFilterTheme : pblFilterThemes) {
+            added = added | this.pblFilterThemes.add(pblFilterTheme);
+        }
+        return added;
+    }
+
+    public final boolean removePblFilterTheme(java.lang.String pblFilterTheme) {
+        if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
+        if (this.pblFilterThemes == null) return false;
+        boolean removed = this.pblFilterThemes.remove(pblFilterTheme);
+        if (removed) updateLastModified();
+        if (removed) fireModified("pblFilterThemes-=" + pblFilterTheme);
+        return removed;
+    }
+
+    public final boolean removePblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
+        if (pblFilterThemes == null) return false;
+        if (pblFilterThemes.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: pblFilterThemes) {
+            removed = removed | removePblFilterTheme(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearPblFilterThemes() {
+        if (this.pblFilterThemes.isEmpty()) return false;
+        this.pblFilterThemes.clear();
+        updateLastModified();
+        fireModified("pblFilterThemes cleared");
+        return true;
+    }
+
+    public final String getPblFilterThemesAsCommaSeparatedString() {
+        if (this.pblFilterThemes.isEmpty()) return null;
+        return Str.concat(this.pblFilterThemes,", ");
+    }
+
+    public final void setPblFilterThemesAsCommaSeparatedString(String pblFilterThemes) {
+        this.pblFilterThemes = new java.util.ArrayList(Str.parseCommaSeparatedString(pblFilterThemes));
+    }
+
+    protected final void updatePblFilterThemes(Object value) {
+        setPblFilterThemes((java.util.List<java.lang.String>) value);
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterQualitys
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> pblFilterQualitysIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.project.Quality> getPblFilterQualitys() {
+        return (java.util.Set) qualityDao.getByIdsAsSet(this.pblFilterQualitysIds);
+    }
+
+    public final void setPblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
+        pblFilterQualitys = preparePblFilterQualitys(pblFilterQualitys);
+        if (pblFilterQualitys == null) pblFilterQualitys = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(pblFilterQualitys);
+        if (this.pblFilterQualitysIds.equals(ids)) return;
+        this.pblFilterQualitysIds = ids;
+        updateLastModified();
+        fireModified("pblFilterQualitys="+Str.format(pblFilterQualitys));
+    }
+
+    protected Collection<scrum.server.project.Quality> preparePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
+        return pblFilterQualitys;
+    }
+
+    protected void repairDeadPblFilterQualityReference(String entityId) {
+        if (this.pblFilterQualitysIds.remove(entityId)) fireModified("pblFilterQualitys-=" + entityId);
+    }
+
+    public final boolean containsPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
+        if (pblFilterQuality == null) return false;
+        return this.pblFilterQualitysIds.contains(pblFilterQuality.getId());
+    }
+
+    public final int getPblFilterQualitysCount() {
+        return this.pblFilterQualitysIds.size();
+    }
+
+    public final boolean isPblFilterQualitysEmpty() {
+        return this.pblFilterQualitysIds.isEmpty();
+    }
+
+    public final boolean addPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
+        if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
+        boolean added = this.pblFilterQualitysIds.add(pblFilterQuality.getId());
+        if (added) updateLastModified();
+        if (added) fireModified("pblFilterQualitys+=" + pblFilterQuality);
+        return added;
+    }
+
+    public final boolean addPblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
+        if (pblFilterQualitys == null) throw new IllegalArgumentException("pblFilterQualitys == null");
+        boolean added = false;
+        for (scrum.server.project.Quality pblFilterQuality : pblFilterQualitys) {
+            added = added | this.pblFilterQualitysIds.add(pblFilterQuality.getId());
+        }
+        return added;
+    }
+
+    public final boolean removePblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
+        if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
+        if (this.pblFilterQualitysIds == null) return false;
+        boolean removed = this.pblFilterQualitysIds.remove(pblFilterQuality.getId());
+        if (removed) updateLastModified();
+        if (removed) fireModified("pblFilterQualitys-=" + pblFilterQuality);
+        return removed;
+    }
+
+    public final boolean removePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
+        if (pblFilterQualitys == null) return false;
+        if (pblFilterQualitys.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.project.Quality _element: pblFilterQualitys) {
+            removed = removed | removePblFilterQuality(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearPblFilterQualitys() {
+        if (this.pblFilterQualitysIds.isEmpty()) return false;
+        this.pblFilterQualitysIds.clear();
+        updateLastModified();
+        fireModified("pblFilterQualitys cleared");
+        return true;
+    }
+
+    protected final void updatePblFilterQualitys(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setPblFilterQualitys((java.util.Set) qualityDao.getByIdsAsSet(ids));
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterDateFrom
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date pblFilterDateFrom;
+
+    public final ilarkesto.base.time.Date getPblFilterDateFrom() {
+        return pblFilterDateFrom;
+    }
+
+    public final void setPblFilterDateFrom(ilarkesto.base.time.Date pblFilterDateFrom) {
+        pblFilterDateFrom = preparePblFilterDateFrom(pblFilterDateFrom);
+        if (isPblFilterDateFrom(pblFilterDateFrom)) return;
+        this.pblFilterDateFrom = pblFilterDateFrom;
+        updateLastModified();
+        fireModified("pblFilterDateFrom="+pblFilterDateFrom);
+    }
+
+    protected ilarkesto.base.time.Date preparePblFilterDateFrom(ilarkesto.base.time.Date pblFilterDateFrom) {
+        return pblFilterDateFrom;
+    }
+
+    public final boolean isPblFilterDateFromSet() {
+        return this.pblFilterDateFrom != null;
+    }
+
+    public final boolean isPblFilterDateFrom(ilarkesto.base.time.Date pblFilterDateFrom) {
+        if (this.pblFilterDateFrom == null && pblFilterDateFrom == null) return true;
+        return this.pblFilterDateFrom != null && this.pblFilterDateFrom.equals(pblFilterDateFrom);
+    }
+
+    protected final void updatePblFilterDateFrom(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setPblFilterDateFrom((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterDateTo
+    // -----------------------------------------------------------
+
+    private ilarkesto.base.time.Date pblFilterDateTo;
+
+    public final ilarkesto.base.time.Date getPblFilterDateTo() {
+        return pblFilterDateTo;
+    }
+
+    public final void setPblFilterDateTo(ilarkesto.base.time.Date pblFilterDateTo) {
+        pblFilterDateTo = preparePblFilterDateTo(pblFilterDateTo);
+        if (isPblFilterDateTo(pblFilterDateTo)) return;
+        this.pblFilterDateTo = pblFilterDateTo;
+        updateLastModified();
+        fireModified("pblFilterDateTo="+pblFilterDateTo);
+    }
+
+    protected ilarkesto.base.time.Date preparePblFilterDateTo(ilarkesto.base.time.Date pblFilterDateTo) {
+        return pblFilterDateTo;
+    }
+
+    public final boolean isPblFilterDateToSet() {
+        return this.pblFilterDateTo != null;
+    }
+
+    public final boolean isPblFilterDateTo(ilarkesto.base.time.Date pblFilterDateTo) {
+        if (this.pblFilterDateTo == null && pblFilterDateTo == null) return true;
+        return this.pblFilterDateTo != null && this.pblFilterDateTo.equals(pblFilterDateTo);
+    }
+
+    protected final void updatePblFilterDateTo(Object value) {
+        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
+        setPblFilterDateTo((ilarkesto.base.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterEstimationFrom
+    // -----------------------------------------------------------
+
+    private java.lang.Float pblFilterEstimationFrom;
+
+    public final java.lang.Float getPblFilterEstimationFrom() {
+        return pblFilterEstimationFrom;
+    }
+
+    public final void setPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        pblFilterEstimationFrom = preparePblFilterEstimationFrom(pblFilterEstimationFrom);
+        if (isPblFilterEstimationFrom(pblFilterEstimationFrom)) return;
+        this.pblFilterEstimationFrom = pblFilterEstimationFrom;
+        updateLastModified();
+        fireModified("pblFilterEstimationFrom="+pblFilterEstimationFrom);
+    }
+
+    protected java.lang.Float preparePblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        return pblFilterEstimationFrom;
+    }
+
+    public final boolean isPblFilterEstimationFromSet() {
+        return this.pblFilterEstimationFrom != null;
+    }
+
+    public final boolean isPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        if (this.pblFilterEstimationFrom == null && pblFilterEstimationFrom == null) return true;
+        return this.pblFilterEstimationFrom != null && this.pblFilterEstimationFrom.equals(pblFilterEstimationFrom);
+    }
+
+    protected final void updatePblFilterEstimationFrom(Object value) {
+        setPblFilterEstimationFrom((java.lang.Float)value);
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterEstimationTo
+    // -----------------------------------------------------------
+
+    private java.lang.Float pblFilterEstimationTo;
+
+    public final java.lang.Float getPblFilterEstimationTo() {
+        return pblFilterEstimationTo;
+    }
+
+    public final void setPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        pblFilterEstimationTo = preparePblFilterEstimationTo(pblFilterEstimationTo);
+        if (isPblFilterEstimationTo(pblFilterEstimationTo)) return;
+        this.pblFilterEstimationTo = pblFilterEstimationTo;
+        updateLastModified();
+        fireModified("pblFilterEstimationTo="+pblFilterEstimationTo);
+    }
+
+    protected java.lang.Float preparePblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        return pblFilterEstimationTo;
+    }
+
+    public final boolean isPblFilterEstimationToSet() {
+        return this.pblFilterEstimationTo != null;
+    }
+
+    public final boolean isPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        if (this.pblFilterEstimationTo == null && pblFilterEstimationTo == null) return true;
+        return this.pblFilterEstimationTo != null && this.pblFilterEstimationTo.equals(pblFilterEstimationTo);
+    }
+
+    protected final void updatePblFilterEstimationTo(Object value) {
+        setPblFilterEstimationTo((java.lang.Float)value);
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterText
+    // -----------------------------------------------------------
+
+    private java.lang.String pblFilterText;
+
+    public final java.lang.String getPblFilterText() {
+        return pblFilterText;
+    }
+
+    public final void setPblFilterText(java.lang.String pblFilterText) {
+        pblFilterText = preparePblFilterText(pblFilterText);
+        if (isPblFilterText(pblFilterText)) return;
+        this.pblFilterText = pblFilterText;
+        updateLastModified();
+        fireModified("pblFilterText="+pblFilterText);
+    }
+
+    protected java.lang.String preparePblFilterText(java.lang.String pblFilterText) {
+        pblFilterText = Str.removeUnreadableChars(pblFilterText);
+        return pblFilterText;
+    }
+
+    public final boolean isPblFilterTextSet() {
+        return this.pblFilterText != null;
+    }
+
+    public final boolean isPblFilterText(java.lang.String pblFilterText) {
+        if (this.pblFilterText == null && pblFilterText == null) return true;
+        return this.pblFilterText != null && this.pblFilterText.equals(pblFilterText);
+    }
+
+    protected final void updatePblFilterText(Object value) {
+        setPblFilterText((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -464,6 +832,13 @@ public abstract class GProjectUserConfig
             if (property.equals("selectedEntitysIds")) updateSelectedEntitysIds(value);
             if (property.equals("online")) updateOnline(value);
             if (property.equals("lastActivityDateAndTime")) updateLastActivityDateAndTime(value);
+            if (property.equals("pblFilterThemes")) updatePblFilterThemes(value);
+            if (property.equals("pblFilterQualitysIds")) updatePblFilterQualitys(value);
+            if (property.equals("pblFilterDateFrom")) updatePblFilterDateFrom(value);
+            if (property.equals("pblFilterDateTo")) updatePblFilterDateTo(value);
+            if (property.equals("pblFilterEstimationFrom")) updatePblFilterEstimationFrom(value);
+            if (property.equals("pblFilterEstimationTo")) updatePblFilterEstimationTo(value);
+            if (property.equals("pblFilterText")) updatePblFilterText(value);
         }
     }
 
@@ -472,6 +847,9 @@ public abstract class GProjectUserConfig
         repairDeadProjectReference(entityId);
         repairDeadUserReference(entityId);
         if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
+        if (this.pblFilterThemes == null) this.pblFilterThemes = new java.util.ArrayList<java.lang.String>();
+        if (this.pblFilterQualitysIds == null) this.pblFilterQualitysIds = new java.util.HashSet<String>();
+        repairDeadPblFilterQualityReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -499,6 +877,17 @@ public abstract class GProjectUserConfig
             repairDeadUserReference(this.userId);
         }
         if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
+        if (this.pblFilterThemes == null) this.pblFilterThemes = new java.util.ArrayList<java.lang.String>();
+        if (this.pblFilterQualitysIds == null) this.pblFilterQualitysIds = new java.util.HashSet<String>();
+        Set<String> pblFilterQualitys = new HashSet<String>(this.pblFilterQualitysIds);
+        for (String entityId : pblFilterQualitys) {
+            try {
+                qualityDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead pblFilterQuality reference");
+                repairDeadPblFilterQualityReference(entityId);
+            }
+        }
     }
 
 
@@ -510,6 +899,12 @@ public abstract class GProjectUserConfig
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GProjectUserConfig.projectDao = projectDao;
+    }
+
+    static scrum.server.project.QualityDao qualityDao;
+
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GProjectUserConfig.qualityDao = qualityDao;
     }
 
     static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;

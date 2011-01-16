@@ -38,6 +38,9 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			"40", "100" };
 
 	private transient EstimationBar estimationBar;
+	private transient AFieldModel<String> taskStatusLabelModel;
+	private transient AFieldModel<String> themesAsStringModel;
+	private transient AFieldModel<String> estimatedWorkWithUnitModel;
 
 	public Requirement(Project project) {
 		setProject(project);
@@ -104,15 +107,11 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public String getEstimatedWorkAsString() {
-		Float work = getEstimatedWork();
-		if (work == null) return null;
-		if (work <= 0.5f) return work.toString();
-		return String.valueOf(work.intValue());
+		return ScrumGwt.getEstimationAsString(getEstimatedWork());
 	}
 
 	public String getEstimatedWorkWithUnit() {
-		String work = getEstimatedWorkAsString();
-		return work == null ? null : work + " " + getProject().getEffortUnit();
+		return ScrumGwt.getEstimationAsString(getEstimatedWork(), getProject().getEffortUnit());
 	}
 
 	public List<RequirementEstimationVote> getEstimationVotes() {
@@ -381,8 +380,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return getSprint().getTasksOrderComparator();
 	}
 
-	private AFieldModel<String> estimatedWorkWithUnitModel;
-
 	public AFieldModel<String> getEstimatedWorkWithUnitModel() {
 		if (estimatedWorkWithUnitModel == null) estimatedWorkWithUnitModel = new AFieldModel<String>() {
 
@@ -394,8 +391,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return estimatedWorkWithUnitModel;
 	}
 
-	private transient AFieldModel<String> taskStatusLabelModel;
-
 	public AFieldModel<String> getTaskStatusLabelModel() {
 		if (taskStatusLabelModel == null) taskStatusLabelModel = new AFieldModel<String>() {
 
@@ -406,8 +401,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		};
 		return taskStatusLabelModel;
 	}
-
-	private transient AFieldModel<String> themesAsStringModel;
 
 	public AFieldModel<String> getThemesAsStringModel() {
 		if (themesAsStringModel == null) themesAsStringModel = new AFieldModel<String>() {

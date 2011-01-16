@@ -59,6 +59,20 @@ public abstract class GProjectUserConfigDao
         projectUserConfigsByOnlineCache.clear();
         projectUserConfigsByLastActivityDateAndTimeCache.clear();
         lastActivityDateAndTimesCache = null;
+        projectUserConfigsByPblFilterThemeCache.clear();
+        pblFilterThemesCache = null;
+        projectUserConfigsByPblFilterQualityCache.clear();
+        pblFilterQualitysCache = null;
+        projectUserConfigsByPblFilterDateFromCache.clear();
+        pblFilterDateFromsCache = null;
+        projectUserConfigsByPblFilterDateToCache.clear();
+        pblFilterDateTosCache = null;
+        projectUserConfigsByPblFilterEstimationFromCache.clear();
+        pblFilterEstimationFromsCache = null;
+        projectUserConfigsByPblFilterEstimationToCache.clear();
+        pblFilterEstimationTosCache = null;
+        projectUserConfigsByPblFilterTextCache.clear();
+        pblFilterTextsCache = null;
     }
 
     @Override
@@ -426,6 +440,286 @@ public abstract class GProjectUserConfigDao
 
     }
 
+    // -----------------------------------------------------------
+    // - pblFilterThemes
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsByPblFilterThemeCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String pblFilterTheme) {
+                    return getEntities(new ContainsPblFilterTheme(pblFilterTheme));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterTheme(java.lang.String pblFilterTheme) {
+        return projectUserConfigsByPblFilterThemeCache.get(pblFilterTheme);
+    }
+    private Set<java.lang.String> pblFilterThemesCache;
+
+    public final Set<java.lang.String> getPblFilterThemes() {
+        if (pblFilterThemesCache == null) {
+            pblFilterThemesCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                pblFilterThemesCache.addAll(e.getPblFilterThemes());
+            }
+        }
+        return pblFilterThemesCache;
+    }
+
+    private static class ContainsPblFilterTheme implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public ContainsPblFilterTheme(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.containsPblFilterTheme(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterQualitys
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Quality,Set<ProjectUserConfig>> projectUserConfigsByPblFilterQualityCache = new Cache<scrum.server.project.Quality,Set<ProjectUserConfig>>(
+            new Cache.Factory<scrum.server.project.Quality,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(scrum.server.project.Quality pblFilterQuality) {
+                    return getEntities(new ContainsPblFilterQuality(pblFilterQuality));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
+        return projectUserConfigsByPblFilterQualityCache.get(pblFilterQuality);
+    }
+    private Set<scrum.server.project.Quality> pblFilterQualitysCache;
+
+    public final Set<scrum.server.project.Quality> getPblFilterQualitys() {
+        if (pblFilterQualitysCache == null) {
+            pblFilterQualitysCache = new HashSet<scrum.server.project.Quality>();
+            for (ProjectUserConfig e : getEntities()) {
+                pblFilterQualitysCache.addAll(e.getPblFilterQualitys());
+            }
+        }
+        return pblFilterQualitysCache;
+    }
+
+    private static class ContainsPblFilterQuality implements Predicate<ProjectUserConfig> {
+
+        private scrum.server.project.Quality value;
+
+        public ContainsPblFilterQuality(scrum.server.project.Quality value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.containsPblFilterQuality(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterDateFrom
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<ProjectUserConfig>> projectUserConfigsByPblFilterDateFromCache = new Cache<ilarkesto.base.time.Date,Set<ProjectUserConfig>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(ilarkesto.base.time.Date pblFilterDateFrom) {
+                    return getEntities(new IsPblFilterDateFrom(pblFilterDateFrom));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterDateFrom(ilarkesto.base.time.Date pblFilterDateFrom) {
+        return projectUserConfigsByPblFilterDateFromCache.get(pblFilterDateFrom);
+    }
+    private Set<ilarkesto.base.time.Date> pblFilterDateFromsCache;
+
+    public final Set<ilarkesto.base.time.Date> getPblFilterDateFroms() {
+        if (pblFilterDateFromsCache == null) {
+            pblFilterDateFromsCache = new HashSet<ilarkesto.base.time.Date>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isPblFilterDateFromSet()) pblFilterDateFromsCache.add(e.getPblFilterDateFrom());
+            }
+        }
+        return pblFilterDateFromsCache;
+    }
+
+    private static class IsPblFilterDateFrom implements Predicate<ProjectUserConfig> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsPblFilterDateFrom(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isPblFilterDateFrom(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterDateTo
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.base.time.Date,Set<ProjectUserConfig>> projectUserConfigsByPblFilterDateToCache = new Cache<ilarkesto.base.time.Date,Set<ProjectUserConfig>>(
+            new Cache.Factory<ilarkesto.base.time.Date,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(ilarkesto.base.time.Date pblFilterDateTo) {
+                    return getEntities(new IsPblFilterDateTo(pblFilterDateTo));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterDateTo(ilarkesto.base.time.Date pblFilterDateTo) {
+        return projectUserConfigsByPblFilterDateToCache.get(pblFilterDateTo);
+    }
+    private Set<ilarkesto.base.time.Date> pblFilterDateTosCache;
+
+    public final Set<ilarkesto.base.time.Date> getPblFilterDateTos() {
+        if (pblFilterDateTosCache == null) {
+            pblFilterDateTosCache = new HashSet<ilarkesto.base.time.Date>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isPblFilterDateToSet()) pblFilterDateTosCache.add(e.getPblFilterDateTo());
+            }
+        }
+        return pblFilterDateTosCache;
+    }
+
+    private static class IsPblFilterDateTo implements Predicate<ProjectUserConfig> {
+
+        private ilarkesto.base.time.Date value;
+
+        public IsPblFilterDateTo(ilarkesto.base.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isPblFilterDateTo(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterEstimationFrom
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Float,Set<ProjectUserConfig>> projectUserConfigsByPblFilterEstimationFromCache = new Cache<java.lang.Float,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.Float,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.Float pblFilterEstimationFrom) {
+                    return getEntities(new IsPblFilterEstimationFrom(pblFilterEstimationFrom));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        return projectUserConfigsByPblFilterEstimationFromCache.get(pblFilterEstimationFrom);
+    }
+    private Set<java.lang.Float> pblFilterEstimationFromsCache;
+
+    public final Set<java.lang.Float> getPblFilterEstimationFroms() {
+        if (pblFilterEstimationFromsCache == null) {
+            pblFilterEstimationFromsCache = new HashSet<java.lang.Float>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isPblFilterEstimationFromSet()) pblFilterEstimationFromsCache.add(e.getPblFilterEstimationFrom());
+            }
+        }
+        return pblFilterEstimationFromsCache;
+    }
+
+    private static class IsPblFilterEstimationFrom implements Predicate<ProjectUserConfig> {
+
+        private java.lang.Float value;
+
+        public IsPblFilterEstimationFrom(java.lang.Float value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isPblFilterEstimationFrom(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterEstimationTo
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Float,Set<ProjectUserConfig>> projectUserConfigsByPblFilterEstimationToCache = new Cache<java.lang.Float,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.Float,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.Float pblFilterEstimationTo) {
+                    return getEntities(new IsPblFilterEstimationTo(pblFilterEstimationTo));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        return projectUserConfigsByPblFilterEstimationToCache.get(pblFilterEstimationTo);
+    }
+    private Set<java.lang.Float> pblFilterEstimationTosCache;
+
+    public final Set<java.lang.Float> getPblFilterEstimationTos() {
+        if (pblFilterEstimationTosCache == null) {
+            pblFilterEstimationTosCache = new HashSet<java.lang.Float>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isPblFilterEstimationToSet()) pblFilterEstimationTosCache.add(e.getPblFilterEstimationTo());
+            }
+        }
+        return pblFilterEstimationTosCache;
+    }
+
+    private static class IsPblFilterEstimationTo implements Predicate<ProjectUserConfig> {
+
+        private java.lang.Float value;
+
+        public IsPblFilterEstimationTo(java.lang.Float value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isPblFilterEstimationTo(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - pblFilterText
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<ProjectUserConfig>> projectUserConfigsByPblFilterTextCache = new Cache<java.lang.String,Set<ProjectUserConfig>>(
+            new Cache.Factory<java.lang.String,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(java.lang.String pblFilterText) {
+                    return getEntities(new IsPblFilterText(pblFilterText));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByPblFilterText(java.lang.String pblFilterText) {
+        return projectUserConfigsByPblFilterTextCache.get(pblFilterText);
+    }
+    private Set<java.lang.String> pblFilterTextsCache;
+
+    public final Set<java.lang.String> getPblFilterTexts() {
+        if (pblFilterTextsCache == null) {
+            pblFilterTextsCache = new HashSet<java.lang.String>();
+            for (ProjectUserConfig e : getEntities()) {
+                if (e.isPblFilterTextSet()) pblFilterTextsCache.add(e.getPblFilterText());
+            }
+        }
+        return pblFilterTextsCache;
+    }
+
+    private static class IsPblFilterText implements Predicate<ProjectUserConfig> {
+
+        private java.lang.String value;
+
+        public IsPblFilterText(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return e.isPblFilterText(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -445,6 +739,12 @@ public abstract class GProjectUserConfigDao
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;
+    }
+
+    scrum.server.project.QualityDao qualityDao;
+
+    public void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        this.qualityDao = qualityDao;
     }
 
 }

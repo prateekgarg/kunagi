@@ -342,6 +342,10 @@ public abstract class GQuality
         return getDao().getRequirementsByQuality((Quality)this);
     }
 
+    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return getDao().getProjectUserConfigsByPblFilterQuality((Quality)this);
+    }
+
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;

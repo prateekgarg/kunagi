@@ -1637,6 +1637,62 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterTheme(java.lang.String pblFilterTheme) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.containsPblFilterTheme(pblFilterTheme)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterQuality(scrum.client.project.Quality pblFilterQuality) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.containsPblFilterQuality(pblFilterQuality)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterDateFrom(ilarkesto.gwt.client.Date pblFilterDateFrom) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isPblFilterDateFrom(pblFilterDateFrom)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterDateTo(ilarkesto.gwt.client.Date pblFilterDateTo) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isPblFilterDateTo(pblFilterDateTo)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isPblFilterEstimationFrom(pblFilterEstimationFrom)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isPblFilterEstimationTo(pblFilterEstimationTo)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByPblFilterText(java.lang.String pblFilterText) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isPblFilterText(pblFilterText)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Quality ---
 
     protected Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();

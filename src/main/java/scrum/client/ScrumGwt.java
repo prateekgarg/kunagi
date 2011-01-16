@@ -23,6 +23,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
 
+	public static String getEstimationAsString(Float estimation, String suffix) {
+		String s = getEstimationAsString(estimation);
+		return s == null ? null : s + " " + suffix;
+	}
+
+	public static String getEstimationAsString(Float estimation) {
+		if (estimation == null) return null;
+		if (estimation <= 0.5f) return estimation.toString();
+		return String.valueOf(estimation.intValue());
+	}
+
 	public static String getReferenceAndLabel(AGwtEntity entity) {
 		StringBuilder sb = new StringBuilder();
 		if (entity instanceof ReferenceSupport) {
