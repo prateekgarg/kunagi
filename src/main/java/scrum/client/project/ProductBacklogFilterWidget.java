@@ -1,11 +1,15 @@
 package scrum.client.project;
 
+import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.ADropdownViewEditWidget;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.ProjectUserConfig;
@@ -61,7 +65,7 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 		userConfig = getCurrentProject().getUserConfig(getCurrentUser());
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.setColumnWidths("50px", "", "100px", "40px", "70px", "20px", "70px", "");
+		tb.setColumnWidths("50px", "", "100px", "40px", "70px", "20px", "70px", "", "80px");
 
 		tb.addField("Text", userConfig.getPblFilterTextModel(), 1);
 		tb.addFieldLabel("Estimation");
@@ -120,6 +124,7 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 
 		});
 		tb.addFieldLabel("");
+		tb.add(new ButtonWidget(new ResetFilterAction()));
 		tb.nextRow();
 		tb.addField("Themes", new ThemesWidget(userConfig.getPblFilter()));
 		tb.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
@@ -144,11 +149,32 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 			public boolean isEditable() {
 				return true;
 			}
-		}, 5);
+		}, 6);
 
 		// tb.addField("Last modified from", userConfig.getPblFilterDateFromModel());
 		// tb.addFieldRow("Last modified to", userConfig.getPblFilterDateToModel());
 
 		return tb.createTable();
+	}
+
+	class ResetFilterAction extends AAction {
+
+		@Override
+		public String getLabel() {
+			return "Reset filter";
+		}
+
+		@Override
+		protected void onExecute() {
+			userConfig.setPblFilterDateFrom(null);
+			userConfig.setPblFilterDateTo(null);
+			userConfig.setPblFilterEstimationFrom(null);
+			userConfig.setPblFilterEstimationTo(null);
+			Set<Quality> qualitys = Collections.emptySet();
+			userConfig.setPblFilterQualitys(qualitys);
+			userConfig.setPblFilterText(null);
+			List<String> themes = Collections.emptyList();
+			userConfig.setPblFilterThemes(themes);
+		}
 	}
 }
