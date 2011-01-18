@@ -11,6 +11,7 @@ import scrum.client.ScrumGwt;
 import scrum.client.admin.ProjectUserConfig;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.ThemesWidget;
+import scrum.client.search.Search;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -46,6 +47,9 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 			Float estimatedWork = req.getEstimatedWork();
 			if (estimatedWork == null || estimatedWork > userConfig.getPblFilterEstimationTo()) return false;
 		}
+		if (userConfig.getPblFilterText() != null) {
+			if (!Search.matchesQuery(req, userConfig.getPblFilterText())) return false;
+		}
 		// if (userConfig.getPblFilterDateFrom()!=null) {
 		// if (!req.getlastM)
 		// }
@@ -57,32 +61,11 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 		userConfig = getCurrentProject().getUserConfig(getCurrentUser());
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
+		tb.setColumnWidths("50px", "", "100px", "40px", "70px", "20px", "70px", "");
 
-		tb.addFieldRow("Themes", new ThemesWidget(userConfig.getPblFilter()), 3);
-		tb.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
-
-			@Override
-			protected void onViewerUpdate() {
-				setViewerItemsAsHtml(userConfig.getPblFilterQualitys());
-			}
-
-			@Override
-			protected void onEditorUpdate() {
-				setEditorItems(userConfig.getProject().getQualitys());
-				setEditorSelectedItems(userConfig.getPblFilterQualitys());
-			}
-
-			@Override
-			protected void onEditorSubmit() {
-				userConfig.setPblFilterQualitys(getEditorSelectedItems());
-			}
-
-			@Override
-			public boolean isEditable() {
-				return true;
-			}
-		}, 3);
-		tb.addField("Estimated from", new ADropdownViewEditWidget() {
+		tb.addField("Text", userConfig.getPblFilterTextModel(), 1);
+		tb.addFieldLabel("Estimation");
+		tb.addField("from", new ADropdownViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -109,7 +92,7 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 			}
 
 		});
-		tb.addFieldRow("Estimated to", new ADropdownViewEditWidget() {
+		tb.addField("to", new ADropdownViewEditWidget() {
 
 			@Override
 			protected void onViewerUpdate() {
@@ -136,6 +119,32 @@ public class ProductBacklogFilterWidget extends AScrumWidget {
 			}
 
 		});
+		tb.addFieldLabel("");
+		tb.nextRow();
+		tb.addField("Themes", new ThemesWidget(userConfig.getPblFilter()));
+		tb.addFieldRow("Qualities", new AMultiSelectionViewEditWidget<Quality>() {
+
+			@Override
+			protected void onViewerUpdate() {
+				setViewerItemsAsHtml(userConfig.getPblFilterQualitys());
+			}
+
+			@Override
+			protected void onEditorUpdate() {
+				setEditorItems(userConfig.getProject().getQualitys());
+				setEditorSelectedItems(userConfig.getPblFilterQualitys());
+			}
+
+			@Override
+			protected void onEditorSubmit() {
+				userConfig.setPblFilterQualitys(getEditorSelectedItems());
+			}
+
+			@Override
+			public boolean isEditable() {
+				return true;
+			}
+		}, 5);
 
 		// tb.addField("Last modified from", userConfig.getPblFilterDateFromModel());
 		// tb.addFieldRow("Last modified to", userConfig.getPblFilterDateToModel());

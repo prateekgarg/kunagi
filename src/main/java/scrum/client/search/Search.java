@@ -23,6 +23,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 
 		new SearchServiceCall(searchText).execute(new Runnable() {
 
+			@Override
 			public void run() {
 				searchClient(searchText);
 				getResultsWidget().update();
@@ -56,14 +57,18 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 		return ret;
 	}
 
-	private boolean matchesKeys(AScrumGwtEntity entity, String[] keys) {
+	public static boolean matchesQuery(AScrumGwtEntity entity, String query) {
+		return matchesKeys(entity, parseKeys(query));
+	}
+
+	public static boolean matchesKeys(AScrumGwtEntity entity, String[] keys) {
 		for (String key : keys) {
 			if (!entity.matchesKey(key)) return false;
 		}
 		return true;
 	}
 
-	private String[] parseKeys(String text) {
+	public static String[] parseKeys(String text) {
 		List<String> ret = new ArrayList<String>();
 		char sep = ' ';
 		int idx = text.indexOf(sep);
@@ -80,6 +85,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 		return results;
 	}
 
+	@Override
 	public void onSearchResultsChanged(SearchResultsChangedEvent event) {
 		getResultsWidget().update();
 	}
