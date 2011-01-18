@@ -73,7 +73,7 @@
     </servlet>      
     <servlet-mapping>
         <servlet-name>fileDownload</servlet-name>
-        <url-pattern>/scrum.ScrumGwtApplication/fileDownload</url-pattern>
+        <url-pattern>/scrum.ScrumGwtApplication/fileDownload/*</url-pattern>
     </servlet-mapping>
 
     <!-- file upload -->

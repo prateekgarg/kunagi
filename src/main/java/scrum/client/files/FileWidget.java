@@ -28,7 +28,8 @@ public class FileWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", file.getLabelModel());
-		String relativeUrl = "fileDownload?projectId=" + project.getId() + "&fileId=" + file.getId();
+		String relativeUrl = "fileDownload/" + file.getFilename() + "?projectId=" + project.getId() + "&fileId="
+				+ file.getId();
 		HTML downloadLink = Gwt.createServletDownloadLink(relativeUrl, file.getFilename());
 		left.addFieldRow("Download", downloadLink);
 		left.addFieldRow("Notes", file.getNoteModel());
