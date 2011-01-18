@@ -4,6 +4,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
+import ilarkesto.gwt.client.animation.AnimatingFlowPanel.InsertCallback;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
-	private Runnable moveObserver;
+	private InsertCallback moveObserver;
 	private BlockListSelectionManager selectionManager;
 	private BlockListDropAction<O> dropAction;
 	private BlockDndMarkerWidget dndMarkerBottom;
@@ -120,7 +121,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		return list.getWidget(object);
 	}
 
-	public void setMoveObserver(Runnable orderObserver) {
+	public void setMoveObserver(InsertCallback orderObserver) {
 		this.moveObserver = orderObserver;
 	}
 

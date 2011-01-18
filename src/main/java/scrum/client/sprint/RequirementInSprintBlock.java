@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.animation.AnimatingFlowPanel.InsertCallback;
 
 import java.util.List;
 
@@ -128,10 +129,10 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		taskList.showObject(task);
 	}
 
-	class MoveObserver implements Runnable {
+	class MoveObserver implements InsertCallback {
 
 		@Override
-		public void run() {
+		public void onInserted(int index) {
 			List<Task> tasks = taskList.getObjects();
 			getObject().updateTasksOrder(tasks);
 			update();

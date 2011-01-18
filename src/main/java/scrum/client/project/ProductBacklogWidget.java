@@ -1,10 +1,12 @@
 package scrum.client.project;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.animation.AnimatingFlowPanel.InsertCallback;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
 
 import java.util.Collections;
@@ -125,12 +127,33 @@ public class ProductBacklogWidget extends AScrumWidget {
 		return velocityWidget;
 	}
 
-	class MoveObserver implements Runnable {
+	class MoveObserver implements InsertCallback {
 
 		@Override
-		public void run() {
+		public void onInserted(int index) {
 			List<Requirement> requirements = list.getObjects();
-			getCurrentProject().updateRequirementsOrder(requirements);
+			if (filterToggleAction.filterActive) {
+				Requirement requirement = requirements.get(index);
+				boolean movedUp = index < filterWidget.getRequirements().indexOf(requirement);
+				List<Requirement> allRequirements = getCurrentProject().getProductBacklogRequirements();
+				Collections.sort(allRequirements, getCurrentProject().getRequirementsOrderComparator());
+				if (movedUp) {
+					Requirement next = requirements.get(index + 1);
+					allRequirements.remove(requirement);
+					int newIndex = allRequirements.indexOf(next);
+					allRequirements.add(newIndex, requirement);
+					Log.DEBUG("-UP-", requirement, "-BEFORE-", next, "-NEWINDEX-", newIndex);
+				} else {
+					Requirement previous = requirements.get(index - 1);
+					allRequirements.remove(requirement);
+					int newIndex = allRequirements.indexOf(previous) + 1;
+					allRequirements.add(newIndex, requirement);
+					Log.DEBUG("-DOWN-", requirement, "-AFTER-", previous, newIndex);
+				}
+				getCurrentProject().updateRequirementsOrder(allRequirements);
+			} else {
+				getCurrentProject().updateRequirementsOrder(requirements);
+			}
 			update();
 		}
 

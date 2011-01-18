@@ -2,6 +2,7 @@ package scrum.client.tasks;
 
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
+import ilarkesto.gwt.client.animation.AnimatingFlowPanel.InsertCallback;
 
 import java.util.List;
 
@@ -71,10 +72,10 @@ public class TaskListWidget extends AScrumWidget {
 		list.clearTaskHighlighting();
 	}
 
-	class MoveObserver implements Runnable {
+	class MoveObserver implements InsertCallback {
 
 		@Override
-		public void run() {
+		public void onInserted(int index) {
 			List<Task> tasks = list.getObjects();
 			requirement.updateTasksOrder(tasks);
 			update();
