@@ -61,6 +61,7 @@ public abstract class GSystemConfig
         properties.put("ldapPassword", this.ldapPassword);
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
+        properties.put("maxFileSize", this.maxFileSize);
     }
 
     public int compareTo(SystemConfig other) {
@@ -928,6 +929,41 @@ public abstract class GSystemConfig
         setLdapUserFilterRegex((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - maxFileSize
+    // -----------------------------------------------------------
+
+    private java.lang.Integer maxFileSize;
+
+    public final java.lang.Integer getMaxFileSize() {
+        return maxFileSize;
+    }
+
+    public final void setMaxFileSize(java.lang.Integer maxFileSize) {
+        maxFileSize = prepareMaxFileSize(maxFileSize);
+        if (isMaxFileSize(maxFileSize)) return;
+        this.maxFileSize = maxFileSize;
+        updateLastModified();
+        fireModified("maxFileSize="+maxFileSize);
+    }
+
+    protected java.lang.Integer prepareMaxFileSize(java.lang.Integer maxFileSize) {
+        return maxFileSize;
+    }
+
+    public final boolean isMaxFileSizeSet() {
+        return this.maxFileSize != null;
+    }
+
+    public final boolean isMaxFileSize(java.lang.Integer maxFileSize) {
+        if (this.maxFileSize == null && maxFileSize == null) return true;
+        return this.maxFileSize != null && this.maxFileSize.equals(maxFileSize);
+    }
+
+    protected final void updateMaxFileSize(Object value) {
+        setMaxFileSize((java.lang.Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -958,6 +994,7 @@ public abstract class GSystemConfig
             if (property.equals("ldapPassword")) updateLdapPassword(value);
             if (property.equals("ldapBaseDn")) updateLdapBaseDn(value);
             if (property.equals("ldapUserFilterRegex")) updateLdapUserFilterRegex(value);
+            if (property.equals("maxFileSize")) updateMaxFileSize(value);
         }
     }
 

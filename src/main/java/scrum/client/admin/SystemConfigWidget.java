@@ -52,6 +52,7 @@ public class SystemConfigWidget extends AScrumWidget {
 				setViewer(new Label(getApp().getApplicationInfo().getDataPath()));
 			}
 		});
+		tbKunagi.addFieldRow("Maximum file size (MB)", config.getMaxFileSizeModel());
 		page.addSection(tbKunagi.createTable());
 
 		page.addHeader("Email", new ButtonWidget(new SendTestEmailAction()));

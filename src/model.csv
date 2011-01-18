@@ -62,6 +62,7 @@
 "20ebc821-d9a3-4e3d-92dc-267bfea60cbb","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","ldapUserFilter"
 "f7b77a05-d436-4559-bd96-c8a56b8ec0e1","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","ldapBaseDn"
 "9d9472da-d5a3-4c58-ad6a-e4f93426be25","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","TextProperty","ldapUserFilterRegex"
+"4d5ff31f-90a2-4fc9-a6c1-b1d55c3c2280","7dd754a3-6bfa-4b59-b67c-7f7ae2b73903","IntegerProperty","maxFileSize"
 "2022a887-21ae-4fb1-ac20-5daf2700f34e","a2e30272-5798-4ecd-b8b6-11fb7bb85a72","Entity","User"
 "9c061e72-c58c-42be-aaca-938bb6ac2c1e","2022a887-21ae-4fb1-ac20-5daf2700f34e","BooleanProperty","admin"
 "da4489ee-a821-4fb2-8eb8-a95c358c39f8","2022a887-21ae-4fb1-ac20-5daf2700f34e","TextProperty","color"

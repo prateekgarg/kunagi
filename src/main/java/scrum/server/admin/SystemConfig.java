@@ -23,6 +23,7 @@ public class SystemConfig extends GSystemConfig {
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+		if (!isMaxFileSizeSet()) setMaxFileSize(20);
 	}
 
 }

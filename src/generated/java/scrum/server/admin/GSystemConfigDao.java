@@ -85,6 +85,8 @@ public abstract class GSystemConfigDao
         ldapBaseDnsCache = null;
         systemConfigsByLdapUserFilterRegexCache.clear();
         ldapUserFilterRegexsCache = null;
+        systemConfigsByMaxFileSizeCache.clear();
+        maxFileSizesCache = null;
     }
 
     @Override
@@ -1022,6 +1024,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isLdapUserFilterRegex(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - maxFileSize
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<SystemConfig>> systemConfigsByMaxFileSizeCache = new Cache<java.lang.Integer,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.Integer,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.Integer maxFileSize) {
+                    return getEntities(new IsMaxFileSize(maxFileSize));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByMaxFileSize(java.lang.Integer maxFileSize) {
+        return systemConfigsByMaxFileSizeCache.get(maxFileSize);
+    }
+    private Set<java.lang.Integer> maxFileSizesCache;
+
+    public final Set<java.lang.Integer> getMaxFileSizes() {
+        if (maxFileSizesCache == null) {
+            maxFileSizesCache = new HashSet<java.lang.Integer>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isMaxFileSizeSet()) maxFileSizesCache.add(e.getMaxFileSize());
+            }
+        }
+        return maxFileSizesCache;
+    }
+
+    private static class IsMaxFileSize implements Predicate<SystemConfig> {
+
+        private java.lang.Integer value;
+
+        public IsMaxFileSize(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isMaxFileSize(value);
         }
 
     }

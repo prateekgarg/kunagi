@@ -1445,6 +1445,71 @@ public abstract class GSystemConfig
 
     }
 
+    // --- maxFileSize ---
+
+    private java.lang.Integer maxFileSize ;
+
+    public final java.lang.Integer getMaxFileSize() {
+        return this.maxFileSize ;
+    }
+
+    public final SystemConfig setMaxFileSize(java.lang.Integer maxFileSize) {
+        if (isMaxFileSize(maxFileSize)) return (SystemConfig)this;
+        this.maxFileSize = maxFileSize ;
+        propertyChanged("maxFileSize", this.maxFileSize);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isMaxFileSize(java.lang.Integer maxFileSize) {
+        return equals(this.maxFileSize, maxFileSize);
+    }
+
+    private transient MaxFileSizeModel maxFileSizeModel;
+
+    public MaxFileSizeModel getMaxFileSizeModel() {
+        if (maxFileSizeModel == null) maxFileSizeModel = createMaxFileSizeModel();
+        return maxFileSizeModel;
+    }
+
+    protected MaxFileSizeModel createMaxFileSizeModel() { return new MaxFileSizeModel(); }
+
+    protected class MaxFileSizeModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_maxFileSize";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getMaxFileSize();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setMaxFileSize(value);
+        }
+
+            @Override
+            public void increment() {
+                setMaxFileSize(getMaxFileSize() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setMaxFileSize(getMaxFileSize() - 1);
+            }
+        @Override
+        public String getTooltip() { return "Maximum size in megabytes for uploaded files."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1473,6 +1538,7 @@ public abstract class GSystemConfig
         ldapPassword  = (java.lang.String) props.get("ldapPassword");
         ldapBaseDn  = (java.lang.String) props.get("ldapBaseDn");
         ldapUserFilterRegex  = (java.lang.String) props.get("ldapUserFilterRegex");
+        maxFileSize  = (java.lang.Integer) props.get("maxFileSize");
         updateLocalModificationTime();
     }
 
@@ -1504,6 +1570,7 @@ public abstract class GSystemConfig
         properties.put("ldapPassword", this.ldapPassword);
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
+        properties.put("maxFileSize", this.maxFileSize);
     }
 
 }

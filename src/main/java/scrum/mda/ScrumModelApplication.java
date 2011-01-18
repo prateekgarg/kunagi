@@ -112,6 +112,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addStringProperty("ldapBaseDn").setTooltip("Example: dc=mydomain,dc=com");
 			systemConfigModel.addStringProperty("ldapUserFilterRegex").setTooltip(
 				"Example: (&(objectClass=user)(sAMAccountName=%u))");
+			systemConfigModel.addIntegerProperty("maxFileSize").setTooltip(
+				"Maximum size in megabytes for uploaded files.");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;

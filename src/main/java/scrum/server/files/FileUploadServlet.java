@@ -10,6 +10,7 @@ import ilarkesto.webapp.Servlet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
@@ -83,4 +84,16 @@ public class FileUploadServlet extends UploadAction {
 		return name;
 	}
 
+	@Override
+	public void checkRequest(HttpServletRequest request) {
+		ScrumWebApplication webApp = ScrumWebApplication.get();
+		Integer maxFileSize = webApp.getSystemConfig().getMaxFileSize();
+		maxSize = maxFileSize == null ? DEFAULT_REQUEST_LIMIT_KB : maxFileSize * 1024 * 1024;
+		super.checkRequest(request);
+	}
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+	}
 }
