@@ -1,23 +1,23 @@
 * {margin: 0; padding: 0;}
-body {background: #F2F5FE url("img/bg.png") 0 0 repeat; font:14px/19px "verdana","sans-serif"; color: #333;}
+body {background: #394686; font:14px/19px "verdana","sans-serif"; color: #333;}
 img {border: none;}
 table td {vertical-align: top;}
 input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 5px;}
 
 
-#main {width: 750px; margin: 20px auto 1000px auto; border: 1px solid #555;}
+#main {width: 922px; margin: 0px auto 1000px auto;}
 
-#header {height: 80px; background: #233C9B url("img/header.jpg") 0 0 no-repeat; color:#FFF;}
+#header {height: 80px; color: #FFF;}
     h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px; color: #192666;}
         h1 .orange {color: orange;}
-    #header img {margin: 0px 10px; border: none;}
-    #searchbox {margin: 1px 8px 0 0;}
-        #searchinput {padding: 2px; font-size: 12px; line-height: 12px; background: #EEF; color: #666; border: 1px solid #666;}
 
-#menu {background: #192666;}
-    #menu a.navigLink {color: #fff; font-weight: bold; border-right: 1px solid #338; cursor: pointer; display: block; padding: 10px; text-decoration: none;}
-    #menu a.navigLinkSelected {background: #394686;}
-    #menu a.navigLink:hover {background: #293676; color: #fff;}
+#menu {position: fixed;}
+    #menu img {margin: 10px 0px 20px 0px; border: none;}
+    #menu a.navigLink {color: #fff; font-weight: bold; cursor: pointer; display: block; padding: 8px 10px; text-decoration: none; text-align: right; font-size: 16px;}
+    #menu a.navigLinkSelected {color: #fd0;}
+    #menu a.navigLink:hover {text-decoration: underline;}
+    #searchbox {margin: 40px 10px 10px 10px;}
+        #searchinput {padding: 2px; font-size: 12px; line-height: 12px; background: #EEF; color: #666; border: 1px solid #666; float: right;}
 
 #content {background: white; padding: 25px; min-height: 500px;}
     #content a {color: #B37400;}
@@ -50,7 +50,7 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
         #content .section .toc {background: #eee; width: 50%; float: right; margin: 0 0 10px 10px;} 
     #content .separator {height: 15px; margin-bottom: 25px; border-bottom: 1px solid #CCC;}
 
-#footer {background: #192666; color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
+#footer {color: #CCC; padding: 0px 10px; font-size: 8px; text-align: right;}
 
 #cse {}
     #cse input.gsc-input, #cse input.gsc-search-button, #cse div.gsc-clear-button {display: none;}
