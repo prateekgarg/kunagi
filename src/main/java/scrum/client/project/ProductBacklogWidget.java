@@ -142,13 +142,11 @@ public class ProductBacklogWidget extends AScrumWidget {
 					allRequirements.remove(requirement);
 					int newIndex = allRequirements.indexOf(next);
 					allRequirements.add(newIndex, requirement);
-					Log.DEBUG("-UP-", requirement, "-BEFORE-", next, "-NEWINDEX-", newIndex);
 				} else {
 					Requirement previous = requirements.get(index - 1);
 					allRequirements.remove(requirement);
 					int newIndex = allRequirements.indexOf(previous) + 1;
 					allRequirements.add(newIndex, requirement);
-					Log.DEBUG("-DOWN-", requirement, "-AFTER-", previous, newIndex);
 				}
 				getCurrentProject().updateRequirementsOrder(allRequirements);
 			} else {
