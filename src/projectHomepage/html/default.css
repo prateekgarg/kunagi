@@ -1,11 +1,11 @@
 * {margin: 0; padding: 0;}
-body {background: #394686; font:14px/19px "verdana","sans-serif"; color: #333;}
+body {background: #204377; font:14px/19px "verdana","sans-serif"; color: #333;}
 img {border: none;}
 table td {vertical-align: top;}
 input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 5px;}
 
 
-#main {width: 924px; margin: 20px auto 1000px auto;}
+#main {width: 924px; margin: 20px auto 1000px auto; background-image: url("img/bg-light.png");}
 
 #header {height: 80px; color: #FFF;}
     h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px; color: #192666;}
