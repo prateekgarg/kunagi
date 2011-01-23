@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("support", "Support - Kunagi", "Kunagi support. Feedback, feature requests. Documentation and Tutorials.", "Kunagi, support, feedback, feature request, documentation, tutorial")
+#header("support", "Support - Kunagi", "Kunagi support. Feedback, feature requests.", "Kunagi, support, feedback, feature request")
 
 <div class="section">
 
@@ -23,14 +23,6 @@
     
     <p>Fixed bugs can be found among <a href="closedissues.html">closed issues</a>.</p>
     
-</div>
-
-<div class="separator"></div>                    
-
-
-
-<div class="section">
-    $wiki.InstallDoc
 </div>
 
 
