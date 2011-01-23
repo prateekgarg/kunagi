@@ -43,8 +43,9 @@
             #navigLink("screenshots", "Screenshots", $page)
             #navigLink("download", "Download", $page)
             #navigLink("documentation", "Documentation", $page)
-            #navigLink("support", "Support", $page)
+            #navigLink("issues", "Issues &amp; Bugs", $page)
             #navigLink("development", "Development", $page)
+            #navigLink("team", "Kunagi Team", $page)
             
             #search()                
     </div>
@@ -158,8 +159,10 @@ pageTracker._trackPageview();
                     <textarea name="text" id="text" rows="10" cols="50" style="width: 685px;"></textarea><br>
                     #if ($visibilityCheckboxLabel)
                         <br>
-                        <input type="checkbox" name="publish" id="publish" value="true" checked="checked">
+                        <input type="checkbox" name="publish" id="publish" value="false">
                         <label for="publish">$visibilityCheckboxLabel</label><br>
+                    #else
+                        <input type="hidden" name="publish" id="publish" value="true">
                     #end
                     <br>    
                 </td>

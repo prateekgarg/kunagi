@@ -21,6 +21,16 @@
       <priority>0.7</priority>
    </url>
    <url>
+      <loc>http://kunagi.org/issues.html</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   <url>
+      <loc>http://kunagi.org/team.html</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+   <url>
       <loc>http://kunagi.org/closedissues.html</loc>
       <changefreq>weekly</changefreq>
       <priority>0.3</priority>

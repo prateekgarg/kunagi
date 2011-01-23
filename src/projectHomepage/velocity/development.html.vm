@@ -35,8 +35,8 @@
     <img src="sprint-burndown-700x200.png" alt="current sprint burndown chart">
 </div>
 
-<div class="separator"></div>
 
+<div class="separator"></div>
 
 <div class="section">
     <a name="productbacklog"></a>
@@ -47,23 +47,6 @@
     #end
     </ul>
     <p>There are more story canditates among collected <a href="ideas.html">ideas</a>.</p>
-</div>
-
-<div class="separator"></div>
-
-
-<div class="section">
-    <a name="team"></a>
-    <h2>Development Team</h2>
-    <p>Kunagi is developed by a distributed team of experienced software developers:</p>
-    <ul>
-        <li><a>Artjom Kochtchi</a> is Product Owner and Team member</li>
-        <li><a href="http://koczewski.de/" target="_blank">Witoslaw Koczewski</a> (<a href="http://koczewski.de/witoslaw-koczewski-csm.pdf" target="_blank">CSM</a>) is ScrumMaster and Team member</li>
-        <li><a href="http://fabianhager.de/" target="_blank">Fabian Hager</a> is Team member</li>
-        <li><a href="http://grubalski.de/" target="_blank">Kacper Grubalski</a> is Team member</li>
-        <li><a>Fabian Wischnewski</a> is Team member</li>
-    </ul>
-    $wiki.Contributions
 </div>
 
 
