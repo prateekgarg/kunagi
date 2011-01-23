@@ -13,6 +13,11 @@ public class PingServiceCall extends scrum.client.core.AServiceCall {
     }
 
     @Override
+    public boolean isDispensable() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Ping";
     }

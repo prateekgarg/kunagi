@@ -19,6 +19,11 @@ public class ChangePropertiesServiceCall extends scrum.client.core.AServiceCall 
     }
 
     @Override
+    public boolean isDispensable() {
+        return ilarkesto.core.scope.Scope.get().getComponent(scrum.client.Dao.class).getEntity(entityId) instanceof scrum.client.admin.ProjectUserConfig && (properties.containsKey("selectedEntitysIds") || properties.containsKey("richtextAutosaveText") || properties.containsKey("richtextAutosaveField") || properties.containsKey("online"));
+    }
+
+    @Override
     public String toString() {
         return "ChangeProperties";
     }

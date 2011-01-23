@@ -47,7 +47,10 @@ public class ServiceCaller extends GServiceCaller {
 	}
 
 	public void onServiceCallFailure(AServiceCall serviceCall, Throwable ex) {
-		onServiceCallReturn();
+		if (serviceCall.isDispensable()) {
+			log.warn("Dispensable service call failed:", serviceCall);
+			return;
+		}
 		log.error("Service call failed:", serviceCall);
 		ScrumGwtApplication.get().handleCommunicationError(ex);
 	}
