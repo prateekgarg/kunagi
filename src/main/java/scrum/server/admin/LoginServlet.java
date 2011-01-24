@@ -189,6 +189,7 @@ public class LoginServlet extends AHttpServlet {
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
 		webApplication.triggerRegisterNotification(user, req.getRemoteHost());
+		webApplication.sendToClients(user);
 
 		session.setUser(user);
 		resp.sendRedirect(getStartPage(historyToken));

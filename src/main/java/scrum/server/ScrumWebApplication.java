@@ -260,6 +260,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 	}
 
+	public void sendToClients(AEntity entity) {
+		for (AGwtConversation c : getGwtConversations()) {
+			c.sendToClient(entity);
+		}
+	}
+
 	public Set<GwtConversation> getConversationsByProject(Project project, GwtConversation exception) {
 		Set<GwtConversation> ret = new HashSet<GwtConversation>();
 		for (Object element : getGwtConversations()) {
