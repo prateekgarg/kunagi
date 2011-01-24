@@ -62,7 +62,11 @@ public class User extends GUser {
 		sb.append("\n");
 		sb.append("Please confirm your email within " + HOURS_FOR_EMAIL_VERIFICATION
 				+ " hours, otherwise your account will be deleted.\n");
-		webApplication.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
+		try {
+			webApplication.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
+		} catch (Exception ex) {
+			log.error("Sending verification email failed:", getEmail(), ex);
+		}
 	}
 
 	public void triggerNewPasswordRequest() {

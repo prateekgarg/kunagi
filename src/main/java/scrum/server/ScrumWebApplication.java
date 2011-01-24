@@ -316,7 +316,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sb.append("OpenID: ").append(user.getOpenId()).append("\n");
 		sb.append("Date/Time: ").append(DateAndTime.now()).append("\n");
 		sb.append("Host: ").append(host).append("\n");
-		sendEmail(null, null, user.getLabel() + " registered on " + getBaseUrl(), sb.toString());
+		String subject = user.getLabel() + " registered on " + getBaseUrl();
+		try {
+			sendEmail(null, null, subject, sb.toString());
+		} catch (Throwable ex) {
+			log.error("Sending notification email failed:", subject, ex);
+		}
 	}
 
 	public void sendEmail(String from, String to, String subject, String text) {
