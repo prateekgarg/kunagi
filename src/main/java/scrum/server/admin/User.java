@@ -16,7 +16,7 @@ import scrum.server.project.Project;
 
 public class User extends GUser {
 
-	private static final int HOURS_FOR_EMAIL_VERIFICATION = 72;
+	private static final int HOURS_FOR_EMAIL_VERIFICATION = 48;
 	private static final int DAYS_FOR_INACTIVITY = 7;
 
 	private static Log log = Log.get(User.class);
