@@ -4,6 +4,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.HyperlinkWidget;
+import ilarkesto.gwt.client.MultiSelectionWidget;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +62,17 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 		protected void onExecute() {
 			String theme = ScrumGwt.prompt("New Theme:", "");
 			if (!Str.isBlank(theme)) {
-				getEditor().add(theme);
-				getEditor().addSelected(theme);
+				MultiSelectionWidget<String> editor = getEditor();
+
+				List<String> items = editor.getItems();
+				List<String> selected = editor.getSelected();
+
+				items.add(theme);
+				Collections.sort(items);
+				selected.add(theme);
+
+				editor.setItems(items);
+				editor.setSelected(selected);
 			}
 		}
 	}
