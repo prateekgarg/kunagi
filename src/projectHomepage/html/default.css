@@ -1,5 +1,5 @@
 * {margin: 0; padding: 0;}
-body {background: #192E3F url("img/bg.jpg") repeat-x; font:14px/19px "verdana","sans-serif"; color: #333;}
+body {background: url("img/bg.jpg") repeat-x fixed left top #172D3F; font:14px/19px "verdana","sans-serif"; color: #333;}
 img {border: none;}
 table td {vertical-align: top;}
 input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 5px;}
