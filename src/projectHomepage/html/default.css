@@ -13,9 +13,9 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 
 #menu {position: fixed;}
     #menu img {margin: 10px 0px 20px 0px; border: none;}
-    #menu a.navigLink {color: #fff; font-weight: bold; cursor: pointer; display: block; padding: 8px 10px; text-decoration: none; text-align: right; font-size: 16px;}
+    #menu a.navigLink {color: #fff; font-weight: bold; cursor: pointer; display: block; padding: 8px 10px; text-decoration: none; text-align: right; font-size: 16px; text-shadow: 1px 1px 0 #222;}
     #menu a.navigLinkSelected {color: #fd0;}
-    #menu a.navigLink:hover {text-decoration: underline;}
+    #menu a.navigLink:hover {color: #f70;}
     #searchbox {margin: 40px 10px 10px 10px;}
         #searchinput {padding: 2px; font-size: 12px; line-height: 12px; background: #EEF; color: #666; border: 1px solid #666; float: right;}
 
