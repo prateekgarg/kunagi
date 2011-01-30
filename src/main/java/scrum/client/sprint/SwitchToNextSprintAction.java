@@ -2,6 +2,9 @@ package scrum.client.sprint;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
+
+import java.util.List;
+
 import scrum.client.common.TooltipBuilder;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
@@ -34,15 +37,27 @@ public class SwitchToNextSprintAction extends GSwitchToNextSprintAction {
 
 	@Override
 	protected void onExecute() {
-		Requirement undecidedRequirement = getCurrentProject().getCurrentSprint()
-				.getFirstCompletedUnclosedRequirement();
-		if (undecidedRequirement != null) {
-			if (!Gwt.confirm("Story "
-					+ undecidedRequirement.getReference()
-					+ " \""
-					+ undecidedRequirement.getLabel()
-					+ "\"  is completed and should be either accepted or rejected. Switch to next Sprint and reject all undecided Stories?"))
-				return;
+		List<Requirement> undecidedRequirements = getCurrentProject().getCurrentSprint()
+				.getCompletedUnclosedRequirements();
+		if (!undecidedRequirements.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			if (undecidedRequirements.size() == 1) {
+				sb.append("Story ").append(undecidedRequirements.get(0).getReference()).append(" is");
+			} else {
+				sb.append("Stories ");
+				boolean first = true;
+				for (Requirement req : undecidedRequirements) {
+					if (first) {
+						first = false;
+					} else {
+						sb.append(", ");
+					}
+					sb.append(req.getReference());
+				}
+				sb.append(" are");
+			}
+			sb.append(" completed and should be either accepted or rejected. Switch to next Sprint and reject all undecided Stories?");
+			if (!Gwt.confirm(sb.toString())) return;
 		} else {
 			if (!Gwt.confirm("Switch to next Sprint?")) return;
 		}
