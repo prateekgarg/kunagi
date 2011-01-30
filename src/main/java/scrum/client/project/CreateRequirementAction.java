@@ -6,6 +6,9 @@ import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateRequirementAction extends GCreateRequirementAction {
 
+	private Requirement relative;
+	private boolean before;
+
 	@Override
 	public String getLabel() {
 		return "Create Story";
@@ -33,29 +36,16 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	protected void onExecute() {
-		Requirement requirement = getCurrentProject().createNewRequirement();
+		Requirement requirement = getCurrentProject().createNewRequirement(relative, before);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showProductBacklog(requirement);
-		// addUndo(new Undo(requirement));
 	}
 
-	// class Undo extends ALocalUndo {
-	//
-	// private Requirement requirement;
-	//
-	// public Undo(Requirement requirement) {
-	// this.requirement = requirement;
-	// }
-	//
-	// @Override
-	// public String getLabel() {
-	// return "Create " + requirement.getReferenceAndLabel();
-	// }
-	//
-	// @Override
-	// protected void onUndo() {
-	// requirement.getProject().deleteRequirement(requirement);
-	// }
-	//
-	// }
+	public void setRelative(Requirement nextRequirement) {
+		this.relative = nextRequirement;
+	}
+
+	public void setBefore(boolean before) {
+		this.before = before;
+	}
 
 }

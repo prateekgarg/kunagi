@@ -188,6 +188,9 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".CreateTaskButtonWrapper").marginTop(5);
 		css.style(".CreateTaskButtonWrapper .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
+
+		css.style(".CreateStoryButtonWidget").marginTop(1);
+		css.style(".CreateStoryButtonWidget-dragHandle").marginTop(0).colorBlack();
 	}
 
 	private void loginPage(CssRenderer css) {
@@ -461,8 +464,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
 		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground, "../blockheader-bg.png", "repeat-x");
 		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
-		css.style(".BlockHeaderWidget-dragHandle").margin(2).padding(2).fontSize(fontSize - 1)
-				.lineHeight(lineHeight - 2).textAlignCenter().cursorMove()
+		css.style(".BlockHeaderWidget-dragHandle, .CreateStoryButtonWidget-dragHandle").margin(2).padding(2)
+				.fontSize(fontSize - 1).lineHeight(lineHeight - 2).textAlignCenter().cursorMove()
 				.background(cBlockHeaderDragHandleBackground, "../blockdraghandle-bg.png")
 				.border(1, cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-anchor").displayBlock().floatLeft().width100().textDecorationNone();

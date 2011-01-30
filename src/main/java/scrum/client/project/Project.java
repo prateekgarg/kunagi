@@ -246,12 +246,13 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	private void updateRequirementsOrder() {
-		List<Requirement> requirements = getRequirements();
+		List<Requirement> requirements = getProductBacklogRequirements();
 		Collections.sort(requirements, getRequirementsOrderComparator());
 		updateRequirementsOrder(requirements);
 	}
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
+		Log.DEBUG("!!!!!!!!!!!! changing order:", requirements);
 		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
 		updateRequirementsModificationTimes();
 	}
@@ -444,10 +445,24 @@ public class Project extends GProject implements ForumSupport {
 		return release;
 	}
 
-	public Requirement createNewRequirement() {
+	/**
+	 * @param relative The story, before which the new story should be placed. Optional.
+	 */
+	public Requirement createNewRequirement(Requirement relative, boolean before) {
 		Requirement item = new Requirement(this);
 		getDao().createRequirement(item);
-		updateRequirementsOrder();
+
+		if (relative == null) {
+			updateRequirementsOrder();
+		} else {
+			List<Requirement> requirements = getProductBacklogRequirements();
+			requirements.remove(item);
+			Collections.sort(requirements, getRequirementsOrderComparator());
+			int idx = requirements.indexOf(relative);
+			if (!before) idx++;
+			requirements.add(idx, item);
+			updateRequirementsOrder(requirements);
+		}
 		return item;
 	}
 

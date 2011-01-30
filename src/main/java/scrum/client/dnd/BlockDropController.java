@@ -2,6 +2,9 @@ package scrum.client.dnd;
 
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockListWidget;
+import scrum.client.project.CreateRequirementAction;
+import scrum.client.project.CreateStoryButtonWidget;
+import scrum.client.project.Requirement;
 
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
@@ -20,10 +23,12 @@ public class BlockDropController implements DropController {
 		this.targetList = targetBlock.getList();
 	}
 
+	@Override
 	public Widget getDropTarget() {
 		return targetBlock;
 	}
 
+	@Override
 	public void onDrop(DragContext context) {
 		Widget draggable = context.draggable;
 		if (!isDropAllowed(draggable)) return;
@@ -40,14 +45,25 @@ public class BlockDropController implements DropController {
 			if (isHigher(area, location)) toIndex--;
 			targetList.drop(draggedBlock, toIndex);
 		}
+
+		if (draggable instanceof CreateStoryButtonWidget) {
+			CreateStoryButtonWidget button = (CreateStoryButtonWidget) draggable;
+			CreateRequirementAction action = button.getAction();
+			action.setRelative((Requirement) targetBlock.getObject());
+			action.setBefore(isHigher(area, location));
+			action.execute();
+		}
 	}
 
+	@Override
 	public void onEnter(DragContext context) {}
 
+	@Override
 	public void onLeave(DragContext context) {
 		targetList.deactivateDndMarkers();
 	}
 
+	@Override
 	public void onMove(DragContext context) {
 		if (!isDropAllowed(context.draggable)) return;
 
@@ -61,6 +77,7 @@ public class BlockDropController implements DropController {
 		}
 	}
 
+	@Override
 	public void onPreviewDrop(DragContext context) throws VetoDragException {
 		if (!isDropAllowed(context.draggable)) { throw new VetoDragException(); }
 	}
@@ -74,7 +91,7 @@ public class BlockDropController implements DropController {
 		if (draggable instanceof ABlockWidget) {
 			ABlockWidget block = (ABlockWidget) draggable;
 			return targetBlock.getList().acceptsDrop(block);
-		}
+		} else if (draggable instanceof CreateStoryButtonWidget) { return true; }
 		return false;
 	}
 }

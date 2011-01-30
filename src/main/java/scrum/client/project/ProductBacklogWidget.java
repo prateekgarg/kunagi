@@ -1,6 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -43,9 +42,11 @@ public class ProductBacklogWidget extends AScrumWidget {
 		headerWrapper = new SimplePanel();
 		filterToggleAction = new FilterToggleAction();
 
+		Widget createStoryButtonWidget = getCurrentProject().isProductOwner(getCurrentUser()) ? new CreateStoryButtonWidget()
+				: new ButtonWidget(new CreateRequirementAction());
+
 		PagePanel page = new PagePanel();
-		page.addHeader("Product Backlog", new ButtonWidget(new CreateRequirementAction()), new ButtonWidget(
-				filterToggleAction));
+		page.addHeader("Product Backlog", createStoryButtonWidget, new ButtonWidget(filterToggleAction));
 		page.addSection(headerWrapper);
 		page.addSection(Gwt.createFlowPanel(list));
 		page.addSection(ScrumGwt.createPdfLink("Download as PDF", "productBacklog", getCurrentProject()));

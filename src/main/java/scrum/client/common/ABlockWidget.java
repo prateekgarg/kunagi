@@ -152,7 +152,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		this.object = object;
 	}
 
-	protected final O getObject() {
+	public final O getObject() {
 		return object;
 	}
 

@@ -16,27 +16,33 @@ public class BlockListDropController implements DropController {
 		this.list = list;
 	}
 
+	@Override
 	public Widget getDropTarget() {
 		return list;
 	}
 
+	@Override
 	public void onDrop(DragContext context) {
 		if (!isDropAllowed(context.draggable)) return;
 
 		list.drop((ABlockWidget) context.draggable, 0);
 	}
 
+	@Override
 	public void onEnter(DragContext context) {
 		if (!isDropAllowed(context.draggable)) return;
 		list.activateDrop();
 	}
 
+	@Override
 	public void onLeave(DragContext context) {
 		list.deactivateDndMarkers();
 	}
 
+	@Override
 	public void onMove(DragContext context) {}
 
+	@Override
 	public void onPreviewDrop(DragContext context) throws VetoDragException {}
 
 	private boolean isDropAllowed(Widget draggable) {
