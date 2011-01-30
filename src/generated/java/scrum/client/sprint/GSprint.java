@@ -798,6 +798,26 @@ public abstract class GSprint
 
     }
 
+    // --- requirementsOrderIds ---
+
+    private java.util.List<java.lang.String> requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getRequirementsOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+    }
+
+    public final void setRequirementsOrderIds(java.util.List<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+        propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
+    }
+
+    public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
+        return requirementsOrderIds.contains(requirementsOrderId);
+    }
+
+
     // --- productOwners ---
 
     private Set<String> productOwnersIds = new HashSet<String>();
@@ -915,6 +935,7 @@ public abstract class GSprint
         planningNote  = (java.lang.String) props.get("planningNote");
         reviewNote  = (java.lang.String) props.get("reviewNote");
         retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
+        requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
         productOwnersIds = (Set<String>) props.get("productOwnersIds");
         scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
@@ -937,6 +958,7 @@ public abstract class GSprint
         properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
+        properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);

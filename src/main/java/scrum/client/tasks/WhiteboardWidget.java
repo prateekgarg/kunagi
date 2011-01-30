@@ -88,7 +88,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		doneLabel.setHTML("<strong>Completed Tasks</strong> (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
 
 		List<Requirement> requirements = sprint.getRequirements();
-		Collections.sort(requirements, sprint.getProject().getRequirementsOrderComparator());
+		Collections.sort(requirements, sprint.getRequirementsOrderComparator());
 
 		if (requirements.equals(knownRequirements)) {
 			// quick update without recreating whole gui

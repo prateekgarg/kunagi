@@ -510,6 +510,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip(
 						"Things that come up during Sprint Retrospectives that are important in the future "
 								+ "or might be of interest for stakeholders.");
+			sprintModel.addListProperty("requirementsOrderIds", String.class);
 			sprintModel.addSetReference("productOwners", getUserModel());
 			sprintModel.addSetReference("scrumMasters", getUserModel());
 			sprintModel.addSetReference("teamMembers", getUserModel());

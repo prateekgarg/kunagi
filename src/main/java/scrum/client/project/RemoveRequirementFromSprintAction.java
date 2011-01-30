@@ -1,5 +1,8 @@
 package scrum.client.project;
 
+import java.util.Collections;
+import java.util.List;
+
 import scrum.client.common.TooltipBuilder;
 import scrum.client.sprint.Sprint;
 
@@ -43,6 +46,14 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	protected void onExecute() {
 		Sprint sprint = requirement.getSprint();
 		requirement.removeFromSprint();
+
+		Project project = getCurrentProject();
+		List<Requirement> requirements = project.getProductBacklogRequirements();
+		requirements.remove(requirement);
+		Collections.sort(requirements, project.getRequirementsOrderComparator());
+		requirements.add(0, requirement);
+		project.updateRequirementsOrder(requirements);
+
 		addUndo(new Undo(sprint));
 	}
 
@@ -62,6 +73,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 		@Override
 		protected void onUndo() {
 			requirement.setSprint(s);
+			s.updateRequirementsOrder();
 		}
 
 	}

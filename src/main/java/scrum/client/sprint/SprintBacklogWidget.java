@@ -18,7 +18,7 @@ public class SprintBacklogWidget extends AScrumWidget {
 		sprint = getSprint();
 
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
-		requirementList.setAutoSorter(getCurrentProject().getRequirementsOrderComparator());
+		requirementList.setAutoSorter(sprint.getRequirementsOrderComparator());
 
 		PagePanel page = new PagePanel();
 		page.addHeader("Stories in this Sprint");

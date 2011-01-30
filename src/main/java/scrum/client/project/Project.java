@@ -252,7 +252,6 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
-		Log.DEBUG("!!!!!!!!!!!! changing order:", requirements);
 		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
 		updateRequirementsModificationTimes();
 	}
@@ -567,8 +566,6 @@ public class Project extends GProject implements ForumSupport {
 
 			@Override
 			public int compare(Requirement a, Requirement b) {
-				if (a.isInCurrentSprint() && !b.isInCurrentSprint()) return -1;
-				if (b.isInCurrentSprint() && !a.isInCurrentSprint()) return 1;
 				List<String> order = getRequirementsOrderIds();
 				int additional = order.size();
 				int ia = order.indexOf(a.getId());

@@ -2639,6 +2639,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByRequirementsOrderId(java.lang.String requirementsOrderId) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsRequirementsOrderId(requirementsOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.sprint.Sprint> getSprintsByProductOwner(scrum.client.admin.User productOwner) {
         List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
         for (scrum.client.sprint.Sprint entity : sprints.values()) {

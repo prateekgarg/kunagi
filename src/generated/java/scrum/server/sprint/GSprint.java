@@ -49,6 +49,7 @@ public abstract class GSprint
         properties.put("planningNote", this.planningNote);
         properties.put("reviewNote", this.reviewNote);
         properties.put("retrospectiveNote", this.retrospectiveNote);
+        properties.put("requirementsOrderIds", this.requirementsOrderIds);
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
@@ -579,6 +580,99 @@ public abstract class GSprint
     }
 
     // -----------------------------------------------------------
+    // - requirementsOrderIds
+    // -----------------------------------------------------------
+
+    private java.util.List<java.lang.String> requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
+
+    public final java.util.List<java.lang.String> getRequirementsOrderIds() {
+        return new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+    }
+
+    public final void setRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        requirementsOrderIds = prepareRequirementsOrderIds(requirementsOrderIds);
+        if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+        updateLastModified();
+        fireModified("requirementsOrderIds="+Str.format(requirementsOrderIds));
+    }
+
+    protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        return requirementsOrderIds;
+    }
+
+    public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) return false;
+        return this.requirementsOrderIds.contains(requirementsOrderId);
+    }
+
+    public final int getRequirementsOrderIdsCount() {
+        return this.requirementsOrderIds.size();
+    }
+
+    public final boolean isRequirementsOrderIdsEmpty() {
+        return this.requirementsOrderIds.isEmpty();
+    }
+
+    public final boolean addRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        boolean added = this.requirementsOrderIds.add(requirementsOrderId);
+        if (added) updateLastModified();
+        if (added) fireModified("requirementsOrderIds+=" + requirementsOrderId);
+        return added;
+    }
+
+    public final boolean addRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) throw new IllegalArgumentException("requirementsOrderIds == null");
+        boolean added = false;
+        for (java.lang.String requirementsOrderId : requirementsOrderIds) {
+            added = added | this.requirementsOrderIds.add(requirementsOrderId);
+        }
+        return added;
+    }
+
+    public final boolean removeRequirementsOrderId(java.lang.String requirementsOrderId) {
+        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (this.requirementsOrderIds == null) return false;
+        boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
+        if (removed) updateLastModified();
+        if (removed) fireModified("requirementsOrderIds-=" + requirementsOrderId);
+        return removed;
+    }
+
+    public final boolean removeRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
+        if (requirementsOrderIds == null) return false;
+        if (requirementsOrderIds.isEmpty()) return false;
+        boolean removed = false;
+        for (java.lang.String _element: requirementsOrderIds) {
+            removed = removed | removeRequirementsOrderId(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearRequirementsOrderIds() {
+        if (this.requirementsOrderIds.isEmpty()) return false;
+        this.requirementsOrderIds.clear();
+        updateLastModified();
+        fireModified("requirementsOrderIds cleared");
+        return true;
+    }
+
+    public final String getRequirementsOrderIdsAsCommaSeparatedString() {
+        if (this.requirementsOrderIds.isEmpty()) return null;
+        return Str.concat(this.requirementsOrderIds,", ");
+    }
+
+    public final void setRequirementsOrderIdsAsCommaSeparatedString(String requirementsOrderIds) {
+        this.requirementsOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(requirementsOrderIds));
+    }
+
+    protected final void updateRequirementsOrderIds(Object value) {
+        setRequirementsOrderIds((java.util.List<java.lang.String>) value);
+    }
+
+    // -----------------------------------------------------------
     // - productOwners
     // -----------------------------------------------------------
 
@@ -866,6 +960,7 @@ public abstract class GSprint
             if (property.equals("planningNote")) updatePlanningNote(value);
             if (property.equals("reviewNote")) updateReviewNote(value);
             if (property.equals("retrospectiveNote")) updateRetrospectiveNote(value);
+            if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
             if (property.equals("productOwnersIds")) updateProductOwners(value);
             if (property.equals("scrumMastersIds")) updateScrumMasters(value);
             if (property.equals("teamMembersIds")) updateTeamMembers(value);
@@ -875,6 +970,7 @@ public abstract class GSprint
     protected void repairDeadReferences(String entityId) {
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.productOwnersIds == null) this.productOwnersIds = new java.util.HashSet<String>();
         repairDeadProductOwnerReference(entityId);
         if (this.scrumMastersIds == null) this.scrumMastersIds = new java.util.HashSet<String>();
@@ -897,6 +993,7 @@ public abstract class GSprint
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.productOwnersIds == null) this.productOwnersIds = new java.util.HashSet<String>();
         Set<String> productOwners = new HashSet<String>(this.productOwnersIds);
         for (String entityId : productOwners) {

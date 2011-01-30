@@ -71,7 +71,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			if (sprintBorderIndicator == null) {
 				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
 				Sprint sprint = getCurrentProject().getCurrentSprint();
-				int sprints = previous.getEstimationBar().getEndSprintOffset() + 1;
+				int sprints = previous.getEstimationBar().getEndSprintOffset() + 2;
 				sprintBorderIndicator.updateLabel(sprints,
 					sprint.getLength().multiplyBy(sprints).subtract(sprint.getBegin().getPeriodTo(Date.today()).abs()));
 				getPreHeaderPanel().add(sprintBorderIndicator);

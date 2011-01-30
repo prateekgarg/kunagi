@@ -3,6 +3,7 @@ package scrum.client.sprint;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Date;
+import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TimePeriod;
 
@@ -32,6 +33,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public static final String REFERENCE_PREFIX = "spr";
 
 	private transient Comparator<Task> tasksOrderComparator;
+	private transient Comparator<Requirement> requirementsOrderComparator;
 
 	public Sprint(Project project, String label) {
 		setProject(project);
@@ -40,6 +42,16 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	public Sprint(Map data) {
 		super(data);
+	}
+
+	public void updateRequirementsOrder() {
+		List<Requirement> requirements = getRequirements();
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		updateRequirementsOrder(requirements);
+	}
+
+	public void updateRequirementsOrder(List<Requirement> requirements) {
+		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
 	}
 
 	public List<Requirement> getCompletedUnclosedRequirements() {
@@ -120,7 +132,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public List<Task> getUnclaimedTasks(boolean sorted) {
 		List<Task> ret = new ArrayList<Task>();
 		List<Requirement> requirements = getRequirements();
-		if (sorted) Collections.sort(requirements, getProject().getRequirementsOrderComparator());
+		if (sorted) Collections.sort(requirements, getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			ret.addAll(requirement.getUnclaimedTasks());
 		}
@@ -290,6 +302,29 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		return lengthInDaysModel;
 	}
 
+	public Comparator<Requirement> getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+
+			@Override
+			public int compare(Requirement a, Requirement b) {
+				List<String> order = getRequirementsOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return requirementsOrderComparator;
+	}
+
 	public Comparator<Task> getTasksOrderComparator() {
 		if (tasksOrderComparator == null) tasksOrderComparator = new Comparator<Task>() {
 
@@ -297,7 +332,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			public int compare(Task a, Task b) {
 				Requirement ar = a.getRequirement();
 				Requirement br = b.getRequirement();
-				if (ar != br) return ar.getProject().getRequirementsOrderComparator().compare(ar, br);
+				if (ar != br) return getRequirementsOrderComparator().compare(ar, br);
 				List<String> order = ar.getTasksOrderIds();
 				int additional = order.size();
 				int ia = order.indexOf(a.getId());

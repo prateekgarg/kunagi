@@ -68,6 +68,8 @@ public abstract class GSprintDao
         reviewNotesCache = null;
         sprintsByRetrospectiveNoteCache.clear();
         retrospectiveNotesCache = null;
+        sprintsByRequirementsOrderIdCache.clear();
+        requirementsOrderIdsCache = null;
         sprintsByProductOwnerCache.clear();
         productOwnersCache = null;
         sprintsByScrumMasterCache.clear();
@@ -608,6 +610,46 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isRetrospectiveNote(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - requirementsOrderIds
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Sprint>> sprintsByRequirementsOrderIdCache = new Cache<java.lang.String,Set<Sprint>>(
+            new Cache.Factory<java.lang.String,Set<Sprint>>() {
+                public Set<Sprint> create(java.lang.String requirementsOrderId) {
+                    return getEntities(new ContainsRequirementsOrderId(requirementsOrderId));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByRequirementsOrderId(java.lang.String requirementsOrderId) {
+        return sprintsByRequirementsOrderIdCache.get(requirementsOrderId);
+    }
+    private Set<java.lang.String> requirementsOrderIdsCache;
+
+    public final Set<java.lang.String> getRequirementsOrderIds() {
+        if (requirementsOrderIdsCache == null) {
+            requirementsOrderIdsCache = new HashSet<java.lang.String>();
+            for (Sprint e : getEntities()) {
+                requirementsOrderIdsCache.addAll(e.getRequirementsOrderIds());
+            }
+        }
+        return requirementsOrderIdsCache;
+    }
+
+    private static class ContainsRequirementsOrderId implements Predicate<Sprint> {
+
+        private java.lang.String value;
+
+        public ContainsRequirementsOrderId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsRequirementsOrderId(value);
         }
 
     }

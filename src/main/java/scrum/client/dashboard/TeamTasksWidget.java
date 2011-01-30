@@ -59,7 +59,7 @@ public class TeamTasksWidget extends AScrumWidget {
 				sb.append("<li>").append(issue.toHtml()).append("</li>");
 			}
 			List<Requirement> requirements = new ArrayList<Requirement>(getRequirements(tasks));
-			Collections.sort(requirements, project.getRequirementsOrderComparator());
+			Collections.sort(requirements, project.getCurrentSprint().getRequirementsOrderComparator());
 			for (Requirement req : requirements) {
 				List<Task> usersTasks = req.getClaimedTasks(user);
 				Collections.sort(usersTasks, req.getTasksOrderComparator());
