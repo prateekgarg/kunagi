@@ -138,7 +138,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		public int compare(Release ra, Release rb) {
 			Date a = ra.getReleaseDate();
 			Date b = rb.getReleaseDate();
-			if (a == null && b == null) return 0;
+			if (a == null && b == null) return ra.getLabel().compareTo(rb.getLabel());
 			if (a == null) return 1;
 			if (b == null) return -1;
 			return a.compareTo(b);
