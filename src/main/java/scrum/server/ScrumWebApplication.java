@@ -60,6 +60,8 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
+	private static final int DATA_VERSION = 23;
+
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
 	private BurndownChart burndownChart;
@@ -73,6 +75,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public ScrumWebApplication() {
 		this(null);
+	}
+
+	@Override
+	protected int getDataVersion() {
+		return DATA_VERSION;
 	}
 
 	// --- composites ---
