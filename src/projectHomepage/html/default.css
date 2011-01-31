@@ -1,11 +1,11 @@
 * {margin: 0; padding: 0;}
-body {background: #204377; font:14px/19px "verdana","sans-serif"; color: #333;}
+body {background: url("img/bg.jpg") repeat-x fixed left top #172D3F; font:14px/19px "verdana","sans-serif"; color: #333;}
 img {border: none;}
 table td {vertical-align: top;}
 input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 5px;}
 
 
-#main {width: 924px; margin: 20px auto 1000px auto; background-image: url("img/bg-light.png");}
+#main {width: 924px; margin: 20px auto 1000px auto;}
 
 #header {height: 80px; color: #FFF;}
     h1 {font: 30pt/55pt "georgia",serif; color: white; margin: 0px 20px; color: #192666;}
@@ -13,9 +13,9 @@ input, textarea {border: 1px solid #192666; font: 14px/19px monospace; padding: 
 
 #menu {position: fixed;}
     #menu img {margin: 10px 0px 20px 0px; border: none;}
-    #menu a.navigLink {color: #fff; font-weight: bold; cursor: pointer; display: block; padding: 8px 10px; text-decoration: none; text-align: right; font-size: 16px;}
+    #menu a.navigLink {color: #fff; font-weight: bold; cursor: pointer; display: block; padding: 8px 10px; text-decoration: none; text-align: right; font-size: 16px; text-shadow: 1px 1px 0 #222;}
     #menu a.navigLinkSelected {color: #fd0;}
-    #menu a.navigLink:hover {text-decoration: underline;}
+    #menu a.navigLink:hover {color: #f70;}
     #searchbox {margin: 40px 10px 10px 10px;}
         #searchinput {padding: 2px; font-size: 12px; line-height: 12px; background: #EEF; color: #666; border: 1px solid #666; float: right;}
 
