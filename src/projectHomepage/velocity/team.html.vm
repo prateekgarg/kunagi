@@ -24,20 +24,7 @@
 <div class="section">
 
     <h2>Networking</h2>
-    You can follow us or write reviews on
-    <a href="http://www.facebook.com/pages/kunagi/106332836057762" target="_blank">Facebook</a>,
-    <a href="http://www.twitter.com/kunagipm" target="_blank">Twitter</a>,
-    <a href="http://identi.ca/kunagi/" target="_blank">identi.ca</a>,
-    <a href="http://friendfeed.com/kunagi" target="_blank">FriendFeed</a>,
-    <a href="http://freshmeat.net/projects/kunagi/" target="_blank">FreshMeat</a>,
-    <a href="http://github.com/Kunagi" target="_blank">GitHub</a>,
-    <a href="http://sourceforge.net/projects/kunagi/" target="_blank">SourceForge</a>,
-    <a href="https://code.google.com/p/kunagi/" target="_blank">Google Code</a>,
-    <a href="http://userstories.com/products/65-kunagi" target="_blank">UserStories.com</a>,
-    <a href="http://alternativeto.net/desktop/kunagi/" target="_blank">AlternativeTo</a>,
-    <a href="http://flattr.com/thing/2486/Kunagi" target="_blank">Flattr</a>,
-    <a href="https://launchpad.net/kunagi/" target="_blank">Launchpad</a>,
-    <a href="http://www.heise.de/software/download/kunagi/74852" target="_blank">Heise</a>.
+    You can follow us or write a review on your favorite site: #sociallinks()
     
 </div>
 

@@ -92,6 +92,24 @@ pageTracker._trackPageview();
 
 
 
+#macro( demosection )
+    <div class="section">
+        <h2>Online demo</h2>
+        <div class="middle">
+            <p>
+                Take a closer look at Kunagi by trying the <strong>online demo</strong>.
+                It is preconfigured with example projects.
+            </p>
+        </div>
+        <div class="sidebar">
+            <div class="starter">
+                <a target="_blank" href="https://servisto.de/kunagi-demo/">Start Demo</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+#end
+
 
 #macro( spacer $width $height )
     <div style="width: ${width}px; height: ${height}px;"></div>
@@ -234,6 +252,24 @@ pageTracker._trackPageview();
 #macro( blogRssLink )
     <a href="blog.rss.xml" style="float: right; line-height: 16px;">RSS Feed</a>
     <a href="blog.rss.xml" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
+#end
+
+
+
+#macro( sociallinks )
+    <a href="http://www.facebook.com/pages/kunagi/106332836057762" target="_blank">Facebook</a>,
+    <a href="http://www.twitter.com/kunagipm" target="_blank">Twitter</a>,
+    <a href="http://identi.ca/kunagi/" target="_blank">identi.ca</a>,
+    <a href="http://friendfeed.com/kunagi" target="_blank">FriendFeed</a>,
+    <a href="http://freshmeat.net/projects/kunagi/" target="_blank">FreshMeat</a>,
+    <a href="http://github.com/Kunagi" target="_blank">GitHub</a>,
+    <a href="http://sourceforge.net/projects/kunagi/" target="_blank">SourceForge</a>,
+    <a href="https://code.google.com/p/kunagi/" target="_blank">Google Code</a>,
+    <a href="http://userstories.com/products/65-kunagi" target="_blank">UserStories.com</a>,
+    <a href="http://alternativeto.net/desktop/kunagi/" target="_blank">AlternativeTo</a>,
+    <a href="http://flattr.com/thing/2486/Kunagi" target="_blank">Flattr</a>,
+    <a href="https://launchpad.net/kunagi/" target="_blank">Launchpad</a>,
+    <a href="http://www.heise.de/software/download/kunagi/74852" target="_blank">Heise</a>
 #end
 
 

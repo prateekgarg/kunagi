@@ -20,8 +20,15 @@
     <div class="clear"></div>
 </div>
 
-<div class="separator"></div>
 
+<div class="separator"></div>
+<div class="section">
+    <h2>Follow or review Kunagi</h2>
+    If you like Kunagi, consider following us or writing a review on your favorite site: #sociallinks()
+</div>
+
+
+<div class="separator"></div>
 <div class="section">
     <a href="http://www.gnu.org/licenses/agpl.html" target="_blank"><img src="img/agplv3-88x31.png" alt="GNU Affero General Public License"
         align="right" style="margin: 0px 0px 15px 25px;"></a>
