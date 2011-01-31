@@ -1,5 +1,6 @@
 package scrum.client.sprint;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.UserGuideWidget;
@@ -15,13 +16,13 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		sprint = getSprint();
+		sprint = getCurrentSprint();
 
 		requirementList = new BlockListWidget<Requirement>(RequirementInSprintBlock.FACTORY);
 		requirementList.setAutoSorter(sprint.getRequirementsOrderComparator());
 
 		PagePanel page = new PagePanel();
-		page.addHeader("Stories in this Sprint");
+		page.addHeader("Stories in this Sprint", new ButtonWidget(new PullNextRequirementAction(sprint)));
 		page.addSection(requirementList);
 		page.addHeader("Sprint Properties");
 		page.addSection(new SprintWidget(sprint));
@@ -32,14 +33,14 @@ public class SprintBacklogWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		if (sprint != getSprint()) reset();
-		requirementList.setObjects(getSprint().getRequirements());
+		if (sprint != getCurrentSprint()) reset();
+		requirementList.setObjects(getCurrentSprint().getRequirements());
 		super.onUpdate();
 	}
 
 	@Override
 	protected boolean isResetRequired() {
-		return sprint != getSprint();
+		return sprint != getCurrentSprint();
 	}
 
 	public void selectRequirement(Requirement r) {
@@ -51,10 +52,6 @@ public class SprintBacklogWidget extends AScrumWidget {
 		RequirementInSprintBlock rBlock = (RequirementInSprintBlock) requirementList.getBlock(task.getRequirement());
 		requirementList.extendBlock(rBlock, true);
 		rBlock.selectTask(task);
-	}
-
-	private Sprint getSprint() {
-		return getCurrentProject().getCurrentSprint();
 	}
 
 }

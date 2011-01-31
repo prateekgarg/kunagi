@@ -67,6 +67,13 @@ public class Project extends GProject implements ForumSupport {
 		super(data);
 	}
 
+	public Requirement getNextProductBacklogRequirement() {
+		List<Requirement> requirements = getProductBacklogRequirements();
+		if (requirements.isEmpty()) return null;
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		return requirements.get(0);
+	}
+
 	public List<String> getThemes() {
 		Set<String> themes = new HashSet<String>();
 		for (Requirement requirement : getRequirements()) {

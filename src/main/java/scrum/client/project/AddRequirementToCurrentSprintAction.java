@@ -46,7 +46,7 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 	}
 
 	@Override
-	protected void onExecute() {
+	public void onExecute() {
 		for (Task task : requirement.getTasks()) {
 			task.setBurnedWork(0);
 		}

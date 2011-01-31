@@ -514,6 +514,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addSetReference("productOwners", getUserModel());
 			sprintModel.addSetReference("scrumMasters", getUserModel());
 			sprintModel.addSetReference("teamMembers", getUserModel());
+			sprintModel.addAction("PullNextRequirement");
 		}
 		return sprintModel;
 	}

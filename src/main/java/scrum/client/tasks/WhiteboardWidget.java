@@ -1,5 +1,6 @@
 package scrum.client.tasks;
 
+import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import scrum.client.common.ElementPredicate;
 import scrum.client.common.UserGuideWidget;
 import scrum.client.context.UserHighlightSupport;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.PullNextRequirementAction;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.PagePanel;
@@ -43,8 +45,11 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private List<Requirement> knownRequirements = Collections.emptyList();
 	private UserGuideWidget userGuide;
 
+	private Sprint sprint;
+
 	@Override
 	protected Widget onInitialization() {
+		sprint = getCurrentSprint();
 		predicate = null;
 
 		requirementLists = new HashMap<Requirement, BlockListWidget<Requirement>>();
@@ -70,6 +75,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		grid.setCellSpacing(0);
 
 		PagePanel page = new PagePanel();
+		page.addHeader("Whiteboard", new ButtonWidget(new PullNextRequirementAction(getCurrentSprint())));
 		page.addSection(grid);
 		userGuide = new UserGuideWidget(getLocalizer().views().whiteboard(), getCurrentProject().getCurrentSprint()
 				.getRequirements().size() < 3, getCurrentUser().getHideUserGuideWhiteboardModel());
@@ -232,6 +238,11 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		updateTaskLists(requirement);
 		selectionManager.select(task);
 		update();
+	}
+
+	@Override
+	protected boolean isResetRequired() {
+		return sprint != getCurrentSprint();
 	}
 
 	@Override
