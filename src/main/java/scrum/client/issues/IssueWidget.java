@@ -41,12 +41,12 @@ public class IssueWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", issue.getLabelModel());
-		left.addFieldRow("Themes", new ThemesWidget(issue));
 		if (issue.isBug()) {
 			left.addFieldRow("Severity", new DropdownEditorWidget<Integer>(issue.getSeverityModel(),
 					Issue.SEVERITY_LABELS));
 		}
 		left.addFieldRow("Description", issue.getDescriptionModel());
+		left.addFieldRow("Themes", new ThemesWidget(issue));
 		left.addFieldRow("Issuer", new TextOutputWidget(new AEditorModel<String>() {
 
 			@Override
