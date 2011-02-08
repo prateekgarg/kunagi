@@ -11,7 +11,7 @@
 
     message = window.location.hash;
     if (message != null && message.startsWith("#")) message = message.substring(1);
-    $("messageOutput").innerHTML = message;
+    $("messageOutput").innerHTML = unescape(message);
     
 #end
 </script>
