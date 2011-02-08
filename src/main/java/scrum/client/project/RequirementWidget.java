@@ -6,6 +6,11 @@ import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.CommentsWidget;
 import scrum.client.collaboration.EmoticonSelectorWidget;
@@ -59,12 +64,16 @@ public class RequirementWidget extends AScrumWidget {
 
 			@Override
 			protected void onViewerUpdate() {
-				setViewerItemsAsHtml(requirement.getQualitys());
+				List<Quality> qualitys = new ArrayList<Quality>(requirement.getQualitys());
+				Collections.sort(qualitys);
+				setViewerItemsAsHtml(qualitys);
 			}
 
 			@Override
 			protected void onEditorUpdate() {
-				setEditorItems(requirement.getProject().getQualitys());
+				List<Quality> qualitys = new ArrayList<Quality>(requirement.getProject().getQualitys());
+				Collections.sort(qualitys);
+				setEditorItems(qualitys);
 				setEditorSelectedItems(requirement.getQualitys());
 			}
 

@@ -17,7 +17,7 @@ import scrum.client.issues.Issue;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Quality extends GQuality implements ReferenceSupport, LabelSupport, ForumSupport {
+public class Quality extends GQuality implements ReferenceSupport, LabelSupport, ForumSupport, Comparable<Quality> {
 
 	public static final String REFERENCE_PREFIX = "qlt";
 
@@ -48,6 +48,11 @@ public class Quality extends GQuality implements ReferenceSupport, LabelSupport,
 	@Override
 	public String toString() {
 		return getReference() + " " + getLabel();
+	}
+
+	@Override
+	public int compareTo(Quality o) {
+		return Utl.compare(getLabel(), o.getLabel());
 	}
 
 	@Override
