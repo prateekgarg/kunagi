@@ -142,8 +142,10 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		pages.addPage(new Page(blog, "Blog", administrationKey));
 		projectUserConfig = new ProjectUserConfigWidget();
 		pages.addPage(new Page(projectUserConfig, "Personal Preferences", administrationKey));
-		projectAdmin = new ProjectAdminWidget();
-		pages.addPage(new Page(projectAdmin, "Project administration", administrationKey));
+		if (project.isScrumTeamMember(user)) {
+			projectAdmin = new ProjectAdminWidget();
+			pages.addPage(new Page(projectAdmin, "Project administration", administrationKey));
+		}
 		if (user.isAdmin()) {
 			systemMessageManager = new SystemMessageManagerWidget();
 			pages.addPage(new Page(systemMessageManager, "System Message", administrationKey));

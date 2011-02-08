@@ -196,8 +196,6 @@ public class Project extends GProject implements ForumSupport {
 		throw new IllegalStateException("User has no project config: " + user);
 	}
 
-	// TODO: guten namen für die methode finden.. hieß vorher isPig(), allerdings ist der PO eig. kein Pig,
-	// oder?
 	public boolean isScrumTeamMember(User user) {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
 	}
