@@ -30,6 +30,8 @@ public class IssueServlet extends AHttpServlet {
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
 
+	private ScrumWebApplication app;
+
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		req.setCharacterEncoding(IO.UTF_8);
@@ -80,6 +82,8 @@ public class IssueServlet extends AHttpServlet {
 		projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(), issue);
 		transactionService.commit();
 
+		app.sendToConversationsByProject(project, issue);
+
 		String issueLink = publish ? "<a href=\"" + issue.getReference() + ".html\">" + issue.getReference() + "</a>"
 				: "<code>" + issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
@@ -88,7 +92,7 @@ public class IssueServlet extends AHttpServlet {
 
 	@Override
 	protected void onInit(ServletConfig config) {
-		ScrumWebApplication app = ScrumWebApplication.get(config);
+		app = ScrumWebApplication.get(config);
 		issueDao = app.getIssueDao();
 		projectDao = app.getProjectDao();
 		transactionService = app.getTransactionService();

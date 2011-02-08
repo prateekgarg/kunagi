@@ -267,6 +267,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 	}
 
+	public void sendToConversationsByProject(Project project, AEntity entity) {
+		for (AGwtConversation c : getConversationsByProject(project, null)) {
+			c.sendToClient(entity);
+		}
+	}
+
 	public void sendToClients(AEntity entity) {
 		for (AGwtConversation c : getGwtConversations()) {
 			c.sendToClient(entity);
