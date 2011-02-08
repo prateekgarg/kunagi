@@ -1,7 +1,6 @@
 package scrum.client.admin;
 
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
-import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 
@@ -104,10 +103,11 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 		addRolesFieldRows(project, tb);
 
-		if (project.isAdmin(getCurrentUser())) {
-			tb.addFieldRow("",
-				Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(), "Download Backup ZIP"));
-		}
+		// if (project.isAdmin(getCurrentUser())) {
+		// tb.addFieldRow("",
+		// Gwt.createServletDownloadLink("backupDownload.zip?projectId=" + project.getId(),
+		// "Download Backup ZIP"));
+		// }
 
 		return tb.createTable();
 	}
