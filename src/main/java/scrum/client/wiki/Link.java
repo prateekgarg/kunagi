@@ -46,8 +46,8 @@ public class Link extends AWikiElement {
 		if (s.startsWith("www.")) {
 			s = s.substring(4);
 		}
-		if (s.length() > 20) {
-			s = s.substring(0, 20) + "...";
+		if (s.length() > 50) {
+			s = s.substring(0, 50) + "...";
 		}
 		return s;
 	}

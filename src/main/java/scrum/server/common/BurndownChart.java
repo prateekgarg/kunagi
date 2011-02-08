@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.Str;
+import ilarkesto.base.Sys;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
@@ -157,6 +158,7 @@ public class BurndownChart {
 		double valueLabelTickUnit = tick;
 		double upperBoundary = Math.min(max * 1.1f, max + 3);
 
+		if (!Sys.isHeadless()) LOG.warn("GraphicsEnvironment is not headless");
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
 			false);
 
