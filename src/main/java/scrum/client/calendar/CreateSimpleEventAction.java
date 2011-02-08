@@ -14,8 +14,7 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 	@Override
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create new Event on the date selected.");
-		if (!getCurrentProject().isScrumTeamMember(getCurrentUser()))
-			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
+		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 
 		return tb.getTooltip();
 	}
@@ -33,8 +32,8 @@ public class CreateSimpleEventAction extends GCreateSimpleEventAction {
 
 	@Override
 	protected void onExecute() {
-		SimpleEvent event = new SimpleEvent(getCurrentProject(), Scope.get()
-				.getComponent(ProjectWorkspaceWidgets.class).getCalendar().getSelectedDate());
+		CalendarWidget calendar = Scope.get().getComponent(ProjectWorkspaceWidgets.class).getCalendar();
+		SimpleEvent event = new SimpleEvent(getCurrentProject(), calendar.getSelectedDate());
 		getDao().createSimpleEvent(event);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showCalendar(event);
 	}
