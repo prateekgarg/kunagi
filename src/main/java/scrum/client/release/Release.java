@@ -78,41 +78,45 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
 	}
 
-	public String getIzemizedReleaseNotes() {
-		String notes = "";
+	public String createIzemizedReleaseNotes() {
+		StringBuilder sb = new StringBuilder();
+
+		String releaseNotes = getReleaseNotes();
+		if (releaseNotes != null) sb.append(releaseNotes).append("\n\n");
 
 		// add Stories from all Sprints that are part of this Release
 		if (someSprintHasStories()) {
-			notes += "'''New Features'''\n\n";
+			sb.append("'''New Features'''\n\n");
 			for (Sprint sprint : getSprints()) {
 				for (Requirement story : sprint.getRequirements()) {
-					notes += "* " + (story.isClosed() ? "" : "(UNFINISHED) ") + story.getReferenceAndLabel() + "\n";
+					sb.append("* " + (story.isClosed() ? "" : "(UNFINISHED) ")).append(story.getReferenceAndLabel())
+							.append("\n");
 				}
 			}
-			notes += "\n\n";
+			sb.append("\n\n");
 		}
 
 		// add Bugs that have been fixed for this Release
 		if (!getFixedIssues().isEmpty() || !getPlannedIssues().isEmpty()) {
-			notes += "'''Fixed Bugs'''\n\n";
+			sb.append("'''Fixed Bugs'''\n\n");
 			for (Issue issue : getFixedIssues()) {
-				notes += "* " + issue.getReferenceAndLabel() + "\n";
+				sb.append("* ").append(issue.getReferenceAndLabel()).append("\n");
 			}
 			for (Issue issue : getPlannedIssues()) {
-				notes += "* (UNFINISHED) " + issue.getReferenceAndLabel() + "\n";
+				sb.append("* (UNFINISHED) ").append(issue.getReferenceAndLabel()).append("\n");
 			}
-			notes += "\n\n";
+			sb.append("\n\n");
 		}
 
 		// add all Bugs that have not been fixed for this Release
 		if (!getAffectedByIssues().isEmpty()) {
-			notes += "'''Known Issues'''\n\n";
+			sb.append("'''Known Issues'''\n\n");
 			for (Issue issue : getAffectedByIssues()) {
-				notes += "* " + issue.getReferenceAndLabel() + "\n";
+				sb.append("* ").append(issue.getReferenceAndLabel() + "\n");
 			}
 		}
 
-		return notes;
+		return sb.toString();
 	}
 
 	private boolean someSprintHasStories() {

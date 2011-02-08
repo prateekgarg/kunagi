@@ -39,6 +39,9 @@ public class ReleaseReleaseAction extends GReleaseReleaseAction {
 	protected void onExecute() {
 		Date previousDate = release.getReleaseDate();
 		release.setReleaseDate(Date.today());
+
+		release.setReleaseNotes(release.createIzemizedReleaseNotes());
+
 		release.setReleased(true);
 		addUndo(new Undo(previousDate));
 	}

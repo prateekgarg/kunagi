@@ -430,7 +430,8 @@ public class Project extends GProject implements ForumSupport {
 	public BlogEntry createNewBlogEntry(Release release) {
 		BlogEntry blogEntry = new BlogEntry(this);
 		blogEntry.setTitle("Release " + release.getLabel());
-		blogEntry.setText(release.getIzemizedReleaseNotes());
+		String text = release.isReleased() ? release.getReleaseNotes() : release.createIzemizedReleaseNotes();
+		blogEntry.setText(text);
 		getDao().createBlogEntry(blogEntry);
 		return blogEntry;
 	}
