@@ -129,6 +129,11 @@ public class Project extends GProject {
 		return getHomepageDir() + "/velocity";
 	}
 
+	public String getHomepageScriptsDir() {
+		if (!isHomepageDirSet()) return null;
+		return getHomepageDir() + "/scripts";
+	}
+
 	public HomepageUpdater getHomepageUpdater() {
 		return new HomepageUpdater(this);
 	}

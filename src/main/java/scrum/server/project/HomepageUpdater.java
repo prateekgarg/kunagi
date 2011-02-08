@@ -1,5 +1,6 @@
 package scrum.server.project;
 
+import ilarkesto.base.Proc;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
@@ -59,12 +60,42 @@ public class HomepageUpdater {
 	}
 
 	public void processAll() {
+		executeScript("pre-update");
 		processDefaultTemplates();
 		processIssueTemplates();
 		processStoryTemplates();
 		processReleaseTemplates();
 		processBlogEntryTemplates();
 		createSprintBurndownChart(700, 200);
+		executeScript("post-update");
+	}
+
+	public void processEntityTemplate(AEntity entity) {
+		executeScript("pre-update");
+		if (entity instanceof Issue) {
+			processIssueTemplate((Issue) entity);
+		} else if (entity instanceof Requirement) {
+			processStoryTemplate((Requirement) entity);
+		} else if (entity instanceof BlogEntry) {
+			processBlogEntryTemplate((BlogEntry) entity);
+		}
+		executeScript("post-update");
+	}
+
+	private void executeScript(String name) {
+		File file = null;
+		File dir = new File(project.getHomepageDir() + "/scripts");
+		if (!dir.exists()) return;
+		for (File f : dir.listFiles()) {
+			if (!f.isFile()) continue;
+			if (!f.getName().startsWith(name)) continue;
+			file = f;
+			break;
+		}
+		if (file == null) return;
+		log.info("Executing script:", file.getAbsolutePath());
+		String output = Proc.execute(project.getHomepageDirFile(), file.getAbsolutePath());
+		log.info(" ", file.getName() + ":", output);
 	}
 
 	private void processDefaultTemplates() {
@@ -127,29 +158,14 @@ public class HomepageUpdater {
 		}
 	}
 
-	public void processIssueTemplates() {
+	private void processIssueTemplates() {
 		List<Issue> issues = new ArrayList<Issue>(project.getPublishedIssues());
 		for (Issue issue : issues) {
 			processIssueTemplate(issue);
 		}
 	}
 
-	public void processEntityTemplate(AEntity entity) {
-		if (entity instanceof Issue) {
-			processIssueTemplate((Issue) entity);
-			return;
-		}
-		if (entity instanceof Requirement) {
-			processStoryTemplate((Requirement) entity);
-			return;
-		}
-		if (entity instanceof BlogEntry) {
-			processBlogEntryTemplate((BlogEntry) entity);
-			return;
-		}
-	}
-
-	public void processIssueTemplate(Issue issue) {
+	private void processIssueTemplate(Issue issue) {
 		ContextBuilder context = new ContextBuilder();
 		fillIssue(context.putSubContext("issue"), issue);
 		processEntityTemplate(context, issue.getReference());
