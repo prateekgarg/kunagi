@@ -67,6 +67,14 @@ public class Project extends GProject implements ForumSupport {
 		super(data);
 	}
 
+	public int getTotalMisconducts() {
+		int sum = 0;
+		for (ProjectUserConfig config : getProjectUserConfigs()) {
+			sum += config.getMisconducts();
+		}
+		return sum;
+	}
+
 	public Requirement getNextProductBacklogRequirement() {
 		List<Requirement> requirements = getProductBacklogRequirements();
 		if (requirements.isEmpty()) return null;

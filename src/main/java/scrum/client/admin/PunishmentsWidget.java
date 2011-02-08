@@ -38,6 +38,9 @@ public class PunishmentsWidget extends AScrumWidget {
 			main.nextRow();
 		}
 
+		main.addRow(Gwt.createSpacer(1, 20), 3);
+		main.addRow(new Label("Sum"), null, new PunishmentSumViewer(project));
+
 		page.addHeader("Courtroom");
 		page.addSection(main.createTable());
 
@@ -53,6 +56,21 @@ public class PunishmentsWidget extends AScrumWidget {
 				.getHideUserGuideCourtroomModel()));
 
 		return page;
+	}
+
+	private class PunishmentSumViewer extends AFieldValueWidget {
+
+		private Project project;
+
+		public PunishmentSumViewer(Project project) {
+			super();
+			this.project = project;
+		}
+
+		@Override
+		protected void onUpdate() {
+			setText(project.getTotalMisconducts() * project.getPunishmentFactor() + " " + project.getPunishmentUnit());
+		}
 	}
 
 	private class PunishmentViewer extends AFieldValueWidget {
