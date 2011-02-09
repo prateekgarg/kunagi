@@ -22,7 +22,7 @@
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="default.css" type="text/css">
-    <link rel="alternate" type="application/rss+xml" title="Kunagi Blog as RSS 2.0" href="blog.rss.xml">
+    <link rel="alternate" type="application/rss+xml" title="Kunagi Blog" href="http://feeds.feedburner.com/kunagi">
     <script type="text/javascript" src="js/prototype.js"></script>
     <script type="text/javascript" src="js/kill-ie6.js"></script>
 
@@ -250,8 +250,8 @@ pageTracker._trackPageview();
 
 
 #macro( blogRssLink )
-    <a href="blog.rss.xml" style="float: right; line-height: 16px;">RSS Feed</a>
-    <a href="blog.rss.xml" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
+    <a href="http://feeds.feedburner.com/kunagi" style="float: right; line-height: 16px;">RSS Feed</a>
+    <a href="http://feeds.feedburner.com/kunagi" style="float: right;"><img src="img/rss.png" alt="RSS" style="margin-right: 5px;"></a>
 #end
 
 
