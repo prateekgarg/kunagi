@@ -85,7 +85,7 @@ public abstract class GSprintDaySnapshot
 
     protected void repairDeadSprintReference(String entityId) {
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
-            setSprint(null);
+            repairMissingMaster();
         }
     }
 
@@ -219,6 +219,10 @@ public abstract class GSprintDaySnapshot
 
     public void ensureIntegrity() {
         super.ensureIntegrity();
+        if (!isSprintSet()) {
+            repairMissingMaster();
+            return;
+        }
         try {
             getSprint();
         } catch (EntityDoesNotExistException ex) {
