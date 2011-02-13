@@ -43,10 +43,15 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 	public ApplicationInfo applicationInfo;
 
+	@Override
 	public void onModuleLoad() {
 		System.out.println("ScrumGwtApplication.onModuleLoad()");
 
 		ScrumScopeManager.initialize();
+		// if (true) {
+		// RootPanel.get().add(new WidgetsTesterWidget().update());
+		// return;
+		// }
 
 		final WorkspaceWidget workspace = Scope.get().getComponent(Ui.class).getWorkspace();
 		workspace.lock("Loading...");
@@ -54,11 +59,11 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 		RootPanel rootPanel = RootPanel.get();
 		rootPanel.getElement().getStyle().setProperty("position", "relative");
 		rootPanel.add(workspace);
-		// rootPanel.add(new WidgetsTesterWidget().update());
 		ScrumJs.initialize();
 
 		new StartConversationServiceCall().execute(new Runnable() {
 
+			@Override
 			public void run() {
 				new ApplicationStartedEvent().fireInCurrentScope();
 			}
@@ -82,6 +87,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 		new LogoutServiceCall().execute(new Runnable() {
 
+			@Override
 			public void run() {
 				String url = GWT.getHostPageBaseURL();
 				if (!GWT.isScript()) url += "index.html?gwt.codesvr=localhost:9997";

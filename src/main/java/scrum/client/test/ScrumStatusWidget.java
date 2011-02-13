@@ -19,6 +19,7 @@ import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
 import scrum.client.workspace.PagePanel;
+import scrum.client.workspace.Ui;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -60,6 +61,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		tb.setCellPadding(5);
+		tb.addRow(new ButtonWidget(new ShowWidgetsTesterAction()));
 		tb.addRow(new ButtonWidget(new GenerateRequirementsAction()));
 		tb.addRow(new ButtonWidget(new GenerateIssuesAction()));
 		tb.addRow(new ButtonWidget(new GenerateTasksAction()));
@@ -87,6 +89,20 @@ public class ScrumStatusWidget extends AScrumWidget {
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
 		return tb.createTable();
+	}
+
+	class ShowWidgetsTesterAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			return "Show widgets tester";
+		}
+
+		@Override
+		protected void onExecute() {
+			Scope.get().getComponent(Ui.class).getWorkspace().getWorkarea().show(new WidgetsTesterWidget());
+		}
+
 	}
 
 	class GenerateCommentsAction extends AScrumAction {
@@ -177,8 +193,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 	private static String text(int lines) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < lines; i++) {
-			sb
-					.append("This is stupid text. You should not waste your time to read it. There is nothing valuable to find.\n");
+			sb.append("This is stupid text. You should not waste your time to read it. There is nothing valuable to find.\n");
 		}
 		return sb.toString();
 	}
