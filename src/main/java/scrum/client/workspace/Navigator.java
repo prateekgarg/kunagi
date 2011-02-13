@@ -4,8 +4,6 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
@@ -18,24 +16,30 @@ import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectDataReceivedEvent;
 import scrum.client.project.SelectProjectServiceCall;
+import scrum.client.workspace.history.HistoryToken;
+import scrum.client.workspace.history.HistoryTokenObserver;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Navigator extends GNavigator implements BlockExpandedHandler, ApplicationStartedHandler {
+public class Navigator extends GNavigator implements BlockExpandedHandler, ApplicationStartedHandler,
+		HistoryTokenObserver {
 
 	public static enum Mode {
 		USER, PROJECT
 	}
 
-	private Mode currentMode;
+	private HistoryToken historyToken;
 	private String page = "Dashboard";
+
+	private Mode currentMode;
 	private boolean toggleMode;
 
 	@Override
 	public void initialize() {
+		historyToken = new HistoryToken(this);
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 			@Override
@@ -45,15 +49,19 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		});
 	}
 
+	@Override
+	public void onProjectChanged() {}
+
+	@Override
+	public void onPageChanged() {}
+
+	@Override
+	public void onEntityChanged() {}
+
 	private void evalHistoryToken(String token) {
 		log.info("evaluating history token:", token);
 
-		Map<String, String> tokens = parseHistoryToken(token);
-
-		// if (tokens.containsKey("project") && !projectDataReceived) {
-		// startToken = token;
-		// return;
-		// }
+		Map<String, String> tokens = HistoryToken.parseHistoryToken(token);
 
 		onHistoryToken(tokens);
 	}
@@ -169,32 +177,6 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		if (object instanceof AGwtEntity) {
 			setToken((AGwtEntity) object);
 		}
-	}
-
-	private Map<String, String> parseHistoryToken(String token) {
-		if (token == null || token.length() == 0) return Collections.emptyMap();
-		Map<String, String> map = new HashMap<String, String>();
-		char separator = '|';
-		int idx = token.indexOf(separator);
-		while (idx > 0) {
-			String subtoken = token.substring(0, idx);
-			parseHistorySubToken(subtoken, map);
-			token = token.substring(idx + 1);
-			idx = token.indexOf(separator);
-		}
-		parseHistorySubToken(token, map);
-		return map;
-	}
-
-	private void parseHistorySubToken(String token, Map<String, String> map) {
-		int idx = token.indexOf('=');
-		if (idx < 0) {
-			map.put(token, token);
-			return;
-		}
-		String key = token.substring(0, idx);
-		String value = token.substring(idx + 1);
-		map.put(key, value);
 	}
 
 	private void activateUserMode() {
