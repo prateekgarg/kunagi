@@ -71,6 +71,12 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public void addRequirementsOrderId(int index, String id) {
+		List<String> ids = getRequirementsOrderIds();
+		ids.add(index, id);
+		setRequirementsOrderIds(ids);
+	}
+
 	public WeekdaySelector getFreeDaysAsWeekdaySelector() {
 		return new WeekdaySelector(getFreeDays());
 	}

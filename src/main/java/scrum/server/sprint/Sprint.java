@@ -48,6 +48,7 @@ public class Sprint extends GSprint implements Numbered {
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
 			} else {
+				getProject().addRequirementsOrderId(incompletedRequirements.size(), requirement.getId());
 				incompletedRequirements.add(requirement);
 			}
 		}
