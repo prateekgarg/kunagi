@@ -1,5 +1,6 @@
 package scrum.client.workspace.history;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 
@@ -18,28 +19,37 @@ public class HistoryToken {
 	private HistoryTokenObserver observer;
 
 	private String projectId;
-	private String page = "Dashboard";
+	private String page;
 	private String entityId;
+	private boolean toggle;
 
 	public HistoryToken(HistoryTokenObserver observer) {
 		this.observer = observer;
 		History.addValueChangeHandler(new TokenChangeHandler());
 	}
 
+	public void evalHistoryToken() {
+		evalHistoryToken(History.getToken());
+	}
+
 	private void evalHistoryToken(String token) {
 		log.debug("Evaluating history token:", token);
 		Map<String, String> props = parseHistoryToken(token);
 
-		String pProjectId = props.get("project");
-		String pPage = props.get("page");
-		String pEntityId = props.get("entity");
+		String oldProjectId = projectId;
+		String oldPage = page;
+		String oldEntityId = entityId;
 
-		if (!Utl.equals(pProjectId, projectId)) {
+		projectId = props.get("project");
+		page = props.get("page");
+		entityId = props.get("entity");
+		toggle = Str.isTrue(props.get("toggle"));
+
+		if (projectId == null || !Utl.equals(oldProjectId, projectId)) {
 			observer.onProjectChanged();
-		} else if (!Utl.equals(pPage, page)) {
-			observer.onPageChanged();
-		} else if (!Utl.equals(pEntityId, entityId)) {
-			observer.onEntityChanged();
+			return;
+		} else if (!Utl.equals(oldPage, page) || !Utl.equals(oldEntityId, entityId)) {
+			observer.onPageOrEntityChanged();
 		} else {
 			log.debug("Nothing changed");
 		}
@@ -69,6 +79,30 @@ public class HistoryToken {
 		String key = token.substring(0, idx);
 		String value = token.substring(idx + 1);
 		map.put(key, value);
+	}
+
+	public void update(String projectId) {
+		History.newItem(projectId == null ? "projectSelector" : "project=" + projectId, true);
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public boolean isProjectIdSet() {
+		return projectId != null;
+	}
+
+	public String getPage() {
+		return page;
+	}
+
+	public String getEntityId() {
+		return entityId;
+	}
+
+	public boolean isToggle() {
+		return toggle;
 	}
 
 	class TokenChangeHandler implements ValueChangeHandler<String> {

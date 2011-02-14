@@ -4,8 +4,6 @@ public interface HistoryTokenObserver {
 
 	void onProjectChanged();
 
-	void onPageChanged();
-
-	void onEntityChanged();
+	void onPageOrEntityChanged();
 
 }

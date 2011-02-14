@@ -37,6 +37,8 @@ import scrum.client.pr.BlogWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectAdminWidget;
+import scrum.client.project.ProjectDataReceivedEvent;
+import scrum.client.project.ProjectDataReceivedHandler;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
@@ -56,7 +58,7 @@ import scrum.client.tasks.WhiteboardWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
+public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements ProjectDataReceivedHandler {
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private DashboardWidget dashboard;
@@ -171,7 +173,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 		}
 	}
 
-	public void activate() {
+	@Override
+	public void onProjectDataReceived(ProjectDataReceivedEvent event) {
 		Scope.get().getComponent(Ui.class).show(sidebar, dashboard);
 	}
 
@@ -310,7 +313,10 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	public void showPage(String pageName) {
 		Page page = pages.getPageByName(pageName);
-		if (page == null) return;
+		if (page == null) {
+			log.warn("Page does not exist:", pageName);
+			return;
+		}
 		select(page.getWidget());
 	}
 
