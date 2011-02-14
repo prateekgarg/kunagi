@@ -1,6 +1,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.core.logging.Log;
 import ilarkesto.integration.itext.PdfBuilder;
 import ilarkesto.testng.ATest;
 
@@ -93,7 +94,7 @@ public class PdfTest extends ATest {
 		sprint.setProject(TestUtil.createProject());
 		sprint.setEnd(Date.today().beforeDays(3));
 		sprint.setBegin(sprint.getEnd().beforeDays(30));
-		sprint.setLabel("Productivity Boost Sprint");
+		sprint.setLabel("Productivity Boost Sprint ä ü ö ß Mirosław");
 		sprint.setGoal("Boost productivity for users.");
 		sprint.setPlanningNote("Planning was fun.");
 		sprint.setReviewNote("PO accepted everything.");
@@ -127,7 +128,9 @@ public class PdfTest extends ATest {
 	private void createPdf(APdfCreator creator) {
 		PdfBuilder pdf = new PdfBuilder();
 		creator.build(pdf);
-		pdf.write(new File(OUTPUT_DIR + "/" + creator.getFilename() + ".pdf"));
+		File file = new File(OUTPUT_DIR + "/" + creator.getFilename() + ".pdf");
+		Log.DEBUG("Writing PDF:", file);
+		pdf.write(file);
 	}
 
 }
