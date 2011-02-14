@@ -6,7 +6,6 @@ import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
-import scrum.client.common.ReferenceSupport;
 import scrum.client.communication.TouchLastActivityServiceCall;
 import scrum.client.core.ApplicationStartedEvent;
 import scrum.client.core.ApplicationStartedHandler;
@@ -16,7 +15,6 @@ import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.workspace.history.HistoryToken;
 import scrum.client.workspace.history.HistoryTokenObserver;
 
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Navigator extends GNavigator implements BlockExpandedHandler, ApplicationStartedHandler,
@@ -27,7 +25,6 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	private HistoryToken historyToken;
-	private String page;
 
 	private Mode currentMode;
 
@@ -78,8 +75,6 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	private void showProject(String projectId, String page, String entityId) {
-		new TouchLastActivityServiceCall().execute();
-
 		Project project = Scope.get().getComponent(Project.class);
 		if (project != null && !projectId.equals(project.getId())) {
 			project = null;
@@ -100,21 +95,18 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	private void showPageAndEntity(String page, String entityId) {
+		new TouchLastActivityServiceCall().execute();
 		ProjectWorkspaceWidgets workspace = Scope.get().getComponent(ProjectWorkspaceWidgets.class);
 
-		if (this.page == null && page == null) page = "Dashboard";
+		if (historyToken.getPage() == null && page == null) page = HistoryToken.START_PAGE;
 
-		if (page != null && !page.equals(this.page)) {
-			// page changed
-			this.page = page;
-			workspace.showPage(page);
-		}
+		if (page != null) workspace.showPage(page);
 
 		if (entityId != null) {
 			if (ScrumGwt.isEntityReferenceOrWikiPage(entityId)) {
 				workspace.showEntityByReference(entityId);
 			} else {
-				if ("Forum".equals(this.page)) {
+				if ("Forum".equals(historyToken.getPage())) {
 					ForumSupport entity = (ForumSupport) dao.getEntity(entityId);
 					workspace.showForum(entity);
 				} else {
@@ -122,16 +114,6 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 				}
 			}
 		}
-	}
-
-	public void setPage(String page) {
-		this.page = page;
-	}
-
-	private void setToken(AGwtEntity entity) {
-		Project project = Scope.get().getComponent(Project.class);
-		if (project == null) return;
-		History.newItem("project=" + project.getId() + "|page=" + page + "|entity=" + entity.getId(), false);
 	}
 
 	@Override
@@ -185,12 +167,13 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	public static String getEntityHref(AGwtEntity entity) {
-		String id = null;
-		if (entity instanceof ReferenceSupport) {
-			id = ((ReferenceSupport) entity).getReference();
-			if (id != null && id.length() == 4 && id.endsWith("0")) id = null;
-		}
-		if (id == null) id = entity.getId();
+		// String id = null;
+		// if (entity instanceof ReferenceSupport) {
+		// id = ((ReferenceSupport) entity).getReference();
+		// if (id != null && id.length() == 4 && id.endsWith("0")) id = null;
+		// }
+		// if (id == null) id = entity.getId();
+		String id = entity.getId();
 		return getEntityHref(id);
 	}
 
@@ -202,7 +185,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		if (project != null) sb.append("project=").append(project.getId()).append("|");
 
 		Navigator navigator = Scope.get().getComponent(Navigator.class);
-		if (navigator != null && navigator.page != null) sb.append("page=").append(navigator.page).append("|");
+		if (navigator != null && navigator.historyToken.getPage() != null)
+			sb.append("page=").append(navigator.historyToken.getPage()).append("|");
 
 		sb.append("entity=").append(entityId);
 		return sb.toString();

@@ -16,6 +16,8 @@ public class HistoryToken {
 
 	private static Log log = Log.get(HistoryToken.class);
 
+	public static final String START_PAGE = "Dashboard";
+
 	private HistoryTokenObserver observer;
 
 	private String projectId;
@@ -82,7 +84,7 @@ public class HistoryToken {
 	}
 
 	public void update(String projectId) {
-		History.newItem(projectId == null ? "projectSelector" : "project=" + projectId, true);
+		History.newItem(projectId == null ? "projectSelector" : "project=" + projectId + "|page=" + START_PAGE, true);
 	}
 
 	public String getProjectId() {
