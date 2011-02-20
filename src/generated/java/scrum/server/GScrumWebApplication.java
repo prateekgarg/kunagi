@@ -603,6 +603,31 @@ public abstract class GScrumWebApplication
         taskDao = null;
     }
 
+    // --- taskDaySnapshotDao ---
+
+    private scrum.server.task.TaskDaySnapshotDao taskDaySnapshotDao;
+
+    public final scrum.server.task.TaskDaySnapshotDao getTaskDaySnapshotDao() {
+        if (taskDaySnapshotDao == null) {
+            taskDaySnapshotDao = createTaskDaySnapshotDao();
+            initializeTaskDaySnapshotDao(taskDaySnapshotDao);
+        }
+        return taskDaySnapshotDao;
+    }
+
+    protected scrum.server.task.TaskDaySnapshotDao createTaskDaySnapshotDao() {
+        return taskDaySnapshotDao = ilarkesto.base.Reflect.newInstance(scrum.server.task.TaskDaySnapshotDao.class);
+    }
+
+    protected void initializeTaskDaySnapshotDao(scrum.server.task.TaskDaySnapshotDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetTaskDaySnapshotDao() {
+        taskDaySnapshotDao = null;
+    }
+
     // --- wikipageDao ---
 
     private scrum.server.collaboration.WikipageDao wikipageDao;

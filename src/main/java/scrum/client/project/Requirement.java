@@ -296,6 +296,14 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return ret;
 	}
 
+	public List<Task> getUserTasks(User owner) {
+		List<Task> ret = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isOwner(owner)) ret.add(task);
+		}
+		return ret;
+	}
+
 	public List<Task> getClosedTasks() {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasks()) {

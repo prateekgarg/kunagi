@@ -115,10 +115,26 @@ public class Project extends GProject implements ForumSupport {
 		return issues;
 	}
 
+	public List<Issue> getUserBugs(User user) {
+		List<Issue> issues = new ArrayList<Issue>();
+		for (Issue issue : getBugs()) {
+			if (issue.isOwner(user)) issues.add(issue);
+		}
+		return issues;
+	}
+
 	public List<Task> getClaimedTasks(User user) {
 		List<Task> tasks = new ArrayList<Task>();
 		for (Requirement req : getRequirements()) {
 			tasks.addAll(req.getClaimedTasks(user));
+		}
+		return tasks;
+	}
+
+	public List<Task> getUserTasks(User user) {
+		List<Task> tasks = new ArrayList<Task>();
+		for (Requirement req : getRequirements()) {
+			tasks.addAll(req.getUserTasks(user));
 		}
 		return tasks;
 	}
@@ -204,6 +220,8 @@ public class Project extends GProject implements ForumSupport {
 		throw new IllegalStateException("User has no project config: " + user);
 	}
 
+	// TODO: guten namen für die methode finden.. hieß vorher isPig(), allerdings ist der PO eig. kein Pig,
+	// oder?
 	public boolean isScrumTeamMember(User user) {
 		return isProductOwner(user) || isScrumMaster(user) || isTeamMember(user);
 	}

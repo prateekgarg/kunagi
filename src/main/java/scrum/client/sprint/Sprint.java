@@ -21,6 +21,7 @@ import scrum.client.collaboration.Wiki;
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.common.WeekdaySelector;
 import scrum.client.impediments.Impediment;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
@@ -96,6 +97,22 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public String getChartUrl(int width, int height) {
 		return GWT.getModuleBaseURL() + "sprintBurndownChart.png?sprintId=" + getId() + "&width=" + width + "&height="
 				+ height;
+	}
+
+	public String getWorkChartUrl(int width, int height) {
+		return getChartUrl(width, height) + "&chart=workChart";
+	}
+
+	public String getUserChartUrl(int width, int height, String userName) {
+		return getWorkChartUrl(width, height) + "&userName=" + userName;
+	}
+
+	public String getEfficiencyChartUrl(int width, int height) {
+		return getChartUrl(width, height) + "&chart=efficiencyChart";
+	}
+
+	public String getAccomplishChartUrl(int width, int height) {
+		return getChartUrl(width, height) + "&chart=accomplishChart";
 	}
 
 	public boolean isCompleted() {
@@ -404,6 +421,20 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			addUndo(this, oldValue);
 		}
 
+	}
+
+	public Date getLastWorkDay() {
+		Date begin = getBegin();
+		Date lastWorkDay = Date.today().prevDay();
+		WeekdaySelector freeDays = getProject().getFreeDaysWeekdaySelectorModel().getValue();
+		int dayOfWeek = lastWorkDay.getWeekday() + 1;
+		int count = 0;
+		while (freeDays.isFree(dayOfWeek) && count < 28 && !begin.isAfter(lastWorkDay)) {
+			lastWorkDay = lastWorkDay.prevDay();
+			dayOfWeek = lastWorkDay.getWeekday() + 1;
+			count++;
+		}
+		return lastWorkDay;
 	}
 
 }

@@ -53,7 +53,10 @@ import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.common.AccomplishChart;
 import scrum.server.common.BurndownChart;
+import scrum.server.common.EfficiencyChart;
+import scrum.server.common.UserBurndownChart;
 import scrum.server.project.DeleteOldProjectsTask;
 import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
@@ -65,6 +68,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
 	private BurndownChart burndownChart;
+	private EfficiencyChart efficiencyChart;
+	private AccomplishChart accomplishChart;
 	private KunagiRootConfig config;
 	private ScrumEntityfilePreparator entityfilePreparator;
 	private SystemMessage systemMessage;
@@ -90,6 +95,25 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			burndownChart.setSprintDao(getSprintDao());
 		}
 		return burndownChart;
+	}
+	public UserBurndownChart getUserBurndownChart() {
+		UserBurndownChart userBurndownChart = new UserBurndownChart();
+		userBurndownChart.setSprintDao(getSprintDao());
+		return userBurndownChart;
+	}
+	public AccomplishChart getAccomplishChart() {
+		if (accomplishChart == null) {
+			accomplishChart = new AccomplishChart();
+			accomplishChart.setSprintDao(getSprintDao());
+		}
+		return accomplishChart;
+	}
+	public EfficiencyChart getEfficiencyChart() {
+		if (efficiencyChart == null) {
+			efficiencyChart = new EfficiencyChart();
+			efficiencyChart.setSprintDao(getSprintDao());
+		}
+		return efficiencyChart;
 	}
 
 	public SystemConfig getSystemConfig() {
