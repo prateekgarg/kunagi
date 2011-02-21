@@ -28,6 +28,7 @@ import java.awt.Color;
 import scrum.server.issues.Issue;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
+import scrum.server.release.Release;
 
 public abstract class APdfCreator {
 
@@ -102,6 +103,22 @@ public abstract class APdfCreator {
 
 		richtextRow(table, "Quality description", quality.getDescription());
 		richtextRow(table, "Acceptance tests", quality.getTestDescription());
+
+		table.createCellBorders(Color.GRAY, 0.2f);
+	}
+
+	protected void release(APdfContainerElement pdf, Release release) {
+		pdf.nl();
+
+		ATable table = pdf.table(3, 20, 3, 3);
+
+		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
+		rowHeader.cell().setFontStyle(referenceFont).text(release.getReference());
+		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(release.getLabel());
+		rowHeader.cell().setFontStyle(defaultFont).text(release.getReleaseDate());
+
+		richtextRow(table, "Development notes", release.getNote());
+		richtextRow(table, "Release notes", release.getReleaseNotes());
 
 		table.createCellBorders(Color.GRAY, 0.2f);
 	}

@@ -38,6 +38,7 @@ import scrum.server.pr.BlogEntry;
 import scrum.server.project.Project;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
+import scrum.server.release.Release;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
@@ -77,6 +78,23 @@ public class TestUtil {
 			admin.setAdmin(true);
 		}
 		return admin;
+	}
+
+	public static Release createRelease(Project project, int number) {
+		return createRelease(project, number, "0." + String.valueOf(number) + ".0", Date.inDays(number),
+			Str.generateRandomParagraph(), Str.generateRandomParagraph());
+	}
+
+	public static Release createRelease(Project project, int number, String label, Date releaseDate,
+			String releaseNotes, String note) {
+		Release release = app.getReleaseDao().newEntityInstance();
+		release.setProject(project);
+		release.setNumber(number);
+		release.setLabel(label);
+		release.setReleaseDate(releaseDate);
+		release.setReleaseNotes(releaseNotes);
+		release.setNote(note);
+		return release;
 	}
 
 	public static void createComments(AEntity parent, int count) {

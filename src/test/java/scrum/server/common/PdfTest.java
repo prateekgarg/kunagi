@@ -35,6 +35,8 @@ import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.QualityBacklogPdfCreator;
 import scrum.server.project.Requirement;
+import scrum.server.release.ReleaseHistoryPdfCreator;
+import scrum.server.release.ReleasePlanPdfCreator;
 import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
@@ -136,6 +138,28 @@ public class PdfTest extends ATest {
 		TestUtil.createIssue(project, 3).setAcceptDate(Date.today());
 
 		createPdf(new IdeaListPdfCreator(project));
+	}
+
+	@Test
+	public void releasePlan() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createRelease(project, 1);
+		TestUtil.createRelease(project, 2);
+		TestUtil.createRelease(project, 3);
+
+		createPdf(new ReleasePlanPdfCreator(project));
+	}
+
+	@Test
+	public void releaseHistory() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createRelease(project, 1).setReleased(true);
+		TestUtil.createRelease(project, 2).setReleased(true);
+		TestUtil.createRelease(project, 3).setReleased(true);
+
+		createPdf(new ReleaseHistoryPdfCreator(project));
 	}
 
 	@Test

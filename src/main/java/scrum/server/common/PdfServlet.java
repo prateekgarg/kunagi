@@ -33,6 +33,8 @@ import scrum.server.issues.BugListPdfCreator;
 import scrum.server.issues.IdeaListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.QualityBacklogPdfCreator;
+import scrum.server.release.ReleaseHistoryPdfCreator;
+import scrum.server.release.ReleasePlanPdfCreator;
 import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
@@ -51,6 +53,8 @@ public class PdfServlet extends AHttpServlet {
 		if (pdfId.equals("calendar")) return createCalendar(req, session);
 		if (pdfId.equals("bugList")) return createBugList(req, session);
 		if (pdfId.equals("ideaList")) return createIdeaList(req, session);
+		if (pdfId.equals("releasePlan")) return createReleasePlan(req, session);
+		if (pdfId.equals("releaseHistory")) return createReleaseHistory(req, session);
 		throw new RuntimeException("Unknown pdfId: " + pdfId);
 	}
 
@@ -58,6 +62,14 @@ public class PdfServlet extends AHttpServlet {
 		Date from = new Date(req.getParameter("from"));
 		Date to = new Date(req.getParameter("to"));
 		return new CalendarPdfCreator(getProject(session, req), from, to);
+	}
+
+	private APdfCreator createReleasePlan(HttpServletRequest req, WebSession session) {
+		return new ReleasePlanPdfCreator(getProject(session, req));
+	}
+
+	private APdfCreator createReleaseHistory(HttpServletRequest req, WebSession session) {
+		return new ReleaseHistoryPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createRiskList(HttpServletRequest req, WebSession session) {
