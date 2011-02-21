@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -31,6 +31,7 @@ import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
+import scrum.server.project.QualityBacklogPdfCreator;
 import scrum.server.project.Requirement;
 import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
@@ -96,10 +97,21 @@ public class PdfTest extends ATest {
 	public void productBacklog() {
 		Project project = TestUtil.createProject();
 
-		Requirement req1 = TestUtil.createRequirement(project, 1);
-		Requirement req2 = TestUtil.createRequirement(project, 2);
+		TestUtil.createRequirement(project, 1);
+		TestUtil.createRequirement(project, 2);
 
 		createPdf(new ProductBacklogPdfCreator(project));
+	}
+
+	@Test
+	public void qualityBacklog() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createQuality(project, 1);
+		TestUtil.createQuality(project, 2);
+		TestUtil.createQuality(project, 3);
+
+		createPdf(new QualityBacklogPdfCreator(project));
 	}
 
 	@Test

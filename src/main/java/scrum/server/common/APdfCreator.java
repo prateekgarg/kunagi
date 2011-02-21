@@ -25,6 +25,7 @@ import ilarkesto.pdf.FontStyle;
 
 import java.awt.Color;
 
+import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
 
 public abstract class APdfCreator {
@@ -85,6 +86,21 @@ public abstract class APdfCreator {
 
 		richtextRow(table, "Story description", req.getDescription());
 		richtextRow(table, "Acceptance tests", req.getTestDescription());
+
+		table.createCellBorders(Color.GRAY, 0.2f);
+	}
+
+	protected void quality(APdfContainerElement pdf, Quality quality) {
+		pdf.nl();
+
+		ATable table = pdf.table(3, 20, 6);
+
+		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
+		rowHeader.cell().setFontStyle(referenceFont).text(quality.getReference());
+		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(quality.getLabel());
+
+		richtextRow(table, "Quality description", quality.getDescription());
+		richtextRow(table, "Acceptance tests", quality.getTestDescription());
 
 		table.createCellBorders(Color.GRAY, 0.2f);
 	}
