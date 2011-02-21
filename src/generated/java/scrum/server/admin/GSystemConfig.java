@@ -62,6 +62,10 @@ public abstract class GSystemConfig
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
         properties.put("maxFileSize", this.maxFileSize);
+        properties.put("myStatisticsDisabled", this.myStatisticsDisabled);
+        properties.put("sprintStatisticsDisabled", this.sprintStatisticsDisabled);
+        properties.put("usersStatisticsDisabled", this.usersStatisticsDisabled);
+        properties.put("workingHoursPerDay", this.workingHoursPerDay);
     }
 
     public int compareTo(SystemConfig other) {
@@ -964,6 +968,131 @@ public abstract class GSystemConfig
         setMaxFileSize((java.lang.Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - myStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private boolean myStatisticsDisabled;
+
+    public final boolean isMyStatisticsDisabled() {
+        return myStatisticsDisabled;
+    }
+
+    public final void setMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        myStatisticsDisabled = prepareMyStatisticsDisabled(myStatisticsDisabled);
+        if (isMyStatisticsDisabled(myStatisticsDisabled)) return;
+        this.myStatisticsDisabled = myStatisticsDisabled;
+        updateLastModified();
+        fireModified("myStatisticsDisabled="+myStatisticsDisabled);
+    }
+
+    protected boolean prepareMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        return myStatisticsDisabled;
+    }
+
+    public final boolean isMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        return this.myStatisticsDisabled == myStatisticsDisabled;
+    }
+
+    protected final void updateMyStatisticsDisabled(Object value) {
+        setMyStatisticsDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - sprintStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private boolean sprintStatisticsDisabled;
+
+    public final boolean isSprintStatisticsDisabled() {
+        return sprintStatisticsDisabled;
+    }
+
+    public final void setSprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        sprintStatisticsDisabled = prepareSprintStatisticsDisabled(sprintStatisticsDisabled);
+        if (isSprintStatisticsDisabled(sprintStatisticsDisabled)) return;
+        this.sprintStatisticsDisabled = sprintStatisticsDisabled;
+        updateLastModified();
+        fireModified("sprintStatisticsDisabled="+sprintStatisticsDisabled);
+    }
+
+    protected boolean prepareSprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        return sprintStatisticsDisabled;
+    }
+
+    public final boolean isSprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        return this.sprintStatisticsDisabled == sprintStatisticsDisabled;
+    }
+
+    protected final void updateSprintStatisticsDisabled(Object value) {
+        setSprintStatisticsDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - usersStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private boolean usersStatisticsDisabled;
+
+    public final boolean isUsersStatisticsDisabled() {
+        return usersStatisticsDisabled;
+    }
+
+    public final void setUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        usersStatisticsDisabled = prepareUsersStatisticsDisabled(usersStatisticsDisabled);
+        if (isUsersStatisticsDisabled(usersStatisticsDisabled)) return;
+        this.usersStatisticsDisabled = usersStatisticsDisabled;
+        updateLastModified();
+        fireModified("usersStatisticsDisabled="+usersStatisticsDisabled);
+    }
+
+    protected boolean prepareUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        return usersStatisticsDisabled;
+    }
+
+    public final boolean isUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        return this.usersStatisticsDisabled == usersStatisticsDisabled;
+    }
+
+    protected final void updateUsersStatisticsDisabled(Object value) {
+        setUsersStatisticsDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - workingHoursPerDay
+    // -----------------------------------------------------------
+
+    private java.lang.Integer workingHoursPerDay;
+
+    public final java.lang.Integer getWorkingHoursPerDay() {
+        return workingHoursPerDay;
+    }
+
+    public final void setWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        workingHoursPerDay = prepareWorkingHoursPerDay(workingHoursPerDay);
+        if (isWorkingHoursPerDay(workingHoursPerDay)) return;
+        this.workingHoursPerDay = workingHoursPerDay;
+        updateLastModified();
+        fireModified("workingHoursPerDay="+workingHoursPerDay);
+    }
+
+    protected java.lang.Integer prepareWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        return workingHoursPerDay;
+    }
+
+    public final boolean isWorkingHoursPerDaySet() {
+        return this.workingHoursPerDay != null;
+    }
+
+    public final boolean isWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        if (this.workingHoursPerDay == null && workingHoursPerDay == null) return true;
+        return this.workingHoursPerDay != null && this.workingHoursPerDay.equals(workingHoursPerDay);
+    }
+
+    protected final void updateWorkingHoursPerDay(Object value) {
+        setWorkingHoursPerDay((java.lang.Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -995,6 +1124,10 @@ public abstract class GSystemConfig
             if (property.equals("ldapBaseDn")) updateLdapBaseDn(value);
             if (property.equals("ldapUserFilterRegex")) updateLdapUserFilterRegex(value);
             if (property.equals("maxFileSize")) updateMaxFileSize(value);
+            if (property.equals("myStatisticsDisabled")) updateMyStatisticsDisabled(value);
+            if (property.equals("sprintStatisticsDisabled")) updateSprintStatisticsDisabled(value);
+            if (property.equals("usersStatisticsDisabled")) updateUsersStatisticsDisabled(value);
+            if (property.equals("workingHoursPerDay")) updateWorkingHoursPerDay(value);
         }
     }
 

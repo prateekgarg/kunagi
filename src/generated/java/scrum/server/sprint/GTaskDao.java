@@ -50,6 +50,8 @@ public abstract class GTaskDao
         labelsCache = null;
         tasksByDescriptionCache.clear();
         descriptionsCache = null;
+        tasksByInitialWorkCache.clear();
+        initialWorksCache = null;
         tasksByRemainingWorkCache.clear();
         remainingWorksCache = null;
         tasksByBurnedWorkCache.clear();
@@ -232,6 +234,46 @@ public abstract class GTaskDao
 
         public boolean test(Task e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - initialWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Task>> tasksByInitialWorkCache = new Cache<Integer,Set<Task>>(
+            new Cache.Factory<Integer,Set<Task>>() {
+                public Set<Task> create(Integer initialWork) {
+                    return getEntities(new IsInitialWork(initialWork));
+                }
+            });
+
+    public final Set<Task> getTasksByInitialWork(int initialWork) {
+        return tasksByInitialWorkCache.get(initialWork);
+    }
+    private Set<Integer> initialWorksCache;
+
+    public final Set<Integer> getInitialWorks() {
+        if (initialWorksCache == null) {
+            initialWorksCache = new HashSet<Integer>();
+            for (Task e : getEntities()) {
+                initialWorksCache.add(e.getInitialWork());
+            }
+        }
+        return initialWorksCache;
+    }
+
+    private static class IsInitialWork implements Predicate<Task> {
+
+        private int value;
+
+        public IsInitialWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isInitialWork(value);
         }
 
     }

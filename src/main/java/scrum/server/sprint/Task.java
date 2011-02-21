@@ -14,9 +14,14 @@
  */
 package scrum.server.sprint;
 
+import ilarkesto.base.time.Date;
+
+import java.util.List;
+
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.project.Project;
+import scrum.server.task.TaskDaySnapshot;
 
 public class Task extends GTask implements Numbered {
 
@@ -75,6 +80,14 @@ public class Task extends GTask implements Numbered {
 	@Override
 	public String toString() {
 		return getReferenceAndLabel();
+	}
+
+	public TaskDaySnapshot getDaySnapshot(Date date) {
+		return taskDaySnapshotDao.getTaskDaySnapshot(this, date, true);
+	}
+
+	public List<TaskDaySnapshot> getTaskDaySnapshots(Sprint sprint) {
+		return taskDaySnapshotDao.getTaskDaySnapshots(sprint, this);
 	}
 
 }

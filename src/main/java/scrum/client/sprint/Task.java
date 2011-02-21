@@ -15,10 +15,14 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.gwt.client.Date;
 import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
@@ -30,6 +34,8 @@ import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
+import scrum.client.task.BurnHours;
+import scrum.client.task.TaskDaySnapshot;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -72,6 +78,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 		} else {
 			setOwner(user);
 		}
+		setInitialWork(getRemainingWork());
 	}
 
 	public String getLongLabel(boolean showOwner, boolean showRequirement) {
@@ -168,7 +175,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	public void decrementRemainingWork() {
 		int work = getRemainingWork();
-		if (work <= 1) return;
+		if (work <= 0) return;
 		setRemainingWork(work - 1);
 	}
 
@@ -229,4 +236,56 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 		};
 		return workTextModel;
 	}
+
+	public List<TaskDaySnapshot> getTaskDaySnapshotsInSprint2(Date date, Sprint sprint) {
+
+		List<TaskDaySnapshot> results = new ArrayList<TaskDaySnapshot>();
+		for (TaskDaySnapshot snapshot : getTaskDaySnapshots()) {
+			if ((date == null || date.equals(snapshot.getDate()))
+					&& snapshot.getDate().isSameOrAfter(sprint.getBegin())) {
+				results.add(snapshot);
+			}
+		}
+		Collections.sort(results, TaskDaySnapshot.DATE_COMPARATOR);
+
+		return results;
+	}
+
+
+
+	public List<BurnHours> getTaskDaySnapshotsInSprint(Date date, Sprint sprint) {
+
+		List<BurnHours> results = new ArrayList<BurnHours>();
+		List<TaskDaySnapshot> taskDaySnapshots = getTaskDaySnapshots();
+		Collections.sort(taskDaySnapshots, TaskDaySnapshot.DATE_COMPARATOR);
+		int previousSnapshotBurn = 0;
+		int burnedWork;
+		BurnHours burnHours = null;
+		for (TaskDaySnapshot snapshot : taskDaySnapshots) {
+			burnHours = copySnapshot(snapshot);
+			burnedWork = burnHours.getBurnedWork();
+			if (previousSnapshotBurn != 0 && burnedWork > 0) {
+				burnedWork -= previousSnapshotBurn;
+				burnHours.setBurnedWork(burnedWork);
+			}
+
+			if ((date == null || date.equals(burnHours.getDate()))
+					&& burnHours.getDate().isSameOrAfter(sprint.getBegin())) {
+				results.add(burnHours);
+			}
+			previousSnapshotBurn = snapshot.getBurnedWork();
+		}
+
+		return results;
+	}
+
+	private BurnHours copySnapshot(TaskDaySnapshot snapshot) {
+		BurnHours newSnapshot = new BurnHours();
+		newSnapshot.setBurnedWork(snapshot.getBurnedWork());
+		newSnapshot.setDate(snapshot.getDate());
+		newSnapshot.setRemainingWork(snapshot.getRemainingWork());
+		newSnapshot.setTask(snapshot.getTask());
+		return newSnapshot;
+	}
+
 }

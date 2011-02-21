@@ -1510,6 +1510,236 @@ public abstract class GSystemConfig
 
     }
 
+    // --- myStatisticsDisabled ---
+
+    private boolean myStatisticsDisabled ;
+
+    public final boolean isMyStatisticsDisabled() {
+        return this.myStatisticsDisabled ;
+    }
+
+    public final SystemConfig setMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        if (isMyStatisticsDisabled(myStatisticsDisabled)) return (SystemConfig)this;
+        this.myStatisticsDisabled = myStatisticsDisabled ;
+        propertyChanged("myStatisticsDisabled", this.myStatisticsDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        return equals(this.myStatisticsDisabled, myStatisticsDisabled);
+    }
+
+    private transient MyStatisticsDisabledModel myStatisticsDisabledModel;
+
+    public MyStatisticsDisabledModel getMyStatisticsDisabledModel() {
+        if (myStatisticsDisabledModel == null) myStatisticsDisabledModel = createMyStatisticsDisabledModel();
+        return myStatisticsDisabledModel;
+    }
+
+    protected MyStatisticsDisabledModel createMyStatisticsDisabledModel() { return new MyStatisticsDisabledModel(); }
+
+    protected class MyStatisticsDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_myStatisticsDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isMyStatisticsDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setMyStatisticsDisabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Acitviate this, if you want to disable the my statistics page for team members."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- sprintStatisticsDisabled ---
+
+    private boolean sprintStatisticsDisabled ;
+
+    public final boolean isSprintStatisticsDisabled() {
+        return this.sprintStatisticsDisabled ;
+    }
+
+    public final SystemConfig setSprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        if (isSprintStatisticsDisabled(sprintStatisticsDisabled)) return (SystemConfig)this;
+        this.sprintStatisticsDisabled = sprintStatisticsDisabled ;
+        propertyChanged("sprintStatisticsDisabled", this.sprintStatisticsDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isSprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        return equals(this.sprintStatisticsDisabled, sprintStatisticsDisabled);
+    }
+
+    private transient SprintStatisticsDisabledModel sprintStatisticsDisabledModel;
+
+    public SprintStatisticsDisabledModel getSprintStatisticsDisabledModel() {
+        if (sprintStatisticsDisabledModel == null) sprintStatisticsDisabledModel = createSprintStatisticsDisabledModel();
+        return sprintStatisticsDisabledModel;
+    }
+
+    protected SprintStatisticsDisabledModel createSprintStatisticsDisabledModel() { return new SprintStatisticsDisabledModel(); }
+
+    protected class SprintStatisticsDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_sprintStatisticsDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isSprintStatisticsDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setSprintStatisticsDisabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Acitviate this, if you want to disable the sprint statistics page for scrum master."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- usersStatisticsDisabled ---
+
+    private boolean usersStatisticsDisabled ;
+
+    public final boolean isUsersStatisticsDisabled() {
+        return this.usersStatisticsDisabled ;
+    }
+
+    public final SystemConfig setUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        if (isUsersStatisticsDisabled(usersStatisticsDisabled)) return (SystemConfig)this;
+        this.usersStatisticsDisabled = usersStatisticsDisabled ;
+        propertyChanged("usersStatisticsDisabled", this.usersStatisticsDisabled);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        return equals(this.usersStatisticsDisabled, usersStatisticsDisabled);
+    }
+
+    private transient UsersStatisticsDisabledModel usersStatisticsDisabledModel;
+
+    public UsersStatisticsDisabledModel getUsersStatisticsDisabledModel() {
+        if (usersStatisticsDisabledModel == null) usersStatisticsDisabledModel = createUsersStatisticsDisabledModel();
+        return usersStatisticsDisabledModel;
+    }
+
+    protected UsersStatisticsDisabledModel createUsersStatisticsDisabledModel() { return new UsersStatisticsDisabledModel(); }
+
+    protected class UsersStatisticsDisabledModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_usersStatisticsDisabled";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isUsersStatisticsDisabled();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setUsersStatisticsDisabled(value);
+        }
+        @Override
+        public String getTooltip() { return "Acitviate this, if you want to disable the users's statistics page for scrum master."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- workingHoursPerDay ---
+
+    private java.lang.Integer workingHoursPerDay ;
+
+    public final java.lang.Integer getWorkingHoursPerDay() {
+        return this.workingHoursPerDay ;
+    }
+
+    public final SystemConfig setWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        if (isWorkingHoursPerDay(workingHoursPerDay)) return (SystemConfig)this;
+        this.workingHoursPerDay = workingHoursPerDay ;
+        propertyChanged("workingHoursPerDay", this.workingHoursPerDay);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        return equals(this.workingHoursPerDay, workingHoursPerDay);
+    }
+
+    private transient WorkingHoursPerDayModel workingHoursPerDayModel;
+
+    public WorkingHoursPerDayModel getWorkingHoursPerDayModel() {
+        if (workingHoursPerDayModel == null) workingHoursPerDayModel = createWorkingHoursPerDayModel();
+        return workingHoursPerDayModel;
+    }
+
+    protected WorkingHoursPerDayModel createWorkingHoursPerDayModel() { return new WorkingHoursPerDayModel(); }
+
+    protected class WorkingHoursPerDayModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_workingHoursPerDay";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getWorkingHoursPerDay();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setWorkingHoursPerDay(value);
+        }
+
+            @Override
+            public void increment() {
+                setWorkingHoursPerDay(getWorkingHoursPerDay() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setWorkingHoursPerDay(getWorkingHoursPerDay() - 1);
+            }
+        @Override
+        public String getTooltip() { return "Workig hours per day per user."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1539,6 +1769,10 @@ public abstract class GSystemConfig
         ldapBaseDn  = (java.lang.String) props.get("ldapBaseDn");
         ldapUserFilterRegex  = (java.lang.String) props.get("ldapUserFilterRegex");
         maxFileSize  = (java.lang.Integer) props.get("maxFileSize");
+        myStatisticsDisabled  = (Boolean) props.get("myStatisticsDisabled");
+        sprintStatisticsDisabled  = (Boolean) props.get("sprintStatisticsDisabled");
+        usersStatisticsDisabled  = (Boolean) props.get("usersStatisticsDisabled");
+        workingHoursPerDay  = (java.lang.Integer) props.get("workingHoursPerDay");
         updateLocalModificationTime();
     }
 
@@ -1571,6 +1805,10 @@ public abstract class GSystemConfig
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
         properties.put("maxFileSize", this.maxFileSize);
+        properties.put("myStatisticsDisabled", this.myStatisticsDisabled);
+        properties.put("sprintStatisticsDisabled", this.sprintStatisticsDisabled);
+        properties.put("usersStatisticsDisabled", this.usersStatisticsDisabled);
+        properties.put("workingHoursPerDay", this.workingHoursPerDay);
     }
 
 }

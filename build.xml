@@ -46,10 +46,13 @@
 
     <target name="compile-gwt" depends="compile-java">
 
-        <java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true">
+        <java classname="com.google.gwt.dev.Compiler" failonerror="true" fork="true" maxmemory="512M">
             <arg value="-war" />
             <arg value="${build.dir}/webapp" />
             <arg value="scrum.ScrumGwtApplication" />
+			<arg value="-localWorkers" />
+			<arg value="2" />
+			<arg value="-draftCompile" />
             <classpath location="src/main/java" />
             <classpath location="src/generated/java" />
             <classpath location="${ilarkesto.dir}/src/main/java" />
@@ -110,9 +113,9 @@
             <fileset dir="." includes="license.*" />
         </copy>
         <zip destfile="${build.dir}/kunagi.zip" basedir="${build.dir}/package-content" />
-        <exec executable="tar" failonerror="true" dir="${build.dir}/package-content">
+        <!--exec executable="tar" failonerror="false" dir="${build.dir}/package-content">
             <arg line="cjf ../kunagi.tar.bz2 kunagi" />
-        </exec>
+        </exec-->
 	</target>
 
 	<target name="publishPackages">

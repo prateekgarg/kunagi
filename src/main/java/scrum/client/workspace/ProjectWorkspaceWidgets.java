@@ -22,6 +22,7 @@ import ilarkesto.gwt.client.SwitcherWidget;
 import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
+import scrum.client.admin.SystemConfig;
 import scrum.client.admin.SystemConfigWidget;
 import scrum.client.admin.SystemMessageManagerWidget;
 import scrum.client.admin.User;
@@ -68,6 +69,9 @@ import scrum.client.sprint.Sprint;
 import scrum.client.sprint.SprintBacklogWidget;
 import scrum.client.sprint.SprintHistoryWidget;
 import scrum.client.sprint.Task;
+import scrum.client.statistics.MyStatisticsWidget;
+import scrum.client.statistics.SprintStatisticsWidget;
+import scrum.client.statistics.UserStatisticsWidget;
 import scrum.client.tasks.WhiteboardWidget;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -76,6 +80,9 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private DashboardWidget dashboard;
+	private SprintStatisticsWidget sprintStatistics;
+	private MyStatisticsWidget myStatistics;
+	private UserStatisticsWidget userStatistics;
 	private ProjectOverviewWidget projectOverview;
 	private WhiteboardWidget whiteboard;
 	private SprintBacklogWidget sprintBacklog;
@@ -106,8 +113,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 	private User highlightedUser;
 
+	private SystemConfig config;
+
 	@Override
 	public void initialize() {
+		config = dao.getSystemConfig();
 		projectOverview = new ProjectOverviewWidget();
 		dashboard = new DashboardWidget();
 
@@ -118,6 +128,23 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		pages.addPage(new Page(whiteboard, "Whiteboard", sprintGroupKey));
 		sprintBacklog = new SprintBacklogWidget();
 		pages.addPage(new Page(sprintBacklog, "Sprint Backlog", sprintGroupKey));
+
+		String statisticsGroupKey = "statistics";
+		Project project = user.getCurrentProject();
+		if (project.isTeamMember(user) && !config.isMyStatisticsDisabled()) {
+			myStatistics = new MyStatisticsWidget();
+			pages.addPage(new Page(myStatistics, "My Statistics", statisticsGroupKey));
+		}
+		if (project.isScrumMaster(user)) {
+			if (!config.isSprintStatisticsDisabled()) {
+				sprintStatistics = new SprintStatisticsWidget();
+				pages.addPage(new Page(sprintStatistics, "Sprint Statistics", statisticsGroupKey));
+			}
+			if (!config.isUsersStatisticsDisabled()) {
+				userStatistics = new UserStatisticsWidget();
+				pages.addPage(new Page(userStatistics, "User's Statistics", statisticsGroupKey));
+			}
+		}
 
 		String productGroupKey = "product";
 		productBacklog = new ProductBacklogWidget();
@@ -178,6 +205,9 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		addNavigatorGroup(navigator, projectGroupKey, "Project");
 		addNavigatorGroup(navigator, collaborationGroupKey, "Collaboration");
 		addNavigatorGroup(navigator, administrationKey, "Administration");
+		if (pages.getPagesByGroupKey(statisticsGroupKey).size() > 0) {
+			addNavigatorGroup(navigator, statisticsGroupKey, "Statistics");
+		}
 	}
 
 	private void addNavigatorGroup(SwitchingNavigatorWidget navigator, String groupKey, String label) {
@@ -236,8 +266,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 						String pageName = reference.substring(2, reference.length() - 2);
 						showWiki(pageName);
 					} else {
-						Scope.get().getComponent(Chat.class)
-								.postSystemMessage("Object does not exist: " + reference, false);
+						Scope.get().getComponent(Chat.class).postSystemMessage("Object does not exist: " + reference,
+							false);
 					}
 					return;
 				}

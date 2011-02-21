@@ -87,6 +87,11 @@ public abstract class GSystemConfigDao
         ldapUserFilterRegexsCache = null;
         systemConfigsByMaxFileSizeCache.clear();
         maxFileSizesCache = null;
+        systemConfigsByMyStatisticsDisabledCache.clear();
+        systemConfigsBySprintStatisticsDisabledCache.clear();
+        systemConfigsByUsersStatisticsDisabledCache.clear();
+        systemConfigsByWorkingHoursPerDayCache.clear();
+        workingHoursPerDaysCache = null;
     }
 
     @Override
@@ -1064,6 +1069,133 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isMaxFileSize(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - myStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByMyStatisticsDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean myStatisticsDisabled) {
+                    return getEntities(new IsMyStatisticsDisabled(myStatisticsDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        return systemConfigsByMyStatisticsDisabledCache.get(myStatisticsDisabled);
+    }
+
+    private static class IsMyStatisticsDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsMyStatisticsDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isMyStatisticsDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - sprintStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsBySprintStatisticsDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean sprintStatisticsDisabled) {
+                    return getEntities(new IsSprintStatisticsDisabled(sprintStatisticsDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        return systemConfigsBySprintStatisticsDisabledCache.get(sprintStatisticsDisabled);
+    }
+
+    private static class IsSprintStatisticsDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsSprintStatisticsDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isSprintStatisticsDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - usersStatisticsDisabled
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<SystemConfig>> systemConfigsByUsersStatisticsDisabledCache = new Cache<Boolean,Set<SystemConfig>>(
+            new Cache.Factory<Boolean,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(Boolean usersStatisticsDisabled) {
+                    return getEntities(new IsUsersStatisticsDisabled(usersStatisticsDisabled));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        return systemConfigsByUsersStatisticsDisabledCache.get(usersStatisticsDisabled);
+    }
+
+    private static class IsUsersStatisticsDisabled implements Predicate<SystemConfig> {
+
+        private boolean value;
+
+        public IsUsersStatisticsDisabled(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return value == e.isUsersStatisticsDisabled();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - workingHoursPerDay
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.Integer,Set<SystemConfig>> systemConfigsByWorkingHoursPerDayCache = new Cache<java.lang.Integer,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.Integer,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.Integer workingHoursPerDay) {
+                    return getEntities(new IsWorkingHoursPerDay(workingHoursPerDay));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        return systemConfigsByWorkingHoursPerDayCache.get(workingHoursPerDay);
+    }
+    private Set<java.lang.Integer> workingHoursPerDaysCache;
+
+    public final Set<java.lang.Integer> getWorkingHoursPerDays() {
+        if (workingHoursPerDaysCache == null) {
+            workingHoursPerDaysCache = new HashSet<java.lang.Integer>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isWorkingHoursPerDaySet()) workingHoursPerDaysCache.add(e.getWorkingHoursPerDay());
+            }
+        }
+        return workingHoursPerDaysCache;
+    }
+
+    private static class IsWorkingHoursPerDay implements Predicate<SystemConfig> {
+
+        private java.lang.Integer value;
+
+        public IsWorkingHoursPerDay(java.lang.Integer value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isWorkingHoursPerDay(value);
         }
 
     }

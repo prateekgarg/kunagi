@@ -40,6 +40,7 @@ public abstract class GTask
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("initialWork", this.initialWork);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
@@ -48,6 +49,10 @@ public abstract class GTask
 
     public int compareTo(Task other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+    }
+
+    public final java.util.Set<scrum.server.task.TaskDaySnapshot> getTaskDaySnapshots() {
+        return taskDaySnapshotDao.getTaskDaySnapshotsByTask((Task)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GTask.class);
@@ -218,6 +223,36 @@ public abstract class GTask
 
     protected final void updateDescription(Object value) {
         setDescription((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - initialWork
+    // -----------------------------------------------------------
+
+    private int initialWork;
+
+    public final int getInitialWork() {
+        return initialWork;
+    }
+
+    public final void setInitialWork(int initialWork) {
+        initialWork = prepareInitialWork(initialWork);
+        if (isInitialWork(initialWork)) return;
+        this.initialWork = initialWork;
+        updateLastModified();
+        fireModified("initialWork="+initialWork);
+    }
+
+    protected int prepareInitialWork(int initialWork) {
+        return initialWork;
+    }
+
+    public final boolean isInitialWork(int initialWork) {
+        return this.initialWork == initialWork;
+    }
+
+    protected final void updateInitialWork(Object value) {
+        setInitialWork((Integer)value);
     }
 
     // -----------------------------------------------------------
@@ -393,6 +428,7 @@ public abstract class GTask
             if (property.equals("number")) updateNumber(value);
             if (property.equals("label")) updateLabel(value);
             if (property.equals("description")) updateDescription(value);
+            if (property.equals("initialWork")) updateInitialWork(value);
             if (property.equals("remainingWork")) updateRemainingWork(value);
             if (property.equals("burnedWork")) updateBurnedWork(value);
             if (property.equals("ownerId")) updateOwner(value);
@@ -456,6 +492,12 @@ public abstract class GTask
 
     public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
         GTask.taskDao = taskDao;
+    }
+
+    static scrum.server.task.TaskDaySnapshotDao taskDaySnapshotDao;
+
+    public static final void setTaskDaySnapshotDao(scrum.server.task.TaskDaySnapshotDao taskDaySnapshotDao) {
+        GTask.taskDaySnapshotDao = taskDaySnapshotDao;
     }
 
 }

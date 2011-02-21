@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,7 @@ import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDaySnapshot;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
+import scrum.server.task.TaskDaySnapshot;
 
 public class Project extends GProject {
 
@@ -256,6 +258,15 @@ public class Project extends GProject {
 
 	public Set<Task> getTasks() {
 		return taskDao.getTasksByProject(this);
+	}
+
+	public Set<TaskDaySnapshot> getTaskDaySnapshots() {
+		Set<TaskDaySnapshot> snapshots = new HashSet<TaskDaySnapshot>();
+		Iterator<Task> iterator = getTasks().iterator();
+		while (iterator.hasNext()) {
+			snapshots.addAll(iterator.next().getTaskDaySnapshots());
+		}
+		return snapshots;
 	}
 
 	public AEntity getEntityByReference(String reference) {

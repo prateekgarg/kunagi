@@ -256,6 +256,74 @@ public abstract class GTask
 
     }
 
+    // --- initialWork ---
+
+    private int initialWork ;
+
+    public final int getInitialWork() {
+        return this.initialWork ;
+    }
+
+    public final Task setInitialWork(int initialWork) {
+        if (isInitialWork(initialWork)) return (Task)this;
+        this.initialWork = initialWork ;
+        propertyChanged("initialWork", this.initialWork);
+        return (Task)this;
+    }
+
+    public final boolean isInitialWork(int initialWork) {
+        return equals(this.initialWork, initialWork);
+    }
+
+    private transient InitialWorkModel initialWorkModel;
+
+    public InitialWorkModel getInitialWorkModel() {
+        if (initialWorkModel == null) initialWorkModel = createInitialWorkModel();
+        return initialWorkModel;
+    }
+
+    protected InitialWorkModel createInitialWorkModel() { return new InitialWorkModel(); }
+
+    protected class InitialWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Task_initialWork";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getInitialWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setInitialWork(value);
+        }
+
+            @Override
+            public void increment() {
+                setInitialWork(getInitialWork() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setInitialWork(getInitialWork() - 1);
+            }
+
+        @Override
+        public boolean isEditable() { return GTask.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "Time estimated on this Task."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- remainingWork ---
 
     private int remainingWork ;
@@ -449,6 +517,7 @@ public abstract class GTask
         number  = (Integer) props.get("number");
         label  = (java.lang.String) props.get("label");
         description  = (java.lang.String) props.get("description");
+        initialWork  = (Integer) props.get("initialWork");
         remainingWork  = (Integer) props.get("remainingWork");
         burnedWork  = (Integer) props.get("burnedWork");
         ownerId = (String) props.get("ownerId");
@@ -463,10 +532,15 @@ public abstract class GTask
         properties.put("number", this.number);
         properties.put("label", this.label);
         properties.put("description", this.description);
+        properties.put("initialWork", this.initialWork);
         properties.put("remainingWork", this.remainingWork);
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
         properties.put("impedimentId", this.impedimentId);
+    }
+
+    public final java.util.List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshots() {
+        return getDao().getTaskDaySnapshotsByTask((Task)this);
     }
 
     @Override

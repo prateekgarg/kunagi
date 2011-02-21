@@ -334,6 +334,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
 			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+			((Task) entity).getDaySnapshot(Date.today()).updateWithCurrentTask();
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
@@ -513,6 +514,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void onTaskChanged(GwtConversation conversation, Task task, Map properties) {
 		// update sprint day snapshot after change
 		conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		task.getDaySnapshot(Date.today()).updateWithCurrentTask();
 		Requirement requirement = task.getRequirement();
 		if (requirement.isInCurrentSprint()) {
 			User currentUser = conversation.getSession().getUser();
@@ -569,6 +571,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getOpenIssues());
 		conversation.sendToClient(project.getReleases());
 		conversation.sendToClient(project.getBlogEntrys());
+		conversation.sendToClient(project.getTaskDaySnapshots());
 
 		sendToClients(conversation, config);
 	}

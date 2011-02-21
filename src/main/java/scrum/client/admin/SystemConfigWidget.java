@@ -85,6 +85,14 @@ public class SystemConfigWidget extends AScrumWidget {
 		tbGoogle.addFieldRow("Analytics Id", config.getGoogleAnalyticsIdModel());
 		page.addSection(tbGoogle.createTable());
 
+		page.addHeader("Statistics");
+		TableBuilder tbStat = ScrumGwt.createFieldTable();
+		tbStat.addFieldRow("Disable my statistics", config.getMyStatisticsDisabledModel());
+		tbStat.addFieldRow("Disable sprint statistics", config.getSprintStatisticsDisabledModel());
+		tbStat.addFieldRow("Disable users statistics", config.getUsersStatisticsDisabledModel());
+		tbStat.addFieldRow("Working hours per day", config.getWorkingHoursPerDayModel());
+		page.addSection(tbStat.createTable());
+
 		return page;
 	}
 }

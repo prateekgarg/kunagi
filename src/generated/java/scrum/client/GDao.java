@@ -3035,6 +3035,38 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByMyStatisticsDisabled(boolean myStatisticsDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isMyStatisticsDisabled(myStatisticsDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySprintStatisticsDisabled(boolean sprintStatisticsDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSprintStatisticsDisabled(sprintStatisticsDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByUsersStatisticsDisabled(boolean usersStatisticsDisabled) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isUsersStatisticsDisabled(usersStatisticsDisabled)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByWorkingHoursPerDay(java.lang.Integer workingHoursPerDay) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isWorkingHoursPerDay(workingHoursPerDay)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Task ---
 
     protected Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
@@ -3129,6 +3161,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Task> getTasksByInitialWork(int initialWork) {
+        List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
+        for (scrum.client.sprint.Task entity : tasks.values()) {
+            if (entity.isInitialWork(initialWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.sprint.Task> getTasksByRemainingWork(int remainingWork) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
@@ -3157,6 +3197,108 @@ public abstract class GDao
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
             if (entity.isImpediment(impediment)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    // --- TaskDaySnapshot ---
+
+    protected Map<String, scrum.client.task.TaskDaySnapshot> taskDaySnapshots = new HashMap<String, scrum.client.task.TaskDaySnapshot>();
+
+    public final void clearTaskDaySnapshots() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing TaskDaySnapshots");
+        taskDaySnapshots.clear();
+    }
+
+    public final boolean containsTaskDaySnapshot(scrum.client.task.TaskDaySnapshot taskDaySnapshot) {
+        return taskDaySnapshots.containsKey(taskDaySnapshot.getId());
+    }
+
+    public final void deleteTaskDaySnapshot(scrum.client.task.TaskDaySnapshot taskDaySnapshot) {
+        taskDaySnapshots.remove(taskDaySnapshot.getId());
+        entityDeleted(taskDaySnapshot);
+    }
+
+    public final void createTaskDaySnapshot(scrum.client.task.TaskDaySnapshot taskDaySnapshot, Runnable successAction) {
+        taskDaySnapshots.put(taskDaySnapshot.getId(), taskDaySnapshot);
+        entityCreated(taskDaySnapshot, successAction);
+    }
+
+    public final void createTaskDaySnapshot(scrum.client.task.TaskDaySnapshot taskDaySnapshot) {
+        taskDaySnapshots.put(taskDaySnapshot.getId(), taskDaySnapshot);
+        entityCreated(taskDaySnapshot, null);
+    }
+
+    protected scrum.client.task.TaskDaySnapshot updateTaskDaySnapshot(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.task.TaskDaySnapshot entity = taskDaySnapshots.get(id);
+        if (entity == null) {
+            entity = new scrum.client.task.TaskDaySnapshot(data);
+            taskDaySnapshots.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("TaskDaySnapshot received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("TaskDaySnapshot updated: " + entity);
+        }
+        return entity;
+    }
+
+    public final scrum.client.task.TaskDaySnapshot getTaskDaySnapshot(String id) {
+        scrum.client.task.TaskDaySnapshot ret = taskDaySnapshots.get(id);
+        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        return ret;
+    }
+
+    public final Set<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshots(Collection<String> ids) {
+        Set<scrum.client.task.TaskDaySnapshot> ret = new HashSet<scrum.client.task.TaskDaySnapshot>();
+        for (String id : ids) {
+            scrum.client.task.TaskDaySnapshot entity = taskDaySnapshots.get(id);
+            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshots() {
+        return new ArrayList<scrum.client.task.TaskDaySnapshot>(taskDaySnapshots.values());
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshotsByTask(scrum.client.sprint.Task task) {
+        List<scrum.client.task.TaskDaySnapshot> ret = new ArrayList<scrum.client.task.TaskDaySnapshot>();
+        for (scrum.client.task.TaskDaySnapshot entity : taskDaySnapshots.values()) {
+            if (entity.isTask(task)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshotsByDate(ilarkesto.gwt.client.Date date) {
+        List<scrum.client.task.TaskDaySnapshot> ret = new ArrayList<scrum.client.task.TaskDaySnapshot>();
+        for (scrum.client.task.TaskDaySnapshot entity : taskDaySnapshots.values()) {
+            if (entity.isDate(date)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshotsByRemainingWork(int remainingWork) {
+        List<scrum.client.task.TaskDaySnapshot> ret = new ArrayList<scrum.client.task.TaskDaySnapshot>();
+        for (scrum.client.task.TaskDaySnapshot entity : taskDaySnapshots.values()) {
+            if (entity.isRemainingWork(remainingWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshotsByBurnedWork(int burnedWork) {
+        List<scrum.client.task.TaskDaySnapshot> ret = new ArrayList<scrum.client.task.TaskDaySnapshot>();
+        for (scrum.client.task.TaskDaySnapshot entity : taskDaySnapshots.values()) {
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.task.TaskDaySnapshot> getTaskDaySnapshotsByOwner(scrum.client.admin.User owner) {
+        List<scrum.client.task.TaskDaySnapshot> ret = new ArrayList<scrum.client.task.TaskDaySnapshot>();
+        for (scrum.client.task.TaskDaySnapshot entity : taskDaySnapshots.values()) {
+            if (entity.isOwner(owner)) ret.add(entity);
         }
         return ret;
     }
@@ -3543,6 +3685,7 @@ public abstract class GDao
             clearSubjects();
             clearSystemConfigs();
             clearTasks();
+            clearTaskDaySnapshots();
             clearUsers();
             clearWikipages();
     }
@@ -3574,6 +3717,7 @@ public abstract class GDao
             entityMaps.add(subjects);
             entityMaps.add(systemConfigs);
             entityMaps.add(tasks);
+            entityMaps.add(taskDaySnapshots);
             entityMaps.add(users);
             entityMaps.add(wikipages);
         }
@@ -3645,6 +3789,9 @@ public abstract class GDao
         if (type.equals(scrum.client.sprint.Task.ENTITY_TYPE)) {
             return updateTask(data);
         }
+        if (type.equals(scrum.client.task.TaskDaySnapshot.ENTITY_TYPE)) {
+            return updateTaskDaySnapshot(data);
+        }
         if (type.equals(scrum.client.admin.User.ENTITY_TYPE)) {
             return updateUser(data);
         }
@@ -3678,6 +3825,7 @@ public abstract class GDao
         ret.put("Subject", subjects.size());
         ret.put("SystemConfig", systemConfigs.size());
         ret.put("Task", tasks.size());
+        ret.put("TaskDaySnapshot", taskDaySnapshots.size());
         ret.put("User", users.size());
         ret.put("Wikipage", wikipages.size());
         return ret;

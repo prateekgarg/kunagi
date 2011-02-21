@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import scrum.client.common.WeekdaySelector;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.project.Project;
@@ -118,6 +119,19 @@ public class Sprint extends GSprint implements Numbered {
 	public Integer getLengthInDays() {
 		if (!isBeginSet() || !isEndSet()) return null;
 		return getBegin().getPeriodTo(getEnd()).toDays();
+	}
+	public Integer getLengthInWorkDays() {
+		if (!isBeginSet() || !isEndSet()) return null;
+		Date date = getBegin();
+		int days = 0;
+		WeekdaySelector freeDays = getProject().getFreeDaysAsWeekdaySelector();
+		while (date.isBeforeOrSame(getEnd()) && date.isPastOrToday()) {
+			if (!freeDays.isFree(date.getWeekday().getDayOfWeek())) {
+				days++;
+			}
+			date = date.nextDay();
+		}
+		return days;
 	}
 
 	public SprintDaySnapshot getDaySnapshot(Date date) {

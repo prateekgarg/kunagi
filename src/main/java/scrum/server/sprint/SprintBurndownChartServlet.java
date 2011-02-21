@@ -32,20 +32,37 @@ public class SprintBurndownChartServlet extends AHttpServlet {
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
 		String sprintId = req.getParameter("sprintId");
-		String width = req.getParameter("width");
-		if (width == null) width = String.valueOf(ProjectOverviewWidget.CHART_WIDTH);
-		String height = req.getParameter("height");
-		if (height == null) height = String.valueOf(ProjectOverviewWidget.CHART_HEIGHT);
+		String widthParam = req.getParameter("width");
+		if (widthParam == null) widthParam = String.valueOf(ProjectOverviewWidget.CHART_WIDTH);
+		String heightParam = req.getParameter("height");
+		if (heightParam == null) heightParam = String.valueOf(ProjectOverviewWidget.CHART_HEIGHT);
+		boolean isWorkChart = "workChart".equals(req.getParameter("chart"));
+		boolean isEfficiencyChart = "efficiencyChart".equals(req.getParameter("chart"));
+		boolean isAccomplishChart = "accomplishChart".equals(req.getParameter("chart"));
+		String userNameParam = req.getParameter("userName");
+		String userName = (userNameParam == null || userNameParam.isEmpty() || "null".equals(userNameParam)) ? null
+				: userNameParam;
 
 		Servlet.preventCaching(resp);
 		resp.setContentType("image/png");
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-		ScrumWebApplication.get().getBurndownChart().writeSprintBurndownChart(out, sprintId, Integer.parseInt(width),
-			Integer.parseInt(height));
+		int width = Integer.parseInt(widthParam);
+		int height = Integer.parseInt(heightParam);
+		if (isWorkChart) {
+			// team or user burned hours
+			ScrumWebApplication.get().getUserBurndownChart().writeChart(out, sprintId, width, height, userName);
+		} else if (isEfficiencyChart) {
+			// initial / burned hours at closed tasks
+			ScrumWebApplication.get().getEfficiencyChart().writeChart(out, sprintId, width, height);
+		} else if (isAccomplishChart) {
+			// burned hours per user
+			ScrumWebApplication.get().getAccomplishChart().writeChart(out, sprintId, width, height);
+		} else {
+			// sprint burndown
+			ScrumWebApplication.get().getBurndownChart().writeChart(out, sprintId, width, height);
+		}
 
 		resp.getOutputStream().write(out.toByteArray());
 	}
-
 }

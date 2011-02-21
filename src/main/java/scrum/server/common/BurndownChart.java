@@ -14,60 +14,26 @@
  */
 package scrum.server.common;
 
-import ilarkesto.base.Str;
-import ilarkesto.base.Sys;
-import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
 import scrum.client.common.WeekdaySelector;
-import scrum.server.css.ScreenCssBuilder;
 import scrum.server.sprint.Sprint;
-import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshot;
 
-public class BurndownChart {
+public class BurndownChart extends Chart {
 
 	private static final Log LOG = Log.get(BurndownChart.class);
-
-	private static final Color COLOR_PAST_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownLine);
-	private static final Color COLOR_PROJECTION_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownProjectionLine);
-	private static final Color COLOR_OPTIMUM_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownOptimalLine);
-
-	// --- dependencies ---
-
-	private SprintDao sprintDao;
-
-	public void setSprintDao(SprintDao sprintDao) {
-		this.sprintDao = sprintDao;
-	}
-
-	// --- ---
 
 	public static byte[] createBurndownChartAsByteArray(Sprint sprint, int width, int height) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -84,7 +50,7 @@ public class BurndownChart {
 	// project.getFreeDaysAsWeekdaySelector(), width, height);
 	// }
 
-	public void writeSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
+	public void writeChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
 		if (sprint == null) throw new IllegalArgumentException("Sprint " + sprintId + " does not exist.");
 		writeSprintBurndownChart(out, sprint, width, height);
@@ -145,8 +111,8 @@ public class BurndownChart {
 		}
 
 		List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-		JFreeChart chart = createSprintBurndownChart(burndownSnapshots, firstDay, lastDay, freeDays, dateMarkTickUnit,
-			widthPerDay);
+		DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay, freeDays);
+		JFreeChart chart = createChart(firstDay, lastDay, dateMarkTickUnit, widthPerDay, data, getMaximum(data), height);
 		try {
 			ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
 			out.flush();
@@ -155,111 +121,12 @@ public class BurndownChart {
 		}
 	}
 
-	private static JFreeChart createSprintBurndownChart(List<BurndownSnapshot> snapshots, Date firstDay, Date lastDay,
-			WeekdaySelector freeDays, int dateMarkTickUnit, float widthPerDay) {
-		DefaultXYDataset data = createSprintBurndownChartDataset(snapshots, firstDay, lastDay, freeDays);
-
-		double tick = 1.0;
-		double max = BurndownChart.getMaximum(data);
-
-		while (max / tick > 25) {
-			tick *= 2;
-			if (max / tick <= 25) break;
-			tick *= 2.5;
-			if (max / tick <= 25) break;
-			tick *= 2;
-		}
-		double valueLabelTickUnit = tick;
-		double upperBoundary = Math.min(max * 1.1f, max + 3);
-
-		if (!Sys.isHeadless()) LOG.warn("GraphicsEnvironment is not headless");
-		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", data, PlotOrientation.VERTICAL, false, true,
-			false);
-
-		XYItemRenderer renderer = chart.getXYPlot().getRenderer();
-
-		renderer.setSeriesPaint(0, COLOR_PAST_LINE);
-		renderer.setSeriesStroke(0, new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
-		renderer.setSeriesPaint(1, COLOR_PROJECTION_LINE);
-		renderer.setSeriesStroke(1, new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL, 1.0f,
-				new float[] { 3f }, 0));
-		renderer.setSeriesPaint(2, COLOR_OPTIMUM_LINE);
-		renderer.setSeriesStroke(2, new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
-
-		DateAxis domainAxis1 = new DateAxis();
-		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
-		// String dateFormat = "        EE d.";
-		String dateFormat = "d.";
-		widthPerDay -= 5;
-		if (widthPerDay > 40) {
-			dateFormat = "EE " + dateFormat;
-		}
-		if (widthPerDay > 10) {
-			float spaces = widthPerDay / 2.7f;
-			dateFormat = Str.multiply(" ", (int) spaces) + dateFormat;
-		}
-		domainAxis1.setDateFormatOverride(new SimpleDateFormat(dateFormat, Locale.US));
-		domainAxis1.setTickUnit(new DateTickUnit(DateTickUnit.DAY, dateMarkTickUnit));
-		domainAxis1.setAxisLineVisible(false);
-		Range range = new Range(firstDay.toMillis(), lastDay.nextDay().toMillis());
-		domainAxis1.setRange(range);
-
-		DateAxis domainAxis2 = new DateAxis();
-		domainAxis2.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 1));
-		domainAxis2.setTickMarksVisible(false);
-		domainAxis2.setTickLabelsVisible(false);
-		domainAxis2.setRange(range);
-
-		chart.getXYPlot().setDomainAxis(0, domainAxis2);
-		chart.getXYPlot().setDomainAxis(1, domainAxis1);
-		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-
-		NumberAxis rangeAxis = new NumberAxis();
-		rangeAxis.setLabelFont(new Font(rangeAxis.getLabelFont().getName(), Font.PLAIN, 6));
-		rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
-		rangeAxis.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
-
-		rangeAxis.setLowerBound(0);
-		rangeAxis.setUpperBound(upperBoundary);
-
-		chart.getXYPlot().setRangeAxis(rangeAxis);
-
-		chart.getXYPlot().getRenderer().setBaseStroke(new BasicStroke(2f));
-
-		chart.setBackgroundPaint(Color.WHITE);
-
-		return chart;
-	}
-
-	static double getMaximum(DefaultXYDataset data) {
-		double max = 0;
-		for (int i = 0; i < data.getSeriesCount(); i++) {
-			for (int j = 0; j < data.getItemCount(i); j++) {
-				double value = data.getYValue(i, j);
-				if (value > max) {
-					max = value;
-				}
-			}
-		}
-		return max;
-	}
-
 	static DefaultXYDataset createSprintBurndownChartDataset(final List<BurndownSnapshot> snapshots,
 			final Date firstDay, final Date lastDay, final WeekdaySelector freeDays) {
 
 		ChartDataFactory factory = new ChartDataFactory();
 		factory.createDataset(snapshots, firstDay, lastDay, freeDays);
 		return factory.getDataset();
-	}
-
-	private static double[][] toArray(List<Double> a, List<Double> b) {
-		int min = Math.min(a.size(), b.size());
-		double[][] array = new double[2][min];
-		for (int i = 0; i < min; i++) {
-			array[0][i] = a.get(i);
-			array[1][i] = b.get(i);
-		}
-		return array;
 	}
 
 	static class ChartDataFactory {
