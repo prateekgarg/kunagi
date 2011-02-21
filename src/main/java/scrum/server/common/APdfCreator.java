@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -45,9 +45,9 @@ public abstract class APdfCreator {
 	public APdfCreator() {
 		defaultFont = new FontStyle().setSize(3);
 		tableHeaderFont = new FontStyle(defaultFont).setBold(true);
-		codeFont = new FontStyle(defaultFont).setFont("Courier");
-		referenceFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 0.5f).setFont("Courier")
-				.setItalic(true);
+		codeFont = new FontStyle(defaultFont).setFont(FontStyle.FONT_DEFAULT_FIXED);
+		referenceFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 0.5f)
+				.setFont(FontStyle.FONT_DEFAULT_FIXED).setItalic(true);
 		fieldLabelFont = new FontStyle(defaultFont).setItalic(true);
 		miniLabelFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 1f).setItalic(true);
 		headerFonts[3] = new FontStyle(defaultFont).setSize(defaultFont.getSize() + 0.2f).setBold(true);
