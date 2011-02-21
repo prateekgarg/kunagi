@@ -29,6 +29,8 @@ import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
+import scrum.server.issues.BugListPdfCreator;
+import scrum.server.issues.IdeaListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.QualityBacklogPdfCreator;
@@ -112,6 +114,28 @@ public class PdfTest extends ATest {
 		TestUtil.createQuality(project, 3);
 
 		createPdf(new QualityBacklogPdfCreator(project));
+	}
+
+	@Test
+	public void bugList() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createBug(project, 1);
+		TestUtil.createBug(project, 2);
+		TestUtil.createBug(project, 3);
+
+		createPdf(new BugListPdfCreator(project));
+	}
+
+	@Test
+	public void ideaList() {
+		Project project = TestUtil.createProject();
+
+		TestUtil.createIssue(project, 1).setAcceptDate(Date.today());
+		TestUtil.createIssue(project, 2).setAcceptDate(Date.today());
+		TestUtil.createIssue(project, 3).setAcceptDate(Date.today());
+
+		createPdf(new IdeaListPdfCreator(project));
 	}
 
 	@Test

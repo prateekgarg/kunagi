@@ -29,6 +29,8 @@ import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
 import scrum.server.impediments.ImpedimentListPdfCreator;
+import scrum.server.issues.BugListPdfCreator;
+import scrum.server.issues.IdeaListPdfCreator;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.QualityBacklogPdfCreator;
 import scrum.server.risks.RiskListPdfCreator;
@@ -47,6 +49,8 @@ public class PdfServlet extends AHttpServlet {
 		if (pdfId.equals("impedimentList")) return createImpedimentList(req, session);
 		if (pdfId.equals("riskList")) return createRiskList(req, session);
 		if (pdfId.equals("calendar")) return createCalendar(req, session);
+		if (pdfId.equals("bugList")) return createBugList(req, session);
+		if (pdfId.equals("ideaList")) return createIdeaList(req, session);
 		throw new RuntimeException("Unknown pdfId: " + pdfId);
 	}
 
@@ -74,6 +78,14 @@ public class PdfServlet extends AHttpServlet {
 
 	private APdfCreator createProductBacklog(HttpServletRequest req, WebSession session) {
 		return new ProductBacklogPdfCreator(getProject(session, req));
+	}
+
+	private APdfCreator createBugList(HttpServletRequest req, WebSession session) {
+		return new BugListPdfCreator(getProject(session, req));
+	}
+
+	private APdfCreator createIdeaList(HttpServletRequest req, WebSession session) {
+		return new IdeaListPdfCreator(getProject(session, req));
 	}
 
 	private APdfCreator createWikipage(HttpServletRequest req, WebSession session) {

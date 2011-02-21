@@ -120,6 +120,13 @@ public class TestUtil {
 		return user;
 	}
 
+	public static Issue createBug(Project project, int number) {
+		Issue issue = createIssue(project, number);
+		issue.setAcceptDate(Date.today());
+		issue.setUrgent(true);
+		return issue;
+	}
+
 	public static Issue createIssue(Project project, int number) {
 		return createIssue(project, number, Str.generateRandomSentence(4, 8), Str.generateRandomParagraph(),
 			Str.generateRandomParagraph(), true);
