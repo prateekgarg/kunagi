@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -60,6 +60,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private UserGuideWidget userGuide;
 
 	private Sprint sprint;
+	private ButtonWidget pullNextButton;
 
 	@Override
 	protected Widget onInitialization() {
@@ -88,8 +89,10 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		grid.setCellPadding(0);
 		grid.setCellSpacing(0);
 
+		pullNextButton = new ButtonWidget(new PullNextRequirementAction(getCurrentSprint()));
+
 		PagePanel page = new PagePanel();
-		page.addHeader("Whiteboard", new ButtonWidget(new PullNextRequirementAction(getCurrentSprint())));
+		page.addHeader("Whiteboard", pullNextButton);
 		page.addSection(grid);
 		userGuide = new UserGuideWidget(getLocalizer().views().whiteboard(), getCurrentProject().getCurrentSprint()
 				.getRequirements().size() < 3, getCurrentUser().getHideUserGuideWhiteboardModel());
@@ -159,6 +162,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		}
 
 		userGuide.update();
+		pullNextButton.update();
 	}
 
 	private BlockListWidget<Requirement> getRequirementList(Requirement requirement) {
@@ -173,6 +177,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private BlockListWidget<Requirement> createRequirementList(Requirement requirement) {
 		BlockListWidget<Requirement> list = new BlockListWidget<Requirement>(RequirementInWhiteboardBlock.FACTORY);
 		list.addAdditionalStyleName("WhiteboardWidget-requirement-list");
+		list.setDnd(false);
 		list.setDndSorting(false);
 		list.setObjects(requirement);
 		return list;

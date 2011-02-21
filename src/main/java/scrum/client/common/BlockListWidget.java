@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -44,6 +44,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	DndManager dndManager;
 
 	private ObjectMappedFlowPanel<O, ABlockWidget<O>> list;
+	private boolean dnd = true;
 	private boolean dndSorting = true;
 	private Comparator<O> autoSorter;
 	private BlockWidgetFactory<O> blockWidgetFactory;
@@ -77,7 +78,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		dndManager = Scope.get().getComponent(DndManager.class);
+		if (dnd) dndManager = Scope.get().getComponent(DndManager.class);
 
 		list = new ObjectMappedFlowPanel<O, ABlockWidget<O>>(
 				new ObjectMappedFlowPanel.WidgetFactory<O, ABlockWidget<O>>() {
@@ -142,6 +143,10 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	public final void setAutoSorter(Comparator<O> autoSorter) {
 		this.autoSorter = autoSorter;
 		if (autoSorter != null) setDndSorting(false);
+	}
+
+	public void setDnd(boolean dnd) {
+		this.dnd = dnd;
 	}
 
 	public final boolean isDndSorting() {
@@ -358,12 +363,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	@Override
 	protected void onLoad() {
 		super.onLoad();
-		if (dndManager != null) dndManager.registerDropTarget(this);
+		if (dnd && dndManager != null) dndManager.registerDropTarget(this);
 	}
 
 	@Override
 	protected void onUnload() {
-		if (dndManager != null) dndManager.unregisterDropTarget(this);
+		if (dnd && dndManager != null) dndManager.unregisterDropTarget(this);
 		super.onUnload();
 	}
 
