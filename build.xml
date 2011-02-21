@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="kunagi" default="package" basedir=".">
+<project name="kunagi" default="webapp" basedir=".">
 
 	<property name="build.dir" value="build" />
 	<property name="homepage.output.dir" value="/var/www/kunagi.org" />
@@ -113,9 +113,9 @@
             <fileset dir="." includes="license.*" />
         </copy>
         <zip destfile="${build.dir}/kunagi.zip" basedir="${build.dir}/package-content" />
-        <!--exec executable="tar" failonerror="false" dir="${build.dir}/package-content">
+        <exec executable="tar" failonerror="false" dir="${build.dir}/package-content">
             <arg line="cjf ../kunagi.tar.bz2 kunagi" />
-        </exec-->
+        </exec>
 	</target>
 
 	<target name="publishPackages">

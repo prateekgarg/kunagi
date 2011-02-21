@@ -31,7 +31,7 @@ public class MyStatisticsWidget extends AScrumWidget {
 		currentUserBurndown.addSection(new UserWorkWidget(currentUser.getName()));
 
 		PagePanel todayBurnHours = new PagePanel();
-		todayBurnHours.addHeader("My burned hours at today",
+		todayBurnHours.addHeader("My burned hours today",
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getWhiteboard())),
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getIssueList())));
 		todayBurnHours.addSection(new BurnHoursWidget(Date.today(), currentUser));
@@ -40,7 +40,7 @@ public class MyStatisticsWidget extends AScrumWidget {
 		Date dateBefore = null;
 		for (int x = 1; x < 5; x++) {
 			dateBefore = Date.today().addDays(-x);
-			beforeBurnHours.addHeader("My burned hours at " + dateBefore);
+			beforeBurnHours.addHeader("My burned hours on " + dateBefore);
 			beforeBurnHours.addSection(new BurnHoursWidget(dateBefore, currentUser));
 		}
 
