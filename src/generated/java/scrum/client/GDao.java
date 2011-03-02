@@ -1377,6 +1377,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByReleaseScriptPath(java.lang.String releaseScriptPath) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isReleaseScriptPath(releaseScriptPath)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsBySupportEmail(java.lang.String supportEmail) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -1933,6 +1941,22 @@ public abstract class GDao
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
             if (entity.isScmTag(scmTag)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByScriptRunning(boolean scriptRunning) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isScriptRunning(scriptRunning)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.release.Release> getReleasesByScriptOutput(java.lang.String scriptOutput) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isScriptOutput(scriptOutput)) ret.add(entity);
         }
         return ret;
     }

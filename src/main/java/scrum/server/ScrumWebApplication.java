@@ -54,6 +54,7 @@ import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
+import scrum.server.journal.ProjectEvent;
 import scrum.server.project.DeleteOldProjectsTask;
 import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
@@ -167,6 +168,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			getTransactionService().commit();
 		}
 
+		getReleaseDao().resetScripts();
 		getProjectDao().scanFiles();
 		getTransactionService().commit();
 
@@ -259,6 +261,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		User admin = userDao.getUserByName("admin");
 		if (admin == null) return false;
 		return admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+	}
+
+	public void postProjectEvent(Project project, String message, AEntity subject) {
+		ProjectEvent event = getProjectEventDao().postEvent(project, message, subject);
+		sendToConversationsByProject(project, event);
+		sendToConversationsByProject(project, event.createChatMessage());
+	}
+
+	public void sendToConversationsByProject(GwtConversation conversation, AEntity entity) {
+		sendToConversationsByProject(conversation.getProject(), entity);
 	}
 
 	public void sendToOtherConversationsByProject(GwtConversation conversation, AEntity entity) {

@@ -46,6 +46,8 @@ public abstract class GRelease
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
         properties.put("scmTag", this.scmTag);
+        properties.put("scriptRunning", this.scriptRunning);
+        properties.put("scriptOutput", this.scriptOutput);
     }
 
     public int compareTo(Release other) {
@@ -520,6 +522,72 @@ public abstract class GRelease
         setScmTag((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - scriptRunning
+    // -----------------------------------------------------------
+
+    private boolean scriptRunning;
+
+    public final boolean isScriptRunning() {
+        return scriptRunning;
+    }
+
+    public final void setScriptRunning(boolean scriptRunning) {
+        scriptRunning = prepareScriptRunning(scriptRunning);
+        if (isScriptRunning(scriptRunning)) return;
+        this.scriptRunning = scriptRunning;
+        updateLastModified();
+        fireModified("scriptRunning="+scriptRunning);
+    }
+
+    protected boolean prepareScriptRunning(boolean scriptRunning) {
+        return scriptRunning;
+    }
+
+    public final boolean isScriptRunning(boolean scriptRunning) {
+        return this.scriptRunning == scriptRunning;
+    }
+
+    protected final void updateScriptRunning(Object value) {
+        setScriptRunning((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - scriptOutput
+    // -----------------------------------------------------------
+
+    private java.lang.String scriptOutput;
+
+    public final java.lang.String getScriptOutput() {
+        return scriptOutput;
+    }
+
+    public final void setScriptOutput(java.lang.String scriptOutput) {
+        scriptOutput = prepareScriptOutput(scriptOutput);
+        if (isScriptOutput(scriptOutput)) return;
+        this.scriptOutput = scriptOutput;
+        updateLastModified();
+        fireModified("scriptOutput="+scriptOutput);
+    }
+
+    protected java.lang.String prepareScriptOutput(java.lang.String scriptOutput) {
+        scriptOutput = Str.removeUnreadableChars(scriptOutput);
+        return scriptOutput;
+    }
+
+    public final boolean isScriptOutputSet() {
+        return this.scriptOutput != null;
+    }
+
+    public final boolean isScriptOutput(java.lang.String scriptOutput) {
+        if (this.scriptOutput == null && scriptOutput == null) return true;
+        return this.scriptOutput != null && this.scriptOutput.equals(scriptOutput);
+    }
+
+    protected final void updateScriptOutput(Object value) {
+        setScriptOutput((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -535,6 +603,8 @@ public abstract class GRelease
             if (property.equals("released")) updateReleased(value);
             if (property.equals("releaseNotes")) updateReleaseNotes(value);
             if (property.equals("scmTag")) updateScmTag(value);
+            if (property.equals("scriptRunning")) updateScriptRunning(value);
+            if (property.equals("scriptOutput")) updateScriptOutput(value);
         }
     }
 

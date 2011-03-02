@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -240,6 +240,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("URL on which the project homepage is accessible.");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
 				"Automatically update the homepage.");
+			projectModel.addStringProperty("releaseScriptPath").setTooltip(
+				"Full path to the script, which needs to be executed when publishing a release. "
+						+ "The Script recives the release label as the first argument.");
 			projectModel.addStringProperty("supportEmail").setTooltip("Email address of the support for this project.");
 			projectModel
 					.addStringProperty("issueReplyTemplate")
@@ -328,6 +331,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 								+ "It should be done in human readable format and an informative manner.");
 			releaseModel.addStringProperty("scmTag").setSearchable(true)
 					.setTooltip("The tag used in content management systems for this release.");
+			releaseModel.addProperty("scriptRunning", boolean.class);
+			releaseModel.addStringProperty("scriptOutput");
 			getApplicationModel().addCreateAction(releaseModel);
 			releaseModel.addAction("DeleteRelease");
 			releaseModel.addAction("CreateBlogEntry");

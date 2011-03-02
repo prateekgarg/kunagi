@@ -148,7 +148,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public String toString() {
-		return getReference() + " " + getLabel();
+		return getReference() + " " + getLabel() + "-> " + isReleased();
 	}
 
 	public static final Comparator<Release> DATE_COMPARATOR = new Comparator<Release>() {

@@ -61,6 +61,9 @@ public abstract class GReleaseDao
         releaseNotessCache = null;
         releasesByScmTagCache.clear();
         scmTagsCache = null;
+        releasesByScriptRunningCache.clear();
+        releasesByScriptOutputCache.clear();
+        scriptOutputsCache = null;
     }
 
     @Override
@@ -464,6 +467,75 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isScmTag(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - scriptRunning
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Release>> releasesByScriptRunningCache = new Cache<Boolean,Set<Release>>(
+            new Cache.Factory<Boolean,Set<Release>>() {
+                public Set<Release> create(Boolean scriptRunning) {
+                    return getEntities(new IsScriptRunning(scriptRunning));
+                }
+            });
+
+    public final Set<Release> getReleasesByScriptRunning(boolean scriptRunning) {
+        return releasesByScriptRunningCache.get(scriptRunning);
+    }
+
+    private static class IsScriptRunning implements Predicate<Release> {
+
+        private boolean value;
+
+        public IsScriptRunning(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return value == e.isScriptRunning();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - scriptOutput
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Release>> releasesByScriptOutputCache = new Cache<java.lang.String,Set<Release>>(
+            new Cache.Factory<java.lang.String,Set<Release>>() {
+                public Set<Release> create(java.lang.String scriptOutput) {
+                    return getEntities(new IsScriptOutput(scriptOutput));
+                }
+            });
+
+    public final Set<Release> getReleasesByScriptOutput(java.lang.String scriptOutput) {
+        return releasesByScriptOutputCache.get(scriptOutput);
+    }
+    private Set<java.lang.String> scriptOutputsCache;
+
+    public final Set<java.lang.String> getScriptOutputs() {
+        if (scriptOutputsCache == null) {
+            scriptOutputsCache = new HashSet<java.lang.String>();
+            for (Release e : getEntities()) {
+                if (e.isScriptOutputSet()) scriptOutputsCache.add(e.getScriptOutput());
+            }
+        }
+        return scriptOutputsCache;
+    }
+
+    private static class IsScriptOutput implements Predicate<Release> {
+
+        private java.lang.String value;
+
+        public IsScriptOutput(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isScriptOutput(value);
         }
 
     }

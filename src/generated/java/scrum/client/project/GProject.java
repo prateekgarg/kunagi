@@ -1852,6 +1852,61 @@ public abstract class GProject
 
     }
 
+    // --- releaseScriptPath ---
+
+    private java.lang.String releaseScriptPath ;
+
+    public final java.lang.String getReleaseScriptPath() {
+        return this.releaseScriptPath ;
+    }
+
+    public final Project setReleaseScriptPath(java.lang.String releaseScriptPath) {
+        if (isReleaseScriptPath(releaseScriptPath)) return (Project)this;
+        this.releaseScriptPath = releaseScriptPath ;
+        propertyChanged("releaseScriptPath", this.releaseScriptPath);
+        return (Project)this;
+    }
+
+    public final boolean isReleaseScriptPath(java.lang.String releaseScriptPath) {
+        return equals(this.releaseScriptPath, releaseScriptPath);
+    }
+
+    private transient ReleaseScriptPathModel releaseScriptPathModel;
+
+    public ReleaseScriptPathModel getReleaseScriptPathModel() {
+        if (releaseScriptPathModel == null) releaseScriptPathModel = createReleaseScriptPathModel();
+        return releaseScriptPathModel;
+    }
+
+    protected ReleaseScriptPathModel createReleaseScriptPathModel() { return new ReleaseScriptPathModel(); }
+
+    protected class ReleaseScriptPathModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_releaseScriptPath";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getReleaseScriptPath();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setReleaseScriptPath(value);
+        }
+        @Override
+        public String getTooltip() { return "Full path to the script, which needs to be executed when publishing a release. The Script recives the release label as the first argument."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- supportEmail ---
 
     private java.lang.String supportEmail ;
@@ -2123,6 +2178,7 @@ public abstract class GProject
         homepageDir  = (java.lang.String) props.get("homepageDir");
         homepageUrl  = (java.lang.String) props.get("homepageUrl");
         autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
+        releaseScriptPath  = (java.lang.String) props.get("releaseScriptPath");
         supportEmail  = (java.lang.String) props.get("supportEmail");
         issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
@@ -2169,6 +2225,7 @@ public abstract class GProject
         properties.put("homepageDir", this.homepageDir);
         properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("releaseScriptPath", this.releaseScriptPath);
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());

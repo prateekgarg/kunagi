@@ -110,6 +110,8 @@ public abstract class GProjectDao
         projectsByHomepageUrlCache.clear();
         homepageUrlsCache = null;
         projectsByAutoUpdateHomepageCache.clear();
+        projectsByReleaseScriptPathCache.clear();
+        releaseScriptPathsCache = null;
         projectsBySupportEmailCache.clear();
         supportEmailsCache = null;
         projectsByIssueReplyTemplateCache.clear();
@@ -1514,6 +1516,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return value == e.isAutoUpdateHomepage();
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - releaseScriptPath
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByReleaseScriptPathCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String releaseScriptPath) {
+                    return getEntities(new IsReleaseScriptPath(releaseScriptPath));
+                }
+            });
+
+    public final Set<Project> getProjectsByReleaseScriptPath(java.lang.String releaseScriptPath) {
+        return projectsByReleaseScriptPathCache.get(releaseScriptPath);
+    }
+    private Set<java.lang.String> releaseScriptPathsCache;
+
+    public final Set<java.lang.String> getReleaseScriptPaths() {
+        if (releaseScriptPathsCache == null) {
+            releaseScriptPathsCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isReleaseScriptPathSet()) releaseScriptPathsCache.add(e.getReleaseScriptPath());
+            }
+        }
+        return releaseScriptPathsCache;
+    }
+
+    private static class IsReleaseScriptPath implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsReleaseScriptPath(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isReleaseScriptPath(value);
         }
 
     }

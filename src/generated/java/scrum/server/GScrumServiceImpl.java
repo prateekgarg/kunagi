@@ -64,6 +64,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onUpdateProjectHomepage(GwtConversation conversation);
 
+    public abstract void onPublishRelease(GwtConversation conversation, String releaseId);
+
     public abstract void onRequestRisks(GwtConversation conversation);
 
     public abstract void onSearch(GwtConversation conversation, String text);
@@ -641,6 +643,26 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onUpdateProjectHomepage(conversation);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "UpdateProjectHomepage", ex);
+                throw new RuntimeException(ex);
+            }
+            scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
+            onServiceMethodExecuted(context);
+            return ret;
+        }
+    }
+
+    public scrum.client.DataTransferObject publishRelease(int conversationNumber, String releaseId) {
+        log.debug("Handling service call: PublishRelease");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = session.getGwtConversation(conversationNumber);
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:PublishRelease");
+            context.bindCurrentThread();
+            try {
+                onPublishRelease(conversation, releaseId);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "PublishRelease", ex);
                 throw new RuntimeException(ex);
             }
             scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();

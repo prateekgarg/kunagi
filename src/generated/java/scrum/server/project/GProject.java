@@ -71,6 +71,7 @@ public abstract class GProject
         properties.put("homepageDir", this.homepageDir);
         properties.put("homepageUrl", this.homepageUrl);
         properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
+        properties.put("releaseScriptPath", this.releaseScriptPath);
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
@@ -1758,6 +1759,42 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - releaseScriptPath
+    // -----------------------------------------------------------
+
+    private java.lang.String releaseScriptPath;
+
+    public final java.lang.String getReleaseScriptPath() {
+        return releaseScriptPath;
+    }
+
+    public final void setReleaseScriptPath(java.lang.String releaseScriptPath) {
+        releaseScriptPath = prepareReleaseScriptPath(releaseScriptPath);
+        if (isReleaseScriptPath(releaseScriptPath)) return;
+        this.releaseScriptPath = releaseScriptPath;
+        updateLastModified();
+        fireModified("releaseScriptPath="+releaseScriptPath);
+    }
+
+    protected java.lang.String prepareReleaseScriptPath(java.lang.String releaseScriptPath) {
+        releaseScriptPath = Str.removeUnreadableChars(releaseScriptPath);
+        return releaseScriptPath;
+    }
+
+    public final boolean isReleaseScriptPathSet() {
+        return this.releaseScriptPath != null;
+    }
+
+    public final boolean isReleaseScriptPath(java.lang.String releaseScriptPath) {
+        if (this.releaseScriptPath == null && releaseScriptPath == null) return true;
+        return this.releaseScriptPath != null && this.releaseScriptPath.equals(releaseScriptPath);
+    }
+
+    protected final void updateReleaseScriptPath(Object value) {
+        setReleaseScriptPath((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - supportEmail
     // -----------------------------------------------------------
 
@@ -1935,6 +1972,7 @@ public abstract class GProject
             if (property.equals("homepageDir")) updateHomepageDir(value);
             if (property.equals("homepageUrl")) updateHomepageUrl(value);
             if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(value);
+            if (property.equals("releaseScriptPath")) updateReleaseScriptPath(value);
             if (property.equals("supportEmail")) updateSupportEmail(value);
             if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);

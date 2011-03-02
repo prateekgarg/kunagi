@@ -15,18 +15,56 @@
 package scrum.server.release;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Utl;
+import ilarkesto.core.logging.Log;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import scrum.client.common.ReferenceSupport;
+import scrum.server.ScrumWebApplication;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
+import scrum.server.project.Project;
 
 public class Release extends GRelease implements Numbered, ReferenceSupport {
+
+	private static Log log = Log.get(Release.class);
+
+	private static TaskManager taskManager;
+
+	public static void setTaskManager(TaskManager taskManager) {
+		Release.taskManager = taskManager;
+	}
+
+	public void release(Project project, User user, ScrumWebApplication webApplication) {
+		if (isReleased()) {
+			log.warn("Already released:", this);
+			return;
+		}
+		if (isScriptAvailable()) {
+			ReleaseTask task = new ReleaseTask(user, this);
+			webApplication.autowire(task);
+			taskManager.start(task);
+		} else {
+			markReleased(project, user, webApplication);
+		}
+	}
+
+	public boolean isScriptAvailable() {
+		return getProject().isReleaseScriptPathSet();
+	}
+
+	public void markReleased(Project project, User user, ScrumWebApplication webApplication) {
+		setReleaseDate(Date.today());
+		setReleased(true);
+		webApplication.postProjectEvent(project, user.getName() + " released " + getReferenceAndLabel(), this);
+		webApplication.sendToConversationsByProject(project, this);
+		log.debug("Release published:", this);
+	}
 
 	public boolean isMajor() {
 		return !isBugfix();

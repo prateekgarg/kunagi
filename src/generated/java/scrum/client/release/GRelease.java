@@ -530,6 +530,112 @@ public abstract class GRelease
 
     }
 
+    // --- scriptRunning ---
+
+    private boolean scriptRunning ;
+
+    public final boolean isScriptRunning() {
+        return this.scriptRunning ;
+    }
+
+    public final Release setScriptRunning(boolean scriptRunning) {
+        if (isScriptRunning(scriptRunning)) return (Release)this;
+        this.scriptRunning = scriptRunning ;
+        propertyChanged("scriptRunning", this.scriptRunning);
+        return (Release)this;
+    }
+
+    public final boolean isScriptRunning(boolean scriptRunning) {
+        return equals(this.scriptRunning, scriptRunning);
+    }
+
+    private transient ScriptRunningModel scriptRunningModel;
+
+    public ScriptRunningModel getScriptRunningModel() {
+        if (scriptRunningModel == null) scriptRunningModel = createScriptRunningModel();
+        return scriptRunningModel;
+    }
+
+    protected ScriptRunningModel createScriptRunningModel() { return new ScriptRunningModel(); }
+
+    protected class ScriptRunningModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_scriptRunning";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isScriptRunning();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setScriptRunning(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- scriptOutput ---
+
+    private java.lang.String scriptOutput ;
+
+    public final java.lang.String getScriptOutput() {
+        return this.scriptOutput ;
+    }
+
+    public final Release setScriptOutput(java.lang.String scriptOutput) {
+        if (isScriptOutput(scriptOutput)) return (Release)this;
+        this.scriptOutput = scriptOutput ;
+        propertyChanged("scriptOutput", this.scriptOutput);
+        return (Release)this;
+    }
+
+    public final boolean isScriptOutput(java.lang.String scriptOutput) {
+        return equals(this.scriptOutput, scriptOutput);
+    }
+
+    private transient ScriptOutputModel scriptOutputModel;
+
+    public ScriptOutputModel getScriptOutputModel() {
+        if (scriptOutputModel == null) scriptOutputModel = createScriptOutputModel();
+        return scriptOutputModel;
+    }
+
+    protected ScriptOutputModel createScriptOutputModel() { return new ScriptOutputModel(); }
+
+    protected class ScriptOutputModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_scriptOutput";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getScriptOutput();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setScriptOutput(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -544,6 +650,8 @@ public abstract class GRelease
         released  = (Boolean) props.get("released");
         releaseNotes  = (java.lang.String) props.get("releaseNotes");
         scmTag  = (java.lang.String) props.get("scmTag");
+        scriptRunning  = (Boolean) props.get("scriptRunning");
+        scriptOutput  = (java.lang.String) props.get("scriptOutput");
         updateLocalModificationTime();
     }
 
@@ -560,6 +668,8 @@ public abstract class GRelease
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
         properties.put("scmTag", this.scmTag);
+        properties.put("scriptRunning", this.scriptRunning);
+        properties.put("scriptOutput", this.scriptOutput);
     }
 
     public final java.util.List<scrum.client.release.Release> getReleases() {
