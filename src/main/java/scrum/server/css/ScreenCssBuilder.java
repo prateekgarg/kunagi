@@ -350,8 +350,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void html(CssRenderer css) {
-		css.html().height100().padding(0).margin(0);
-		css.body().height100().padding(0).margin(0).background(cBackground).fontFamily(fontFamily).fontSize(fontSize)
+		css.html().padding(0).margin(0);
+		css.body().padding(0).margin(0).background(cBackground).fontFamily(fontFamily).fontSize(fontSize)
 				.lineHeight(lineHeight);
 		css.table().borderCollapseCollapse();
 		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
@@ -371,16 +371,19 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void workspace(CssRenderer css) {
-		css.style(".Workspace").height100();
-		css.style(".Workspace-header").height(25).background(cHeaderBackground, "../header-bg.png");
-		css.style(".Workspace-body").height100();
-		css.style(".Workspace-body-west").floatLeft().width(200).height100().backgroundUrl("../sidebar-bg.png")
-				.overflowHidden();
-		css.style(".Workspace-body-center").height100();
-		css.style(".Workspace-body-center-content").padding(10).paddingBottom(1000);
-		css.style(".Workspace-body-west .PagePanel").padding(0);
-		css.style(".Workspace-body-west .PagePanel-header").color(cHeaderText);
-		css.style(".Workspace-body-west .PagePanel-content").border("0");
+		int headerHeight = 25;
+		css.style(".Workspace");
+
+		css.style(".Workspace-header").height(headerHeight).background(cHeaderBackground, "../header-bg.png")
+				.positionFixed().width100();
+
+		css.style(".Workspace-sidebar").overflowHidden().positionFixed(headerHeight + 10, 0).width(200);
+		css.style(".Workspace-sidebar .PagePanel").padding(0);
+		css.style(".Workspace-sidebar .PagePanel-header").color(cHeaderText);
+		css.style(".Workspace-sidebar .PagePanel-content").border("0");
+		css.style(".ProjectSidebarWidget").marginLeft(10);
+
+		css.style(".Workspace-workarea").marginTop(headerHeight + 10).marginRight(10).minHeight(2000);
 
 		css.style(".HeaderWidget-logo").marginLeft(5).marginRight(10); // .positionFixed().top(0).left(40).zIndex(100);
 		css.style(".HeaderWidget-title").color(cHeaderText).fontSize(12).fontWeightBold().paddingLeft(5).paddingTop(3);
@@ -396,7 +399,8 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void systemMessage(CssRenderer css) {
-		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10);
+		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10)
+				.marginBottom(10);
 		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 	}
@@ -412,6 +416,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	}
 
 	private void navigator(CssRenderer css) {
+		css.style(".NavigatorWidget");
 		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
