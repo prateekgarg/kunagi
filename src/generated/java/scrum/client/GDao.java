@@ -2151,6 +2151,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Requirement> getRequirementsByEpic(scrum.client.project.Requirement epic) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.isEpic(epic)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- RequirementEstimationVote ---
 
     protected Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();

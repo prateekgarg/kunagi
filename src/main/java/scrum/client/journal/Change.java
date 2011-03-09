@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -17,13 +17,16 @@ package scrum.client.journal;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.diff.HtmlDiffMarker;
 import ilarkesto.core.diff.TokenDiff;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.EntityDoesNotExistException;
 
 import java.util.Comparator;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
+import scrum.client.admin.User;
 import scrum.client.core.RequestEntityServiceCall;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -37,9 +40,20 @@ public class Change extends GChange {
 		super(data);
 	}
 
+	public Change(AGwtEntity parent, String key) {
+		setParent(parent);
+		setKey(key);
+		setDateAndTime(DateAndTime.now());
+		setUser(Scope.get().getComponent(User.class));
+	}
+
 	public String getLabel() {
 		String key = getKey();
 		AGwtEntity parent = getParent();
+		if (parent instanceof Requirement) {
+			if ("@created".equals(key) && getNewValue() != null) return "splitted story from " + getNewValue();
+			if ("@split".equals(key)) return "splitted " + getNewValue();
+		}
 		if ("@created".equals(key)) return "created entity";
 		if (parent instanceof Issue) {
 			if (key.equals("@reply")) return "emailed a reply";

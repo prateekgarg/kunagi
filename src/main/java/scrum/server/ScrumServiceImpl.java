@@ -268,15 +268,32 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			blogEntry.addAuthor(currentUser);
 		}
 
+		if (entity instanceof Change) {
+			Change change = (Change) entity;
+			change.setDateAndTime(DateAndTime.now());
+			change.setUser(currentUser);
+		}
+
 		if (!(entity instanceof Transient)) dao.saveEntity(entity);
 
 		sendToClients(conversation, entity);
 
-		if (entity instanceof Task || entity instanceof Requirement || entity instanceof Wikipage
-				|| entity instanceof Risk || entity instanceof Impediment || entity instanceof Issue
-				|| entity instanceof BlogEntry) {
-			User user = currentUser;
-			Change change = changeDao.postChange(entity, user, "@created", null, null);
+		if (entity instanceof Requirement) {
+			Requirement requirement = (Requirement) entity;
+			Requirement epic = requirement.getEpic();
+			String value = null;
+			if (epic != null) {
+				value = epic.getReferenceAndLabel();
+				Change change = changeDao.postChange(epic, currentUser, "@split", null, requirement.getReference());
+				conversation.sendToClient(change);
+			}
+			Change change = changeDao.postChange(requirement, currentUser, "@created", null, value);
+			conversation.sendToClient(change);
+		}
+
+		if (entity instanceof Task || entity instanceof Wikipage || entity instanceof Risk
+				|| entity instanceof Impediment || entity instanceof Issue || entity instanceof BlogEntry) {
+			Change change = changeDao.postChange(entity, currentUser, "@created", null, null);
 			conversation.sendToClient(change);
 		}
 

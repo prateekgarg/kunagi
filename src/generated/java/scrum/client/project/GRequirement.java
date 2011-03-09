@@ -760,6 +760,31 @@ public abstract class GRequirement
     }
 
 
+    // --- epic ---
+
+    private String epicId;
+
+    public final scrum.client.project.Requirement getEpic() {
+        if (epicId == null) return null;
+        return getDao().getRequirement(this.epicId);
+    }
+
+    public final boolean isEpicSet() {
+        return epicId != null;
+    }
+
+    public final Requirement setEpic(scrum.client.project.Requirement epic) {
+        String id = epic == null ? null : epic.getId();
+        if (equals(this.epicId, id)) return (Requirement) this;
+        this.epicId = id;
+        propertyChanged("epicId", this.epicId);
+        return (Requirement)this;
+    }
+
+    public final boolean isEpic(scrum.client.project.Requirement epic) {
+        return equals(this.epicId, epic);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -780,6 +805,7 @@ public abstract class GRequirement
         workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
         tasksOrderIds  = (java.util.List<java.lang.String>) props.get("tasksOrderIds");
         themes  = (java.util.List<java.lang.String>) props.get("themes");
+        epicId = (String) props.get("epicId");
         updateLocalModificationTime();
     }
 
@@ -802,10 +828,15 @@ public abstract class GRequirement
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
         properties.put("tasksOrderIds", this.tasksOrderIds);
         properties.put("themes", this.themes);
+        properties.put("epicId", this.epicId);
     }
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {
         return getDao().getIssuesByStory((Requirement)this);
+    }
+
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByEpic((Requirement)this);
     }
 
     public final java.util.List<scrum.client.sprint.Task> getTasks() {

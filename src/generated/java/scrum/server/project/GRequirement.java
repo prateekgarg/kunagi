@@ -52,6 +52,7 @@ public abstract class GRequirement
         properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
         properties.put("tasksOrderIds", this.tasksOrderIds);
         properties.put("themes", this.themes);
+        properties.put("epicId", this.epicId);
     }
 
     public int compareTo(Requirement other) {
@@ -60,6 +61,10 @@ public abstract class GRequirement
 
     public final java.util.Set<scrum.server.issues.Issue> getIssues() {
         return issueDao.getIssuesByStory((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByEpic((Requirement)this);
     }
 
     public final java.util.Set<scrum.server.sprint.Task> getTasks() {
@@ -848,6 +853,58 @@ public abstract class GRequirement
         setThemes((java.util.List<java.lang.String>) value);
     }
 
+    // -----------------------------------------------------------
+    // - epic
+    // -----------------------------------------------------------
+
+    private String epicId;
+    private transient scrum.server.project.Requirement epicCache;
+
+    private void updateEpicCache() {
+        epicCache = this.epicId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.epicId);
+    }
+
+    public final String getEpicId() {
+        return this.epicId;
+    }
+
+    public final scrum.server.project.Requirement getEpic() {
+        if (epicCache == null) updateEpicCache();
+        return epicCache;
+    }
+
+    public final void setEpic(scrum.server.project.Requirement epic) {
+        epic = prepareEpic(epic);
+        if (isEpic(epic)) return;
+        this.epicId = epic == null ? null : epic.getId();
+        epicCache = epic;
+        updateLastModified();
+        fireModified("epic="+epic);
+    }
+
+    protected scrum.server.project.Requirement prepareEpic(scrum.server.project.Requirement epic) {
+        return epic;
+    }
+
+    protected void repairDeadEpicReference(String entityId) {
+        if (this.epicId == null || entityId.equals(this.epicId)) {
+            setEpic(null);
+        }
+    }
+
+    public final boolean isEpicSet() {
+        return this.epicId != null;
+    }
+
+    public final boolean isEpic(scrum.server.project.Requirement epic) {
+        if (this.epicId == null && epic == null) return true;
+        return epic != null && epic.getId().equals(this.epicId);
+    }
+
+    protected final void updateEpic(Object value) {
+        setEpic(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -869,6 +926,7 @@ public abstract class GRequirement
             if (property.equals("workEstimationVotingShowoff")) updateWorkEstimationVotingShowoff(value);
             if (property.equals("tasksOrderIds")) updateTasksOrderIds(value);
             if (property.equals("themes")) updateThemes(value);
+            if (property.equals("epicId")) updateEpic(value);
         }
     }
 
@@ -881,6 +939,7 @@ public abstract class GRequirement
         repairDeadQualityReference(entityId);
         if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        repairDeadEpicReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -921,6 +980,12 @@ public abstract class GRequirement
         }
         if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        try {
+            getEpic();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead epic reference");
+            repairDeadEpicReference(this.epicId);
+        }
     }
 
 

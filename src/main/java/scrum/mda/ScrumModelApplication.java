@@ -401,6 +401,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addProperty("workEstimationVotingShowoff", boolean.class);
 			requirementModel.addListProperty("tasksOrderIds", String.class);
 			requirementModel.addListProperty("themes", String.class);
+			requirementModel.addReference("epic", getRequirementModel());
 			getApplicationModel().addCreateAction(requirementModel);
 			requirementModel.addAction("DeleteRequirement");
 			requirementModel.addAction("AddRequirementToCurrentSprint");
@@ -416,6 +417,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("RequirementEstimationVotingShowoff");
 			requirementModel.addAction("ResetRequirementEstimationVoting");
 			requirementModel.addAction("RequirementEstimationVote").addParameter("estimatedWork", Float.class);
+			requirementModel.addAction("SplitRequirement");
 		}
 		return requirementModel;
 	}

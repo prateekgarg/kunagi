@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -475,9 +475,23 @@ public class Project extends GProject implements ForumSupport {
 	/**
 	 * @param relative The story, before which the new story should be placed. Optional.
 	 */
-	public Requirement createNewRequirement(Requirement relative, boolean before) {
+	public Requirement createNewRequirement(Requirement relative, boolean before, boolean split) {
 		Requirement item = new Requirement(this);
-		getDao().createRequirement(item);
+
+		if (split) {
+			String theme = relative.getLabel();
+			List<String> themes = relative.getThemes();
+			if (!themes.contains(theme)) themes.add(theme);
+
+			relative.setThemes(themes);
+			relative.setDirty(true);
+
+			item.setEpic(relative);
+			item.setThemes(themes);
+			item.setDescription(relative.getDescription());
+			item.setTestDescription(relative.getTestDescription());
+			item.setQualitys(relative.getQualitys());
+		}
 
 		if (relative == null) {
 			updateRequirementsOrder();
@@ -490,6 +504,8 @@ public class Project extends GProject implements ForumSupport {
 			requirements.add(idx, item);
 			updateRequirementsOrder(requirements);
 		}
+
+		getDao().createRequirement(item);
 		return item;
 	}
 

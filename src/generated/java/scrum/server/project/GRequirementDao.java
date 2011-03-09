@@ -70,6 +70,8 @@ public abstract class GRequirementDao
         tasksOrderIdsCache = null;
         requirementsByThemeCache.clear();
         themesCache = null;
+        requirementsByEpicCache.clear();
+        epicsCache = null;
     }
 
     @Override
@@ -680,6 +682,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.containsTheme(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - epic
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Requirement,Set<Requirement>> requirementsByEpicCache = new Cache<scrum.server.project.Requirement,Set<Requirement>>(
+            new Cache.Factory<scrum.server.project.Requirement,Set<Requirement>>() {
+                public Set<Requirement> create(scrum.server.project.Requirement epic) {
+                    return getEntities(new IsEpic(epic));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByEpic(scrum.server.project.Requirement epic) {
+        return requirementsByEpicCache.get(epic);
+    }
+    private Set<scrum.server.project.Requirement> epicsCache;
+
+    public final Set<scrum.server.project.Requirement> getEpics() {
+        if (epicsCache == null) {
+            epicsCache = new HashSet<scrum.server.project.Requirement>();
+            for (Requirement e : getEntities()) {
+                if (e.isEpicSet()) epicsCache.add(e.getEpic());
+            }
+        }
+        return epicsCache;
+    }
+
+    private static class IsEpic implements Predicate<Requirement> {
+
+        private scrum.server.project.Requirement value;
+
+        public IsEpic(scrum.server.project.Requirement value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isEpic(value);
         }
 
     }
