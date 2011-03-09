@@ -22,6 +22,10 @@ import scrum.server.common.Numbered;
 
 public class Quality extends GQuality implements Numbered, ReferenceSupport, LabelSupport, Comparable<Quality> {
 
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
+	}
+
 	@Override
 	public String getReference() {
 		return scrum.client.project.Quality.REFERENCE_PREFIX + getNumber();
@@ -49,7 +53,7 @@ public class Quality extends GQuality implements Numbered, ReferenceSupport, Lab
 
 	@Override
 	public String toString() {
-		return getLabel();
+		return getReferenceAndLabel();
 	}
 
 	@Override
