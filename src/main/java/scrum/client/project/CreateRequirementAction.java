@@ -16,12 +16,18 @@ package scrum.client.project;
 
 import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.project.ProductBacklogWidget.FilterToggleAction;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateRequirementAction extends GCreateRequirementAction {
 
 	private Requirement relative;
 	private boolean before;
+	private FilterToggleAction filterToggleAction;
+
+	public CreateRequirementAction(FilterToggleAction filterToggleAction) {
+		this.filterToggleAction = filterToggleAction;
+	}
 
 	@Override
 	public String getLabel() {
@@ -30,6 +36,7 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (filterToggleAction.filterActive) return false;
 		return true;
 	}
 
