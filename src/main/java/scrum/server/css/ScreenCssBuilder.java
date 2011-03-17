@@ -249,7 +249,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.background("#5A5 url(pokertable_bg.jpg)").padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
-		css.style(".PlanningPokerWidget-table .HyperlinkWidget, .PlanningPokerWidget-table a").color(
+		css.style(".PlanningPokerWidget-table .gwt-Hyperlink, .PlanningPokerWidget-table a").color(
 			cPlanningPokerTableLines);
 
 		int cardWidth = 40;
@@ -529,7 +529,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.background(cPagePanelHeaderBackground, "../page-header-bg.png").color(cPagePanelHeader);
 		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header input").fontSize(fontSizeSmall);
-		css.style(".PagePanel-header .HyperlinkWidget").fontSize(fontSizeSmall);
+		css.style(".PagePanel-header .gwt-Hyperlink").fontSize(fontSizeSmall);
 		css.style(".PagePanel-section").margin(0, 10, 0, 10);
 		css.style(".PagePanel-spacer").height(10);
 	}

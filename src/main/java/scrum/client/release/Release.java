@@ -90,7 +90,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	@Override
 	public Widget createForumItemWidget() {
-		return new HyperlinkWidget(new ShowEntityAction(this, getLabel()));
+		return new HyperlinkWidget(new ShowEntityAction(ReleaseManagementWidget.class, this, getLabel()));
 	}
 
 	public String createIzemizedReleaseNotes() {

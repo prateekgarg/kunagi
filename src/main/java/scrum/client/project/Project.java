@@ -45,6 +45,7 @@ import scrum.client.collaboration.Subject;
 import scrum.client.collaboration.Wikipage;
 import scrum.client.common.ShowEntityAction;
 import scrum.client.common.WeekdaySelector;
+import scrum.client.dashboard.DashboardWidget;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -668,7 +669,7 @@ public class Project extends GProject implements ForumSupport {
 
 	@Override
 	public Widget createForumItemWidget() {
-		return new HyperlinkWidget(new ShowEntityAction(this, "Project Dashboard"));
+		return new HyperlinkWidget(new ShowEntityAction(DashboardWidget.class, this, "Project Dashboard"));
 	}
 
 	@Override

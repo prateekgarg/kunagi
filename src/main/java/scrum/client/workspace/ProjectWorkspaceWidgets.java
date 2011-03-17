@@ -19,7 +19,6 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.SwitcherWidget;
-import ilarkesto.gwt.client.SwitchingNavigatorWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.SystemConfigWidget;
@@ -171,7 +170,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 			pages.addPage(new Page(userList, "User Management", administrationKey));
 		}
 
-		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
+		ScrumNavigatorWidget navigator = getSidebar().getNavigator();
 		navigator.addItem("Dashboard", dashboard);
 		addNavigatorGroup(navigator, sprintGroupKey, "Sprint");
 		addNavigatorGroup(navigator, productGroupKey, "Product");
@@ -180,7 +179,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		addNavigatorGroup(navigator, administrationKey, "Administration");
 	}
 
-	private void addNavigatorGroup(SwitchingNavigatorWidget navigator, String groupKey, String label) {
+	private void addNavigatorGroup(ScrumNavigatorWidget navigator, String groupKey, String label) {
 		navigator.addGroup(label, groupKey);
 		for (Page page : pages.getPagesByGroupKey(groupKey)) {
 			navigator.addItem(groupKey, page.getLabel(), page.getWidget());
@@ -206,7 +205,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	public void showSearchResults() {
-		SwitchingNavigatorWidget navigator = getSidebar().getNavigator();
+		ScrumNavigatorWidget navigator = getSidebar().getNavigator();
 		SearchResultsWidget results = Scope.get().getComponent(Search.class).getResultsWidget();
 		if (!searchResultsAdded) {
 			navigator.addItem("Search Results", results);
@@ -489,6 +488,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 	private void select(AWidget widget) {
 		getSidebar().getNavigator().select(widget);
+		getWorkarea().show(widget);
 		Scope.get().getComponent(Ui.class).unlock();
 	}
 
