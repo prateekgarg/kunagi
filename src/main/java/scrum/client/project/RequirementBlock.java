@@ -14,7 +14,6 @@
  */
 package scrum.client.project;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Date;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
@@ -92,7 +91,6 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 				Date begin = sprint.getBegin();
 				int totalLength = sprintLength * sprints;
 				Date date = begin.addDays(totalLength);
-				Log.DEBUG("--->", requirement.getReference(), sprintLength, begin, totalLength, date);
 				sprintBorderIndicator.updateLabel(sprints, date);
 				getPreHeaderPanel().add(sprintBorderIndicator);
 				requirement.updateLocalModificationTime();

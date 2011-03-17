@@ -38,7 +38,7 @@ public class SprintSwitchIndicatorWidget extends AWidget {
 			s = "next";
 		}
 		label.setText("After " + s + " sprint" + (sprints < 2 ? "" : "s")
-				+ (", in " + date.getPeriodTo(Date.today()).toShortestString()));
+				+ (", in " + date.getPeriodTo(Date.today()).abs().toShortestString()));
 	}
 
 }
