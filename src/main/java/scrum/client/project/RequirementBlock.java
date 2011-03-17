@@ -14,6 +14,7 @@
  */
 package scrum.client.project;
 
+import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Date;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
@@ -85,10 +86,14 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		if (previous != null && sprintBorder) {
 			if (sprintBorderIndicator == null) {
 				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
-				Sprint sprint = getCurrentProject().getCurrentSprint();
-				int sprints = previous.getEstimationBar().getEndSprintOffset() + 2;
-				sprintBorderIndicator.updateLabel(sprints,
-					sprint.getLength().multiplyBy(sprints).subtract(sprint.getBegin().getPeriodTo(Date.today()).abs()));
+				Sprint sprint = getCurrentProject().getNextSprint();
+				int sprints = previous.getEstimationBar().getEndSprintOffset();
+				int sprintLength = sprint.getLength().toDays();
+				Date begin = sprint.getBegin();
+				int totalLength = sprintLength * sprints;
+				Date date = begin.addDays(totalLength);
+				Log.DEBUG("--->", requirement.getReference(), sprintLength, begin, totalLength, date);
+				sprintBorderIndicator.updateLabel(sprints, date);
 				getPreHeaderPanel().add(sprintBorderIndicator);
 				requirement.updateLocalModificationTime();
 			}

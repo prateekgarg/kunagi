@@ -134,7 +134,6 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			AGwtEntity entity = getHrefEntity();
 			String href = Navigator.getEntityHref(entity);
 			href += "|toggle=" + isExtended();
-			Log.DEBUG("--------->", object, "-------->", href);
 			header.setHref(href);
 		}
 	}
