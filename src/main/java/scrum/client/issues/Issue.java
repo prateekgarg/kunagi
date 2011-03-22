@@ -16,8 +16,8 @@ package scrum.client.issues;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
-import ilarkesto.gwt.client.Date;
-import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.core.time.Date;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.LabelProvider;
 import ilarkesto.gwt.client.editor.AFieldModel;

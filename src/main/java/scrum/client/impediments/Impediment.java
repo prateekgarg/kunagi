@@ -14,7 +14,7 @@
  */
 package scrum.client.impediments;
 
-import ilarkesto.gwt.client.Date;
+import ilarkesto.core.time.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;

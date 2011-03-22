@@ -17,12 +17,12 @@ package scrum.client.project;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.core.time.Date;
+import ilarkesto.core.time.DateAndTime;
+import ilarkesto.core.time.Time;
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.Date;
-import ilarkesto.gwt.client.DateAndTime;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.Time;
 import ilarkesto.gwt.client.editor.AEditorModel;
 import ilarkesto.gwt.client.editor.AFieldModel;
 

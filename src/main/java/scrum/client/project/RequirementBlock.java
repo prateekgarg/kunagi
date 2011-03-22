@@ -14,7 +14,7 @@
  */
 package scrum.client.project;
 
-import ilarkesto.gwt.client.Date;
+import ilarkesto.core.time.Date;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;

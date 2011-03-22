@@ -15,7 +15,7 @@
 package scrum.client.pr;
 
 import ilarkesto.core.base.Utl;
-import ilarkesto.gwt.client.DateAndTime;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 

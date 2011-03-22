@@ -398,20 +398,20 @@ public abstract class GUser
 
     // --- lastLoginDateAndTime ---
 
-    private ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime ;
+    private ilarkesto.core.time.DateAndTime lastLoginDateAndTime ;
 
-    public final ilarkesto.gwt.client.DateAndTime getLastLoginDateAndTime() {
+    public final ilarkesto.core.time.DateAndTime getLastLoginDateAndTime() {
         return this.lastLoginDateAndTime ;
     }
 
-    public final User setLastLoginDateAndTime(ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime) {
+    public final User setLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return (User)this;
         this.lastLoginDateAndTime = lastLoginDateAndTime ;
         propertyChanged("lastLoginDateAndTime", this.lastLoginDateAndTime);
         return (User)this;
     }
 
-    public final boolean isLastLoginDateAndTime(ilarkesto.gwt.client.DateAndTime lastLoginDateAndTime) {
+    public final boolean isLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
         return equals(this.lastLoginDateAndTime, lastLoginDateAndTime);
     }
 
@@ -432,17 +432,17 @@ public abstract class GUser
         }
 
         @Override
-        public ilarkesto.gwt.client.DateAndTime getValue() {
+        public ilarkesto.core.time.DateAndTime getValue() {
             return getLastLoginDateAndTime();
         }
 
         @Override
-        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+        public void setValue(ilarkesto.core.time.DateAndTime value) {
             setLastLoginDateAndTime(value);
         }
 
         @Override
-        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+        protected void onChangeValue(ilarkesto.core.time.DateAndTime oldValue, ilarkesto.core.time.DateAndTime newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
         }
@@ -451,20 +451,20 @@ public abstract class GUser
 
     // --- registrationDateAndTime ---
 
-    private ilarkesto.gwt.client.DateAndTime registrationDateAndTime ;
+    private ilarkesto.core.time.DateAndTime registrationDateAndTime ;
 
-    public final ilarkesto.gwt.client.DateAndTime getRegistrationDateAndTime() {
+    public final ilarkesto.core.time.DateAndTime getRegistrationDateAndTime() {
         return this.registrationDateAndTime ;
     }
 
-    public final User setRegistrationDateAndTime(ilarkesto.gwt.client.DateAndTime registrationDateAndTime) {
+    public final User setRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
         if (isRegistrationDateAndTime(registrationDateAndTime)) return (User)this;
         this.registrationDateAndTime = registrationDateAndTime ;
         propertyChanged("registrationDateAndTime", this.registrationDateAndTime);
         return (User)this;
     }
 
-    public final boolean isRegistrationDateAndTime(ilarkesto.gwt.client.DateAndTime registrationDateAndTime) {
+    public final boolean isRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
         return equals(this.registrationDateAndTime, registrationDateAndTime);
     }
 
@@ -485,17 +485,17 @@ public abstract class GUser
         }
 
         @Override
-        public ilarkesto.gwt.client.DateAndTime getValue() {
+        public ilarkesto.core.time.DateAndTime getValue() {
             return getRegistrationDateAndTime();
         }
 
         @Override
-        public void setValue(ilarkesto.gwt.client.DateAndTime value) {
+        public void setValue(ilarkesto.core.time.DateAndTime value) {
             setRegistrationDateAndTime(value);
         }
 
         @Override
-        protected void onChangeValue(ilarkesto.gwt.client.DateAndTime oldValue, ilarkesto.gwt.client.DateAndTime newValue) {
+        protected void onChangeValue(ilarkesto.core.time.DateAndTime oldValue, ilarkesto.core.time.DateAndTime newValue) {
             super.onChangeValue(oldValue, newValue);
             addUndo(this, oldValue);
         }
@@ -1469,9 +1469,9 @@ public abstract class GUser
         currentProjectId = (String) props.get("currentProjectId");
         color  = (java.lang.String) props.get("color");
         String lastLoginDateAndTimeAsString = (String) props.get("lastLoginDateAndTime");
-        lastLoginDateAndTime  =  lastLoginDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(lastLoginDateAndTimeAsString);
+        lastLoginDateAndTime  =  lastLoginDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastLoginDateAndTimeAsString);
         String registrationDateAndTimeAsString = (String) props.get("registrationDateAndTime");
-        registrationDateAndTime  =  registrationDateAndTimeAsString == null ? null : new ilarkesto.gwt.client.DateAndTime(registrationDateAndTimeAsString);
+        registrationDateAndTime  =  registrationDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(registrationDateAndTimeAsString);
         disabled  = (Boolean) props.get("disabled");
         hideUserGuideBlog  = (Boolean) props.get("hideUserGuideBlog");
         hideUserGuideCalendar  = (Boolean) props.get("hideUserGuideCalendar");

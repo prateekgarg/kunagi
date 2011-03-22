@@ -16,10 +16,10 @@ package scrum.client.sprint;
 
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.Date;
+import ilarkesto.core.time.Date;
+import ilarkesto.core.time.TimePeriod;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.ArrayList;
 import java.util.Collections;

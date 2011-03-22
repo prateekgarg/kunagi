@@ -14,10 +14,10 @@
  */
 package scrum.client.calendar;
 
-import ilarkesto.gwt.client.Date;
+import ilarkesto.core.time.Date;
+import ilarkesto.core.time.Time;
+import ilarkesto.core.time.TimePeriod;
 import ilarkesto.gwt.client.HyperlinkWidget;
-import ilarkesto.gwt.client.Time;
-import ilarkesto.gwt.client.TimePeriod;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport, Reference
 
 	public String getTimeAsString() {
 		Time time = getTime();
-		return time == null ? null : time.toString(false);
+		return time == null ? null : time.toHourMinuteString();
 	}
 
 	public String getDurationAsString() {
@@ -61,7 +61,7 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport, Reference
 		sb.append(getDate().toString());
 		Time time = getTime();
 		if (time != null) {
-			sb.append(" ").append(time.toString(false));
+			sb.append(" ").append(time.toHourMinuteString());
 		}
 		String location = getLocation();
 		if (location != null) {
