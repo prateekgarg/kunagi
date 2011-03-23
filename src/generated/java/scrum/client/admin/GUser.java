@@ -158,6 +158,61 @@ public abstract class GUser
 
     }
 
+    // --- fullName ---
+
+    private java.lang.String fullName ;
+
+    public final java.lang.String getFullName() {
+        return this.fullName ;
+    }
+
+    public final User setFullName(java.lang.String fullName) {
+        if (isFullName(fullName)) return (User)this;
+        this.fullName = fullName ;
+        propertyChanged("fullName", this.fullName);
+        return (User)this;
+    }
+
+    public final boolean isFullName(java.lang.String fullName) {
+        return equals(this.fullName, fullName);
+    }
+
+    private transient FullNameModel fullNameModel;
+
+    public FullNameModel getFullNameModel() {
+        if (fullNameModel == null) fullNameModel = createFullNameModel();
+        return fullNameModel;
+    }
+
+    protected FullNameModel createFullNameModel() { return new FullNameModel(); }
+
+    protected class FullNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_fullName";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getFullName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setFullName(value);
+        }
+        @Override
+        public String getTooltip() { return "Full name of the person."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- admin ---
 
     private boolean admin ;
@@ -1463,6 +1518,7 @@ public abstract class GUser
     public void updateProperties(Map props) {
         name  = (java.lang.String) props.get("name");
         publicName  = (java.lang.String) props.get("publicName");
+        fullName  = (java.lang.String) props.get("fullName");
         admin  = (Boolean) props.get("admin");
         emailVerified  = (Boolean) props.get("emailVerified");
         email  = (java.lang.String) props.get("email");
@@ -1498,6 +1554,7 @@ public abstract class GUser
         super.storeProperties(properties);
         properties.put("name", this.name);
         properties.put("publicName", this.publicName);
+        properties.put("fullName", this.fullName);
         properties.put("admin", this.admin);
         properties.put("emailVerified", this.emailVerified);
         properties.put("email", this.email);
@@ -1530,6 +1587,7 @@ public abstract class GUser
         if (super.matchesKey(key)) return true;
         if (matchesKey(getName(), key)) return true;
         if (matchesKey(getPublicName(), key)) return true;
+        if (matchesKey(getFullName(), key)) return true;
         if (matchesKey(getEmail(), key)) return true;
         return false;
     }

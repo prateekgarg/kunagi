@@ -3270,6 +3270,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.User> getUsersByFullName(java.lang.String fullName) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isFullName(fullName)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.User> getUsersByAdmin(boolean admin) {
         List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
         for (scrum.client.admin.User entity : users.values()) {
