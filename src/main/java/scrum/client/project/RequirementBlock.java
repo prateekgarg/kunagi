@@ -15,6 +15,7 @@
 package scrum.client.project;
 
 import ilarkesto.core.time.Date;
+import ilarkesto.core.time.TimePeriod;
 import scrum.client.collaboration.EmoticonsWidget;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.AScrumAction;
@@ -87,9 +88,10 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 				sprintBorderIndicator = new SprintSwitchIndicatorWidget();
 				Sprint sprint = getCurrentProject().getNextSprint();
 				int sprints = previous.getEstimationBar().getEndSprintOffset();
-				int sprintLength = sprint.getLength().toDays();
+				TimePeriod sprintLength = sprint.getLength();
+				int sprintLengthInDays = sprintLength == null ? 14 : sprintLength.toDays();
 				Date begin = sprint.getBegin();
-				int totalLength = sprintLength * sprints;
+				int totalLength = sprintLengthInDays * sprints;
 				Date date = begin.addDays(totalLength);
 				sprintBorderIndicator.updateLabel(sprints, date);
 				getPreHeaderPanel().add(sprintBorderIndicator);
