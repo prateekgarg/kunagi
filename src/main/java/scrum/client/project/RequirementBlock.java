@@ -32,6 +32,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RequirementBlock extends ABlockWidget<Requirement> implements TrashSupport {
 
+	public RequirementBlock() {}
+
 	private SimplePanel statusIcon;
 	private SprintSwitchIndicatorWidget sprintBorderIndicator;
 
@@ -91,6 +93,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 				TimePeriod sprintLength = sprint.getLength();
 				int sprintLengthInDays = sprintLength == null ? 14 : sprintLength.toDays();
 				Date begin = sprint.getBegin();
+				if (begin.isPast()) begin = new Date();
 				int totalLength = sprintLengthInDays * sprints;
 				Date date = begin.addDays(totalLength);
 				sprintBorderIndicator.updateLabel(sprints, date);
