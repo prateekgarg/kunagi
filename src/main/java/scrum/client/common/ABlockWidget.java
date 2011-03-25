@@ -263,7 +263,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 			NativeEvent nativeEvent = event.getNativeEvent();
 			boolean modifierDown = nativeEvent.getCtrlKey() || nativeEvent.getShiftKey() || nativeEvent.getAltKey();
 			list.toggleExtension(getObject(), !modifierDown);
-			event.stopPropagation();
+			// event.stopPropagation();
 		}
 
 	}
