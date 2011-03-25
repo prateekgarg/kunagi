@@ -207,8 +207,8 @@ pageTracker._trackPageview();
     </form>
     <script type="text/javascript">
         var buttonCode = '<input id="commentFormSubmitButton" type="submit" name="submit" class="submit" value="$submitLabel">';
-        $('commentFormSubmitButtonContainer').append(buttonCode);
-		$('commentForm').attr('action', 'https://servisto.de/scrum/$servlet');
+        $('#commentFormSubmitButtonContainer').append(buttonCode);
+		$('#commentForm').attr('action', 'https://servisto.de/scrum/$servlet');
     </script>
 #end
 
