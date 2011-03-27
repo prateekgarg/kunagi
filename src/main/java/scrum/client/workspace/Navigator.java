@@ -26,6 +26,7 @@ import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectDataReceivedEvent;
 import scrum.client.project.SelectProjectServiceCall;
+import scrum.client.search.SearchResultsWidget;
 import scrum.client.workspace.history.HistoryToken;
 import scrum.client.workspace.history.HistoryTokenObserver;
 
@@ -86,6 +87,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 	public void gotoProject(String projectId) {
 		historyToken.update(projectId);
+	}
+
+	public void gotoCurrentProjectSearch() {
+		historyToken.updatePage(Page.getPageName(SearchResultsWidget.class));
 	}
 
 	private void showProject(String projectId, String page, String entityId) {

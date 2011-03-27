@@ -204,16 +204,6 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		return projectUserConfig;
 	}
 
-	public void showSearchResults() {
-		ScrumNavigatorWidget navigator = getSidebar().getNavigator();
-		SearchResultsWidget results = Scope.get().getComponent(Search.class).getResultsWidget();
-		if (!searchResultsAdded) {
-			navigator.addItem("Search Results", results);
-			searchResultsAdded = true;
-		}
-		navigator.select(results);
-	}
-
 	public void showEntityByReference(final String reference) {
 		log.debug("Showing entity by reference:", reference);
 
@@ -327,7 +317,17 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	public void showPage(String pageName) {
 		Page page = pages.getPageByName(pageName);
 		if (page == null) {
-			log.warn("Page does not exist:", pageName);
+			if (pageName.equals(Page.getPageName(SearchResultsWidget.class))) {
+				ScrumNavigatorWidget navigator = getSidebar().getNavigator();
+				SearchResultsWidget results = Scope.get().getComponent(Search.class).getResultsWidget();
+				if (!searchResultsAdded) {
+					navigator.addItem("Search Results", results);
+					searchResultsAdded = true;
+				}
+				select(results);
+			} else {
+				log.warn("Page does not exist:", pageName);
+			}
 			return;
 		}
 		select(page.getWidget());
@@ -483,7 +483,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	public void showProjectEvent(ProjectEvent event) {
-
+		select(projectEventList);
+		projectEventList.select(event);
 	}
 
 	private void select(AWidget widget) {
