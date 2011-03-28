@@ -57,6 +57,7 @@ public class IssueServlet extends AHttpServlet {
 		String email = Str.cutRight(req.getParameter("email"), 66);
 		if (Str.isBlank(email)) email = null;
 		boolean publish = Str.isTrue(req.getParameter("publish"));
+		String spamPreventionCode = req.getParameter("spamPreventionCode");
 
 		log.info("Message from the internets");
 		log.info("    projectId: " + projectId);
@@ -69,7 +70,7 @@ public class IssueServlet extends AHttpServlet {
 
 		String message;
 		try {
-			message = submitIssue(projectId, text, name, email, publish);
+			message = submitIssue(projectId, text, name, email, publish, spamPreventionCode);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
@@ -83,7 +84,10 @@ public class IssueServlet extends AHttpServlet {
 		resp.sendRedirect(returnUrl);
 	}
 
-	private String submitIssue(String projectId, String text, String name, String email, boolean publish) {
+	private String submitIssue(String projectId, String text, String name, String email, boolean publish,
+			String spamPreventionCode) {
+		if (!"no-spam".equals(spamPreventionCode)) throw new RuntimeException("Posting identified as SPAM.");
+
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, "Message from the Internets", "<nowiki>" + text + "</nowiki>", name,

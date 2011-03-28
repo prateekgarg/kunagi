@@ -169,6 +169,7 @@ pageTracker._trackPageview();
         #end
         #if ($entityId) <input name="entityId" type="hidden" value="$entityId"> #end
         <input name="returnUrl" type="hidden" value="http://kunagi.org/message.html#{message}">
+        <input id="spamPreventionCodeField" name="spamPreventionCode" type="hidden" value="spam">
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
                 <td colspan="5">
@@ -206,9 +207,11 @@ pageTracker._trackPageview();
         </table>
     </form>
     <script type="text/javascript">
-        var buttonCode = '<input id="commentFormSubmitButton" type="submit" name="submit" class="submit" value="$submitLabel">';
-        $('\#commentFormSubmitButtonContainer').append(buttonCode);
+        var buttonHtml = '<input id="commentFormSubmitButton" type="submit" name="submit" class="submit" value="$submitLabel">';
+        $('\#commentFormSubmitButtonContainer').append(buttonHtml);
 		$('\#commentForm').attr('action', 'https://servisto.de/scrum/$servlet');
+		var spamPreventionCode = 'no-spam';
+		$('\#spamPreventionCodeField').attr('value, spamPreventionCode);
     </script>
 #end
 
