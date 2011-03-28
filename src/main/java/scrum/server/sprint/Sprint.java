@@ -211,7 +211,7 @@ public class Sprint extends GSprint implements Numbered {
 		getDaySnapshot(begin).updateWithCurrentSprint();
 		begin = begin.nextDay();
 		while (begin.isBefore(end)) {
-			if (!begin.isWeekend()) {
+			if (!begin.getWeekday().isWeekend()) {
 				int toBurn = Utl.randomInt(0, defaultWorkPerDay + (defaultWorkPerDay * 2));
 				int totalRemaining = getRemainingWork();
 				for (Task task : getTasks()) {
