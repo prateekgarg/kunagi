@@ -140,7 +140,7 @@ public class ReleaseWidget extends AScrumWidget {
 						setViewer(ScrumGwt.createDiv("ReleaseWidget-script-running", "Release script is running..."));
 						return;
 					}
-					String output = release.getScriptOutput();
+					String output = Str.toHtml(release.getScriptOutput());
 					if (release.isReleased()) {
 						setViewer(ScrumGwt.createDiv("ReleaseWidget-script-ok", output));
 						return;
