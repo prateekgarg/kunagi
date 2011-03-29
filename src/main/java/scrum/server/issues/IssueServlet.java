@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
@@ -44,7 +45,7 @@ public class IssueServlet extends AHttpServlet {
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
 
-	private ScrumWebApplication app;
+	private transient ScrumWebApplication app;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
@@ -57,7 +58,6 @@ public class IssueServlet extends AHttpServlet {
 		String email = Str.cutRight(req.getParameter("email"), 66);
 		if (Str.isBlank(email)) email = null;
 		boolean publish = Str.isTrue(req.getParameter("publish"));
-		String spamPreventionCode = req.getParameter("spamPreventionCode");
 
 		log.info("Message from the internets");
 		log.info("    projectId: " + projectId);
@@ -70,7 +70,8 @@ public class IssueServlet extends AHttpServlet {
 
 		String message;
 		try {
-			message = submitIssue(projectId, text, name, email, publish, spamPreventionCode);
+			SpamChecker.check(req);
+			message = submitIssue(projectId, text, name, email, publish);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
@@ -84,10 +85,7 @@ public class IssueServlet extends AHttpServlet {
 		resp.sendRedirect(returnUrl);
 	}
 
-	private String submitIssue(String projectId, String text, String name, String email, boolean publish,
-			String spamPreventionCode) {
-		if (!"no-spam".equals(spamPreventionCode)) throw new RuntimeException("Posting identified as SPAM.");
-
+	private String submitIssue(String projectId, String text, String name, String email, boolean publish) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, "Message from the Internets", "<nowiki>" + text + "</nowiki>", name,
