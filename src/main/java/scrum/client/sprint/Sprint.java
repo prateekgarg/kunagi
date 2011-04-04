@@ -15,6 +15,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.base.Utl;
+import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.TimePeriod;
@@ -79,6 +80,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	public Integer getLengthInDays() {
 		TimePeriod lenght = getLength();
+		Log.DEBUG("-------------> lenght is:", lenght.toDays(), " | begin:", getBegin(), " | end:", getEnd());
 		return lenght == null ? null : lenght.toDays();
 	}
 
@@ -90,6 +92,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	}
 
 	public void setLengthInDays(Integer lenght) {
+		Log.DEBUG("-------------> set lenght:", lenght);
 		if (lenght == null || lenght <= 0) return;
 		Date begin = getBegin();
 		if (begin == null) {
@@ -97,6 +100,8 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			setBegin(begin);
 		}
 		Date end = begin.addDays(lenght - 1);
+		Log.DEBUG("-------------> begin:", getBegin());
+		Log.DEBUG("-------------> end:", getEnd());
 		setEnd(end);
 	}
 
