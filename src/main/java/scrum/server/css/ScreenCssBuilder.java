@@ -52,7 +52,10 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cNavigatorSelectedItemBackground = "#CCD5E6";
 	public static String cNavigatorHoverItemBackground = "#E9EEF6";
 
+	public static String cFieldBackground = "white";
+
 	public static String cBlockHeaderBackground = cNavigatorHoverItemBackground;
+	public static String cBlockBackground = "#FAFDFF";
 	public static String cBlockSelectionBorder = cHeaderBackground;
 	public static String cBlockHeaderHoverBackground = cBackground;
 	public static String cBlockHeaderDragHandleBackground = "#FBFBFF";
@@ -69,8 +72,6 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	public static String cTrashBackground = cNavigatorHoverItemBackground;
 	public static String cTrashBorder = cPagePanelBorder;
-
-	public static String cFieldBackground = "#FAFDFF";
 
 	public static String cWaitBackground = cFieldBackground;
 	public static String cWait = cLink;
@@ -484,7 +485,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	private void blockList(CssRenderer css) {
 		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
-		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground);
+		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground).background(cBlockBackground);
 
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
 		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground, "../blockheader-bg.png", "repeat-x");
