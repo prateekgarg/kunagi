@@ -208,10 +208,10 @@ pageTracker._trackPageview();
     </form>
     <script type="text/javascript">
         var buttonHtml = '<input id="commentFormSubmitButton" type="submit" name="submit" class="submit" value="$submitLabel">';
-        $('#commentFormSubmitButtonContainer').append(buttonHtml);
-		$('#commentForm').attr('action', 'https://servisto.de/scrum/$servlet');
+        $(document.getElementById('commentFormSubmitButtonContainer')).append(buttonHtml);
+		$(document.getElementById('commentForm')).attr('action', 'https://servisto.de/scrum/$servlet');
 		var spamPreventionCode = 'no-spam';
-		$('#spamPreventionCodeField').attr(value, spamPreventionCode);
+		$(document.getElementById('spamPreventionCodeField')).attr('value', spamPreventionCode);
     </script>
 #end
 
