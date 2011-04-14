@@ -18,6 +18,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.common.AScrumWidget;
+import scrum.client.workspace.Navigator;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -38,6 +39,8 @@ public class SearchInputWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		search = Scope.get().getComponent(Search.class);
 
+		Scope.get().getComponent(Navigator.class).setSearch(this);
+
 		input = new TextBox();
 		input.addKeyUpHandler(new InputHandler());
 		input.addKeyDownHandler(new SubmitHandler());
@@ -56,6 +59,10 @@ public class SearchInputWidget extends AScrumWidget {
 	private void submitSearch() {
 		dirty = false;
 		search.search(input.getText());
+	}
+
+	public void clear() {
+		if (input != null) input.setText(null);
 	}
 
 	class InputHandler implements KeyUpHandler {

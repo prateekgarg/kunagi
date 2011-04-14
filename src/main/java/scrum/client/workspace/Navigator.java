@@ -26,6 +26,7 @@ import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectDataReceivedEvent;
 import scrum.client.project.SelectProjectServiceCall;
+import scrum.client.search.SearchInputWidget;
 import scrum.client.search.SearchResultsWidget;
 import scrum.client.workspace.history.HistoryToken;
 import scrum.client.workspace.history.HistoryTokenObserver;
@@ -40,8 +41,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	}
 
 	private HistoryToken historyToken;
-
 	private Mode currentMode;
+	private SearchInputWidget search;
 
 	@Override
 	public void initialize() {
@@ -132,6 +133,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 					workspace.showEntityById(entityId);
 				}
 			}
+		}
+
+		if (search != null && !Page.getPageName(SearchResultsWidget.class).equals(historyToken.getPage())) {
+			search.clear();
 		}
 	}
 
@@ -224,6 +229,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 
 	public boolean isToggleMode() {
 		return historyToken.isToggle();
+	}
+
+	public void setSearch(SearchInputWidget search) {
+		this.search = search;
 	}
 
 }
