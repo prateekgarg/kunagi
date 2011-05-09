@@ -45,14 +45,14 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cLink = "#2956B2";
 	public static String cErrorBackground = "#FEE";
 	public static String cError = "darkred";
-	public static String cHeaderText = "white";
+	public static String cHeaderText = "#FFFFFF";
 
 	public static String cNavigatorSeparator = "#D9DEE6";
 	public static String cNavigatorLink = "#465B79";
 	public static String cNavigatorSelectedItemBackground = "#CCD5E6";
 	public static String cNavigatorHoverItemBackground = "#E9EEF6";
 
-	public static String cFieldBackground = "white";
+	public static String cFieldBackground = "#FFFFFF";
 
 	public static String cBlockHeaderBackground = cNavigatorHoverItemBackground;
 	public static String cBlockBackground = "#FAFDFF";
@@ -67,7 +67,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cPagePanelHeader = "#FF6637";
 	public static String cPagePanelBorder = cNavigatorSeparator;
 
-	public static String cChatBackground = "white";
+	public static String cChatBackground = "#FFFFFF";
 	public static String cChatBorder = cPagePanelBorder;
 
 	public static String cTrashBackground = cNavigatorHoverItemBackground;
