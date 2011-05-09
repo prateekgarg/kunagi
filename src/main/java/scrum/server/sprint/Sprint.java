@@ -176,6 +176,9 @@ public class Sprint extends GSprint implements Numbered {
 		if (getProject().isCurrentSprint(this)) {
 			if (!isBeginSet()) setBegin(Date.today());
 			if (!isEndSet()) setEnd(getBegin().addDays(14));
+
+			// auto stretch sprint
+			if (getEnd().isYesterday()) setEnd(Date.today());
 		}
 
 		if (isBeginSet() && isEndSet() && getBegin().isAfter(getEnd())) setEnd(getBegin());
