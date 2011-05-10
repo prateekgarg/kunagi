@@ -130,4 +130,10 @@ shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel 
 shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
 
 
+# deploy
+print '  Deploy demo and scrum'
+shutil.copyfile(packageWar, '/home/kunagi-demo/tomcat/webapps/kunagi-demo.war')
+shutil.copyfile(packageWar, '/home/scrum/tomcat/webapps/scrum.war')
+
+
 print 'Kunagi ' + releaseLabel + ' released'
