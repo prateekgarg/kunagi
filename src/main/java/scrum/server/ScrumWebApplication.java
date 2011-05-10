@@ -61,7 +61,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final int DATA_VERSION = 23;
+	private static final int DATA_VERSION = 24;
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
