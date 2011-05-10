@@ -259,6 +259,14 @@ public class LoginServlet extends AHttpServlet {
 				return;
 			}
 
+			if (!webApplication.getSystemConfig().isOpenIdDomainAllowed(openId)) {
+				renderLoginPage(resp, null, null, historyToken, "Registration failed. OpenID domains are limited to: "
+						+ webApplication.getSystemConfig().getOpenIdDomains(), false, false);
+				log.warn("Registration failed. OpenID domains are limited to:", webApplication.getSystemConfig()
+						.getOpenIdDomains());
+				return;
+			}
+
 			if (email != null) {
 				if (userDao.getUserByEmail(email) != null) {
 					renderLoginPage(resp, null, null, historyToken, "Creating account failed. Email '" + email

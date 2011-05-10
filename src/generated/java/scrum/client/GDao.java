@@ -3003,6 +3003,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByOpenIdDomains(java.lang.String openIdDomains) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isOpenIdDomains(openIdDomains)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.SystemConfig> getSystemConfigsByVersionCheckEnabled(boolean versionCheckEnabled) {
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {

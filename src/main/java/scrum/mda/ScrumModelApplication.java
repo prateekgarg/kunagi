@@ -112,6 +112,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.addProperty("openIdDisabled", boolean.class).setTooltip(
 				"Activate this, if you want to disable logins with OpenID.");
 			systemConfigModel
+					.addStringProperty("openIdDomains")
+					.setTooltip(
+						"Limits accepted OpenID domains for new users. Multiple domains separated by commas allowed. Leave empty to allow all domains.");
+			systemConfigModel
 					.addProperty("versionCheckEnabled", boolean.class)
 					.setTooltip(
 						"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
