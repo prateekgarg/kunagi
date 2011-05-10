@@ -154,6 +154,8 @@ public class ScreenCssBuilder implements CssBuilder {
 
 		css.style(".highlighted .ABlockWidget-title").border(1, cError);
 
+		css.style(".LockInfoWidget-icon").marginRight(10);
+
 		css.style(".WaitWidget").background(cWaitBackground).margin(200, 0, 200, 0).borderTop(1, cPagePanelBorder)
 				.borderBottom(1, cPagePanelBorder).fontSize(fontSize + 2);
 		css.style(".LoginWidget-errorMessage").background(cErrorBackground).color(cError).border(1, cError)

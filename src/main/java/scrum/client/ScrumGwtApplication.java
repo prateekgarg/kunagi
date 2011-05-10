@@ -113,14 +113,21 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	}
 
 	@Override
-	public void handleCommunicationError(Throwable ex) {
-		Scope.get().getComponent(Ui.class).getWorkspace().abort(Str.formatException(ex));
+	public void handleServiceCallError(String serviceCall, Throwable ex) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<strong>Server service call error</strong><br>");
+		sb.append("Calling service <em>").append(serviceCall).append("</em> failed.<br>");
+		sb.append(Str.toHtml(Str.formatException(ex)));
+		Scope.get().getComponent(Ui.class).getWorkspace().abort(sb.toString());
 	}
 
 	@Override
 	protected void handleUnexpectedError(Throwable ex) {
-		log.error("Unexpected error:", ex);
-		Scope.get().getComponent(Ui.class).getWorkspace().abort("Unexpected error: " + Str.formatException(ex));
+		log.error("Unexpected error", ex);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<strong>Unexpected Error</strong><br>");
+		sb.append(Str.toHtml(Str.formatException(ex)));
+		Scope.get().getComponent(Ui.class).getWorkspace().abort(sb.toString());
 	}
 
 	@Override
