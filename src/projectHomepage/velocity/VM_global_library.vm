@@ -272,7 +272,7 @@ pageTracker._trackPageview();
     <a href="http://github.com/Kunagi" target="_blank">GitHub</a>,
     <a href="http://sourceforge.net/projects/kunagi/" target="_blank">SourceForge</a>,
     <a href="https://code.google.com/p/kunagi/" target="_blank">Google Code</a>,
-    <h href="https://www.ohloh.net/p/kunagi" target="_blank">Ohloh</a>,
+    <a href="https://www.ohloh.net/p/kunagi" target="_blank">Ohloh</a>,
     <a href="http://userstories.com/products/65-kunagi" target="_blank">UserStories.com</a>,
     <a href="http://alternativeto.net/desktop/kunagi/" target="_blank">AlternativeTo</a>,
     <a href="http://flattr.com/thing/2486/Kunagi" target="_blank">Flattr</a>,
