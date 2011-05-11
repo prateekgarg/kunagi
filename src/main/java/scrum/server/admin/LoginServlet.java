@@ -43,7 +43,7 @@ import scrum.server.common.AHttpServlet;
 
 public class LoginServlet extends AHttpServlet {
 
-	private static final int LOGIN_TOKEN_COOKIE_MAXAGE = 259200; // 3days
+	private static final int LOGIN_TOKEN_COOKIE_MAXAGE = 518400; // 6 days
 	private static final long serialVersionUID = 1;
 
 	private static Log log = Log.get(LoginServlet.class);
