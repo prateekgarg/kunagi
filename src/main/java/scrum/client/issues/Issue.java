@@ -23,6 +23,7 @@ import ilarkesto.gwt.client.LabelProvider;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +166,9 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	}
 
 	public String getThemesAsString() {
-		return Str.concat(getThemes(), ", ");
+		List<String> themes = getThemes();
+		Collections.sort(themes);
+		return Str.concat(themes, ", ");
 	}
 
 	public void setFixed(User user) {
