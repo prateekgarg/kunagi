@@ -75,7 +75,7 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 
 	@Override
 	public boolean isThemesCreatable() {
-		return true;
+		return ScrumGwt.isCurrentUserProductOwner();
 	}
 
 	public List<Requirement> getRelatedRequirements() {

@@ -66,9 +66,11 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 
 	@Override
 	protected Widget getExtendedEditorContent() {
-		if (!model.isThemesCreatable()) return null;
+		StringBuilder tooltip = new StringBuilder("Create a new theme.");
+		if (!model.isThemesCreatable()) tooltip.append("Only Product Owner can create themes.");
 
 		newThemeTextBox = new TextBox();
+		newThemeTextBox.setEnabled(model.isThemesCreatable());
 		newThemeTextBox.addKeyDownHandler(new KeyDownHandler() {
 
 			@Override
@@ -82,6 +84,8 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 
 		});
 		newThemeTextBox.setWidth(200 + "px");
+		newThemeTextBox.setTitle(tooltip.toString());
+
 		Button createThemeButton = new Button("Add", new ClickHandler() {
 
 			@Override
@@ -90,6 +94,9 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 			}
 
 		});
+		createThemeButton.setEnabled(model.isThemesCreatable());
+		createThemeButton.setTitle(tooltip.toString());
+
 		HorizontalPanel hp = ScrumGwt.createHorizontalPanel(3, newThemeTextBox, createThemeButton);
 		hp.setWidth("");
 		return hp;

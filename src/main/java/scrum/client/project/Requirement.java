@@ -90,7 +90,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	@Override
 	public boolean isThemesCreatable() {
-		return true;
+		return ScrumGwt.isCurrentUserProductOwner();
 	}
 
 	public List<Requirement> getRelatedRequirements() {
