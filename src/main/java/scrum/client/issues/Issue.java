@@ -73,6 +73,11 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		return getLabelModel().isEditable();
 	}
 
+	@Override
+	public boolean isThemesCreatable() {
+		return true;
+	}
+
 	public List<Requirement> getRelatedRequirements() {
 		return getProject().getRequirementsByThemes(getThemes());
 	}
