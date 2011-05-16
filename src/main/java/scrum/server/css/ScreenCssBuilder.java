@@ -226,13 +226,20 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".loginPage .panel img").marginBottom(-20);
 		css.style(".loginPage .message").color("gold").fontWeightBold().marginBottom(10).fontSize(fontSizeTitle);
 		String labelColor = Colors.lighten(Colors.lighten(Colors.lighten(cHeaderBackground)));
-		css.style(".loginPage .inputButton").background(Colors.darken(cHeaderBackground)).marginRight(10)
-				.borderRadius(5).color(labelColor).fontWeightBold().padding(1, 10).cursorPointer();
-		css.style(".loginPage input:hover.inputButton").color(Colors.lighten(labelColor));
+
+		css.style(".loginPage .inputButton, .loginPage a.openid .button").background(Colors.darken(cHeaderBackground))
+				.border(1, cPagePanelBorder).borderRadius(5).color(labelColor).fontWeightBold().padding(1, 10)
+				.cursorPointer().textShadow(-1, -1, 0, "#444");
+		css.style(".loginPage .inputButton").marginRight(10);
+		css.style(".loginPage a.openid .button").margin(0, 5, 5, 0).floatLeft();
+		css.style(".loginPage input:hover.inputButton, .loginPage a.openid:hover .button").color(
+			Colors.lighten(labelColor));
+
 		css.style(".loginPage .inputCheckbox").marginLeft(0);
 		css.style(".loginPage .panel label").color(labelColor).marginRight(5);
 		css.style(".loginPage .panel .optionalLabel label").color(Colors.lighten(cHeaderBackground));
-		css.style(".loginPage h2").colorWhite().margin(30, 0, 20, 0).fontSize(fontSizeTitle + 4);
+		css.style(".loginPage h2").color("#fff").margin(30, 0, 20, 0).fontSize(fontSizeTitle + 4)
+				.textShadow(1, 1, 0, "#222");
 		css.style(".loginPage input").marginBottom(5);
 		css.style("#username, #email, #password").width(150).marginRight(10);
 		css.style("#openid").width(309).marginRight(10);
@@ -240,10 +247,6 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".loginPage .configMessage").colorWhite();
 		css.style(".loginPage .kunagiLink").textAlignRight().fontSize(fontSizeSmall).color(labelColor);
 		css.style(".loginPage .kunagiLink a").color(Colors.lighten(labelColor));
-		css.style(".loginPage a.openid .button").border(1, cPagePanelBorder)
-				.background(Colors.darken(cHeaderBackground)).margin(0, 5, 5, 0).borderRadius(5).color(labelColor)
-				.fontWeightBold().padding(1, 10).cursorPointer().floatLeft();
-		css.style(".loginPage a.openid:hover .button").color(Colors.lighten(labelColor));
 	}
 
 	private void planningPoker(CssRenderer css) {
