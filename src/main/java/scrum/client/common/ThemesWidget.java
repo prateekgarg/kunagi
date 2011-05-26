@@ -57,6 +57,7 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 		Collections.sort(themes);
 		setEditorItems(themes);
 		setEditorSelectedItems(model.getThemes());
+		newThemeTextBox.setFocus(true);
 	}
 
 	@Override
@@ -78,6 +79,9 @@ public class ThemesWidget extends AMultiSelectionViewEditWidget<String> {
 				int keyCode = event.getNativeKeyCode();
 				if (keyCode == KeyCodes.KEY_ENTER) {
 					createTheme();
+				}
+				if (keyCode == KeyCodes.KEY_ESCAPE) {
+					cancelEditor();
 				}
 				event.stopPropagation();
 			}
