@@ -2623,14 +2623,6 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.sprint.Sprint> getSprintsByCompletedRequirementLabels(java.lang.String completedRequirementLabels) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.isCompletedRequirementLabels(completedRequirementLabels)) ret.add(entity);
-        }
-        return ret;
-    }
-
     public final List<scrum.client.sprint.Sprint> getSprintsByCompletedRequirementsData(java.lang.String completedRequirementsData) {
         List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
         for (scrum.client.sprint.Sprint entity : sprints.values()) {

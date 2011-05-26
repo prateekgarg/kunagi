@@ -71,8 +71,8 @@ public class Sprint extends GSprint implements Numbered {
 				incompletedRequirements.add(requirement);
 			}
 		}
-		setCompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(completedRequirements));
-		setIncompletedRequirementsData(SprintReportHelper.encodeRequirementsAndTasks(incompletedRequirements));
+		setCompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(completedRequirements));
+		setIncompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(incompletedRequirements));
 		for (Requirement requirement : requirements) {
 			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
 			if (requirement.isClosed()) {
