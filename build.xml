@@ -141,7 +141,7 @@
 		<copy file="etc/kunagi-release.py" tofile="/home/cad/bin/kunagi-release" preservelastmodified="true" />
 	</target>
 	
-    <target name="continousIntegrationBuild" depends="clean,test,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
+    <target name="continousIntegrationBuild" depends="clean,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
 
 </project>
 
