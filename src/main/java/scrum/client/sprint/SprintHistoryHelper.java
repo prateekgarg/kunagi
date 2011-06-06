@@ -16,11 +16,9 @@ package scrum.client.sprint;
 
 import ilarkesto.core.base.Str;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SprintHistoryHelper {
@@ -45,33 +43,31 @@ public class SprintHistoryHelper {
 		return ret;
 	}
 
+	public static List<String> parseLines(String s) {
+		if (s == null) return Collections.emptyList();
+		LinkedList<String> ll = new LinkedList<String>();
+		int idx = s.indexOf('\n');
+		while (idx >= 0) {
+			String line = s.substring(0, idx);
+			s = s.substring(idx + 1);
+			ll.add(line);
+			idx = s.indexOf('\n');
+		}
+		ll.add(s);
+		return ll;
+	}
+
 	static List<String[]> decodeRequirementsAndTasks(String s) {
-		if (Str.isBlank(s)) return Collections.emptyList();
-		BufferedReader in = new BufferedReader(new StringReader(s));
+		List<String> lines = parseLines(s);
+		if (lines.isEmpty()) return Collections.emptyList();
 		List<String[]> records = new ArrayList<String[]>();
-		String line;
-		try {
-			line = in.readLine();
-		} catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-		if (line == null) return Collections.emptyList();
-		if (!line.startsWith(PREFIX + VERSION)) throw new RuntimeException("Illegal format: " + s);
-		try {
-			line = in.readLine();
-		} catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-		while (line != null) {
+		if (!lines.get(0).startsWith(PREFIX + VERSION)) throw new RuntimeException("Illegal format: " + s);
+		lines.remove(0);
+		for (String line : lines) {
 			if (line.startsWith(scrum.client.project.Requirement.REFERENCE_PREFIX)) {
 				records.add(decodeRequirement(line));
 			} else if (line.startsWith(scrum.client.sprint.Task.REFERENCE_PREFIX)) {
 				records.add(decodeTask(line));
-			}
-			try {
-				line = in.readLine();
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
 			}
 		}
 		return records;
