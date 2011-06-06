@@ -97,6 +97,20 @@ execute('tar -czf ../kunagi-' + releaseLabel + '.tar.gz kunagi-' + releaseLabel,
 execute('zip -r9 ../kunagi-' + releaseLabel + '.zip kunagi-' + releaseLabel, packageDirParentDir)
 
 
+# debianize
+print '  Create debian package'
+debianDir = buildDir + '/debian'
+debianDocDir = debianDir + '/usr/share/doc/kunagi'
+packageDeb = buildDir + '/kunagi_' + releaseLabel + '.deb'
+shutil.copy(workDir + '/kunagi/src/debian', buildDir)
+os.mkdir(debianDir + '/var/lib/tomcat6/webapps')
+shutil.copyfile(packageWar, debianDir + '/var/lib/tomcat6/webapps/kunagi.war')
+os.mkdir(debianDocDir)
+shutil.copyfile(workDir + '/kunagi/README', debianDocDir + '/README')
+execute('fakeroot dpkg-deb --build debian', buildDir)
+shutil.move(buildDir + '/debian.deb', packageDeb)
+
+
 # check files and directories
 print '  Check artifacts'
 artifactsDestinationDir = artifactsDestinationHomeDir + '/' + releaseLabel
@@ -119,6 +133,7 @@ execute('ant releaseHomepage', workDir + '/kunagi')
 print '  Upload artifacts to SourceForge'
 sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/' + releaseLabel
 execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
+execute('scp ' + packageDeb + ' ' + sourceForgePath + '/kunagi_' + releaseLabel + '.deb')
 execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.gz')
 execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
 
@@ -127,6 +142,7 @@ execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel 
 print '  Copy artifacts to ' + artifactsDestinationDir
 os.mkdir(artifactsDestinationDir)
 shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
+shutil.copyfile(packageDeb, artifactsDestinationDir + '/kunagi_' + releaseLabel + '.deb')
 shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.gz')
 shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
 
