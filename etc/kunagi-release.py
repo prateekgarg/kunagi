@@ -42,9 +42,10 @@ print 'Releasing Kunagi ' + releaseLabel
 
 
 # configuration
+os.chdir('/home/scrum/')
+workDir = os.path.abspath('kunagi-release-workdir')
 artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
 githubUser = 'git://github.com/Kunagi'
-workDir = 'kunagi-release-workdir'
 buildDir = workDir + '/kunagi/build'
 packageDir = buildDir + '/package-content/kunagi'
 packageWar = buildDir + '/kunagi.war'
@@ -53,7 +54,7 @@ packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
 
 
 # cleanup previous release
-print '  Clean'
+print '  Clean work direcotry: ' + workDir
 if os.path.exists(workDir):
     shutil.rmtree(workDir)
 
