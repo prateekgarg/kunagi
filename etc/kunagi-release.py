@@ -114,8 +114,8 @@ shutil.move(buildDir + '/debian.deb', packageDeb)
 # check files and directories
 print '  Check artifacts'
 artifactsDestinationDir = artifactsDestinationHomeDir + '/' + releaseLabel
-if os.path.exists(artifactsDestinationDir):
-    fail('Release directory already exists: ' + artifactsDestinationDir)
+#if os.path.exists(artifactsDestinationDir):
+#    fail('Release directory already exists: ' + artifactsDestinationDir)
 if not os.path.exists(packageWar):
     fail('Missing war package: ' + packageWar)
 if not os.path.exists(packageZip):
