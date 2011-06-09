@@ -102,10 +102,10 @@ print '  Create debian package'
 debianDir = buildDir + '/debian'
 debianDocDir = debianDir + '/usr/share/doc/kunagi'
 packageDeb = buildDir + '/kunagi_' + releaseLabel + '.deb'
-shutil.copy(workDir + '/kunagi/src/debian', buildDir)
-os.mkdir(debianDir + '/var/lib/tomcat6/webapps')
+shutil.copytree(workDir + '/kunagi/src/debian', buildDir + '/debian')
+os.makedirs(debianDir + '/var/lib/tomcat6/webapps')
 shutil.copyfile(packageWar, debianDir + '/var/lib/tomcat6/webapps/kunagi.war')
-os.mkdir(debianDocDir)
+os.makedirs(debianDocDir)
 shutil.copyfile(workDir + '/kunagi/README', debianDocDir + '/README')
 execute('fakeroot dpkg-deb --build debian', buildDir)
 shutil.move(buildDir + '/debian.deb', packageDeb)
@@ -114,8 +114,8 @@ shutil.move(buildDir + '/debian.deb', packageDeb)
 # check files and directories
 print '  Check artifacts'
 artifactsDestinationDir = artifactsDestinationHomeDir + '/' + releaseLabel
-if os.path.exists(artifactsDestinationDir):
-    fail('Release directory already exists: ' + artifactsDestinationDir)
+#if os.path.exists(artifactsDestinationDir):
+#    fail('Release directory already exists: ' + artifactsDestinationDir)
 if not os.path.exists(packageWar):
     fail('Missing war package: ' + packageWar)
 if not os.path.exists(packageZip):
@@ -148,9 +148,9 @@ shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel 
 
 
 # deploy
-print '  Deploy demo and scrum'
+print '  Deploy demo'
 shutil.copyfile(packageWar, '/home/kunagi-demo/tomcat/webapps/kunagi-demo.war')
-shutil.copyfile(packageWar, '/home/scrum/tomcat/webapps/scrum.war')
+#shutil.copyfile(packageWar, '/home/scrum/tomcat/webapps/scrum.war')
 
 
 print 'Kunagi ' + releaseLabel + ' released'
