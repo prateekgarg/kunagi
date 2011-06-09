@@ -102,10 +102,10 @@ print '  Create debian package'
 debianDir = buildDir + '/debian'
 debianDocDir = debianDir + '/usr/share/doc/kunagi'
 packageDeb = buildDir + '/kunagi_' + releaseLabel + '.deb'
-shutil.copy(workDir + '/kunagi/src/debian', buildDir)
-os.mkdir(debianDir + '/var/lib/tomcat6/webapps')
+shutil.copytree(workDir + '/kunagi/src/debian', buildDir + '/debian')
+os.makedirs(debianDir + '/var/lib/tomcat6/webapps')
 shutil.copyfile(packageWar, debianDir + '/var/lib/tomcat6/webapps/kunagi.war')
-os.mkdir(debianDocDir)
+os.makedirs(debianDocDir)
 shutil.copyfile(workDir + '/kunagi/README', debianDocDir + '/README')
 execute('fakeroot dpkg-deb --build debian', buildDir)
 shutil.move(buildDir + '/debian.deb', packageDeb)
