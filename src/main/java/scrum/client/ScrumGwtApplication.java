@@ -19,6 +19,10 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.AGwtDao;
+import ilarkesto.gwt.client.ErrorWrapper;
+
+import java.util.List;
+
 import scrum.client.admin.Auth;
 import scrum.client.admin.LogoutServiceCall;
 import scrum.client.calendar.SimpleEvent;
@@ -39,7 +43,6 @@ import scrum.client.sprint.Task;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -104,20 +107,27 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 
 			@Override
 			public void run() {
-				String url = GWT.getHostPageBaseURL();
-				if (!GWT.isScript()) url += "index.html?gwt.codesvr=localhost:9997";
-				Window.Location.replace(url);
+				Window.Location.replace(ScrumGwt.getLoginUrl());
 			}
 		});
 
 	}
 
 	@Override
-	public void handleServiceCallError(String serviceCall, Throwable ex) {
+	public void handleServiceCallError(String serviceCall, List<ErrorWrapper> errors) {
+		for (ErrorWrapper error : errors) {
+			if ("ilarkesto.webapp.GwtConversationDoesNotExist".equals(error.getName())) {
+				Scope.get().getComponent(Ui.class).getWorkspace().abort("Sitzung abgelaufen.");
+				return;
+			}
+		}
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("<strong>Server service call error</strong><br>");
 		sb.append("Calling service <em>").append(serviceCall).append("</em> failed.<br>");
-		sb.append(Str.toHtml(Str.formatException(ex)));
+		for (ErrorWrapper error : errors) {
+			sb.append(Str.toHtml(error.toString())).append("<br>");
+		}
 		Scope.get().getComponent(Ui.class).getWorkspace().abort(sb.toString());
 	}
 

@@ -32,11 +32,16 @@ import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
 import scrum.client.workspace.Navigator;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ScrumGwt extends Gwt {
+
+	public static String getLoginUrl() {
+		return GWT.getHostPageBaseURL() + "login.html";
+	}
 
 	public static boolean isCurrentUserProductOwner() {
 		Scope scope = Scope.get();

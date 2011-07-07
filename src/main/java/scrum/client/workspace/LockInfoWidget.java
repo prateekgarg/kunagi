@@ -14,7 +14,8 @@
  */
 package scrum.client.workspace;
 
-import ilarkesto.gwt.client.AWidget;
+import scrum.client.ScrumGwt;
+import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,7 +23,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LockInfoWidget extends AWidget {
+public class LockInfoWidget extends AScrumWidget {
 
 	private HTML message;
 	private Image image;
@@ -49,6 +50,11 @@ public class LockInfoWidget extends AWidget {
 	public void showBug(String html) {
 		initialize();
 		image.setUrl("bug.png");
+
+		if (html == null) html = "";
+
+		html += "<br><a href=\"" + ScrumGwt.getLoginUrl() + "\">Neustart</a>";
+
 		message.setHTML(html);
 	}
 

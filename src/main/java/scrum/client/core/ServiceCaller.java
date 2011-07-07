@@ -16,6 +16,11 @@ package scrum.client.core;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
+import ilarkesto.core.time.Tm;
+import ilarkesto.gwt.client.ErrorWrapper;
+
+import java.util.List;
+
 import scrum.client.Dao;
 import scrum.client.DataTransferObject;
 import scrum.client.ScrumGwtApplication;
@@ -26,10 +31,13 @@ import scrum.client.communication.ServerDataReceivedEvent;
 
 public class ServiceCaller extends GServiceCaller {
 
+	private static final long MAX_FAILURE_TIME = 30 * Tm.SECOND;
+
 	private int activeServiceCallCount;
 	private AScrumWidget statusWidget;
 	private ScrumServiceAsync scrumService;
 	protected int conversationNumber = -1;
+	private long lastSuccessfullServiceCallTime;
 
 	public final ScrumServiceAsync getService() {
 		if (scrumService == null) {
@@ -41,6 +49,7 @@ public class ServiceCaller extends GServiceCaller {
 	}
 
 	public void onServiceCallSuccess(DataTransferObject data) {
+		lastSuccessfullServiceCallTime = System.currentTimeMillis();
 		onServiceCallReturn();
 
 		if (data.conversationNumber != null) {
@@ -61,15 +70,16 @@ public class ServiceCaller extends GServiceCaller {
 		new ServerDataReceivedEvent(data).fireInCurrentScope();
 	}
 
-	public void onServiceCallFailure(AServiceCall serviceCall, Throwable ex) {
-		if (serviceCall.isDispensable()) {
-			log.warn("Dispensable service call failed:", serviceCall);
+	public void onServiceCallFailure(AServiceCall serviceCall, List<ErrorWrapper> errors) {
+		long timeFromLastSuccess = System.currentTimeMillis() - lastSuccessfullServiceCallTime;
+		if (serviceCall.isDispensable() && timeFromLastSuccess < MAX_FAILURE_TIME) {
+			log.warn("Dispensable service call failed:", serviceCall, errors);
 			return;
 		}
-		log.error("Service call failed:", serviceCall);
+		log.error("Service call failed:", serviceCall, errors);
 		String serviceCallName = Str.getSimpleName(serviceCall.getClass());
 		serviceCallName = Str.removeSuffix(serviceCallName, "ServiceCall");
-		ScrumGwtApplication.get().handleServiceCallError(serviceCallName, ex);
+		ScrumGwtApplication.get().handleServiceCallError(serviceCallName, errors);
 	}
 
 	public void onServiceCall() {

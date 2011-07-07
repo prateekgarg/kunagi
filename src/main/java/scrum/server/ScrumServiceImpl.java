@@ -741,6 +741,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
+		// if (true) throw new GwtConversationDoesNotExist(666); // TODO remove!!!!!
 		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
 	}
 
