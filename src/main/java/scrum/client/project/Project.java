@@ -14,6 +14,7 @@
  */
 package scrum.client.project;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
@@ -80,6 +81,10 @@ public class Project extends GProject implements ForumSupport {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public boolean isHomepagePublishingEnabled() {
+		return !Str.isBlank(getHomepageDir());
 	}
 
 	public int getTotalMisconducts() {
