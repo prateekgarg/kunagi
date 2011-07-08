@@ -791,13 +791,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		context.bindCurrentThread();
 		try {
 			onStartConversation(conversation);
+			onServiceMethodExecuted(context);
 		} catch (Throwable t) {
 			handleServiceMethodException(conversation.getNumber(), "startSession", t);
-			throw new RuntimeException(t);
 		}
-		scrum.client.DataTransferObject ret = (scrum.client.DataTransferObject) conversation.popNextData();
-		onServiceMethodExecuted(context);
-		return ret;
+		return (scrum.client.DataTransferObject) conversation.popNextData();
 	}
 
 	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
