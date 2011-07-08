@@ -191,9 +191,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public String createUrl(String relativePath) {
 		if (relativePath == null) relativePath = "";
 		String prefix = getBaseUrl();
+
+		// return relative path if base is not defined
 		if (Str.isBlank(prefix)) return relativePath;
+
+		// concat base and relative and return
 		if (prefix.endsWith("/")) {
-			if (relativePath.startsWith("/")) return prefix.substring(0, prefix.length() - 1) + relativePath;
+			if (relativePath.startsWith("/")) return Str.removeSuffix(prefix, "/") + relativePath;
 			return prefix + relativePath;
 		}
 		if (relativePath.startsWith("/")) return prefix + relativePath;
@@ -242,7 +246,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return new Url("index.html");
 	}
 
-	public String getBaseUrl() {
+	private String getBaseUrl() {
 		String url = getSystemConfig().getUrl();
 		return url == null ? "http://localhost:8080/kunagi/" : url;
 	}
@@ -341,7 +345,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public void triggerRegisterNotification(User user, String host) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Kunagi URL: ").append(getBaseUrl()).append("\n");
+		sb.append("Kunagi URL: ").append(createUrl(null)).append("\n");
 		sb.append("Name: ").append(user.getName()).append("\n");
 		sb.append("Email: ").append(user.getEmail()).append("\n");
 		sb.append("OpenID: ").append(user.getOpenId()).append("\n");

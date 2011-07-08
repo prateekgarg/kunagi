@@ -40,7 +40,7 @@ public class JournalRssServlet extends AHttpServlet {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		Project project = projectDao.getById(projectId);
 		resp.setContentType("application/rss+xml");
-		project.writeJournalAsRss(resp.getOutputStream(), "UTF-8", app.getBaseUrl());
+		project.writeJournalAsRss(resp.getOutputStream(), "UTF-8", app.createUrl(null));
 	}
 
 	@Override
