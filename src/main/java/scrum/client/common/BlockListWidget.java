@@ -182,11 +182,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	public final void drop(ABlockWidget<O> block, int toIndex) {
 		Log.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
+		O object = block.getObject();
 		if (block.getList() == this) {
-			list.move(toIndex, block.getObject(), true, moveObserver);
+			list.move(toIndex, object, true, moveObserver);
 			return;
 		}
-		dropAction.onDrop(block.getObject());
+		if (dropAction.isDroppable(object)) dropAction.onDrop(object);
 	}
 
 	public final int size() {
@@ -355,7 +356,8 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	public boolean acceptsDrop(ABlockWidget<O> block) {
 		if (this == block.getList()) return true;
 		if (dummy == null) dummy = blockWidgetFactory.createBlock();
-		return dummy.getClass().getName().equals(block.getClass().getName());
+		if (!dummy.getClass().getName().equals(block.getClass().getName())) return false;
+		return dropAction.isDroppable(block.getObject());
 	}
 
 	private ABlockWidget<O> dummy = null;

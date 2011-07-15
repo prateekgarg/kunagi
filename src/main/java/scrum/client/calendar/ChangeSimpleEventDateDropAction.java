@@ -28,6 +28,11 @@ public class ChangeSimpleEventDateDropAction implements BlockListDropAction<Simp
 	}
 
 	@Override
+	public boolean isDroppable(SimpleEvent event) {
+		return true;
+	}
+
+	@Override
 	public boolean onDrop(SimpleEvent event) {
 		event.setDate(date);
 		new VisibleDataChangedEvent().fireInCurrentScope();
