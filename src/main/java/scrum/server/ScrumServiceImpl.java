@@ -315,8 +315,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			file.deleteFile();
 		}
 
+		if (entity instanceof Task) {
+			// update sprint day snapshot before delete
+			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		}
+
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
+
+		if (entity instanceof Task) onTaskDeleted(conversation, (Task) entity);
 
 		Project project = conversation.getProject();
 		if (project != null) {
@@ -329,6 +336,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			ProjectUserConfig config = project.getUserConfig(user);
 			config.touch();
 			sendToClients(conversation, config);
+		}
+	}
+
+	private void onTaskDeleted(GwtConversation conversation, Task task) {
+		// update sprint day snapshot after delete
+		conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		Requirement requirement = task.getRequirement();
+		if (requirement.isInCurrentSprint()) {
+			if (task.isOwnerSet()) {
+				postProjectEvent(conversation,
+					conversation.getSession().getUser().getName() + " deleted " + task.getReferenceAndLabel(), task);
+			}
 		}
 	}
 
