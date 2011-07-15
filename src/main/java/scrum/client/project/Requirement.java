@@ -112,9 +112,8 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public boolean isDecidable() {
-		if (!isTasksClosed()) return false;
 		if (getRejectDate() != null) return false;
-		return true;
+		return isTasksClosed();
 	}
 
 	public boolean isRejected() {
