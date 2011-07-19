@@ -14,7 +14,7 @@
  */
 package scrum.server.admin;
 
-import ilarkesto.base.Crypt;
+import ilarkesto.base.CryptOneWay;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.core.logging.Log;
@@ -130,12 +130,12 @@ public class User extends GUser {
 
 	@Override
 	public boolean matchesPassword(String password) {
-		return Crypt.cryptWebPassword(password).equals(this.password);
+		return CryptOneWay.cryptWebPassword(password).equals(this.password);
 	}
 
 	@Override
 	public void setPassword(String value) {
-		this.password = Crypt.cryptWebPassword(value);
+		this.password = CryptOneWay.cryptWebPassword(value);
 		fireModified("password=xxx");
 	}
 
