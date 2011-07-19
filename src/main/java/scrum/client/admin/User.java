@@ -123,7 +123,7 @@ public class User extends GUser implements LabelSupport, Comparable<User> {
 
 		@Override
 		public int compare(User a, User b) {
-			return a.getName().compareTo(b.getName());
+			return a.getName().toLowerCase().compareTo(b.getName().toLowerCase());
 		}
 	};
 
