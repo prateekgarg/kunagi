@@ -54,7 +54,7 @@
             <classpath location="src/generated/java" />
             <classpath location="${ilarkesto.dir}/src/main/java" />
         	<classpath>
-        		   <fileset dir="${ilarkesto.dir}/lib" includes="gwt*.jar" />
+        		   <fileset dir="${ilarkesto.dir}/lib" includes="gwt*.jar,validation-api-*.jar" />
         	</classpath>
         </java>
 
