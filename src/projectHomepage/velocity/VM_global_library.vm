@@ -276,7 +276,6 @@ pageTracker._trackPageview();
     <a href="https://www.ohloh.net/p/kunagi" target="_blank">Ohloh</a>,
     <a href="http://userstories.com/products/65-kunagi" target="_blank">UserStories.com</a>,
     <a href="http://alternativeto.net/desktop/kunagi/" target="_blank">AlternativeTo</a>,
-    <a href="http://flattr.com/thing/2486/Kunagi" target="_blank">Flattr</a>,
     <a href="https://launchpad.net/kunagi/" target="_blank">Launchpad</a>,
     <a href="http://www.heise.de/software/download/kunagi/74852" target="_blank">Heise</a>
 #end
@@ -290,7 +289,6 @@ pageTracker._trackPageview();
                 <td style="padding: 0 15px 0 0;"> #plusoneButton($url) </td>
                 <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
                 <td style="padding: 0 15px 0 0;"> #buzzButton() </td>
-                <td style="padding: 0 15px 0 0;"> #flattrButton() </td>
                 <td style="padding: 0 15px 0 0;"> #addthisButton() </td>
             </tr>
         </table>
@@ -345,7 +343,6 @@ pageTracker._trackPageview();
                     #googlecodeBox() #socialspacer()
                     #freshmeatBox() #socialspacer()
                     #launchpadBox() #socialspacer()
-                    #flattrBox() #socialspacer()
                     #heiseBox() #socialspacer()
                 </td>
             </tr>
