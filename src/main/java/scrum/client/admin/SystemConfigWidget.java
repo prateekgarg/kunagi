@@ -34,6 +34,7 @@ public class SystemConfigWidget extends AScrumWidget {
 
 		page.addHeader("Login page");
 		TableBuilder tbLogin = ScrumGwt.createFieldTable();
+		tbLogin.addFieldRow("Instance name", config.getInstanceNameModel());
 		tbLogin.addFieldRow("Custom logo", config.getLoginPageLogoUrlModel());
 		tbLogin.addFieldRow("Login message", config.getLoginPageMessageModel());
 		tbLogin.addFieldRow("Register message", config.getRegisterPageMessageModel());

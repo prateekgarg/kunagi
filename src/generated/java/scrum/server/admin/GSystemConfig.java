@@ -45,6 +45,7 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("instanceName", this.instanceName);
         properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);
@@ -388,6 +389,42 @@ public abstract class GSystemConfig
 
     protected final void updateSmtpFrom(Object value) {
         setSmtpFrom((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - instanceName
+    // -----------------------------------------------------------
+
+    private java.lang.String instanceName;
+
+    public final java.lang.String getInstanceName() {
+        return instanceName;
+    }
+
+    public final void setInstanceName(java.lang.String instanceName) {
+        instanceName = prepareInstanceName(instanceName);
+        if (isInstanceName(instanceName)) return;
+        this.instanceName = instanceName;
+        updateLastModified();
+        fireModified("instanceName="+instanceName);
+    }
+
+    protected java.lang.String prepareInstanceName(java.lang.String instanceName) {
+        instanceName = Str.removeUnreadableChars(instanceName);
+        return instanceName;
+    }
+
+    public final boolean isInstanceNameSet() {
+        return this.instanceName != null;
+    }
+
+    public final boolean isInstanceName(java.lang.String instanceName) {
+        if (this.instanceName == null && instanceName == null) return true;
+        return this.instanceName != null && this.instanceName.equals(instanceName);
+    }
+
+    protected final void updateInstanceName(Object value) {
+        setInstanceName((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1015,6 +1052,7 @@ public abstract class GSystemConfig
             if (property.equals("smtpUser")) updateSmtpUser(value);
             if (property.equals("smtpPassword")) updateSmtpPassword(value);
             if (property.equals("smtpFrom")) updateSmtpFrom(value);
+            if (property.equals("instanceName")) updateInstanceName(value);
             if (property.equals("loginPageLogoUrl")) updateLoginPageLogoUrl(value);
             if (property.equals("loginPageMessage")) updateLoginPageMessage(value);
             if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);

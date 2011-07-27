@@ -552,6 +552,61 @@ public abstract class GSystemConfig
 
     }
 
+    // --- instanceName ---
+
+    private java.lang.String instanceName ;
+
+    public final java.lang.String getInstanceName() {
+        return this.instanceName ;
+    }
+
+    public final SystemConfig setInstanceName(java.lang.String instanceName) {
+        if (isInstanceName(instanceName)) return (SystemConfig)this;
+        this.instanceName = instanceName ;
+        propertyChanged("instanceName", this.instanceName);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isInstanceName(java.lang.String instanceName) {
+        return equals(this.instanceName, instanceName);
+    }
+
+    private transient InstanceNameModel instanceNameModel;
+
+    public InstanceNameModel getInstanceNameModel() {
+        if (instanceNameModel == null) instanceNameModel = createInstanceNameModel();
+        return instanceNameModel;
+    }
+
+    protected InstanceNameModel createInstanceNameModel() { return new InstanceNameModel(); }
+
+    protected class InstanceNameModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_instanceName";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getInstanceName();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setInstanceName(value);
+        }
+        @Override
+        public String getTooltip() { return "Name of this Kunagi installation instance. For identification in the title."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- loginPageLogoUrl ---
 
     private java.lang.String loginPageLogoUrl ;
@@ -1577,6 +1632,7 @@ public abstract class GSystemConfig
         smtpUser  = (java.lang.String) props.get("smtpUser");
         smtpPassword  = (java.lang.String) props.get("smtpPassword");
         smtpFrom  = (java.lang.String) props.get("smtpFrom");
+        instanceName  = (java.lang.String) props.get("instanceName");
         loginPageLogoUrl  = (java.lang.String) props.get("loginPageLogoUrl");
         loginPageMessage  = (java.lang.String) props.get("loginPageMessage");
         registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
@@ -1610,6 +1666,7 @@ public abstract class GSystemConfig
         properties.put("smtpUser", this.smtpUser);
         properties.put("smtpPassword", this.smtpPassword);
         properties.put("smtpFrom", this.smtpFrom);
+        properties.put("instanceName", this.instanceName);
         properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
         properties.put("loginPageMessage", this.loginPageMessage);
         properties.put("registerPageMessage", this.registerPageMessage);

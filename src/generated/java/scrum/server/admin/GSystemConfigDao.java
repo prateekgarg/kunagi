@@ -59,6 +59,8 @@ public abstract class GSystemConfigDao
         smtpPasswordsCache = null;
         systemConfigsBySmtpFromCache.clear();
         smtpFromsCache = null;
+        systemConfigsByInstanceNameCache.clear();
+        instanceNamesCache = null;
         systemConfigsByLoginPageLogoUrlCache.clear();
         loginPageLogoUrlsCache = null;
         systemConfigsByLoginPageMessageCache.clear();
@@ -452,6 +454,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isSmtpFrom(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - instanceName
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsByInstanceNameCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String instanceName) {
+                    return getEntities(new IsInstanceName(instanceName));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsByInstanceName(java.lang.String instanceName) {
+        return systemConfigsByInstanceNameCache.get(instanceName);
+    }
+    private Set<java.lang.String> instanceNamesCache;
+
+    public final Set<java.lang.String> getInstanceNames() {
+        if (instanceNamesCache == null) {
+            instanceNamesCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isInstanceNameSet()) instanceNamesCache.add(e.getInstanceName());
+            }
+        }
+        return instanceNamesCache;
+    }
+
+    private static class IsInstanceName implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsInstanceName(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isInstanceName(value);
         }
 
     }

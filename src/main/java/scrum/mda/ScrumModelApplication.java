@@ -94,6 +94,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("Password, if your SMTP email server requires authentication.");
 			systemConfigModel.addStringProperty("smtpFrom").setTooltip(
 				"Email address, which is used as sender, when Kunagi sends Emails.");
+			systemConfigModel.addStringProperty("instanceName").setTooltip(
+				"Name of this Kunagi installation instance. For identification in the title.");
 			systemConfigModel.addStringProperty("loginPageLogoUrl").setTooltip(
 				"If you wand your custom logo on the login page, type the URL to the image here.");
 			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true)

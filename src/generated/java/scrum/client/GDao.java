@@ -2923,6 +2923,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsByInstanceName(java.lang.String instanceName) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isInstanceName(instanceName)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.SystemConfig> getSystemConfigsByLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
