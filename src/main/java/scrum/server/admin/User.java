@@ -184,9 +184,12 @@ public class User extends GUser {
 		colors.add("darkorange");
 		colors.add("darkorchid");
 		colors.add("darkslateblue");
-		colors.add("darkgray");
 		colors.add("orange");
 		colors.add("green");
+		colors.add("blueviolet");
+		colors.add("darkgoldenrod");
+		colors.add("darkslategray");
+		colors.add("olive");
 		return colors;
 	}
 
