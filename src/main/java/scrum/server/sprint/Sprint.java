@@ -64,7 +64,6 @@ public class Sprint extends GSprint implements Numbered {
 		int burned = 0;
 		for (Task task : requirement.getTasks()) {
 			burned += task.getBurnedWork();
-			// TODO save burned work in sprint?
 			if (task.isClosed()) {
 				taskDao.deleteEntity(task);
 			} else {
@@ -75,7 +74,9 @@ public class Sprint extends GSprint implements Numbered {
 		requirement.setSprint(null);
 		requirement.setDirty(burned > 0);
 		requirement.getProject().moveRequirementToTop(requirement);
-		getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		SprintDaySnapshot daySnapshot = getDaySnapshot(Date.today());
+		daySnapshot.addBurnedWorkFromDeleted(burned);
+		daySnapshot.updateWithCurrentSprint();
 	}
 
 	public void moveToBottom(Requirement requirement) {

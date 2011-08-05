@@ -554,6 +554,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintDaySnapshotModel.addProperty("date", Date.class);
 			sprintDaySnapshotModel.addProperty("remainingWork", int.class);
 			sprintDaySnapshotModel.addProperty("burnedWork", int.class);
+			sprintDaySnapshotModel.addProperty("burnedWorkFromDeleted", int.class);
 		}
 		return sprintDaySnapshotModel;
 	}

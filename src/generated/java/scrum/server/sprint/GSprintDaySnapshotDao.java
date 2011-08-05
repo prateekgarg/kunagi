@@ -50,6 +50,8 @@ public abstract class GSprintDaySnapshotDao
         remainingWorksCache = null;
         sprintDaySnapshotsByBurnedWorkCache.clear();
         burnedWorksCache = null;
+        sprintDaySnapshotsByBurnedWorkFromDeletedCache.clear();
+        burnedWorkFromDeletedsCache = null;
     }
 
     @Override
@@ -224,6 +226,46 @@ public abstract class GSprintDaySnapshotDao
 
         public boolean test(SprintDaySnapshot e) {
             return e.isBurnedWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWorkFromDeleted
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<SprintDaySnapshot>> sprintDaySnapshotsByBurnedWorkFromDeletedCache = new Cache<Integer,Set<SprintDaySnapshot>>(
+            new Cache.Factory<Integer,Set<SprintDaySnapshot>>() {
+                public Set<SprintDaySnapshot> create(Integer burnedWorkFromDeleted) {
+                    return getEntities(new IsBurnedWorkFromDeleted(burnedWorkFromDeleted));
+                }
+            });
+
+    public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWorkFromDeleted(int burnedWorkFromDeleted) {
+        return sprintDaySnapshotsByBurnedWorkFromDeletedCache.get(burnedWorkFromDeleted);
+    }
+    private Set<Integer> burnedWorkFromDeletedsCache;
+
+    public final Set<Integer> getBurnedWorkFromDeleteds() {
+        if (burnedWorkFromDeletedsCache == null) {
+            burnedWorkFromDeletedsCache = new HashSet<Integer>();
+            for (SprintDaySnapshot e : getEntities()) {
+                burnedWorkFromDeletedsCache.add(e.getBurnedWorkFromDeleted());
+            }
+        }
+        return burnedWorkFromDeletedsCache;
+    }
+
+    private static class IsBurnedWorkFromDeleted implements Predicate<SprintDaySnapshot> {
+
+        private int value;
+
+        public IsBurnedWorkFromDeleted(int value) {
+            this.value = value;
+        }
+
+        public boolean test(SprintDaySnapshot e) {
+            return e.isBurnedWorkFromDeleted(value);
         }
 
     }
