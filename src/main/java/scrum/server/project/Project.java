@@ -222,6 +222,7 @@ public class Project extends GProject {
 			item.setDescription(event.getLabel());
 			String link = baseUrl + "#project=" + getId();
 			if (event.isSubjectSet()) link += "|entity=" + event.getSubjectId();
+			link += "|fromEvent=" + event.getId();
 			item.setLink(link);
 			item.setGuid(link);
 			item.setPubDate(event.getDateAndTime());
