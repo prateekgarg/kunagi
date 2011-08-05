@@ -38,6 +38,7 @@ import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
 import scrum.server.admin.User;
 import scrum.server.collaboration.Comment;
+import scrum.server.collaboration.Subject;
 import scrum.server.estimation.RequirementEstimationVote;
 import scrum.server.issues.Issue;
 import scrum.server.journal.Change;
@@ -205,8 +206,8 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void requestForum() {
-		app.getSubjectDao().newEntityInstance().setProject(project);
-		app.getCommentDao().newEntityInstance().setParent(project);
+		Subject subject = app.getSubjectDao().postSubject(project, "Test subject");
+		app.getCommentDao().postComment(subject, "hello world", "anonymous", null, true);
 		service.onRequestForum(conversation, true);
 		assertConversationWithoutErrors(conversation);
 		assertContainsEntities(conversation, project.getSubjects());

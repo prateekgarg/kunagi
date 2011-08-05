@@ -18,6 +18,7 @@ import ilarkesto.base.Money;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
+import ilarkesto.base.time.DateAndTime;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
 import ilarkesto.rss.Rss20Builder;
@@ -614,7 +615,8 @@ public class Project extends GProject {
 		if (comments.size() < 2) return comments;
 		Comment latest = null;
 		for (Comment comment : comments) {
-			if (latest == null || comment.getDateAndTime().isAfter(latest.getDateAndTime())) latest = comment;
+			DateAndTime dateAndTime = comment.getDateAndTime();
+			if (latest == null || dateAndTime.isAfter(latest.getDateAndTime())) latest = comment;
 		}
 		assert latest != null;
 		return Utl.toSet(latest);
