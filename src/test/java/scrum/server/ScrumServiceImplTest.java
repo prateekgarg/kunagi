@@ -105,7 +105,7 @@ public class ScrumServiceImplTest extends ATest {
 		assertConversationWithoutErrors(conversation);
 		assertEquals(conversation.getNextData().getEntities().size(), 1);
 		Project project = getEntityByType(conversation, Project.class);
-		assertStartsWith(project.getLabel(), "Example Project");
+		assertStartsWith(project.getLabel(), "New Project");
 		assertTrue(project.containsAdmin(duke));
 		assertTrue(project.containsParticipant(duke));
 		assertTrue(project.containsProductOwner(duke));

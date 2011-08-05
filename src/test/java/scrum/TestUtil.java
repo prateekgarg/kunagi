@@ -55,7 +55,7 @@ public class TestUtil {
 		Log.setDebugEnabled(false);
 		Sys.setHeadless(true);
 
-		KunagiRootConfig config = new KunagiRootConfig(new File(ATest.OUTPUT_DIR + "/runtimedata"), null);
+		KunagiRootConfig config = new KunagiRootConfig(new File(ATest.INPUT_DIR + "/config.properties"), null);
 		app = new ScrumWebApplication(config);
 		app.start();
 

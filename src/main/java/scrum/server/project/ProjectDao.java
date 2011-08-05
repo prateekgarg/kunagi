@@ -46,10 +46,22 @@ public class ProjectDao extends GProjectDao {
 
 	public Project postProject(User admin) {
 		Project project = newEntityInstance();
-		project.setLabel("New Project");
+		project.setLabel(createProjectLabel("New Project"));
 		project.addAdmin(admin);
 		saveEntity(project);
 		return project;
+	}
+
+	private String createProjectLabel(String labelPrefix) {
+		String label = labelPrefix;
+		int count = 1;
+		Project project = getProjectByLabel(label);
+		while (project != null) {
+			count++;
+			label = label + " " + count;
+			project = getProjectByLabel(label);
+		}
+		return label;
 	}
 
 	public void scanFiles() {
@@ -67,7 +79,6 @@ public class ProjectDao extends GProjectDao {
 		// team.remove(sm);
 
 		Project project = postProject(owner);
-		project.setLabel("Example Project # " + DateAndTime.now());
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
 		project.setSupportEmail("support@kunagi.org");
