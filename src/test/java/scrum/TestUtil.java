@@ -21,6 +21,7 @@ import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.Time;
 import ilarkesto.core.logging.Log;
+import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.testng.ATest;
 
@@ -55,7 +56,10 @@ public class TestUtil {
 		Log.setDebugEnabled(false);
 		Sys.setHeadless(true);
 
-		KunagiRootConfig config = new KunagiRootConfig(new File(ATest.INPUT_DIR + "/config.properties"), null);
+		File configFileOrig = new File(ATest.INPUT_DIR + "/config.properties");
+		File configFile = new File(ATest.OUTPUT_DIR + "/config.properties");
+		IO.copyFile(configFileOrig, configFile);
+		KunagiRootConfig config = new KunagiRootConfig(configFile, null);
 		app = new ScrumWebApplication(config);
 		app.start();
 
