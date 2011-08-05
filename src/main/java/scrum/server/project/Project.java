@@ -85,6 +85,13 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public void moveRequirementToTop(Requirement requirement) {
+		List<String> orderIds = getRequirementsOrderIds();
+		orderIds.remove(getId());
+		orderIds.add(0, getId());
+		setRequirementsOrderIds(orderIds);
+	}
+
 	public void addRequirementsOrderId(int index, String id) {
 		List<String> ids = getRequirementsOrderIds();
 		ids.add(index, id);

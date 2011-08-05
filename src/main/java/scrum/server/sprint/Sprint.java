@@ -51,6 +51,40 @@ public class Sprint extends GSprint implements Numbered {
 		return releases.isEmpty() ? null : Utl.getElement(releases, 0);
 	}
 
+	public void pullRequirement(Requirement requirement) {
+		for (Task task : requirement.getTasks()) {
+			task.reset();
+		}
+		requirement.setSprint(this);
+		moveToBottom(requirement);
+		getDaySnapshot(Date.today()).updateWithCurrentSprint();
+	}
+
+	public void kickRequirement(Requirement requirement) {
+		int burned = 0;
+		for (Task task : requirement.getTasks()) {
+			burned += task.getBurnedWork();
+			// TODO save burned work in sprint?
+			if (task.isClosed()) {
+				taskDao.deleteEntity(task);
+			} else {
+				task.reset();
+			}
+		}
+
+		requirement.setSprint(null);
+		requirement.setDirty(burned > 0);
+		requirement.getProject().moveRequirementToTop(requirement);
+		getDaySnapshot(Date.today()).updateWithCurrentSprint();
+	}
+
+	public void moveToBottom(Requirement requirement) {
+		List<String> orderIds = getRequirementsOrderIds();
+		orderIds.remove(requirement.getId());
+		orderIds.add(requirement.getId());
+		setRequirementsOrderIds(orderIds);
+	}
+
 	public void close() {
 		float velocity = 0;
 		StringBuilder releaseNotes = new StringBuilder();

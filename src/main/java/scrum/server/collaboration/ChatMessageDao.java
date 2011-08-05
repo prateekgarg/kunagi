@@ -27,4 +27,12 @@ public class ChatMessageDao extends GChatMessageDao {
 		return msg;
 	}
 
+	@Override
+	public void ensureIntegrity() {
+		super.ensureIntegrity();
+		for (ChatMessage message : getEntities()) {
+			deleteEntity(message);
+		}
+	}
+
 }

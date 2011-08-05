@@ -145,6 +145,43 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onPullStoryToSprint(GwtConversation conversation, String storyId) {
+		assertProjectSelected(conversation);
+		Requirement story = requirementDao.getById(storyId);
+		Project project = conversation.getProject();
+		Sprint sprint = project.getCurrentSprint();
+
+		sprint.pullRequirement(story);
+
+		User currentUser = conversation.getSession().getUser();
+		postProjectEvent(conversation, currentUser.getName() + " pulled " + story.getReferenceAndLabel()
+				+ " to current sprint", story);
+
+		sendToClients(conversation, sprint);
+		sendToClients(conversation, story);
+		sendToClients(conversation, story.getTasks());
+	}
+
+	@Override
+	public void onKickStoryFromSprint(GwtConversation conversation, String storyId) {
+		assertProjectSelected(conversation);
+		Requirement story = requirementDao.getById(storyId);
+		Sprint sprint = story.getSprint();
+		Set<Task> tasks = story.getTasks();
+
+		sprint.kickRequirement(story);
+
+		User currentUser = conversation.getSession().getUser();
+		postProjectEvent(conversation, currentUser.getName() + " kicked " + story.getReferenceAndLabel()
+				+ " from current sprint", story);
+
+		sendToClients(conversation, tasks);
+		sendToClients(conversation, story);
+		sendToClients(conversation, sprint);
+		sendToClients(conversation, sprint.getProject());
+	}
+
+	@Override
 	public void onSendIssueReplyEmail(GwtConversation conversation, String issueId, String from, String to,
 			String subject, String text) {
 		assertProjectSelected(conversation);
