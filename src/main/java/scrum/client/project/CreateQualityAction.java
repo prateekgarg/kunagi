@@ -29,7 +29,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 	public String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder("Create a new Quality.");
 
-		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 
 		return tb.getTooltip();
 	}
@@ -41,7 +41,7 @@ public class CreateQualityAction extends GCreateQualityAction {
 
 	@Override
 	public boolean isPermitted() {
-		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) return false;
+		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
 		return true;
 	}
 
