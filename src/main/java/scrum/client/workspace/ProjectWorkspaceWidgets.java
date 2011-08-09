@@ -19,7 +19,6 @@ import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.SwitcherWidget;
-import scrum.client.ScrumGwt;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.SystemConfigWidget;
@@ -314,8 +313,6 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 	public String getPageForEntity(String entityId) {
 		try {
-			if (ScrumGwt.isEntityReferenceOrWikiPage(entityId))
-				return getPageForEntity(dao.getEntityByReference(entityId));
 			return getPageForEntity(dao.getEntityByReference(entityId));
 		} catch (EntityDoesNotExistException ex) {
 			return null;
@@ -327,8 +324,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		if (getWorkarea().isShowing(forum)) return Page.getPageName(forum);
 
 		if (entity instanceof Task) {
-			if (getWorkarea().isShowing(whiteboard)) return Page.getPageName(whiteboard);
-			return Page.getPageName(sprintBacklog);
+			if (getWorkarea().isShowing(sprintBacklog)) return Page.getPageName(sprintBacklog);
+			return Page.getPageName(whiteboard);
 		}
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
