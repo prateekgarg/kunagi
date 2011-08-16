@@ -102,6 +102,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return config;
 	}
 
+	@Override
+	public String getApplicationName() {
+		return "kunagi";
+	}
+
 	public ScrumEntityfilePreparator getEntityfilePreparator() {
 		if (entityfilePreparator == null) {
 			entityfilePreparator = new ScrumEntityfilePreparator();

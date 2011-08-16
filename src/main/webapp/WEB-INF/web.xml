@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
-	<display-name>scrum</display-name>
+	<display-name>kunagi</display-name>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -164,4 +164,8 @@
         <url-pattern>/confirmEmail</url-pattern>
     </servlet-mapping>
 
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    
 </web-app>
