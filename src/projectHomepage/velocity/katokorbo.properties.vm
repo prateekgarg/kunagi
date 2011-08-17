@@ -1,0 +1,2 @@
+version=$project.currentRelease
+warUrl=http://kunagi.org/releases/$project.currentRelease/kunagi.war
