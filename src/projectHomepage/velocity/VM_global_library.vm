@@ -47,7 +47,6 @@
             #navigLink("development", "Development", $page)
             #navigLink("team", "Kunagi Team", $page)
             
-            #search()                
     </div>
     </td>
     
