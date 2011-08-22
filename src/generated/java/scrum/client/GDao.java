@@ -1417,6 +1417,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsByReleasingInfo(java.lang.String releasingInfo) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isReleasingInfo(releasingInfo)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- ProjectEvent ---
 
     protected Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();

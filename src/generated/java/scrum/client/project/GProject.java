@@ -2138,6 +2138,64 @@ public abstract class GProject
 
     }
 
+    // --- releasingInfo ---
+
+    private java.lang.String releasingInfo ;
+
+    public final java.lang.String getReleasingInfo() {
+        return this.releasingInfo ;
+    }
+
+    public final Project setReleasingInfo(java.lang.String releasingInfo) {
+        if (isReleasingInfo(releasingInfo)) return (Project)this;
+        this.releasingInfo = releasingInfo ;
+        propertyChanged("releasingInfo", this.releasingInfo);
+        return (Project)this;
+    }
+
+    public final boolean isReleasingInfo(java.lang.String releasingInfo) {
+        return equals(this.releasingInfo, releasingInfo);
+    }
+
+    private transient ReleasingInfoModel releasingInfoModel;
+
+    public ReleasingInfoModel getReleasingInfoModel() {
+        if (releasingInfoModel == null) releasingInfoModel = createReleasingInfoModel();
+        return releasingInfoModel;
+    }
+
+    protected ReleasingInfoModel createReleasingInfoModel() { return new ReleasingInfoModel(); }
+
+    protected class ReleasingInfoModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_releasingInfo";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getReleasingInfo();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setReleasingInfo(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Custom info text for the releases page. Could be used for a release checklist."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -2184,6 +2242,7 @@ public abstract class GProject
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastOpenedDateAndTimeAsString);
         freeDays  = (Integer) props.get("freeDays");
+        releasingInfo  = (java.lang.String) props.get("releasingInfo");
         updateLocalModificationTime();
     }
 
@@ -2230,6 +2289,7 @@ public abstract class GProject
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
         properties.put("freeDays", this.freeDays);
+        properties.put("releasingInfo", this.releasingInfo);
     }
 
     public final java.util.List<scrum.client.sprint.Sprint> getSprints() {

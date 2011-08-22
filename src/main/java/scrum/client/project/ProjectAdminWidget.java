@@ -34,25 +34,26 @@ public class ProjectAdminWidget extends AScrumWidget {
 
 		PagePanel page = new PagePanel();
 
-		page.addHeader("Project Properties");
+		page.addHeader("Project properties");
 		TableBuilder tbPro = ScrumGwt.createFieldTable();
 		tbPro.addFieldRow("Name", project.getLabelModel());
 		tbPro.addFieldRow("Vision", new RichtextEditorWidget(project.getVisionModel()));
 		ProjectBlock.addRolesFieldRows(project, tbPro);
 		tbPro.addFieldRow("Free days", new WeekdaySelectorEditorWidget(project.getFreeDaysWeekdaySelectorModel()));
+		tbPro.addFieldRow("Release info", project.getReleasingInfoModel());
 		page.addSection(tbPro.createTable());
 
-		page.addHeader("Product Descriptions");
+		page.addHeader("Product descriptions");
 		TableBuilder tbDescr = ScrumGwt.createFieldTable();
 		tbDescr.addFieldRow("Name", project.getProductLabelModel());
 		tbDescr.addFieldRow("Tagline", project.getShortDescriptionModel());
-		tbDescr.addFieldRow("Short Description", project.getDescriptionModel());
-		tbDescr.addFieldRow("Long Description", project.getLongDescriptionModel());
+		tbDescr.addFieldRow("Short description", project.getDescriptionModel());
+		tbDescr.addFieldRow("Long description", project.getLongDescriptionModel());
 		page.addSection(tbDescr.createTable());
 
-		page.addHeader("Project Homepage", new ButtonWidget(new UpdateProjectHomepageAction(project)));
+		page.addHeader("Project homepage", new ButtonWidget(new UpdateProjectHomepageAction(project)));
 		TableBuilder tbHomepage = ScrumGwt.createFieldTable();
-		tbHomepage.addFieldRow("Homepage Directory", project.getHomepageDirModel());
+		tbHomepage.addFieldRow("Homepage directory", project.getHomepageDirModel());
 		tbHomepage.addFieldRow("Homepage URL", project.getHomepageUrlModel());
 		tbHomepage.addFieldRow("Update automatically", project.getAutoUpdateHomepageModel());
 		page.addSection(tbHomepage.createTable());
@@ -62,9 +63,9 @@ public class ProjectAdminWidget extends AScrumWidget {
 		tbScripts.addFieldRow("Release script", project.getReleaseScriptPathModel());
 		page.addSection(tbScripts.createTable());
 
-		page.addHeader("Project Support");
+		page.addHeader("Project support");
 		TableBuilder tbSupport = ScrumGwt.createFieldTable();
-		tbSupport.addFieldRow("Support Email", project.getSupportEmailModel());
+		tbSupport.addFieldRow("Support email", project.getSupportEmailModel());
 		tbSupport.addFieldRow("Issue reply template", project.getIssueReplyTemplateModel());
 		page.addSection(tbSupport.createTable());
 

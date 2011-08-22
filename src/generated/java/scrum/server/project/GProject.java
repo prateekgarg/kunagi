@@ -76,6 +76,7 @@ public abstract class GProject
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
         properties.put("freeDays", this.freeDays);
+        properties.put("releasingInfo", this.releasingInfo);
     }
 
     public int compareTo(Project other) {
@@ -1932,6 +1933,42 @@ public abstract class GProject
         setFreeDays((Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - releasingInfo
+    // -----------------------------------------------------------
+
+    private java.lang.String releasingInfo;
+
+    public final java.lang.String getReleasingInfo() {
+        return releasingInfo;
+    }
+
+    public final void setReleasingInfo(java.lang.String releasingInfo) {
+        releasingInfo = prepareReleasingInfo(releasingInfo);
+        if (isReleasingInfo(releasingInfo)) return;
+        this.releasingInfo = releasingInfo;
+        updateLastModified();
+        fireModified("releasingInfo="+releasingInfo);
+    }
+
+    protected java.lang.String prepareReleasingInfo(java.lang.String releasingInfo) {
+        releasingInfo = Str.removeUnreadableChars(releasingInfo);
+        return releasingInfo;
+    }
+
+    public final boolean isReleasingInfoSet() {
+        return this.releasingInfo != null;
+    }
+
+    public final boolean isReleasingInfo(java.lang.String releasingInfo) {
+        if (this.releasingInfo == null && releasingInfo == null) return true;
+        return this.releasingInfo != null && this.releasingInfo.equals(releasingInfo);
+    }
+
+    protected final void updateReleasingInfo(Object value) {
+        setReleasingInfo((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1977,6 +2014,7 @@ public abstract class GProject
             if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
             if (property.equals("freeDays")) updateFreeDays(value);
+            if (property.equals("releasingInfo")) updateReleasingInfo(value);
         }
     }
 

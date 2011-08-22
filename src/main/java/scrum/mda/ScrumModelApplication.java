@@ -260,6 +260,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
 			getApplicationModel().addCreateAction(projectModel);
+			projectModel.addStringProperty("releasingInfo").setRichtext(true)
+					.setTooltip("Custom info text for the releases page. Could be used for a release checklist.");
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");
 			projectModel.addAction("UpdateProjectHomepage");

@@ -120,6 +120,8 @@ public abstract class GProjectDao
         lastOpenedDateAndTimesCache = null;
         projectsByFreeDaysCache.clear();
         freeDayssCache = null;
+        projectsByReleasingInfoCache.clear();
+        releasingInfosCache = null;
     }
 
     @Override
@@ -1716,6 +1718,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isFreeDays(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - releasingInfo
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsByReleasingInfoCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String releasingInfo) {
+                    return getEntities(new IsReleasingInfo(releasingInfo));
+                }
+            });
+
+    public final Set<Project> getProjectsByReleasingInfo(java.lang.String releasingInfo) {
+        return projectsByReleasingInfoCache.get(releasingInfo);
+    }
+    private Set<java.lang.String> releasingInfosCache;
+
+    public final Set<java.lang.String> getReleasingInfos() {
+        if (releasingInfosCache == null) {
+            releasingInfosCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isReleasingInfoSet()) releasingInfosCache.add(e.getReleasingInfo());
+            }
+        }
+        return releasingInfosCache;
+    }
+
+    private static class IsReleasingInfo implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsReleasingInfo(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isReleasingInfo(value);
         }
 
     }
