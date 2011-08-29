@@ -285,7 +285,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@Test
 	public void requestComments() {
-		Comment comment = app.getCommentDao().newEntityInstance();
+		Comment comment = app.getCommentDao().postComment(project, "test comment", "duke", "duke@kunagi.org", true);
 		comment.setParent(project);
 		service.onRequestComments(conversation, project.getId());
 		assertConversationWithoutErrors(conversation);
