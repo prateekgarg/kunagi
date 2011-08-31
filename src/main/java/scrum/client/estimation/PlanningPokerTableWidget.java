@@ -106,7 +106,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			qCard = new PlanningPokerCardWidget(-1, true, new SetEstimationClickHandler(-1),
 					"Put this card on the table.");
 		}
-		tb.add(new PlanningPokerCardSlotWidget("I don't know.", qCard));
+		tb.add(new PlanningPokerCardSlotWidget("No idea", qCard));
 		tb.add(Gwt.createSpacer(5, 1));
 
 		// value cards
