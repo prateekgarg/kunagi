@@ -130,7 +130,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 
 	@Override
 	protected String getFilename() {
-		return "sprint";
+		return "report-" + sprint.getReference();
 	}
 
 }
