@@ -20,7 +20,9 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.animation.AnimatingFlowPanel.InsertCallback;
+import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.IntegerEditorWidget;
+import ilarkesto.gwt.client.editor.TextOutputWidget;
 
 import java.util.Collections;
 import java.util.List;
@@ -108,6 +110,15 @@ public class ProductBacklogWidget extends AScrumWidget {
 	private Widget getVelocityWidget() {
 		if (velocityWidget == null) {
 			TableBuilder tb = ScrumGwt.createFieldTable();
+			tb.addField("In current Sprint", new TextOutputWidget(new AFieldModel<String>() {
+
+				@Override
+				public String getValue() {
+					Float work = getCurrentSprint().getEstimatedRequirementWork();
+					if (work == null) return "nothing";
+					return (work < 1 ? work.toString() : String.valueOf(work.intValue())) + " SP";
+				}
+			}));
 			tb.addField("Assumed Velocity", new IntegerEditorWidget(getCurrentProject().getVelocityModel()) {
 
 				@Override
