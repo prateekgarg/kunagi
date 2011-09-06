@@ -15,7 +15,11 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
+
+import java.util.List;
+
 import scrum.client.common.AScrumWidget;
+import scrum.client.core.AServiceCall;
 import scrum.client.core.ServiceCaller;
 import scrum.client.test.ScrumStatusWidget;
 
@@ -53,11 +57,11 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		int count = serviceCaller.getActiveServiceCallCount();
-		if (count > 0) {
-			if (!isOn()) switchOn();
-		} else {
+		List<AServiceCall> calls = serviceCaller.getActiveServiceCalls();
+		if (calls.isEmpty()) {
 			if (isOn()) switchOff();
+		} else {
+			if (!isOn()) switchOn();
 		}
 	}
 

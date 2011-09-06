@@ -19,6 +19,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.Tm;
 import ilarkesto.gwt.client.ErrorWrapper;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import scrum.client.Dao;
@@ -33,7 +34,7 @@ public class ServiceCaller extends GServiceCaller {
 
 	private static final long MAX_FAILURE_TIME = 30 * Tm.SECOND;
 
-	private int activeServiceCallCount;
+	private List<AServiceCall> activeServiceCalls = new LinkedList<AServiceCall>();
 	private AScrumWidget statusWidget;
 	private ScrumServiceAsync scrumService;
 	protected int conversationNumber = -1;
@@ -50,7 +51,6 @@ public class ServiceCaller extends GServiceCaller {
 
 	public void onServiceCallSuccess(DataTransferObject data) {
 		lastSuccessfullServiceCallTime = System.currentTimeMillis();
-		onServiceCallReturn();
 
 		if (data.conversationNumber != null) {
 			conversationNumber = data.conversationNumber;
@@ -82,19 +82,18 @@ public class ServiceCaller extends GServiceCaller {
 		ScrumGwtApplication.get().handleServiceCallError(serviceCallName, errors);
 	}
 
-	public void onServiceCall() {
-		activeServiceCallCount++;
+	public void onServiceCall(AServiceCall call) {
+		activeServiceCalls.add(call);
 		if (statusWidget != null) statusWidget.update();
 	}
 
-	public void onServiceCallReturn() {
-		activeServiceCallCount--;
-		if (activeServiceCallCount < 0) activeServiceCallCount = 0;
+	public void onServiceCallReturn(AServiceCall call) {
+		activeServiceCalls.remove(call);
 		if (statusWidget != null) statusWidget.update();
 	}
 
-	public int getActiveServiceCallCount() {
-		return activeServiceCallCount;
+	public List<AServiceCall> getActiveServiceCalls() {
+		return activeServiceCalls;
 	}
 
 	public int getConversationNumber() {

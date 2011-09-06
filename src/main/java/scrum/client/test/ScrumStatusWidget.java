@@ -14,6 +14,7 @@
  */
 package scrum.client.test;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -101,7 +102,8 @@ public class ScrumStatusWidget extends AScrumWidget {
 
 	private Widget createStateInformation() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
-		tb.addFieldRow("activeServiceCallCount", new Label(String.valueOf(serviceCaller.getActiveServiceCallCount())));
+		tb.addFieldRow("activeServiceCallCount",
+			new Label(String.valueOf(Str.concat(serviceCaller.getActiveServiceCalls(), ", "))));
 		tb.addFieldRow("conversationNumber", new Label(String.valueOf(serviceCaller.getConversationNumber())));
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));

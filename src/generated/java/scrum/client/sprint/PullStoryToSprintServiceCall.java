@@ -11,8 +11,8 @@ public class PullStoryToSprintServiceCall extends scrum.client.core.AServiceCall
     }
 
     public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall();
-        serviceCaller.getService().pullStoryToSprint(serviceCaller.getConversationNumber(), storyId, new DefaultCallback(returnHandler));
+        serviceCaller.onServiceCall(this);
+        serviceCaller.getService().pullStoryToSprint(serviceCaller.getConversationNumber(), storyId, new DefaultCallback(this, returnHandler));
     }
 
     @Override

@@ -27,9 +27,11 @@ public abstract class AServiceCall implements ServiceCall {
 	protected class DefaultCallback implements AsyncCallback<DataTransferObject> {
 
 		private Runnable returnHandler;
+		private AServiceCall serviceCall;
 
-		public DefaultCallback(Runnable returnHandler) {
+		public DefaultCallback(AServiceCall serviceCall, Runnable returnHandler) {
 			this.returnHandler = returnHandler;
+			this.serviceCall = serviceCall;
 		}
 
 		@Override
@@ -39,13 +41,14 @@ public abstract class AServiceCall implements ServiceCall {
 				serviceCaller.onServiceCallFailure(AServiceCall.this, errors);
 				return;
 			}
+			serviceCaller.onServiceCallReturn(serviceCall);
 			serviceCaller.onServiceCallSuccess(data);
 			if (returnHandler != null) returnHandler.run();
 		}
 
 		@Override
 		public void onFailure(Throwable ex) {
-			serviceCaller.onServiceCallReturn();
+			serviceCaller.onServiceCallReturn(AServiceCall.this);
 			serviceCaller.onServiceCallFailure(AServiceCall.this, Utl.toList(new ErrorWrapper(ex)));
 		}
 
