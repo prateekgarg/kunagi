@@ -136,7 +136,7 @@ public abstract class GEmoticon
 
     protected void repairDeadOwnerReference(String entityId) {
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
-            setOwner(null);
+            repairMissingMaster();
         }
     }
 
@@ -219,6 +219,10 @@ public abstract class GEmoticon
         } catch (EntityDoesNotExistException ex) {
             LOG.info("Repairing dead parent reference");
             repairDeadParentReference(this.parentId);
+        }
+        if (!isOwnerSet()) {
+            repairMissingMaster();
+            return;
         }
         try {
             getOwner();
