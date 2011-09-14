@@ -53,7 +53,7 @@ public class LockInfoWidget extends AScrumWidget {
 
 		if (html == null) html = "";
 
-		html += "<br><a href=\"" + ScrumGwt.getLoginUrl() + "\">Neustart</a>";
+		html += "<br><a href=\"" + ScrumGwt.getLoginUrl() + "\">Reload</a>";
 
 		message.setHTML(html);
 	}
