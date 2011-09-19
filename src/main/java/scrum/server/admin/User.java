@@ -69,7 +69,9 @@ public class User extends GUser {
 
 		String urlBase = webApplication.createUrl(null);
 		StringBuilder sb = new StringBuilder();
-		sb.append("You have created a Kunagi account on ").append(urlBase).append("\n");
+		String nameSuffix = webApplication.getSystemConfig().isInstanceNameSet() ? " @ "
+				+ webApplication.getSystemConfig().getInstanceName() : "";
+		sb.append("You have created an account for Kunagi" + nameSuffix).append(urlBase).append("\n");
 		sb.append("\n");
 		sb.append("Please visit the following link, to confirm your email: ").append(urlBase)
 				.append("confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
