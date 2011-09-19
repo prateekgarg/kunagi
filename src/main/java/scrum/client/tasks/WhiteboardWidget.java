@@ -176,6 +176,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 	private BlockListWidget<Requirement> createRequirementList(Requirement requirement) {
 		BlockListWidget<Requirement> list = new BlockListWidget<Requirement>(RequirementInWhiteboardBlock.FACTORY);
+		list.setSelectionManager(getSelectionManager());
 		list.addAdditionalStyleName("WhiteboardWidget-requirement-list");
 		list.setDnd(false);
 		list.setDndSorting(false);
