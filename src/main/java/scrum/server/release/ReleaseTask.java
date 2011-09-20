@@ -62,7 +62,7 @@ public class ReleaseTask extends ATask {
 				release.setScriptRunning(false);
 				transactionService.commit();
 				String message = "Releasing failed: " + release.getReferenceAndLabel();
-				AEntity chatMessage = chatMessageDao.createChatMessage(project, message);
+				AEntity chatMessage = chatMessageDao.postChatMessage(project, message);
 				webApplication.sendToConversationsByProject(project, chatMessage);
 				webApplication.sendToConversationsByProject(project, release);
 				return;

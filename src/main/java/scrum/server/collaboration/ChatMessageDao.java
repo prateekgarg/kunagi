@@ -19,11 +19,16 @@ import scrum.server.project.Project;
 
 public class ChatMessageDao extends GChatMessageDao {
 
-	public ChatMessage createChatMessage(Project project, String text) {
+	public ChatMessage postChatMessage(Project project, String text) {
+		return postChatMessage(project, text, DateAndTime.now());
+	}
+
+	public ChatMessage postChatMessage(Project project, String text, DateAndTime dateAndTime) {
 		ChatMessage msg = newEntityInstance();
 		msg.setProject(project);
-		msg.setDateAndTime(DateAndTime.now());
+		msg.setDateAndTime(dateAndTime);
 		msg.setText(text);
+		saveEntity(msg);
 		return msg;
 	}
 

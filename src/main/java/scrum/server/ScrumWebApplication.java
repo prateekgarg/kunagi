@@ -275,7 +275,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public void postProjectEvent(Project project, String message, AEntity subject) {
 		ProjectEvent event = getProjectEventDao().postEvent(project, message, subject);
 		sendToConversationsByProject(project, event);
-		sendToConversationsByProject(project, event.createChatMessage());
+		sendToConversationsByProject(project, event.postChatMessage());
 	}
 
 	public void sendToConversationsByProject(GwtConversation conversation, AEntity entity) {
