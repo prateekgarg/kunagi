@@ -16,30 +16,29 @@ package scrum.client.impediments;
 
 import scrum.client.common.TooltipBuilder;
 
-public class CloseImpedimentAction extends GCloseImpedimentAction {
+public class ReopenImpedimentAction extends GCloseImpedimentAction {
 
-	public CloseImpedimentAction(scrum.client.impediments.Impediment impediment) {
+	public ReopenImpedimentAction(scrum.client.impediments.Impediment impediment) {
 		super(impediment);
 	}
 
 	@Override
 	public String getLabel() {
-		return "Close";
+		return "Reopen";
 	}
 
 	@Override
 	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Close this Impediment, marking it as solved or obsolete.");
+		TooltipBuilder tb = new TooltipBuilder("Reopen this Impediment, marking it as impeding.");
 		if (!impediment.getProject().isScrumTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		}
-
 		return tb.getTooltip();
 	}
 
 	@Override
 	public boolean isExecutable() {
-		if (impediment.isClosed()) return false;
+		if (!impediment.isClosed()) return false;
 		return true;
 	}
 
@@ -51,7 +50,7 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 
 	@Override
 	protected void onExecute() {
-		impediment.setClosed(true);
+		impediment.setClosed(false);
 		addUndo(new Undo());
 	}
 
@@ -59,12 +58,12 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 
 		@Override
 		public String getLabel() {
-			return "Undo Close " + impediment.getReference() + " " + impediment.getLabel();
+			return "Undo Reopen " + impediment.getReferenceAndLabel();
 		}
 
 		@Override
 		protected void onUndo() {
-			impediment.setClosed(false);
+			impediment.setClosed(true);
 		}
 
 	}
