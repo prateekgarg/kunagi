@@ -155,7 +155,9 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<div class='PlanningPokerTableWidget-estimationHelp'>");
 			sb.append("<span>");
-			sb.append("Other Stories estimated with ").append(ScrumGwt.getEstimationAsString(estimation)).append(":");
+			sb.append("Other stuff estimated with ")
+					.append(ScrumGwt.getEstimationAsString(estimation, requirement.getProject().getEffortUnit()))
+					.append(":");
 			sb.append("</span>");
 
 			sb.append("<ul>");
@@ -164,9 +166,14 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 				Iterator<Requirement> it = stories.iterator();
 				while (it.hasNext()) {
 					Requirement some = it.next();
+					if (some.getEstimatedWork() == estimation / 2) {
+						sb.append("<strong>twice as much as</strong> ");
+					} else if (some.getEstimatedWork() == estimation * 2) {
+						sb.append("<strong>half as much as</strong> ");
+					}
 					sb.append(some.toHtml());
 					if (some.getEstimatedWork() != estimation) {
-						sb.append(" (").append(some.getEstimatedWorkAsString()).append(")");
+						sb.append(" (").append(some.getEstimatedWorkWithUnit()).append(")");
 					}
 					if (it.hasNext()) sb.append(" <strong>and</strong> ");
 				}
