@@ -16,10 +16,9 @@ public class SplitRequirementAction extends GSplitRequirementAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tt = new TooltipBuilder("Create a new substory from this (epic) story.");
-		if (!requirement.getProject().isProductOwner(getCurrentUser())) tt.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
-		return tt.getTooltip();
+	public void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create a new substory from this (epic) story.");
+		if (!requirement.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 	}
 
 	@Override

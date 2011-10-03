@@ -28,16 +28,13 @@ public class DeleteTaskAction extends GDeleteTaskAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Delete this Task permanently.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Delete this Task permanently.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) tb.addRemark("Another user owns this Task.");
 		}
-
-		return tb.getTooltip();
 	}
 
 	@Override

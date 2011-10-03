@@ -28,13 +28,11 @@ public class CloseImpedimentAction extends GCloseImpedimentAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Close this Impediment, marking it as solved or obsolete.");
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Close this Impediment, marking it as solved or obsolete.");
 		if (!impediment.getProject().isScrumTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		}
-
-		return tb.getTooltip();
 	}
 
 	@Override

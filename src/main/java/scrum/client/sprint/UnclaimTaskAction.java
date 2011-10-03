@@ -28,17 +28,13 @@ public class UnclaimTaskAction extends GReopenTaskAction {
 	}
 
 	@Override
-	public String getTooltip() {
-
-		TooltipBuilder tb = new TooltipBuilder("Unclaim ownership for this Task.");
-
+	public void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Unclaim ownership for this Task.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isClosed()) tb.addRemark("Task is already closed.");
 		}
-
-		return tb.getTooltip();
 	}
 
 	@Override

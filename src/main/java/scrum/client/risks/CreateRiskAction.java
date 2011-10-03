@@ -26,12 +26,9 @@ public class CreateRiskAction extends GCreateRiskAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new Risk.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create new Risk.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

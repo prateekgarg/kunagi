@@ -28,18 +28,14 @@ public class CloseTaskAction extends GCloseTaskAction {
 	}
 
 	@Override
-	public String getTooltip() {
-
-		TooltipBuilder tb = new TooltipBuilder("Mark this Task as done.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Mark this Task as done.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (task.isClosed()) tb.addRemark("Task is already closed.");
 			if (task.isOwnerSet() && !task.isOwner(getCurrentUser())) tb.addRemark("Another user owns this Task.");
 		}
-
-		return tb.getTooltip();
 	}
 
 	@Override

@@ -28,12 +28,9 @@ public class ReleaseReleaseAction extends GReleaseReleaseAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Mark this release as published and available to the users.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Mark this release as published and available to the users.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

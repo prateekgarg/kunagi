@@ -28,12 +28,11 @@ public class ReopenImpedimentAction extends GCloseImpedimentAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Reopen this Impediment, marking it as impeding.");
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Reopen this Impediment, marking it as impeding.");
 		if (!impediment.getProject().isScrumTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
 		}
-		return tb.getTooltip();
 	}
 
 	@Override

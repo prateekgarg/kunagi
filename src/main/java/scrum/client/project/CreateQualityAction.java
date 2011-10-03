@@ -26,12 +26,9 @@ public class CreateQualityAction extends GCreateQualityAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create a new Quality.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create a new Quality.");
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
-
-		return tb.getTooltip();
 	}
 
 	@Override

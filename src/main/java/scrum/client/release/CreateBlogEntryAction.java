@@ -31,13 +31,9 @@ public class CreateBlogEntryAction extends GCreateBlogEntryAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder(
-				"Create a new Blog Entry advertizing this Release. It will contain itemized Release Notes.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create a new Blog Entry advertizing this Release. It will contain itemized Release Notes.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

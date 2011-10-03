@@ -31,13 +31,11 @@ public class ConvertIssueToQualityAction extends GConvertIssueToQualityAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Convert this issue to a Quality in the Quality Backlog.");
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Convert this issue to a Quality in the Quality Backlog.");
 		if (!issue.getProject().isProductOwner(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		}
-
-		return tb.getTooltip();
 	}
 
 	@Override
