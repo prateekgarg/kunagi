@@ -26,11 +26,9 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new Impediment.");
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create new Impediment.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

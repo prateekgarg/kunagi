@@ -26,13 +26,9 @@ public class CreateBlogEntryAction extends GCreateBlogEntryAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder(
-				"Create a new Blog entry. You can set date, title and text after creation.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create a new Blog entry. You can set date, title and text after creation.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

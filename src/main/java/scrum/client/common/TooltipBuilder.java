@@ -14,12 +14,14 @@
  */
 package scrum.client.common;
 
+import ilarkesto.core.base.Str;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TooltipBuilder {
 
-	private String mainTooltip;
+	private String text;
 	private List<String> remarks = new ArrayList<String>();
 
 	public static String NOT_TEAM = "You are not Team Member.";
@@ -31,8 +33,16 @@ public class TooltipBuilder {
 	public static String NOT_ADMIN = "You are not Project Admin.";
 	public static String NOT_SYS_ADMIN = "You are not System Admin.";
 
-	public TooltipBuilder(String mainTooltip) {
-		this.mainTooltip = mainTooltip;
+	public TooltipBuilder() {}
+
+	public void setText(String mainTooltip) {
+		this.text = mainTooltip;
+	}
+
+	public boolean isBlank() {
+		if (!Str.isBlank(text)) return false;
+		if (!remarks.isEmpty()) return false;
+		return true;
 	}
 
 	public void addRemark(String remark) {
@@ -41,7 +51,7 @@ public class TooltipBuilder {
 
 	public String getTooltip() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(mainTooltip);
+		sb.append(text);
 
 		if (remarks.size() > 0) {
 
@@ -61,7 +71,7 @@ public class TooltipBuilder {
 
 	public String getTooltipAsHtml() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<p>").append(mainTooltip).append("</p>");
+		sb.append("<p>").append(text).append("</p>");
 
 		if (remarks.size() > 0) {
 

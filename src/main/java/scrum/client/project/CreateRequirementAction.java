@@ -41,12 +41,9 @@ public class CreateRequirementAction extends GCreateRequirementAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create a new Story.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create a new Story.");
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
-
-		return tb.getTooltip();
 	}
 
 	@Override

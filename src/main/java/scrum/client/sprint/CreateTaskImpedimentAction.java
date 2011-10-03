@@ -31,11 +31,9 @@ public class CreateTaskImpedimentAction extends GCreateTaskImpedimentAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Create new Impediment, which is blocking this Task.");
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Create new Impediment, which is blocking this Task.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override

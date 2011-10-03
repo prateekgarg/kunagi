@@ -29,12 +29,9 @@ public class UnreleaseReleaseAction extends GUnreleaseReleaseAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		TooltipBuilder tb = new TooltipBuilder("Mark this release as not published and not available to the users.");
-
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Mark this release as not published and not available to the users.");
 		if (!getCurrentProject().isScrumTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_SCRUMTEAM);
-
-		return tb.getTooltip();
 	}
 
 	@Override
