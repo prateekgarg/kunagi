@@ -36,7 +36,7 @@ public abstract class AScrumAction extends AAction {
 	protected void updateTooltip(TooltipBuilder tb) {}
 
 	@Override
-	public String getTooltip() {
+	public final String getTooltip() {
 		TooltipBuilder tb = new TooltipBuilder();
 		updateTooltip(tb);
 		if (tb.isBlank()) return null;
@@ -44,7 +44,7 @@ public abstract class AScrumAction extends AAction {
 	}
 
 	@Override
-	public String getTooltipAsHtml() {
+	public final String getTooltipAsHtml() {
 		TooltipBuilder tb = new TooltipBuilder();
 		updateTooltip(tb);
 		if (tb.isBlank()) return null;

@@ -18,6 +18,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;
 import ilarkesto.gwt.client.Gwt;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.journal.ProjectEvent;
 
 public class PublishSimpleEventAction extends GPublishSimpleEventAction {
@@ -32,8 +33,8 @@ public class PublishSimpleEventAction extends GPublishSimpleEventAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		return "Add a notification for this event to the project journal.";
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Add a notification for this event to the project journal.");
 	}
 
 	@Override

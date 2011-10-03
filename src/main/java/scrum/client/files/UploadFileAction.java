@@ -16,6 +16,7 @@ package scrum.client.files;
 
 import ilarkesto.core.scope.Scope;
 import scrum.client.common.AScrumAction;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.files.Uploader.UploadedFileHandler;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
@@ -27,8 +28,8 @@ public class UploadFileAction extends AScrumAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		return "Upload a local file to the repository.";
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Upload a local file to the repository.");
 	}
 
 	@Override

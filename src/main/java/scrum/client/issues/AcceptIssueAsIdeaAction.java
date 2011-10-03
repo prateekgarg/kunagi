@@ -15,6 +15,7 @@
 package scrum.client.issues;
 
 import ilarkesto.core.scope.Scope;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
@@ -29,8 +30,8 @@ public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 	}
 
 	@Override
-	public String getTooltip() {
-		return "Accept this issue as an idea for future stories.";
+	protected void updateTooltip(TooltipBuilder tb) {
+		tb.setText("Accept this issue as an idea for future stories.");
 	}
 
 	@Override
