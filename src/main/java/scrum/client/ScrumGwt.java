@@ -30,6 +30,7 @@ import scrum.client.common.AScrumGwtEntity;
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.project.Project;
+import scrum.client.project.Requirement;
 import scrum.client.workspace.Navigator;
 
 import com.google.gwt.core.client.GWT;
@@ -57,8 +58,24 @@ public class ScrumGwt extends Gwt {
 
 	public static String getEstimationAsString(Float estimation) {
 		if (estimation == null) return null;
+		if (estimation <= 0.0f) return "?";
 		if (estimation <= 0.5f) return estimation.toString();
 		return String.valueOf(estimation.intValue());
+	}
+
+	public static Float getNextEstimationValue(Float value) {
+		for (Float f : Requirement.WORK_ESTIMATION_FLOAT_VALUES) {
+			if (f >= value) { return f; }
+		}
+		throw new IllegalArgumentException("No next value for " + value);
+	}
+
+	public static Float getPrevEstimationValue(Float value) {
+		for (int i = Requirement.WORK_ESTIMATION_FLOAT_VALUES.length - 1; i >= 0; i--) {
+			Float f = Requirement.WORK_ESTIMATION_FLOAT_VALUES[i];
+			if (f <= value) { return f; }
+		}
+		throw new IllegalArgumentException("No previous value for " + value);
 	}
 
 	public static String getReferenceAndLabel(AGwtEntity entity) {

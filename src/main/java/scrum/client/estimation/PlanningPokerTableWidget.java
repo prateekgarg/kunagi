@@ -18,9 +18,16 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.CloseRequirementEstimationVotingAction;
+import scrum.client.project.PlanningPokerStoryFinder;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementEstimationVotingShowoffAction;
@@ -29,7 +36,10 @@ import scrum.client.workspace.VisibleDataChangedEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -42,6 +52,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 	private SimplePanel cardSlotsWrapper;
 	private SimplePanel handCardsWrapper;
 	private SimplePanel actionsWrapper;
+	private SimplePanel estimationHelpDisplay;
 
 	public PlanningPokerTableWidget(Requirement requirement) {
 		super();
@@ -53,6 +64,8 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		cardSlotsWrapper = new SimplePanel();
 		handCardsWrapper = new SimplePanel();
 		actionsWrapper = new SimplePanel();
+		estimationHelpDisplay = new SimplePanel();
+		estimationHelpDisplay.getElement().getStyle().setProperty("minHeight", "90px");
 
 		FlowPanel pokerTable = new FlowPanel();
 		pokerTable.setStyleName("PlanningPokerWidget-table");
@@ -64,6 +77,8 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		}
 		pokerTable.add(Gwt.createSpacer(1, 20));
 		pokerTable.add(actionsWrapper);
+		pokerTable.add(Gwt.createSpacer(1, 20));
+		pokerTable.add(estimationHelpDisplay);
 
 		SimplePanel pokerTableBorder = Gwt.createDiv("PlanningPokerWidget-table-border", pokerTable);
 
@@ -92,7 +107,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 	}
 
 	private Widget createHandCards() {
-		Project project = getCurrentProject();
+		final Project project = getCurrentProject();
 		RequirementEstimationVote vote = requirement.getEstimationVote(getCurrentUser());
 		Float voteValue = vote == null ? null : vote.getEstimatedWork();
 		boolean showoff = requirement.isWorkEstimationVotingShowoff();
@@ -112,17 +127,55 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		// value cards
 		for (String value : Requirement.WORK_ESTIMATION_VALUES) {
 			if (value.length() == 0) continue;
-			float estimation = Float.parseFloat(value);
+			final float estimation = Float.parseFloat(value);
 			PlanningPokerCardWidget card = null;
 			if (!showoff && (voteValue == null || estimation != voteValue)) {
 				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
 						"Put this card on the table.");
+				card.setMouseOverHandler(new MouseOverHandler() {
+
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						estimationHelpDisplay.setWidget(createEstimationHelp(estimation));
+					}
+				});
 			}
 			tb.add(new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(), card));
 			tb.add(Gwt.createSpacer(5, 1));
 		}
 
 		return tb.createTable();
+	}
+
+	private Widget createEstimationHelp(float estimation) {
+		PlanningPokerStoryFinder finder = new PlanningPokerStoryFinder(requirement);
+		List<Set<Requirement>> results = finder.getByEstimation(estimation);
+
+		if (!results.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<div class='PlanningPokerTableWidget-estimationHelp'>");
+			sb.append("<span>");
+			sb.append("Other Stories estimated with ").append(ScrumGwt.getEstimationAsString(estimation)).append(":");
+			sb.append("</span>");
+
+			sb.append("<ul>");
+			for (Set<Requirement> stories : results) {
+				sb.append("<li>");
+				Iterator<Requirement> it = stories.iterator();
+				while (it.hasNext()) {
+					Requirement some = it.next();
+					sb.append(some.toHtml());
+					if (some.getEstimatedWork() != estimation) {
+						sb.append(" (").append(some.getEstimatedWorkAsString()).append(")");
+					}
+					if (it.hasNext()) sb.append(" <strong>and</strong> ");
+				}
+				sb.append("</li>");
+			}
+			sb.append("</ul></div>");
+			return new HTML(sb.toString());
+		}
+		return new HTML();
 	}
 
 	private Widget createCardSlots() {
