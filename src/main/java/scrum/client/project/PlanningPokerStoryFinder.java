@@ -64,10 +64,11 @@ public class PlanningPokerStoryFinder {
 		Collections.sort(stories, project.getRequirementsOrderComparator());
 		List<Set<Requirement>> results = new ArrayList<Set<Requirement>>();
 		for (Requirement story : stories) {
-			if (!this.story.equals(story) && story.isEstimatedWorkValid()
-					&& story.getEstimatedWork().equals(estimation)) {
-				results.add(Collections.singleton(story));
-			}
+			if (story.equals(this.story)) continue;
+			if (story.isClosed()) continue;
+			if (!story.isEstimatedWorkValid()) continue;
+			if (!estimation.equals(story.getEstimatedWork())) continue;
+			results.add(Collections.singleton(story));
 		}
 		return results;
 	}
