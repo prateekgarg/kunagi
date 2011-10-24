@@ -256,8 +256,9 @@ public class ScreenCssBuilder implements CssBuilder {
 				.background("#5A5 url(pokertable_bg.jpg)").padding(40);
 		css.style(".PlanningPokerWidget-table-branding").color(cPlanningPokerTableLines).fontFamily("Times New Roman")
 				.fontWeightBold().fontSize(30).textAlignCenter().marginBottom(30);
-		css.style(".PlanningPokerWidget-table .gwt-Hyperlink, .PlanningPokerWidget-table a").color(
-			cPlanningPokerTableLines);
+		css.style(
+			".PlanningPokerWidget-table .gwt-Hyperlink, .PlanningPokerWidget-table a, .PlanningPokerTableWidget-estimationHelp ul li a.reference")
+				.color(cPlanningPokerTableLines);
 
 		int cardWidth = 40;
 		int cardHeight = 60;
