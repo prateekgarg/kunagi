@@ -45,7 +45,6 @@ import scrum.server.admin.UserDao;
 import scrum.server.collaboration.ChatMessage;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.CommentDao;
-import scrum.server.collaboration.EmoticonDao;
 import scrum.server.collaboration.Subject;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.common.Numbered;
@@ -56,9 +55,7 @@ import scrum.server.issues.Issue;
 import scrum.server.issues.IssueDao;
 import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
-import scrum.server.journal.ProjectEventDao;
 import scrum.server.pr.BlogEntry;
-import scrum.server.pr.BlogEntryDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -83,10 +80,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient ReleaseDao releaseDao;
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
-	private transient ProjectEventDao projectEventDao;
-	private transient EmoticonDao emoticonDao;
 	private transient ChangeDao changeDao;
-	private transient BlogEntryDao blogEntryDao;
 
 	public void setReleaseDao(ReleaseDao releaseDao) {
 		this.releaseDao = releaseDao;
@@ -94,14 +88,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	public void setChangeDao(ChangeDao changeDao) {
 		this.changeDao = changeDao;
-	}
-
-	public void setEmoticonDao(EmoticonDao emoticonDao) {
-		this.emoticonDao = emoticonDao;
-	}
-
-	public void setProjectEventDao(ProjectEventDao projectEventDao) {
-		this.projectEventDao = projectEventDao;
 	}
 
 	public void setWebApplication(ScrumWebApplication webApplication) {
@@ -126,10 +112,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	public void setCommentDao(CommentDao commentDao) {
 		this.commentDao = commentDao;
-	}
-
-	public void setBlogEntryDao(BlogEntryDao blogEntryDao) {
-		this.blogEntryDao = blogEntryDao;
 	}
 
 	// --- ---

@@ -21,6 +21,7 @@ import ilarkesto.auth.OpenId;
 import ilarkesto.base.Sys;
 import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Str;
@@ -272,10 +273,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD);
 	}
 
-	public void postProjectEvent(Project project, String message, AEntity subject) {
+	public synchronized void postProjectEvent(Project project, String message, AEntity subject) {
 		ProjectEvent event = getProjectEventDao().postEvent(project, message, subject);
 		sendToConversationsByProject(project, event);
 		sendToConversationsByProject(project, event.postChatMessage());
+		Utl.sleep(100);
 	}
 
 	public void sendToConversationsByProject(GwtConversation conversation, AEntity entity) {
