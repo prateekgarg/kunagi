@@ -219,9 +219,9 @@ public class Project extends GProject implements ForumSupport {
 
 	public ProjectUserConfig getUserConfig(User user) {
 		for (ProjectUserConfig config : getDao().getProjectUserConfigsByProject(this)) {
-			if (config.isUser(user)) { return config; }
+			if (config.isUser(user)) return config;
 		}
-		throw new IllegalStateException("User has no project config: " + user);
+		return null;
 	}
 
 	public boolean isScrumTeamMember(User user) {

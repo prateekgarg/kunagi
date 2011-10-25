@@ -19,6 +19,7 @@ import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
 import scrum.client.ScrumGwt;
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.img.Img;
@@ -47,7 +48,8 @@ public class CommentWidget extends AScrumWidget {
 
 		User author = comment.getAuthor();
 		if (author != null) {
-			String color = getCurrentProject().getUserConfig(author).getColor();
+			ProjectUserConfig userConfig = getCurrentProject().getUserConfig(author);
+			String color = userConfig == null ? "darkgray" : userConfig.getColor();
 			authorLabel.getElement().getStyle().setProperty("color", color);
 		}
 

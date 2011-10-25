@@ -35,6 +35,7 @@ public class DeleteUserAction extends GDeleteUserAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (true) return false; // TODO this is just a workaround to preven damaged projects
 		if (!user.isDisabled()) return false;
 		if (!getCurrentUser().isAdmin()) return false;
 		return true;
