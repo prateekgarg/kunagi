@@ -188,6 +188,14 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	}
 
 	private void updateTaskLists(Requirement requirement) {
+		TaskListWidget openTasksList = openTasks.get(requirement);
+		TaskListWidget ownedTasksList = ownedTasks.get(requirement);
+		TaskListWidget closedTasksList = closedTasks.get(requirement);
+
+		Task selectedTaskInOpen = openTasksList.getSelectedTask();
+		Task selectedTaskInOwned = ownedTasksList.getSelectedTask();
+		Task selectedTaskInClosed = closedTasksList.getSelectedTask();
+
 		List<Task> openTaskList = new ArrayList<Task>();
 		List<Task> ownedTaskList = new ArrayList<Task>();
 		List<Task> closedTaskList = new ArrayList<Task>();
@@ -201,10 +209,16 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			}
 		}
 
-		openTasks.get(requirement).setTasks(openTaskList);
-		ownedTasks.get(requirement).setTasks(ownedTaskList);
-		closedTasks.get(requirement).setTasks(closedTaskList);
+		openTasksList.setTasks(openTaskList);
+		ownedTasksList.setTasks(ownedTaskList);
+		closedTasksList.setTasks(closedTaskList);
 
+		if (selectedTaskInOpen != null && !openTaskList.contains(selectedTaskInOpen))
+			selectionManager.select(selectedTaskInOpen);
+		if (selectedTaskInOwned != null && !ownedTaskList.contains(selectedTaskInOwned))
+			selectionManager.select(selectedTaskInOwned);
+		if (selectedTaskInClosed != null && !closedTaskList.contains(selectedTaskInClosed))
+			selectionManager.select(selectedTaskInClosed);
 	}
 
 	private void updateHighlighting() {

@@ -48,6 +48,10 @@ public class TaskListWidget extends AScrumWidget {
 		this.createTaskButton = createTaskButton;
 	}
 
+	public Task getSelectedTask() {
+		return list == null ? null : list.getExtendedObject();
+	}
+
 	@Override
 	protected Widget onInitialization() {
 		list = new BlockListWidget<Task>(new TaskBlock.TaskBlockFactory(container), this.dropAction);

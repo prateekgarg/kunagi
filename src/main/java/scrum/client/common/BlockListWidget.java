@@ -62,6 +62,18 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		dndMarkerBottom = new BlockDndMarkerWidget();
 	}
 
+	public ABlockWidget<O> getExtendedBlock() {
+		for (ABlockWidget<O> block : getBlocks()) {
+			if (block.isExtended()) return block;
+		}
+		return null;
+	}
+
+	public O getExtendedObject() {
+		ABlockWidget<O> block = getExtendedBlock();
+		return block == null ? null : block.getObject();
+	}
+
 	public void setMinHeight(int height) {
 		initialize();
 		panel.getElement().getStyle().setProperty("minHeight", height + "px");
@@ -351,6 +363,10 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	public List<O> getObjects() {
 		return list.getObjects();
+	}
+
+	public Collection<ABlockWidget<O>> getBlocks() {
+		return list.getWidgets();
 	}
 
 	public boolean acceptsDrop(ABlockWidget<O> block) {
