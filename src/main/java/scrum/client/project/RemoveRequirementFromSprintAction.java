@@ -64,7 +64,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 		// requirements.add(0, requirement);
 		// project.updateRequirementsOrder(requirements);
 
-		addUndo(new Undo(requirement.getSprint()));
+		// addUndo(new Undo(requirement.getSprint()));
 	}
 
 	class Undo extends ALocalUndo {
