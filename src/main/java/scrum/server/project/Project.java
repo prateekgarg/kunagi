@@ -61,6 +61,9 @@ public class Project extends GProject {
 
 	private transient Comparator<Requirement> requirementsOrderComparator;
 
+	private static final String NEXT_SPRINT_LABEL = "Next Sprint";
+	private static final String CURRENT_SPRINT_LABEL = "Current Sprint";
+
 	// --- dependencies ---
 
 	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
@@ -475,6 +478,7 @@ public class Project extends GProject {
 		if (!newSprint.isEndSet() || newSprint.getEnd().isBeforeOrSame(newSprint.getBegin()))
 			newSprint.setEnd(newSprint.getBegin().addDays(oldSprint.getLengthInDays()));
 
+		if (newSprint.isLabel(NEXT_SPRINT_LABEL)) newSprint.setLabel(CURRENT_SPRINT_LABEL);
 		setCurrentSprint(newSprint);
 		createNextSprint();
 
@@ -498,7 +502,7 @@ public class Project extends GProject {
 	public Sprint createNextSprint() {
 		Sprint sprint = sprintDao.newEntityInstance();
 		sprint.setProject(this);
-		sprint.setLabel("Next Sprint");
+		sprint.setLabel(NEXT_SPRINT_LABEL);
 		if (isCurrentSprintSet()) {
 			sprint.setBegin(getCurrentSprint().getEnd());
 			Integer length = getCurrentSprint().getLengthInDays();

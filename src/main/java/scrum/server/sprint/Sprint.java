@@ -141,7 +141,8 @@ public class Sprint extends GSprint implements Numbered {
 		setProductOwners(project.getProductOwners());
 		setScrumMasters(project.getScrumMasters());
 		setTeamMembers(project.getTeamMembers());
-		project.setVelocity(Math.round(velocity));
+		int roundedVelocity = Math.round(velocity);
+		if (roundedVelocity > 0) project.setVelocity(roundedVelocity);
 	}
 
 	public String getProductOwnersAsString() {

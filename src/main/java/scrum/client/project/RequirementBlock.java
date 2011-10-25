@@ -96,7 +96,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			int sprintLengthInDays = sprintLength == null ? 14 : sprintLength.toDays();
 			Date begin = sprint.getBegin();
 			if (begin == null || begin.isPast()) begin = new Date();
-			int totalLength = sprintLengthInDays * sprints;
+			int totalLength = sprintLengthInDays * (sprints + 1);
 			Date date = begin.addDays(totalLength);
 			sprintBorderIndicator.updateLabel(sprints + 1, date);
 			requirement.updateLocalModificationTime();
