@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -75,18 +75,22 @@ public class RichtextAutosaver extends GRichtextAutosaver implements Application
 	public void autosave() {
 		AViewEditWidget currentEditor = RichtextEditorWidget.getCurrentEditor();
 		if (currentEditor == null) return;
-		if (!currentEditor.isInitialized()) return;
-		ProjectUserConfig config = Scope.get().getComponent(ProjectUserConfig.class);
-		if (config == null) return;
-		if (!(currentEditor instanceof RichtextEditorWidget)) return;
-		RichtextEditorWidget editor = (RichtextEditorWidget) currentEditor;
-		if (!editor.isEditMode()) return;
-		String text = editor.getEditorText();
-		if (Str.isBlank(text)) return;
-		if (text == null || text.length() < 3) return;
-		if (Utl.equals(text, editor.getModel().getValue())) return;
-		config.setRichtextAutosaveText(text);
-		config.setRichtextAutosaveField(editor.getId());
+		try {
+			if (!currentEditor.isInitialized()) return;
+			ProjectUserConfig config = Scope.get().getComponent(ProjectUserConfig.class);
+			if (config == null) return;
+			if (!(currentEditor instanceof RichtextEditorWidget)) return;
+			RichtextEditorWidget editor = (RichtextEditorWidget) currentEditor;
+			if (!editor.isEditMode()) return;
+			String text = editor.getEditorText();
+			if (Str.isBlank(text)) return;
+			if (text == null || text.length() < 3) return;
+			if (Utl.equals(text, editor.getModel().getValue())) return;
+			config.setRichtextAutosaveText(text);
+			config.setRichtextAutosaveField(editor.getId());
+		} catch (Throwable ex) {
+			log.error(ex);
+		}
 	}
 
 }
