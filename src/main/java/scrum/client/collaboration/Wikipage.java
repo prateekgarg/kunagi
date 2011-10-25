@@ -28,7 +28,7 @@ public class Wikipage extends GWikipage implements ForumSupport {
 	public Wikipage(Project project, String name) {
 		setProject(project);
 		setName(name);
-		setText("New Wiki Page...");
+		setText("= " + name + " =\n\n...");
 	}
 
 	public Wikipage(Map data) {
