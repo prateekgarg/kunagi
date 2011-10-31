@@ -14,6 +14,7 @@
  */
 package scrum.server.admin;
 
+import ilarkesto.auth.PasswordHasher;
 import ilarkesto.base.CryptOneWay;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
@@ -132,13 +133,24 @@ public class User extends GUser {
 
 	@Override
 	public boolean matchesPassword(String password) {
-		return CryptOneWay.cryptWebPassword(password).equals(this.password);
+		if (this.password != null && this.password.startsWith(CryptOneWay.DEFAULT_SALT)) {
+			boolean success = CryptOneWay.cryptWebPassword(password).equals(this.password);
+			if (!success) return false;
+			log.warn("Converting old password hash into new:", this);
+			setPassword(password);
+			return true;
+		}
+		return hashPassword(password).equals(this.password);
 	}
 
 	@Override
 	public void setPassword(String value) {
-		this.password = CryptOneWay.cryptWebPassword(value);
+		this.password = hashPassword(value);
 		fireModified("password=xxx");
+	}
+
+	private String hashPassword(String password) {
+		return PasswordHasher.hashPassword(password, "/&öüz³^°'`9<*", "SHA-256:");
 	}
 
 	@Override
