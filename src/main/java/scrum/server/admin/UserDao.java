@@ -80,8 +80,7 @@ public class UserDao extends GUserDao {
 	@Override
 	public User newEntityInstance() {
 		User user = super.newEntityInstance();
-		String password = getDefaultPassword();
-		user.setPassword(password);
+		user.setPassword(getDefaultPassword());
 		user.setRegistrationDateAndTime(DateAndTime.now());
 		return user;
 	}
