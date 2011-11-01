@@ -145,12 +145,12 @@ public class User extends GUser {
 
 	@Override
 	public void setPassword(String value) {
-		if (!isPasswordSaltSet()) setPasswordSalt(Str.generatePassword(32));
 		this.password = hashPassword(value);
 		fireModified("password=xxx");
 	}
 
 	private String hashPassword(String password) {
+		if (!isPasswordSaltSet()) setPasswordSalt(Str.generatePassword(32));
 		return PasswordHasher.hashPassword(password, getPasswordSalt(), "SHA-256:");
 	}
 
