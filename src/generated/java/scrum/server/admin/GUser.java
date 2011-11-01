@@ -36,6 +36,7 @@ public abstract class GUser
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("passwordSalt", this.passwordSalt);
         properties.put("name", this.name);
         properties.put("publicName", this.publicName);
         properties.put("fullName", this.fullName);
@@ -86,6 +87,42 @@ public abstract class GUser
         if (matchesKey(getFullName(), key)) return true;
         if (matchesKey(getEmail(), key)) return true;
         return false;
+    }
+
+    // -----------------------------------------------------------
+    // - passwordSalt
+    // -----------------------------------------------------------
+
+    private java.lang.String passwordSalt;
+
+    public final java.lang.String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public final void setPasswordSalt(java.lang.String passwordSalt) {
+        passwordSalt = preparePasswordSalt(passwordSalt);
+        if (isPasswordSalt(passwordSalt)) return;
+        this.passwordSalt = passwordSalt;
+        updateLastModified();
+        fireModified("passwordSalt="+passwordSalt);
+    }
+
+    protected java.lang.String preparePasswordSalt(java.lang.String passwordSalt) {
+        passwordSalt = Str.removeUnreadableChars(passwordSalt);
+        return passwordSalt;
+    }
+
+    public final boolean isPasswordSaltSet() {
+        return this.passwordSalt != null;
+    }
+
+    public final boolean isPasswordSalt(java.lang.String passwordSalt) {
+        if (this.passwordSalt == null && passwordSalt == null) return true;
+        return this.passwordSalt != null && this.passwordSalt.equals(passwordSalt);
+    }
+
+    protected final void updatePasswordSalt(Object value) {
+        setPasswordSalt((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1013,6 +1050,7 @@ public abstract class GUser
             String property = (String) entry.getKey();
             if (property.equals("id")) continue;
             Object value = entry.getValue();
+            if (property.equals("passwordSalt")) updatePasswordSalt(value);
             if (property.equals("name")) updateName(value);
             if (property.equals("publicName")) updatePublicName(value);
             if (property.equals("fullName")) updateFullName(value);

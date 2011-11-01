@@ -42,6 +42,8 @@ public abstract class GUserDao
 
     // --- clear caches ---
     public void clearCaches() {
+        usersByPasswordSaltCache.clear();
+        passwordSaltsCache = null;
         namesCache = null;
         usersByPublicNameCache.clear();
         publicNamesCache = null;
@@ -92,6 +94,46 @@ public abstract class GUserDao
         if (event.getEntity() instanceof User) {
             clearCaches();
         }
+    }
+
+    // -----------------------------------------------------------
+    // - passwordSalt
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<User>> usersByPasswordSaltCache = new Cache<java.lang.String,Set<User>>(
+            new Cache.Factory<java.lang.String,Set<User>>() {
+                public Set<User> create(java.lang.String passwordSalt) {
+                    return getEntities(new IsPasswordSalt(passwordSalt));
+                }
+            });
+
+    public final Set<User> getUsersByPasswordSalt(java.lang.String passwordSalt) {
+        return usersByPasswordSaltCache.get(passwordSalt);
+    }
+    private Set<java.lang.String> passwordSaltsCache;
+
+    public final Set<java.lang.String> getPasswordSalts() {
+        if (passwordSaltsCache == null) {
+            passwordSaltsCache = new HashSet<java.lang.String>();
+            for (User e : getEntities()) {
+                if (e.isPasswordSaltSet()) passwordSaltsCache.add(e.getPasswordSalt());
+            }
+        }
+        return passwordSaltsCache;
+    }
+
+    private static class IsPasswordSalt implements Predicate<User> {
+
+        private java.lang.String value;
+
+        public IsPasswordSalt(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(User e) {
+            return e.isPasswordSalt(value);
+        }
+
     }
 
     // -----------------------------------------------------------

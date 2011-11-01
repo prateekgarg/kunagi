@@ -44,6 +44,59 @@ public abstract class GUser
         return ENTITY_TYPE;
     }
 
+    // --- passwordSalt ---
+
+    private java.lang.String passwordSalt ;
+
+    public final java.lang.String getPasswordSalt() {
+        return this.passwordSalt ;
+    }
+
+    public final User setPasswordSalt(java.lang.String passwordSalt) {
+        if (isPasswordSalt(passwordSalt)) return (User)this;
+        this.passwordSalt = passwordSalt ;
+        propertyChanged("passwordSalt", this.passwordSalt);
+        return (User)this;
+    }
+
+    public final boolean isPasswordSalt(java.lang.String passwordSalt) {
+        return equals(this.passwordSalt, passwordSalt);
+    }
+
+    private transient PasswordSaltModel passwordSaltModel;
+
+    public PasswordSaltModel getPasswordSaltModel() {
+        if (passwordSaltModel == null) passwordSaltModel = createPasswordSaltModel();
+        return passwordSaltModel;
+    }
+
+    protected PasswordSaltModel createPasswordSaltModel() { return new PasswordSaltModel(); }
+
+    protected class PasswordSaltModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "User_passwordSalt";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getPasswordSalt();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setPasswordSalt(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- name ---
 
     private java.lang.String name ;
@@ -1516,6 +1569,7 @@ public abstract class GUser
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
+        passwordSalt  = (java.lang.String) props.get("passwordSalt");
         name  = (java.lang.String) props.get("name");
         publicName  = (java.lang.String) props.get("publicName");
         fullName  = (java.lang.String) props.get("fullName");
@@ -1552,6 +1606,7 @@ public abstract class GUser
     @Override
     public void storeProperties(Map properties) {
         super.storeProperties(properties);
+        properties.put("passwordSalt", this.passwordSalt);
         properties.put("name", this.name);
         properties.put("publicName", this.publicName);
         properties.put("fullName", this.fullName);

@@ -467,7 +467,7 @@ public class LoginServlet extends AHttpServlet {
 			html.DIV("separator", null);
 			html.startDIV("configMessage");
 			html.html("<h2>Warning!</h2>The administrator user <code>admin</code> has the default password <code>"
-					+ scrum.client.admin.User.INITIAL_PASSWORD + "</code>. Please change it.");
+					+ systemConfig.getDefaultUserPassword() + "</code>. Please change it.");
 			html.endDIV();
 		}
 

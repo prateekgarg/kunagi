@@ -15,6 +15,7 @@
 package scrum.server.admin;
 
 import ilarkesto.base.Str;
+import scrum.server.KunagiRootConfig;
 
 public class SystemConfig extends GSystemConfig {
 
@@ -38,7 +39,7 @@ public class SystemConfig extends GSystemConfig {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(config.getInitialPassword());
 		if (!isMaxFileSizeSet()) setMaxFileSize(20);
 	}
 
@@ -51,4 +52,13 @@ public class SystemConfig extends GSystemConfig {
 		return false;
 	}
 
+	// --- dependencies ---
+
+	private static KunagiRootConfig config;
+
+	public static void setConfig(KunagiRootConfig config) {
+		SystemConfig.config = config;
+	}
+
+	// --- ---
 }

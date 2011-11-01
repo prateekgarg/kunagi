@@ -139,7 +139,7 @@ public class KunagiRootConfig {
 	}
 
 	public String getInitialPassword() {
-		return props.get("initialPassword", scrum.client.admin.User.INITIAL_PASSWORD);
+		return props.get("initialPassword", "geheim");
 	}
 
 	public boolean isLoggingDebug() {

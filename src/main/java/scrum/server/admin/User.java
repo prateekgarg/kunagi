@@ -150,7 +150,7 @@ public class User extends GUser {
 	}
 
 	private String hashPassword(String password) {
-		return PasswordHasher.hashPassword(password, "/&öüz³^°'`9<*", "SHA-256:");
+		return PasswordHasher.hashPassword(password, getPasswordSalt(), "SHA-256:");
 	}
 
 	@Override
@@ -165,6 +165,8 @@ public class User extends GUser {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
+		if (!isPasswordSaltSet()) setPasswordSalt(Str.generatePassword(32));
+		if (Str.isBlank(this.password)) setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
 		if (!isPublicNameSet()) setPublicName(getName());
 		if (!isColorSet()) setColor(getDefaultColor());
 		if (!isLoginTokenSet()) createLoginToken();

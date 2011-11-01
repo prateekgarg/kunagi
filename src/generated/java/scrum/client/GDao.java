@@ -3271,6 +3271,14 @@ public abstract class GDao
         return new ArrayList<scrum.client.admin.User>(users.values());
     }
 
+    public final List<scrum.client.admin.User> getUsersByPasswordSalt(java.lang.String passwordSalt) {
+        List<scrum.client.admin.User> ret = new ArrayList<scrum.client.admin.User>();
+        for (scrum.client.admin.User entity : users.values()) {
+            if (entity.isPasswordSalt(passwordSalt)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final scrum.client.admin.User getUserByName(java.lang.String name) {
         for (scrum.client.admin.User entity : users.values()) {
             if (entity.isName(name)) return entity;

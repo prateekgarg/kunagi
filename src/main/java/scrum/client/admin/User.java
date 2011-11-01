@@ -34,7 +34,6 @@ import scrum.client.project.Project;
 public class User extends GUser implements LabelSupport, Comparable<User> {
 
 	public static final String INITIAL_NAME = "newuser";
-	public static final String INITIAL_PASSWORD = "geheim";
 
 	public User() {
 		setName(getNextNewUserName());

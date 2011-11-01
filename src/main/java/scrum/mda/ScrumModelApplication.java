@@ -702,6 +702,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.setSuperbean(super.getUserModel());
 			userModel.setViewProtected(true);
 			userModel.setEditProtected(true);
+			userModel.addStringProperty("passwordSalt");
 			userModel.addStringProperty("name").setMandatory(true).setSearchable(true).setUnique(true)
 					.setTooltip("Login name.");
 			userModel.addStringProperty("publicName").setSearchable(true)

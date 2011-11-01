@@ -62,7 +62,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final int DATA_VERSION = 26;
+	private static final int DATA_VERSION = 27;
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
@@ -117,11 +117,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public ApplicationInfo getApplicationInfo() {
-		User admin = getUserDao().getUserByName("admin");
-		boolean defaultAdminPassword = false;
-		if (admin != null && admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD)) {
-			defaultAdminPassword = true;
-		}
+		boolean defaultAdminPassword = isAdminPasswordDefault();
 		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease(),
 				getApplicationDataDir());
 	}
@@ -166,7 +162,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (!Str.isBlank(url)) getSystemConfig().setUrl(url);
 
 		if (getUserDao().getEntities().isEmpty()) {
-			String password = getConfig().getInitialPassword();
+			String password = getSystemConfig().getDefaultUserPassword();
 			log.warn("No users. Creating initial user <admin> with password <" + password + ">");
 			User admin = getUserDao().postUserWithDefaultPassword("admin");
 			admin.setPassword(password);
@@ -270,7 +266,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public boolean isAdminPasswordDefault() {
 		User admin = userDao.getUserByName("admin");
 		if (admin == null) return false;
-		return admin.matchesPassword(scrum.client.admin.User.INITIAL_PASSWORD);
+		return admin.matchesPassword(getSystemConfig().getDefaultUserPassword());
 	}
 
 	public synchronized void postProjectEvent(Project project, String message, AEntity subject) {
