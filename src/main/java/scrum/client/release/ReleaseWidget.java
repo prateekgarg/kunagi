@@ -83,7 +83,7 @@ public class ReleaseWidget extends AScrumWidget {
 				}
 			});
 
-			tb.addFieldRow("Requirements", new AOutputViewEditWidget() {
+			tb.addFieldRow("Stories", new AOutputViewEditWidget() {
 
 				@Override
 				protected void onViewerUpdate() {
