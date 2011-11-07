@@ -14,7 +14,6 @@
  */
 package scrum.client.release;
 
-import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
@@ -40,7 +39,7 @@ public class ReleaseManagementWidget extends AScrumWidget {
 		Project project = getCurrentProject();
 
 		TableBuilder fields = ScrumGwt.createFieldTable();
-		if (!Str.isBlank(project.getReleasingInfo())) fields.addFieldRow("Info", project.getReleasingInfoModel());
+		fields.addFieldRow("Info", project.getReleasingInfoModel());
 
 		planned = new BlockListWidget<Release>(ReleaseBlock.FACTORY);
 		planned.setSelectionManager(selectionManager);
