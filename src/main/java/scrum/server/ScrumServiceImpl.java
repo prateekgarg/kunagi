@@ -509,10 +509,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void onImpedimentChanged(GwtConversation conversation, Impediment impediment, Map properties) {
 		User currentUser = conversation.getSession().getUser();
-		if (impediment.isClosed() && properties.containsKey("closed")) {
-			impediment.setDate(Date.today());
-			postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel(),
-				impediment);
+		if (properties.containsKey("closed")) {
+			if (impediment.isClosed()) {
+				impediment.setDate(Date.today());
+				postProjectEvent(conversation, currentUser.getName() + " closed " + impediment.getReferenceAndLabel(),
+					impediment);
+			} else {
+				postProjectEvent(conversation,
+					currentUser.getName() + " reopened " + impediment.getReferenceAndLabel(), impediment);
+			}
 		}
 	}
 
