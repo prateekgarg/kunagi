@@ -121,7 +121,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByUrl(java.lang.String url) {
-        return systemConfigsByUrlCache.get(url);
+        return new HashSet<SystemConfig>(systemConfigsByUrlCache.get(url));
     }
     private Set<java.lang.String> urlsCache;
 
@@ -161,7 +161,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByAdminEmail(java.lang.String adminEmail) {
-        return systemConfigsByAdminEmailCache.get(adminEmail);
+        return new HashSet<SystemConfig>(systemConfigsByAdminEmailCache.get(adminEmail));
     }
     private Set<java.lang.String> adminEmailsCache;
 
@@ -201,7 +201,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
-        return systemConfigsByGoogleAnalyticsIdCache.get(googleAnalyticsId);
+        return new HashSet<SystemConfig>(systemConfigsByGoogleAnalyticsIdCache.get(googleAnalyticsId));
     }
     private Set<java.lang.String> googleAnalyticsIdsCache;
 
@@ -241,7 +241,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpServer(java.lang.String smtpServer) {
-        return systemConfigsBySmtpServerCache.get(smtpServer);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpServerCache.get(smtpServer));
     }
     private Set<java.lang.String> smtpServersCache;
 
@@ -281,7 +281,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpPort(java.lang.Integer smtpPort) {
-        return systemConfigsBySmtpPortCache.get(smtpPort);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpPortCache.get(smtpPort));
     }
     private Set<java.lang.Integer> smtpPortsCache;
 
@@ -321,7 +321,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpTls(boolean smtpTls) {
-        return systemConfigsBySmtpTlsCache.get(smtpTls);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpTlsCache.get(smtpTls));
     }
 
     private static class IsSmtpTls implements Predicate<SystemConfig> {
@@ -350,7 +350,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpUser(java.lang.String smtpUser) {
-        return systemConfigsBySmtpUserCache.get(smtpUser);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpUserCache.get(smtpUser));
     }
     private Set<java.lang.String> smtpUsersCache;
 
@@ -390,7 +390,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpPassword(java.lang.String smtpPassword) {
-        return systemConfigsBySmtpPasswordCache.get(smtpPassword);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpPasswordCache.get(smtpPassword));
     }
     private Set<java.lang.String> smtpPasswordsCache;
 
@@ -430,7 +430,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsBySmtpFrom(java.lang.String smtpFrom) {
-        return systemConfigsBySmtpFromCache.get(smtpFrom);
+        return new HashSet<SystemConfig>(systemConfigsBySmtpFromCache.get(smtpFrom));
     }
     private Set<java.lang.String> smtpFromsCache;
 
@@ -470,7 +470,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByInstanceName(java.lang.String instanceName) {
-        return systemConfigsByInstanceNameCache.get(instanceName);
+        return new HashSet<SystemConfig>(systemConfigsByInstanceNameCache.get(instanceName));
     }
     private Set<java.lang.String> instanceNamesCache;
 
@@ -510,7 +510,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
-        return systemConfigsByLoginPageLogoUrlCache.get(loginPageLogoUrl);
+        return new HashSet<SystemConfig>(systemConfigsByLoginPageLogoUrlCache.get(loginPageLogoUrl));
     }
     private Set<java.lang.String> loginPageLogoUrlsCache;
 
@@ -550,7 +550,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLoginPageMessage(java.lang.String loginPageMessage) {
-        return systemConfigsByLoginPageMessageCache.get(loginPageMessage);
+        return new HashSet<SystemConfig>(systemConfigsByLoginPageMessageCache.get(loginPageMessage));
     }
     private Set<java.lang.String> loginPageMessagesCache;
 
@@ -590,7 +590,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByRegisterPageMessage(java.lang.String registerPageMessage) {
-        return systemConfigsByRegisterPageMessageCache.get(registerPageMessage);
+        return new HashSet<SystemConfig>(systemConfigsByRegisterPageMessageCache.get(registerPageMessage));
     }
     private Set<java.lang.String> registerPageMessagesCache;
 
@@ -630,7 +630,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByAboutPageMessage(java.lang.String aboutPageMessage) {
-        return systemConfigsByAboutPageMessageCache.get(aboutPageMessage);
+        return new HashSet<SystemConfig>(systemConfigsByAboutPageMessageCache.get(aboutPageMessage));
     }
     private Set<java.lang.String> aboutPageMessagesCache;
 
@@ -670,7 +670,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByUserEmailMandatory(boolean userEmailMandatory) {
-        return systemConfigsByUserEmailMandatoryCache.get(userEmailMandatory);
+        return new HashSet<SystemConfig>(systemConfigsByUserEmailMandatoryCache.get(userEmailMandatory));
     }
 
     private static class IsUserEmailMandatory implements Predicate<SystemConfig> {
@@ -699,7 +699,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByRegistrationDisabled(boolean registrationDisabled) {
-        return systemConfigsByRegistrationDisabledCache.get(registrationDisabled);
+        return new HashSet<SystemConfig>(systemConfigsByRegistrationDisabledCache.get(registrationDisabled));
     }
 
     private static class IsRegistrationDisabled implements Predicate<SystemConfig> {
@@ -728,7 +728,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByProjectCreationDisabled(boolean projectCreationDisabled) {
-        return systemConfigsByProjectCreationDisabledCache.get(projectCreationDisabled);
+        return new HashSet<SystemConfig>(systemConfigsByProjectCreationDisabledCache.get(projectCreationDisabled));
     }
 
     private static class IsProjectCreationDisabled implements Predicate<SystemConfig> {
@@ -757,7 +757,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByDefaultUserPassword(java.lang.String defaultUserPassword) {
-        return systemConfigsByDefaultUserPasswordCache.get(defaultUserPassword);
+        return new HashSet<SystemConfig>(systemConfigsByDefaultUserPasswordCache.get(defaultUserPassword));
     }
     private Set<java.lang.String> defaultUserPasswordsCache;
 
@@ -797,7 +797,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByOpenIdDisabled(boolean openIdDisabled) {
-        return systemConfigsByOpenIdDisabledCache.get(openIdDisabled);
+        return new HashSet<SystemConfig>(systemConfigsByOpenIdDisabledCache.get(openIdDisabled));
     }
 
     private static class IsOpenIdDisabled implements Predicate<SystemConfig> {
@@ -826,7 +826,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByOpenIdDomains(java.lang.String openIdDomains) {
-        return systemConfigsByOpenIdDomainsCache.get(openIdDomains);
+        return new HashSet<SystemConfig>(systemConfigsByOpenIdDomainsCache.get(openIdDomains));
     }
     private Set<java.lang.String> openIdDomainssCache;
 
@@ -866,7 +866,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByVersionCheckEnabled(boolean versionCheckEnabled) {
-        return systemConfigsByVersionCheckEnabledCache.get(versionCheckEnabled);
+        return new HashSet<SystemConfig>(systemConfigsByVersionCheckEnabledCache.get(versionCheckEnabled));
     }
 
     private static class IsVersionCheckEnabled implements Predicate<SystemConfig> {
@@ -895,7 +895,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapEnabled(boolean ldapEnabled) {
-        return systemConfigsByLdapEnabledCache.get(ldapEnabled);
+        return new HashSet<SystemConfig>(systemConfigsByLdapEnabledCache.get(ldapEnabled));
     }
 
     private static class IsLdapEnabled implements Predicate<SystemConfig> {
@@ -924,7 +924,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapUrl(java.lang.String ldapUrl) {
-        return systemConfigsByLdapUrlCache.get(ldapUrl);
+        return new HashSet<SystemConfig>(systemConfigsByLdapUrlCache.get(ldapUrl));
     }
     private Set<java.lang.String> ldapUrlsCache;
 
@@ -964,7 +964,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapUser(java.lang.String ldapUser) {
-        return systemConfigsByLdapUserCache.get(ldapUser);
+        return new HashSet<SystemConfig>(systemConfigsByLdapUserCache.get(ldapUser));
     }
     private Set<java.lang.String> ldapUsersCache;
 
@@ -1004,7 +1004,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapPassword(java.lang.String ldapPassword) {
-        return systemConfigsByLdapPasswordCache.get(ldapPassword);
+        return new HashSet<SystemConfig>(systemConfigsByLdapPasswordCache.get(ldapPassword));
     }
     private Set<java.lang.String> ldapPasswordsCache;
 
@@ -1044,7 +1044,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapBaseDn(java.lang.String ldapBaseDn) {
-        return systemConfigsByLdapBaseDnCache.get(ldapBaseDn);
+        return new HashSet<SystemConfig>(systemConfigsByLdapBaseDnCache.get(ldapBaseDn));
     }
     private Set<java.lang.String> ldapBaseDnsCache;
 
@@ -1084,7 +1084,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
-        return systemConfigsByLdapUserFilterRegexCache.get(ldapUserFilterRegex);
+        return new HashSet<SystemConfig>(systemConfigsByLdapUserFilterRegexCache.get(ldapUserFilterRegex));
     }
     private Set<java.lang.String> ldapUserFilterRegexsCache;
 
@@ -1124,7 +1124,7 @@ public abstract class GSystemConfigDao
             });
 
     public final Set<SystemConfig> getSystemConfigsByMaxFileSize(java.lang.Integer maxFileSize) {
-        return systemConfigsByMaxFileSizeCache.get(maxFileSize);
+        return new HashSet<SystemConfig>(systemConfigsByMaxFileSizeCache.get(maxFileSize));
     }
     private Set<java.lang.Integer> maxFileSizesCache;
 

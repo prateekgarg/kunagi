@@ -187,7 +187,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
-        label = Str.removeUnreadableChars(label);
+        // label = Str.removeUnreadableChars(label);
         return label;
     }
 
@@ -223,7 +223,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareVision(java.lang.String vision) {
-        vision = Str.removeUnreadableChars(vision);
+        // vision = Str.removeUnreadableChars(vision);
         return vision;
     }
 
@@ -259,7 +259,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareProductLabel(java.lang.String productLabel) {
-        productLabel = Str.removeUnreadableChars(productLabel);
+        // productLabel = Str.removeUnreadableChars(productLabel);
         return productLabel;
     }
 
@@ -295,7 +295,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareShortDescription(java.lang.String shortDescription) {
-        shortDescription = Str.removeUnreadableChars(shortDescription);
+        // shortDescription = Str.removeUnreadableChars(shortDescription);
         return shortDescription;
     }
 
@@ -331,7 +331,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
-        description = Str.removeUnreadableChars(description);
+        // description = Str.removeUnreadableChars(description);
         return description;
     }
 
@@ -367,7 +367,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareLongDescription(java.lang.String longDescription) {
-        longDescription = Str.removeUnreadableChars(longDescription);
+        // longDescription = Str.removeUnreadableChars(longDescription);
         return longDescription;
     }
 
@@ -1610,7 +1610,7 @@ public abstract class GProject
     }
 
     protected java.lang.String preparePunishmentUnit(java.lang.String punishmentUnit) {
-        punishmentUnit = Str.removeUnreadableChars(punishmentUnit);
+        // punishmentUnit = Str.removeUnreadableChars(punishmentUnit);
         return punishmentUnit;
     }
 
@@ -1676,7 +1676,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareHomepageDir(java.lang.String homepageDir) {
-        homepageDir = Str.removeUnreadableChars(homepageDir);
+        // homepageDir = Str.removeUnreadableChars(homepageDir);
         return homepageDir;
     }
 
@@ -1712,7 +1712,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareHomepageUrl(java.lang.String homepageUrl) {
-        homepageUrl = Str.removeUnreadableChars(homepageUrl);
+        // homepageUrl = Str.removeUnreadableChars(homepageUrl);
         return homepageUrl;
     }
 
@@ -1778,7 +1778,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareReleaseScriptPath(java.lang.String releaseScriptPath) {
-        releaseScriptPath = Str.removeUnreadableChars(releaseScriptPath);
+        // releaseScriptPath = Str.removeUnreadableChars(releaseScriptPath);
         return releaseScriptPath;
     }
 
@@ -1814,7 +1814,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareSupportEmail(java.lang.String supportEmail) {
-        supportEmail = Str.removeUnreadableChars(supportEmail);
+        // supportEmail = Str.removeUnreadableChars(supportEmail);
         return supportEmail;
     }
 
@@ -1850,7 +1850,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareIssueReplyTemplate(java.lang.String issueReplyTemplate) {
-        issueReplyTemplate = Str.removeUnreadableChars(issueReplyTemplate);
+        // issueReplyTemplate = Str.removeUnreadableChars(issueReplyTemplate);
         return issueReplyTemplate;
     }
 
@@ -1952,7 +1952,7 @@ public abstract class GProject
     }
 
     protected java.lang.String prepareReleasingInfo(java.lang.String releasingInfo) {
-        releasingInfo = Str.removeUnreadableChars(releasingInfo);
+        // releasingInfo = Str.removeUnreadableChars(releasingInfo);
         return releasingInfo;
     }
 

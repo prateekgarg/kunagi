@@ -93,7 +93,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareUrl(java.lang.String url) {
-        url = Str.removeUnreadableChars(url);
+        // url = Str.removeUnreadableChars(url);
         return url;
     }
 
@@ -129,7 +129,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
-        adminEmail = Str.removeUnreadableChars(adminEmail);
+        // adminEmail = Str.removeUnreadableChars(adminEmail);
         return adminEmail;
     }
 
@@ -165,7 +165,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
-        googleAnalyticsId = Str.removeUnreadableChars(googleAnalyticsId);
+        // googleAnalyticsId = Str.removeUnreadableChars(googleAnalyticsId);
         return googleAnalyticsId;
     }
 
@@ -201,7 +201,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareSmtpServer(java.lang.String smtpServer) {
-        smtpServer = Str.removeUnreadableChars(smtpServer);
+        // smtpServer = Str.removeUnreadableChars(smtpServer);
         return smtpServer;
     }
 
@@ -302,7 +302,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareSmtpUser(java.lang.String smtpUser) {
-        smtpUser = Str.removeUnreadableChars(smtpUser);
+        // smtpUser = Str.removeUnreadableChars(smtpUser);
         return smtpUser;
     }
 
@@ -338,7 +338,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareSmtpPassword(java.lang.String smtpPassword) {
-        smtpPassword = Str.removeUnreadableChars(smtpPassword);
+        // smtpPassword = Str.removeUnreadableChars(smtpPassword);
         return smtpPassword;
     }
 
@@ -374,7 +374,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
-        smtpFrom = Str.removeUnreadableChars(smtpFrom);
+        // smtpFrom = Str.removeUnreadableChars(smtpFrom);
         return smtpFrom;
     }
 
@@ -410,7 +410,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareInstanceName(java.lang.String instanceName) {
-        instanceName = Str.removeUnreadableChars(instanceName);
+        // instanceName = Str.removeUnreadableChars(instanceName);
         return instanceName;
     }
 
@@ -446,7 +446,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
-        loginPageLogoUrl = Str.removeUnreadableChars(loginPageLogoUrl);
+        // loginPageLogoUrl = Str.removeUnreadableChars(loginPageLogoUrl);
         return loginPageLogoUrl;
     }
 
@@ -482,7 +482,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
-        loginPageMessage = Str.removeUnreadableChars(loginPageMessage);
+        // loginPageMessage = Str.removeUnreadableChars(loginPageMessage);
         return loginPageMessage;
     }
 
@@ -518,7 +518,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
-        registerPageMessage = Str.removeUnreadableChars(registerPageMessage);
+        // registerPageMessage = Str.removeUnreadableChars(registerPageMessage);
         return registerPageMessage;
     }
 
@@ -554,7 +554,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {
-        aboutPageMessage = Str.removeUnreadableChars(aboutPageMessage);
+        // aboutPageMessage = Str.removeUnreadableChars(aboutPageMessage);
         return aboutPageMessage;
     }
 
@@ -680,7 +680,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareDefaultUserPassword(java.lang.String defaultUserPassword) {
-        defaultUserPassword = Str.removeUnreadableChars(defaultUserPassword);
+        // defaultUserPassword = Str.removeUnreadableChars(defaultUserPassword);
         return defaultUserPassword;
     }
 
@@ -746,7 +746,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareOpenIdDomains(java.lang.String openIdDomains) {
-        openIdDomains = Str.removeUnreadableChars(openIdDomains);
+        // openIdDomains = Str.removeUnreadableChars(openIdDomains);
         return openIdDomains;
     }
 
@@ -842,7 +842,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLdapUrl(java.lang.String ldapUrl) {
-        ldapUrl = Str.removeUnreadableChars(ldapUrl);
+        // ldapUrl = Str.removeUnreadableChars(ldapUrl);
         return ldapUrl;
     }
 
@@ -878,7 +878,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLdapUser(java.lang.String ldapUser) {
-        ldapUser = Str.removeUnreadableChars(ldapUser);
+        // ldapUser = Str.removeUnreadableChars(ldapUser);
         return ldapUser;
     }
 
@@ -914,7 +914,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLdapPassword(java.lang.String ldapPassword) {
-        ldapPassword = Str.removeUnreadableChars(ldapPassword);
+        // ldapPassword = Str.removeUnreadableChars(ldapPassword);
         return ldapPassword;
     }
 
@@ -950,7 +950,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLdapBaseDn(java.lang.String ldapBaseDn) {
-        ldapBaseDn = Str.removeUnreadableChars(ldapBaseDn);
+        // ldapBaseDn = Str.removeUnreadableChars(ldapBaseDn);
         return ldapBaseDn;
     }
 
@@ -986,7 +986,7 @@ public abstract class GSystemConfig
     }
 
     protected java.lang.String prepareLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
-        ldapUserFilterRegex = Str.removeUnreadableChars(ldapUserFilterRegex);
+        // ldapUserFilterRegex = Str.removeUnreadableChars(ldapUserFilterRegex);
         return ldapUserFilterRegex;
     }
 

@@ -82,7 +82,7 @@ public abstract class GSprintDaySnapshotDao
             });
 
     public final Set<SprintDaySnapshot> getSprintDaySnapshotsBySprint(scrum.server.sprint.Sprint sprint) {
-        return sprintDaySnapshotsBySprintCache.get(sprint);
+        return new HashSet<SprintDaySnapshot>(sprintDaySnapshotsBySprintCache.get(sprint));
     }
     private Set<scrum.server.sprint.Sprint> sprintsCache;
 
@@ -122,7 +122,7 @@ public abstract class GSprintDaySnapshotDao
             });
 
     public final Set<SprintDaySnapshot> getSprintDaySnapshotsByDate(ilarkesto.base.time.Date date) {
-        return sprintDaySnapshotsByDateCache.get(date);
+        return new HashSet<SprintDaySnapshot>(sprintDaySnapshotsByDateCache.get(date));
     }
     private Set<ilarkesto.base.time.Date> datesCache;
 
@@ -162,7 +162,7 @@ public abstract class GSprintDaySnapshotDao
             });
 
     public final Set<SprintDaySnapshot> getSprintDaySnapshotsByRemainingWork(int remainingWork) {
-        return sprintDaySnapshotsByRemainingWorkCache.get(remainingWork);
+        return new HashSet<SprintDaySnapshot>(sprintDaySnapshotsByRemainingWorkCache.get(remainingWork));
     }
     private Set<Integer> remainingWorksCache;
 
@@ -202,7 +202,7 @@ public abstract class GSprintDaySnapshotDao
             });
 
     public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWork(int burnedWork) {
-        return sprintDaySnapshotsByBurnedWorkCache.get(burnedWork);
+        return new HashSet<SprintDaySnapshot>(sprintDaySnapshotsByBurnedWorkCache.get(burnedWork));
     }
     private Set<Integer> burnedWorksCache;
 
@@ -242,7 +242,7 @@ public abstract class GSprintDaySnapshotDao
             });
 
     public final Set<SprintDaySnapshot> getSprintDaySnapshotsByBurnedWorkFromDeleted(int burnedWorkFromDeleted) {
-        return sprintDaySnapshotsByBurnedWorkFromDeletedCache.get(burnedWorkFromDeleted);
+        return new HashSet<SprintDaySnapshot>(sprintDaySnapshotsByBurnedWorkFromDeletedCache.get(burnedWorkFromDeleted));
     }
     private Set<Integer> burnedWorkFromDeletedsCache;
 

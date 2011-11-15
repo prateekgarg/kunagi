@@ -108,7 +108,7 @@ public abstract class GUser
     }
 
     protected java.lang.String preparePasswordSalt(java.lang.String passwordSalt) {
-        passwordSalt = Str.removeUnreadableChars(passwordSalt);
+        // passwordSalt = Str.removeUnreadableChars(passwordSalt);
         return passwordSalt;
     }
 
@@ -145,7 +145,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
-        name = Str.removeUnreadableChars(name);
+        // name = Str.removeUnreadableChars(name);
         return name;
     }
 
@@ -181,7 +181,7 @@ public abstract class GUser
     }
 
     protected java.lang.String preparePublicName(java.lang.String publicName) {
-        publicName = Str.removeUnreadableChars(publicName);
+        // publicName = Str.removeUnreadableChars(publicName);
         return publicName;
     }
 
@@ -217,7 +217,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareFullName(java.lang.String fullName) {
-        fullName = Str.removeUnreadableChars(fullName);
+        // fullName = Str.removeUnreadableChars(fullName);
         return fullName;
     }
 
@@ -314,7 +314,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareEmail(java.lang.String email) {
-        email = Str.removeUnreadableChars(email);
+        // email = Str.removeUnreadableChars(email);
         return email;
     }
 
@@ -402,7 +402,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
-        color = Str.removeUnreadableChars(color);
+        // color = Str.removeUnreadableChars(color);
         return color;
     }
 
@@ -991,7 +991,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareLoginToken(java.lang.String loginToken) {
-        loginToken = Str.removeUnreadableChars(loginToken);
+        // loginToken = Str.removeUnreadableChars(loginToken);
         return loginToken;
     }
 
@@ -1028,7 +1028,7 @@ public abstract class GUser
     }
 
     protected java.lang.String prepareOpenId(java.lang.String openId) {
-        openId = Str.removeUnreadableChars(openId);
+        // openId = Str.removeUnreadableChars(openId);
         return openId;
     }
 

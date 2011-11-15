@@ -108,7 +108,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByPasswordSalt(java.lang.String passwordSalt) {
-        return usersByPasswordSaltCache.get(passwordSalt);
+        return new HashSet<User>(usersByPasswordSaltCache.get(passwordSalt));
     }
     private Set<java.lang.String> passwordSaltsCache;
 
@@ -181,7 +181,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByPublicName(java.lang.String publicName) {
-        return usersByPublicNameCache.get(publicName);
+        return new HashSet<User>(usersByPublicNameCache.get(publicName));
     }
     private Set<java.lang.String> publicNamesCache;
 
@@ -221,7 +221,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByFullName(java.lang.String fullName) {
-        return usersByFullNameCache.get(fullName);
+        return new HashSet<User>(usersByFullNameCache.get(fullName));
     }
     private Set<java.lang.String> fullNamesCache;
 
@@ -261,7 +261,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByAdmin(boolean admin) {
-        return usersByAdminCache.get(admin);
+        return new HashSet<User>(usersByAdminCache.get(admin));
     }
 
     private static class IsAdmin implements Predicate<User> {
@@ -290,7 +290,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByEmailVerified(boolean emailVerified) {
-        return usersByEmailVerifiedCache.get(emailVerified);
+        return new HashSet<User>(usersByEmailVerifiedCache.get(emailVerified));
     }
 
     private static class IsEmailVerified implements Predicate<User> {
@@ -352,7 +352,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByCurrentProject(scrum.server.project.Project currentProject) {
-        return usersByCurrentProjectCache.get(currentProject);
+        return new HashSet<User>(usersByCurrentProjectCache.get(currentProject));
     }
     private Set<scrum.server.project.Project> currentProjectsCache;
 
@@ -392,7 +392,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByColor(java.lang.String color) {
-        return usersByColorCache.get(color);
+        return new HashSet<User>(usersByColorCache.get(color));
     }
     private Set<java.lang.String> colorsCache;
 
@@ -432,7 +432,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByLastLoginDateAndTime(ilarkesto.base.time.DateAndTime lastLoginDateAndTime) {
-        return usersByLastLoginDateAndTimeCache.get(lastLoginDateAndTime);
+        return new HashSet<User>(usersByLastLoginDateAndTimeCache.get(lastLoginDateAndTime));
     }
     private Set<ilarkesto.base.time.DateAndTime> lastLoginDateAndTimesCache;
 
@@ -472,7 +472,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByRegistrationDateAndTime(ilarkesto.base.time.DateAndTime registrationDateAndTime) {
-        return usersByRegistrationDateAndTimeCache.get(registrationDateAndTime);
+        return new HashSet<User>(usersByRegistrationDateAndTimeCache.get(registrationDateAndTime));
     }
     private Set<ilarkesto.base.time.DateAndTime> registrationDateAndTimesCache;
 
@@ -512,7 +512,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByDisabled(boolean disabled) {
-        return usersByDisabledCache.get(disabled);
+        return new HashSet<User>(usersByDisabledCache.get(disabled));
     }
 
     private static class IsDisabled implements Predicate<User> {
@@ -541,7 +541,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideBlog(boolean hideUserGuideBlog) {
-        return usersByHideUserGuideBlogCache.get(hideUserGuideBlog);
+        return new HashSet<User>(usersByHideUserGuideBlogCache.get(hideUserGuideBlog));
     }
 
     private static class IsHideUserGuideBlog implements Predicate<User> {
@@ -570,7 +570,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideCalendar(boolean hideUserGuideCalendar) {
-        return usersByHideUserGuideCalendarCache.get(hideUserGuideCalendar);
+        return new HashSet<User>(usersByHideUserGuideCalendarCache.get(hideUserGuideCalendar));
     }
 
     private static class IsHideUserGuideCalendar implements Predicate<User> {
@@ -599,7 +599,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideFiles(boolean hideUserGuideFiles) {
-        return usersByHideUserGuideFilesCache.get(hideUserGuideFiles);
+        return new HashSet<User>(usersByHideUserGuideFilesCache.get(hideUserGuideFiles));
     }
 
     private static class IsHideUserGuideFiles implements Predicate<User> {
@@ -628,7 +628,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideForum(boolean hideUserGuideForum) {
-        return usersByHideUserGuideForumCache.get(hideUserGuideForum);
+        return new HashSet<User>(usersByHideUserGuideForumCache.get(hideUserGuideForum));
     }
 
     private static class IsHideUserGuideForum implements Predicate<User> {
@@ -657,7 +657,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideImpediments(boolean hideUserGuideImpediments) {
-        return usersByHideUserGuideImpedimentsCache.get(hideUserGuideImpediments);
+        return new HashSet<User>(usersByHideUserGuideImpedimentsCache.get(hideUserGuideImpediments));
     }
 
     private static class IsHideUserGuideImpediments implements Predicate<User> {
@@ -686,7 +686,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideIssues(boolean hideUserGuideIssues) {
-        return usersByHideUserGuideIssuesCache.get(hideUserGuideIssues);
+        return new HashSet<User>(usersByHideUserGuideIssuesCache.get(hideUserGuideIssues));
     }
 
     private static class IsHideUserGuideIssues implements Predicate<User> {
@@ -715,7 +715,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideJournal(boolean hideUserGuideJournal) {
-        return usersByHideUserGuideJournalCache.get(hideUserGuideJournal);
+        return new HashSet<User>(usersByHideUserGuideJournalCache.get(hideUserGuideJournal));
     }
 
     private static class IsHideUserGuideJournal implements Predicate<User> {
@@ -744,7 +744,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
-        return usersByHideUserGuideNextSprintCache.get(hideUserGuideNextSprint);
+        return new HashSet<User>(usersByHideUserGuideNextSprintCache.get(hideUserGuideNextSprint));
     }
 
     private static class IsHideUserGuideNextSprint implements Predicate<User> {
@@ -773,7 +773,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
-        return usersByHideUserGuideProductBacklogCache.get(hideUserGuideProductBacklog);
+        return new HashSet<User>(usersByHideUserGuideProductBacklogCache.get(hideUserGuideProductBacklog));
     }
 
     private static class IsHideUserGuideProductBacklog implements Predicate<User> {
@@ -802,7 +802,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
-        return usersByHideUserGuideCourtroomCache.get(hideUserGuideCourtroom);
+        return new HashSet<User>(usersByHideUserGuideCourtroomCache.get(hideUserGuideCourtroom));
     }
 
     private static class IsHideUserGuideCourtroom implements Predicate<User> {
@@ -831,7 +831,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
-        return usersByHideUserGuideQualityBacklogCache.get(hideUserGuideQualityBacklog);
+        return new HashSet<User>(usersByHideUserGuideQualityBacklogCache.get(hideUserGuideQualityBacklog));
     }
 
     private static class IsHideUserGuideQualityBacklog implements Predicate<User> {
@@ -860,7 +860,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideReleases(boolean hideUserGuideReleases) {
-        return usersByHideUserGuideReleasesCache.get(hideUserGuideReleases);
+        return new HashSet<User>(usersByHideUserGuideReleasesCache.get(hideUserGuideReleases));
     }
 
     private static class IsHideUserGuideReleases implements Predicate<User> {
@@ -889,7 +889,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideRisks(boolean hideUserGuideRisks) {
-        return usersByHideUserGuideRisksCache.get(hideUserGuideRisks);
+        return new HashSet<User>(usersByHideUserGuideRisksCache.get(hideUserGuideRisks));
     }
 
     private static class IsHideUserGuideRisks implements Predicate<User> {
@@ -918,7 +918,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
-        return usersByHideUserGuideSprintBacklogCache.get(hideUserGuideSprintBacklog);
+        return new HashSet<User>(usersByHideUserGuideSprintBacklogCache.get(hideUserGuideSprintBacklog));
     }
 
     private static class IsHideUserGuideSprintBacklog implements Predicate<User> {
@@ -947,7 +947,7 @@ public abstract class GUserDao
             });
 
     public final Set<User> getUsersByHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
-        return usersByHideUserGuideWhiteboardCache.get(hideUserGuideWhiteboard);
+        return new HashSet<User>(usersByHideUserGuideWhiteboardCache.get(hideUserGuideWhiteboard));
     }
 
     private static class IsHideUserGuideWhiteboard implements Predicate<User> {

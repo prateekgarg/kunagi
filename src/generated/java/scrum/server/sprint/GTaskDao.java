@@ -88,7 +88,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByRequirement(scrum.server.project.Requirement requirement) {
-        return tasksByRequirementCache.get(requirement);
+        return new HashSet<Task>(tasksByRequirementCache.get(requirement));
     }
     private Set<scrum.server.project.Requirement> requirementsCache;
 
@@ -128,7 +128,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByNumber(int number) {
-        return tasksByNumberCache.get(number);
+        return new HashSet<Task>(tasksByNumberCache.get(number));
     }
     private Set<Integer> numbersCache;
 
@@ -168,7 +168,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByLabel(java.lang.String label) {
-        return tasksByLabelCache.get(label);
+        return new HashSet<Task>(tasksByLabelCache.get(label));
     }
     private Set<java.lang.String> labelsCache;
 
@@ -208,7 +208,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByDescription(java.lang.String description) {
-        return tasksByDescriptionCache.get(description);
+        return new HashSet<Task>(tasksByDescriptionCache.get(description));
     }
     private Set<java.lang.String> descriptionsCache;
 
@@ -248,7 +248,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByRemainingWork(int remainingWork) {
-        return tasksByRemainingWorkCache.get(remainingWork);
+        return new HashSet<Task>(tasksByRemainingWorkCache.get(remainingWork));
     }
     private Set<Integer> remainingWorksCache;
 
@@ -288,7 +288,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByBurnedWork(int burnedWork) {
-        return tasksByBurnedWorkCache.get(burnedWork);
+        return new HashSet<Task>(tasksByBurnedWorkCache.get(burnedWork));
     }
     private Set<Integer> burnedWorksCache;
 
@@ -328,7 +328,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByOwner(scrum.server.admin.User owner) {
-        return tasksByOwnerCache.get(owner);
+        return new HashSet<Task>(tasksByOwnerCache.get(owner));
     }
     private Set<scrum.server.admin.User> ownersCache;
 
@@ -368,7 +368,7 @@ public abstract class GTaskDao
             });
 
     public final Set<Task> getTasksByImpediment(scrum.server.impediments.Impediment impediment) {
-        return tasksByImpedimentCache.get(impediment);
+        return new HashSet<Task>(tasksByImpedimentCache.get(impediment));
     }
     private Set<scrum.server.impediments.Impediment> impedimentsCache;
 
