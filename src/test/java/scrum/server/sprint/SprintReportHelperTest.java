@@ -44,7 +44,7 @@ public class SprintReportHelperTest extends ATest {
 	@Test
 	public void encodeTask() {
 		Requirement req = TestUtil.createRequirement(TestUtil.createProject(), 2);
-		Task tsk = TestUtil.createTask(req, 1, 1);
+		Task tsk = TestUtil.createTask(req, 1, 1, 0);
 		tsk.setLabel("Task;X :-D");
 		tsk.setBurnedWork(6);
 		assertEquals(SprintHistoryHelper.encodeTask(tsk), "tsk1;6;1;Task;X :-D");
@@ -62,10 +62,10 @@ public class SprintReportHelperTest extends ATest {
 		req1.setEstimatedWork(0.5f);
 		Requirement req2 = TestUtil.createRequirement(TestUtil.createProject(), 2);
 		req2.setEstimatedWork(5f);
-		Task tsk1 = TestUtil.createTask(req2, 1, 5);
+		Task tsk1 = TestUtil.createTask(req2, 1, 5, 0);
 		tsk1.setRemainingWork(2);
 		tsk1.setBurnedWork(3);
-		Task tsk2 = TestUtil.createTask(req2, 2, 3);
+		Task tsk2 = TestUtil.createTask(req2, 2, 3, 0);
 		tsk2.setRemainingWork(1);
 		tsk2.setBurnedWork(1);
 		Requirement req3 = TestUtil.createRequirement(TestUtil.createProject(), 3);

@@ -123,16 +123,23 @@ public class TestUtil {
 		return comment;
 	}
 
-	public static Task createTask(Requirement requirement, int number, int work) {
-		return createTask(requirement, number, Str.generateRandomSentence(2, 6), work);
+	public static void createTasks(Requirement requirement, int count) {
+		for (int i = 0; i < count; i++) {
+			createTask(requirement, i + 10, Utl.randomInt(0, 5), Utl.randomInt(0, 5));
+		}
 	}
 
-	public static Task createTask(Requirement requirement, int number, String label, int work) {
+	public static Task createTask(Requirement requirement, int number, int remainingWork, int burnedWork) {
+		return createTask(requirement, number, Str.generateRandomSentence(2, 6), remainingWork, burnedWork);
+	}
+
+	public static Task createTask(Requirement requirement, int number, String label, int remainingWork, int burnedWork) {
 		Task task = app.getTaskDao().newEntityInstance();
 		task.setRequirement(requirement);
 		task.setNumber(number);
 		task.setLabel(label);
-		task.setRemainingWork(work);
+		task.setRemainingWork(remainingWork);
+		task.setBurnedWork(burnedWork);
 		return task;
 	}
 

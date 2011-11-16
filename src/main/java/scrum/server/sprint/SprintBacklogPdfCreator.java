@@ -14,7 +14,9 @@
  */
 package scrum.server.sprint;
 
+import ilarkesto.base.time.Date;
 import ilarkesto.pdf.APdfContainerElement;
+import ilarkesto.pdf.FieldList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +41,22 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 		Sprint sprint = project.getCurrentSprint();
 
 		reportHeader(pdf, "Sprint Backlog", project.getLabel());
+
+		pdf.nl();
+		FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
+		fields.field("Sprint").paragraph().text(sprint.getReference() + " ", referenceFont).text(sprint.getLabel());
+		fields.field("Period").text(
+			sprint.getBegin().toString(Date.FORMAT_SHORTWEEKDAY_SHORTMONTH_DAY) + "  -  "
+					+ sprint.getEnd().toString(Date.FORMAT_SHORTWEEKDAY_SHORTMONTH_DAY) + "   ("
+					+ sprint.getLengthInDays() + " days)");
+		int burned = sprint.getBurnedWork();
+		int remaining = sprint.getRemainingWork();
+		int total = remaining + burned;
+		float percent = burned * 100f / total;
+		fields.field("Work progress").text(burned + " of " + total + " hours   (" + Math.round(percent) + "%)");
+		fields.field("Product Owner").text(sprint.getProductOwnersAsString());
+		fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
+		fields.field("Team").text(sprint.getTeamMembersAsString());
 
 		pdf.nl();
 		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);

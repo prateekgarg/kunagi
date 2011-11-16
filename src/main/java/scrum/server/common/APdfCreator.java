@@ -14,7 +14,6 @@
  */
 package scrum.server.common;
 
-import ilarkesto.base.Str;
 import ilarkesto.base.time.Date;
 import ilarkesto.pdf.ACell;
 import ilarkesto.pdf.APdfBuilder;
@@ -33,6 +32,7 @@ import scrum.server.release.Release;
 public abstract class APdfCreator {
 
 	protected FontStyle defaultFont;
+	protected FontStyle smallerFont;
 	protected FontStyle tableHeaderFont;
 	protected FontStyle codeFont;
 	protected FontStyle referenceFont;
@@ -47,6 +47,7 @@ public abstract class APdfCreator {
 
 	public APdfCreator() {
 		defaultFont = new FontStyle().setSize(3);
+		smallerFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 0.5f);
 		tableHeaderFont = new FontStyle(defaultFont).setBold(true);
 		codeFont = new FontStyle(defaultFont).setFont(FontStyle.FONT_DEFAULT_FIXED);
 		referenceFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 0.5f)
@@ -79,12 +80,12 @@ public abstract class APdfCreator {
 	protected void requirement(APdfContainerElement pdf, Requirement req) {
 		pdf.nl();
 
-		ATable table = pdf.table(3, 20, 3, 3);
+		ATable table = pdf.table(3, 20, 0, 5);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(req.getReference());
 		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(req.getLabel());
-		rowHeader.cell().text(Str.appendIfNotBlank(req.getEstimatedWorkAsString(), " SP"));
+		rowHeader.cell().setFontStyle(smallerFont).text(req.getWorkDescriptionAsString());
 
 		richtextRow(table, "Story description", req.getDescription());
 		richtextRow(table, "Acceptance tests", req.getTestDescription());

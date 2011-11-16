@@ -14,6 +14,7 @@
  */
 package scrum.server.common;
 
+import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
 import ilarkesto.integration.itext.PdfBuilder;
@@ -89,9 +90,15 @@ public class PdfTest extends ATest {
 		project.setCurrentSprint(sprint);
 
 		Requirement req1 = TestUtil.createRequirement(project, 1);
+		req1.setEstimatedWork(3f);
+		req1.setDirty(false);
+		TestUtil.createTasks(req1, Utl.randomInt(1, 10));
 		req1.setSprint(sprint);
 
 		Requirement req2 = TestUtil.createRequirement(project, 2);
+		req2.setEstimatedWork(0.5f);
+		req2.setDirty(false);
+		TestUtil.createTasks(req1, Utl.randomInt(0, 2));
 		req2.setSprint(sprint);
 
 		createPdf(new SprintBacklogPdfCreator(project));
@@ -101,7 +108,7 @@ public class PdfTest extends ATest {
 	public void productBacklog() {
 		Project project = TestUtil.createProject();
 
-		TestUtil.createRequirement(project, 1);
+		TestUtil.createRequirement(project, 1).setEstimatedWork(3f);
 		TestUtil.createRequirement(project, 2);
 
 		createPdf(new ProductBacklogPdfCreator(project));
@@ -179,12 +186,12 @@ public class PdfTest extends ATest {
 		sprint.setTeamMembers(Arrays.asList(TestUtil.createUser("Alfred"), TestUtil.createUser("Duke")));
 
 		Requirement req1 = TestUtil.createRequirement(sprint, 1, 0.5f);
-		TestUtil.createTask(req1, 1, 0).setBurnedWork(1);
+		TestUtil.createTask(req1, 1, 0, 1);
 		req1.setClosed(true);
 		Requirement req2 = TestUtil.createRequirement(sprint, 1, 1f);
 		Requirement req3 = TestUtil.createRequirement(sprint, 1, 5f);
-		TestUtil.createTask(req3, 2, 1).setBurnedWork(1);
-		TestUtil.createTask(req3, 3, 2).setBurnedWork(2);
+		TestUtil.createTask(req3, 2, 1, 1);
+		TestUtil.createTask(req3, 3, 2, 2);
 
 		sprint.close();
 

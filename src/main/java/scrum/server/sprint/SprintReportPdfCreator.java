@@ -14,6 +14,7 @@
  */
 package scrum.server.sprint;
 
+import ilarkesto.base.time.Date;
 import ilarkesto.pdf.ACell;
 import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfContainerElement;
@@ -48,9 +49,11 @@ public class SprintReportPdfCreator extends APdfCreator {
 
 		pdf.nl();
 		FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
-		fields.field("Sprint").text(sprint.getLabel());
+		fields.field("Sprint").paragraph().text(sprint.getReference() + " ", referenceFont).text(sprint.getLabel());
 		fields.field("Period").text(
-			sprint.getBegin() + " - " + sprint.getEnd() + " / " + sprint.getLengthInDays() + " days");
+			sprint.getBegin().toString(Date.FORMAT_SHORTWEEKDAY_SHORTMONTH_DAY) + "  -  "
+					+ sprint.getEnd().toString(Date.FORMAT_SHORTWEEKDAY_SHORTMONTH_DAY) + "   ("
+					+ sprint.getLengthInDays() + " days)");
 		fields.field("Velocity").text(sprint.getVelocity() + " StoryPoints");
 		fields.field("Burned work").text(
 			getBurnedWork(sprint.getCompletedRequirementsData())

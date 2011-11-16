@@ -31,6 +31,36 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 	private transient Comparator<Task> tasksOrderComparator;
 
+	public String getWorkDescriptionAsString() {
+		if (!isInCurrentSprint()) return Str.appendIfNotBlank(getEstimatedWorkAsString(), "SP");
+		int remaining = getRemainingWork();
+		int burned = getBurnedWork();
+		int total = remaining + burned;
+		if (total == 0) return null;
+		float percent = burned * 100f / total;
+		return burned + "/" + total + " hrs. (" + Math.round(percent) + "%)";
+	}
+
+	public int getTotalWork() {
+		return getRemainingWork() + getBurnedWork();
+	}
+
+	public int getRemainingWork() {
+		int work = 0;
+		for (Task task : getTasks()) {
+			work += task.getRemainingWork();
+		}
+		return work;
+	}
+
+	public int getBurnedWork() {
+		int work = 0;
+		for (Task task : getTasks()) {
+			work += task.getBurnedWork();
+		}
+		return work;
+	}
+
 	public String getEstimatedWorkAsString() {
 		Float work = getEstimatedWork();
 		if (work == null) return null;
