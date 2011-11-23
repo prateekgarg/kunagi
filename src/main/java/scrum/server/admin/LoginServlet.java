@@ -193,7 +193,7 @@ public class LoginServlet extends AHttpServlet {
 	}
 
 	private String getStartPage(String historyToken) {
-		String url = webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
+		String url = getDefaultStartPage();
 		if (historyToken != null) url += "#" + historyToken;
 		url = webApplication.createUrl(url);
 		return url;

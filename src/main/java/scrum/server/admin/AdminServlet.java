@@ -20,8 +20,10 @@ import ilarkesto.base.Sys;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.TimePeriod;
+import ilarkesto.core.logging.LogRecord;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
+import ilarkesto.logging.DefaultLogRecordHandler;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.AWebSession;
 
@@ -75,9 +77,12 @@ public class AdminServlet extends AHttpServlet {
 
 		html.startBODY().setStyle("font-size: 10px");
 
+		adminLinks(html);
+
 		version(html);
 		sessions(html);
 		conversations(html);
+		errors(html);
 		runtime(html);
 		processes(html);
 		threads(html);
@@ -87,10 +92,18 @@ public class AdminServlet extends AHttpServlet {
 		systemProperties(html);
 		environment(html);
 
+		adminLinks(html);
+
 		html.endBODY();
 
 		html.endHTML();
 		html.flush();
+	}
+
+	private void errors(HtmlRenderer html) {
+		sectionHeader(html, "Warnings and Errors");
+		List<LogRecord> logs = DefaultLogRecordHandler.getErrors();
+		logsTable(html, logs);
 	}
 
 	private void runtime(HtmlRenderer html) {
@@ -207,70 +220,6 @@ public class AdminServlet extends AHttpServlet {
 		}
 		endTABLE(html);
 		html.flush();
-	}
-
-	// --- ---
-
-	private void startTABLE(HtmlRenderer html) {
-		html.startTABLE();
-	}
-
-	private void headersRow(HtmlRenderer html, String... headers) {
-		html.startTR();
-
-		for (String header : headers) {
-			html.startTH().setStyle(getLabelStyle());
-			html.text(header);
-			html.endTH();
-		}
-
-		html.endTR();
-		html.flush();
-	}
-
-	private void valuesRow(HtmlRenderer html, Object... values) {
-		html.startTR();
-
-		for (Object value : values) {
-			html.startTD().setStyle(getValueStyle());
-			html.text(value);
-			html.endTD();
-		}
-
-		html.endTR();
-		html.flush();
-	}
-
-	private void keyValueRow(HtmlRenderer html, String key, Object value) {
-		html.startTR();
-
-		html.startTD().setStyle(getLabelStyle());
-		html.text(key);
-		html.endTD();
-
-		html.startTD().setStyle(getValueStyle());
-		html.text(value);
-		html.endTD();
-
-		html.endTR();
-		html.flush();
-	}
-
-	private void endTABLE(HtmlRenderer html) {
-		html.endTABLE();
-		html.flush();
-	}
-
-	private void sectionHeader(HtmlRenderer html, String title) {
-		html.H2(title);
-	}
-
-	private String getLabelStyle() {
-		return "color: #999; font-weight: normal; padding: 2px 20px 2px 5px; text-align: left;";
-	}
-
-	private String getValueStyle() {
-		return "font-family: mono; padding: 2px 20px 2px 5px;";
 	}
 
 }

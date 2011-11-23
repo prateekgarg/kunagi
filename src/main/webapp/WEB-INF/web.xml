@@ -54,6 +54,17 @@
         <url-pattern>/admin.html</url-pattern>
     </servlet-mapping>
 
+    <!-- logs page -->
+    <servlet>
+        <servlet-name>logs</servlet-name>
+        <servlet-class>scrum.server.admin.LogsServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>logs</servlet-name>
+        <url-pattern>/logs.html</url-pattern>
+    </servlet-mapping>
+
 	<!-- main communication service -->
 	<servlet>
 		<servlet-name>scrum</servlet-name>

@@ -18,10 +18,13 @@ import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.logging.LogRecord;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -98,6 +101,110 @@ public abstract class AHttpServlet extends HttpServlet {
 	}
 
 	// --- helper ---
+
+	protected void logsTable(HtmlRenderer html, List<LogRecord> logs) {
+		startTABLE(html);
+		headersRow(html, "Level", "Logger", "Message", "Context");
+		for (LogRecord log : logs) {
+			String color = "#666";
+			if (log.level.isErrorOrWorse()) color = "#c00";
+			if (log.level.isWarn()) color = "#990";
+			if (log.level.isInfo()) color = "#000";
+			valuesRowColored(html, color, log.level, log.name, log.getParametersAsString(), log.context);
+		}
+		endTABLE(html);
+	}
+
+	protected void startTABLE(HtmlRenderer html) {
+		html.startTABLE();
+	}
+
+	protected void headersRow(HtmlRenderer html, String... headers) {
+		html.startTR();
+
+		for (String header : headers) {
+			html.startTH().setStyle(getLabelStyle());
+			html.text(header);
+			html.endTH();
+		}
+
+		html.endTR();
+		html.flush();
+	}
+
+	protected void valuesRowColored(HtmlRenderer html, String color, Object... values) {
+		html.startTR();
+
+		for (Object value : values) {
+			html.startTD().setStyle(getValueStyle() + " color: " + color + ";");
+			html.text(value);
+			html.endTD();
+		}
+
+		html.endTR();
+		html.flush();
+	}
+
+	protected void valuesRow(HtmlRenderer html, Object... values) {
+		html.startTR();
+
+		for (Object value : values) {
+			html.startTD().setStyle(getValueStyle());
+			html.text(value);
+			html.endTD();
+		}
+
+		html.endTR();
+		html.flush();
+	}
+
+	protected void keyValueRow(HtmlRenderer html, String key, Object value) {
+		html.startTR();
+
+		html.startTD().setStyle(getLabelStyle());
+		html.text(key);
+		html.endTD();
+
+		html.startTD().setStyle(getValueStyle());
+		html.text(value);
+		html.endTD();
+
+		html.endTR();
+		html.flush();
+	}
+
+	protected void endTABLE(HtmlRenderer html) {
+		html.endTABLE();
+		html.flush();
+	}
+
+	protected void sectionHeader(HtmlRenderer html, String title) {
+		html.H2(title);
+	}
+
+	private String getLabelStyle() {
+		return "color: #999; font-weight: normal; padding: 2px 20px 2px 5px; text-align: left;";
+	}
+
+	private String getValueStyle() {
+		return "font-family: mono; padding: 2px 20px 2px 5px;";
+	}
+
+	protected String getDefaultStartPage() {
+		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
+	}
+
+	protected void adminLinks(HtmlRenderer html) {
+		html.startP();
+		html.text("[");
+		html.A("admin.html", "Admin page");
+		html.text("] [");
+		html.A("logs.html", "Latest logs");
+		html.text("] [");
+		html.A(getDefaultStartPage(), "Kunagi");
+		html.text("]");
+		html.endP();
+	}
 
 	protected boolean tokenLogin(HttpServletRequest req, HttpServletResponse resp, WebSession session)
 			throws IOException {
