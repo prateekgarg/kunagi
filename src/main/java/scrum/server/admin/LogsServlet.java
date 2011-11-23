@@ -14,7 +14,6 @@
  */
 package scrum.server.admin;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.logging.LogRecord;
 import ilarkesto.io.IO;
 import ilarkesto.logging.DefaultLogRecordHandler;
@@ -33,9 +32,6 @@ public class LogsServlet extends AHttpServlet {
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
-		Log.get(getClass()).warn("AAA!!!");
-		Log.get(getClass()).error("oups!!!");
-		Log.get(getClass()).fatal("shit!!!");
 		tokenLogin(req, resp, session);
 
 		User user = session.getUser();
