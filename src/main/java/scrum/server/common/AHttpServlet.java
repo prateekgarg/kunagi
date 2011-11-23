@@ -201,7 +201,7 @@ public abstract class AHttpServlet extends HttpServlet {
 		html.text("] [");
 		html.A("logs.html", "Latest logs");
 		html.text("] [");
-		html.A(getDefaultStartPage(), "Kunagi");
+		html.A(config.getUrl(), "Kunagi");
 		html.text("]");
 		html.endP();
 	}
