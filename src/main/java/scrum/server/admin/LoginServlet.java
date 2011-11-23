@@ -28,30 +28,21 @@ import ilarkesto.webapp.Servlet;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.openid4java.consumer.VerificationResult;
 
-import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 
 public class LoginServlet extends AHttpServlet {
 
-	private static final int LOGIN_TOKEN_COOKIE_MAXAGE = 518400; // 6 days
 	private static final long serialVersionUID = 1;
 
 	private static Log log = Log.get(LoginServlet.class);
-
-	private static ScrumWebApplication webApplication;
-	private ApplicationInfo applicationInfo;
-	private UserDao userDao;
-	private SystemConfig systemConfig;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
@@ -62,17 +53,9 @@ public class LoginServlet extends AHttpServlet {
 			return;
 		}
 
-		String loginToken = Servlet.getCookieValue(req, ScrumGwtApplication.LOGIN_TOKEN_COOKIE);
-		if (!Str.isBlank(loginToken)) {
-			User user = userDao.getUserByLoginToken(loginToken);
-			if (user != null) {
-				user.setLastLoginDateAndTime(DateAndTime.now());
-				session.setUser(user);
-				Servlet.setCookie(resp, ScrumGwtApplication.LOGIN_TOKEN_COOKIE, user.getLoginToken(),
-					LOGIN_TOKEN_COOKIE_MAXAGE);
-				resp.sendRedirect(getStartPage(historyToken));
-				return;
-			}
+		if (tokenLogin(req, resp, session)) {
+			resp.sendRedirect(getStartPage(historyToken));
+			return;
 		}
 
 		if (OpenId.isOpenIdCallback(req)) {
@@ -667,15 +650,6 @@ public class LoginServlet extends AHttpServlet {
 		html.text(message);
 		html.endDIV();
 		html.DIV("separator", null);
-	}
-
-	@Override
-	protected void onInit(ServletConfig servletConfig) {
-		super.onInit(servletConfig);
-		webApplication = ScrumWebApplication.get();
-		userDao = webApplication.getUserDao();
-		applicationInfo = webApplication.getApplicationInfo();
-		systemConfig = webApplication.getSystemConfig();
 	}
 
 }
