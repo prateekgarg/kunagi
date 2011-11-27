@@ -36,6 +36,8 @@ public class User extends GUser {
 
 	private static Log log = Log.get(User.class);
 
+	private String passwordSalt;
+
 	// --- dependencies ---
 
 	private static ScrumWebApplication webApplication;
@@ -150,8 +152,11 @@ public class User extends GUser {
 	}
 
 	private String hashPassword(String password) {
-		if (!isPasswordSaltSet()) setPasswordSalt(Str.generatePassword(32));
-		return PasswordHasher.hashPassword(password, getPasswordSalt(), "SHA-256:");
+		if (passwordSalt == null) {
+			passwordSalt = Str.generatePassword(32);
+			fireModified("passwordSalt=" + this.passwordSalt);
+		}
+		return PasswordHasher.hashPassword(password, this.passwordSalt, "SHA-256:");
 	}
 
 	@Override
