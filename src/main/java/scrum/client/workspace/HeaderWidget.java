@@ -48,7 +48,6 @@ public class HeaderWidget extends AScrumWidget {
 	private DropdownMenuButtonWidget switchProjectButton;
 	private SearchInputWidget search;
 	private CommunicationIndicatorWidget status;
-	private HTML feedback;
 
 	@Override
 	protected Widget onInitialization() {
@@ -65,10 +64,16 @@ public class HeaderWidget extends AScrumWidget {
 
 		search = new SearchInputWidget();
 
-		feedback = new HTML("<a href='http://kunagi.org/support.html' target='blank'>Support/Feedback</a>");
-
 		wrapper = Gwt.createDiv("HeaderWidget", title);
 		return wrapper;
+	}
+
+	private HTML createLinksHtml() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<a href='http://kunagi.org/support.html' target='_blank'>Support/Feedback</a>");
+		if (getAuth().isUserLoggedIn() && getCurrentUser().isAdmin())
+			sb.append(" <a href='admin.html' target='_blank'>Administration/Monitoring</a>");
+		return new HTML(sb.toString());
 	}
 
 	@Override
@@ -118,7 +123,7 @@ public class HeaderWidget extends AScrumWidget {
 		// Widget changeProjectWidget = projectOpen ? new HyperlinkWidget(new ChangeProjectAction()) : Gwt
 		// .createEmptyDiv();
 		Widget changeProjectWidget = projectOpen ? switchProjectButton : Gwt.createEmptyDiv();
-		tb.add(createLogo(), status, upgrade, searchWidget, feedback, undoWidget, changeProjectWidget,
+		tb.add(createLogo(), status, upgrade, searchWidget, createLinksHtml(), undoWidget, changeProjectWidget,
 			createCurrentUserWidget(), new HyperlinkWidget(new LogoutAction()));
 		wrapper.setWidget(tb.createTable());
 
