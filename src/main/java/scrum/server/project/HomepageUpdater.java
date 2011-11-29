@@ -357,7 +357,7 @@ public class HomepageUpdater {
 
 	private void fillStories(ContextBuilder context) {
 		for (Requirement requirement : project.getRequirements()) {
-			if (requirement.isClosed()) continue;
+			// if (requirement.isClosed()) continue;
 			fillStory(context.addSubContext("stories"), requirement);
 		}
 	}
