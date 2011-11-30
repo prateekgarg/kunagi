@@ -93,6 +93,7 @@ public class CommentServlet extends AHttpServlet {
 
 	private String postComment(String projectId, String entityId, String text, String name, String email) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
+		if (Str.isBlank(text)) throw new RuntimeException("Comment is empty.");
 		Project project = projectDao.getById(projectId);
 		AEntity entity = daoService.getById(entityId);
 		Comment comment = commentDao.postComment(entity, "<nowiki>" + text + "</nowiki>", name, email, true);
