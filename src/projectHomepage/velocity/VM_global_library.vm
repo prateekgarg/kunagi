@@ -19,12 +19,14 @@
     <meta name="fb:admins" content="kunagi">
     <meta name="og:description" content="$description">
 
+    <meta itemprop="name" content="$title">
+    <meta itemprop="description" content="$description">
+
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="default.css" type="text/css">
     <link rel="alternate" type="application/rss+xml" title="Kunagi Blog" href="http://feeds.feedburner.com/kunagi">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
 </head>
 
@@ -295,7 +297,15 @@ pageTracker._trackPageview();
 #end
 
 #macro( plusoneButton $url )
-    <g:plusone size="medium" href="${url}"></g:plusone>
+    <g:plusone size="medium" annotation="inline"></g:plusone>
+
+    <script type="text/javascript">
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
 #end
 
 #macro( facebookButton $url )
