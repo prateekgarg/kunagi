@@ -21,7 +21,8 @@
 
     <meta itemprop="name" content="$title">
     <meta itemprop="description" content="$description">
-
+    <meta itemprop="image" content="http://kunagi.org/img/kunagi.png">
+    
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="default.css" type="text/css">
