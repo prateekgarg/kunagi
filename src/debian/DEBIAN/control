@@ -1,7 +1,7 @@
 Package: kunagi
 Version: 0.22.2
 Section: devel
-Depends: tomcat6
+Depends: tomcat6, ttf-liberation
 Priority: optional
 Architecture: all
 Maintainer: Kunagi Team <support@kunagi.org>

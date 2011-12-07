@@ -290,15 +290,13 @@ pageTracker._trackPageview();
                 #if($url) <td style="padding: 0 0 0 0;"> #facebookButton($url) </td> #end
                 <td style="padding: 0 15px 0 0;"> #plusoneButton($url) </td>
                 <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
-                <td style="padding: 0 15px 0 0;"> #buzzButton() </td>
-                <td style="padding: 0 15px 0 0;"> #addthisButton() </td>
             </tr>
         </table>
     </div>
 #end
 
 #macro( plusoneButton $url )
-    <g:plusone size="medium" annotation="inline"></g:plusone>
+    <g:plusone size="medium" annotation=""></g:plusone>
 
     <script type="text/javascript">
       (function() {
