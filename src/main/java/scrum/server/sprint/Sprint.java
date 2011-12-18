@@ -22,18 +22,20 @@ import ilarkesto.core.logging.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
+import scrum.server.issues.Issue;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 import scrum.server.release.Release;
 
 public class Sprint extends GSprint implements Numbered {
 
-	private static final Log LOG = Log.get(Sprint.class);
+	private static final Log log = Log.get(Sprint.class);
 
 	// --- dependencies ---
 
@@ -127,6 +129,15 @@ public class Sprint extends GSprint implements Numbered {
 			}
 			requirement.setSprint(null);
 		}
+
+		Set<Issue> fixedIssues = getFixedIssues();
+		if (!fixedIssues.isEmpty()) {
+			releaseNotes.append("'''\nFixed bugs'''\n\n");
+			for (Issue issue : fixedIssues) {
+				releaseNotes.append("* ").append(issue.getReferenceAndLabel()).append("\n");
+			}
+		}
+
 		for (Release release : getReleases()) {
 			StringBuilder sb = new StringBuilder();
 			if (release.isReleaseNotesSet()) {
@@ -143,6 +154,16 @@ public class Sprint extends GSprint implements Numbered {
 		setTeamMembers(project.getTeamMembers());
 		int roundedVelocity = Math.round(velocity);
 		if (roundedVelocity > 0) project.setVelocity(roundedVelocity);
+	}
+
+	public Set<Issue> getFixedIssues() {
+		Set<Issue> fixedIssues = new HashSet<Issue>();
+		for (Release release : getReleases()) {
+			for (Issue issue : release.getFixIssues()) {
+				if (issue.isFixed()) fixedIssues.add(issue);
+			}
+		}
+		return fixedIssues;
 	}
 
 	public String getProductOwnersAsString() {
