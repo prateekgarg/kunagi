@@ -22,7 +22,6 @@ import ilarkesto.core.logging.Log;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,15 +74,6 @@ public class BurndownChart {
 		return out.toByteArray();
 	}
 
-	// public void writeProjectBurndownChart(OutputStream out, String projectId, int width, int height) {
-	// Project project = projectDao.getById(projectId);
-	// List<ProjectSprintSnapshot> snapshots = project.getSprintSnapshots();
-	// project.getCurrentSprintSnapshot().update();
-	//
-	// writeProjectBurndownChart(out, snapshots, project.getBegin(), project.getEnd().addDays(1),
-	// project.getFreeDaysAsWeekdaySelector(), width, height);
-	// }
-
 	public void writeSprintBurndownChart(OutputStream out, String sprintId, int width, int height) {
 		Sprint sprint = sprintDao.getById(sprintId);
 		if (sprint == null) throw new IllegalArgumentException("Sprint " + sprintId + " does not exist.");
@@ -104,32 +94,6 @@ public class BurndownChart {
 
 		writeSprintBurndownChart(out, snapshots, sprint.getBegin(), sprint.getEnd(), freeDays, width, height);
 	}
-
-	// private void writeProjectBurndownChart(OutputStream out, List<ProjectSprintSnapshot> snapshots, Date
-	// firstDay,
-	// Date lastDay, WeekdaySelector freeDays, int width, int height) {
-	// List<BurndownSnapshot> burndownSnapshots = new ArrayList<BurndownSnapshot>(snapshots);
-	// DefaultXYDataset data = createSprintBurndownChartDataset(burndownSnapshots, firstDay, lastDay);
-	// double tick = 1.0;
-	// double max = getMaximum(data);
-	//
-	// while (max / tick > 25) {
-	// tick *= 2;
-	// if (max / tick <= 25) break;
-	// tick *= 2.5;
-	// if (max / tick <= 25) break;
-	// tick *= 2;
-	// }
-	//
-	// JFreeChart chart = createSprintBurndownChart(data, "Date", "Work", firstDay, lastDay, 10, 30, max *
-	// 1.1, tick,
-	// freeDays);
-	// try {
-	// ChartUtilities.writeScaledChartAsPNG(out, chart, width, height, 1, 1);
-	// } catch (IOException e) {
-	// throw new RuntimeException(e);
-	// }
-	// }
 
 	static void writeSprintBurndownChart(OutputStream out, List<? extends BurndownSnapshot> snapshots, Date firstDay,
 			Date lastDay, WeekdaySelector freeDays, int width, int height) {
@@ -187,8 +151,6 @@ public class BurndownChart {
 		renderer.setSeriesStroke(2, new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
 		DateAxis domainAxis1 = new DateAxis();
-		domainAxis1.setLabelFont(new Font(domainAxis1.getLabelFont().getName(), Font.PLAIN, 7));
-		// String dateFormat = "        EE d.";
 		String dateFormat = "d.";
 		widthPerDay -= 5;
 		if (widthPerDay > 40) {
@@ -215,7 +177,6 @@ public class BurndownChart {
 		chart.getXYPlot().setDomainAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
 
 		NumberAxis rangeAxis = new NumberAxis();
-		rangeAxis.setLabelFont(new Font(rangeAxis.getLabelFont().getName(), Font.PLAIN, 6));
 		rangeAxis.setNumberFormatOverride(NumberFormat.getIntegerInstance());
 		rangeAxis.setTickUnit(new NumberTickUnit(valueLabelTickUnit));
 
@@ -319,9 +280,6 @@ public class BurndownChart {
 					jump = totalAfter - totalBefore + burned;
 				}
 
-				// System.out.println(date + " totalBefore=" + totalBefore + " totalAfter=" + totalAfter +
-				// " jump=" + jump
-				// + " burned=" + burned + " -> " + snapshot);
 				if (workFinished) {
 					processSuffix();
 				} else if (workStarted) {
@@ -357,9 +315,6 @@ public class BurndownChart {
 
 				if (totalWorkDays > 0) {
 					idealBurnPerDay = (double) jump / (double) totalWorkDays;
-					// System.out.println("*** jump:" + jump + " totalWorkDays:" + totalWorkDays +
-					// " idealBurnPerDay:"
-					// + idealBurnPerDay);
 				}
 
 				processCenter();
@@ -408,9 +363,6 @@ public class BurndownChart {
 			workFinished = true;
 			totalRemaining = totalAfter;
 			burnPerDay = (double) totalBurned / (double) workDays;
-			// System.out.println("***** totalBurned:" + totalBurned + " workDays:" + workDays +
-			// " burnPerDay:"
-			// + burnPerDay);
 			extrapolationDates.add((double) millisBegin);
 			extrapolationValues.add(totalRemaining);
 			return null;
