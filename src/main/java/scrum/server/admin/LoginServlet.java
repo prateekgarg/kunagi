@@ -339,7 +339,7 @@ public class LoginServlet extends AHttpServlet {
 				return;
 			}
 
-			if (user == null) {
+			if (authenticated && user == null) {
 				if (webApplication.getSystemConfig().isRegistrationDisabled()) {
 					renderLoginPage(resp, null, null, historyToken, "There is no user " + username
 							+ " and creating new users is disabled.", false, false);
