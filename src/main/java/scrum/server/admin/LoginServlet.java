@@ -185,6 +185,7 @@ public class LoginServlet extends AHttpServlet {
 		User user = userDao.postUser(email, username, password);
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
+		webApplication.getTransactionService().commit();
 		webApplication.triggerRegisterNotification(user, req.getRemoteHost());
 		webApplication.sendToClients(user);
 
@@ -224,21 +225,12 @@ public class LoginServlet extends AHttpServlet {
 		String nickname = OpenId.getNickname(openIdResult);
 		String fullName = OpenId.getFullname(openIdResult);
 
-		log.info("User authenticated by OpenID:", openId);
-
 		User user = userDao.getUserByOpenId(openId);
 
 		if (user == null) {
 			if (webApplication.getSystemConfig().isRegistrationDisabled()) {
 				renderLoginPage(resp, null, null, historyToken, "There is no user with the OpenID " + openId
 						+ " and creating new users is disabled.", false, false);
-				return;
-			}
-
-			if (userDao.getUserByOpenId(openId) != null) {
-				renderLoginPage(resp, null, null, historyToken, "Creating account failed. OpenID '" + openId
-						+ "' is already used.", false, false);
-				log.warn("Registration failed. OpenID already exists:", openId);
 				return;
 			}
 
@@ -267,8 +259,11 @@ public class LoginServlet extends AHttpServlet {
 			}
 
 			user = userDao.postUserWithOpenId(openId, nickname, fullName, email);
+			webApplication.getTransactionService().commit();
 			webApplication.triggerRegisterNotification(user, request.getRemoteHost());
 		}
+
+		log.info("User authenticated by OpenID:", openId, "->", user);
 
 		if (user.isDisabled()) {
 			renderLoginPage(resp, null, null, historyToken, "User is disabled.", false, false);
