@@ -345,6 +345,13 @@ public class LoginServlet extends AHttpServlet {
 							+ " and creating new users is disabled.", false, false);
 					return;
 				}
+
+				if (userDao.getUserByEmail(email) != null) {
+					renderLoginPage(resp, null, null, historyToken, "User with email " + email + " already exists: "
+							+ email, false, false);
+					return;
+				}
+
 				user = userDao.postUser(email, username, Str.generatePassword(23));
 				if (Str.isEmail(email)) user.setEmail(email);
 				webApplication.triggerRegisterNotification(user, request.getRemoteHost());
