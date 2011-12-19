@@ -330,6 +330,9 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public void deleteImpediment(Impediment impediment) {
+		for (Task task : getDao().getTasksByImpediment(impediment)) {
+			task.setImpediment(null);
+		}
 		getDao().deleteImpediment(impediment);
 	}
 
