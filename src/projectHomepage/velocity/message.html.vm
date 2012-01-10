@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
-#header("home", "Message - Kunagi", "Kunagi Message", "Kunagi")
+#header("message", "Message - Kunagi", "Kunagi Message", "Kunagi")
 
 <div class="section">
     <span id="messageOutput"></span>

@@ -16,6 +16,7 @@ package scrum.server.project;
 
 import ilarkesto.base.Proc;
 import ilarkesto.base.Str;
+import ilarkesto.base.Sys;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
@@ -26,10 +27,12 @@ import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import scrum.client.wiki.Header;
@@ -70,7 +73,8 @@ public class HomepageUpdater {
 	}
 
 	public HomepageUpdater(Project project) {
-		this(project, project.getHomepageVelocityDir(), project.getHomepageDir());
+		this(project, project.getHomepageVelocityDir(), Sys.isDevelopmentMode() ? "runtimedata/homepage" : project
+				.getHomepageDir());
 	}
 
 	public void processAll() {
@@ -327,6 +331,7 @@ public class HomepageUpdater {
 		context.put("plainText", wikiToText(entry.getText()));
 		DateAndTime date = entry.getDateAndTime();
 		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
+		context.put("dateDe", date.toString(new SimpleDateFormat("dd. MMMM yyyy", Locale.GERMANY)));
 		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
 		fillComments(context, entry);
 	}

@@ -150,13 +150,13 @@ pageTracker._trackPageview();
         </div>
     #end
 
-#if ( $entity.id )
-    <div class="separator"></div>
-    <div class="section">
-        <h2>Post a comment</h2>
-        #commentForm("postComment", $entity.id, "Your comment", $null, "Post comment")
-    </div>
-#end
+    #if ( $entity.id )
+        <div class="separator"></div>
+        <div class="section">
+            <h2>Post a comment</h2>
+            #commentForm("postComment", $entity.id, "Your comment", $null, "Post comment")
+        </div>
+    #end
 
 #end
 
