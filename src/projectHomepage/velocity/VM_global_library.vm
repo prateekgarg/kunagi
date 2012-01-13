@@ -165,7 +165,7 @@ pageTracker._trackPageview();
 
 #macro( commentForm $servlet $entityId $textLabel $visibilityCheckboxLabel $submitLabel)
     <form id="commentForm" method="post" accept-charset="UTF-8">
-        #if ($id)
+        #if ($project.id)
             <input name="projectId" type="hidden" value="$id">
         #else
             <input name="projectId" type="hidden" value="ef50396a-0e3a-479b-8808-c31cdfd77fa0">

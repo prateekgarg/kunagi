@@ -296,6 +296,8 @@ public class HomepageUpdater {
 		}
 		context.put("date", comment.getDateAndTime()
 				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
+		context.put("dateDe",
+			comment.getDateAndTime().toString(new SimpleDateFormat("EEE, d. MMMMM yyyy, HH:mm", Locale.GERMANY)));
 	}
 
 	private void fillRelease(ContextBuilder context, Release release) {
