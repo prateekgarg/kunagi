@@ -111,6 +111,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 		}
 	}
 
+	@Deprecated
 	private void requirements(APdfContainerElement pdf, String title, String requirementsData) {
 		List<StoryInfo> requirements = SprintHistoryHelper.parseRequirementsAndTasks(requirementsData);
 		if (requirements.isEmpty()) return;
@@ -120,6 +121,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 		}
 	}
 
+	@Deprecated
 	private void requirement(APdfContainerElement pdf, StoryInfo req) {
 		pdf.nl();
 

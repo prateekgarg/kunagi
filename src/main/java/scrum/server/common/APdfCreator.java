@@ -80,11 +80,11 @@ public abstract class APdfCreator {
 	protected void requirement(APdfContainerElement pdf, Requirement req) {
 		pdf.nl();
 
-		ATable table = pdf.table(3, 20, 0, 5);
+		ATable table = pdf.table(3, 20, 3);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(req.getReference());
-		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(req.getLabel());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(req.getLabel());
 		rowHeader.cell().setFontStyle(smallerFont).text(req.getWorkDescriptionAsString());
 
 		richtextRow(table, "Story description", req.getDescription());
@@ -100,7 +100,7 @@ public abstract class APdfCreator {
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(quality.getReference());
-		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(quality.getLabel());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(quality.getLabel());
 
 		richtextRow(table, "Quality description", quality.getDescription());
 		richtextRow(table, "Acceptance tests", quality.getTestDescription());
@@ -111,11 +111,11 @@ public abstract class APdfCreator {
 	protected void release(APdfContainerElement pdf, Release release) {
 		pdf.nl();
 
-		ATable table = pdf.table(3, 20, 3, 3);
+		ATable table = pdf.table(3, 20, 3);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(release.getReference());
-		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(release.getLabel());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(release.getLabel());
 		rowHeader.cell().setFontStyle(defaultFont).text(release.getReleaseDate());
 
 		richtextRow(table, "Development notes", release.getNote());
@@ -127,11 +127,11 @@ public abstract class APdfCreator {
 	protected void issue(APdfContainerElement pdf, Issue issue) {
 		pdf.nl();
 
-		ATable table = pdf.table(3, 20, 3, 3);
+		ATable table = pdf.table(3, 20, 3);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(issue.getReference());
-		rowHeader.cell().setColspan(2).setFontStyle(new FontStyle(defaultFont).setBold(true)).text(issue.getLabel());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(issue.getLabel());
 		String sideinfo = issue.isBug() ? issue.getSeverityLabel() : issue.getAcceptDate().toString();
 		rowHeader.cell().setFontStyle(defaultFont).text(sideinfo);
 
@@ -144,13 +144,10 @@ public abstract class APdfCreator {
 	private void richtextRow(ATable table, String label, String value) {
 		ARow row = table.row();
 
-		ACell valueCell = row.cell().setColspan(2);
+		ACell valueCell = row.cell().setColspan(3);
 		valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
 		wiki(valueCell, value);
 		valueCell.setPaddingBottom(3);
-
-		ACell commentCell = row.cell().setColspan(2);
-		commentCell.paragraph().setDefaultFontStyle(miniLabelFont).text("Comments");
 	}
 
 }

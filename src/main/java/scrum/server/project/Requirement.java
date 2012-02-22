@@ -38,7 +38,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 		int total = remaining + burned;
 		if (total == 0) return null;
 		float percent = burned * 100f / total;
-		return burned + "/" + total + " hrs. (" + Math.round(percent) + "%)";
+		return burned + "/" + total + " hrs. (" + Math.round(percent) + "%), " + getEstimatedWorkAsString() + " SP";
 	}
 
 	public int getTotalWork() {
