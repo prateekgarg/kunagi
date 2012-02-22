@@ -58,16 +58,16 @@ public abstract class GRelease
         return releaseDao.getReleasesByParentRelease((Release)this);
     }
 
-    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
-        return blogEntryDao.getBlogEntrysByRelease((Release)this);
-    }
-
     public final java.util.Set<scrum.server.issues.Issue> getAffectedIssues() {
         return issueDao.getIssuesByAffectedRelease((Release)this);
     }
 
     public final java.util.Set<scrum.server.issues.Issue> getFixIssues() {
         return issueDao.getIssuesByFixRelease((Release)this);
+    }
+
+    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
+        return blogEntryDao.getBlogEntrysByRelease((Release)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRelease.class);
@@ -671,16 +671,16 @@ public abstract class GRelease
         GRelease.releaseDao = releaseDao;
     }
 
-    static scrum.server.pr.BlogEntryDao blogEntryDao;
-
-    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
-        GRelease.blogEntryDao = blogEntryDao;
-    }
-
     static scrum.server.issues.IssueDao issueDao;
 
     public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
         GRelease.issueDao = issueDao;
+    }
+
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
+        GRelease.blogEntryDao = blogEntryDao;
     }
 
 }

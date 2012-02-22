@@ -50,6 +50,10 @@ public abstract class GTask
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
+    public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReports() {
+        return sprintReportDao.getSprintReportsByClosedTask((Task)this);
+    }
+
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GTask.class);
 
     public static final String TYPE = "task";
@@ -456,6 +460,12 @@ public abstract class GTask
 
     public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
         GTask.taskDao = taskDao;
+    }
+
+    static scrum.server.sprint.SprintReportDao sprintReportDao;
+
+    public static final void setSprintReportDao(scrum.server.sprint.SprintReportDao sprintReportDao) {
+        GTask.sprintReportDao = sprintReportDao;
     }
 
 }

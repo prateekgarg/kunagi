@@ -528,6 +528,31 @@ public abstract class GScrumWebApplication
         sprintDaySnapshotDao = null;
     }
 
+    // --- sprintReportDao ---
+
+    private scrum.server.sprint.SprintReportDao sprintReportDao;
+
+    public final scrum.server.sprint.SprintReportDao getSprintReportDao() {
+        if (sprintReportDao == null) {
+            sprintReportDao = createSprintReportDao();
+            initializeSprintReportDao(sprintReportDao);
+        }
+        return sprintReportDao;
+    }
+
+    protected scrum.server.sprint.SprintReportDao createSprintReportDao() {
+        return sprintReportDao = ilarkesto.base.Reflect.newInstance(scrum.server.sprint.SprintReportDao.class);
+    }
+
+    protected void initializeSprintReportDao(scrum.server.sprint.SprintReportDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSprintReportDao() {
+        sprintReportDao = null;
+    }
+
     // --- subjectDao ---
 
     private scrum.server.collaboration.SubjectDao subjectDao;

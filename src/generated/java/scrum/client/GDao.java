@@ -2703,26 +2703,119 @@ public abstract class GDao
         return ret;
     }
 
-    public final List<scrum.client.sprint.Sprint> getSprintsByCompletedOnCloseRequirement(scrum.client.project.Requirement completedOnCloseRequirement) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.containsCompletedOnCloseRequirement(completedOnCloseRequirement)) ret.add(entity);
+    // --- SprintReport ---
+
+    protected Map<String, scrum.client.sprint.SprintReport> sprintReports = new HashMap<String, scrum.client.sprint.SprintReport>();
+
+    public final void clearSprintReports() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing SprintReports");
+        sprintReports.clear();
+    }
+
+    public final boolean containsSprintReport(scrum.client.sprint.SprintReport sprintReport) {
+        return sprintReports.containsKey(sprintReport.getId());
+    }
+
+    public final void deleteSprintReport(scrum.client.sprint.SprintReport sprintReport) {
+        sprintReports.remove(sprintReport.getId());
+        entityDeleted(sprintReport);
+    }
+
+    public final void createSprintReport(scrum.client.sprint.SprintReport sprintReport, Runnable successAction) {
+        sprintReports.put(sprintReport.getId(), sprintReport);
+        entityCreated(sprintReport, successAction);
+    }
+
+    public final void createSprintReport(scrum.client.sprint.SprintReport sprintReport) {
+        sprintReports.put(sprintReport.getId(), sprintReport);
+        entityCreated(sprintReport, null);
+    }
+
+    protected scrum.client.sprint.SprintReport updateSprintReport(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.sprint.SprintReport entity = sprintReports.get(id);
+        if (entity == null) {
+            entity = new scrum.client.sprint.SprintReport(data);
+            sprintReports.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("SprintReport received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("SprintReport updated: " + entity);
+        }
+        return entity;
+    }
+
+    public final scrum.client.sprint.SprintReport getSprintReport(String id) {
+        scrum.client.sprint.SprintReport ret = sprintReports.get(id);
+        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        return ret;
+    }
+
+    public final Set<scrum.client.sprint.SprintReport> getSprintReports(Collection<String> ids) {
+        Set<scrum.client.sprint.SprintReport> ret = new HashSet<scrum.client.sprint.SprintReport>();
+        for (String id : ids) {
+            scrum.client.sprint.SprintReport entity = sprintReports.get(id);
+            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.sprint.Sprint> getSprintsByRejectedOnCloseRequirement(scrum.client.project.Requirement rejectedOnCloseRequirement) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.containsRejectedOnCloseRequirement(rejectedOnCloseRequirement)) ret.add(entity);
+    public final List<scrum.client.sprint.SprintReport> getSprintReports() {
+        return new ArrayList<scrum.client.sprint.SprintReport>(sprintReports.values());
+    }
+
+    public final scrum.client.sprint.SprintReport getSprintReportBySprint(scrum.client.sprint.Sprint sprint) {
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.isSprint(sprint)) return entity;
+        }
+        return null;
+    }
+
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByCompletedRequirement(scrum.client.project.Requirement completedRequirement) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.containsCompletedRequirement(completedRequirement)) ret.add(entity);
         }
         return ret;
     }
 
-    public final List<scrum.client.sprint.Sprint> getSprintsByOnCloseBurnedWork(int onCloseBurnedWork) {
-        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
-        for (scrum.client.sprint.Sprint entity : sprints.values()) {
-            if (entity.isOnCloseBurnedWork(onCloseBurnedWork)) ret.add(entity);
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByRejectedRequirement(scrum.client.project.Requirement rejectedRequirement) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.containsRejectedRequirement(rejectedRequirement)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByRequirementsOrderId(java.lang.String requirementsOrderId) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.containsRequirementsOrderId(requirementsOrderId)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByClosedTask(scrum.client.sprint.Task closedTask) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.containsClosedTask(closedTask)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByOpenTask(scrum.client.sprint.Task openTask) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.containsOpenTask(openTask)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.SprintReport> getSprintReportsByBurnedWork(int burnedWork) {
+        List<scrum.client.sprint.SprintReport> ret = new ArrayList<scrum.client.sprint.SprintReport>();
+        for (scrum.client.sprint.SprintReport entity : sprintReports.values()) {
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
         }
         return ret;
     }
@@ -3620,6 +3713,7 @@ public abstract class GDao
             clearRisks();
             clearSimpleEvents();
             clearSprints();
+            clearSprintReports();
             clearSubjects();
             clearSystemConfigs();
             clearTasks();
@@ -3651,6 +3745,7 @@ public abstract class GDao
             entityMaps.add(risks);
             entityMaps.add(simpleEvents);
             entityMaps.add(sprints);
+            entityMaps.add(sprintReports);
             entityMaps.add(subjects);
             entityMaps.add(systemConfigs);
             entityMaps.add(tasks);
@@ -3716,6 +3811,9 @@ public abstract class GDao
         if (type.equals(scrum.client.sprint.Sprint.ENTITY_TYPE)) {
             return updateSprint(data);
         }
+        if (type.equals(scrum.client.sprint.SprintReport.ENTITY_TYPE)) {
+            return updateSprintReport(data);
+        }
         if (type.equals(scrum.client.collaboration.Subject.ENTITY_TYPE)) {
             return updateSubject(data);
         }
@@ -3755,6 +3853,7 @@ public abstract class GDao
         ret.put("Risk", risks.size());
         ret.put("SimpleEvent", simpleEvents.size());
         ret.put("Sprint", sprints.size());
+        ret.put("SprintReport", sprintReports.size());
         ret.put("Subject", subjects.size());
         ret.put("SystemConfig", systemConfigs.size());
         ret.put("Task", tasks.size());

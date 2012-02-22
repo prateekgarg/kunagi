@@ -90,6 +90,10 @@ public class Sprint extends GSprint implements Numbered {
 	}
 
 	public void close() {
+		SprintReport report = sprintReportDao.postSprintReport(this);
+		report.setRequirementsOrderIds(getRequirementsOrderIds());
+		report.setBurnedWork(getBurnedWork());
+
 		float velocity = 0;
 		StringBuilder releaseNotes = new StringBuilder();
 		releaseNotes.append("'''Stories from ").append(getReferenceAndLabel()).append("'''\n\n");
@@ -100,8 +104,13 @@ public class Sprint extends GSprint implements Numbered {
 		for (Requirement requirement : requirements) {
 			releaseNotes.append("* " + (requirement.isClosed() ? "" : "(UNFINISHED) "))
 					.append(requirement.getReferenceAndLabel()).append("\n");
-			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
-			Collections.sort(tasks, requirement.getTasksOrderComparator());
+			for (Task task : requirement.getTasks()) {
+				if (task.isClosed()) {
+					report.addClosedTask(task);
+				} else {
+					report.addOpenTask(task);
+				}
+			}
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
 			} else {
@@ -109,9 +118,9 @@ public class Sprint extends GSprint implements Numbered {
 				incompletedRequirements.add(requirement);
 			}
 		}
-		setCompletedOnCloseRequirements(completedRequirements);
-		setRejectedOnCloseRequirements(incompletedRequirements);
-		setOnCloseBurnedWork(getBurnedWork());
+
+		report.setCompletedRequirements(completedRequirements);
+		report.setRejectedRequirements(incompletedRequirements);
 
 		setCompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(completedRequirements));
 		setIncompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(incompletedRequirements));
@@ -228,22 +237,6 @@ public class Sprint extends GSprint implements Numbered {
 		if (getNumber() == 0) setNumber(getProject().generateSprintNumber());
 	}
 
-	public boolean isOnCloseRequirementsEmpty() {
-		return isCompletedOnCloseRequirementsEmpty() && isRejectedOnCloseRequirementsEmpty();
-	}
-
-	public List<Requirement> getCompletedOnCloseRequirementsAsList() {
-		List<Requirement> requirements = new ArrayList<Requirement>(getCompletedOnCloseRequirements());
-		Collections.sort(requirements, getRequirementsOrderComparator());
-		return requirements;
-	}
-
-	public List<Requirement> getRejectedOnCloseRequirementsAsList() {
-		List<Requirement> requirements = new ArrayList<Requirement>(getRejectedOnCloseRequirements());
-		Collections.sort(requirements, getRequirementsOrderComparator());
-		return requirements;
-	}
-
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
@@ -315,7 +308,7 @@ public class Sprint extends GSprint implements Numbered {
 		}
 	}
 
-	private Comparator<Requirement> requirementsOrderComparator;
+	private transient Comparator<Requirement> requirementsOrderComparator;
 
 	public Comparator<Requirement> getRequirementsOrderComparator() {
 		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {

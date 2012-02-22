@@ -63,20 +63,20 @@ public abstract class GRequirement
         return issueDao.getIssuesByStory((Requirement)this);
     }
 
-    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
-        return taskDao.getTasksByRequirement((Requirement)this);
-    }
-
-    public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
-        return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement((Requirement)this);
-    }
-
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
         return requirementDao.getRequirementsByEpic((Requirement)this);
     }
 
-    public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
-        return sprintDao.getSprintsByCompletedOnCloseRequirement((Requirement)this);
+    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
+        return taskDao.getTasksByRequirement((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReports() {
+        return sprintReportDao.getSprintReportsByCompletedRequirement((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement((Requirement)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRequirement.class);
@@ -1031,6 +1031,12 @@ public abstract class GRequirement
 
     public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
         GRequirement.taskDao = taskDao;
+    }
+
+    static scrum.server.sprint.SprintReportDao sprintReportDao;
+
+    public static final void setSprintReportDao(scrum.server.sprint.SprintReportDao sprintReportDao) {
+        GRequirement.sprintReportDao = sprintReportDao;
     }
 
     static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;

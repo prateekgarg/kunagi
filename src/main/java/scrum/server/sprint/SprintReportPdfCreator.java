@@ -48,7 +48,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 	protected void build(APdfContainerElement pdf) {
 		reportHeader(pdf, "Sprint Report", sprint.getProject().getLabel());
 
-		boolean requirementLegacy = sprint.isOnCloseRequirementsEmpty();
+		SprintReport report = sprint.getSprintReport();
 
 		pdf.nl();
 		FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
@@ -58,8 +58,8 @@ public class SprintReportPdfCreator extends APdfCreator {
 					+ sprint.getEnd().toString(Date.FORMAT_SHORTWEEKDAY_SHORTMONTH_DAY) + "   ("
 					+ sprint.getLengthInDays() + " days)");
 		fields.field("Velocity").text(sprint.getVelocity() + " StoryPoints");
-		int burnedWork = requirementLegacy ? getBurnedWork(sprint.getIncompletedRequirementsData())
-				+ getBurnedWork(sprint.getCompletedRequirementsData()) : sprint.getOnCloseBurnedWork();
+		int burnedWork = report == null ? getBurnedWork(sprint.getIncompletedRequirementsData())
+				+ getBurnedWork(sprint.getCompletedRequirementsData()) : report.getBurnedWork();
 		fields.field("Burned work").text(burnedWork + " hours");
 		fields.field("Product Owner").text(sprint.getProductOwnersAsString());
 		fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
@@ -73,12 +73,12 @@ public class SprintReportPdfCreator extends APdfCreator {
 			WikiToPdfConverter.buildPdf(pdf, sprint.getGoal(), new ScrumPdfContext());
 		}
 
-		if (requirementLegacy) {
+		if (report == null) {
 			requirements(pdf, "Completed stories", sprint.getCompletedRequirementsData());
 			requirements(pdf, "Rejected stories", sprint.getIncompletedRequirementsData());
 		} else {
-			requirements(pdf, "Completed stories", sprint.getCompletedOnCloseRequirementsAsList());
-			requirements(pdf, "Rejected stories", sprint.getRejectedOnCloseRequirementsAsList());
+			requirements(pdf, "Completed stories", report.getCompletedRequirementsAsList());
+			requirements(pdf, "Rejected stories", report.getRejectedRequirementsAsList());
 		}
 
 		if (sprint.isReviewNoteSet()) {

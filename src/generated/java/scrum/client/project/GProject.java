@@ -2296,6 +2296,10 @@ public abstract class GProject
         return getDao().getSprintsByProject((Project)this);
     }
 
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesByProject((Project)this);
+    }
+
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {
         return getDao().getRequirementsByProject((Project)this);
     }
@@ -2304,8 +2308,8 @@ public abstract class GProject
         return getDao().getIssuesByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.release.Release> getReleases() {
-        return getDao().getReleasesByProject((Project)this);
+    public final java.util.List<scrum.client.project.Quality> getQualitys() {
+        return getDao().getQualitysByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.impediments.Impediment> getImpediments() {
@@ -2314,10 +2318,6 @@ public abstract class GProject
 
     public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
         return getDao().getProjectUserConfigsByProject((Project)this);
-    }
-
-    public final java.util.List<scrum.client.project.Quality> getQualitys() {
-        return getDao().getQualitysByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {

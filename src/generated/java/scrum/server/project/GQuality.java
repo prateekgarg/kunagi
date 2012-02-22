@@ -47,12 +47,12 @@ public abstract class GQuality
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
-    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
-        return projectUserConfigDao.getProjectUserConfigsByPblFilterQuality((Quality)this);
-    }
-
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
         return requirementDao.getRequirementsByQuality((Quality)this);
+    }
+
+    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return projectUserConfigDao.getProjectUserConfigsByPblFilterQuality((Quality)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GQuality.class);
@@ -313,16 +313,16 @@ public abstract class GQuality
         GQuality.qualityDao = qualityDao;
     }
 
-    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
-
-    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
-        GQuality.projectUserConfigDao = projectUserConfigDao;
-    }
-
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GQuality.requirementDao = requirementDao;
+    }
+
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
+
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
+        GQuality.projectUserConfigDao = projectUserConfigDao;
     }
 
 }

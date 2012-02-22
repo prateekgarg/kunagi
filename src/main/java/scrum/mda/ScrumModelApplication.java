@@ -76,7 +76,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (systemConfigModel == null) {
 			systemConfigModel = createEntityModel("SystemConfig", "admin");
 			systemConfigModel.setGwtSupport(true);
-			systemConfigModel.setViewProtected(true);
 			systemConfigModel.setEditProtected(true);
 			systemConfigModel.addStringProperty("url").setTooltip(
 				"URL, on which this Kunagi instance is installed. It will be used in emails.");
@@ -145,7 +144,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (simpleEventModel == null) {
 			simpleEventModel = createEntityModel("SimpleEvent", "calendar");
 			simpleEventModel.setGwtSupport(true);
-			simpleEventModel.setViewProtected(true);
 			simpleEventModel.addReference("project", getProjectModel()).setMaster(true);
 			simpleEventModel.addStringProperty("label").setMandatory(true).setSearchable(true);
 			simpleEventModel.addProperty("number", int.class).setMandatory(true);
@@ -167,7 +165,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	public EntityModel getProjectModel() {
 		if (projectModel == null) {
 			projectModel = createEntityModel("Project", "project");
-			projectModel.setViewProtected(true);
 			projectModel.setDeleteProtected(true);
 			projectModel.setGwtSupport(true);
 			projectModel.addPredicate("editable");
@@ -275,7 +272,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (fileModel == null) {
 			fileModel = createEntityModel("File", "files");
 			fileModel.setGwtSupport(true);
-			fileModel.setViewProtected(true);
 			fileModel.addReference("project", getProjectModel()).setMaster(true);
 			fileModel.addStringProperty("filename").setEditablePredicate("false").setMandatory(true)
 					.setSearchable(true);
@@ -305,7 +301,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (releaseModel == null) {
 			releaseModel = createEntityModel("Release", "release");
 			releaseModel.setGwtSupport(true);
-			releaseModel.setViewProtected(true);
 			releaseModel.addReference("project", getProjectModel()).setMaster(true);
 			releaseModel.addReference("parentRelease", getReleaseModel());
 			releaseModel.addSetReference("sprints", getSprintModel()).setTooltip(
@@ -542,12 +537,26 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addSetReference("productOwners", getUserModel());
 			sprintModel.addSetReference("scrumMasters", getUserModel());
 			sprintModel.addSetReference("teamMembers", getUserModel());
-			sprintModel.addSetReference("completedOnCloseRequirements", getRequirementModel());
-			sprintModel.addSetReference("rejectedOnCloseRequirements", getRequirementModel());
-			sprintModel.addProperty("onCloseBurnedWork", int.class);
 			sprintModel.addAction("PullNextRequirement");
 		}
 		return sprintModel;
+	}
+
+	private EntityModel sprintReportModel;
+
+	public EntityModel getSprintReportModel() {
+		if (sprintReportModel == null) {
+			sprintReportModel = createEntityModel("SprintReport", "sprint");
+			sprintReportModel.setGwtSupport(true);
+			sprintReportModel.addReference("sprint", getSprintModel()).setMaster(true).setUnique(true);
+			sprintReportModel.addSetReference("completedRequirements", getRequirementModel());
+			sprintReportModel.addSetReference("rejectedRequirements", getRequirementModel());
+			sprintReportModel.addListProperty("requirementsOrderIds", String.class);
+			sprintReportModel.addSetReference("closedTasks", getTaskModel());
+			sprintReportModel.addSetReference("openTasks", getTaskModel());
+			sprintReportModel.addProperty("burnedWork", int.class);
+		}
+		return sprintReportModel;
 	}
 
 	private EntityModel sprintDaySnapshotModel;
@@ -703,7 +712,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel = createEntityModel("User", "admin");
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
-			userModel.setViewProtected(true);
 			userModel.setEditProtected(true);
 			userModel.addStringProperty("name").setMandatory(true).setSearchable(true).setUnique(true)
 					.setTooltip("Login name.");

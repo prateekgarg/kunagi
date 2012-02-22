@@ -469,6 +469,10 @@ public abstract class GTask
         properties.put("impedimentId", this.impedimentId);
     }
 
+    public final java.util.List<scrum.client.sprint.SprintReport> getSprintReports() {
+        return getDao().getSprintReportsByClosedTask((Task)this);
+    }
+
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;

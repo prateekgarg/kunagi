@@ -87,6 +87,10 @@ public abstract class GProject
         return sprintDao.getSprintsByProject((Project)this);
     }
 
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesByProject((Project)this);
+    }
+
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
         return requirementDao.getRequirementsByProject((Project)this);
     }
@@ -95,8 +99,8 @@ public abstract class GProject
         return issueDao.getIssuesByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.release.Release> getReleases() {
-        return releaseDao.getReleasesByProject((Project)this);
+    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
+        return qualityDao.getQualitysByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.impediments.Impediment> getImpediments() {
@@ -105,10 +109,6 @@ public abstract class GProject
 
     public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
         return projectUserConfigDao.getProjectUserConfigsByProject((Project)this);
-    }
-
-    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
-        return qualityDao.getQualitysByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
@@ -2123,6 +2123,12 @@ public abstract class GProject
         GProject.projectDao = projectDao;
     }
 
+    static scrum.server.release.ReleaseDao releaseDao;
+
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        GProject.releaseDao = releaseDao;
+    }
+
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
@@ -2135,10 +2141,10 @@ public abstract class GProject
         GProject.issueDao = issueDao;
     }
 
-    static scrum.server.release.ReleaseDao releaseDao;
+    static scrum.server.project.QualityDao qualityDao;
 
-    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
-        GProject.releaseDao = releaseDao;
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GProject.qualityDao = qualityDao;
     }
 
     static scrum.server.impediments.ImpedimentDao impedimentDao;
@@ -2151,12 +2157,6 @@ public abstract class GProject
 
     public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
         GProject.projectUserConfigDao = projectUserConfigDao;
-    }
-
-    static scrum.server.project.QualityDao qualityDao;
-
-    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
-        GProject.qualityDao = qualityDao;
     }
 
     static scrum.server.pr.BlogEntryDao blogEntryDao;
