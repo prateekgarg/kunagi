@@ -2703,6 +2703,30 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.sprint.Sprint> getSprintsByCompletedOnCloseRequirement(scrum.client.project.Requirement completedOnCloseRequirement) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsCompletedOnCloseRequirement(completedOnCloseRequirement)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByRejectedOnCloseRequirement(scrum.client.project.Requirement rejectedOnCloseRequirement) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.containsRejectedOnCloseRequirement(rejectedOnCloseRequirement)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.sprint.Sprint> getSprintsByOnCloseBurnedWork(int onCloseBurnedWork) {
+        List<scrum.client.sprint.Sprint> ret = new ArrayList<scrum.client.sprint.Sprint>();
+        for (scrum.client.sprint.Sprint entity : sprints.values()) {
+            if (entity.isOnCloseBurnedWork(onCloseBurnedWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Subject ---
 
     protected Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();

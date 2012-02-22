@@ -74,6 +74,12 @@ public abstract class GSprintDao
         scrumMastersCache = null;
         sprintsByTeamMemberCache.clear();
         teamMembersCache = null;
+        sprintsByCompletedOnCloseRequirementCache.clear();
+        completedOnCloseRequirementsCache = null;
+        sprintsByRejectedOnCloseRequirementCache.clear();
+        rejectedOnCloseRequirementsCache = null;
+        sprintsByOnCloseBurnedWorkCache.clear();
+        onCloseBurnedWorksCache = null;
     }
 
     @Override
@@ -732,6 +738,126 @@ public abstract class GSprintDao
 
     }
 
+    // -----------------------------------------------------------
+    // - completedOnCloseRequirements
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Requirement,Set<Sprint>> sprintsByCompletedOnCloseRequirementCache = new Cache<scrum.server.project.Requirement,Set<Sprint>>(
+            new Cache.Factory<scrum.server.project.Requirement,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.project.Requirement completedOnCloseRequirement) {
+                    return getEntities(new ContainsCompletedOnCloseRequirement(completedOnCloseRequirement));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByCompletedOnCloseRequirement(scrum.server.project.Requirement completedOnCloseRequirement) {
+        return new HashSet<Sprint>(sprintsByCompletedOnCloseRequirementCache.get(completedOnCloseRequirement));
+    }
+    private Set<scrum.server.project.Requirement> completedOnCloseRequirementsCache;
+
+    public final Set<scrum.server.project.Requirement> getCompletedOnCloseRequirements() {
+        if (completedOnCloseRequirementsCache == null) {
+            completedOnCloseRequirementsCache = new HashSet<scrum.server.project.Requirement>();
+            for (Sprint e : getEntities()) {
+                completedOnCloseRequirementsCache.addAll(e.getCompletedOnCloseRequirements());
+            }
+        }
+        return completedOnCloseRequirementsCache;
+    }
+
+    private static class ContainsCompletedOnCloseRequirement implements Predicate<Sprint> {
+
+        private scrum.server.project.Requirement value;
+
+        public ContainsCompletedOnCloseRequirement(scrum.server.project.Requirement value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsCompletedOnCloseRequirement(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - rejectedOnCloseRequirements
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.project.Requirement,Set<Sprint>> sprintsByRejectedOnCloseRequirementCache = new Cache<scrum.server.project.Requirement,Set<Sprint>>(
+            new Cache.Factory<scrum.server.project.Requirement,Set<Sprint>>() {
+                public Set<Sprint> create(scrum.server.project.Requirement rejectedOnCloseRequirement) {
+                    return getEntities(new ContainsRejectedOnCloseRequirement(rejectedOnCloseRequirement));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByRejectedOnCloseRequirement(scrum.server.project.Requirement rejectedOnCloseRequirement) {
+        return new HashSet<Sprint>(sprintsByRejectedOnCloseRequirementCache.get(rejectedOnCloseRequirement));
+    }
+    private Set<scrum.server.project.Requirement> rejectedOnCloseRequirementsCache;
+
+    public final Set<scrum.server.project.Requirement> getRejectedOnCloseRequirements() {
+        if (rejectedOnCloseRequirementsCache == null) {
+            rejectedOnCloseRequirementsCache = new HashSet<scrum.server.project.Requirement>();
+            for (Sprint e : getEntities()) {
+                rejectedOnCloseRequirementsCache.addAll(e.getRejectedOnCloseRequirements());
+            }
+        }
+        return rejectedOnCloseRequirementsCache;
+    }
+
+    private static class ContainsRejectedOnCloseRequirement implements Predicate<Sprint> {
+
+        private scrum.server.project.Requirement value;
+
+        public ContainsRejectedOnCloseRequirement(scrum.server.project.Requirement value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.containsRejectedOnCloseRequirement(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - onCloseBurnedWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Sprint>> sprintsByOnCloseBurnedWorkCache = new Cache<Integer,Set<Sprint>>(
+            new Cache.Factory<Integer,Set<Sprint>>() {
+                public Set<Sprint> create(Integer onCloseBurnedWork) {
+                    return getEntities(new IsOnCloseBurnedWork(onCloseBurnedWork));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByOnCloseBurnedWork(int onCloseBurnedWork) {
+        return new HashSet<Sprint>(sprintsByOnCloseBurnedWorkCache.get(onCloseBurnedWork));
+    }
+    private Set<Integer> onCloseBurnedWorksCache;
+
+    public final Set<Integer> getOnCloseBurnedWorks() {
+        if (onCloseBurnedWorksCache == null) {
+            onCloseBurnedWorksCache = new HashSet<Integer>();
+            for (Sprint e : getEntities()) {
+                onCloseBurnedWorksCache.add(e.getOnCloseBurnedWork());
+            }
+        }
+        return onCloseBurnedWorksCache;
+    }
+
+    private static class IsOnCloseBurnedWork implements Predicate<Sprint> {
+
+        private int value;
+
+        public IsOnCloseBurnedWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isOnCloseBurnedWork(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -751,6 +877,12 @@ public abstract class GSprintDao
 
     public void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         this.projectDao = projectDao;
+    }
+
+    scrum.server.project.RequirementDao requirementDao;
+
+    public void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
+        this.requirementDao = requirementDao;
     }
 
 }

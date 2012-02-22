@@ -63,16 +63,20 @@ public abstract class GRequirement
         return issueDao.getIssuesByStory((Requirement)this);
     }
 
-    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
-        return requirementDao.getRequirementsByEpic((Requirement)this);
-    }
-
     public final java.util.Set<scrum.server.sprint.Task> getTasks() {
         return taskDao.getTasksByRequirement((Requirement)this);
     }
 
     public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
         return requirementEstimationVoteDao.getRequirementEstimationVotesByRequirement((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByEpic((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
+        return sprintDao.getSprintsByCompletedOnCloseRequirement((Requirement)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRequirement.class);

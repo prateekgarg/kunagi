@@ -676,16 +676,16 @@ public abstract class GRelease
         return getDao().getReleasesByParentRelease((Release)this);
     }
 
+    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return getDao().getBlogEntrysByRelease((Release)this);
+    }
+
     public final java.util.List<scrum.client.issues.Issue> getAffectedIssues() {
         return getDao().getIssuesByAffectedRelease((Release)this);
     }
 
     public final java.util.List<scrum.client.issues.Issue> getFixIssues() {
         return getDao().getIssuesByFixRelease((Release)this);
-    }
-
-    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
-        return getDao().getBlogEntrysByRelease((Release)this);
     }
 
     @Override

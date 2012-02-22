@@ -338,12 +338,12 @@ public abstract class GQuality
         properties.put("testDescription", this.testDescription);
     }
 
-    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
-        return getDao().getRequirementsByQuality((Quality)this);
-    }
-
     public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
         return getDao().getProjectUserConfigsByPblFilterQuality((Quality)this);
+    }
+
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByQuality((Quality)this);
     }
 
     @Override

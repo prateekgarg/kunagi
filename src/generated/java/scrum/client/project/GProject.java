@@ -2308,16 +2308,16 @@ public abstract class GProject
         return getDao().getReleasesByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.project.Quality> getQualitys() {
-        return getDao().getQualitysByProject((Project)this);
-    }
-
     public final java.util.List<scrum.client.impediments.Impediment> getImpediments() {
         return getDao().getImpedimentsByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
         return getDao().getProjectUserConfigsByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.project.Quality> getQualitys() {
+        return getDao().getQualitysByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {

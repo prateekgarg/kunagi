@@ -22,6 +22,7 @@ import ilarkesto.core.logging.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,7 +96,7 @@ public class Sprint extends GSprint implements Numbered {
 		Collection<Requirement> completedRequirements = new ArrayList<Requirement>();
 		Collection<Requirement> incompletedRequirements = new ArrayList<Requirement>();
 		List<Requirement> requirements = new ArrayList<Requirement>(getRequirements());
-		Collections.sort(requirements, getProject().getRequirementsOrderComparator());
+		Collections.sort(requirements, getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			releaseNotes.append("* " + (requirement.isClosed() ? "" : "(UNFINISHED) "))
 					.append(requirement.getReferenceAndLabel()).append("\n");
@@ -108,16 +109,18 @@ public class Sprint extends GSprint implements Numbered {
 				incompletedRequirements.add(requirement);
 			}
 		}
+		setCompletedOnCloseRequirements(completedRequirements);
+		setRejectedOnCloseRequirements(incompletedRequirements);
+		setOnCloseBurnedWork(getBurnedWork());
+
 		setCompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(completedRequirements));
 		setIncompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(incompletedRequirements));
+
 		for (Requirement requirement : requirements) {
 			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
 			if (requirement.isClosed()) {
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
-				for (Task task : tasks) {
-					taskDao.deleteEntity(task);
-				}
 			} else {
 				for (Task task : tasks) {
 					if (task.isClosed()) {
@@ -225,6 +228,22 @@ public class Sprint extends GSprint implements Numbered {
 		if (getNumber() == 0) setNumber(getProject().generateSprintNumber());
 	}
 
+	public boolean isOnCloseRequirementsEmpty() {
+		return isCompletedOnCloseRequirementsEmpty() && isRejectedOnCloseRequirementsEmpty();
+	}
+
+	public List<Requirement> getCompletedOnCloseRequirementsAsList() {
+		List<Requirement> requirements = new ArrayList<Requirement>(getCompletedOnCloseRequirements());
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		return requirements;
+	}
+
+	public List<Requirement> getRejectedOnCloseRequirementsAsList() {
+		List<Requirement> requirements = new ArrayList<Requirement>(getRejectedOnCloseRequirements());
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		return requirements;
+	}
+
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
@@ -294,6 +313,31 @@ public class Sprint extends GSprint implements Numbered {
 			getDaySnapshot(begin).updateWithCurrentSprint();
 			begin = begin.nextDay();
 		}
+	}
+
+	private Comparator<Requirement> requirementsOrderComparator;
+
+	public Comparator<Requirement> getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+
+			@Override
+			public int compare(Requirement a, Requirement b) {
+				List<String> order = getRequirementsOrderIds();
+				int additional = order.size();
+				int ia = order.indexOf(a.getId());
+				if (ia < 0) {
+					ia = additional;
+					additional++;
+				}
+				int ib = order.indexOf(b.getId());
+				if (ib < 0) {
+					ib = additional;
+					additional++;
+				}
+				return ia - ib;
+			}
+		};
+		return requirementsOrderComparator;
 	}
 
 }

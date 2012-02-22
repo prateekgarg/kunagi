@@ -861,6 +861,135 @@ public abstract class GSprint
     }
 
 
+    // --- completedOnCloseRequirements ---
+
+    private Set<String> completedOnCloseRequirementsIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.project.Requirement> getCompletedOnCloseRequirements() {
+        if ( completedOnCloseRequirementsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getRequirements(this.completedOnCloseRequirementsIds);
+    }
+
+    public final void setCompletedOnCloseRequirements(Collection<scrum.client.project.Requirement> values) {
+        completedOnCloseRequirementsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("completedOnCloseRequirementsIds", this.completedOnCloseRequirementsIds);
+    }
+
+    public final void addCompletedOnCloseRequirement(scrum.client.project.Requirement completedOnCloseRequirement) {
+        String id = completedOnCloseRequirement.getId();
+        if (completedOnCloseRequirementsIds.contains(id)) return;
+        completedOnCloseRequirementsIds.add(id);
+        propertyChanged("completedOnCloseRequirementsIds", this.completedOnCloseRequirementsIds);
+    }
+
+    public final void removeCompletedOnCloseRequirement(scrum.client.project.Requirement completedOnCloseRequirement) {
+        String id = completedOnCloseRequirement.getId();
+        if (!completedOnCloseRequirementsIds.contains(id)) return;
+        completedOnCloseRequirementsIds.remove(id);
+        propertyChanged("completedOnCloseRequirementsIds", this.completedOnCloseRequirementsIds);
+    }
+
+    public final boolean containsCompletedOnCloseRequirement(scrum.client.project.Requirement completedOnCloseRequirement) {
+        return completedOnCloseRequirementsIds.contains(completedOnCloseRequirement.getId());
+    }
+
+
+    // --- rejectedOnCloseRequirements ---
+
+    private Set<String> rejectedOnCloseRequirementsIds = new HashSet<String>();
+
+    public final java.util.Set<scrum.client.project.Requirement> getRejectedOnCloseRequirements() {
+        if ( rejectedOnCloseRequirementsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getRequirements(this.rejectedOnCloseRequirementsIds);
+    }
+
+    public final void setRejectedOnCloseRequirements(Collection<scrum.client.project.Requirement> values) {
+        rejectedOnCloseRequirementsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("rejectedOnCloseRequirementsIds", this.rejectedOnCloseRequirementsIds);
+    }
+
+    public final void addRejectedOnCloseRequirement(scrum.client.project.Requirement rejectedOnCloseRequirement) {
+        String id = rejectedOnCloseRequirement.getId();
+        if (rejectedOnCloseRequirementsIds.contains(id)) return;
+        rejectedOnCloseRequirementsIds.add(id);
+        propertyChanged("rejectedOnCloseRequirementsIds", this.rejectedOnCloseRequirementsIds);
+    }
+
+    public final void removeRejectedOnCloseRequirement(scrum.client.project.Requirement rejectedOnCloseRequirement) {
+        String id = rejectedOnCloseRequirement.getId();
+        if (!rejectedOnCloseRequirementsIds.contains(id)) return;
+        rejectedOnCloseRequirementsIds.remove(id);
+        propertyChanged("rejectedOnCloseRequirementsIds", this.rejectedOnCloseRequirementsIds);
+    }
+
+    public final boolean containsRejectedOnCloseRequirement(scrum.client.project.Requirement rejectedOnCloseRequirement) {
+        return rejectedOnCloseRequirementsIds.contains(rejectedOnCloseRequirement.getId());
+    }
+
+
+    // --- onCloseBurnedWork ---
+
+    private int onCloseBurnedWork ;
+
+    public final int getOnCloseBurnedWork() {
+        return this.onCloseBurnedWork ;
+    }
+
+    public final Sprint setOnCloseBurnedWork(int onCloseBurnedWork) {
+        if (isOnCloseBurnedWork(onCloseBurnedWork)) return (Sprint)this;
+        this.onCloseBurnedWork = onCloseBurnedWork ;
+        propertyChanged("onCloseBurnedWork", this.onCloseBurnedWork);
+        return (Sprint)this;
+    }
+
+    public final boolean isOnCloseBurnedWork(int onCloseBurnedWork) {
+        return equals(this.onCloseBurnedWork, onCloseBurnedWork);
+    }
+
+    private transient OnCloseBurnedWorkModel onCloseBurnedWorkModel;
+
+    public OnCloseBurnedWorkModel getOnCloseBurnedWorkModel() {
+        if (onCloseBurnedWorkModel == null) onCloseBurnedWorkModel = createOnCloseBurnedWorkModel();
+        return onCloseBurnedWorkModel;
+    }
+
+    protected OnCloseBurnedWorkModel createOnCloseBurnedWorkModel() { return new OnCloseBurnedWorkModel(); }
+
+    protected class OnCloseBurnedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_onCloseBurnedWork";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getOnCloseBurnedWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setOnCloseBurnedWork(value);
+        }
+
+            @Override
+            public void increment() {
+                setOnCloseBurnedWork(getOnCloseBurnedWork() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setOnCloseBurnedWork(getOnCloseBurnedWork() - 1);
+            }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -882,6 +1011,9 @@ public abstract class GSprint
         productOwnersIds = (Set<String>) props.get("productOwnersIds");
         scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
         teamMembersIds = (Set<String>) props.get("teamMembersIds");
+        completedOnCloseRequirementsIds = (Set<String>) props.get("completedOnCloseRequirementsIds");
+        rejectedOnCloseRequirementsIds = (Set<String>) props.get("rejectedOnCloseRequirementsIds");
+        onCloseBurnedWork  = (Integer) props.get("onCloseBurnedWork");
         updateLocalModificationTime();
     }
 
@@ -904,14 +1036,9 @@ public abstract class GSprint
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getCurrentSprintProjects() {
-        return getDao().getProjectsByCurrentSprint((Sprint)this);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getNextSprintProjects() {
-        return getDao().getProjectsByNextSprint((Sprint)this);
+        properties.put("completedOnCloseRequirementsIds", this.completedOnCloseRequirementsIds);
+        properties.put("rejectedOnCloseRequirementsIds", this.rejectedOnCloseRequirementsIds);
+        properties.put("onCloseBurnedWork", this.onCloseBurnedWork);
     }
 
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {
@@ -923,6 +1050,14 @@ public abstract class GSprint
     }
 
 
+
+    public final java.util.List<scrum.client.project.Project> getCurrentSprintProjects() {
+        return getDao().getProjectsByCurrentSprint((Sprint)this);
+    }
+
+    public final java.util.List<scrum.client.project.Project> getNextSprintProjects() {
+        return getDao().getProjectsByNextSprint((Sprint)this);
+    }
 
     @Override
     public boolean matchesKey(String key) {

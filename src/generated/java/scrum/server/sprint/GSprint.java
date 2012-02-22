@@ -52,18 +52,13 @@ public abstract class GSprint
         properties.put("productOwnersIds", this.productOwnersIds);
         properties.put("scrumMastersIds", this.scrumMastersIds);
         properties.put("teamMembersIds", this.teamMembersIds);
+        properties.put("completedOnCloseRequirementsIds", this.completedOnCloseRequirementsIds);
+        properties.put("rejectedOnCloseRequirementsIds", this.rejectedOnCloseRequirementsIds);
+        properties.put("onCloseBurnedWork", this.onCloseBurnedWork);
     }
 
     public int compareTo(Sprint other) {
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
-    }
-
-    public final java.util.Set<scrum.server.project.Project> getCurrentSprintProjects() {
-        return projectDao.getProjectsByCurrentSprint((Sprint)this);
-    }
-
-    public final java.util.Set<scrum.server.project.Project> getNextSprintProjects() {
-        return projectDao.getProjectsByNextSprint((Sprint)this);
     }
 
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
@@ -80,6 +75,14 @@ public abstract class GSprint
 
     public final scrum.server.project.ProjectSprintSnapshot getProjectSprintSnapshot() {
         return projectSprintSnapshotDao.getProjectSprintSnapshotBySprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getCurrentSprintProjects() {
+        return projectDao.getProjectsByCurrentSprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getNextSprintProjects() {
+        return projectDao.getProjectsByNextSprint((Sprint)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprint.class);
@@ -905,6 +908,216 @@ public abstract class GSprint
         setTeamMembers((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
+    // -----------------------------------------------------------
+    // - completedOnCloseRequirements
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> completedOnCloseRequirementsIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.project.Requirement> getCompletedOnCloseRequirements() {
+        return (java.util.Set) requirementDao.getByIdsAsSet(this.completedOnCloseRequirementsIds);
+    }
+
+    public final void setCompletedOnCloseRequirements(Collection<scrum.server.project.Requirement> completedOnCloseRequirements) {
+        completedOnCloseRequirements = prepareCompletedOnCloseRequirements(completedOnCloseRequirements);
+        if (completedOnCloseRequirements == null) completedOnCloseRequirements = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(completedOnCloseRequirements);
+        if (this.completedOnCloseRequirementsIds.equals(ids)) return;
+        this.completedOnCloseRequirementsIds = ids;
+        updateLastModified();
+        fireModified("completedOnCloseRequirements="+Str.format(completedOnCloseRequirements));
+    }
+
+    protected Collection<scrum.server.project.Requirement> prepareCompletedOnCloseRequirements(Collection<scrum.server.project.Requirement> completedOnCloseRequirements) {
+        return completedOnCloseRequirements;
+    }
+
+    protected void repairDeadCompletedOnCloseRequirementReference(String entityId) {
+        if (this.completedOnCloseRequirementsIds.remove(entityId)) fireModified("completedOnCloseRequirements-=" + entityId);
+    }
+
+    public final boolean containsCompletedOnCloseRequirement(scrum.server.project.Requirement completedOnCloseRequirement) {
+        if (completedOnCloseRequirement == null) return false;
+        return this.completedOnCloseRequirementsIds.contains(completedOnCloseRequirement.getId());
+    }
+
+    public final int getCompletedOnCloseRequirementsCount() {
+        return this.completedOnCloseRequirementsIds.size();
+    }
+
+    public final boolean isCompletedOnCloseRequirementsEmpty() {
+        return this.completedOnCloseRequirementsIds.isEmpty();
+    }
+
+    public final boolean addCompletedOnCloseRequirement(scrum.server.project.Requirement completedOnCloseRequirement) {
+        if (completedOnCloseRequirement == null) throw new IllegalArgumentException("completedOnCloseRequirement == null");
+        boolean added = this.completedOnCloseRequirementsIds.add(completedOnCloseRequirement.getId());
+        if (added) updateLastModified();
+        if (added) fireModified("completedOnCloseRequirements+=" + completedOnCloseRequirement);
+        return added;
+    }
+
+    public final boolean addCompletedOnCloseRequirements(Collection<scrum.server.project.Requirement> completedOnCloseRequirements) {
+        if (completedOnCloseRequirements == null) throw new IllegalArgumentException("completedOnCloseRequirements == null");
+        boolean added = false;
+        for (scrum.server.project.Requirement completedOnCloseRequirement : completedOnCloseRequirements) {
+            added = added | this.completedOnCloseRequirementsIds.add(completedOnCloseRequirement.getId());
+        }
+        return added;
+    }
+
+    public final boolean removeCompletedOnCloseRequirement(scrum.server.project.Requirement completedOnCloseRequirement) {
+        if (completedOnCloseRequirement == null) throw new IllegalArgumentException("completedOnCloseRequirement == null");
+        if (this.completedOnCloseRequirementsIds == null) return false;
+        boolean removed = this.completedOnCloseRequirementsIds.remove(completedOnCloseRequirement.getId());
+        if (removed) updateLastModified();
+        if (removed) fireModified("completedOnCloseRequirements-=" + completedOnCloseRequirement);
+        return removed;
+    }
+
+    public final boolean removeCompletedOnCloseRequirements(Collection<scrum.server.project.Requirement> completedOnCloseRequirements) {
+        if (completedOnCloseRequirements == null) return false;
+        if (completedOnCloseRequirements.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.project.Requirement _element: completedOnCloseRequirements) {
+            removed = removed | removeCompletedOnCloseRequirement(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearCompletedOnCloseRequirements() {
+        if (this.completedOnCloseRequirementsIds.isEmpty()) return false;
+        this.completedOnCloseRequirementsIds.clear();
+        updateLastModified();
+        fireModified("completedOnCloseRequirements cleared");
+        return true;
+    }
+
+    protected final void updateCompletedOnCloseRequirements(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setCompletedOnCloseRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
+    }
+
+    // -----------------------------------------------------------
+    // - rejectedOnCloseRequirements
+    // -----------------------------------------------------------
+
+    private java.util.Set<String> rejectedOnCloseRequirementsIds = new java.util.HashSet<String>();
+
+    public final java.util.Set<scrum.server.project.Requirement> getRejectedOnCloseRequirements() {
+        return (java.util.Set) requirementDao.getByIdsAsSet(this.rejectedOnCloseRequirementsIds);
+    }
+
+    public final void setRejectedOnCloseRequirements(Collection<scrum.server.project.Requirement> rejectedOnCloseRequirements) {
+        rejectedOnCloseRequirements = prepareRejectedOnCloseRequirements(rejectedOnCloseRequirements);
+        if (rejectedOnCloseRequirements == null) rejectedOnCloseRequirements = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(rejectedOnCloseRequirements);
+        if (this.rejectedOnCloseRequirementsIds.equals(ids)) return;
+        this.rejectedOnCloseRequirementsIds = ids;
+        updateLastModified();
+        fireModified("rejectedOnCloseRequirements="+Str.format(rejectedOnCloseRequirements));
+    }
+
+    protected Collection<scrum.server.project.Requirement> prepareRejectedOnCloseRequirements(Collection<scrum.server.project.Requirement> rejectedOnCloseRequirements) {
+        return rejectedOnCloseRequirements;
+    }
+
+    protected void repairDeadRejectedOnCloseRequirementReference(String entityId) {
+        if (this.rejectedOnCloseRequirementsIds.remove(entityId)) fireModified("rejectedOnCloseRequirements-=" + entityId);
+    }
+
+    public final boolean containsRejectedOnCloseRequirement(scrum.server.project.Requirement rejectedOnCloseRequirement) {
+        if (rejectedOnCloseRequirement == null) return false;
+        return this.rejectedOnCloseRequirementsIds.contains(rejectedOnCloseRequirement.getId());
+    }
+
+    public final int getRejectedOnCloseRequirementsCount() {
+        return this.rejectedOnCloseRequirementsIds.size();
+    }
+
+    public final boolean isRejectedOnCloseRequirementsEmpty() {
+        return this.rejectedOnCloseRequirementsIds.isEmpty();
+    }
+
+    public final boolean addRejectedOnCloseRequirement(scrum.server.project.Requirement rejectedOnCloseRequirement) {
+        if (rejectedOnCloseRequirement == null) throw new IllegalArgumentException("rejectedOnCloseRequirement == null");
+        boolean added = this.rejectedOnCloseRequirementsIds.add(rejectedOnCloseRequirement.getId());
+        if (added) updateLastModified();
+        if (added) fireModified("rejectedOnCloseRequirements+=" + rejectedOnCloseRequirement);
+        return added;
+    }
+
+    public final boolean addRejectedOnCloseRequirements(Collection<scrum.server.project.Requirement> rejectedOnCloseRequirements) {
+        if (rejectedOnCloseRequirements == null) throw new IllegalArgumentException("rejectedOnCloseRequirements == null");
+        boolean added = false;
+        for (scrum.server.project.Requirement rejectedOnCloseRequirement : rejectedOnCloseRequirements) {
+            added = added | this.rejectedOnCloseRequirementsIds.add(rejectedOnCloseRequirement.getId());
+        }
+        return added;
+    }
+
+    public final boolean removeRejectedOnCloseRequirement(scrum.server.project.Requirement rejectedOnCloseRequirement) {
+        if (rejectedOnCloseRequirement == null) throw new IllegalArgumentException("rejectedOnCloseRequirement == null");
+        if (this.rejectedOnCloseRequirementsIds == null) return false;
+        boolean removed = this.rejectedOnCloseRequirementsIds.remove(rejectedOnCloseRequirement.getId());
+        if (removed) updateLastModified();
+        if (removed) fireModified("rejectedOnCloseRequirements-=" + rejectedOnCloseRequirement);
+        return removed;
+    }
+
+    public final boolean removeRejectedOnCloseRequirements(Collection<scrum.server.project.Requirement> rejectedOnCloseRequirements) {
+        if (rejectedOnCloseRequirements == null) return false;
+        if (rejectedOnCloseRequirements.isEmpty()) return false;
+        boolean removed = false;
+        for (scrum.server.project.Requirement _element: rejectedOnCloseRequirements) {
+            removed = removed | removeRejectedOnCloseRequirement(_element);
+        }
+        return removed;
+    }
+
+    public final boolean clearRejectedOnCloseRequirements() {
+        if (this.rejectedOnCloseRequirementsIds.isEmpty()) return false;
+        this.rejectedOnCloseRequirementsIds.clear();
+        updateLastModified();
+        fireModified("rejectedOnCloseRequirements cleared");
+        return true;
+    }
+
+    protected final void updateRejectedOnCloseRequirements(Object value) {
+        Collection<String> ids = (Collection<String>) value;
+        setRejectedOnCloseRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
+    }
+
+    // -----------------------------------------------------------
+    // - onCloseBurnedWork
+    // -----------------------------------------------------------
+
+    private int onCloseBurnedWork;
+
+    public final int getOnCloseBurnedWork() {
+        return onCloseBurnedWork;
+    }
+
+    public final void setOnCloseBurnedWork(int onCloseBurnedWork) {
+        onCloseBurnedWork = prepareOnCloseBurnedWork(onCloseBurnedWork);
+        if (isOnCloseBurnedWork(onCloseBurnedWork)) return;
+        this.onCloseBurnedWork = onCloseBurnedWork;
+        updateLastModified();
+        fireModified("onCloseBurnedWork="+onCloseBurnedWork);
+    }
+
+    protected int prepareOnCloseBurnedWork(int onCloseBurnedWork) {
+        return onCloseBurnedWork;
+    }
+
+    public final boolean isOnCloseBurnedWork(int onCloseBurnedWork) {
+        return this.onCloseBurnedWork == onCloseBurnedWork;
+    }
+
+    protected final void updateOnCloseBurnedWork(Object value) {
+        setOnCloseBurnedWork((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -926,6 +1139,9 @@ public abstract class GSprint
             if (property.equals("productOwnersIds")) updateProductOwners(value);
             if (property.equals("scrumMastersIds")) updateScrumMasters(value);
             if (property.equals("teamMembersIds")) updateTeamMembers(value);
+            if (property.equals("completedOnCloseRequirementsIds")) updateCompletedOnCloseRequirements(value);
+            if (property.equals("rejectedOnCloseRequirementsIds")) updateRejectedOnCloseRequirements(value);
+            if (property.equals("onCloseBurnedWork")) updateOnCloseBurnedWork(value);
         }
     }
 
@@ -939,6 +1155,10 @@ public abstract class GSprint
         repairDeadScrumMasterReference(entityId);
         if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         repairDeadTeamMemberReference(entityId);
+        if (this.completedOnCloseRequirementsIds == null) this.completedOnCloseRequirementsIds = new java.util.HashSet<String>();
+        repairDeadCompletedOnCloseRequirementReference(entityId);
+        if (this.rejectedOnCloseRequirementsIds == null) this.rejectedOnCloseRequirementsIds = new java.util.HashSet<String>();
+        repairDeadRejectedOnCloseRequirementReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -986,6 +1206,26 @@ public abstract class GSprint
                 repairDeadTeamMemberReference(entityId);
             }
         }
+        if (this.completedOnCloseRequirementsIds == null) this.completedOnCloseRequirementsIds = new java.util.HashSet<String>();
+        Set<String> completedOnCloseRequirements = new HashSet<String>(this.completedOnCloseRequirementsIds);
+        for (String entityId : completedOnCloseRequirements) {
+            try {
+                requirementDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead completedOnCloseRequirement reference");
+                repairDeadCompletedOnCloseRequirementReference(entityId);
+            }
+        }
+        if (this.rejectedOnCloseRequirementsIds == null) this.rejectedOnCloseRequirementsIds = new java.util.HashSet<String>();
+        Set<String> rejectedOnCloseRequirements = new HashSet<String>(this.rejectedOnCloseRequirementsIds);
+        for (String entityId : rejectedOnCloseRequirements) {
+            try {
+                requirementDao.getById(entityId);
+            } catch (EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead rejectedOnCloseRequirement reference");
+                repairDeadRejectedOnCloseRequirementReference(entityId);
+            }
+        }
     }
 
 
@@ -999,16 +1239,16 @@ public abstract class GSprint
         GSprint.projectDao = projectDao;
     }
 
-    static scrum.server.sprint.SprintDao sprintDao;
-
-    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
-        GSprint.sprintDao = sprintDao;
-    }
-
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GSprint.requirementDao = requirementDao;
+    }
+
+    static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GSprint.sprintDao = sprintDao;
     }
 
     static scrum.server.release.ReleaseDao releaseDao;

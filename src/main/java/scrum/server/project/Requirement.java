@@ -161,10 +161,6 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 		// delete estimation votes when closed or in sprint
 		if (isClosed() || isSprintSet()) clearEstimationVotes();
-
-		// delete when closed and older than 4 weeks
-		if (isClosed() && getLastModified().getPeriodToNow().toWeeks() > 4) getDao().deleteEntity(this);
-
 	}
 
 	@Override

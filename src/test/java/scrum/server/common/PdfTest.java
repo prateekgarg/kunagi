@@ -188,8 +188,8 @@ public class PdfTest extends ATest {
 		Requirement req1 = TestUtil.createRequirement(sprint, 1, 0.5f);
 		TestUtil.createTask(req1, 1, 0, 1);
 		req1.setClosed(true);
-		Requirement req2 = TestUtil.createRequirement(sprint, 1, 1f);
-		Requirement req3 = TestUtil.createRequirement(sprint, 1, 5f);
+		Requirement req2 = TestUtil.createRequirement(sprint, 2, 1f);
+		Requirement req3 = TestUtil.createRequirement(sprint, 3, 5f);
 		TestUtil.createTask(req3, 2, 1, 1);
 		TestUtil.createTask(req3, 3, 2, 2);
 

@@ -99,16 +99,16 @@ public abstract class GProject
         return releaseDao.getReleasesByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
-        return qualityDao.getQualitysByProject((Project)this);
-    }
-
     public final java.util.Set<scrum.server.impediments.Impediment> getImpediments() {
         return impedimentDao.getImpedimentsByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
         return projectUserConfigDao.getProjectUserConfigsByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Quality> getQualitys() {
+        return qualityDao.getQualitysByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
@@ -2141,12 +2141,6 @@ public abstract class GProject
         GProject.releaseDao = releaseDao;
     }
 
-    static scrum.server.project.QualityDao qualityDao;
-
-    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
-        GProject.qualityDao = qualityDao;
-    }
-
     static scrum.server.impediments.ImpedimentDao impedimentDao;
 
     public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
@@ -2157,6 +2151,12 @@ public abstract class GProject
 
     public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
         GProject.projectUserConfigDao = projectUserConfigDao;
+    }
+
+    static scrum.server.project.QualityDao qualityDao;
+
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GProject.qualityDao = qualityDao;
     }
 
     static scrum.server.pr.BlogEntryDao blogEntryDao;
