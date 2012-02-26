@@ -74,6 +74,7 @@ public class Sprint extends GSprint implements Numbered {
 			}
 		}
 
+		requirement.setClosed(false);
 		requirement.setSprint(null);
 		requirement.setDirty(burned > 0);
 		requirement.getProject().moveRequirementToTop(requirement);
