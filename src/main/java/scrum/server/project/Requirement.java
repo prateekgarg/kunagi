@@ -16,6 +16,8 @@ package scrum.server.project;
 
 import ilarkesto.core.base.Str;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,12 @@ import scrum.server.sprint.Task;
 public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
 
 	private transient Comparator<Task> tasksOrderComparator;
+
+	public List<Task> getTasksAsList() {
+		List<Task> tasks = new ArrayList<Task>(getTasks());
+		Collections.sort(tasks, getTasksOrderComparator());
+		return tasks;
+	}
 
 	public String getWorkDescriptionAsString() {
 		if (!isInCurrentSprint()) return Str.appendIfNotBlank(getEstimatedWorkAsString(), "SP");
@@ -171,6 +179,24 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 	@Override
 	public String toString() {
 		return getReferenceAndLabel();
+	}
+
+	public List<Task> getClosedTasksAsList() {
+		List<Task> tasks = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (task.isClosed()) tasks.add(task);
+		}
+		Collections.sort(tasks, getTasksOrderComparator());
+		return tasks;
+	}
+
+	public List<Task> getOpenTasksAsList() {
+		List<Task> tasks = new ArrayList<Task>();
+		for (Task task : getTasks()) {
+			if (!task.isClosed()) tasks.add(task);
+		}
+		Collections.sort(tasks, getTasksOrderComparator());
+		return tasks;
 	}
 
 }

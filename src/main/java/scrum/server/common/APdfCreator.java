@@ -23,11 +23,13 @@ import ilarkesto.pdf.ATable;
 import ilarkesto.pdf.FontStyle;
 
 import java.awt.Color;
+import java.util.Collection;
 
 import scrum.server.issues.Issue;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
 import scrum.server.release.Release;
+import scrum.server.sprint.Task;
 
 public abstract class APdfCreator {
 
@@ -77,7 +79,8 @@ public abstract class APdfCreator {
 		WikiToPdfConverter.buildPdf(parent, wikiCode, new ScrumPdfContext());
 	}
 
-	protected void requirement(APdfContainerElement pdf, Requirement req) {
+	protected void requirement(APdfContainerElement pdf, Requirement req, Collection<Task> openTasks,
+			Collection<Task> closedTasks) {
 		pdf.nl();
 
 		ATable table = pdf.table(3, 20, 3);
@@ -90,7 +93,37 @@ public abstract class APdfCreator {
 		richtextRow(table, "Story description", req.getDescription());
 		richtextRow(table, "Acceptance tests", req.getTestDescription());
 
+		tasksRow(table, "Closed tasks", closedTasks);
+		tasksRow(table, "Open tasks", openTasks);
+
 		table.createCellBorders(Color.GRAY, 0.2f);
+	}
+
+	private void tasksRow(ATable table, String label, Collection<Task> tasks) {
+		if (tasks == null || tasks.isEmpty()) return;
+		ARow row = table.row();
+
+		ACell valueCell = row.cell().setColspan(3);
+		valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
+
+		tasks(valueCell, tasks);
+		valueCell.setPaddingBottom(3);
+	}
+
+	private void tasks(APdfContainerElement container, Collection<Task> tasks) {
+		for (Task task : tasks) {
+			container.nl(miniLabelFont);
+			ATable table = container.table(3, 20);
+
+			ARow rowHeader = table.row().setDefaultBackgroundColor(new Color(223, 223, 223));
+			rowHeader.cell().setFontStyle(referenceFont).text(task.getReference());
+			rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(task.getLabel());
+
+			if (task.isDescriptionSet()) richtextRow(table, "Description", task.getDescription());
+
+			table.createCellBorders(Color.LIGHT_GRAY, 0.2f);
+		}
+
 	}
 
 	protected void quality(APdfContainerElement pdf, Quality quality) {
@@ -142,9 +175,10 @@ public abstract class APdfCreator {
 	}
 
 	private void richtextRow(ATable table, String label, String value) {
+		int colspan = table.getColumnCount();
 		ARow row = table.row();
 
-		ACell valueCell = row.cell().setColspan(3);
+		ACell valueCell = row.cell().setColspan(colspan);
 		valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
 		wiki(valueCell, value);
 		valueCell.setPaddingBottom(3);

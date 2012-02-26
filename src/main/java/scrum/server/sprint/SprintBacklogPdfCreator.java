@@ -65,8 +65,7 @@ public class SprintBacklogPdfCreator extends APdfCreator {
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement req : requirements) {
-			requirement(pdf, req);
-			// TODO burned work, estimated work
+			requirement(pdf, req, req.getOpenTasksAsList(), req.getClosedTasksAsList());
 		}
 
 	}

@@ -77,8 +77,8 @@ public class SprintReportPdfCreator extends APdfCreator {
 			requirements(pdf, "Completed stories", sprint.getCompletedRequirementsData());
 			requirements(pdf, "Rejected stories", sprint.getIncompletedRequirementsData());
 		} else {
-			requirements(pdf, "Completed stories", report.getCompletedRequirementsAsList());
-			requirements(pdf, "Rejected stories", report.getRejectedRequirementsAsList());
+			requirements(pdf, "Completed stories", report.getCompletedRequirementsAsList(), report);
+			requirements(pdf, "Rejected stories", report.getRejectedRequirementsAsList(), report);
 		}
 
 		if (sprint.isReviewNoteSet()) {
@@ -103,11 +103,12 @@ public class SprintReportPdfCreator extends APdfCreator {
 		return sum;
 	}
 
-	private void requirements(APdfContainerElement pdf, String title, List<Requirement> requirements) {
+	private void requirements(APdfContainerElement pdf, String title, List<Requirement> requirements,
+			SprintReport report) {
 		if (requirements.isEmpty()) return;
 		sectionHeader(pdf, title);
 		for (Requirement req : requirements) {
-			requirement(pdf, req);
+			requirement(pdf, req, report.getOpenTasks(req), report.getClosedTasks(req));
 		}
 	}
 

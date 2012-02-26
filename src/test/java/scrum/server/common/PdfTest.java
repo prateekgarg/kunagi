@@ -14,6 +14,7 @@
  */
 package scrum.server.common;
 
+import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.core.logging.Log;
@@ -42,6 +43,7 @@ import scrum.server.risks.RiskListPdfCreator;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
+import scrum.server.sprint.Task;
 
 public class PdfTest extends ATest {
 
@@ -171,24 +173,29 @@ public class PdfTest extends ATest {
 
 	@Test
 	public void sprintReport() {
+		Project project = TestUtil.createProject();
+		project.addProductOwners(Arrays.asList(TestUtil.createUser("Cartman")));
+		project.addScrumMasters(Arrays.asList(TestUtil.createUser("Homer")));
+		project.addTeamMembers(Arrays.asList(TestUtil.createUser("Alfred"), TestUtil.createUser("Duke")));
+
 		Sprint sprint = new Sprint();
-		sprint.setProject(TestUtil.createProject());
-		sprint.setEnd(Date.today().beforeDays(3));
-		sprint.setBegin(sprint.getEnd().beforeDays(30));
+		sprint.setProject(project);
+		sprint.setEnd(Date.beforeDays(3));
+		sprint.setBegin(sprint.getEnd().addDays(-30));
 		sprint.setLabel("Productivity Boost Sprint ä ü ö ß Mirosław");
-		sprint.setGoal("Boost productivity for users.");
-		sprint.setPlanningNote("Planning was fun.");
-		sprint.setReviewNote("PO accepted everything.");
-		sprint.setRetrospectiveNote("Perfect sprint.");
+		sprint.setGoal(Str.generateRandomSentence(3, 15));
+		sprint.setPlanningNote(Str.generateRandomParagraphs(2));
+		sprint.setReviewNote(Str.generateRandomParagraphs(2));
+		sprint.setRetrospectiveNote(Str.generateRandomParagraphs(2));
 		sprint.setVelocity(666f);
-		sprint.setProductOwners(Arrays.asList(TestUtil.createUser("Cartman")));
-		sprint.setScrumMasters(Arrays.asList(TestUtil.createUser("Homer")));
-		sprint.setTeamMembers(Arrays.asList(TestUtil.createUser("Alfred"), TestUtil.createUser("Duke")));
 
 		Requirement req1 = TestUtil.createRequirement(sprint, 1, 0.5f);
-		TestUtil.createTask(req1, 1, 0, 1);
+		Task tsk1 = TestUtil.createTask(req1, 1, 0, 1);
+		tsk1.setDescription(Str.generateRandomParagraphs(3));
 		req1.setClosed(true);
+
 		Requirement req2 = TestUtil.createRequirement(sprint, 2, 1f);
+
 		Requirement req3 = TestUtil.createRequirement(sprint, 3, 5f);
 		TestUtil.createTask(req3, 2, 1, 1);
 		TestUtil.createTask(req3, 3, 2, 2);
