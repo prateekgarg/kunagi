@@ -174,14 +174,15 @@ public abstract class APdfCreator {
 		table.createCellBorders(Color.GRAY, 0.2f);
 	}
 
-	private void richtextRow(ATable table, String label, String value) {
+	protected ACell richtextRow(ATable table, String label, String value) {
 		int colspan = table.getColumnCount();
 		ARow row = table.row();
 
 		ACell valueCell = row.cell().setColspan(colspan);
 		valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
-		wiki(valueCell, value);
+		if (value != null) wiki(valueCell, value);
 		valueCell.setPaddingBottom(3);
+		return valueCell;
 	}
 
 }

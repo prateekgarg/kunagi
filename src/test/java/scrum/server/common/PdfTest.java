@@ -30,6 +30,7 @@ import scrum.TestUtil;
 import scrum.server.calendar.CalendarPdfCreator;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.collaboration.WikipagePdfCreator;
+import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.issues.BugListPdfCreator;
 import scrum.server.issues.IdeaListPdfCreator;
@@ -77,8 +78,15 @@ public class PdfTest extends ATest {
 
 		TestUtil.createImpediment(project, 1);
 		TestUtil.createImpediment(project, 2);
-		TestUtil.createImpediment(project, 3);
-		TestUtil.createImpediment(project, 4);
+
+		Impediment imp3 = TestUtil.createImpediment(project, 3);
+		imp3.setSolution(Str.generateRandomParagraphs(2));
+
+		Impediment imp4 = TestUtil.createImpediment(project, 4);
+		Requirement req1 = TestUtil.createRequirement(project, 1);
+		TestUtil.createTask(req1, 1, 3, 0).setImpediment(imp4);
+		TestUtil.createTask(req1, 2, 1, 0).setImpediment(imp4);
+
 		TestUtil.createImpediment(project, 5);
 
 		createPdf(new ImpedimentListPdfCreator(project));

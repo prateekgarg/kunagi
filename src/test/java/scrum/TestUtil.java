@@ -220,8 +220,8 @@ public class TestUtil {
 	}
 
 	public static Impediment createImpediment(Project project, int number) {
-		return createImpediment(project, Date.beforeDays(number), number, "Impediment #" + number, "Impediment #"
-				+ number + " description.");
+		return createImpediment(project, Date.beforeDays(number), number, Str.generateRandomSentence(3, 9),
+			Str.generateRandomParagraphs(2));
 	}
 
 	public static Impediment createImpediment(Project project, Date date, int number, String label, String description) {

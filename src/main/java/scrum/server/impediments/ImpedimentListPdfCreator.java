@@ -14,15 +14,21 @@
  */
 package scrum.server.impediments;
 
+import ilarkesto.pdf.ACell;
 import ilarkesto.pdf.APdfContainerElement;
-import ilarkesto.pdf.FieldList;
+import ilarkesto.pdf.ARow;
+import ilarkesto.pdf.ATable;
+import ilarkesto.pdf.FontStyle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import scrum.server.common.APdfCreator;
 import scrum.server.project.Project;
+import scrum.server.sprint.Task;
 
 public class ImpedimentListPdfCreator extends APdfCreator {
 
@@ -41,14 +47,34 @@ public class ImpedimentListPdfCreator extends APdfCreator {
 		Collections.sort(impediments);
 		for (Impediment imp : impediments) {
 			if (imp.isClosed()) continue;
-			pdf.nl();
-			pdf.paragraph().text(imp.getReferenceAndLabel(), headerFonts[2]);
-			wiki(pdf, imp.getDescription());
-			pdf.nl();
-			FieldList fields = pdf.fieldList().setLabelFontStyle(fieldLabelFont);
-			fields.field("Date").text(imp.getDate());
-			if (imp.isSolutionSet()) wiki(fields.field("Solution"), imp.getSolution());
+			impediment(pdf, imp);
 		}
+	}
+
+	private void impediment(APdfContainerElement pdf, Impediment imp) {
+		pdf.nl();
+
+		ATable table = pdf.table(2, 20, 3);
+
+		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
+		rowHeader.cell().setFontStyle(referenceFont).text(imp.getReference());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(imp.getLabel());
+		rowHeader.cell().setFontStyle(smallerFont).text(imp.getDate());
+
+		richtextRow(table, "Description", imp.getDescription());
+
+		if (imp.isSolutionSet()) richtextRow(table, "Solution", imp.getSolution());
+
+		Set<Task> tasks = imp.getTasks();
+		if (!tasks.isEmpty()) {
+			ACell cell = richtextRow(table, "Blocked tasks", null);
+			for (Task task : tasks) {
+				cell.paragraph().text(task.getReference(), referenceFont).text(" ").text(task.getLabel()).text(" (")
+						.text(task.getRequirement().getReference(), referenceFont).text(")");
+			}
+		}
+
+		table.createCellBorders(Color.GRAY, 0.2f);
 	}
 
 	@Override
