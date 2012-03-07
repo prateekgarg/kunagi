@@ -146,7 +146,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		sendToClients(conversation, sprint);
 		sendToClients(conversation, story);
-		sendToClients(conversation, story.getTasks());
+		sendToClients(conversation, story.getTasksInSprint());
 	}
 
 	@Override
@@ -154,7 +154,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(conversation);
 		Requirement story = requirementDao.getById(storyId);
 		Sprint sprint = story.getSprint();
-		Set<Task> tasks = story.getTasks();
 
 		sprint.kickRequirement(story);
 
@@ -162,7 +161,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		postProjectEvent(conversation, currentUser.getName() + " kicked " + story.getReferenceAndLabel()
 				+ " from current sprint", story);
 
-		sendToClients(conversation, tasks);
+		sendToClients(conversation, story.getTasksInSprint());
 		sendToClients(conversation, story);
 		sendToClients(conversation, sprint);
 		sendToClients(conversation, sprint.getProject());
@@ -384,6 +383,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Sprint previousRequirementSprint = entity instanceof Requirement ? ((Requirement) entity).getSprint() : null;
 
 		if (entity instanceof Requirement) {
+			postChangeIfChanged(conversation, entity, properties, currentUser, "label");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "testDescription");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "sprintId");
@@ -393,6 +393,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
 			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+			postChangeIfChanged(conversation, entity, properties, currentUser, "label");
+			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 		}
 		if (entity instanceof Wikipage) {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
@@ -617,11 +619,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(project.getSprints());
 		conversation.sendToClient(sprintReportDao.getSprintReportsByProject(project));
 		conversation.sendToClient(project.getParticipants());
-		Set<Requirement> requirements = project.getRequirements();
+		Set<Requirement> requirements = project.getRequirements(); // TODO optimize: skip history
 		conversation.sendToClient(requirements);
 		for (Requirement requirement : requirements) {
 			conversation.sendToClient(requirement.getEstimationVotes());
-			conversation.sendToClient(requirement.getTasks());
+			conversation.sendToClient(requirement.getTasks()); // TODO optimize: skip history
 		}
 		conversation.sendToClient(project.getQualitys());
 		conversation.sendToClient(project.getTasks());
@@ -777,7 +779,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		project.switchToNextSprint();
 		sendToClients(conversation, project.getSprints());
 		sendToClients(conversation, project.getRequirements());
-		sendToClients(conversation, project.getTasks());
+		sendToClients(conversation, project.getTasks()); // TODO optimize: no history tasks
 		sendToClients(conversation, oldSprint.getReleases());
 		sendToClients(conversation, project);
 	}

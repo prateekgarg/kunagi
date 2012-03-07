@@ -329,10 +329,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		// TODO only for subjects and entities with comments
 		if (getWorkarea().isShowing(forum)) return forum;
 
-		if (entity instanceof Task) {
-			if (getWorkarea().isShowing(sprintBacklog)) return sprintBacklog;
-			return whiteboard;
-		}
+		if (entity instanceof Task) return getWidgetForEntity(((Task) entity).getRequirement());
+
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
 			if (requirement.isClosed()) return sprintHistory;
@@ -417,6 +415,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		sprintHistory.select(requirement);
 	}
 
+	private void showSprintHistory(Task task) {
+		select(sprintHistory);
+		sprintHistory.select(task);
+	}
+
 	private void showIssue(Issue issue) {
 		select(issueList);
 		issueList.select(issue);
@@ -443,8 +446,12 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	private void showTask(Task task) {
-		if (getWorkarea().isShowing(whiteboard)) {
+		AWidget widget = getWidgetForEntity(task);
+
+		if (widget == whiteboard) {
 			showWhiteboard(task);
+		} else if (widget == sprintHistory) {
+			showSprintHistory(task);
 		} else {
 			showSprintBacklog(task);
 		}

@@ -19,6 +19,7 @@ import ilarkesto.core.base.Str;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,7 @@ import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
+import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
 public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
@@ -34,8 +36,22 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 	private transient Comparator<Task> tasksOrderComparator;
 
 	public List<Task> getTasksAsList() {
-		List<Task> tasks = new ArrayList<Task>(getTasks());
+		List<Task> tasks = new ArrayList<Task>(getTasksInSprint());
 		Collections.sort(tasks, getTasksOrderComparator());
+		return tasks;
+	}
+
+	public Set<Task> getTasksInSprint() {
+		return getTasksInSprint(getProject().getCurrentSprint());
+	}
+
+	public Set<Task> getTasksInSprint(Sprint sprint) {
+		Set<Task> tasks = getTasks();
+		Iterator<Task> iterator = tasks.iterator();
+		while (iterator.hasNext()) {
+			Task task = iterator.next();
+			if (!task.isSprint(sprint)) iterator.remove();
+		}
 		return tasks;
 	}
 
@@ -55,7 +71,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 	public int getRemainingWork() {
 		int work = 0;
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			work += task.getRemainingWork();
 		}
 		return work;
@@ -63,7 +79,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 	public int getBurnedWork() {
 		int work = 0;
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			work += task.getBurnedWork();
 		}
 		return work;
@@ -112,7 +128,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 	}
 
 	public boolean isTasksClosed() {
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (!task.isClosed()) return false;
 		}
 		return true;
@@ -183,7 +199,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 	public List<Task> getClosedTasksAsList() {
 		List<Task> tasks = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isClosed()) tasks.add(task);
 		}
 		Collections.sort(tasks, getTasksOrderComparator());
@@ -192,7 +208,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 
 	public List<Task> getOpenTasksAsList() {
 		List<Task> tasks = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (!task.isClosed()) tasks.add(task);
 		}
 		Collections.sort(tasks, getTasksOrderComparator());

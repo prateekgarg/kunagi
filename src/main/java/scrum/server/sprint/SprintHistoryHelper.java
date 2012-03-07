@@ -25,7 +25,7 @@ public class SprintHistoryHelper extends scrum.client.sprint.SprintHistoryHelper
 		sb.append(PREFIX).append(VERSION).append("\n");
 		for (Requirement req : requirements) {
 			sb.append(encodeRequirement(req)).append("\n");
-			for (Task task : req.getTasks()) {
+			for (Task task : req.getTasksInSprint()) {
 				sb.append(encodeTask(task)).append("\n");
 			}
 		}

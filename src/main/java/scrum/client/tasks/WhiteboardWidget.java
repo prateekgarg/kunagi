@@ -188,6 +188,8 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	}
 
 	private void updateTaskLists(Requirement requirement) {
+		if (requirement == null) return;
+
 		TaskListWidget openTasksList = openTasks.get(requirement);
 		TaskListWidget ownedTasksList = ownedTasks.get(requirement);
 		TaskListWidget closedTasksList = closedTasks.get(requirement);
@@ -199,7 +201,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		List<Task> openTaskList = new ArrayList<Task>();
 		List<Task> ownedTaskList = new ArrayList<Task>();
 		List<Task> closedTaskList = new ArrayList<Task>();
-		for (Task task : requirement.getTasks()) {
+		for (Task task : requirement.getTasksInSprint()) {
 			if (task.isClosed()) {
 				closedTaskList.add(task);
 			} else if (task.isOwnerSet()) {
@@ -286,11 +288,6 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 	@Override
 	public boolean isShowRequirement() {
-		return false;
-	}
-
-	@Override
-	public boolean isWideMode() {
 		return false;
 	}
 

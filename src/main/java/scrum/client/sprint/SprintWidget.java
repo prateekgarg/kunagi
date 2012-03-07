@@ -40,7 +40,7 @@ public class SprintWidget extends AScrumWidget {
 		tb.setColumnWidths("80px", "100px", "80px", "100px", "80px");
 
 		int cols = 6;
-		tb.addFieldRow("Label", sprint.getLabelModel(), cols - 1);
+		if (!completed) tb.addFieldRow("Label", sprint.getLabelModel(), cols - 1);
 		tb.addFieldRow("Goal", new RichtextEditorWidget(sprint.getGoalModel()), cols - 1);
 		tb.addFieldRow("Releases", new AFieldValueWidget() {
 
@@ -103,12 +103,6 @@ public class SprintWidget extends AScrumWidget {
 		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), cols - 1);
 		tb.addFieldRow("Review Note", new RichtextEditorWidget(sprint.getReviewNoteModel()), cols - 1);
 		tb.addFieldRow("Retrospective Note", new RichtextEditorWidget(sprint.getRetrospectiveNoteModel()), cols - 1);
-
-		if (completed) {
-			tb.add(ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint), cols);
-		} else {
-			tb.add(ScrumGwt.createPdfLink("Download as PDF", "sprintBacklog", sprint), cols);
-		}
 
 		return TableBuilder.row(10, tb.createTable(), ScrumGwt.createEmoticonsAndComments(sprint));
 	}

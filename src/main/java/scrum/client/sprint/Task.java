@@ -39,6 +39,10 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";
 
+	public Sprint getSprint() {
+		return getRequirement().getSprint();
+	}
+
 	public Task(Requirement requirement) {
 		setRequirement(requirement);
 		// setLabel("New Task");
@@ -47,6 +51,10 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	public Task(Map data) {
 		super(data);
+	}
+
+	public boolean isInCurrentSprint() {
+		return getRequirement().isInCurrentSprint();
 	}
 
 	@Override
@@ -195,6 +203,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	@Override
 	public boolean isEditable() {
+		if (!isInCurrentSprint()) return false;
 		if (!getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
@@ -230,4 +239,5 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 		};
 		return workTextModel;
 	}
+
 }

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -106,10 +107,24 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public void removeFromSprint() {
 		setSprint(null);
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			task.setOwner(null);
 			task.setBurnedWork(0);
 		}
+	}
+
+	public List<Task> getTasksInSprint() {
+		return getTasksInSprint(getProject().getCurrentSprint());
+	}
+
+	public List<Task> getTasksInSprint(Sprint sprint) {
+		List<Task> tasks = getTasks();
+		Iterator<Task> iterator = tasks.iterator();
+		while (iterator.hasNext()) {
+			Task task = iterator.next();
+			if (!sprint.equals(task.getSprint())) iterator.remove();
+		}
+		return tasks;
 	}
 
 	public boolean isDecidable() {
@@ -183,8 +198,9 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public String getTaskStatusLabel() {
-		int burned = Task.sumBurnedWork(getTasks());
-		int remaining = Task.sumRemainingWork(getTasks());
+		List<Task> tasks = getTasksInSprint();
+		int burned = Task.sumBurnedWork(tasks);
+		int remaining = Task.sumRemainingWork(getTasksInSprint());
 		if (remaining == 0) return "100% completed, " + burned + " hrs burned";
 		int burnedPercent = Gwt.percent(burned + remaining, burned);
 		return burnedPercent + "% completed, " + remaining + " hrs left";
@@ -234,14 +250,14 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	 * No tasks created yet.
 	 */
 	public boolean isPlanned() {
-		return !getTasks().isEmpty();
+		return !getTasksInSprint().isEmpty();
 	}
 
 	/**
 	 * All tasks are done. Not closed yet.
 	 */
 	public boolean isTasksClosed() {
-		Collection<Task> tasks = getTasks();
+		Collection<Task> tasks = getTasksInSprint();
 		if (tasks.isEmpty()) return false;
 		for (Task task : tasks) {
 			if (!task.isClosed()) return false;
@@ -272,7 +288,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		int taskCount = 0;
 		int openTaskCount = 0;
 		int effort = 0;
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			taskCount++;
 			if (!task.isClosed()) {
 				openTaskCount++;
@@ -287,7 +303,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public int getBurnedWork() {
-		return Task.sumBurnedWork(getTasks());
+		return Task.sumBurnedWork(getTasksInSprint());
 	}
 
 	public int getBurnedWorkInClaimedTasks() {
@@ -303,12 +319,12 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public int getRemainingWork() {
-		return Task.sumRemainingWork(getTasks());
+		return Task.sumRemainingWork(getTasksInSprint());
 	}
 
 	public List<Task> getClaimedTasks() {
 		List<Task> ret = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isOwnerSet() && !task.isClosed()) ret.add(task);
 		}
 		return ret;
@@ -316,7 +332,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public List<Task> getClaimedTasks(User owner) {
 		List<Task> ret = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isOwner(owner) && !task.isClosed()) ret.add(task);
 		}
 		return ret;
@@ -324,7 +340,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public List<Task> getClosedTasks() {
 		List<Task> ret = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isClosed()) ret.add(task);
 		}
 		return ret;
@@ -332,7 +348,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public List<Task> getUnclaimedTasks() {
 		List<Task> ret = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isClosed() || task.isOwnerSet()) continue;
 			ret.add(task);
 		}
@@ -341,7 +357,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public List<Task> getTasksBlockedBy(Impediment impediment) {
 		List<Task> ret = new ArrayList<Task>();
-		for (Task task : getTasks()) {
+		for (Task task : getTasksInSprint()) {
 			if (task.isImpediment(impediment)) ret.add(task);
 		}
 		return ret;
@@ -368,6 +384,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	@Override
 	public boolean isEditable() {
+		if (isClosed()) return false;
 		if (isInCurrentSprint()) return false;
 		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
@@ -390,7 +407,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	private void updateTasksOrder() {
-		List<Task> tasks = getTasks();
+		List<Task> tasks = getTasksInSprint();
 		Collections.sort(tasks, getTasksOrderComparator());
 		updateTasksOrder(tasks);
 	}

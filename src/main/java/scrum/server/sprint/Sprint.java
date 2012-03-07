@@ -55,23 +55,19 @@ public class Sprint extends GSprint implements Numbered {
 	}
 
 	public void pullRequirement(Requirement requirement) {
-		for (Task task : requirement.getTasks()) {
+		requirement.setSprint(this);
+		for (Task task : requirement.getTasksInSprint()) {
 			task.reset();
 		}
-		requirement.setSprint(this);
 		moveToBottom(requirement);
 		getDaySnapshot(Date.today()).updateWithCurrentSprint();
 	}
 
 	public void kickRequirement(Requirement requirement) {
 		int burned = 0;
-		for (Task task : requirement.getTasks()) {
+		for (Task task : requirement.getTasksInSprint()) {
 			burned += task.getBurnedWork();
-			if (task.isClosed()) {
-				taskDao.deleteEntity(task);
-			} else {
-				task.reset();
-			}
+			task.reset();
 		}
 
 		requirement.setClosed(false);
@@ -105,7 +101,7 @@ public class Sprint extends GSprint implements Numbered {
 		for (Requirement requirement : requirements) {
 			releaseNotes.append("* " + (requirement.isClosed() ? "" : "(UNFINISHED) "))
 					.append(requirement.getReferenceAndLabel()).append("\n");
-			for (Task task : requirement.getTasks()) {
+			for (Task task : requirement.getTasksInSprint()) {
 				if (task.isClosed()) {
 					report.addClosedTask(task);
 				} else {
@@ -127,15 +123,13 @@ public class Sprint extends GSprint implements Numbered {
 		setIncompletedRequirementsData(SprintHistoryHelper.encodeRequirementsAndTasks(incompletedRequirements));
 
 		for (Requirement requirement : requirements) {
-			List<Task> tasks = new ArrayList<Task>(requirement.getTasks());
+			List<Task> tasks = new ArrayList<Task>(requirement.getTasksInSprint());
 			if (requirement.isClosed()) {
 				Float work = requirement.getEstimatedWork();
 				if (work != null) velocity += work;
 			} else {
 				for (Task task : tasks) {
-					if (task.isClosed()) {
-						taskDao.deleteEntity(task);
-					} else {
+					if (!task.isClosed()) {
 						task.reset();
 					}
 				}

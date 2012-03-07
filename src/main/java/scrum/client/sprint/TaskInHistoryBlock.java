@@ -20,6 +20,7 @@ import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.dnd.TrashSupport;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.tasks.TaskWidget;
 
 import com.google.gwt.user.client.ui.Image;
@@ -52,6 +53,7 @@ public class TaskInHistoryBlock extends ABlockWidget<Task> implements TrashSuppo
 
 		header.addText(task.getLabelModel());
 		header.setDragHandle(task.getReference());
+		header.addMenuAction(new ActivateChangeHistoryAction(task));
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class TaskInHistoryBlock extends ABlockWidget<Task> implements TrashSuppo
 
 	@Override
 	protected Widget onExtendedInitialization() {
-		return new TaskWidget(getObject(), false);
+		return new TaskWidget(getObject());
 	}
 
 	@Override

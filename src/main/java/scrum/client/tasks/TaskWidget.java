@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -25,8 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
+import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.impediments.Impediment;
+import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -34,22 +36,29 @@ import com.google.gwt.user.client.ui.Widget;
 public class TaskWidget extends AScrumWidget {
 
 	private Task task;
-	private boolean wideMode;
 
-	public TaskWidget(Task task, boolean wideMode) {
+	public TaskWidget(Task task) {
 		this.task = task;
-		this.wideMode = wideMode;
 	}
 
 	@Override
 	protected Widget onInitialization() {
+		boolean inCurrentSprint = task.isInCurrentSprint();
 
 		TableBuilder tb = ScrumGwt.createFieldTable();
 
-		tb.addFieldRow("Label", task.getLabelModel(), 3);
+		if (inCurrentSprint) tb.addFieldRow("Label", task.getLabelModel(), 3);
 
 		tb.addFieldRow("Description", task.getDescriptionModel(), 3);
 
+		if (inCurrentSprint) appendCurrentSprintFields(tb);
+
+		Widget comments = inCurrentSprint ? ScrumGwt.createEmoticonsAndComments(task) : new CommentsWidget(task);
+		ChangeHistoryWidget changeHistory = new ChangeHistoryWidget(task);
+		return Gwt.createFlowPanel(tb.createTable(), comments, Gwt.createSpacer(1, 10), changeHistory);
+	}
+
+	private void appendCurrentSprintFields(TableBuilder tb) {
 		tb.addField("Burned", new AIntegerViewEditWidget() {
 
 			@Override
@@ -136,8 +145,5 @@ public class TaskWidget extends AScrumWidget {
 			}
 
 		}, 3);
-
-		return wideMode ? TableBuilder.row(20, tb.createTable(), ScrumGwt.createEmoticonsAndComments(task)) : Gwt
-				.createFlowPanel(tb.createTable(), ScrumGwt.createEmoticonsAndComments(task));
 	}
 }

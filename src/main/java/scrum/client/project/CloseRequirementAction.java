@@ -34,7 +34,7 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 			tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
-			if (!requirement.getTasks().isEmpty() && !requirement.isTasksClosed())
+			if (!requirement.getTasksInSprint().isEmpty() && !requirement.isTasksClosed())
 				tb.addRemark("Requirement contains unclosed tasks.");
 		}
 	}

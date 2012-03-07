@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.project.Requirement;
 
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SprintHistorySprintWidget extends AScrumWidget {
@@ -52,18 +54,19 @@ public class SprintHistorySprintWidget extends AScrumWidget {
 		requirementList.setAutoSorter(sprint.getRequirementsOrderComparator());
 		requirementList.setObjects(requirements);
 
-		return Gwt.createFlowPanel(requirementList, new SprintWidget(sprint));
+		HTML pdfLink = ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint);
+		return Gwt.createFlowPanel(new SprintWidget(sprint), requirementList, pdfLink);
 	}
 
 	public boolean selectRequirement(Requirement r) {
 		return requirementList.showObject(r);
 	}
 
-	public void selectTask(Task task) {
+	public boolean selectTask(Task task) {
 		update();
-		RequirementInSprintBlock rBlock = (RequirementInSprintBlock) requirementList.getBlock(task.getRequirement());
+		RequirementInHistoryBlock rBlock = (RequirementInHistoryBlock) requirementList.getBlock(task.getRequirement());
 		requirementList.extendBlock(rBlock, true);
-		rBlock.selectTask(task);
+		return rBlock.selectTask(task);
 	}
 
 }

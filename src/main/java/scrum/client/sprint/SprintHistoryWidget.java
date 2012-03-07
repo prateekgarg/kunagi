@@ -50,7 +50,7 @@ public class SprintHistoryWidget extends AScrumWidget {
 		super.onUpdate();
 	}
 
-	public boolean select(Requirement requirement) {
+	private Sprint getSprint(Requirement requirement) {
 		List<Sprint> sprints = new ArrayList(getDao().getSprints());
 		Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
 		for (Sprint sprint : sprints) {
@@ -58,12 +58,26 @@ public class SprintHistoryWidget extends AScrumWidget {
 			if (report == null) {
 				continue; // TODO legacy workaround
 			}
-			if (report.containsCompletedRequirement(requirement) || report.containsRejectedRequirement(requirement)) {
-				SprintHistorySprintWidget sprintHistorySprintWidget = sprintWidgets.get(sprint);
-				return sprintHistorySprintWidget.selectRequirement(requirement);
-			}
+			if (report.containsCompletedRequirement(requirement) || report.containsRejectedRequirement(requirement))
+				return sprint;
 		}
-		return false;
+		return null;
+	}
+
+	public boolean select(Task task) {
+		Sprint sprint = getSprint(task.getRequirement());
+		if (sprint == null) return false;
+
+		SprintHistorySprintWidget sprintHistorySprintWidget = sprintWidgets.get(sprint);
+		return sprintHistorySprintWidget.selectTask(task);
+	}
+
+	public boolean select(Requirement requirement) {
+		Sprint sprint = getSprint(requirement);
+		if (sprint == null) return false;
+
+		SprintHistorySprintWidget sprintHistorySprintWidget = sprintWidgets.get(sprint);
+		return sprintHistorySprintWidget.selectRequirement(requirement);
 	}
 
 	public boolean select(Sprint sprint) {

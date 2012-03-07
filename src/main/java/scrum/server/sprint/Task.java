@@ -57,15 +57,6 @@ public class Task extends GTask implements Numbered, ReferenceSupport, LabelSupp
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
 		updateNumber();
-
-		if (!getRequirement().isInCurrentSprint()) {
-			if (getRequirement().isClosed()) {
-				getDao().deleteEntity(this);
-			} else {
-				reset();
-			}
-		}
-
 	}
 
 	public Project getProject() {

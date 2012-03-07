@@ -160,7 +160,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public List<Task> getTasks(User user) {
 		List<Task> ret = new ArrayList<Task>();
 		for (Requirement requirement : getRequirements()) {
-			for (Task task : requirement.getTasks()) {
+			for (Task task : requirement.getTasksInSprint()) {
 				if (user == null) {
 					if (!task.isOwnerSet()) {
 						ret.add(task);

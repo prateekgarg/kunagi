@@ -15,22 +15,20 @@
 package scrum.client.sprint;
 
 import ilarkesto.gwt.client.Gwt;
-import ilarkesto.gwt.client.TableBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import scrum.client.ScrumGwt;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
 import scrum.client.common.BlockListWidget;
 import scrum.client.common.BlockWidgetFactory;
 import scrum.client.img.Img;
+import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,7 +39,6 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 	private BlockListWidget<Task> taskList;
 	private RequirementWidget requirementWidget;
 	private FlowPanel right;
-	private FlexTable bodyWidget;
 	private ChangeHistoryWidget changeHistoryWidget;
 
 	public RequirementInHistoryBlock(Sprint sprint) {
@@ -65,6 +62,7 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 		header.addIconWrapper().setWidget(statusImage);
 		header.addText(requirement.getLabelModel());
 		header.addText(requirement.getThemesAsStringModel(), true, false);
+		header.addMenuAction(new ActivateChangeHistoryAction(requirement));
 
 		header.setDragHandle(requirement.getReference());
 	}
@@ -78,8 +76,8 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 		SprintReport report = sprint.getSprintReport();
 
 		List<Task> tasks = new ArrayList<Task>();
-		tasks.addAll(report.getOpenTasks());
-		tasks.addAll(report.getClosedTasks());
+		tasks.addAll(report.getOpenTasks(requirement));
+		tasks.addAll(report.getClosedTasks(requirement));
 
 		requirementWidget = new RequirementWidget(requirement, false, false, false, true, false, false, false);
 
@@ -89,20 +87,11 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
-		FlowPanel left = new FlowPanel();
-		left.add(requirementWidget);
-		left.add(taskList);
-		left.add(changeHistoryWidget);
-
-		right = new FlowPanel();
-		if (requirement.isDecidable() && requirement.getProject().isProductOwner(getCurrentUser())) {
-			right.add(RequirementWidget.createActionsPanelForCompletedRequirement(requirement));
-			right.add(Gwt.createSpacer(1, 10));
-		}
-		right.add(ScrumGwt.createEmoticonsAndComments(requirement));
-
-		bodyWidget = TableBuilder.row(20, left, right);
-		return bodyWidget;
+		FlowPanel panel = new FlowPanel();
+		panel.add(requirementWidget);
+		panel.add(taskList);
+		panel.add(changeHistoryWidget);
+		return panel;
 	}
 
 	@Override
