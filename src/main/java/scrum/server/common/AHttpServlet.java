@@ -44,7 +44,7 @@ import scrum.server.project.Project;
 
 public abstract class AHttpServlet extends HttpServlet {
 
-	protected static final int LOGIN_TOKEN_COOKIE_MAXAGE = 518400; // 6 days
+	protected static final int LOGIN_TOKEN_COOKIE_MAXAGE = 1209600; // 14 days
 
 	private static final Log log = Log.get(AHttpServlet.class);
 

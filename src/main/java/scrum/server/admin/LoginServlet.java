@@ -489,7 +489,7 @@ public class LoginServlet extends AHttpServlet {
 
 		html.startTR();
 		html.startTD();
-		html.INPUTcheckbox("keepmeloggedin", "keepmeloggedin", false);
+		html.INPUTcheckbox("keepmeloggedin", "keepmeloggedin", true);
 		html.LABEL("keepmeloggedin", "Keep me logged in");
 		html.endTD();
 		html.startTD().setAlignRight();
