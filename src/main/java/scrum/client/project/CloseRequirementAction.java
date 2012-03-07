@@ -42,7 +42,7 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 	@Override
 	public boolean isPermitted() {
 		if (!getCurrentProject().isProductOwner(getCurrentUser())) return false;
-		if (!requirement.isTasksClosed()) return false;
+		if (!requirement.getTasksInSprint().isEmpty() && !requirement.isTasksClosed()) return false;
 		return true;
 	}
 

@@ -224,7 +224,8 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		List<Task> tasks = getTasksInSprint();
 		int burned = Task.sumBurnedWork(tasks);
 		int remaining = Task.sumRemainingWork(getTasksInSprint());
-		if (remaining == 0) return "100% completed, " + burned + " hrs burned";
+		if (remaining == 0)
+			return tasks.isEmpty() ? "no tasks planned yet" : "100% completed, " + burned + " hrs burned";
 		int burnedPercent = Gwt.percent(burned + remaining, burned);
 		return burnedPercent + "% completed, " + remaining + " hrs left";
 	}
