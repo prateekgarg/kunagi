@@ -1,13 +1,13 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+ * General Public License as published by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
@@ -41,22 +41,34 @@ public class UpcomingPoTasksWidget extends AScrumWidget {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class='UpcomingTasksWidget'>");
 
-		Project project = getCurrentProject();
+		appendFixedBugs(sb);
+		appendStoriesToReview(sb);
+		appendIssueInbox(sb);
 
-		List<Issue> fixedBugs = project.getFixedBugs();
-		Collections.sort(fixedBugs, project.getIssuesOrderComparator());
-		if (!fixedBugs.isEmpty()) {
-			sb.append("Fixed bugs to review:");
+		sb.append("</div>");
+		html.setHTML(sb.toString());
+	}
+
+	private void appendIssueInbox(StringBuilder sb) {
+		Project project = getCurrentProject();
+		List<Issue> issues = project.getOpenIssues(false);
+		Collections.sort(issues, project.getIssuesOrderComparator());
+		if (!issues.isEmpty()) {
+			sb.append("New issues to classify:");
 			sb.append("<ul>");
-			for (Issue issue : fixedBugs) {
+			int count = 0;
+			for (Issue issue : issues) {
 				sb.append("<li>");
 				sb.append(issue.toHtml());
 				sb.append("</li>");
+				if (count >= 5) break;
 			}
 			sb.append("</ul>");
 		}
+	}
 
-		Sprint sprint = project.getCurrentSprint();
+	private void appendStoriesToReview(StringBuilder sb) {
+		Sprint sprint = getCurrentProject().getCurrentSprint();
 		List<Requirement> decidableRequirements = sprint.getDecidableUndecidedRequirements();
 		Collections.sort(decidableRequirements, sprint.getRequirementsOrderComparator());
 		if (!decidableRequirements.isEmpty()) {
@@ -69,8 +81,21 @@ public class UpcomingPoTasksWidget extends AScrumWidget {
 			}
 			sb.append("</ul>");
 		}
+	}
 
-		sb.append("</div>");
-		html.setHTML(sb.toString());
+	private void appendFixedBugs(StringBuilder sb) {
+		Project project = getCurrentProject();
+		List<Issue> fixedBugs = project.getFixedBugs();
+		Collections.sort(fixedBugs, project.getIssuesOrderComparator());
+		if (!fixedBugs.isEmpty()) {
+			sb.append("Fixed bugs to review:");
+			sb.append("<ul>");
+			for (Issue issue : fixedBugs) {
+				sb.append("<li>");
+				sb.append(issue.toHtml());
+				sb.append("</li>");
+			}
+			sb.append("</ul>");
+		}
 	}
 }
