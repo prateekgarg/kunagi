@@ -606,6 +606,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("The Team member working on the Task.");
 			taskModel.addReference("impediment", getImpedimentModel()).setEditablePredicate("editable")
 					.setTooltip("Blocked by Impediment.");
+			taskModel.addReference("closedInPastSprint", getSprintModel()).setBackReferenceName("closedTasksInPast");
 			getApplicationModel().addCreateAction(taskModel);
 			taskModel.addAction("DeleteTask");
 			taskModel.addAction("ClaimTask");

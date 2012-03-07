@@ -38,16 +38,6 @@ public class Sprint extends GSprint implements Numbered {
 
 	private static final Log log = Log.get(Sprint.class);
 
-	// --- dependencies ---
-
-	private static TaskDao taskDao;
-
-	public static void setTaskDao(TaskDao taskDao) {
-		Sprint.taskDao = taskDao;
-	}
-
-	// --- ---
-
 	public Release getNextRelease() {
 		List<Release> releases = new ArrayList<Release>(getReleases());
 		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
@@ -129,7 +119,9 @@ public class Sprint extends GSprint implements Numbered {
 				if (work != null) velocity += work;
 			} else {
 				for (Task task : tasks) {
-					if (!task.isClosed()) {
+					if (task.isClosed()) {
+						task.setClosedInPastSprint(this);
+					} else {
 						task.reset();
 					}
 				}

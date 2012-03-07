@@ -44,6 +44,7 @@ public abstract class GTask
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
         properties.put("impedimentId", this.impedimentId);
+        properties.put("closedInPastSprintId", this.closedInPastSprintId);
     }
 
     public int compareTo(Task other) {
@@ -388,6 +389,58 @@ public abstract class GTask
         setImpediment(value == null ? null : (scrum.server.impediments.Impediment)impedimentDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - closedInPastSprint
+    // -----------------------------------------------------------
+
+    private String closedInPastSprintId;
+    private transient scrum.server.sprint.Sprint closedInPastSprintCache;
+
+    private void updateClosedInPastSprintCache() {
+        closedInPastSprintCache = this.closedInPastSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.closedInPastSprintId);
+    }
+
+    public final String getClosedInPastSprintId() {
+        return this.closedInPastSprintId;
+    }
+
+    public final scrum.server.sprint.Sprint getClosedInPastSprint() {
+        if (closedInPastSprintCache == null) updateClosedInPastSprintCache();
+        return closedInPastSprintCache;
+    }
+
+    public final void setClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        closedInPastSprint = prepareClosedInPastSprint(closedInPastSprint);
+        if (isClosedInPastSprint(closedInPastSprint)) return;
+        this.closedInPastSprintId = closedInPastSprint == null ? null : closedInPastSprint.getId();
+        closedInPastSprintCache = closedInPastSprint;
+        updateLastModified();
+        fireModified("closedInPastSprint="+closedInPastSprint);
+    }
+
+    protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        return closedInPastSprint;
+    }
+
+    protected void repairDeadClosedInPastSprintReference(String entityId) {
+        if (this.closedInPastSprintId == null || entityId.equals(this.closedInPastSprintId)) {
+            setClosedInPastSprint(null);
+        }
+    }
+
+    public final boolean isClosedInPastSprintSet() {
+        return this.closedInPastSprintId != null;
+    }
+
+    public final boolean isClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        if (this.closedInPastSprintId == null && closedInPastSprint == null) return true;
+        return closedInPastSprint != null && closedInPastSprint.getId().equals(this.closedInPastSprintId);
+    }
+
+    protected final void updateClosedInPastSprint(Object value) {
+        setClosedInPastSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -401,6 +454,7 @@ public abstract class GTask
             if (property.equals("burnedWork")) updateBurnedWork(value);
             if (property.equals("ownerId")) updateOwner(value);
             if (property.equals("impedimentId")) updateImpediment(value);
+            if (property.equals("closedInPastSprintId")) updateClosedInPastSprint(value);
         }
     }
 
@@ -409,6 +463,7 @@ public abstract class GTask
         repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);
         repairDeadImpedimentReference(entityId);
+        repairDeadClosedInPastSprintReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -437,6 +492,12 @@ public abstract class GTask
             LOG.info("Repairing dead impediment reference");
             repairDeadImpedimentReference(this.impedimentId);
         }
+        try {
+            getClosedInPastSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead closedInPastSprint reference");
+            repairDeadClosedInPastSprintReference(this.closedInPastSprintId);
+        }
     }
 
 
@@ -454,6 +515,12 @@ public abstract class GTask
 
     public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
         GTask.impedimentDao = impedimentDao;
+    }
+
+    static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GTask.sprintDao = sprintDao;
     }
 
     static scrum.server.sprint.TaskDao taskDao;

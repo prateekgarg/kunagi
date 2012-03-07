@@ -442,6 +442,31 @@ public abstract class GTask
         return equals(this.impedimentId, impediment);
     }
 
+    // --- closedInPastSprint ---
+
+    private String closedInPastSprintId;
+
+    public final scrum.client.sprint.Sprint getClosedInPastSprint() {
+        if (closedInPastSprintId == null) return null;
+        return getDao().getSprint(this.closedInPastSprintId);
+    }
+
+    public final boolean isClosedInPastSprintSet() {
+        return closedInPastSprintId != null;
+    }
+
+    public final Task setClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
+        String id = closedInPastSprint == null ? null : closedInPastSprint.getId();
+        if (equals(this.closedInPastSprintId, id)) return (Task) this;
+        this.closedInPastSprintId = id;
+        propertyChanged("closedInPastSprintId", this.closedInPastSprintId);
+        return (Task)this;
+    }
+
+    public final boolean isClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
+        return equals(this.closedInPastSprintId, closedInPastSprint);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -453,6 +478,7 @@ public abstract class GTask
         burnedWork  = (Integer) props.get("burnedWork");
         ownerId = (String) props.get("ownerId");
         impedimentId = (String) props.get("impedimentId");
+        closedInPastSprintId = (String) props.get("closedInPastSprintId");
         updateLocalModificationTime();
     }
 
@@ -467,6 +493,7 @@ public abstract class GTask
         properties.put("burnedWork", this.burnedWork);
         properties.put("ownerId", this.ownerId);
         properties.put("impedimentId", this.impedimentId);
+        properties.put("closedInPastSprintId", this.closedInPastSprintId);
     }
 
     public final java.util.List<scrum.client.sprint.SprintReport> getSprintReports() {

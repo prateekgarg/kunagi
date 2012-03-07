@@ -58,6 +58,8 @@ public abstract class GTaskDao
         ownersCache = null;
         tasksByImpedimentCache.clear();
         impedimentsCache = null;
+        tasksByClosedInPastSprintCache.clear();
+        closedInPastSprintsCache = null;
     }
 
     @Override
@@ -396,6 +398,46 @@ public abstract class GTaskDao
 
     }
 
+    // -----------------------------------------------------------
+    // - closedInPastSprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Task>> tasksByClosedInPastSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Task>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Task>>() {
+                public Set<Task> create(scrum.server.sprint.Sprint closedInPastSprint) {
+                    return getEntities(new IsClosedInPastSprint(closedInPastSprint));
+                }
+            });
+
+    public final Set<Task> getTasksByClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        return new HashSet<Task>(tasksByClosedInPastSprintCache.get(closedInPastSprint));
+    }
+    private Set<scrum.server.sprint.Sprint> closedInPastSprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getClosedInPastSprints() {
+        if (closedInPastSprintsCache == null) {
+            closedInPastSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Task e : getEntities()) {
+                if (e.isClosedInPastSprintSet()) closedInPastSprintsCache.add(e.getClosedInPastSprint());
+            }
+        }
+        return closedInPastSprintsCache;
+    }
+
+    private static class IsClosedInPastSprint implements Predicate<Task> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsClosedInPastSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Task e) {
+            return e.isClosedInPastSprint(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -421,6 +463,12 @@ public abstract class GTaskDao
 
     public void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
         this.impedimentDao = impedimentDao;
+    }
+
+    scrum.server.sprint.SprintDao sprintDao;
+
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
     }
 
 }

@@ -50,7 +50,7 @@ public class Requirement extends GRequirement implements Numbered, ReferenceSupp
 		Iterator<Task> iterator = tasks.iterator();
 		while (iterator.hasNext()) {
 			Task task = iterator.next();
-			if (!task.isSprint(sprint)) iterator.remove();
+			if (task.isClosedInPastSprintSet() || !task.isSprint(sprint)) iterator.remove();
 		}
 		return tasks;
 	}

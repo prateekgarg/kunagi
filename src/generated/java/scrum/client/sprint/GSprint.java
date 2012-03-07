@@ -922,6 +922,10 @@ public abstract class GSprint
         return getDao().getRequirementsBySprint((Sprint)this);
     }
 
+    public final java.util.List<scrum.client.sprint.Task> getClosedTasksInPasts() {
+        return getDao().getTasksByClosedInPastSprint((Sprint)this);
+    }
+
 
     public final scrum.client.sprint.SprintReport getSprintReport() {
         return getDao().getSprintReportBySprint((Sprint)this);

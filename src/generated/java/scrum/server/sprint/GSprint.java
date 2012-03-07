@@ -74,6 +74,10 @@ public abstract class GSprint
         return requirementDao.getRequirementsBySprint((Sprint)this);
     }
 
+    public final java.util.Set<scrum.server.sprint.Task> getClosedTasksInPasts() {
+        return taskDao.getTasksByClosedInPastSprint((Sprint)this);
+    }
+
     public final java.util.Set<scrum.server.sprint.SprintDaySnapshot> getSprintDaySnapshots() {
         return sprintDaySnapshotDao.getSprintDaySnapshotsBySprint((Sprint)this);
     }
@@ -1019,6 +1023,12 @@ public abstract class GSprint
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GSprint.requirementDao = requirementDao;
+    }
+
+    static scrum.server.sprint.TaskDao taskDao;
+
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
+        GSprint.taskDao = taskDao;
     }
 
     static scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;

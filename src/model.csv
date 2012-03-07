@@ -478,6 +478,7 @@
 "c56d57dc-0929-4561-a885-ee5a313449f3","e9943ab9-bcf0-4da6-b376-833387fe03ce","ReferenceProperty","requirement"
 "4be2673f-f1ec-427b-a988-caeb0ee5af41","e9943ab9-bcf0-4da6-b376-833387fe03ce","TextProperty","description"
 "788bcd80-d657-4d4a-9c7b-7347c59b9140","e9943ab9-bcf0-4da6-b376-833387fe03ce","TextProperty","label"
+"cccfa2af-83b4-45a0-8daf-b71bfdc150a5","e9943ab9-bcf0-4da6-b376-833387fe03ce","ReferenceProperty","closedInPastSprint"
 "b2767677-68f3-4ee6-9ac8-1f67926b1a6a","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","KickStoryFromSprint"
 "68378b15-49ac-4d71-b485-b7c8c52eda25","b2767677-68f3-4ee6-9ac8-1f67926b1a6a","Parameter","storyId"
 "97bd287f-d10a-412e-94ae-71522b67b6eb","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","PullStoryToSprint"

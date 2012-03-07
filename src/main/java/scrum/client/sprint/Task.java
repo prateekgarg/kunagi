@@ -203,6 +203,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	@Override
 	public boolean isEditable() {
+		if (getClosedInPastSprint() != null) return false;
 		if (!isInCurrentSprint()) return false;
 		if (!getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;

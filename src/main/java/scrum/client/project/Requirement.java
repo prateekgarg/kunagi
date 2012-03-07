@@ -122,7 +122,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		Iterator<Task> iterator = tasks.iterator();
 		while (iterator.hasNext()) {
 			Task task = iterator.next();
-			if (!sprint.equals(task.getSprint())) iterator.remove();
+			if (task.getClosedInPastSprint() != null || !sprint.equals(task.getSprint())) iterator.remove();
 		}
 		return tasks;
 	}
