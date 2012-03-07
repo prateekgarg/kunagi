@@ -23,6 +23,7 @@ import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.In;
 import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
@@ -64,6 +65,7 @@ import scrum.server.release.Release;
 import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintReportDao;
 import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
@@ -81,6 +83,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
 	private transient ChangeDao changeDao;
+
+	@In
+	private transient SprintReportDao sprintReportDao;
 
 	public void setReleaseDao(ReleaseDao releaseDao) {
 		this.releaseDao = releaseDao;
@@ -610,11 +615,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.sendToClient(project);
 		conversation.sendToClient(project.getSprints());
+		conversation.sendToClient(sprintReportDao.getSprintReportsByProject(project));
 		conversation.sendToClient(project.getParticipants());
 		Set<Requirement> requirements = project.getRequirements();
 		conversation.sendToClient(requirements);
 		for (Requirement requirement : requirements) {
 			conversation.sendToClient(requirement.getEstimationVotes());
+			conversation.sendToClient(requirement.getTasks());
 		}
 		conversation.sendToClient(project.getQualitys());
 		conversation.sendToClient(project.getTasks());

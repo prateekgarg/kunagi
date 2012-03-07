@@ -889,6 +889,7 @@ public class Project extends GProject {
 	}
 
 	public void addTestSprints() {
+		sprintDao.createTestHistorySprint(this, Date.beforeDays(45), Date.beforeDays(15));
 		sprintDao.createTestSprint(this);
 	}
 

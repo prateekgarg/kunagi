@@ -94,8 +94,10 @@ public class SprintWidget extends AScrumWidget {
 			tb.nextRow();
 		} else {
 			// completed
-			tb.addFieldRow("Completed Stories", new RichtextEditorWidget(getSprint()
-					.getCompletedRequirementLabelsModel()), cols - 1);
+			if (sprint.getSprintReport() == null) {
+				tb.addFieldRow("Completed Stories", new RichtextEditorWidget(getSprint()
+						.getCompletedRequirementLabelsModel()), cols - 1);
+			}
 		}
 
 		tb.addFieldRow("Planning Note", new RichtextEditorWidget(sprint.getPlanningNoteModel()), cols - 1);

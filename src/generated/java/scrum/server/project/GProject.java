@@ -177,7 +177,7 @@ public abstract class GProject
         return label;
     }
 
-    public final void setLabel(java.lang.String label) {
+	public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
         if (label != null && getDao().getProjectByLabel(label) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "label", label);

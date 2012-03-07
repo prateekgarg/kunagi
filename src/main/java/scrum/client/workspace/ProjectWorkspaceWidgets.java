@@ -273,6 +273,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	public void showEntity(AGwtEntity entity) {
+		AWidget widget = getWidgetForEntity(entity);
+
 		log.debug("Showing entity:", entity);
 		if (entity instanceof Task) {
 			showTask((Task) entity);
@@ -320,40 +322,52 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	public String getPageForEntity(AGwtEntity entity) {
+		return Page.getPageName(getWidgetForEntity(entity));
+	}
+
+	public AWidget getWidgetForEntity(AGwtEntity entity) {
 		// TODO only for subjects and entities with comments
-		if (getWorkarea().isShowing(forum)) return Page.getPageName(forum);
+		if (getWorkarea().isShowing(forum)) return forum;
 
 		if (entity instanceof Task) {
-			if (getWorkarea().isShowing(sprintBacklog)) return Page.getPageName(sprintBacklog);
-			return Page.getPageName(whiteboard);
+			if (getWorkarea().isShowing(sprintBacklog)) return sprintBacklog;
+			return whiteboard;
 		}
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
+			if (requirement.isClosed()) return sprintHistory;
+
+			if (getWorkarea().isShowing(sprintHistory)) {
+				// FIXME multiple requirements on same page
+				boolean existsInHistory = !dao.getSprintReportsByRejectedRequirement(requirement).isEmpty();
+				if (existsInHistory) return sprintHistory;
+			}
+
 			boolean inCurrentSprint = requirement.isInCurrentSprint();
 			if (inCurrentSprint) {
-				if (getWorkarea().isShowing(sprintBacklog)) return Page.getPageName(sprintBacklog);
-				return Page.getPageName(whiteboard);
+				if (getWorkarea().isShowing(sprintBacklog)) return sprintBacklog;
+				return whiteboard;
 			}
-			return Page.getPageName(productBacklog);
+			return productBacklog;
 		}
 		if (entity instanceof Sprint) {
 			Sprint sprint = (Sprint) entity;
-			if (sprint.isCurrent()) return Page.getPageName(whiteboard);
-			return Page.getPageName(sprintHistory);
+			if (sprint.isCurrent()) return whiteboard;
+			return sprintHistory;
 		}
-		if (entity instanceof Issue) return Page.getPageName(issueList);
-		if (entity instanceof Risk) return Page.getPageName(riskList);
-		if (entity instanceof Quality) return Page.getPageName(qualityBacklog);
-		if (entity instanceof Subject) return Page.getPageName(forum);
-		if (entity instanceof Impediment) return Page.getPageName(impedimentList);
-		if (entity instanceof File) return Page.getPageName(fileRepository);
-		if (entity instanceof Wikipage) return Page.getPageName(wiki);
-		if (entity instanceof SimpleEvent) return Page.getPageName(calendar);
-		if (entity instanceof Project) return Page.getPageName(dashboard);
-		if (entity instanceof ProjectEvent) return Page.getPageName(projectEventList);
-		if (entity instanceof Release) return Page.getPageName(releaseList);
-		if (entity instanceof BlogEntry) return Page.getPageName(blog);
-		if (entity instanceof User) return Page.getPageName(userList);
+		if (entity instanceof Issue) return issueList;
+		if (entity instanceof Risk) return riskList;
+		if (entity instanceof Quality) return qualityBacklog;
+		if (entity instanceof Subject) return forum;
+		if (entity instanceof Impediment) return impedimentList;
+		if (entity instanceof File) return fileRepository;
+		if (entity instanceof Wikipage) return wiki;
+		if (entity instanceof SimpleEvent) return calendar;
+		if (entity instanceof Project) return dashboard;
+		if (entity instanceof ProjectEvent) return projectEventList;
+		if (entity instanceof Release) return releaseList;
+		if (entity instanceof BlogEntry) return blog;
+		if (entity instanceof User) return userList;
 		return null;
 	}
 
@@ -398,6 +412,11 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		sprintHistory.select(sprint);
 	}
 
+	private void showSprintHistory(Requirement requirement) {
+		select(sprintHistory);
+		sprintHistory.select(requirement);
+	}
+
 	private void showIssue(Issue issue) {
 		select(issueList);
 		issueList.select(issue);
@@ -432,17 +451,19 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 	}
 
 	private void showRequirement(Requirement requirement) {
-		boolean inCurrentSprint = requirement.isInCurrentSprint();
-		if (inCurrentSprint) {
-			if (getWorkarea().isShowing(productBacklog)) {
-				showProductBacklog(requirement);
-			} else if (getWorkarea().isShowing(whiteboard)) {
-				showWhiteboard(requirement);
-			} else {
-				showSprintBacklog(requirement);
-			}
-		} else {
+		// TODO generalize
+
+		AWidget widget = getWidgetForEntity(requirement);
+		if (widget == sprintHistory) {
+			showSprintHistory(requirement);
+		} else if (widget == whiteboard) {
+			showWhiteboard(requirement);
+		} else if (widget == sprintBacklog) {
+			showSprintBacklog(requirement);
+		} else if (widget == productBacklog) {
 			showProductBacklog(requirement);
+		} else {
+			throw new IllegalStateException("Unknown widget: " + widget.getClass().getName());
 		}
 	}
 

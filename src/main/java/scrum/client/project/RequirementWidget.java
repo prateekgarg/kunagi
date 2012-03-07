@@ -49,6 +49,7 @@ public class RequirementWidget extends AScrumWidget {
 
 	private boolean decidableOnInitialization;
 
+	// FIXME remove showComments
 	public RequirementWidget(Requirement requirement, boolean showLabel, boolean showSprint, boolean showTaskWork,
 			boolean showComments, boolean planningPoker, boolean showChangeHistory, boolean acceptReject) {
 		this.requirement = requirement;

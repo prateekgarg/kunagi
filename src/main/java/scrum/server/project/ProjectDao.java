@@ -58,7 +58,7 @@ public class ProjectDao extends GProjectDao {
 		Project project = getProjectByLabel(label);
 		while (project != null) {
 			count++;
-			label = label + " " + count;
+			label = labelPrefix + " " + count;
 			project = getProjectByLabel(label);
 		}
 		return label;

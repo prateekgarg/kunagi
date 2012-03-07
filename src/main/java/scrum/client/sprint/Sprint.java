@@ -234,7 +234,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	@Override
 	public String toString() {
-		return getReference() + " " + getLabel();
+		return getReferenceAndLabel();
 	}
 
 	@Override
@@ -455,5 +455,9 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 			}
 		};
 		return completedRequirementLabelsModel;
+	}
+
+	public String getReferenceAndLabel() {
+		return getReference() + " " + getLabel();
 	}
 }
