@@ -15,6 +15,7 @@
 package scrum.client.calendar;
 
 import ilarkesto.core.time.Date;
+import ilarkesto.core.time.Weekday;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 
@@ -60,10 +61,9 @@ public class DaySelectorListWidget extends AScrumWidget {
 		tb.add(Gwt.createDiv("DateSelectorWidget-weeknumber", "" + month.get(0).getWeek()));
 		count++;
 
-		int weekday = month.get(0).getWeekday().getDayOfWeek();
-		if (weekday == 0) weekday = 7;
+		Weekday weekday = month.get(0).getWeekday();
 
-		for (int i = 1; i < weekday; i++) {
+		for (int i = 1; i < weekday.getDayOfWeek() - 1; i++) {
 			count++;
 			tb.add(Gwt.createDiv("DateSelectorWidget-spacer", ""));
 		}

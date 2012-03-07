@@ -82,9 +82,12 @@ public class CalendarWidget extends AScrumWidget {
 		monthSelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
 		daySelector.setSelectedDate(date);
 		daySelector.setVisibleRange(dayList.getBegin(), dayList.getEnd());
+		update();
 	}
 
 	public void showEvent(SimpleEvent event) {
+		if (event == null) return;
+		showDate(event.getDate());
 		dayList.showEvent(event);
 	}
 
