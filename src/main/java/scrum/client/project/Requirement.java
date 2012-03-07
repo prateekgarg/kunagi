@@ -26,9 +26,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
@@ -72,6 +74,26 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public boolean isBlocked() {
+		return getImpediment() != null;
+	}
+
+	public Impediment getImpediment() {
+		Set<Impediment> impediments = new HashSet<Impediment>();
+		for (Task task : getTasksInSprint()) {
+			if (task.isBlocked()) return task.getImpediment();
+		}
+		return null;
+	}
+
+	public Set<Impediment> getImpediments() {
+		Set<Impediment> impediments = new HashSet<Impediment>();
+		for (Task task : getTasksInSprint()) {
+			if (task.isBlocked()) impediments.add(task.getImpediment());
+		}
+		return impediments;
 	}
 
 	public void addTheme(String theme) {

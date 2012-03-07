@@ -95,6 +95,9 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		} else if (requirement.isTasksClosed()) {
 			statusImage = Img.bundle.reqTasksClosed().createImage();
 			statusImage.setTitle("All tasks done.");
+		} else if (requirement.isBlocked()) {
+			statusImage = Img.bundle.tskBlocked().createImage();
+			statusImage.setTitle("Blocked by " + requirement.getImpediment().getReferenceAndLabel() + ".");
 		}
 		statusIcon.setWidget(statusImage);
 	}
