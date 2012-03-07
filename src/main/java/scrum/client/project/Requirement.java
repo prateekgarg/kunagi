@@ -52,9 +52,10 @@ import com.google.gwt.user.client.ui.Widget;
 public class Requirement extends GRequirement implements ReferenceSupport, LabelSupport, ForumSupport, ThemesContainer {
 
 	public static final String REFERENCE_PREFIX = "sto";
-	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0.5", "1", "2", "3", "5", "8", "13", "20",
+	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0", "0.5", "1", "2", "3", "5", "8", "13", "20",
 			"40", "100" };
-	public static Float[] WORK_ESTIMATION_FLOAT_VALUES = new Float[] { 0.5f, 1f, 2f, 3f, 5f, 8f, 13f, 20f, 40f, 100f };
+	public static Float[] WORK_ESTIMATION_FLOAT_VALUES = new Float[] { 0.5f, 0f, 1f, 2f, 3f, 5f, 8f, 13f, 20f, 40f,
+			100f };
 
 	private transient EstimationBar estimationBar;
 	private transient AFieldModel<String> taskStatusLabelModel;

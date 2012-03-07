@@ -58,7 +58,8 @@ public class ScrumGwt extends Gwt {
 
 	public static String getEstimationAsString(Float estimation) {
 		if (estimation == null) return null;
-		if (estimation <= 0.0f) return "?";
+		if (estimation < 0.0f) return "?";
+		if (estimation == 0f) return "0";
 		if (estimation <= 0.5f) return estimation.toString();
 		return String.valueOf(estimation.intValue());
 	}

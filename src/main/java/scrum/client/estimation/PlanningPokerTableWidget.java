@@ -234,6 +234,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		public void onClick(ClickEvent event) {
 			if (estimation >= 0) {
 				requirement.setEstimatedWork(estimation);
+				requirement.deactivateWorkEstimationVoting();
 				new VisibleDataChangedEvent().fireInCurrentScope();
 			}
 		}
