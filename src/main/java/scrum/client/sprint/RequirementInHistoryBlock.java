@@ -16,6 +16,10 @@ package scrum.client.sprint;
 
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import scrum.client.ScrumGwt;
 import scrum.client.common.ABlockWidget;
 import scrum.client.common.BlockHeaderWidget;
@@ -71,10 +75,18 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 	@Override
 	protected Widget onExtendedInitialization() {
 		Requirement requirement = getObject();
+		SprintReport report = sprint.getSprintReport();
+
+		List<Task> tasks = new ArrayList<Task>();
+		tasks.addAll(report.getOpenTasks());
+		tasks.addAll(report.getClosedTasks());
 
 		requirementWidget = new RequirementWidget(requirement, false, false, false, true, false, false, false);
-		taskList = new BlockListWidget<Task>(TaskInRequirementBlock.FACTORY);
+
+		taskList = new BlockListWidget<Task>(TaskInHistoryBlock.createFactory(sprint));
 		taskList.setAutoSorter(sprint.getTasksOrderComparator());
+		taskList.setObjects(tasks);
+
 		changeHistoryWidget = new ChangeHistoryWidget(requirement);
 
 		FlowPanel left = new FlowPanel();
@@ -96,14 +108,13 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 	@Override
 	protected void onUpdateBody() {
 		requirementWidget.update();
-		taskList.setObjects(getObject().getTasks());
 		taskList.update();
 		Gwt.update(right);
 		changeHistoryWidget.update();
 	}
 
-	public void selectTask(Task task) {
-		taskList.showObject(task);
+	public boolean selectTask(Task task) {
+		return taskList.showObject(task);
 	}
 
 	public static BlockWidgetFactory<Requirement> createFactory(final Sprint sprint) {

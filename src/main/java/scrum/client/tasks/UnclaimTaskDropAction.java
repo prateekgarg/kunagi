@@ -33,13 +33,12 @@ public class UnclaimTaskDropAction implements BlockListDropAction<Task> {
 	@Override
 	public boolean isDroppable(Task task) {
 		if (!task.getProject().isTeamMember(Scope.get().getComponent(User.class))) return false;
+		if (!task.getRequirement().equals(this.requirement)) return false;
 		return true;
 	}
 
 	@Override
 	public boolean onDrop(Task task) {
-		Requirement requirement = task.getRequirement();
-		task.setRequirement(this.requirement);
 		task.setUnOwned();
 		new VisibleDataChangedEvent().fireInCurrentScope();
 		Scope.get().getComponent(scrum.client.undo.Undo.class).getManager().add(new Undo(task, requirement));

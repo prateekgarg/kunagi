@@ -34,13 +34,12 @@ public class CloseTaskDropAction implements BlockListDropAction<Task> {
 	@Override
 	public boolean isDroppable(Task task) {
 		if (!task.getProject().isTeamMember(Scope.get().getComponent(User.class))) return false;
+		if (!task.getRequirement().equals(this.requirement)) return false;
 		return true;
 	}
 
 	@Override
 	public boolean onDrop(Task task) {
-		Requirement requirement = task.getRequirement();
-		task.setRequirement(this.requirement);
 		if (!task.isClosed()) task.setDone(Scope.get().getComponent(Auth.class).getUser());
 		Scope.get().getComponent(scrum.client.undo.Undo.class).getManager().add(new Undo(task, requirement));
 		return true;
