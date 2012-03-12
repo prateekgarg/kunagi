@@ -30,6 +30,7 @@ import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 import scrum.server.common.SpamChecker;
+import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
@@ -96,10 +97,12 @@ public class IssueServlet extends AHttpServlet {
 		}
 		String issuer = issue.getIssuer();
 		if (Str.isBlank(issuer)) issuer = "anonymous";
-		projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(), issue);
+		ProjectEvent event = projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(),
+			issue);
 		transactionService.commit();
 
 		app.sendToConversationsByProject(project, issue);
+		app.sendToConversationsByProject(project, event);
 
 		String issueLink = publish ? "<a href=\"" + issue.getReference() + ".html\">" + issue.getReference() + "</a>"
 				: "<code>" + issue.getReference() + "</code>";

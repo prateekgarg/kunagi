@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+#header("rel", "$release.label - Kunagi", "Kunagi release $release.label", "Kunagi, release")
+
+<div class="section">
+    
+    <h2>
+      #if( $release.major ) Major #end
+      #if( $release.bugfix ) Bugfix #end
+      Release $release.label
+    </h2>
+    
+    #if ( $release.releaseDate )
+      <div class="middle">
+        <p>
+          #if ( $release.released ) Published on #else Planned for #end
+          $release.releaseDate
+        </p>
+      </div>
+      <div class="sidebar">
+          <div class="starter">
+              <a href="http://sourceforge.net/projects/kunagi/files/$release.label" target="_blank">Download</a>
+          </div>
+      </div>
+      <div class="clear"></div>
+    #end
+
+    
+    #if( $release.releaseNotes )
+      <p>$release.releaseNotes</p>
+    #end
+        
+</div>
+
+#commentsSection($release)
+
+#footer()

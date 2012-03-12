@@ -306,11 +306,36 @@ public class HomepageUpdater {
 		context.put("label", toHtml(release.getLabel()));
 		context.put("note", wikiToHtml(release.getNote()));
 		context.put("releaseNotes", wikiToHtml(release.getReleaseNotes()));
-		context.put("releaseDate", release.getReleaseDate());
+		context.put("releaseDate", release.getReleaseDate().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
 		context.put("released", release.isReleased());
 		context.put("major", release.isMajor());
 		context.put("bugfix", release.isBugfix());
+
+		for (Sprint sprint : release.getSprints()) {
+			fillSprint(context.addSubContext("sprints"), sprint);
+		}
+
+		for (Issue issue : release.getAffectedIssues()) {
+			fillIssue(context.addSubContext("affectedByIssues"), issue);
+		}
+
+		for (Issue issue : release.getFixIssues()) {
+			if (issue.isFixed() || issue.isClosed()) {
+				fillIssue(context.addSubContext("fixedIssues"), issue);
+			} else {
+				fillIssue(context.addSubContext("plannedIssues"), issue);
+			}
+		}
+
 		fillComments(context, release);
+	}
+
+	private void fillSprint(ContextBuilder context, Sprint sprint) {
+		context.put("id", sprint.getId());
+		context.put("reference", sprint.getReference());
+		context.put("label", toHtml(sprint.getLabel()));
+		context.put("goal", wikiToHtml(sprint.getGoal()));
+		fillComments(context, sprint);
 	}
 
 	private void fillBlog(ContextBuilder context) {
