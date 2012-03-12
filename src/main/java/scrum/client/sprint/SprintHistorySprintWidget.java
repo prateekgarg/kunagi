@@ -14,11 +14,10 @@
  */
 package scrum.client.sprint;
 
+import ilarkesto.core.base.ChangeIndicator;
 import ilarkesto.gwt.client.Gwt;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
@@ -32,6 +31,7 @@ public class SprintHistorySprintWidget extends AScrumWidget {
 
 	private Sprint sprint;
 	private BlockListWidget<Requirement> requirementList;
+	private ChangeIndicator changeIndicator = new ChangeIndicator();
 
 	public SprintHistorySprintWidget(Sprint sprint) {
 		super();
@@ -40,22 +40,23 @@ public class SprintHistorySprintWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		SprintReport report = sprint.getSprintReport();
-
-		List<Requirement> requirements = new ArrayList<Requirement>();
-
-		if (report != null) {
-			requirements.addAll(report.getCompletedRequirements());
-			requirements.addAll(report.getRejectedRequirements());
-			Collections.sort(requirements, sprint.getRequirementsOrderComparator());
-		}
-
 		requirementList = new BlockListWidget<Requirement>(RequirementInHistoryBlock.createFactory(sprint));
 		requirementList.setAutoSorter(sprint.getRequirementsOrderComparator());
-		requirementList.setObjects(requirements);
 
 		HTML pdfLink = ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint);
 		return Gwt.createFlowPanel(new SprintWidget(sprint), requirementList, pdfLink);
+	}
+
+	@Override
+	protected void onUpdate() {
+		SprintReport report = sprint.getSprintReport();
+		if (report != null) {
+			Set<Requirement> allRequirements = report.getAllRequirements();
+			if (changeIndicator.update(allRequirements)) {
+				requirementList.setObjects(allRequirements);
+			}
+		}
+		super.onUpdate();
 	}
 
 	public boolean selectRequirement(Requirement r) {

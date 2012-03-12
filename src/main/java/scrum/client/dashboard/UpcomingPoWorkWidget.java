@@ -26,7 +26,7 @@ import scrum.client.sprint.Sprint;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UpcomingPoTasksWidget extends AScrumWidget {
+public class UpcomingPoWorkWidget extends AScrumWidget {
 
 	private HTML html;
 
@@ -61,7 +61,7 @@ public class UpcomingPoTasksWidget extends AScrumWidget {
 				sb.append("<li>");
 				sb.append(issue.toHtml());
 				sb.append("</li>");
-				if (count >= 5) break;
+				if (count++ >= 5) break;
 			}
 			sb.append("</ul>");
 		}

@@ -74,6 +74,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onPullStoryToSprint(GwtConversation conversation, String storyId);
 
+    public abstract void onRequestHistory(GwtConversation conversation);
+
     public abstract void onSwitchToNextSprint(GwtConversation conversation);
 
     @Override
@@ -988,6 +990,33 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "PullStoryToSprint", ex);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    @Override
+    public scrum.client.DataTransferObject requestHistory(int conversationNumber) {
+        log.debug("Handling service call: RequestHistory");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = null;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestHistory");
+            context.bindCurrentThread();
+            try {
+                onRequestHistory(conversation);
+                onServiceMethodExecuted(context);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestHistory", ex);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

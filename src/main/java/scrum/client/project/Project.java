@@ -145,8 +145,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public String getVelocitiesFromLastSprints() {
 		StringBuilder sb = new StringBuilder();
-		List<Sprint> sprints = getCompletedSprints();
-		Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
+		List<Sprint> sprints = getCompletedSprintsInOrder();
 		float sum = 0;
 		int count = 0;
 		for (Sprint sprint : sprints) {
@@ -185,12 +184,16 @@ public class Project extends GProject implements ForumSupport {
 		return latest;
 	}
 
-	public List<Sprint> getCompletedSprints() {
-		List<Sprint> ret = new ArrayList<Sprint>();
+	public Set<Sprint> getCompletedSprints() {
+		Set<Sprint> ret = new HashSet<Sprint>();
 		for (Sprint sprint : getSprints()) {
 			if (sprint.isCompleted()) ret.add(sprint);
 		}
 		return ret;
+	}
+
+	public List<Sprint> getCompletedSprintsInOrder() {
+		return Utl.sort(getCompletedSprints(), Sprint.END_DATE_COMPARATOR);
 	}
 
 	public List<ProjectEvent> getLatestProjectEvents(int min) {

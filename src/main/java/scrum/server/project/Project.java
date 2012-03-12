@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +55,8 @@ import scrum.server.release.Release;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDaySnapshot;
+import scrum.server.sprint.SprintReport;
+import scrum.server.sprint.SprintReportDao;
 import scrum.server.sprint.Task;
 import scrum.server.sprint.TaskDao;
 
@@ -66,10 +69,15 @@ public class Project extends GProject {
 
 	// --- dependencies ---
 
-	private static ProjectSprintSnapshotDao projectSprintSnapshotDao;
-	private static TaskDao taskDao;
-	private static KunagiRootConfig config;
-	private static CommentDao commentDao;
+	private static transient ProjectSprintSnapshotDao projectSprintSnapshotDao;
+	private static transient TaskDao taskDao;
+	private static transient KunagiRootConfig config;
+	private static transient CommentDao commentDao;
+	private static transient SprintReportDao sprintReportDao;
+
+	public static void setSprintReportDao(SprintReportDao sprintReportDao) {
+		Project.sprintReportDao = sprintReportDao;
+	}
 
 	public static void setCommentDao(CommentDao commentDao) {
 		Project.commentDao = commentDao;
@@ -88,6 +96,20 @@ public class Project extends GProject {
 	}
 
 	// --- ---
+
+	public Set<Requirement> getProductBacklogRequirements() {
+		Set<Requirement> requirements = getRequirements();
+		Iterator<Requirement> iterator = requirements.iterator();
+		while (iterator.hasNext()) {
+			Requirement requirement = iterator.next();
+			if (requirement.isClosed() || requirement.isInCurrentSprint()) iterator.remove();
+		}
+		return requirements;
+	}
+
+	public Set<SprintReport> getSprintReports() {
+		return sprintReportDao.getSprintReportsByProject(this);
+	}
 
 	public void moveRequirementToTop(Requirement requirement) {
 		List<String> orderIds = getRequirementsOrderIds();

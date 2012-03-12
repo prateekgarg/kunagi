@@ -74,6 +74,8 @@ public interface ScrumService extends com.google.gwt.user.client.rpc.RemoteServi
 
     scrum.client.DataTransferObject pullStoryToSprint(int conversationNumber, String storyId);
 
+    scrum.client.DataTransferObject requestHistory(int conversationNumber);
+
     scrum.client.DataTransferObject switchToNextSprint(int conversationNumber);
 
 }

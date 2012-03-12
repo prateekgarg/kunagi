@@ -51,7 +51,7 @@ public class DashboardWidget extends AScrumWidget {
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getProductBacklog())),
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getSprintBacklog())),
 			new HyperlinkWidget(nav.createSwitchAction(widgets.getIssueList())));
-		posTasks.addSection(new UpcomingPoTasksWidget());
+		posTasks.addSection(new UpcomingPoWorkWidget());
 
 		PagePanel impediments = new PagePanel();
 		impediments.addHeader("Open Impediments",

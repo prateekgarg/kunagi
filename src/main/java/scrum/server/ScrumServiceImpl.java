@@ -65,12 +65,13 @@ import scrum.server.release.Release;
 import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintReport;
 import scrum.server.sprint.SprintReportDao;
 import scrum.server.sprint.Task;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
 
-	private static final Log LOG = Log.get(ScrumServiceImpl.class);
+	private static final Log log = Log.get(ScrumServiceImpl.class);
 	private static final long serialVersionUID = 1;
 
 	// --- dependencies ---
@@ -132,6 +133,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onRequestHistory(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		conversation.sendToClient(project.getSprints());
+		conversation.sendToClient(project.getSprintReports());
+		Set<Requirement> requirements = project.getRequirements();
+		conversation.sendToClient(requirements);
+		for (Requirement requirement : requirements) {
+			conversation.sendToClient(requirement.getTasks());
+		}
+	};
+
+	@Override
 	public void onPullStoryToSprint(GwtConversation conversation, String storyId) {
 		assertProjectSelected(conversation);
 		Requirement story = requirementDao.getById(storyId);
@@ -191,7 +205,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Project project = conversation.getProject();
 		if (project == null) return;
 		List<AEntity> foundEntities = project.search(text);
-		LOG.debug("Found entities for search", "\"" + text + "\"", "->", foundEntities);
+		log.debug("Found entities for search", "\"" + text + "\"", "->", foundEntities);
 		conversation.sendToClient(foundEntities);
 	}
 
@@ -226,7 +240,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		user.setPassword(newPassword);
 
-		LOG.info("password changed by", user);
+		log.info("password changed by", user);
 	}
 
 	@Override
@@ -616,17 +630,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		config.touch();
 
 		conversation.sendToClient(project);
-		conversation.sendToClient(project.getSprints());
-		conversation.sendToClient(sprintReportDao.getSprintReportsByProject(project));
+		conversation.sendToClient(project.getCurrentSprint());
+		conversation.sendToClient(project.getNextSprint());
 		conversation.sendToClient(project.getParticipants());
-		Set<Requirement> requirements = project.getRequirements(); // TODO optimize: skip history
+		Set<Requirement> requirements = project.getProductBacklogRequirements();
 		conversation.sendToClient(requirements);
 		for (Requirement requirement : requirements) {
 			conversation.sendToClient(requirement.getEstimationVotes());
-			conversation.sendToClient(requirement.getTasks()); // TODO optimize: skip history
+			conversation.sendToClient(requirement.getTasksInSprint());
 		}
 		conversation.sendToClient(project.getQualitys());
-		conversation.sendToClient(project.getTasks());
 		conversation.sendToClient(project.getUserConfigs());
 		conversation.sendToClient(project.getWikipages());
 		conversation.sendToClient(project.getImpediments());
@@ -716,7 +729,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (!Auth.isVisible(entity, conversation.getSession().getUser())) throw new PermissionDeniedException();
 			// TODO check if entity is from project
 			conversation.sendToClient(entity);
+			conversation.sendToClient(getAssociatedEntities(entity));
 		} catch (EntityDoesNotExistException ex) {
+			log.info("Requested entity not found:", entityId);
 			// nop
 		}
 	}
@@ -728,10 +743,51 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		AEntity entity = project.getEntityByReference(reference);
 		if (entity == null) {
-			LOG.info("Requested entity not found:", reference);
+			log.info("Requested entity not found:", reference);
 		} else {
 			conversation.sendToClient(entity);
+			conversation.sendToClient(getAssociatedEntities(entity));
 		}
+	}
+
+	private Set<AEntity> getAssociatedEntities(AEntity entity) {
+		Set<AEntity> ret = new HashSet<AEntity>();
+
+		if (entity instanceof Task) {
+			Task task = (Task) entity;
+			Requirement requirement = task.getRequirement();
+			ret.add(requirement);
+			ret.addAll(getAssociatedEntities(requirement));
+		}
+
+		if (entity instanceof Requirement) {
+			Requirement requirement = (Requirement) entity;
+			Sprint sprint = requirement.getSprint();
+			if (sprint != null) {
+				ret.add(sprint);
+				SprintReport report = sprint.getSprintReport();
+				if (report != null) {
+					ret.add(report);
+					ret.addAll(getAssociatedEntities(report));
+				}
+			}
+			Set<SprintReport> reports = requirement.getSprintReports();
+			for (SprintReport report : reports) {
+				ret.add(report);
+				ret.add(report.getSprint());
+				ret.addAll(getAssociatedEntities(report));
+			}
+		}
+
+		if (entity instanceof SprintReport) {
+			SprintReport report = (SprintReport) entity;
+			ret.addAll(report.getCompletedRequirements());
+			ret.addAll(report.getRejectedRequirements());
+			ret.addAll(report.getClosedTasks());
+			ret.addAll(report.getOpenTasks());
+		}
+
+		return ret;
 	}
 
 	@Override
@@ -835,7 +891,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public DataTransferObject startConversation(int conversationNumber) {
-		LOG.debug("startConversation");
+		log.debug("startConversation");
 		WebSession session = (WebSession) getSession();
 		GwtConversation conversation = session.getGwtConversation(-1);
 		ilarkesto.di.Context context = ilarkesto.di.Context.get();

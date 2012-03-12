@@ -14,6 +14,8 @@
  */
 package scrum.client.sprint;
 
+import ilarkesto.core.base.ChangeIndicator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,30 +30,38 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class SprintHistoryWidget extends AScrumWidget {
 
-	Map<Sprint, SprintHistorySprintWidget> sprintWidgets = new HashMap<Sprint, SprintHistorySprintWidget>();
+	private Map<Sprint, SprintHistorySprintWidget> sprintWidgets = new HashMap<Sprint, SprintHistorySprintWidget>();
+	private ChangeIndicator changeIndicator = new ChangeIndicator();
+	private PagePanel page = new PagePanel();
 
 	@Override
 	protected Widget onInitialization() {
-		PagePanel page = new PagePanel();
-
-		List<Sprint> sprints = getCurrentProject().getCompletedSprints();
-		for (Sprint sprint : sprints) {
-			page.addHeader(sprint.getReferenceAndLabel());
-			SprintHistorySprintWidget widget = new SprintHistorySprintWidget(sprint);
-			sprintWidgets.put(sprint, widget);
-			page.addSection(widget);
-		}
-
+		new RequestHistoryServiceCall().execute();
 		return page;
 	}
 
 	@Override
 	protected void onUpdate() {
+		List<Sprint> sprints = getCurrentProject().getCompletedSprintsInOrder();
+		if (changeIndicator.update(sprints)) {
+			page.clear();
+			for (Sprint sprint : sprints) {
+				page.addHeader(sprint.getReferenceAndLabel());
+
+				SprintHistorySprintWidget widget = sprintWidgets.get(sprint);
+				if (widget == null) {
+					widget = new SprintHistorySprintWidget(sprint);
+					sprintWidgets.put(sprint, widget);
+				}
+
+				page.addSection(widget);
+			}
+		}
 		super.onUpdate();
 	}
 
 	private Sprint getSprint(Requirement requirement) {
-		List<Sprint> sprints = new ArrayList(getDao().getSprints());
+		List<Sprint> sprints = new ArrayList<Sprint>(getDao().getSprints());
 		Collections.sort(sprints, Sprint.END_DATE_COMPARATOR);
 		for (Sprint sprint : sprints) {
 			SprintReport report = sprint.getSprintReport();
