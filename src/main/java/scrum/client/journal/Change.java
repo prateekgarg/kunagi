@@ -36,6 +36,8 @@ import scrum.client.risks.RiskComputer;
 
 public class Change extends GChange {
 
+	public static final String CREATED = "@created";
+
 	public Change(Map data) {
 		super(data);
 	}
@@ -51,10 +53,10 @@ public class Change extends GChange {
 		String key = getKey();
 		AGwtEntity parent = getParent();
 		if (parent instanceof Requirement) {
-			if ("@created".equals(key) && getNewValue() != null) return "splitted story from " + getNewValue();
+			if (CREATED.equals(key) && getNewValue() != null) return "splitted story from " + getNewValue();
 			if ("@split".equals(key)) return "splitted " + getNewValue();
 		}
-		if ("@created".equals(key)) return "created entity";
+		if (CREATED.equals(key)) return "created entity";
 		if (parent instanceof Issue) {
 			if (key.equals("@reply")) return "emailed a reply";
 		}
@@ -74,9 +76,10 @@ public class Change extends GChange {
 		} else if (parent instanceof Impediment) {
 			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed impediment" : "reopened impediment";
 		} else if (parent instanceof Requirement) {
-			if (key.equals("closed")) return Str.isTrue(newValue) ? "closed story" : "reopened story";
+			if (key.equals("closed")) return Str.isTrue(newValue) ? "accepted story" : "reopened story";
 			if (key.equals("sprintId"))
-				return newValue == null ? "kicked story from sprint" : "pulled story to sprint";
+				return newValue == null ? "kicked story from " + getEntityReferenceAndLabel(oldValue)
+						: "pulled story to " + getEntityReferenceAndLabel(newValue);
 			if (key.equals("issueId")) return "created story from issue " + getEntityReferenceAndLabel(newValue);
 		}
 
@@ -86,6 +89,7 @@ public class Change extends GChange {
 	}
 
 	private String getEntityReferenceAndLabel(String id) {
+		if (id == null) return null;
 		try {
 			return ScrumGwt.getReferenceAndLabel(getDao().getEntity(id));
 		} catch (EntityDoesNotExistException ex) {

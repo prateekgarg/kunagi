@@ -151,10 +151,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Requirement story = requirementDao.getById(storyId);
 		Project project = conversation.getProject();
 		Sprint sprint = project.getCurrentSprint();
-
-		sprint.pullRequirement(story);
-
 		User currentUser = conversation.getSession().getUser();
+
+		sprint.pullRequirement(story, currentUser);
+
 		postProjectEvent(conversation, currentUser.getName() + " pulled " + story.getReferenceAndLabel()
 				+ " to current sprint", story);
 
@@ -168,10 +168,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(conversation);
 		Requirement story = requirementDao.getById(storyId);
 		Sprint sprint = story.getSprint();
-
-		sprint.kickRequirement(story);
-
 		User currentUser = conversation.getSession().getUser();
+
+		sprint.kickRequirement(story, currentUser);
+
 		postProjectEvent(conversation, currentUser.getName() + " kicked " + story.getReferenceAndLabel()
 				+ " from current sprint", story);
 
@@ -909,7 +909,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postChangeIfChanged(GwtConversation conversation, AEntity entity, Map properties, User user,
 			String property) {
 		if (properties.containsKey(property)) {
-			boolean reference = property.endsWith("Id");
 			Object oldValue = Reflect.getProperty(entity, property);
 			Object newValue = properties.get(property);
 			Change change = changeDao.postChange(entity, user, property, oldValue, newValue);

@@ -30,6 +30,7 @@ import java.util.Set;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
+import scrum.server.journal.ChangeDao;
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
 import scrum.server.release.Release;
@@ -38,22 +39,34 @@ public class Sprint extends GSprint implements Numbered {
 
 	private static final Log log = Log.get(Sprint.class);
 
+	// --- dependencies ---
+
+	private static transient ChangeDao changeDao;
+
+	public static void setChangeDao(ChangeDao changeDao) {
+		Sprint.changeDao = changeDao;
+	}
+
+	// --- ---
+
 	public Release getNextRelease() {
 		List<Release> releases = new ArrayList<Release>(getReleases());
 		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
 		return releases.isEmpty() ? null : Utl.getElement(releases, 0);
 	}
 
-	public void pullRequirement(Requirement requirement) {
+	public void pullRequirement(Requirement requirement, User user) {
 		requirement.setSprint(this);
 		for (Task task : requirement.getTasksInSprint()) {
 			task.reset();
 		}
 		moveToBottom(requirement);
 		getDaySnapshot(Date.today()).updateWithCurrentSprint();
+
+		changeDao.postChange(requirement, user, "sprintId", null, getId());
 	}
 
-	public void kickRequirement(Requirement requirement) {
+	public void kickRequirement(Requirement requirement, User user) {
 		int burned = 0;
 		for (Task task : requirement.getTasksInSprint()) {
 			burned += task.getBurnedWork();
@@ -67,6 +80,8 @@ public class Sprint extends GSprint implements Numbered {
 		SprintDaySnapshot daySnapshot = getDaySnapshot(Date.today());
 		daySnapshot.addBurnedWorkFromDeleted(burned);
 		daySnapshot.updateWithCurrentSprint();
+
+		changeDao.postChange(requirement, user, "sprintId", getId(), null);
 	}
 
 	public void moveToBottom(Requirement requirement) {
@@ -100,9 +115,11 @@ public class Sprint extends GSprint implements Numbered {
 			}
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
+				changeDao.postChange(requirement, null, "completedInSprint", null, getReference());
 			} else {
 				getProject().addRequirementsOrderId(incompletedRequirements.size(), requirement.getId());
 				incompletedRequirements.add(requirement);
+				changeDao.postChange(requirement, null, "rejectedInSprint", null, getReference());
 			}
 		}
 
