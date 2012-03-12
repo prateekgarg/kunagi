@@ -37,6 +37,8 @@ import scrum.client.risks.RiskComputer;
 public class Change extends GChange {
 
 	public static final String CREATED = "@created";
+	public static final String REQ_COMPLETED_IN_SPRINT = "@completedInSprint";
+	public static final String REQ_REJECTED_IN_SPRINT = "@rejectedInSprint";
 
 	public Change(Map data) {
 		super(data);
@@ -55,6 +57,9 @@ public class Change extends GChange {
 		if (parent instanceof Requirement) {
 			if (CREATED.equals(key) && getNewValue() != null) return "splitted story from " + getNewValue();
 			if ("@split".equals(key)) return "splitted " + getNewValue();
+			if (REQ_COMPLETED_IN_SPRINT.equals(key))
+				return "Completed in " + getEntityReferenceAndLabel(getNewValue());
+			if (REQ_REJECTED_IN_SPRINT.equals(key)) return "Rejected in " + getEntityReferenceAndLabel(getNewValue());
 		}
 		if (CREATED.equals(key)) return "created entity";
 		if (parent instanceof Issue) {

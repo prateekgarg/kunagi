@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import scrum.client.journal.Change;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
@@ -115,11 +116,12 @@ public class Sprint extends GSprint implements Numbered {
 			}
 			if (requirement.isClosed()) {
 				completedRequirements.add(requirement);
-				changeDao.postChange(requirement, null, "completedInSprint", null, getReference());
+				changeDao
+						.postChange(requirement, null, Change.REQ_COMPLETED_IN_SPRINT, requirement.getLabel(), getId());
 			} else {
 				getProject().addRequirementsOrderId(incompletedRequirements.size(), requirement.getId());
 				incompletedRequirements.add(requirement);
-				changeDao.postChange(requirement, null, "rejectedInSprint", null, getReference());
+				changeDao.postChange(requirement, null, Change.REQ_REJECTED_IN_SPRINT, requirement.getLabel(), getId());
 			}
 		}
 

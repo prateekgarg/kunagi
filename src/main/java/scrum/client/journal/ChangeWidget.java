@@ -43,11 +43,14 @@ public class ChangeWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		User changer = change.getUser();
-		Label changerLabel = new Label(changer.getName());
-		changerLabel.setStyleName("ChangeWidget-header-author");
-		ProjectUserConfig userConfig = getCurrentProject().getUserConfig(changer);
-		String color = userConfig == null ? "darkgray" : userConfig.getColor();
-		changerLabel.getElement().getStyle().setProperty("color", color);
+		Label changerLabel = null;
+		if (changer != null) {
+			changerLabel = new Label(changer.getName());
+			changerLabel.setStyleName("ChangeWidget-header-author");
+			ProjectUserConfig userConfig = getCurrentProject().getUserConfig(changer);
+			String color = userConfig == null ? "darkgray" : userConfig.getColor();
+			changerLabel.getElement().getStyle().setProperty("color", color);
+		}
 
 		date = new Label();
 		date.setStyleName("ChangeWidget-header-date");
@@ -55,7 +58,7 @@ public class ChangeWidget extends AScrumWidget {
 		FlowPanel header = new FlowPanel();
 		header.setStyleName("ChangeWidget-header");
 		header.add(date);
-		header.add(changerLabel);
+		if (changerLabel != null) header.add(changerLabel);
 
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("ChangeWidget");

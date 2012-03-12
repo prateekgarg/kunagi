@@ -28,12 +28,47 @@ import scrum.client.common.ReferenceSupport;
 import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.estimation.RequirementEstimationVote;
+import scrum.server.journal.Change;
+import scrum.server.journal.ChangeDao;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
 public class Requirement extends GRequirement implements Numbered, ReferenceSupport, LabelSupport {
 
 	private transient Comparator<Task> tasksOrderComparator;
+
+	// --- dependencies ---
+
+	private static transient ChangeDao changeDao;
+
+	public static void setChangeDao(ChangeDao changeDao) {
+		Requirement.changeDao = changeDao;
+	}
+
+	// --- ---
+	public String getHistoryLabel(final Sprint sprint) {
+		if (sprint == null) return getLabel();
+		Set<Change> changes = changeDao.getChangesByParent(this);
+		for (Change change : changes) {
+			String key = change.getKey();
+			if (!change.isNewValue(sprint.getId())) continue;
+			if (scrum.client.journal.Change.REQ_COMPLETED_IN_SPRINT.equals(key)
+					|| scrum.client.journal.Change.REQ_REJECTED_IN_SPRINT.equals(key)) return change.getOldValue();
+		}
+		return getLabel();
+	}
+
+	public Set<Change> getSprintSwitchChanges() {
+		Set<Change> changes = changeDao.getChangesByParent(this);
+		Iterator<Change> iterator = changes.iterator();
+		while (iterator.hasNext()) {
+			Change change = iterator.next();
+			if (change.isKey(scrum.client.journal.Change.REQ_COMPLETED_IN_SPRINT)) continue;
+			if (change.isKey(scrum.client.journal.Change.REQ_REJECTED_IN_SPRINT)) continue;
+			iterator.remove();
+		}
+		return changes;
+	}
 
 	public List<Task> getTasksAsList() {
 		List<Task> tasks = new ArrayList<Task>(getTasksInSprint());

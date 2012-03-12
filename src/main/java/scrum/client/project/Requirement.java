@@ -43,6 +43,7 @@ import scrum.client.common.ThemesContainer;
 import scrum.client.estimation.RequirementEstimationVote;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.Change;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.WhiteboardWidget;
@@ -75,6 +76,17 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public Requirement(Map data) {
 		super(data);
+	}
+
+	public String getHistoryLabel(final Sprint sprint) {
+		List<Change> changes = getDao().getChangesByParent(Requirement.this);
+		for (Change change : changes) {
+			String key = change.getKey();
+			if (!change.isNewValue(sprint.getId())) continue;
+			if (Change.REQ_COMPLETED_IN_SPRINT.equals(key) || Change.REQ_REJECTED_IN_SPRINT.equals(key))
+				return change.getOldValue();
+		}
+		return getLabel();
 	}
 
 	public boolean isBlocked() {
@@ -479,6 +491,16 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			}
 		};
 		return themesAsStringModel;
+	}
+
+	public AFieldModel<String> getHistoryLabelModel(final Sprint sprint) {
+		return new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return getHistoryLabel(sprint);
+			}
+		};
 	}
 
 }

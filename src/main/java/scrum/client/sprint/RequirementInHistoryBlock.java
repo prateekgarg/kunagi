@@ -60,7 +60,7 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 			statusImage.setTitle("Rejected.");
 		}
 		header.addIconWrapper().setWidget(statusImage);
-		header.addText(requirement.getLabelModel());
+		header.addText(requirement.getHistoryLabelModel(sprint));
 		header.addText(requirement.getThemesAsStringModel(), true, false);
 		header.addMenuAction(new ActivateChangeHistoryAction(requirement));
 

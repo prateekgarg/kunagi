@@ -8,9 +8,21 @@ import java.util.List;
 import java.util.Set;
 
 import scrum.server.admin.User;
+import scrum.server.journal.Change;
 import scrum.server.project.Requirement;
 
 public class SprintReport extends GSprintReport {
+
+	public Set<Change> getSprintSwitchRequirementChanges() {
+		Set<Change> changes = new HashSet<Change>();
+		for (Requirement requirement : getCompletedRequirements()) {
+			changes.addAll(requirement.getSprintSwitchChanges());
+		}
+		for (Requirement requirement : getRejectedRequirements()) {
+			changes.addAll(requirement.getSprintSwitchChanges());
+		}
+		return changes;
+	}
 
 	public List<Requirement> getCompletedRequirementsAsList() {
 		List<Requirement> requirements = new ArrayList<Requirement>(getCompletedRequirements());
@@ -75,4 +87,5 @@ public class SprintReport extends GSprintReport {
 		}
 		return tasks;
 	}
+
 }

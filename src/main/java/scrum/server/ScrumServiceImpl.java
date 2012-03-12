@@ -142,8 +142,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(requirements);
 		for (Requirement requirement : requirements) {
 			conversation.sendToClient(requirement.getTasks());
+			conversation.sendToClient(requirement.getSprintSwitchChanges());
 		}
-	};
+	}
 
 	@Override
 	public void onPullStoryToSprint(GwtConversation conversation, String storyId) {
@@ -755,34 +756,28 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Task) {
 			Task task = (Task) entity;
-			Requirement requirement = task.getRequirement();
-			ret.add(requirement);
-			ret.addAll(getAssociatedEntities(requirement));
+			Set<SprintReport> reports = sprintReportDao.getSprintReportsByClosedTask(task);
+			reports.addAll(sprintReportDao.getSprintReportsByOpenTask(task));
+			for (SprintReport report : reports) {
+				ret.addAll(getAssociatedEntities(report));
+			}
 		}
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
-			Sprint sprint = requirement.getSprint();
-			if (sprint != null) {
-				ret.add(sprint);
-				SprintReport report = sprint.getSprintReport();
-				if (report != null) {
-					ret.add(report);
-					ret.addAll(getAssociatedEntities(report));
-				}
-			}
-			Set<SprintReport> reports = requirement.getSprintReports();
+			Set<SprintReport> reports = sprintReportDao.getSprintReportsByCompletedRequirement(requirement);
+			reports.addAll(sprintReportDao.getSprintReportsByRejectedRequirement(requirement));
 			for (SprintReport report : reports) {
-				ret.add(report);
-				ret.add(report.getSprint());
 				ret.addAll(getAssociatedEntities(report));
 			}
 		}
 
 		if (entity instanceof SprintReport) {
 			SprintReport report = (SprintReport) entity;
+			ret.add(report.getSprint());
 			ret.addAll(report.getCompletedRequirements());
 			ret.addAll(report.getRejectedRequirements());
+			ret.addAll(report.getSprintSwitchRequirementChanges());
 			ret.addAll(report.getClosedTasks());
 			ret.addAll(report.getOpenTasks());
 		}

@@ -29,6 +29,7 @@ import scrum.server.issues.Issue;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
 import scrum.server.release.Release;
+import scrum.server.sprint.Sprint;
 import scrum.server.sprint.Task;
 
 public abstract class APdfCreator {
@@ -81,13 +82,18 @@ public abstract class APdfCreator {
 
 	protected void requirement(APdfContainerElement pdf, Requirement req, Collection<Task> openTasks,
 			Collection<Task> closedTasks) {
+		requirement(pdf, req, openTasks, closedTasks, null);
+	}
+
+	protected void requirement(APdfContainerElement pdf, Requirement req, Collection<Task> openTasks,
+			Collection<Task> closedTasks, Sprint pastSprint) {
 		pdf.nl();
 
 		ATable table = pdf.table(3, 20, 3);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(req.getReference());
-		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(req.getLabel());
+		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(req.getHistoryLabel(pastSprint));
 		rowHeader.cell().setFontStyle(smallerFont).text(req.getWorkDescriptionAsString());
 
 		richtextRow(table, "Story description", req.getDescription());
