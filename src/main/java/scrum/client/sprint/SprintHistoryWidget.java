@@ -15,6 +15,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.base.ChangeIndicator;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,8 +92,8 @@ public class SprintHistoryWidget extends AScrumWidget {
 	}
 
 	public boolean select(Sprint sprint) {
-		// FIXME
-		// return sprintList.showObject(sprint);
+		update();
+		Gwt.scrollTo(sprintWidgets.get(sprint));
 		return true;
 	}
 }
