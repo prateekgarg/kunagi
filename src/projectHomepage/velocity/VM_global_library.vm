@@ -168,6 +168,7 @@ pageTracker._trackPageview();
         <input name="projectId" type="hidden" value="$project.id">
         #if ($entityId) <input name="entityId" type="hidden" value="$entityId"> #end
         <input name="returnUrl" type="hidden" value="http://kunagi.org/message.html#{message}">
+        <input name="publish" type="hidden" value="true">
         <input id="spamPreventionCodeField" name="spamPreventionCode" type="hidden" value="spam">
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
