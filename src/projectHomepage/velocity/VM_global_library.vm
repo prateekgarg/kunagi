@@ -171,18 +171,29 @@ pageTracker._trackPageview();
         <input name="publish" type="hidden" value="true">
         <input id="spamPreventionCodeField" name="spamPreventionCode" type="hidden" value="spam">
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            #if ( !$entityId )
+              <tr>
+                <td style="padding-top: 7px;">
+                  <label for="subject">Subject:</label><br>
+                </td>
+                <td colspan="4" style="padding-bottom: 10px; text-align: right;">
+                  <input type="text" name="subject" id="subject" style="width: 620px;" title="Short description of your issue">
+                </td>
+              </tr>
+            #end
             <tr>
                 <td colspan="5">
                     <label for="text">$textLabel:</label><br>
-                    <textarea name="text" id="text" rows="10" cols="50" style="width: 685px;"></textarea><br>
-                    #if ($visibilityCheckboxLabel)
-                        <br>
-                        <input type="checkbox" name="publish" id="publish" value="true">
-                        <label for="publish">$visibilityCheckboxLabel</label><br>
-                    #else
-                        <input type="hidden" name="publish" id="publish" value="true">
-                    #end
-                    <br>    
+                    <div style="padding-bottom: 20px; text-align: right;">
+                      <textarea name="text" id="text" rows="10" cols="50" style="width: 688px;"></textarea><br>
+                      #if ($visibilityCheckboxLabel)
+                          <br>
+                          <input type="checkbox" name="publish" id="publish" value="true">
+                          <label for="publish">$visibilityCheckboxLabel</label><br>
+                      #else
+                          <input type="hidden" name="publish" id="publish" value="true">
+                      #end
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -191,14 +202,14 @@ pageTracker._trackPageview();
                     <label for="name" class="optional">Name:</label>
                 </td>
                 <td>                 
-                    <input type="text" name="name" id="name" class="textinput">
+                    <input type="text" name="name" id="name" class="textinput" title="Your real name. Used for communication with you, will not be published on our website. Please leave blank for anonymous posts.">
                 </td>
                 <td>
                     <div class="sublabel">optional</div>
                     <label for="email" class="optional">E-Mail:</label>
                 </td>
                 <td>
-                    <input type="text" name="email" id="email" class="textinput">
+                    <input type="text" name="email" id="email" class="textinput" title="Your real Email. Used for communication with you, will not be published on our website. Please leave blank for anonymous posts.">
                 </td>
                 <td id="commentFormSubmitButtonContainer" align="right">
                     

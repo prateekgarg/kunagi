@@ -53,6 +53,7 @@ public class IssueServlet extends AHttpServlet {
 		req.setCharacterEncoding(IO.UTF_8);
 
 		String projectId = req.getParameter("projectId");
+		String subject = req.getParameter("subject");
 		String text = req.getParameter("text");
 		String name = Str.cutRight(req.getParameter("name"), 33);
 		if (Str.isBlank(name)) name = null;
@@ -65,6 +66,7 @@ public class IssueServlet extends AHttpServlet {
 		log.info("    name: " + name);
 		log.info("    email: " + email);
 		log.info("    publish: " + publish);
+		log.info("    subject: " + subject);
 		log.info("    text: " + text);
 		log.info("  Request-Data:");
 		log.info(Servlet.toString(req, "        "));
@@ -72,7 +74,7 @@ public class IssueServlet extends AHttpServlet {
 		String message;
 		try {
 			SpamChecker.check(req);
-			message = submitIssue(projectId, text, name, email, publish);
+			message = submitIssue(projectId, subject, text, name, email, publish);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req, "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
@@ -86,12 +88,13 @@ public class IssueServlet extends AHttpServlet {
 		resp.sendRedirect(returnUrl);
 	}
 
-	private String submitIssue(String projectId, String text, String name, String email, boolean publish) {
+	private String submitIssue(String projectId, String label, String text, String name, String email, boolean publish) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
-		if (Str.isBlank(text)) throw new RuntimeException("Description is empty.");
+		if (Str.isBlank(label) && Str.isBlank(text))
+			throw new RuntimeException("Subject and Description are empty. At least one required.");
+		if (Str.isBlank(label)) label = "Message from the Internets";
 		Project project = projectDao.getById(projectId);
-		Issue issue = issueDao.postIssue(project, "Message from the Internets", "<nowiki>" + text + "</nowiki>", name,
-			email, publish);
+		Issue issue = issueDao.postIssue(project, label, "<nowiki>" + text + "</nowiki>", name, email, publish);
 		if (publish) {
 			project.updateHomepage(issue, true);
 		}

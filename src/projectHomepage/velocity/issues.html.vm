@@ -5,7 +5,7 @@
 <div class="section">
 
     <h2>Report a bug / Request a feature / Suggest a UserStory</h2>
-    #commentForm("submitIssue", $null, "Your issue", $null, "Submit issue")
+    #commentForm("submitIssue", $null, "Description", $null, "Submit issue")
     
 </div>
 
