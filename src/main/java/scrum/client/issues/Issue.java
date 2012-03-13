@@ -18,6 +18,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
+import ilarkesto.core.time.TimePeriod;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.LabelProvider;
 import ilarkesto.gwt.client.editor.AFieldModel;
@@ -153,19 +154,33 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	}
 
 	public String getStatusLabel() {
-		if (isClosed()) return "closed on " + getCloseDate();
+		if (isClosed()) {
+			TimePeriod period = getCloseDate().getPeriodToToday();
+			String time = period.toDays() < 1 ? "today" : period.toShortestString() + " ago";
+			return "closed " + time;
+		}
 		if (isBug()) {
 			String s = "";
-			if (isFixed()) s += "fixed by ";
-			if (isOwnerSet()) s += getOwner().getName();
+			if (isFixed()) {
+				s += "fixed ";
+				TimePeriod period = getFixDate().getPeriodToToday();
+				s += period.toDays() < 1 ? "today" : period.toShortestString() + " ago";
+			} else if (isOwnerSet()) {
+				s += "claimed";
+			}
+			if (isOwnerSet()) s += " by " + getOwner().getName();
 			return s;
 		}
-		if (isIdea()) return "accepted on " + getAcceptDate();
+		if (isIdea()) {
+			TimePeriod period = getAcceptDate().getPeriodToToday();
+			String time = period.toDays() < 1 ? "today" : period.toShortestString() + " ago";
+			return "accepted " + time;
+		}
 		if (isSuspended()) return "suspended until " + getSuspendedUntilDate();
 
 		String issuer = getIssuer();
 		if (Str.isBlank(issuer)) issuer = "anonymous";
-		return "issued on " + getDate().getDate() + " by " + issuer;
+		return "issued " + getDate().getPeriodToNow().toShortestString() + " ago by " + issuer;
 	}
 
 	public String getThemesAsString() {

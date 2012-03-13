@@ -20,7 +20,7 @@ import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.AEditorModel;
+import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.DropdownEditorWidget;
 import ilarkesto.gwt.client.editor.TextOutputWidget;
 
@@ -61,7 +61,7 @@ public class IssueWidget extends AScrumWidget {
 		}
 		left.addFieldRow("Description", issue.getDescriptionModel());
 		left.addFieldRow("Themes", new ThemesWidget(issue));
-		left.addFieldRow("Issuer", new TextOutputWidget(new AEditorModel<String>() {
+		left.addFieldRow("Issuer", new TextOutputWidget(new AFieldModel<String>() {
 
 			@Override
 			public String getValue() {
@@ -69,7 +69,16 @@ public class IssueWidget extends AScrumWidget {
 			}
 
 			@Override
-			public void setValue(String value) {}
+			public String getTooltip() {
+				return "Person who created this issue.";
+			}
+		}));
+		left.addFieldRow("Date", new TextOutputWidget(new AFieldModel<String>() {
+
+			@Override
+			public String getValue() {
+				return issue.getDate().toString();
+			}
 
 			@Override
 			public String getTooltip() {
