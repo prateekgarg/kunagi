@@ -160,8 +160,7 @@ public class CommentsWidget extends AScrumWidget {
 		return widget;
 	}
 
-	private void postComment() {
-		String text = editor.getEditorText();
+	private void postComment(String text) {
 		if (Str.isBlank(text)) return;
 		text = text.trim();
 		Comment comment = new Comment(parent, getAuth().getUser(), text);
@@ -174,7 +173,21 @@ public class CommentsWidget extends AScrumWidget {
 	}
 
 	private void activateEditor() {
-		this.editor = new MyRichtextEditorWidget();
+		this.editor = new RichtextEditorWidget(new ATextEditorModel() {
+
+			@Override
+			public void setValue(String text) {
+				postComment(text);
+			}
+
+			@Override
+			public String getValue() {
+				return null;
+			}
+
+		});
+		this.editor.setAutosave(false);
+		this.editor.setApplyButtonLabel("Post comment");
 		this.editor.switchToEditMode();
 		this.editor.setModeSwitchHandler(new AViewEditWidget.ModeSwitchHandler() {
 
@@ -188,32 +201,6 @@ public class CommentsWidget extends AScrumWidget {
 			public void onEditorActivated(AViewEditWidget widget) {}
 		});
 		update();
-	}
-
-	private class MyRichtextEditorWidget extends RichtextEditorWidget {
-
-		public MyRichtextEditorWidget() {
-			super(new ATextEditorModel() {
-
-				@Override
-				public void setValue(String text) {
-					// postComment();
-				}
-
-				@Override
-				public String getValue() {
-					return null;
-				}
-
-			});
-		}
-
-		@Override
-		protected void onEditorClose() {
-			postComment();
-			super.onEditorClose();
-		}
-
 	}
 
 	private class ActivateCommentEditorAction extends AAction {

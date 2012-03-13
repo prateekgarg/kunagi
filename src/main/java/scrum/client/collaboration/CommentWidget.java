@@ -83,6 +83,7 @@ public class CommentWidget extends AScrumWidget {
 		panel.add(header);
 
 		editor = new RichtextEditorWidget(comment.getTextModel());
+		editor.setAutosave(false);
 		panel.add(editor);
 
 		return panel;
