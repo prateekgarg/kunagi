@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -49,6 +50,20 @@ public class Sprint extends GSprint implements Numbered {
 	}
 
 	// --- ---
+
+	public List<Requirement> getClosedRequirementsAsList() {
+		return Utl.sort(getClosedRequirements(), getRequirementsOrderComparator());
+	}
+
+	public Set<Requirement> getClosedRequirements() {
+		Set<Requirement> requirements = getRequirements();
+		Iterator<Requirement> iterator = requirements.iterator();
+		while (iterator.hasNext()) {
+			Requirement requirement = iterator.next();
+			if (!requirement.isClosed()) iterator.remove();
+		}
+		return requirements;
+	}
 
 	public Release getNextRelease() {
 		List<Release> releases = new ArrayList<Release>(getReleases());
@@ -338,5 +353,14 @@ public class Sprint extends GSprint implements Numbered {
 		};
 		return requirementsOrderComparator;
 	}
+
+	public static final Comparator<Sprint> END_DATE_COMPARATOR = new Comparator<Sprint>() {
+
+		@Override
+		public int compare(Sprint a, Sprint b) {
+			return Utl.compare(a.getEnd(), b.getEnd());
+		}
+
+	};
 
 }

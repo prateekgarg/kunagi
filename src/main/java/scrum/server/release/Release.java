@@ -29,15 +29,35 @@ import scrum.server.admin.User;
 import scrum.server.common.Numbered;
 import scrum.server.issues.Issue;
 import scrum.server.project.Project;
+import scrum.server.project.Requirement;
+import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintReport;
 
 public class Release extends GRelease implements Numbered, ReferenceSupport {
 
 	private static Log log = Log.get(Release.class);
 
-	private static TaskManager taskManager;
+	// --- dependencies ---
+
+	private static transient TaskManager taskManager;
 
 	public static void setTaskManager(TaskManager taskManager) {
 		Release.taskManager = taskManager;
+	}
+
+	// --- ---
+
+	public List<Requirement> getClosedRequirements() {
+		List<Requirement> requirements = new ArrayList<Requirement>();
+		for (Sprint sprint : Utl.sort(getSprints(), Sprint.END_DATE_COMPARATOR)) {
+			SprintReport report = sprint.getSprintReport();
+			if (report == null) {
+				requirements.addAll(sprint.getClosedRequirementsAsList());
+			} else {
+				requirements.addAll(report.getCompletedRequirementsAsList());
+			}
+		}
+		return requirements;
 	}
 
 	public void release(Project project, User user, ScrumWebApplication webApplication) {

@@ -94,6 +94,16 @@ pageTracker._trackPageview();
 
 
 
+#macro( entitiesUl $entities )
+    <ul>
+      #foreach ($entity in $entities)
+          <li><a href="${entity.reference}.html" class="reference">$entity.reference</a> $entity.label</li>
+      #end
+    </ul>
+#end
+
+
+
 #macro( demosection )
     <div class="section">
         <h2>Online demo</h2>

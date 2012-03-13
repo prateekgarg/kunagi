@@ -25,9 +25,29 @@
       <div class="clear"></div>
     #end
 
-    
     #if( $release.releaseNotes )
+      <h3>Release notes</h3>
       <p>$release.releaseNotes</p>
+    #end
+
+    #if( $release.finishedStories )
+      <h3>Finished user stories</h3>
+      #entitiesUl($release.finishedStories)
+    #end
+
+    #if( $release.affectedByIssues )
+      <h3>Affected by issues</h3>
+      #entitiesUl($release.affectedByIssues)
+    #end
+
+    #if( $release.fixedIssues )
+      <h3>Fixed issues</h3>
+      #entitiesUl($release.fixedIssues)
+    #end
+
+    #if( !$release.released and $release.plannedIssues )
+      <h3>Planned issues</h3>
+      #entitiesUl($release.plannedIssues)
     #end
         
 </div>

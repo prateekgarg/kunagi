@@ -260,7 +260,6 @@ public class HomepageUpdater {
 		List<Release> releases = new ArrayList<Release>(project.getReleases());
 		Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
 		for (Release release : releases) {
-			if (!release.isReleased()) continue;
 			fillRelease(context.addSubContext("releases"), release);
 		}
 	}
@@ -311,8 +310,10 @@ public class HomepageUpdater {
 		context.put("major", release.isMajor());
 		context.put("bugfix", release.isBugfix());
 
-		for (Sprint sprint : release.getSprints()) {
-			fillSprint(context.addSubContext("sprints"), sprint);
+		for (Requirement requirement : release.getClosedRequirements()) {
+			ContextBuilder reqContext = context.addSubContext("finishedStories");
+			reqContext.put("reference", requirement.getReference());
+			reqContext.put("label", requirement.getLabel());
 		}
 
 		for (Issue issue : release.getAffectedIssues()) {
