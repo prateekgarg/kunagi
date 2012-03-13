@@ -105,9 +105,11 @@ public class Project extends GProject implements ForumSupport {
 	public List<String> getThemes() {
 		Set<String> themes = new HashSet<String>();
 		for (Requirement requirement : getRequirements()) {
+			if (requirement.isClosed()) continue;
 			themes.addAll(requirement.getThemes());
 		}
 		for (Issue issue : getIssues()) {
+			if (issue.isClosed()) continue;
 			themes.addAll(issue.getThemes());
 		}
 		List<String> ret = new ArrayList<String>(themes);
