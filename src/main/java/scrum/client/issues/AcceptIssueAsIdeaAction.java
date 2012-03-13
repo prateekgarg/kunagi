@@ -14,9 +14,7 @@
  */
 package scrum.client.issues;
 
-import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
-import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 
@@ -49,7 +47,6 @@ public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 	@Override
 	protected void onExecute() {
 		issue.acceptAsIdea();
-		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(issue);
 		addUndo(new Undo());
 	}
 

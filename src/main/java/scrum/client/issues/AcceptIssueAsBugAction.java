@@ -14,9 +14,7 @@
  */
 package scrum.client.issues;
 
-import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
-import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 
@@ -53,7 +51,6 @@ public class AcceptIssueAsBugAction extends GAcceptIssueAsBugAction {
 	@Override
 	protected void onExecute() {
 		issue.acceptAsBug();
-		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(issue);
 		addUndo(new Undo());
 	}
 

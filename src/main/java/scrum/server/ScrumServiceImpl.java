@@ -526,6 +526,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
+		if (properties.containsKey("acceptDate")) {
+			if (issue.isIdea() || issue.isBug()) {
+				postProjectEvent(conversation, currentUser.getName() + " accepted " + issue.getReferenceAndLabel(),
+					issue);
+			}
+		}
+
 		issue.getProject().updateHomepage(issue, false);
 	}
 
