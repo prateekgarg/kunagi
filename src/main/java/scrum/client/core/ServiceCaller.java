@@ -96,6 +96,13 @@ public class ServiceCaller extends GServiceCaller {
 		return activeServiceCalls;
 	}
 
+	public boolean containsServiceCall(Class<? extends AServiceCall> type) {
+		for (AServiceCall call : activeServiceCalls) {
+			if (call.getClass().getName().equals(type.getClass().getName())) return true;
+		}
+		return false;
+	}
+
 	public int getConversationNumber() {
 		return conversationNumber;
 	}

@@ -23,7 +23,7 @@ import com.google.gwt.user.client.Timer;
 
 public class RichtextAutosaver extends GRichtextAutosaver implements ApplicationStartedHandler {
 
-	public static final int SAVE_INTERVAL_IN_SECONDS = 3;
+	public static final int SAVE_INTERVAL_IN_SECONDS = 5;
 
 	@Override
 	public void onApplicationStarted(ApplicationStartedEvent event) {
