@@ -162,7 +162,10 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		}
 		if (isIdea()) return "accepted on " + getAcceptDate();
 		if (isSuspended()) return "suspended until " + getSuspendedUntilDate();
-		return "issued on " + getDate().getDate();
+
+		String issuer = getIssuer();
+		if (Str.isBlank(issuer)) issuer = "anonymous";
+		return "issued on " + getDate().getDate() + " by " + issuer;
 	}
 
 	public String getThemesAsString() {
