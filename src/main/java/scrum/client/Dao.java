@@ -258,7 +258,12 @@ public class Dao extends GDao {
 		private void flush() {
 			if (!entityProperties.isEmpty()) {
 				ChangeHistoryManager changeHistoryManager = Scope.get().getComponent(ChangeHistoryManager.class);
-				if (changeHistoryManager != null) changeHistoryManager.deactivateChangeHistory();
+				if (changeHistoryManager != null) {
+					for (String entityId : entityProperties.keySet()) {
+						if (changeHistoryManager.isChangeHistoryActive(entityId))
+							changeHistoryManager.deactivateChangeHistory();
+					}
+				}
 			}
 
 			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
