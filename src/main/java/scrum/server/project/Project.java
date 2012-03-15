@@ -19,6 +19,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
+import ilarkesto.base.time.Time;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
 import ilarkesto.rss.Rss20Builder;
@@ -28,7 +29,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -243,7 +243,7 @@ public class Project extends GProject {
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
 		rss.setLink(baseUrl + "#project=" + getId());
-		for (ProjectEvent event : getLatestProjectEvents()) {
+		for (ProjectEvent event : getLatestProjectEvents(30)) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
@@ -266,15 +266,19 @@ public class Project extends GProject {
 		return simpleEventDao.getSimpleEventsByProject(this);
 	}
 
-	public List<ProjectEvent> getLatestProjectEvents() {
-		List<ProjectEvent> events = new LinkedList<ProjectEvent>(getProjectEvents());
-		int max = 30;
-		if (events.size() <= max) return events;
-		Collections.sort(events);
-		while (events.size() > max) {
-			events.remove(0);
+	public List<ProjectEvent> getLatestProjectEvents(int min) {
+		List<ProjectEvent> events = Utl.sort(projectEventDao.getProjectEventsByProject(this));
+
+		DateAndTime deadline = new DateAndTime(Date.today().prevDay(), Time.now());
+		List<ProjectEvent> ret = new ArrayList<ProjectEvent>();
+		int count = 0;
+		for (ProjectEvent event : events) {
+			ret.add(event);
+			count++;
+			DateAndTime dateAndTime = event.getDateAndTime();
+			if (count > min && dateAndTime.isBefore(deadline)) break;
 		}
-		return events;
+		return ret;
 	}
 
 	public Set<ProjectUserConfig> getUserConfigs() {
