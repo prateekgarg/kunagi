@@ -86,15 +86,17 @@ public class ChangeWidget extends AScrumWidget {
 
 	public void expand() {
 		payloadPanel.clear();
-		ATextWidget diffWidget = new ATextWidget() {
+		if (change.isDiffAvailable()) {
+			ATextWidget diffWidget = new ATextWidget() {
 
-			@Override
-			protected void onUpdate() {
-				setHtml(change.getDiff());
-			}
-		};
-		diffWidget.addStyleName("ChangeWidget-diff");
-		payloadPanel.add(diffWidget);
+				@Override
+				protected void onUpdate() {
+					setHtml(change.getDiff());
+				}
+			};
+			diffWidget.addStyleName("ChangeWidget-diff");
+			payloadPanel.add(diffWidget);
+		}
 		payloadPanel.add(Gwt.createDiv("ChangeWidget-comment", new RichtextEditorWidget(change.getCommentModel())));
 		update();
 	}

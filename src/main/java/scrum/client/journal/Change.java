@@ -159,4 +159,12 @@ public class Change extends GChange {
 		return s;
 	}
 
+	public boolean isDiffAvailable() {
+		if (getParent() instanceof Requirement) {
+			if (isKey(REQ_REJECTED_IN_SPRINT)) return false;
+			if (isKey(REQ_COMPLETED_IN_SPRINT)) return false;
+		}
+		return true;
+	}
+
 }

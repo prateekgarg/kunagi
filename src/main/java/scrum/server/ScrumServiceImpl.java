@@ -835,8 +835,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				sendToClients(conversation, requirement);
 			}
 		}
-		project.switchToNextSprint();
+		Sprint newSprint = project.switchToNextSprint();
+		postProjectEvent(conversation, conversation.getSession().getUser() + " switched to next sprint ", newSprint);
 		sendToClients(conversation, project.getSprints());
+		sendToClients(conversation, project.getSprintReports());
 		sendToClients(conversation, project.getRequirements());
 		sendToClients(conversation, project.getTasks()); // TODO optimize: no history tasks
 		sendToClients(conversation, oldSprint.getReleases());

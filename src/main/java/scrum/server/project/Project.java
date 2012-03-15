@@ -488,7 +488,7 @@ public class Project extends GProject {
 		return projectSprintSnapshotDao.getProjectSprintSnapshotsByProject(this);
 	}
 
-	public void switchToNextSprint() {
+	public Sprint switchToNextSprint() {
 		Sprint oldSprint = getCurrentSprint();
 		oldSprint.close();
 		oldSprint.setEnd(Date.today());
@@ -512,6 +512,8 @@ public class Project extends GProject {
 				taskDao.deleteEntity(task);
 			}
 		}
+
+		return newSprint;
 	}
 
 	private ProjectSprintSnapshot createSprintSnapshot() {
