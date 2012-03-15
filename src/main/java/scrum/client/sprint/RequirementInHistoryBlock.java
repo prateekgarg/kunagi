@@ -79,7 +79,7 @@ public class RequirementInHistoryBlock extends ABlockWidget<Requirement> {
 		tasks.addAll(report.getOpenTasks(requirement));
 		tasks.addAll(report.getClosedTasks(requirement));
 
-		requirementWidget = new RequirementWidget(requirement, false, false, false, true, false, false, false);
+		requirementWidget = new RequirementWidget(requirement, true, false, false, true, false, false, false);
 
 		taskList = new BlockListWidget<Task>(TaskInHistoryBlock.createFactory(sprint));
 		taskList.setAutoSorter(sprint.getTasksOrderComparator());

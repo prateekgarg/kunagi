@@ -19,6 +19,7 @@ import ilarkesto.core.scope.Scope;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
+import scrum.client.communication.Pinger;
 import scrum.client.core.AServiceCall;
 import scrum.client.core.ServiceCaller;
 import scrum.client.test.ScrumStatusWidget;
@@ -26,6 +27,7 @@ import scrum.client.test.ScrumStatusWidget;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,6 +35,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class CommunicationIndicatorWidget extends AScrumWidget {
 
 	private ServiceCaller serviceCaller;
+	private Pinger pinger;
 
 	private FocusPanel focusPanel;
 	private Label status;
@@ -44,6 +47,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		serviceCaller = Scope.get().getComponent(ServiceCaller.class);
 		serviceCaller.setStatusWidget(this);
+		pinger = Scope.get().getComponent(Pinger.class);
 
 		status = new Label();
 		status.setStyleName("StatusWidget");
@@ -51,6 +55,22 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 
 		focusPanel = new FocusPanel(status);
 		focusPanel.addClickHandler(new StatusClickHandler());
+
+		new Timer() {
+
+			@Override
+			public void run() {
+				if (onTime > 0) {
+					long onDuration = System.currentTimeMillis() - onTime;
+					if (onDuration > 3000) {
+						statusStyle.setBackgroundColor("#f00");
+						status.setTitle("Waiting for server response since " + (onDuration / 1000) + " seconds...");
+						return;
+					}
+				}
+				status.setTitle(pinger.getAvaragePingTimeMessage());
+			}
+		}.scheduleRepeating(1000);
 
 		return focusPanel;
 	}

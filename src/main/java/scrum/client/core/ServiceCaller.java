@@ -97,8 +97,10 @@ public class ServiceCaller extends GServiceCaller {
 	}
 
 	public boolean containsServiceCall(Class<? extends AServiceCall> type) {
+		String name = Str.getSimpleName(type);
 		for (AServiceCall call : activeServiceCalls) {
-			if (call.getClass().getName().equals(type.getClass().getName())) return true;
+			String callName = Str.getSimpleName(call.getClass());
+			if (callName.equals(name)) return true;
 		}
 		return false;
 	}
