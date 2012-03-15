@@ -36,12 +36,12 @@ public class DeleteIssueAction extends GDeleteIssueAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (!issue.isOpen()) return false;
 		return true;
 	}
 
 	@Override
 	public boolean isPermitted() {
-		if (!issue.isOpen()) return false;
 		if (!issue.getProject().isScrumTeamMember(getCurrentUser())) return false;
 		return true;
 	}
