@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import scrum.client.admin.ProjectUserConfig;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.project.Project;
@@ -69,6 +70,16 @@ public class UsersStatusWidget extends AScrumWidget {
 		@Override
 		public int compare(User a, User b) {
 			Project project = getCurrentProject();
+
+			ProjectUserConfig aConfig = project.getUserConfig(a);
+			ProjectUserConfig bConfig = project.getUserConfig(b);
+
+			boolean aOnline = aConfig.isOnline();
+			boolean bOnline = bConfig.isOnline();
+
+			if (aOnline && !bOnline) return -1;
+			if (!aOnline && bOnline) return 1;
+
 			boolean aScrumTeam = project.isScrumTeamMember(a);
 			boolean bScrumTeam = project.isScrumTeamMember(b);
 
