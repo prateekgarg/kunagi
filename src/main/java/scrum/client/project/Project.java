@@ -66,6 +66,7 @@ public class Project extends GProject implements ForumSupport {
 	private static final String effortUnit = "pts";
 	public static final String INIT_LABEL = "New Project";
 
+	public transient boolean historyLoaded;
 	private transient Comparator<Requirement> requirementsOrderComparator;
 	private transient Comparator<Issue> issuesOrderComparator;
 

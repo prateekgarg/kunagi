@@ -137,7 +137,13 @@ public class Change extends GChange {
 
 	@Override
 	public String toString() {
-		return getUser() + " on " + getDateAndTime() + ": " + getParent() + " ." + getKey();
+		String parent;
+		try {
+			parent = getParent().toString();
+		} catch (Exception ex) {
+			parent = "<?>";
+		}
+		return getUser() + " on " + getDateAndTime() + ": " + parent + " ." + getKey();
 	}
 
 	public static transient final Comparator<Change> DATE_AND_TIME_COMPARATOR = new Comparator<Change>() {

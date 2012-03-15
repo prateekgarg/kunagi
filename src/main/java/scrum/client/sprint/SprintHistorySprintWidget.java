@@ -50,7 +50,7 @@ public class SprintHistorySprintWidget extends AScrumWidget {
 	@Override
 	protected void onUpdate() {
 		SprintReport report = sprint.getSprintReport();
-		if (report != null) {
+		if (sprint.getProject().historyLoaded && report != null) {
 			Set<Requirement> allRequirements = report.getAllRequirements();
 			if (changeIndicator.update(allRequirements)) {
 				requirementList.setObjects(allRequirements);

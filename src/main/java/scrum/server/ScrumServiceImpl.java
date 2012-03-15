@@ -136,14 +136,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onRequestHistory(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
-		conversation.sendToClient(project.getSprints());
-		conversation.sendToClient(project.getSprintReports());
-		Set<Requirement> requirements = project.getRequirements();
-		conversation.sendToClient(requirements);
-		for (Requirement requirement : requirements) {
-			conversation.sendToClient(requirement.getTasks());
-			conversation.sendToClient(requirement.getSprintSwitchChanges());
+		Set<SprintReport> reports = project.getSprintReports();
+		Set<AEntity> entities = new HashSet<AEntity>();
+		entities.addAll(reports);
+		for (SprintReport report : reports) {
+			entities.addAll(getAssociatedEntities(report));
 		}
+		conversation.sendToClient(entities);
 	}
 
 	@Override
@@ -639,6 +638,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.sendToClient(project);
 		conversation.sendToClient(project.getSprints());
+		conversation.sendToClient(project.getSprintReports());
 		conversation.sendToClient(project.getParticipants());
 		for (Requirement requirement : project.getProductBacklogRequirements()) {
 			conversation.sendToClient(requirement);

@@ -37,7 +37,14 @@ public class SprintHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		new RequestHistoryServiceCall().execute();
+		new RequestHistoryServiceCall().execute(new Runnable() {
+
+			@Override
+			public void run() {
+				getCurrentProject().historyLoaded = true;
+				update();
+			}
+		});
 		return page;
 	}
 
