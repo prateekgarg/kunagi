@@ -500,9 +500,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(), issue);
 
 			Release nextRelease = issue.getProject().getNextRelease();
-			if (issue.isFixReleasesEmpty() && nextRelease != null) {
+			if (nextRelease != null && issue.isFixReleasesEmpty()) {
 				issue.setFixReleases(Collections.singleton(nextRelease));
-				sendToClients(conversation, issue);
 			}
 		}
 
@@ -520,7 +519,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				Release currentRelease = issue.getProject().getCurrentRelease();
 				if (issue.isAffectedReleasesEmpty() && currentRelease != null) {
 					issue.setAffectedReleases(Collections.singleton(currentRelease));
-					sendToClients(conversation, issue);
 				}
 			}
 		}

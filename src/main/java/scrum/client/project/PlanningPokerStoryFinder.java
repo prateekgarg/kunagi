@@ -1,7 +1,5 @@
 package scrum.client.project;
 
-import ilarkesto.core.logging.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -51,10 +49,10 @@ public class PlanningPokerStoryFinder {
 		// Stories that have twice the size
 		if (results.size() < MAX_RESULTS && estimation < 100) {
 			Float value = ScrumGwt.getNextEstimationValue(estimation * 2);
-			Log.DEBUG(value, estimation * 2);
+			// Log.DEBUG(value, estimation * 2);
 			if (value.equals(estimation * 2)) {
 				List<Set<Requirement>> stories = getSame(value);
-				Log.DEBUG(stories);
+				// Log.DEBUG(stories);
 				results.addAll(stories);
 			}
 		}

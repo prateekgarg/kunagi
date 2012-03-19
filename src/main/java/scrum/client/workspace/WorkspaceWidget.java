@@ -71,14 +71,12 @@ public class WorkspaceWidget extends AScrumWidget {
 	}
 
 	public void abort(String messageHtml) {
-		Log.DEBUG("Locking UI for ABORT:", messageHtml);
 		lockInfo.showBug(messageHtml);
 		locker.lock(lockInfo);
 	}
 
 	public void lock(String message) {
 		initialize();
-		Log.DEBUG("Locking UI:", message);
 		lockInfo.showWait(message);
 		locker.lock(lockInfo);
 	}
@@ -89,7 +87,6 @@ public class WorkspaceWidget extends AScrumWidget {
 	}
 
 	public void unlock() {
-		Log.DEBUG("Unlocking UI");
 		locker.unlock();
 	}
 

@@ -14,7 +14,6 @@
  */
 package scrum.client.release;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
 import scrum.client.ScrumGwt;
@@ -64,8 +63,6 @@ public class ReleaseManagementWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		Log.DEBUG("planned:", getCurrentProject().getPlannedReleases());
-		Log.DEBUG("released:", getCurrentProject().getReleasedReleases());
 		planned.setObjects(getCurrentProject().getPlannedReleases());
 		published.setObjects(getCurrentProject().getReleasedReleases());
 		super.onUpdate();
