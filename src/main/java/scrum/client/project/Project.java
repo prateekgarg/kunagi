@@ -54,6 +54,7 @@ import scrum.client.journal.ProjectEvent;
 import scrum.client.pr.BlogEntry;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
+import scrum.client.sprint.RequirementsOrderComparator;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.SprintReport;
 import scrum.client.sprint.Task;
@@ -68,7 +69,7 @@ public class Project extends GProject implements ForumSupport {
 	public static final String INIT_LABEL = "New Project";
 
 	public transient boolean historyLoaded;
-	private transient Comparator<Requirement> requirementsOrderComparator;
+	private transient RequirementsOrderComparator requirementsOrderComparator;
 	private transient Comparator<Issue> issuesOrderComparator;
 
 	public Project(User creator) {
@@ -638,25 +639,14 @@ public class Project extends GProject implements ForumSupport {
 		return issuesOrderComparator;
 	}
 
-	public Comparator<Requirement> getRequirementsOrderComparator() {
-		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+	public RequirementsOrderComparator getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new RequirementsOrderComparator() {
 
 			@Override
-			public int compare(Requirement a, Requirement b) {
-				List<String> order = getRequirementsOrderIds();
-				int additional = order.size();
-				int ia = order.indexOf(a.getId());
-				if (ia < 0) {
-					ia = additional;
-					additional++;
-				}
-				int ib = order.indexOf(b.getId());
-				if (ib < 0) {
-					ib = additional;
-					additional++;
-				}
-				return ia - ib;
+			protected List<String> getOrder() {
+				return getRequirementsOrderIds();
 			}
+
 		};
 		return requirementsOrderComparator;
 	}

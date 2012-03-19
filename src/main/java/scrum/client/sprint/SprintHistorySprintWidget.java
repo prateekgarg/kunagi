@@ -40,8 +40,10 @@ public class SprintHistorySprintWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		SprintReport report = sprint.getSprintReport();
 		requirementList = new BlockListWidget<Requirement>(RequirementInHistoryBlock.createFactory(sprint));
-		requirementList.setAutoSorter(sprint.getRequirementsOrderComparator());
+		requirementList.setAutoSorter(report != null ? report.getRequirementsOrderComparator() : sprint
+				.getRequirementsOrderComparator());
 
 		HTML pdfLink = ScrumGwt.createPdfLink("Download Report as PDF", "sprintReport", sprint);
 		return Gwt.createFlowPanel(new SprintWidget(sprint), requirementList, pdfLink);

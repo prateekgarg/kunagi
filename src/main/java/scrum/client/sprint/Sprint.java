@@ -51,7 +51,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 	public static final String REFERENCE_PREFIX = "spr";
 
 	private transient Comparator<Task> tasksOrderComparator;
-	private transient Comparator<Requirement> requirementsOrderComparator;
+	private transient RequirementsOrderComparator requirementsOrderComparator;
 
 	public Sprint(Project project, String label) {
 		setProject(project);
@@ -321,24 +321,12 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 		return lengthInDaysModel;
 	}
 
-	public Comparator<Requirement> getRequirementsOrderComparator() {
-		if (requirementsOrderComparator == null) requirementsOrderComparator = new Comparator<Requirement>() {
+	public RequirementsOrderComparator getRequirementsOrderComparator() {
+		if (requirementsOrderComparator == null) requirementsOrderComparator = new RequirementsOrderComparator() {
 
 			@Override
-			public int compare(Requirement a, Requirement b) {
-				List<String> order = getRequirementsOrderIds();
-				int additional = order.size();
-				int ia = order.indexOf(a.getId());
-				if (ia < 0) {
-					ia = additional;
-					additional++;
-				}
-				int ib = order.indexOf(b.getId());
-				if (ib < 0) {
-					ib = additional;
-					additional++;
-				}
-				return ia - ib;
+			protected List<String> getOrder() {
+				return getRequirementsOrderIds();
 			}
 		};
 		return requirementsOrderComparator;
