@@ -497,7 +497,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
-			postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(), issue);
+			if (!issue.isFixed()) {
+				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
+					issue);
+			}
 
 			Release nextRelease = issue.getProject().getNextRelease();
 			if (nextRelease != null && issue.isFixReleasesEmpty()) {
