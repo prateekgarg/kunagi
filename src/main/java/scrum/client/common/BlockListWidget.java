@@ -14,7 +14,6 @@
  */
 package scrum.client.common;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.ObjectMappedFlowPanel;
@@ -205,7 +204,6 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
-		Log.DEBUG("Dropping to index", toIndex, "->", block);
 		assert block != null;
 		O object = block.getObject();
 		if (block.getList() == this) {
@@ -279,10 +277,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	public final boolean extendObject(O object, boolean exclusive) {
 		int idx = indexOfObject(object);
-		if (idx < 0) {
-			Log.DEBUG("Extending block failed. Object does not exist:", object);
-			return false;
-		}
+		if (idx < 0) { return false; }
 		extendRow(idx, exclusive);
 		assert isExtended(object);
 		return true;

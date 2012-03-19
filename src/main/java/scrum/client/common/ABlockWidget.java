@@ -14,7 +14,6 @@
  */
 package scrum.client.common;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.ScrumScopeManager;
@@ -152,7 +151,6 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		if (!initializedExtension) {
 			if (initializingExtension) throw new RuntimeException("Extension already initializing: " + toString());
 			initializingExtension = true;
-			Log.DEBUG("Initializing extension: " + toString());
 			body = onExtendedInitialization();
 			initializedExtension = true;
 			initializingExtension = false;
