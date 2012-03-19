@@ -179,7 +179,12 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		setObjects(Gwt.toList(objects));
 	}
 
+	public final void setObjects(Collection<O> newObjects) {
+		setObjects(new ArrayList<O>(newObjects));
+	}
+
 	public final void setObjects(List<O> newObjects) {
+		if (locked) return;
 		initialize();
 		if (autoSorter != null) {
 			Collections.sort(newObjects, autoSorter);
@@ -187,8 +192,16 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		list.set(newObjects);
 	}
 
-	public final void setObjects(Collection<O> newObjects) {
-		setObjects(new ArrayList<O>(newObjects));
+	private transient static boolean locked;
+
+	public static final void lockForChanges() {
+		if (locked) return;
+		locked = true;
+	}
+
+	public static final void unlock() {
+		if (!locked) return;
+		locked = false;
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
