@@ -141,6 +141,10 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		return isAccepted() && isUrgent();
 	}
 
+	public boolean isUnclosedBug() {
+		return isBug() && !isClosed();
+	}
+
 	public boolean isIdea() {
 		return isAccepted() && !isUrgent();
 	}

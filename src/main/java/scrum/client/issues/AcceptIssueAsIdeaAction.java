@@ -40,7 +40,7 @@ public class AcceptIssueAsIdeaAction extends GAcceptIssueAsIdeaAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!issue.isOpen()) return false;
+		if (!(issue.isOpen() || issue.isUnclosedBug())) return false;
 		return true;
 	}
 
