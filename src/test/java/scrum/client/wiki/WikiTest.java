@@ -78,6 +78,7 @@ public class WikiTest extends Assert {
 		Assert.assertTrue(toHtml("[[Wiki|Custom Text]] is cool").contains(">Custom Text</a>"));
 		Assert.assertTrue(toHtml("tsk15!").contains("<a "));
 		Assert.assertTrue(toHtml("(tsk15!), :-)").contains("<a "));
+		Assert.assertTrue(toHtml("tsk15:; :-)").contains("<a "));
 	}
 
 	@Test

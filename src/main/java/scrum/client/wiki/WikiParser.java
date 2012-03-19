@@ -509,7 +509,7 @@ public class WikiParser {
 	}
 
 	private boolean isIgnorableWordSuffix(char c) {
-		return c == '.' || c == ',' || c == '!' || c == '?' || c == ')';
+		return c == '.' || c == ',' || c == '!' || c == '?' || c == ')' || c == ':' || c == ';';
 	}
 
 	private boolean isUrl(String s) {
