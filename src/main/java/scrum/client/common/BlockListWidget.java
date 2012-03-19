@@ -61,6 +61,10 @@ public final class BlockListWidget<O> extends AScrumWidget {
 		dndMarkerBottom = new BlockDndMarkerWidget();
 	}
 
+	public boolean isAnimating() {
+		return list.isAnimating();
+	}
+
 	public ABlockWidget<O> getExtendedBlock() {
 		for (ABlockWidget<O> block : getBlocks()) {
 			if (block.isExtended()) return block;
