@@ -311,6 +311,8 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		} else {
 			throw new RuntimeException("Showing entity not supported: " + entity.getClass().getName());
 		}
+
+		navigator.updateHistory(Page.getPageName(getWorkarea().getCurrentWidget()), entity);
 	}
 
 	public String getPageForEntity(String entityId) {

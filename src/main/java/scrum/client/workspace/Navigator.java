@@ -235,6 +235,10 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		return historyToken.isToggle();
 	}
 
+	public void updateHistory(String page, AGwtEntity entity) {
+		historyToken.updatePageAndEntityWithoutEvent(page, entity);
+	}
+
 	public void setSearch(SearchInputWidget search) {
 		this.search = search;
 	}

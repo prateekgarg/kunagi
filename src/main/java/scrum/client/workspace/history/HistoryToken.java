@@ -17,6 +17,7 @@ package scrum.client.workspace.history;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
+import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -104,6 +105,16 @@ public class HistoryToken {
 
 	public void updatePage(String page) {
 		History.newItem("project=" + projectId + "|page=" + page, true);
+	}
+
+	public void updatePageAndEntityWithoutEvent(String page, AGwtEntity entity) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("project=").append(getProjectId());
+		if (!Str.isBlank(page)) sb.append("|page=").append(page);
+		if (entity != null) sb.append("|entity=").append(entity.getId());
+		String token = sb.toString();
+		if (token.equals(History.getToken())) return;
+		History.newItem(token, false);
 	}
 
 	public String getProjectId() {
