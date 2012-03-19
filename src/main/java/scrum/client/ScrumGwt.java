@@ -72,7 +72,7 @@ public class ScrumGwt extends Gwt {
 	}
 
 	public static Float getPrevEstimationValue(Float value) {
-		for (int i = Requirement.WORK_ESTIMATION_FLOAT_VALUES.length - 1; i >= 0; i--) {
+		for (int i = Requirement.WORK_ESTIMATION_FLOAT_VALUES.length - 1; i > 0; i--) {
 			Float f = Requirement.WORK_ESTIMATION_FLOAT_VALUES[i];
 			if (f <= value) { return f; }
 		}
