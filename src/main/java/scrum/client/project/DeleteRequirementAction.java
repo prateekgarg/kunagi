@@ -35,8 +35,10 @@ public class DeleteRequirementAction extends GDeleteRequirementAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!getCurrentProject().getProductBacklogRequirements().contains(requirement)) return false;
-		if (getCurrentProject().isCurrentSprint(requirement.getSprint())) return false;
+		Project project = getCurrentProject();
+		if (!project.getProductBacklogRequirements().contains(requirement)) return false;
+		if (project.isCurrentSprint(requirement.getSprint())) return false;
+		if (project.isInHistory(requirement)) return false;
 		return true;
 	}
 

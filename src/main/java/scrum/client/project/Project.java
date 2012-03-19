@@ -55,6 +55,7 @@ import scrum.client.pr.BlogEntry;
 import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
+import scrum.client.sprint.SprintReport;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -82,6 +83,23 @@ public class Project extends GProject implements ForumSupport {
 
 	public Project(Map data) {
 		super(data);
+	}
+
+	public boolean isInHistory(Requirement requirement) {
+		for (SprintReport report : getSprintReports()) {
+			if (report.containsCompletedRequirement(requirement)) return true;
+			if (report.containsRejectedRequirement(requirement)) return true;
+		}
+		return false;
+	}
+
+	public Set<SprintReport> getSprintReports() {
+		Set<SprintReport> reports = new HashSet<SprintReport>();
+		for (Sprint sprint : getSprints()) {
+			SprintReport report = sprint.getSprintReport();
+			if (report != null) reports.add(report);
+		}
+		return reports;
 	}
 
 	public boolean isHomepagePublishingEnabled() {
