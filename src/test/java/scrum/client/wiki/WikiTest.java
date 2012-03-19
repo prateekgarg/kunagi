@@ -144,6 +144,7 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void code() {
+		Assert.assertEquals(toHtml("<code>code</code> is here."), "<code>code</code> is here.");
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiline\ncode</code>."),

@@ -317,12 +317,15 @@ public class WikiParser {
 		if (input.startsWith("<code>")) {
 			int endIdx = input.indexOf("</code>");
 			if (endIdx > 0) {
-				String code = input.substring(6, endIdx);
-				Paragraph p = new Paragraph(true);
-				p.add(new Code(code));
-				model.add(p);
-				burn(endIdx + 8);
-				return;
+				int linebreakIdx = input.indexOf("\n");
+				if (linebreakIdx > 0 && endIdx > linebreakIdx) {
+					String code = input.substring(6, endIdx);
+					Paragraph p = new Paragraph(true);
+					p.add(new Code(code));
+					model.add(p);
+					burn(endIdx + 8);
+					return;
+				}
 			}
 		}
 
