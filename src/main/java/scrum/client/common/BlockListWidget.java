@@ -120,6 +120,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
+		// if (locked) return;
 		super.onUpdate();
 	}
 

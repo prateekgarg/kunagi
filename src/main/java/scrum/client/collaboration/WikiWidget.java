@@ -28,6 +28,7 @@ import scrum.client.common.TooltipBuilder;
 import scrum.client.communication.TouchLastActivityServiceCall;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.journal.ChangeHistoryWidget;
+import scrum.client.workspace.Navigator;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -35,6 +36,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -171,7 +173,7 @@ public class WikiWidget extends AScrumWidget {
 
 		@Override
 		protected void onExecute() {
-			showPage(pageName);
+			History.newItem(Navigator.getEntityHistoryToken("wiki", "[[" + pageName + "]]"));
 		}
 	}
 
