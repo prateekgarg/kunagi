@@ -15,7 +15,9 @@
 package scrum.server.common;
 
 import ilarkesto.base.time.Date;
+import ilarkesto.core.base.Str;
 import ilarkesto.pdf.ACell;
+import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfBuilder;
 import ilarkesto.pdf.APdfContainerElement;
 import ilarkesto.pdf.ARow;
@@ -25,6 +27,7 @@ import ilarkesto.pdf.FontStyle;
 import java.awt.Color;
 import java.util.Collection;
 
+import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
@@ -127,6 +130,14 @@ public abstract class APdfCreator {
 
 			if (task.isDescriptionSet()) richtextRow(table, "Description", task.getDescription());
 
+			Impediment impediment = task.getImpediment();
+			if (impediment != null && !impediment.isClosed()) {
+				AParagraph p = richtextRow(table, null, null).paragraph();
+				p.text("Blocked by ", fieldLabelFont);
+				p.text(impediment.getReference(), referenceFont);
+				p.text(" " + impediment.getLabel(), defaultFont);
+			}
+
 			table.createCellBorders(Color.LIGHT_GRAY, 0.2f);
 		}
 
@@ -185,7 +196,7 @@ public abstract class APdfCreator {
 		ARow row = table.row();
 
 		ACell valueCell = row.cell().setColspan(colspan);
-		valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
+		if (!Str.isBlank(label)) valueCell.paragraph().setDefaultFontStyle(miniLabelFont).text(label);
 		if (value != null) wiki(valueCell, value);
 		valueCell.setPaddingBottom(3);
 		return valueCell;

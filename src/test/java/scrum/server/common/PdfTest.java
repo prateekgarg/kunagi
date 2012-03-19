@@ -109,6 +109,7 @@ public class PdfTest extends ATest {
 		req2.setEstimatedWork(0.5f);
 		req2.setDirty(false);
 		TestUtil.createTasks(req1, Utl.randomInt(0, 2));
+		TestUtil.createTask(req2, 666, 1, 0).setImpediment(TestUtil.createImpediment(project, 666));
 		req2.setSprint(sprint);
 
 		createPdf(new SprintBacklogPdfCreator(project));
