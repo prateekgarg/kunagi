@@ -36,7 +36,7 @@ public class ProjectEvent extends GProjectEvent implements Comparable<ProjectEve
 
 	@Override
 	public int compareTo(ProjectEvent other) {
-		return getDateAndTime().compareTo(other.getDateAndTime());
+		return other.getDateAndTime().compareTo(getDateAndTime());
 	}
 
 	@Override
