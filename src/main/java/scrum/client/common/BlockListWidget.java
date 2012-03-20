@@ -231,7 +231,6 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final boolean extendRow(int row, boolean exclusive) {
-		unlock();
 		if (exclusive) {
 			if (selectionManager == null) {
 				collapseAll();
