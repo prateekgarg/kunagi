@@ -58,8 +58,6 @@ public class ProjectBlock extends ABlockWidget<Project> {
 
 		tb.addFieldRow("Support Email", project.getSupportEmailModel());
 
-		tb.addFieldRow("Vision", new TextEditorWidget(project.getVisionModel()));
-
 		addParticipantsAndAdminsFieldRows(project, tb);
 
 		addRolesFieldRows(project, tb);
@@ -73,7 +71,7 @@ public class ProjectBlock extends ABlockWidget<Project> {
 		return tb.createTable();
 	}
 
-	private static void addParticipantsAndAdminsFieldRows(final Project project, TableBuilder tb) {
+	public static void addParticipantsAndAdminsFieldRows(final Project project, TableBuilder tb) {
 		tb.addFieldRow("Participants", new AMultiSelectionViewEditWidget<User>() {
 
 			@Override

@@ -14,20 +14,11 @@
  */
 package scrum.client.project;
 
-import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.TableBuilder;
-import ilarkesto.gwt.client.editor.AEditorModel;
 import ilarkesto.gwt.client.editor.RichtextEditorWidget;
-import ilarkesto.gwt.client.editor.TextOutputWidget;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import scrum.client.ScrumGwt;
 import scrum.client.admin.ProjectBlock;
-import scrum.client.admin.User;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.WeekdaySelectorEditorWidget;
 import scrum.client.workspace.PagePanel;
@@ -47,40 +38,8 @@ public class ProjectAdminWidget extends AScrumWidget {
 		TableBuilder tbPro = ScrumGwt.createFieldTable();
 		tbPro.addFieldRow("Name", project.getLabelModel());
 		tbPro.addFieldRow("Vision", new RichtextEditorWidget(project.getVisionModel()));
-		tbPro.addFieldRow("Participants", new TextOutputWidget(new AEditorModel<String>() {
 
-			@Override
-			public String getValue() {
-				List<User> participants = new ArrayList<User>(project.getParticipants());
-				Collections.sort(participants);
-				return Str.concat(participants, ", ");
-			}
-
-			@Override
-			public void setValue(String value) {}
-
-			@Override
-			public String getTooltip() {
-				return "Users who participate in this project. To change this, you have to login as <code>admin</code>.";
-			}
-		}));
-		tbPro.addFieldRow("Admins", new TextOutputWidget(new AEditorModel<String>() {
-
-			@Override
-			public String getValue() {
-				List<User> admins = new ArrayList<User>(project.getAdmins());
-				Collections.sort(admins);
-				return Str.concat(admins, ", ");
-			}
-
-			@Override
-			public void setValue(String value) {}
-
-			@Override
-			public String getTooltip() {
-				return "Users who technically administrate this project. To change this, you have to login as <code>admin</code>.";
-			}
-		}));
+		ProjectBlock.addParticipantsAndAdminsFieldRows(project, tbPro);
 		ProjectBlock.addRolesFieldRows(project, tbPro);
 		tbPro.addFieldRow("Free days", new WeekdaySelectorEditorWidget(project.getFreeDaysWeekdaySelectorModel()));
 		tbPro.addFieldRow("Release info", project.getReleasingInfoModel());
