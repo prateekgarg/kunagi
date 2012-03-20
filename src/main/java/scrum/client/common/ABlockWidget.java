@@ -213,6 +213,8 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 
 		resetLastModificationTime();
 		update();
+
+		BlockListWidget.unlock();
 	}
 
 	final void activate() {

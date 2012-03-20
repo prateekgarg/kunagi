@@ -249,7 +249,6 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final void collapseRow(int row) {
-		unlock();
 		getBlock(row).setExtended(false);
 	}
 
