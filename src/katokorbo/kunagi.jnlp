@@ -9,11 +9,12 @@
         <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
         <jar href="https://github.com/downloads/witek/katokorbo/katokorbo.jar" main="true" />
     </resources>
-    <application-desc
-         name="Kunagi"
-         main-class="katokorbo.Katokorbo"
-         width="300"
-         height="300">
-     </application-desc>
-     <update check="background"/>
+    <application-desc name="Kunagi" main-class="katokorbo.Katokorbo">
+      <argument>--title</argument>
+      <argument>Kunagi</argument>
+      <argument>--port</argument>
+      <argument>9061</argument>
+      <argument>http://kunagi.org/katokorbo.properties</argument>
+    </application-desc>
+    <update check="background"/>
 </jnlp>
