@@ -20,6 +20,7 @@ import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
+import ilarkesto.gwt.client.animation.AnimatingFlowPanel;
 
 import java.util.Map;
 
@@ -77,6 +78,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		tb.setCellPadding(5);
+		tb.addRow(new ButtonWidget(new ToggleListAnimationsAction()));
 		tb.addRow(new ButtonWidget(new ThrowExceptionAction()));
 		tb.addRow(new ButtonWidget(new ThrowServerExceptionAction()));
 		tb.addRow(new ButtonWidget(new ShowWidgetsTesterAction()));
@@ -108,6 +110,19 @@ public class ScrumStatusWidget extends AScrumWidget {
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
 		return tb.createTable();
+	}
+
+	class ToggleListAnimationsAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			return AnimatingFlowPanel.animationsDisabled ? "Enable list animations" : "Disable list animations";
+		}
+
+		@Override
+		protected void onExecute() {
+			AnimatingFlowPanel.animationsDisabled = !AnimatingFlowPanel.animationsDisabled;
+		}
 	}
 
 	class ThrowExceptionAction extends AScrumAction {
