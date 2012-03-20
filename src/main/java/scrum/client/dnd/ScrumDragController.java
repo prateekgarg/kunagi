@@ -14,12 +14,12 @@
  */
 package scrum.client.dnd;
 
-import scrum.client.common.BlockListWidget;
-
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumDragController extends PickupDragController {
+
+	private static boolean dragging;
 
 	public ScrumDragController() {
 		super(RootPanel.get(), false);
@@ -28,14 +28,18 @@ public class ScrumDragController extends PickupDragController {
 
 	@Override
 	public void dragStart() {
-		BlockListWidget.lockForChanges();
 		super.dragStart();
+		dragging = true;
 	}
 
 	@Override
 	public void dragEnd() {
+		dragging = false;
 		super.dragEnd();
-		BlockListWidget.unlock();
+	}
+
+	public static boolean isDragging() {
+		return dragging;
 	}
 
 	@Override

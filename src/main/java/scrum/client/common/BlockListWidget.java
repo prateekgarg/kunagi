@@ -27,6 +27,7 @@ import java.util.List;
 
 import scrum.client.dnd.BlockDndMarkerWidget;
 import scrum.client.dnd.BlockListDropAction;
+import scrum.client.dnd.ScrumDragController;
 import scrum.client.workspace.DndManager;
 import scrum.client.workspace.Navigator;
 
@@ -124,7 +125,7 @@ public final class BlockListWidget<O> extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		if (locked) return;
+		if (ScrumDragController.isDragging() || list.isAnimating()) return;
 		super.onUpdate();
 	}
 
@@ -188,24 +189,11 @@ public final class BlockListWidget<O> extends AScrumWidget {
 	}
 
 	public final void setObjects(List<O> newObjects) {
-		if (locked) return;
 		initialize();
 		if (autoSorter != null) {
 			Collections.sort(newObjects, autoSorter);
 		}
 		list.set(newObjects);
-	}
-
-	private transient static boolean locked;
-
-	public static final void lockForChanges() {
-		if (locked) return;
-		locked = true;
-	}
-
-	public static final void unlock() {
-		if (!locked) return;
-		locked = false;
 	}
 
 	public final void drop(ABlockWidget<O> block, int toIndex) {
