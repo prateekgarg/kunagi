@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://kunagi.org/webstart" href="kunagi.jnlp">
+    <information>
+        <title>Kunagi</title>
+        <vendor>Kunagi Team</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="https://github.com/downloads/witek/katokorbo/katokorbo.jar" main="true" />
+    </resources>
+    <application-desc
+         name="Kunagi"
+         main-class="katokorbo.Katokorbo"
+         width="300"
+         height="300">
+     </application-desc>
+     <update check="background"/>
+</jnlp>
