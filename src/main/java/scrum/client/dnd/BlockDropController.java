@@ -81,8 +81,6 @@ public class BlockDropController implements DropController {
 
 	@Override
 	public void onMove(DragContext context) {
-		if (targetList.isAnimating()) return;
-
 		if (!isDropAllowed(context.draggable)) return;
 
 		WidgetArea area = new WidgetArea(targetBlock, null);
@@ -106,6 +104,7 @@ public class BlockDropController implements DropController {
 	}
 
 	private boolean isDropAllowed(Widget draggable) {
+		if (targetList.isAnimating()) return false;
 		if (draggable instanceof ABlockWidget) {
 			ABlockWidget block = (ABlockWidget) draggable;
 			return targetBlock.getList().acceptsDrop(block);
