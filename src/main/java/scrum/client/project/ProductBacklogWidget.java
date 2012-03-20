@@ -178,7 +178,6 @@ public class ProductBacklogWidget extends AScrumWidget {
 			} else {
 				getCurrentProject().updateRequirementsOrder(requirements);
 			}
-			update();
 		}
 
 	}
