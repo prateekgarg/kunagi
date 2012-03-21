@@ -21,7 +21,7 @@ public class PlanningPokerStoryFinder {
 	}
 
 	public List<Set<Requirement>> getByEstimation(Float estimation) {
-		if (estimation == 0f) return Collections.emptyList();
+		if (estimation.floatValue() < 0.5f) return Collections.emptyList();
 
 		// other Stories with the same estimation
 		List<Set<Requirement>> results = getSame(estimation);
@@ -60,7 +60,7 @@ public class PlanningPokerStoryFinder {
 	}
 
 	private List<Set<Requirement>> getSame(Float estimation) {
-		if (estimation == 0) return Collections.emptyList();
+		if (estimation.floatValue() < 0.5f) return Collections.emptyList();
 		List<Requirement> stories = project.getRequirements();
 		Collections.sort(stories, project.getRequirementsOrderComparator());
 		List<Set<Requirement>> results = new ArrayList<Set<Requirement>>();
