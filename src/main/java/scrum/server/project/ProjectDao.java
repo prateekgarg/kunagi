@@ -46,15 +46,15 @@ public class ProjectDao extends GProjectDao {
 
 	public Project postProject(User admin) {
 		Project project = newEntityInstance();
-		project.setLabel(createProjectLabel("New Project"));
+		project.setLabel(createProjectLabel("Project"));
 		project.addAdmin(admin);
 		saveEntity(project);
 		return project;
 	}
 
 	private String createProjectLabel(String labelPrefix) {
-		String label = labelPrefix;
 		int count = 1;
+		String label = labelPrefix + " " + count;
 		Project project = getProjectByLabel(label);
 		while (project != null) {
 			count++;
