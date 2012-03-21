@@ -1,10 +1,9 @@
 
-#macro( header $page $title $description $keywords)
-<html>
+#macro( header $page $title $description $keywords)<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="content-language" content="en">
 
     <title>$title</title>
     <meta name="description" content="$description">
