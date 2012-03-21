@@ -33,8 +33,9 @@ public class ChatMessage extends GChatMessage {
 	@Override
 	public void ensureIntegrity() {
 		super.ensureIntegrity();
-		if (!isDateAndTimeSet() || getDateAndTime().getPeriodToNow().abs().isGreaterThen(TTL))
-		;
+		// TODO
+		// if (!isDateAndTimeSet() || getDateAndTime().getPeriodToNow().abs().isGreaterThen(TTL))
+		// getDao().deleteEntity(this);
 	}
 
 }

@@ -62,7 +62,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final int DATA_VERSION = 29;
+	private static final int DATA_VERSION = 30;
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
@@ -101,11 +101,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public KunagiRootConfig getConfig() {
 		if (config == null) config = new KunagiRootConfig(getApplicationName());
 		return config;
-	}
-
-	@Override
-	public String getApplicationName() {
-		return "kunagi";
 	}
 
 	public ScrumEntityfilePreparator getEntityfilePreparator() {
