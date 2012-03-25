@@ -51,7 +51,8 @@ packageDir = buildDir + '/package-content/kunagi'
 packageWar = buildDir + '/kunagi.war'
 packageZip = buildDir + '/kunagi-' + releaseLabel + '.zip'
 packageTar = buildDir + '/kunagi-' + releaseLabel + '.tar.gz'
-packageExe = artifactsDestinationHomeDir + '/kunagi.exe'
+packageExe32 = artifactsDestinationHomeDir + '/kunagi32.exe'
+packageExe64 = artifactsDestinationHomeDir + '/kunagi64.exe'
 
 
 # cleanup previous release
@@ -123,8 +124,10 @@ if not os.path.exists(packageZip):
     fail('Missing zip package: ' + packageZip)
 if not os.path.exists(packageTar):
     fail('Missing tar package: ' + packageTar)
-if not os.path.exists(packageExe):
-    fail('Missing exe package: ' + packageExe)
+if not os.path.exists(packageExe32):
+    fail('Missing 32 bit exe package: ' + packageExe32)
+if not os.path.exists(packageExe64):
+    fail('Missing 64 bit exe package: ' + packageExe64)
 
 
 # update homepage
@@ -136,7 +139,8 @@ execute('ant releaseHomepage', workDir + '/kunagi')
 print '  Upload artifacts to SourceForge'
 sourceForgePath = 'koczewski,kunagi@frs.sourceforge.net:/home/frs/project/k/ku/kunagi/' + releaseLabel
 execute('scp ' + packageWar + ' ' + sourceForgePath + '/kunagi.war')
-execute('scp ' + packageExe + ' ' + sourceForgePath + '/kunagi.exe')
+execute('scp ' + packageExe32 + ' ' + sourceForgePath + '/kunagi32.exe')
+execute('scp ' + packageExe64 + ' ' + sourceForgePath + '/kunagi64.exe')
 execute('scp ' + packageDeb + ' ' + sourceForgePath + '/kunagi_' + releaseLabel + '.deb')
 execute('scp ' + packageTar + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.tar.gz')
 execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel + '.zip')
@@ -146,7 +150,8 @@ execute('scp ' + packageZip + ' ' + sourceForgePath + '/kunagi-' + releaseLabel 
 print '  Copy artifacts to ' + artifactsDestinationDir
 os.mkdir(artifactsDestinationDir)
 shutil.copyfile(packageWar, artifactsDestinationDir + '/kunagi.war')
-shutil.copyfile(packageExe, artifactsDestinationDir + '/kunagi.exe')
+shutil.copyfile(packageExe32, artifactsDestinationDir + '/kunagi32.exe')
+shutil.copyfile(packageExe64, artifactsDestinationDir + '/kunagi64.exe')
 shutil.copyfile(packageDeb, artifactsDestinationDir + '/kunagi_' + releaseLabel + '.deb')
 shutil.copyfile(packageTar, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.tar.gz')
 shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel + '.zip')
