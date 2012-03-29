@@ -136,7 +136,7 @@ pageTracker._trackPageview();
 
 
 #macro( navigLink $page $label $currentPage )
-    <a class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="${page}.html">${label}</a>
+    <a class="navigLink #if($page==$currentPage)navigLinkSelected#end" href="#if($page=="index")/#else${page}.html#end">${label}</a>
 #end
 
 
