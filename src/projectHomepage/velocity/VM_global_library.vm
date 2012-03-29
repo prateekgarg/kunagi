@@ -24,9 +24,11 @@
     
     <meta name="robots" content="index">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="default.css" type="text/css">
+    <link rel="stylesheet" href="kunagihomepage.css" type="text/css">
     <link rel="alternate" type="application/rss+xml" title="Kunagi Blog" href="http://feeds.feedburner.com/kunagi">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.sharrre.js"></script>
+    <script type="text/javascript" src="js/kunagihomepage.js"></script>
 
 </head>
 
@@ -301,53 +303,9 @@ pageTracker._trackPageview();
 
 
 #macro( socialbuttons $url )
-    <div class="socialbuttons">
-        <table border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                #if($url) <td style="padding: 0 0 0 0;"> #facebookButton($url) </td> #end
-                <td style="padding: 0 15px 0 0;"> #plusoneButton($url) </td>
-                <td style="padding: 0 15px 0 0;"> #tweetButton() </td>
-            </tr>
-        </table>
-    </div>
+    <div id="shareme" data-url="$url" data-text="Kunagi"></div>
+    <script type="text/javascript">kunagihp.sharrre();</script>
 #end
-
-#macro( plusoneButton $url )
-    <g:plusone size="medium" annotation=""></g:plusone>
-
-    <script type="text/javascript">
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-    </script>
-#end
-
-#macro( facebookButton $url )
-    <iframe src="http://www.facebook.com/plugins/like.php?href=${url}&amp;layout=button_count&amp;show_faces=true&amp;width=90&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
-#end
-
-#macro( tweetButton )
-    <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="kunagipm" style="cursor: pointer;">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-#end
-
-#macro( flattrButton )
-    <a href="http://flattr.com/thing/2486/Kunagi" target="_blank">
-    <img src="http://api.flattr.com/button/button-compact-static-100x17.png" alt="Flattr this" title="Flattr this" border="0" /></a>
-#end
-
-#macro( buzzButton )
-    <div style="vertical-align: top;">
-        <a title="Post to Google Buzz" class="google-buzz-button" href="http://www.google.com/buzz/post" data-button-style="small-button" data-imageurl="http://kunagi.org/img/kunagi.png"></a>
-        <script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>
-    </div>
-#end
-
-#macro( addthisButton )
-    <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;username=kunagi"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=kunagi"></script>
-#end
-
 
 
 #macro( socialpages )
