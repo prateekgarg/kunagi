@@ -9,8 +9,7 @@ kunagihp.sharrre = function() {
           digg: true,
           delicious: true,
           stumbleupon: true,
-          linkedin: true,
-          pinterest: true
+          linkedin: true
         },
         buttons: {
           googlePlus: {size: 'tall'},
@@ -20,9 +19,6 @@ kunagihp.sharrre = function() {
           delicious: {size: 'tall'},
           stumbleupon: {layout: '5'},
           linkedin: {counter: 'top'}
-        },
-        enableHover: false,
-        enableCounter: false,
-        enableTracking: true
+        }
       });
 }
