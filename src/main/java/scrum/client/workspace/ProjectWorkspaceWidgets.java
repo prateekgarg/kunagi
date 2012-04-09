@@ -335,7 +335,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
-			if (requirement.isClosed()) return sprintHistory;
+			if (requirement.isClosed() && !requirement.isInCurrentSprint()) return sprintHistory;
 
 			if (getWorkarea().isShowing(sprintHistory)) {
 				// FIXME multiple requirements on same page
