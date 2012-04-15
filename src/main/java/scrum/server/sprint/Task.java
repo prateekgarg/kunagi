@@ -45,6 +45,7 @@ public class Task extends GTask implements Numbered, ReferenceSupport, LabelSupp
 	}
 
 	public boolean isSprint(Sprint sprint) {
+		if (isClosedInPastSprintSet()) return false;
 		return getRequirement().isSprint(sprint);
 	}
 
