@@ -33,7 +33,10 @@ public class EmailSender {
 
 	public void sendEmail(String from, String to, String subject, String text) {
 		Session session = createSmtpSession();
-		if (session == null) return;
+		if (session == null) {
+			log.debug("Skipping sending email.", from, "->", to, "|", subject, "|", text);
+			return;
+		}
 
 		if (Str.isBlank(from)) from = systemConfig.getSmtpFrom();
 		if (Str.isBlank(from)) {
@@ -61,6 +64,7 @@ public class EmailSender {
 			log.error("Missing configuration: smtpServer");
 			return null;
 		}
-		return Eml.createSmtpSession(smtpServer, smtpPort, smtpTls, systemConfig.getSmtpUser(), systemConfig.getSmtpPassword());
+		return Eml.createSmtpSession(smtpServer, smtpPort, smtpTls, systemConfig.getSmtpUser(),
+			systemConfig.getSmtpPassword());
 	}
 }

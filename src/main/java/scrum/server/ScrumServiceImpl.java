@@ -58,6 +58,7 @@ import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.pr.BlogEntry;
 import scrum.server.pr.EmailSender;
+import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -85,6 +86,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
 	private transient ChangeDao changeDao;
+
+	@In
+	private transient SubscriptionService subscriptionService;
 
 	@In
 	private transient SprintReportDao sprintReportDao;
@@ -277,6 +281,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
 				comment.getParent());
 			currentProject.updateHomepage(comment.getParent(), true);
+
+			subscriptionService.notifySubscribers(comment.getParent(),
+				"New comment posted by " + comment.getAuthorLabel(), conversation.getProject(), null);
 		}
 
 		if (entity instanceof ChatMessage) {

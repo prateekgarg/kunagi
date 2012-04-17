@@ -42,6 +42,7 @@ public class SubscriptionService {
 
 	public void subscribe(String email, AEntity subject) {
 		if (!Str.isEmail(email)) throw new RuntimeException("Invalid email: " + email);
+		email = email.toLowerCase();
 		Subscription subscription = subscriptionDao.getSubscriptionBySubject(subject);
 		if (subscription == null) {
 			subscription = subscriptionDao.postSubscription(subject);
@@ -51,6 +52,7 @@ public class SubscriptionService {
 	}
 
 	public void unsubscribe(String email, AEntity subject, String key) throws InvalidKeyException {
+		email = email.toLowerCase();
 		if (!createKey(email).equals(key)) throw new InvalidKeyException(email);
 		if (subject == null) {
 			unsubscribeAll(email, key);
@@ -66,6 +68,7 @@ public class SubscriptionService {
 	}
 
 	private void unsubscribeAll(String email, String key) {
+		email = email.toLowerCase();
 		Set<Subscription> subscriptions = subscriptionDao.getSubscriptionsBySubscribersEmail(email);
 		if (subscriptions.isEmpty()) {
 			log.debug(email, "is not subscribed to anything");
@@ -77,14 +80,16 @@ public class SubscriptionService {
 		log.info(email, "unsubscribed from", subscriptions.size(), "entities");
 	}
 
-	public void notifySubscribers(AEntity subject, String message, Project project) {
+	public void notifySubscribers(AEntity subject, String message, Project project, String exceptionEmail) {
 		Subscription subscription = subscriptionDao.getSubscriptionBySubject(subject);
 		if (subscription == null || subscription.isSubscribersEmailsEmpty()) {
 			log.debug("No subscribers for", subject);
 			return;
 		}
 		String subjectText = createSubjectText(subject, project);
-		for (String email : subscription.getSubscribersEmails()) {
+		Set<String> subscribersEmails = subscription.getSubscribersEmails();
+		if (exceptionEmail != null) subscribersEmails.remove(exceptionEmail.toLowerCase());
+		for (String email : subscribersEmails) {
 			String text = createText(subject, project, email, message);
 			emailSender.sendEmail(null, email, subjectText, text);
 		}
@@ -106,10 +111,10 @@ public class SubscriptionService {
 		if (subject instanceof LabelSupport) {
 			text = text.replace("${entity.label}", ((LabelSupport) subject).getLabel());
 		}
-		text = text.replace("${message}", message);
+		text = text.replace("${change.message}", message);
 		text = text.replace("${project.label}", project.getLabel());
 		text = text.replace("${project.id}", project.getId());
-		text = text.replace("${homepage.url}", project.getHomepageUrl());
+		if (project.isHomepageUrlSet()) text = text.replace("${homepage.url}", project.getHomepageUrl());
 		text = text.replace("${unsubscribe.url}", createUnsubscribeUrl(email, subject, project));
 		text = text.replace("${unsubscribeall.url}", createUnsubscribeUrl(email, null, project));
 		text = text.replace("${kunagi.instance}", systemConfig.getInstanceNameWithApplicationLabel());

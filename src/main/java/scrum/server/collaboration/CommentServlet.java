@@ -99,6 +99,11 @@ public class CommentServlet extends AHttpServlet {
 		Project project = projectDao.getById(projectId);
 		AEntity entity = daoService.getById(entityId);
 		Comment comment = commentDao.postComment(entity, "<nowiki>" + text + "</nowiki>", name, email, true);
+
+		String message = "New comment posted";
+		if (!Str.isBlank(name)) message += " by " + name;
+		subscriptionService.notifySubscribers(entity, message, project, email);
+
 		project.updateHomepage(entity, true);
 		String reference = ((ReferenceSupport) entity).getReference();
 		String label = ((LabelSupport) entity).getLabel();
