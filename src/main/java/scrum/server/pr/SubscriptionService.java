@@ -124,8 +124,10 @@ public class SubscriptionService {
 
 	private String createUnsubscribeUrl(String email, AEntity subject, Project project) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(systemConfig.getUrl());
-		sb.append("/unsubscribe");
+		String baseUrl = systemConfig.getUrl();
+		sb.append(baseUrl);
+		if (!baseUrl.endsWith("/")) sb.append("/");
+		sb.append("unsubscribe");
 		sb.append("?email=").append(Str.encodeUrlParameter(email));
 		if (subject != null) sb.append("&subject=").append(Str.encodeUrlParameter(subject.getId()));
 		sb.append("&key=").append(Str.encodeUrlParameter(createKey(email)));

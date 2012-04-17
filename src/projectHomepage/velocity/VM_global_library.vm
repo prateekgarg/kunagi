@@ -144,22 +144,23 @@ pageTracker._trackPageview();
 
 
 #macro( commentsSection $entity )
-    #if( $entity.comments )
-        <div class="separator"></div>
-        <div class="section">
-            <h2>Comments</h2>
-            #foreach( $comment in $entity.comments )
-                <p>
-                    <b>$comment.date</b> by
-                    <b>$comment.author</b>
-                    #if ($comment.authorRoles) ($comment.authorRoles) #end
-                </p>
-                <div style="margin-left: 20px;">
-                    $comment.text
-                </div>
-            #end
+    <div class="separator"></div>
+    <div class="section">
+        <div class="sidebar">
+          <div class="starter"> <a onclick="kunagihp.subscribe('https://servisto.de/scrum/subscribe?subject=$entity.id&email=')" title="Subscribe to changes and comments on this entity">Subscribe</a> </div>
         </div>
-    #end
+        <h2>Comments</h2>
+        #foreach( $comment in $entity.comments )
+            <p>
+                <b>$comment.date</b> by
+                <b>$comment.author</b>
+                #if ($comment.authorRoles) ($comment.authorRoles) #end
+            </p>
+            <div style="margin-left: 20px;">
+                $comment.text
+            </div>
+        #end
+    </div>
 
     #if ( $entity.id )
         <div class="separator"></div>

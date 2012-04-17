@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
-import scrum.server.common.SpamChecker;
 
 public class SubscribeServlet extends AHttpServlet {
 
@@ -61,7 +60,6 @@ public class SubscribeServlet extends AHttpServlet {
 
 		String message;
 		try {
-			SpamChecker.check(req);
 			AEntity subject = subscribe(email, subjectId);
 			message = "Succesfully subscribed to <strong>" + subject.toString() + "</strong>";
 		} catch (Throwable ex) {
