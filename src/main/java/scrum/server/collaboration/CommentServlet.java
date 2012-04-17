@@ -36,6 +36,7 @@ import scrum.server.common.AHttpServlet;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -50,6 +51,7 @@ public class CommentServlet extends AHttpServlet {
 	private transient ProjectDao projectDao;
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
+	private transient SubscriptionService subscriptionService;
 
 	private transient ScrumWebApplication app;
 
@@ -102,6 +104,7 @@ public class CommentServlet extends AHttpServlet {
 		String label = ((LabelSupport) entity).getLabel();
 		ProjectEvent event = projectEventDao.postEvent(project, comment.getAuthorName() + " commented on " + reference
 				+ " " + label, entity);
+		if (Str.isEmail(email)) subscriptionService.subscribe(email, entity);
 		transactionService.commit();
 
 		app.sendToConversationsByProject(project, event);
@@ -118,6 +121,7 @@ public class CommentServlet extends AHttpServlet {
 		projectDao = app.getProjectDao();
 		transactionService = app.getTransactionService();
 		projectEventDao = app.getProjectEventDao();
+		subscriptionService = app.getSubscriptionService();
 	}
 
 }

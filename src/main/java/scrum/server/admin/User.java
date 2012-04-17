@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import scrum.server.ScrumWebApplication;
+import scrum.server.pr.EmailSender;
 import scrum.server.project.Project;
 
 public class User extends GUser {
@@ -41,6 +42,11 @@ public class User extends GUser {
 	// --- dependencies ---
 
 	private static ScrumWebApplication webApplication;
+	private static EmailSender emailSender;
+
+	public static void setEmailSender(EmailSender emailSender) {
+		User.emailSender = emailSender;
+	}
 
 	public static void setWebApplication(ScrumWebApplication webApplication) {
 		User.webApplication = webApplication;
@@ -74,7 +80,9 @@ public class User extends GUser {
 		StringBuilder sb = new StringBuilder();
 		String nameSuffix = webApplication.getSystemConfig().isInstanceNameSet() ? " @ "
 				+ webApplication.getSystemConfig().getInstanceName() : "";
-		sb.append("You have created an account for Kunagi" + nameSuffix).append(urlBase).append("\n");
+		sb.append(
+			"You have created an account for " + webApplication.getSystemConfig().getInstanceNameWithApplicationLabel())
+				.append(urlBase).append("\n");
 		sb.append("\n");
 		sb.append("Please visit the following link, to confirm your email: ").append(urlBase)
 				.append("confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
@@ -82,7 +90,7 @@ public class User extends GUser {
 		sb.append("Please confirm your email within " + HOURS_FOR_EMAIL_VERIFICATION
 				+ " hours, otherwise your account will be deleted.\n");
 		try {
-			webApplication.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
+			emailSender.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
 		} catch (Exception ex) {
 			log.error("Sending verification email failed:", getEmail(), ex);
 		}
@@ -105,7 +113,7 @@ public class User extends GUser {
 		sb.append("\n");
 		sb.append("You sould change this password, since somebody else could read this email.");
 
-		webApplication.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
+		emailSender.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
 
 		setPassword(newPassword);
 		log.info("Password changed for", this);
@@ -125,7 +133,7 @@ public class User extends GUser {
 		sb.append("Password: ").append(newPassword).append("\n");
 		sb.append("\n");
 		sb.append("You sould change this password, since somebody else could read this email.");
-		webApplication.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
+		emailSender.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
 	}
 
 	@Override

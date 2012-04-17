@@ -27,7 +27,6 @@ import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.di.app.WebApplicationStarter;
-import ilarkesto.email.Eml;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
@@ -40,8 +39,6 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,13 +53,15 @@ import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
 import scrum.server.journal.ProjectEvent;
+import scrum.server.pr.EmailSender;
+import scrum.server.pr.SubscriptionService;
 import scrum.server.project.DeleteOldProjectsTask;
 import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final int DATA_VERSION = 30;
+	private static final int DATA_VERSION = 31;
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
@@ -113,8 +112,13 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public ApplicationInfo getApplicationInfo() {
 		boolean defaultAdminPassword = isAdminPasswordDefault();
-		return new ApplicationInfo("Kunagi", getReleaseLabel(), getBuild(), defaultAdminPassword, getCurrentRelease(),
-				getApplicationDataDir());
+		return new ApplicationInfo(getApplicationLabel(), getReleaseLabel(), getBuild(), defaultAdminPassword,
+				getCurrentRelease(), getApplicationDataDir());
+	}
+
+	@Override
+	public String getApplicationLabel() {
+		return "Kunagi";
 	}
 
 	private String currentRelease;
@@ -351,45 +355,24 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sb.append("Host: ").append(host).append("\n");
 		String subject = user.getLabel() + " registered on " + getBaseUrl();
 		try {
-			sendEmail(null, null, subject, sb.toString());
+			getEmailSender().sendEmail(null, null, subject, sb.toString());
 		} catch (Throwable ex) {
 			log.error("Sending notification email failed:", subject, ex);
 		}
 	}
 
-	public void sendEmail(String from, String to, String subject, String text) {
-		Session session = createSmtpSession();
-		if (session == null) return;
-		SystemConfig config = getSystemConfig();
+	private EmailSender emailSender;
 
-		if (Str.isBlank(from)) from = config.getSmtpFrom();
-		if (Str.isBlank(from)) {
-			log.error("Missing configuration: smtpFrom");
-			return;
-		}
-
-		if (Str.isBlank(to)) to = config.getAdminEmail();
-		if (Str.isBlank(to)) {
-			log.error("Missing configuration: adminEmail");
-			return;
-		}
-
-		if (Str.isBlank(subject)) subject = "Kunagi";
-
-		MimeMessage message = Eml.createTextMessage(session, subject, text, from, to);
-		Eml.sendSmtpMessage(session, message);
+	public EmailSender getEmailSender() {
+		if (emailSender == null) emailSender = autowire(new EmailSender());
+		return emailSender;
 	}
 
-	public Session createSmtpSession() {
-		SystemConfig config = getSystemConfig();
-		String smtpServer = config.getSmtpServer();
-		Integer smtpPort = config.getSmtpPort();
-		boolean smtpTls = config.isSmtpTls();
-		if (smtpServer == null) {
-			log.error("Missing configuration: smtpServer");
-			return null;
-		}
-		return Eml.createSmtpSession(smtpServer, smtpPort, smtpTls, config.getSmtpUser(), config.getSmtpPassword());
+	private SubscriptionService subscriptionService;
+
+	public SubscriptionService getSubscriptionService() {
+		if (subscriptionService == null) subscriptionService = autowire(new SubscriptionService());
+		return subscriptionService;
 	}
 
 }

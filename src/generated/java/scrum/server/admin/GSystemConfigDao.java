@@ -91,6 +91,8 @@ public abstract class GSystemConfigDao
         ldapUserFilterRegexsCache = null;
         systemConfigsByMaxFileSizeCache.clear();
         maxFileSizesCache = null;
+        systemConfigsBySubscriptionKeySeedCache.clear();
+        subscriptionKeySeedsCache = null;
     }
 
     @Override
@@ -1148,6 +1150,46 @@ public abstract class GSystemConfigDao
 
         public boolean test(SystemConfig e) {
             return e.isMaxFileSize(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - subscriptionKeySeed
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<SystemConfig>> systemConfigsBySubscriptionKeySeedCache = new Cache<java.lang.String,Set<SystemConfig>>(
+            new Cache.Factory<java.lang.String,Set<SystemConfig>>() {
+                public Set<SystemConfig> create(java.lang.String subscriptionKeySeed) {
+                    return getEntities(new IsSubscriptionKeySeed(subscriptionKeySeed));
+                }
+            });
+
+    public final Set<SystemConfig> getSystemConfigsBySubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        return new HashSet<SystemConfig>(systemConfigsBySubscriptionKeySeedCache.get(subscriptionKeySeed));
+    }
+    private Set<java.lang.String> subscriptionKeySeedsCache;
+
+    public final Set<java.lang.String> getSubscriptionKeySeeds() {
+        if (subscriptionKeySeedsCache == null) {
+            subscriptionKeySeedsCache = new HashSet<java.lang.String>();
+            for (SystemConfig e : getEntities()) {
+                if (e.isSubscriptionKeySeedSet()) subscriptionKeySeedsCache.add(e.getSubscriptionKeySeed());
+            }
+        }
+        return subscriptionKeySeedsCache;
+    }
+
+    private static class IsSubscriptionKeySeed implements Predicate<SystemConfig> {
+
+        private java.lang.String value;
+
+        public IsSubscriptionKeySeed(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(SystemConfig e) {
+            return e.isSubscriptionKeySeed(value);
         }
 
     }

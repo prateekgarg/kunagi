@@ -133,6 +133,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Example: (&(objectClass=user)(sAMAccountName=%u))");
 			systemConfigModel.addIntegerProperty("maxFileSize").setTooltip(
 				"Maximum size in megabytes for uploaded files.");
+			systemConfigModel.addStringProperty("subscriptionKeySeed");
 			autowire(systemConfigModel);
 		}
 		return systemConfigModel;
@@ -254,6 +255,13 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						"Text template, which to use when replying to issue authors by email.<br><br>"
 								+ "The following variables can be used: "
 								+ "${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}");
+			projectModel
+					.addStringProperty("subscriberNotificationTemplate")
+					.setRichtext(true)
+					.setTooltip(
+						"Text template, which to use when sending change notifications to subscribers.<br><br>"
+								+ "The following variables can be used: "
+								+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
 			getApplicationModel().addCreateAction(projectModel);
@@ -994,6 +1002,18 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			blogEntryModel.addAction("UnpublishBlogEntry");
 		}
 		return blogEntryModel;
+	}
+
+	private EntityModel subscriptionModel;
+
+	public EntityModel getSubscriptionModel() {
+		if (subscriptionModel == null) {
+			subscriptionModel = createEntityModel("Subscription", "pr");
+			subscriptionModel.setGwtSupport(true);
+			subscriptionModel.addReference("subject", getEntityModel()).setMaster(true).setUnique(true);
+			subscriptionModel.addSetProperty("subscribersEmails", String.class);
+		}
+		return subscriptionModel;
 	}
 
 	@Override

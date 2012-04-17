@@ -1620,6 +1620,59 @@ public abstract class GSystemConfig
 
     }
 
+    // --- subscriptionKeySeed ---
+
+    private java.lang.String subscriptionKeySeed ;
+
+    public final java.lang.String getSubscriptionKeySeed() {
+        return this.subscriptionKeySeed ;
+    }
+
+    public final SystemConfig setSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        if (isSubscriptionKeySeed(subscriptionKeySeed)) return (SystemConfig)this;
+        this.subscriptionKeySeed = subscriptionKeySeed ;
+        propertyChanged("subscriptionKeySeed", this.subscriptionKeySeed);
+        return (SystemConfig)this;
+    }
+
+    public final boolean isSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        return equals(this.subscriptionKeySeed, subscriptionKeySeed);
+    }
+
+    private transient SubscriptionKeySeedModel subscriptionKeySeedModel;
+
+    public SubscriptionKeySeedModel getSubscriptionKeySeedModel() {
+        if (subscriptionKeySeedModel == null) subscriptionKeySeedModel = createSubscriptionKeySeedModel();
+        return subscriptionKeySeedModel;
+    }
+
+    protected SubscriptionKeySeedModel createSubscriptionKeySeedModel() { return new SubscriptionKeySeedModel(); }
+
+    protected class SubscriptionKeySeedModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "SystemConfig_subscriptionKeySeed";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getSubscriptionKeySeed();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setSubscriptionKeySeed(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1651,6 +1704,7 @@ public abstract class GSystemConfig
         ldapBaseDn  = (java.lang.String) props.get("ldapBaseDn");
         ldapUserFilterRegex  = (java.lang.String) props.get("ldapUserFilterRegex");
         maxFileSize  = (java.lang.Integer) props.get("maxFileSize");
+        subscriptionKeySeed  = (java.lang.String) props.get("subscriptionKeySeed");
         updateLocalModificationTime();
     }
 
@@ -1685,6 +1739,7 @@ public abstract class GSystemConfig
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
         properties.put("maxFileSize", this.maxFileSize);
+        properties.put("subscriptionKeySeed", this.subscriptionKeySeed);
     }
 
 }

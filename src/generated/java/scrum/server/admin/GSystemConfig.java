@@ -64,6 +64,7 @@ public abstract class GSystemConfig
         properties.put("ldapBaseDn", this.ldapBaseDn);
         properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
         properties.put("maxFileSize", this.maxFileSize);
+        properties.put("subscriptionKeySeed", this.subscriptionKeySeed);
     }
 
     public int compareTo(SystemConfig other) {
@@ -1038,6 +1039,42 @@ public abstract class GSystemConfig
         setMaxFileSize((java.lang.Integer)value);
     }
 
+    // -----------------------------------------------------------
+    // - subscriptionKeySeed
+    // -----------------------------------------------------------
+
+    private java.lang.String subscriptionKeySeed;
+
+    public final java.lang.String getSubscriptionKeySeed() {
+        return subscriptionKeySeed;
+    }
+
+    public final void setSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        subscriptionKeySeed = prepareSubscriptionKeySeed(subscriptionKeySeed);
+        if (isSubscriptionKeySeed(subscriptionKeySeed)) return;
+        this.subscriptionKeySeed = subscriptionKeySeed;
+        updateLastModified();
+        fireModified("subscriptionKeySeed="+subscriptionKeySeed);
+    }
+
+    protected java.lang.String prepareSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        // subscriptionKeySeed = Str.removeUnreadableChars(subscriptionKeySeed);
+        return subscriptionKeySeed;
+    }
+
+    public final boolean isSubscriptionKeySeedSet() {
+        return this.subscriptionKeySeed != null;
+    }
+
+    public final boolean isSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        if (this.subscriptionKeySeed == null && subscriptionKeySeed == null) return true;
+        return this.subscriptionKeySeed != null && this.subscriptionKeySeed.equals(subscriptionKeySeed);
+    }
+
+    protected final void updateSubscriptionKeySeed(Object value) {
+        setSubscriptionKeySeed((java.lang.String)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1071,6 +1108,7 @@ public abstract class GSystemConfig
             if (property.equals("ldapBaseDn")) updateLdapBaseDn(value);
             if (property.equals("ldapUserFilterRegex")) updateLdapUserFilterRegex(value);
             if (property.equals("maxFileSize")) updateMaxFileSize(value);
+            if (property.equals("subscriptionKeySeed")) updateSubscriptionKeySeed(value);
         }
     }
 

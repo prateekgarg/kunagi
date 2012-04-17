@@ -2020,6 +2020,64 @@ public abstract class GProject
 
     }
 
+    // --- subscriberNotificationTemplate ---
+
+    private java.lang.String subscriberNotificationTemplate ;
+
+    public final java.lang.String getSubscriberNotificationTemplate() {
+        return this.subscriberNotificationTemplate ;
+    }
+
+    public final Project setSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        if (isSubscriberNotificationTemplate(subscriberNotificationTemplate)) return (Project)this;
+        this.subscriberNotificationTemplate = subscriberNotificationTemplate ;
+        propertyChanged("subscriberNotificationTemplate", this.subscriberNotificationTemplate);
+        return (Project)this;
+    }
+
+    public final boolean isSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        return equals(this.subscriberNotificationTemplate, subscriberNotificationTemplate);
+    }
+
+    private transient SubscriberNotificationTemplateModel subscriberNotificationTemplateModel;
+
+    public SubscriberNotificationTemplateModel getSubscriberNotificationTemplateModel() {
+        if (subscriberNotificationTemplateModel == null) subscriberNotificationTemplateModel = createSubscriberNotificationTemplateModel();
+        return subscriberNotificationTemplateModel;
+    }
+
+    protected SubscriberNotificationTemplateModel createSubscriberNotificationTemplateModel() { return new SubscriberNotificationTemplateModel(); }
+
+    protected class SubscriberNotificationTemplateModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Project_subscriberNotificationTemplate";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getSubscriberNotificationTemplate();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setSubscriberNotificationTemplate(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Text template, which to use when sending change notifications to subscribers.<br><br>The following variables can be used: ${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}"; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- lastOpenedDateAndTime ---
 
     private ilarkesto.core.time.DateAndTime lastOpenedDateAndTime ;
@@ -2239,6 +2297,7 @@ public abstract class GProject
         releaseScriptPath  = (java.lang.String) props.get("releaseScriptPath");
         supportEmail  = (java.lang.String) props.get("supportEmail");
         issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
+        subscriberNotificationTemplate  = (java.lang.String) props.get("subscriberNotificationTemplate");
         String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
         lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastOpenedDateAndTimeAsString);
         freeDays  = (Integer) props.get("freeDays");
@@ -2287,6 +2346,7 @@ public abstract class GProject
         properties.put("releaseScriptPath", this.releaseScriptPath);
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
+        properties.put("subscriberNotificationTemplate", this.subscriberNotificationTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
         properties.put("freeDays", this.freeDays);
         properties.put("releasingInfo", this.releasingInfo);
@@ -2296,16 +2356,16 @@ public abstract class GProject
         return getDao().getSprintsByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.release.Release> getReleases() {
-        return getDao().getReleasesByProject((Project)this);
-    }
-
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {
         return getDao().getRequirementsByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {
         return getDao().getIssuesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.project.Quality> getQualitys() {

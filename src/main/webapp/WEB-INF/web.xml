@@ -186,6 +186,28 @@
         <url-pattern>/confirmEmail</url-pattern>
     </servlet-mapping>
 
+    <!-- subscription -->
+    <servlet>
+        <servlet-name>subscribe</servlet-name>
+        <servlet-class>scrum.server.pr.SubscribeServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>subscribe</servlet-name>
+        <url-pattern>/subscribe</url-pattern>
+    </servlet-mapping>
+
+    <!-- unsubscription -->
+    <servlet>
+        <servlet-name>unsubscribe</servlet-name>
+        <servlet-class>scrum.server.pr.UnsubscribeServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>unsubscribe</servlet-name>
+        <url-pattern>/unsubscribe</url-pattern>
+    </servlet-mapping>
+
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

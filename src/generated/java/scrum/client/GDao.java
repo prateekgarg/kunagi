@@ -1401,6 +1401,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Project> getProjectsBySubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isSubscriberNotificationTemplate(subscriberNotificationTemplate)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.project.Project> getProjectsByLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
@@ -2914,6 +2922,83 @@ public abstract class GDao
         return ret;
     }
 
+    // --- Subscription ---
+
+    protected Map<String, scrum.client.pr.Subscription> subscriptions = new HashMap<String, scrum.client.pr.Subscription>();
+
+    public final void clearSubscriptions() {
+        ilarkesto.core.logging.Log.DEBUG("Clearing Subscriptions");
+        subscriptions.clear();
+    }
+
+    public final boolean containsSubscription(scrum.client.pr.Subscription subscription) {
+        return subscriptions.containsKey(subscription.getId());
+    }
+
+    public final void deleteSubscription(scrum.client.pr.Subscription subscription) {
+        subscriptions.remove(subscription.getId());
+        entityDeleted(subscription);
+    }
+
+    public final void createSubscription(scrum.client.pr.Subscription subscription, Runnable successAction) {
+        subscriptions.put(subscription.getId(), subscription);
+        entityCreated(subscription, successAction);
+    }
+
+    public final void createSubscription(scrum.client.pr.Subscription subscription) {
+        subscriptions.put(subscription.getId(), subscription);
+        entityCreated(subscription, null);
+    }
+
+    protected scrum.client.pr.Subscription updateSubscription(Map data) {
+        String id = (String) data.get("id");
+        scrum.client.pr.Subscription entity = subscriptions.get(id);
+        if (entity == null) {
+            entity = new scrum.client.pr.Subscription(data);
+            subscriptions.put(id, entity);
+            ilarkesto.core.logging.Log.DEBUG("Subscription received: " + entity.getId() + " ("+entity+")");
+        } else {
+            entity.updateProperties(data);
+            ilarkesto.core.logging.Log.DEBUG("Subscription updated: " + entity);
+        }
+        return entity;
+    }
+
+    public final scrum.client.pr.Subscription getSubscription(String id) {
+        scrum.client.pr.Subscription ret = subscriptions.get(id);
+        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        return ret;
+    }
+
+    public final Set<scrum.client.pr.Subscription> getSubscriptions(Collection<String> ids) {
+        Set<scrum.client.pr.Subscription> ret = new HashSet<scrum.client.pr.Subscription>();
+        for (String id : ids) {
+            scrum.client.pr.Subscription entity = subscriptions.get(id);
+            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.pr.Subscription> getSubscriptions() {
+        return new ArrayList<scrum.client.pr.Subscription>(subscriptions.values());
+    }
+
+    public final scrum.client.pr.Subscription getSubscriptionBySubject(ilarkesto.gwt.client.AGwtEntity subject) {
+        for (scrum.client.pr.Subscription entity : subscriptions.values()) {
+            if (entity.isSubject(subject)) return entity;
+        }
+        return null;
+    }
+
+    public final List<scrum.client.pr.Subscription> getSubscriptionsBySubscribersEmail(java.lang.String subscribersEmail) {
+        List<scrum.client.pr.Subscription> ret = new ArrayList<scrum.client.pr.Subscription>();
+        for (scrum.client.pr.Subscription entity : subscriptions.values()) {
+            if (entity.containsSubscribersEmail(subscribersEmail)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- SystemConfig ---
 
     protected Map<String, scrum.client.admin.SystemConfig> systemConfigs = new HashMap<String, scrum.client.admin.SystemConfig>();
@@ -3196,6 +3281,14 @@ public abstract class GDao
         List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
         for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
             if (entity.isMaxFileSize(maxFileSize)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.admin.SystemConfig> getSystemConfigsBySubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
+        List<scrum.client.admin.SystemConfig> ret = new ArrayList<scrum.client.admin.SystemConfig>();
+        for (scrum.client.admin.SystemConfig entity : systemConfigs.values()) {
+            if (entity.isSubscriptionKeySeed(subscriptionKeySeed)) ret.add(entity);
         }
         return ret;
     }
@@ -3723,6 +3816,7 @@ public abstract class GDao
             clearSprints();
             clearSprintReports();
             clearSubjects();
+            clearSubscriptions();
             clearSystemConfigs();
             clearTasks();
             clearUsers();
@@ -3755,6 +3849,7 @@ public abstract class GDao
             entityMaps.add(sprints);
             entityMaps.add(sprintReports);
             entityMaps.add(subjects);
+            entityMaps.add(subscriptions);
             entityMaps.add(systemConfigs);
             entityMaps.add(tasks);
             entityMaps.add(users);
@@ -3825,6 +3920,9 @@ public abstract class GDao
         if (type.equals(scrum.client.collaboration.Subject.ENTITY_TYPE)) {
             return updateSubject(data);
         }
+        if (type.equals(scrum.client.pr.Subscription.ENTITY_TYPE)) {
+            return updateSubscription(data);
+        }
         if (type.equals(scrum.client.admin.SystemConfig.ENTITY_TYPE)) {
             return updateSystemConfig(data);
         }
@@ -3863,6 +3961,7 @@ public abstract class GDao
         ret.put("Sprint", sprints.size());
         ret.put("SprintReport", sprintReports.size());
         ret.put("Subject", subjects.size());
+        ret.put("Subscription", subscriptions.size());
         ret.put("SystemConfig", systemConfigs.size());
         ret.put("Task", tasks.size());
         ret.put("User", users.size());

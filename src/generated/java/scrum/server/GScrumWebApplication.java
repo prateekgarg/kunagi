@@ -578,6 +578,31 @@ public abstract class GScrumWebApplication
         subjectDao = null;
     }
 
+    // --- subscriptionDao ---
+
+    private scrum.server.pr.SubscriptionDao subscriptionDao;
+
+    public final scrum.server.pr.SubscriptionDao getSubscriptionDao() {
+        if (subscriptionDao == null) {
+            subscriptionDao = createSubscriptionDao();
+            initializeSubscriptionDao(subscriptionDao);
+        }
+        return subscriptionDao;
+    }
+
+    protected scrum.server.pr.SubscriptionDao createSubscriptionDao() {
+        return subscriptionDao = ilarkesto.base.Reflect.newInstance(scrum.server.pr.SubscriptionDao.class);
+    }
+
+    protected void initializeSubscriptionDao(scrum.server.pr.SubscriptionDao bean) {
+        autowire(bean);
+        ilarkesto.base.Reflect.invokeInitializeIfThere(bean);
+    }
+
+    public final void resetSubscriptionDao() {
+        subscriptionDao = null;
+    }
+
     // --- systemConfigDao ---
 
     private scrum.server.admin.SystemConfigDao systemConfigDao;

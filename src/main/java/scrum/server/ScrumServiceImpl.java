@@ -57,6 +57,7 @@ import scrum.server.issues.IssueDao;
 import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.pr.BlogEntry;
+import scrum.server.pr.EmailSender;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 import scrum.server.project.Requirement;
@@ -87,6 +88,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@In
 	private transient SprintReportDao sprintReportDao;
+
+	@In
+	private transient EmailSender emailSender;
 
 	public void setReleaseDao(ReleaseDao releaseDao) {
 		this.releaseDao = releaseDao;
@@ -186,7 +190,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			String subject, String text) {
 		assertProjectSelected(conversation);
 		Issue issue = issueDao.getById(issueId);
-		webApplication.sendEmail(from, to, subject, text);
+		emailSender.sendEmail(from, to, subject, text);
 		User user = conversation.getSession().getUser();
 		postProjectEvent(conversation, user.getName() + " emailed a response to " + issue.getReferenceAndLabel(), issue);
 		Change change = changeDao.postChange(issue, user, "@reply", null, text);
@@ -856,7 +860,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
 		// if (true) throw new GwtConversationDoesNotExist(666); // TODO remove!!!!!
-		webApplication.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
+		emailSender.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
 	}
 
 	@Override

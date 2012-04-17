@@ -32,6 +32,7 @@ import scrum.server.common.AHttpServlet;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
+import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
@@ -45,6 +46,7 @@ public class IssueServlet extends AHttpServlet {
 	private transient ProjectDao projectDao;
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
+	private transient SubscriptionService subscriptionService;
 
 	private transient ScrumWebApplication app;
 
@@ -102,6 +104,7 @@ public class IssueServlet extends AHttpServlet {
 		if (Str.isBlank(issuer)) issuer = "anonymous";
 		ProjectEvent event = projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(),
 			issue);
+		if (Str.isEmail(email)) subscriptionService.subscribe(email, issue);
 		transactionService.commit();
 
 		app.sendToConversationsByProject(project, issue);
@@ -110,7 +113,7 @@ public class IssueServlet extends AHttpServlet {
 		String issueLink = publish ? "<a href=\"" + issue.getReference() + ".html\">" + issue.getReference() + "</a>"
 				: "<code>" + issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
-				+ issueLink + " and will be reviewed by our Product Owner shortly.</p>";
+				+ issueLink + " and will be reviewed by our Product Owner.</p>";
 	}
 
 	@Override
@@ -120,6 +123,7 @@ public class IssueServlet extends AHttpServlet {
 		projectDao = app.getProjectDao();
 		transactionService = app.getTransactionService();
 		projectEventDao = app.getProjectEventDao();
+		subscriptionService = app.getSubscriptionService();
 	}
 
 }

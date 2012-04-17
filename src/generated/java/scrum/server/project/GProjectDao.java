@@ -116,6 +116,8 @@ public abstract class GProjectDao
         supportEmailsCache = null;
         projectsByIssueReplyTemplateCache.clear();
         issueReplyTemplatesCache = null;
+        projectsBySubscriberNotificationTemplateCache.clear();
+        subscriberNotificationTemplatesCache = null;
         projectsByLastOpenedDateAndTimeCache.clear();
         lastOpenedDateAndTimesCache = null;
         projectsByFreeDaysCache.clear();
@@ -1638,6 +1640,46 @@ public abstract class GProjectDao
 
         public boolean test(Project e) {
             return e.isIssueReplyTemplate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - subscriberNotificationTemplate
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Project>> projectsBySubscriberNotificationTemplateCache = new Cache<java.lang.String,Set<Project>>(
+            new Cache.Factory<java.lang.String,Set<Project>>() {
+                public Set<Project> create(java.lang.String subscriberNotificationTemplate) {
+                    return getEntities(new IsSubscriberNotificationTemplate(subscriberNotificationTemplate));
+                }
+            });
+
+    public final Set<Project> getProjectsBySubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        return new HashSet<Project>(projectsBySubscriberNotificationTemplateCache.get(subscriberNotificationTemplate));
+    }
+    private Set<java.lang.String> subscriberNotificationTemplatesCache;
+
+    public final Set<java.lang.String> getSubscriberNotificationTemplates() {
+        if (subscriberNotificationTemplatesCache == null) {
+            subscriberNotificationTemplatesCache = new HashSet<java.lang.String>();
+            for (Project e : getEntities()) {
+                if (e.isSubscriberNotificationTemplateSet()) subscriberNotificationTemplatesCache.add(e.getSubscriberNotificationTemplate());
+            }
+        }
+        return subscriberNotificationTemplatesCache;
+    }
+
+    private static class IsSubscriberNotificationTemplate implements Predicate<Project> {
+
+        private java.lang.String value;
+
+        public IsSubscriberNotificationTemplate(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Project e) {
+            return e.isSubscriberNotificationTemplate(value);
         }
 
     }

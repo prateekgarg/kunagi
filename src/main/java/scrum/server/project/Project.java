@@ -683,6 +683,26 @@ public class Project extends GProject {
 			setPunishmentFactor(1);
 		}
 		if (!isHomepageDirSet()) setAutoUpdateHomepage(false);
+		if (!isSubscriberNotificationTemplateSet())
+			setSubscriberNotificationTemplate(createDefaultSubscriberNotificationTemplate());
+	}
+
+	private String createDefaultSubscriberNotificationTemplate() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Hello,\n");
+		sb.append("\n");
+		sb.append("there is news on an entity you are subscribed to:\n");
+		sb.append("\n");
+		sb.append("    ${entity.reference} ${entity.label}\n");
+		sb.append("    ${homepage.url}/${entity.reference}.html\n");
+		sb.append("\n");
+		sb.append("    ${change.message}\n");
+		sb.append("\n");
+		sb.append("This entity comes from project ${project.name} on ${kunagi.instance}\n");
+		sb.append("\n");
+		sb.append("Unsubscribe from ${entity.reference}: ${unsubscribe.url}\n");
+		sb.append("Unsubscribe from all entities: ${unsubscribeall.url}\n");
+		return sb.toString();
 	}
 
 	@Override

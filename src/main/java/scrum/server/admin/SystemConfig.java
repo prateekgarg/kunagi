@@ -16,8 +16,24 @@ package scrum.server.admin;
 
 import ilarkesto.base.Str;
 import scrum.server.KunagiRootConfig;
+import scrum.server.ScrumWebApplication;
 
 public class SystemConfig extends GSystemConfig {
+
+	// --- dependencies ---
+
+	private static transient ScrumWebApplication webApplication;
+
+	public static void setWebApplication(ScrumWebApplication webApplication) {
+		SystemConfig.webApplication = webApplication;
+	}
+
+	// --- ---
+
+	public String getInstanceNameWithApplicationLabel() {
+		if (!isInstanceNameSet()) return webApplication.getApplicationLabel();
+		return webApplication.getApplicationLabel() + " @ " + getInstanceName();
+	}
 
 	@Override
 	public boolean isVisibleFor(User user) {
@@ -41,6 +57,7 @@ public class SystemConfig extends GSystemConfig {
 		super.ensureIntegrity();
 		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(config.getInitialPassword());
 		if (!isMaxFileSizeSet()) setMaxFileSize(20);
+		if (!isSubscriptionKeySeedSet()) setSubscriptionKeySeed(Str.generatePassword(32));
 	}
 
 	public boolean isOpenIdDomainAllowed(String openId) {

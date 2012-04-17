@@ -74,6 +74,7 @@ public abstract class GProject
         properties.put("releaseScriptPath", this.releaseScriptPath);
         properties.put("supportEmail", this.supportEmail);
         properties.put("issueReplyTemplate", this.issueReplyTemplate);
+        properties.put("subscriberNotificationTemplate", this.subscriberNotificationTemplate);
         properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
         properties.put("freeDays", this.freeDays);
         properties.put("releasingInfo", this.releasingInfo);
@@ -87,16 +88,16 @@ public abstract class GProject
         return sprintDao.getSprintsByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.release.Release> getReleases() {
-        return releaseDao.getReleasesByProject((Project)this);
-    }
-
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
         return requirementDao.getRequirementsByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.issues.Issue> getIssues() {
         return issueDao.getIssuesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.project.Quality> getQualitys() {
@@ -1868,6 +1869,42 @@ public abstract class GProject
     }
 
     // -----------------------------------------------------------
+    // - subscriberNotificationTemplate
+    // -----------------------------------------------------------
+
+    private java.lang.String subscriberNotificationTemplate;
+
+    public final java.lang.String getSubscriberNotificationTemplate() {
+        return subscriberNotificationTemplate;
+    }
+
+    public final void setSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        subscriberNotificationTemplate = prepareSubscriberNotificationTemplate(subscriberNotificationTemplate);
+        if (isSubscriberNotificationTemplate(subscriberNotificationTemplate)) return;
+        this.subscriberNotificationTemplate = subscriberNotificationTemplate;
+        updateLastModified();
+        fireModified("subscriberNotificationTemplate="+subscriberNotificationTemplate);
+    }
+
+    protected java.lang.String prepareSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        // subscriberNotificationTemplate = Str.removeUnreadableChars(subscriberNotificationTemplate);
+        return subscriberNotificationTemplate;
+    }
+
+    public final boolean isSubscriberNotificationTemplateSet() {
+        return this.subscriberNotificationTemplate != null;
+    }
+
+    public final boolean isSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        if (this.subscriberNotificationTemplate == null && subscriberNotificationTemplate == null) return true;
+        return this.subscriberNotificationTemplate != null && this.subscriberNotificationTemplate.equals(subscriberNotificationTemplate);
+    }
+
+    protected final void updateSubscriberNotificationTemplate(Object value) {
+        setSubscriberNotificationTemplate((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
     // - lastOpenedDateAndTime
     // -----------------------------------------------------------
 
@@ -2012,6 +2049,7 @@ public abstract class GProject
             if (property.equals("releaseScriptPath")) updateReleaseScriptPath(value);
             if (property.equals("supportEmail")) updateSupportEmail(value);
             if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(value);
+            if (property.equals("subscriberNotificationTemplate")) updateSubscriberNotificationTemplate(value);
             if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(value);
             if (property.equals("freeDays")) updateFreeDays(value);
             if (property.equals("releasingInfo")) updateReleasingInfo(value);
@@ -2123,12 +2161,6 @@ public abstract class GProject
         GProject.projectDao = projectDao;
     }
 
-    static scrum.server.release.ReleaseDao releaseDao;
-
-    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
-        GProject.releaseDao = releaseDao;
-    }
-
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
@@ -2139,6 +2171,12 @@ public abstract class GProject
 
     public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
         GProject.issueDao = issueDao;
+    }
+
+    static scrum.server.release.ReleaseDao releaseDao;
+
+    public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
+        GProject.releaseDao = releaseDao;
     }
 
     static scrum.server.project.QualityDao qualityDao;
