@@ -715,7 +715,9 @@ public class Project extends GProject {
 		sb.append("\n");
 		sb.append("This entity comes from project ${project.label} on ${kunagi.instance}\n");
 		sb.append("\n");
+		sb.append("---\n");
 		sb.append("Unsubscribe from ${entity.reference}: ${unsubscribe.url}\n");
+		sb.append("\n");
 		sb.append("Unsubscribe from all entities: ${unsubscribeall.url}\n");
 		return sb.toString();
 	}
