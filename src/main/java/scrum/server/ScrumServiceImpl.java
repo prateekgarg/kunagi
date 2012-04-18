@@ -501,9 +501,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (issue.isClosed()) {
 				issue.setCloseDate(Date.today());
 				postProjectEvent(conversation, currentUser.getName() + " closed " + issue.getReferenceAndLabel(), issue);
+				subscriptionService.notifySubscribers(issue, "Issue closed", conversation.getProject(), null);
 			} else {
 				postProjectEvent(conversation, currentUser.getName() + " reopened " + issue.getReferenceAndLabel(),
 					issue);
+				subscriptionService.notifySubscribers(issue, "Issue reopened", conversation.getProject(), null);
 			}
 		}
 
@@ -541,6 +543,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (issue.isIdea() || issue.isBug()) {
 				postProjectEvent(conversation, currentUser.getName() + " accepted " + issue.getReferenceAndLabel(),
 					issue);
+				subscriptionService.notifySubscribers(issue, "Issue accepted", conversation.getProject(), null);
 			}
 		}
 
@@ -590,10 +593,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					postProjectEvent(conversation,
 						currentUser.getName() + " pulled " + requirement.getReferenceAndLabel() + " to current sprint",
 						requirement);
+					subscriptionService.notifySubscribers(requirement, "Story pulled to current Sprint",
+						conversation.getProject(), null);
 				} else {
 					postProjectEvent(conversation,
 						currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
 								+ " from current sprint", requirement);
+					subscriptionService.notifySubscribers(requirement, "Story kicked from current Sprint",
+						conversation.getProject(), null);
 				}
 			}
 		}
