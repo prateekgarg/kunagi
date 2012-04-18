@@ -136,8 +136,7 @@ public class SubscriptionService {
 	}
 
 	private void sendEmails(Notification notification) {
-		String subjectText = EmailHelper.createSubject(systemConfig, notification.project,
-			notification.subject.toString());
+		String subjectText = EmailHelper.createSubject(notification.project, notification.subject.toString());
 		for (String email : notification.emails) {
 			String text = createText(email, notification);
 			emailSender.sendEmail(null, email, subjectText, text);
@@ -163,6 +162,8 @@ public class SubscriptionService {
 		text = text.replace("${change.message}", notification.message);
 		text = text.replace("${project.label}", notification.project.getLabel());
 		text = text.replace("${project.id}", notification.project.getId());
+		if (notification.project.isProductLabelSet())
+			text = text.replace("${product.label}", notification.project.getProductLabel());
 		if (notification.project.isHomepageUrlSet())
 			text = text.replace("${homepage.url}", notification.project.getHomepageUrl());
 		text = text.replace("${unsubscribe.url}", createUnsubscribeUrl(email, notification));

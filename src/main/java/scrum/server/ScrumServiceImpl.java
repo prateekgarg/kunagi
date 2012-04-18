@@ -957,7 +957,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	public void sendProjectEventEmails(String message, AEntity subject, Project project, String exceptionEmail) {
 		if (exceptionEmail != null) exceptionEmail = exceptionEmail.toLowerCase();
-		String subjectText = EmailHelper.createSubject(webApplication.getSystemConfig(), project, message);
+		String subjectText = EmailHelper.createSubject(project, message);
 		String emailText = createProjectEventEmailText(project, message, subject);
 		for (ProjectUserConfig config : project.getUserConfigs()) {
 			if (!config.isReceiveEmailsOnProjectEvents()) continue;

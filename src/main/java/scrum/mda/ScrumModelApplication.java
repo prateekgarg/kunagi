@@ -261,7 +261,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip(
 						"Text template, which to use when sending change notifications to subscribers.<br><br>"
 								+ "The following variables can be used: "
-								+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
+								+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${product.label} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
 			getApplicationModel().addCreateAction(projectModel);

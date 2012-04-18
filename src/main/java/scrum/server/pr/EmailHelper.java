@@ -14,15 +14,13 @@
  */
 package scrum.server.pr;
 
-import scrum.server.admin.SystemConfig;
 import scrum.server.project.Project;
 
 public class EmailHelper {
 
-	public static String createSubject(SystemConfig systemConfig, Project project, String text) {
+	public static String createSubject(Project project, String text) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(systemConfig.getInstanceNameWithApplicationLabel());
-		sb.append(": ").append(project.getLabel());
+		sb.append(project.isProductLabelSet() ? project.getProductLabel() : project.getLabel());
 		sb.append(": ").append(text);
 		return sb.toString();
 	}
