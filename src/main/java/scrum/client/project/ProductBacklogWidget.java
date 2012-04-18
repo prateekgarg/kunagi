@@ -16,6 +16,7 @@ package scrum.client.project;
 
 import ilarkesto.gwt.client.AAction;
 import ilarkesto.gwt.client.AFieldValueWidget;
+import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -58,18 +59,21 @@ public class ProductBacklogWidget extends AScrumWidget {
 		headerWrapper = new SimplePanel();
 		filterToggleAction = new FilterToggleAction();
 
-		Widget createStoryButtonWidget = getCurrentProject().isProductOwner(getCurrentUser()) ? new CreateStoryButtonWidget(
-				filterToggleAction) : new ButtonWidget(new CreateRequirementAction(filterToggleAction));
-
 		PagePanel page = new PagePanel();
-		page.addHeader("Product Backlog", createStoryButtonWidget, new ButtonWidget(filterToggleAction));
+		page.addHeader("Product Backlog", createCreateStoryButtons(), new ButtonWidget(filterToggleAction));
 		page.addSection(headerWrapper);
 		page.addSection(Gwt.createFlowPanel(list));
+		page.addSection(createCreateStoryButtons());
 		page.addSection(ScrumGwt.createPdfLink("Download as PDF", "productBacklog", getCurrentProject()));
 		page.addSection(new UserGuideWidget(getLocalizer().views().productBacklog(), getCurrentProject()
 				.getProductBacklogRequirements().size() < 5, getCurrentUser().getHideUserGuideProductBacklogModel()));
 
 		return page;
+	}
+
+	public AWidget createCreateStoryButtons() {
+		return getCurrentProject().isProductOwner(getCurrentUser()) ? new CreateStoryButtonWidget(filterToggleAction)
+				: new ButtonWidget(new CreateRequirementAction(filterToggleAction));
 	}
 
 	@Override

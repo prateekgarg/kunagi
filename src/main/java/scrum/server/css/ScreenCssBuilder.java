@@ -207,8 +207,8 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".CreateTaskButtonWrapper").marginTop(5);
 		css.style(".CreateTaskButtonWrapper .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
 
-		css.style(".CreateStoryButtonWidget").marginTop(1);
-		css.style(".CreateStoryButtonWidget-dragHandle").marginTop(0).colorBlack();
+		css.style(".CreateStoryButtonWidget").marginTop(1).width(140);
+		css.style(".CreateStoryButtonWidget-dragHandle").marginTop(0).width(40).colorBlack();
 
 		css.style(".ReleaseWidget-script-running").fontFamilyMonospace().overflowHidden().color("red").fontWeightBold()
 				.textDecorationBlink();
