@@ -117,7 +117,7 @@ public class ScrumGwtApplication extends GScrumGwtApplication {
 	public void handleServiceCallError(String serviceCall, List<ErrorWrapper> errors) {
 		for (ErrorWrapper error : errors) {
 			if ("ilarkesto.webapp.GwtConversationDoesNotExist".equals(error.getName())) {
-				Scope.get().getComponent(Ui.class).getWorkspace().abort("Sitzung abgelaufen.");
+				Scope.get().getComponent(Ui.class).getWorkspace().abort("Session timed out.");
 				return;
 			}
 		}
