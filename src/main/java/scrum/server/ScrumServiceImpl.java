@@ -283,9 +283,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
 				comment.getParent());
 			currentProject.updateHomepage(comment.getParent(), true);
-
-			subscriptionService.notifySubscribers(comment.getParent(),
-				"New comment posted by " + comment.getAuthorLabel(), conversation.getProject(), null);
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -456,7 +453,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Impediment) onImpedimentChanged(conversation, (Impediment) entity, properties);
 		if (entity instanceof Issue) onIssueChanged(conversation, (Issue) entity, properties);
 		if (entity instanceof BlogEntry) onBlogEntryChanged(conversation, (BlogEntry) entity, properties);
-		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity);
+		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity, properties);
 		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
 
 		Project currentProject = conversation.getProject();
@@ -476,8 +473,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	private void onCommentChanged(GwtConversation conversation, Comment comment) {
+	private void onCommentChanged(GwtConversation conversation, Comment comment, Map properties) {
 		conversation.getProject().updateHomepage(comment.getParent(), false);
+		if (comment.isPublished() && properties.containsKey("published")) {
+			subscriptionService.notifySubscribers(comment.getParent(),
+				"New comment posted by " + comment.getAuthorLabel(), conversation.getProject(), null);
+		}
 	}
 
 	private void onBlogEntryChanged(GwtConversation conversation, BlogEntry blogEntry, Map properties) {
