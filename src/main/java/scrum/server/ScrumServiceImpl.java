@@ -976,5 +976,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			currentUser.getName() + " created " + story.getReference() + " from " + issue.getReferenceAndLabel(), issue);
 		changeDao.postChange(issue, currentUser, "storyId", null, story.getId());
 		changeDao.postChange(story, currentUser, "issueId", null, issue.getId());
+		subscriptionService.copySubscribers(issue, story);
+		subscriptionService.notifySubscribers(story, "Story created from " + issue, conversation.getProject(), null);
 	}
 }

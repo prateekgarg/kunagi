@@ -44,9 +44,7 @@ public class SubscriptionService {
 		if (!Str.isEmail(email)) throw new RuntimeException("Invalid email: " + email);
 		email = email.toLowerCase();
 		Subscription subscription = subscriptionDao.getSubscriptionBySubject(subject);
-		if (subscription == null) {
-			subscription = subscriptionDao.postSubscription(subject);
-		}
+		if (subscription == null) subscription = subscriptionDao.postSubscription(subject);
 		subscription.addSubscribersEmail(email);
 		log.info(email, "subscribed to", subject);
 	}
@@ -93,6 +91,14 @@ public class SubscriptionService {
 			String text = createText(subject, project, email, message);
 			emailSender.sendEmail(null, email, subjectText, text);
 		}
+	}
+
+	public void copySubscribers(AEntity from, AEntity to) {
+		Subscription fromSubscription = subscriptionDao.getSubscriptionBySubject(from);
+		if (fromSubscription == null || fromSubscription.isSubscribersEmailsEmpty()) return;
+		Subscription toSubscription = subscriptionDao.getSubscriptionBySubject(to);
+		if (toSubscription == null) toSubscription = subscriptionDao.postSubscription(to);
+		toSubscription.addSubscribersEmails(fromSubscription.getSubscribersEmails());
 	}
 
 	private String createSubjectText(AEntity subject, Project project) {
