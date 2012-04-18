@@ -69,6 +69,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		TableBuilder tbSupport = ScrumGwt.createFieldTable();
 		tbSupport.addFieldRow("Support email", project.getSupportEmailModel());
 		tbSupport.addFieldRow("Issue reply template", project.getIssueReplyTemplateModel());
+		tbSupport.addFieldRow("Subscriber notification template", project.getSubscriberNotificationTemplateModel());
 		page.addSection(tbSupport.createTable());
 
 		return page;

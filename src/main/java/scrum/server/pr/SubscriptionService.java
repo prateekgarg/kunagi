@@ -110,15 +110,21 @@ public class SubscriptionService {
 	}
 
 	public void processNotifications() {
+		int total = 0;
+		int count = 0;
 		synchronized (notifications) {
+			if (notifications.isEmpty()) return;
+			total = notifications.size();
 			Iterator<Notification> iterator = notifications.iterator();
 			while (iterator.hasNext()) {
 				Notification notification = iterator.next();
 				if (notification.actionTime.isFuture()) continue;
 				sendEmails(notification);
 				iterator.remove();
+				count++;
 			}
 		}
+		log.info(count, "of", total, "notifications sent to subscribers");
 	}
 
 	private void sendEmails(Notification notification) {

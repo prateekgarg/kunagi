@@ -683,8 +683,19 @@ public class Project extends GProject {
 			setPunishmentFactor(1);
 		}
 		if (!isHomepageDirSet()) setAutoUpdateHomepage(false);
+		if (!isIssueReplyTemplateSet()) setIssueReplyTemplate(createDefaultIssueReplyTemplate());
 		if (!isSubscriberNotificationTemplateSet())
 			setSubscriberNotificationTemplate(createDefaultSubscriberNotificationTemplate());
+	}
+
+	private String createDefaultIssueReplyTemplate() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Hello ${issuer.name},\n");
+		sb.append("\n");
+		sb.append("thank you very much for your feedback.\n");
+		sb.append("\n");
+		sb.append("Your issue is now known as ${issue.reference}. You can view it on our homepage: ${homepage.url}/${issue.reference}.html\n");
+		return sb.toString();
 	}
 
 	private String createDefaultSubscriberNotificationTemplate() {
