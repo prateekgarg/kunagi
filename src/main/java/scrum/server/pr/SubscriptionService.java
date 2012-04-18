@@ -15,11 +15,16 @@
 package scrum.server.pr;
 
 import ilarkesto.auth.PasswordHasher;
+import ilarkesto.base.time.DateAndTime;
+import ilarkesto.concurrent.ATask;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.In;
 import ilarkesto.persistence.AEntity;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import scrum.client.common.LabelSupport;
@@ -39,6 +44,8 @@ public class SubscriptionService {
 
 	@In
 	private SystemConfig systemConfig;
+
+	private List<Notification> notifications = new LinkedList<Notification>();
 
 	public void subscribe(String email, AEntity subject) {
 		if (!Str.isEmail(email)) throw new RuntimeException("Invalid email: " + email);
@@ -84,11 +91,40 @@ public class SubscriptionService {
 			log.debug("No subscribers for", subject);
 			return;
 		}
-		String subjectText = createSubjectText(subject, project);
+
 		Set<String> subscribersEmails = subscription.getSubscribersEmails();
 		if (exceptionEmail != null) subscribersEmails.remove(exceptionEmail.toLowerCase());
-		for (String email : subscribersEmails) {
-			String text = createText(subject, project, email, message);
+		if (subscribersEmails.isEmpty()) {
+			log.debug("No subscribers for", subject);
+			return;
+		}
+
+		synchronized (notifications) {
+			for (Notification notification : notifications) {
+				if (!notification.subject.equals(subject)) continue;
+				notification.merge(message, subscribersEmails);
+				return;
+			}
+			notifications.add(new Notification(subject, message, project, subscribersEmails));
+		}
+	}
+
+	public void processNotifications() {
+		synchronized (notifications) {
+			Iterator<Notification> iterator = notifications.iterator();
+			while (iterator.hasNext()) {
+				Notification notification = iterator.next();
+				if (notification.actionTime.isFuture()) continue;
+				sendEmails(notification);
+				iterator.remove();
+			}
+		}
+	}
+
+	private void sendEmails(Notification notification) {
+		String subjectText = createSubjectText(notification);
+		for (String email : notification.emails) {
+			String text = createText(email, notification);
 			emailSender.sendEmail(null, email, subjectText, text);
 		}
 	}
@@ -101,41 +137,43 @@ public class SubscriptionService {
 		toSubscription.addSubscribersEmails(fromSubscription.getSubscribersEmails());
 	}
 
-	private String createSubjectText(AEntity subject, Project project) {
+	private String createSubjectText(Notification notification) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(systemConfig.getInstanceNameWithApplicationLabel());
-		sb.append(": ").append(project.getLabel());
-		sb.append(": ").append(subject.toString());
+		sb.append(": ").append(notification.project.getLabel());
+		sb.append(": ").append(notification.subject.toString());
 		return sb.toString();
 	}
 
-	private String createText(AEntity subject, Project project, String email, String message) {
-		String text = project.getSubscriberNotificationTemplate();
-		if (subject instanceof ReferenceSupport) {
-			text = text.replace("${entity.reference}", ((ReferenceSupport) subject).getReference());
+	private String createText(String email, Notification notification) {
+		String text = notification.project.getSubscriberNotificationTemplate();
+		if (notification.subject instanceof ReferenceSupport) {
+			text = text.replace("${entity.reference}", ((ReferenceSupport) notification.subject).getReference());
 		}
-		if (subject instanceof LabelSupport) {
-			text = text.replace("${entity.label}", ((LabelSupport) subject).getLabel());
+		if (notification.subject instanceof LabelSupport) {
+			text = text.replace("${entity.label}", ((LabelSupport) notification.subject).getLabel());
 		}
-		text = text.replace("${change.message}", message);
-		text = text.replace("${project.label}", project.getLabel());
-		text = text.replace("${project.id}", project.getId());
-		if (project.isHomepageUrlSet()) text = text.replace("${homepage.url}", project.getHomepageUrl());
-		text = text.replace("${unsubscribe.url}", createUnsubscribeUrl(email, subject, project));
-		text = text.replace("${unsubscribeall.url}", createUnsubscribeUrl(email, null, project));
+		text = text.replace("${change.message}", notification.message);
+		text = text.replace("${project.label}", notification.project.getLabel());
+		text = text.replace("${project.id}", notification.project.getId());
+		if (notification.project.isHomepageUrlSet())
+			text = text.replace("${homepage.url}", notification.project.getHomepageUrl());
+		text = text.replace("${unsubscribe.url}", createUnsubscribeUrl(email, notification));
+		text = text.replace("${unsubscribeall.url}", createUnsubscribeUrl(email, notification));
 		text = text.replace("${kunagi.instance}", systemConfig.getInstanceNameWithApplicationLabel());
 		text = text.replace("${kunagi.url}", systemConfig.getUrl());
 		return text;
 	}
 
-	private String createUnsubscribeUrl(String email, AEntity subject, Project project) {
+	private String createUnsubscribeUrl(String email, Notification notification) {
 		StringBuilder sb = new StringBuilder();
 		String baseUrl = systemConfig.getUrl();
 		sb.append(baseUrl);
 		if (!baseUrl.endsWith("/")) sb.append("/");
 		sb.append("unsubscribe");
 		sb.append("?email=").append(Str.encodeUrlParameter(email));
-		if (subject != null) sb.append("&subject=").append(Str.encodeUrlParameter(subject.getId()));
+		if (notification.subject != null)
+			sb.append("&subject=").append(Str.encodeUrlParameter(notification.subject.getId()));
 		sb.append("&key=").append(Str.encodeUrlParameter(createKey(email)));
 		return sb.toString();
 	}
@@ -144,4 +182,40 @@ public class SubscriptionService {
 		return PasswordHasher.hashPassword(email, systemConfig.getSubscriptionKeySeed());
 	}
 
+	public class Task extends ATask {
+
+		@Override
+		protected void perform() throws InterruptedException {
+			processNotifications();
+		}
+
+	}
+
+	private class Notification {
+
+		private AEntity subject;
+		private String message;
+		private Project project;
+		private Set<String> emails;
+		private DateAndTime actionTime;
+
+		public Notification(AEntity subject, String message, Project project, Set<String> emails) {
+			super();
+			this.subject = subject;
+			this.message = message;
+			this.project = project;
+			this.emails = emails;
+			updateActionTime();
+		}
+
+		public void merge(String newMessage, Set<String> newEmails) {
+			emails.addAll(newEmails);
+			message += "; " + newMessage;
+			updateActionTime();
+		}
+
+		private void updateActionTime() {
+			actionTime = DateAndTime.now().addMinutes(10);
+		}
+	}
 }

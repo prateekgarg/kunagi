@@ -61,7 +61,7 @@ import scrum.server.project.Project;
 
 public class ScrumWebApplication extends GScrumWebApplication {
 
-	private static final int DATA_VERSION = 31;
+	private static final int DATA_VERSION = 32;
 
 	private static final Log log = Log.get(ScrumWebApplication.class);
 
@@ -223,6 +223,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected void scheduleTasks(TaskManager tm) {
 		tm.scheduleWithFixedDelay(autowire(new DestroyTimeoutedSessionsTask()), Tm.MINUTE);
 		tm.scheduleWithFixedDelay(autowire(new HomepageUpdaterTask()), Tm.HOUR);
+		tm.scheduleWithFixedDelay(autowire(getSubscriptionService().new Task()), Tm.MINUTE);
 
 		if (getConfig().isDisableUsersWithUnverifiedEmails())
 			tm.scheduleWithFixedDelay(autowire(new DisableUsersWithUnverifiedEmailsTask()), Tm.SECOND * 10, Tm.HOUR);
