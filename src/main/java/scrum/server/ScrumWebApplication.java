@@ -241,7 +241,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	@Override
-	protected void onShutdownWebApplication() {}
+	protected void onShutdownWebApplication() {
+		getSubscriptionService().flush();
+	}
 
 	@Override
 	public Url getHomeUrl() {

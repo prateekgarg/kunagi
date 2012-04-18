@@ -110,6 +110,14 @@ public class SubscriptionService {
 	}
 
 	public void processNotifications() {
+		processNotifications(false);
+	}
+
+	public void flush() {
+		processNotifications(true);
+	}
+
+	private void processNotifications(boolean ignoreActionTime) {
 		int total = 0;
 		int count = 0;
 		synchronized (notifications) {
@@ -118,7 +126,7 @@ public class SubscriptionService {
 			Iterator<Notification> iterator = notifications.iterator();
 			while (iterator.hasNext()) {
 				Notification notification = iterator.next();
-				if (notification.actionTime.isFuture()) continue;
+				if (!ignoreActionTime && notification.actionTime.isFuture()) continue;
 				sendEmails(notification);
 				iterator.remove();
 				count++;
