@@ -212,11 +212,12 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	}
 
 	public void acceptAsIdea() {
-		setAcceptDate(Date.today());
+		if (getAcceptDate() == null) setAcceptDate(Date.today());
+		setUrgent(false);
 	}
 
 	public void acceptAsBug() {
-		setAcceptDate(Date.today());
+		if (getAcceptDate() == null) setAcceptDate(Date.today());
 		setUrgent(true);
 	}
 
