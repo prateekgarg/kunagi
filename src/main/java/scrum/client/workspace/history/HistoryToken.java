@@ -107,14 +107,19 @@ public class HistoryToken {
 		History.newItem("project=" + projectId + "|page=" + page, true);
 	}
 
-	public void updatePageAndEntityWithoutEvent(String page, AGwtEntity entity) {
+	public void updatePageAndEntity(String page, AGwtEntity entity, boolean event) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("project=").append(getProjectId());
+
 		if (!Str.isBlank(page)) sb.append("|page=").append(page);
+		this.page = page;
+
 		if (entity != null) sb.append("|entity=").append(entity.getId());
+		this.entityId = entity == null ? null : entity.getId();
+
 		String token = sb.toString();
 		if (token.equals(History.getToken())) return;
-		History.newItem(token, false);
+		History.newItem(token, event);
 	}
 
 	public String getProjectId() {

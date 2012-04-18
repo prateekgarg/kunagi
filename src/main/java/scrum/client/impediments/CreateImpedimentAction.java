@@ -14,9 +14,7 @@
  */
 package scrum.client.impediments;
 
-import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
-import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateImpedimentAction extends GCreateImpedimentAction {
 
@@ -45,7 +43,7 @@ public class CreateImpedimentAction extends GCreateImpedimentAction {
 	@Override
 	protected void onExecute() {
 		Impediment impediment = getCurrentProject().createNewImpediment();
-		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(impediment);
+		getNavigator().gotoPageWithEntity(null, impediment);
 	}
 
 }
