@@ -149,6 +149,59 @@ public abstract class GProjectUserConfig
 
     }
 
+    // --- receiveEmailsOnProjectEvents ---
+
+    private boolean receiveEmailsOnProjectEvents ;
+
+    public final boolean isReceiveEmailsOnProjectEvents() {
+        return this.receiveEmailsOnProjectEvents ;
+    }
+
+    public final ProjectUserConfig setReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
+        if (isReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents)) return (ProjectUserConfig)this;
+        this.receiveEmailsOnProjectEvents = receiveEmailsOnProjectEvents ;
+        propertyChanged("receiveEmailsOnProjectEvents", this.receiveEmailsOnProjectEvents);
+        return (ProjectUserConfig)this;
+    }
+
+    public final boolean isReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
+        return equals(this.receiveEmailsOnProjectEvents, receiveEmailsOnProjectEvents);
+    }
+
+    private transient ReceiveEmailsOnProjectEventsModel receiveEmailsOnProjectEventsModel;
+
+    public ReceiveEmailsOnProjectEventsModel getReceiveEmailsOnProjectEventsModel() {
+        if (receiveEmailsOnProjectEventsModel == null) receiveEmailsOnProjectEventsModel = createReceiveEmailsOnProjectEventsModel();
+        return receiveEmailsOnProjectEventsModel;
+    }
+
+    protected ReceiveEmailsOnProjectEventsModel createReceiveEmailsOnProjectEventsModel() { return new ReceiveEmailsOnProjectEventsModel(); }
+
+    protected class ReceiveEmailsOnProjectEventsModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "ProjectUserConfig_receiveEmailsOnProjectEvents";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isReceiveEmailsOnProjectEvents();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setReceiveEmailsOnProjectEvents(value);
+        }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- misconducts ---
 
     private int misconducts ;
@@ -771,6 +824,7 @@ public abstract class GProjectUserConfig
         projectId = (String) props.get("projectId");
         userId = (String) props.get("userId");
         color  = (java.lang.String) props.get("color");
+        receiveEmailsOnProjectEvents  = (Boolean) props.get("receiveEmailsOnProjectEvents");
         misconducts  = (Integer) props.get("misconducts");
         richtextAutosaveText  = (java.lang.String) props.get("richtextAutosaveText");
         richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
@@ -796,6 +850,7 @@ public abstract class GProjectUserConfig
         properties.put("projectId", this.projectId);
         properties.put("userId", this.userId);
         properties.put("color", this.color);
+        properties.put("receiveEmailsOnProjectEvents", this.receiveEmailsOnProjectEvents);
         properties.put("misconducts", this.misconducts);
         properties.put("richtextAutosaveText", this.richtextAutosaveText);
         properties.put("richtextAutosaveField", this.richtextAutosaveField);

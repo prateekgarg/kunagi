@@ -136,7 +136,8 @@ public class SubscriptionService {
 	}
 
 	private void sendEmails(Notification notification) {
-		String subjectText = createSubjectText(notification);
+		String subjectText = EmailHelper.createSubject(systemConfig, notification.project,
+			notification.subject.toString());
 		for (String email : notification.emails) {
 			String text = createText(email, notification);
 			emailSender.sendEmail(null, email, subjectText, text);
@@ -149,14 +150,6 @@ public class SubscriptionService {
 		Subscription toSubscription = subscriptionDao.getSubscriptionBySubject(to);
 		if (toSubscription == null) toSubscription = subscriptionDao.postSubscription(to);
 		toSubscription.addSubscribersEmails(fromSubscription.getSubscribersEmails());
-	}
-
-	private String createSubjectText(Notification notification) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(systemConfig.getInstanceNameWithApplicationLabel());
-		sb.append(": ").append(notification.project.getLabel());
-		sb.append(": ").append(notification.subject.toString());
-		return sb.toString();
 	}
 
 	private String createText(String email, Notification notification) {

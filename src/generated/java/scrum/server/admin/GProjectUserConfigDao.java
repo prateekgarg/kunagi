@@ -48,6 +48,7 @@ public abstract class GProjectUserConfigDao
         usersCache = null;
         projectUserConfigsByColorCache.clear();
         colorsCache = null;
+        projectUserConfigsByReceiveEmailsOnProjectEventsCache.clear();
         projectUserConfigsByMisconductsCache.clear();
         misconductssCache = null;
         projectUserConfigsByRichtextAutosaveTextCache.clear();
@@ -207,6 +208,35 @@ public abstract class GProjectUserConfigDao
 
         public boolean test(ProjectUserConfig e) {
             return e.isColor(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - receiveEmailsOnProjectEvents
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<ProjectUserConfig>> projectUserConfigsByReceiveEmailsOnProjectEventsCache = new Cache<Boolean,Set<ProjectUserConfig>>(
+            new Cache.Factory<Boolean,Set<ProjectUserConfig>>() {
+                public Set<ProjectUserConfig> create(Boolean receiveEmailsOnProjectEvents) {
+                    return getEntities(new IsReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents));
+                }
+            });
+
+    public final Set<ProjectUserConfig> getProjectUserConfigsByReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
+        return new HashSet<ProjectUserConfig>(projectUserConfigsByReceiveEmailsOnProjectEventsCache.get(receiveEmailsOnProjectEvents));
+    }
+
+    private static class IsReceiveEmailsOnProjectEvents implements Predicate<ProjectUserConfig> {
+
+        private boolean value;
+
+        public IsReceiveEmailsOnProjectEvents(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(ProjectUserConfig e) {
+            return value == e.isReceiveEmailsOnProjectEvents();
         }
 
     }

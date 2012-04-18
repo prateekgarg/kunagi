@@ -772,6 +772,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectUserConfigModel.addReference("project", getProjectModel()).setMaster(true);
 			projectUserConfigModel.addReference("user", getUserModel()).setMaster(true);
 			projectUserConfigModel.addStringProperty("color");
+			projectUserConfigModel.addProperty("receiveEmailsOnProjectEvents", boolean.class);
 			projectUserConfigModel.addProperty("misconducts", int.class).setEditablePredicate("misconductsEditable");
 			projectUserConfigModel.addStringProperty("richtextAutosaveText");
 			projectUserConfigModel.addStringProperty("richtextAutosaveField");

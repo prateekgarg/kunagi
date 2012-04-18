@@ -18,14 +18,11 @@ import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.editor.TextEditorWidget;
 import scrum.client.ScrumGwt;
 import scrum.client.common.AScrumWidget;
-import scrum.client.common.FieldsWidget;
 import scrum.client.workspace.PagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
 
 public class UserConfigWidget extends AScrumWidget {
-
-	private FieldsWidget fields;
 
 	@Override
 	protected Widget onInitialization() {

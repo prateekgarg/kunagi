@@ -22,6 +22,7 @@ import ilarkesto.base.Reflect;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
+import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.In;
 import ilarkesto.integration.ldap.Ldap;
@@ -57,6 +58,7 @@ import scrum.server.issues.IssueDao;
 import scrum.server.journal.Change;
 import scrum.server.journal.ChangeDao;
 import scrum.server.pr.BlogEntry;
+import scrum.server.pr.EmailHelper;
 import scrum.server.pr.EmailSender;
 import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
@@ -942,7 +944,34 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void postProjectEvent(GwtConversation conversation, String message, AEntity subject) {
 		assertProjectSelected(conversation);
-		webApplication.postProjectEvent(conversation.getProject(), message, subject);
+		Project project = conversation.getProject();
+		webApplication.postProjectEvent(project, message, subject);
+
+		try {
+			sendProjectEventEmails(message, subject, project, conversation.getSession().getUser().getEmail());
+		} catch (Throwable ex) {
+			log.error("Sending project event notification emails failed.", ex);
+		}
+	}
+
+	public void sendProjectEventEmails(String message, AEntity subject, Project project, String exceptionEmail) {
+		if (exceptionEmail != null) exceptionEmail = exceptionEmail.toLowerCase();
+		String subjectText = EmailHelper.createSubject(webApplication.getSystemConfig(), project, message);
+		String emailText = createProjectEventEmailText(project, message, subject);
+		for (ProjectUserConfig config : project.getUserConfigs()) {
+			if (!config.isReceiveEmailsOnProjectEvents()) continue;
+			String email = config.getUser().getEmail();
+			if (!Str.isEmail(email)) continue;
+			if (email.toLowerCase().equals(exceptionEmail)) continue;
+			emailSender.sendEmail(null, email, subjectText, emailText);
+		}
+	}
+
+	private String createProjectEventEmailText(Project project, String message, AEntity subject) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(message).append("\n");
+		sb.append(webApplication.createUrl(project, subject)).append("\n");
+		return sb.toString();
 	}
 
 	private void sendToClients(GwtConversation conversation, Collection<? extends AEntity> entities) {

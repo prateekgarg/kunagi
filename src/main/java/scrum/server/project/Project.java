@@ -38,6 +38,7 @@ import java.util.Set;
 
 import scrum.client.common.WeekdaySelector;
 import scrum.server.KunagiRootConfig;
+import scrum.server.ScrumWebApplication;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.User;
 import scrum.server.calendar.SimpleEvent;
@@ -74,6 +75,11 @@ public class Project extends GProject {
 	private static transient KunagiRootConfig config;
 	private static transient CommentDao commentDao;
 	private static transient SprintReportDao sprintReportDao;
+	private static transient ScrumWebApplication webApplication;
+
+	public static void setWebApplication(ScrumWebApplication webApplication) {
+		Project.webApplication = webApplication;
+	}
 
 	public static void setSprintReportDao(SprintReportDao sprintReportDao) {
 		Project.sprintReportDao = sprintReportDao;
@@ -238,18 +244,16 @@ public class Project extends GProject {
 		return true;
 	}
 
-	public void writeJournalAsRss(OutputStream out, String encoding, String baseUrl) {
+	public void writeJournalAsRss(OutputStream out, String encoding) {
 		Rss20Builder rss = new Rss20Builder();
 		rss.setTitle(getLabel() + " Event Journal");
 		rss.setLanguage("en");
-		rss.setLink(baseUrl + "#project=" + getId());
+		rss.setLink(webApplication.createUrl(this, null));
 		for (ProjectEvent event : getLatestProjectEvents(30)) {
 			Rss20Builder.Item item = rss.addItem();
 			item.setTitle(event.getLabel());
 			item.setDescription(event.getLabel());
-			String link = baseUrl + "#project=" + getId();
-			if (event.isSubjectSet()) link += "|entity=" + event.getSubjectId();
-			link += "|fromEvent=" + event.getId();
+			String link = webApplication.createUrl(this, event.getSubject()) + "|fromEvent=" + event.getId();
 			item.setLink(link);
 			item.setGuid(link);
 			item.setPubDate(event.getDateAndTime());

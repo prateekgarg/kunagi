@@ -1613,6 +1613,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
+        List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
+        for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
+            if (entity.isReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigsByMisconducts(int misconducts) {
         List<scrum.client.admin.ProjectUserConfig> ret = new ArrayList<scrum.client.admin.ProjectUserConfig>();
         for (scrum.client.admin.ProjectUserConfig entity : projectUserConfigs.values()) {
