@@ -58,6 +58,13 @@ public class SystemConfig extends GSystemConfig {
 		if (!isDefaultUserPasswordSet()) setDefaultUserPassword(config.getInitialPassword());
 		if (!isMaxFileSizeSet()) setMaxFileSize(20);
 		if (!isSubscriptionKeySeedSet()) setSubscriptionKeySeed(Str.generatePassword(32));
+		if (!isSmtpServerSet()) updateSmtp();
+	}
+
+	private void updateSmtp() {
+		setSmtpServer(config.getSmtpServer());
+		if (!Str.isBlank(config.getSmtpUser())) setSmtpUser(config.getSmtpUser());
+		if (!Str.isBlank(config.getSmtpPassword())) setSmtpPassword(config.getSmtpPassword());
 	}
 
 	public boolean isOpenIdDomainAllowed(String openId) {
@@ -71,7 +78,7 @@ public class SystemConfig extends GSystemConfig {
 
 	// --- dependencies ---
 
-	private static KunagiRootConfig config;
+	private transient static KunagiRootConfig config;
 
 	public static void setConfig(KunagiRootConfig config) {
 		SystemConfig.config = config;

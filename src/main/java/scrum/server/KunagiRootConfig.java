@@ -183,4 +183,16 @@ public class KunagiRootConfig {
 		return props.getInt("http.proxy.port", 8080);
 	}
 
+	public String getSmtpServer() {
+		return props.get("smtp.server");
+	}
+
+	public String getSmtpUser() {
+		return props.get("smtp.user");
+	}
+
+	public String getSmtpPassword() {
+		return props.get("smtp.password");
+	}
+
 }
