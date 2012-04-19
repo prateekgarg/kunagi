@@ -246,7 +246,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
 		User user = conversation.getSession().getUser();
-		if (!user.isAdmin() && user.matchesPassword(oldPassword) == false) throw new WrongPasswordException();
+		if (!user.matchesPassword(oldPassword)) throw new WrongPasswordException();
 
 		user.setPassword(newPassword);
 
