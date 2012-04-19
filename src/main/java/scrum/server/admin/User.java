@@ -90,7 +90,7 @@ public class User extends GUser {
 		sb.append("Please confirm your email within " + HOURS_FOR_EMAIL_VERIFICATION
 				+ " hours, otherwise your account will be deleted.\n");
 		try {
-			emailSender.sendEmail(null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
+			emailSender.sendEmail((String) null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
 		} catch (Exception ex) {
 			log.error("Sending verification email failed:", getEmail(), ex);
 		}
@@ -113,7 +113,7 @@ public class User extends GUser {
 		sb.append("\n");
 		sb.append("You sould change this password, since somebody else could read this email.");
 
-		emailSender.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
+		emailSender.sendEmail((String) null, getEmail(), "Kunagi password", sb.toString());
 
 		setPassword(newPassword);
 		log.info("Password changed for", this);
@@ -133,7 +133,7 @@ public class User extends GUser {
 		sb.append("Password: ").append(newPassword).append("\n");
 		sb.append("\n");
 		sb.append("You sould change this password, since somebody else could read this email.");
-		emailSender.sendEmail(null, getEmail(), "Kunagi password", sb.toString());
+		emailSender.sendEmail((String) null, getEmail(), "Kunagi password", sb.toString());
 	}
 
 	@Override

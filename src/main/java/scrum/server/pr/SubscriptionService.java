@@ -139,7 +139,7 @@ public class SubscriptionService {
 		String subjectText = EmailHelper.createSubject(notification.project, notification.subject.toString());
 		for (String email : notification.emails) {
 			String text = createText(email, notification);
-			emailSender.sendEmail(null, email, subjectText, text);
+			emailSender.sendEmail(notification.project, email, subjectText, text);
 		}
 	}
 

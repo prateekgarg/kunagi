@@ -364,7 +364,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		sb.append("Host: ").append(host).append("\n");
 		String subject = user.getLabel() + " registered on " + getBaseUrl();
 		try {
-			getEmailSender().sendEmail(null, null, subject, sb.toString());
+			getEmailSender().sendEmail((String) null, null, subject, sb.toString());
 		} catch (Throwable ex) {
 			log.error("Sending notification email failed:", subject, ex);
 		}

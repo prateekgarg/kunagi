@@ -23,6 +23,7 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
 import scrum.server.admin.SystemConfig;
+import scrum.server.project.Project;
 
 public class EmailSender {
 
@@ -30,6 +31,10 @@ public class EmailSender {
 
 	@In
 	private SystemConfig systemConfig;
+
+	public void sendEmail(Project project, String to, String subject, String text) {
+		sendEmail(project == null ? null : project.getSupportEmail(), to, subject, text);
+	}
 
 	public void sendEmail(String from, String to, String subject, String text) {
 		Session session = createSmtpSession();

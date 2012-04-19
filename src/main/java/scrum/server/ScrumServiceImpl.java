@@ -196,7 +196,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			String subject, String text) {
 		assertProjectSelected(conversation);
 		Issue issue = issueDao.getById(issueId);
-		emailSender.sendEmail(from, to, subject, text);
+		if (Str.isEmail(from)) {
+			emailSender.sendEmail(conversation.getProject(), to, subject, text);
+		} else {
+			emailSender.sendEmail(from, to, subject, text);
+		}
 		User user = conversation.getSession().getUser();
 		postProjectEvent(conversation, user.getName() + " emailed a response to " + issue.getReferenceAndLabel(), issue);
 		Change change = changeDao.postChange(issue, user, "@reply", null, text);
@@ -877,7 +881,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onSendTestEmail(GwtConversation conversation) {
 		// if (true) throw new GwtConversationDoesNotExist(666); // TODO remove!!!!!
-		emailSender.sendEmail(null, null, "Kunagi email test", "Kunagi email test");
+		emailSender.sendEmail((String) null, null, "Kunagi email test", "Kunagi email test");
 	}
 
 	@Override
@@ -964,7 +968,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			String email = config.getUser().getEmail();
 			if (!Str.isEmail(email)) continue;
 			if (email.toLowerCase().equals(exceptionEmail)) continue;
-			emailSender.sendEmail(null, email, subjectText, emailText);
+			emailSender.sendEmail(project, email, subjectText, emailText);
 		}
 	}
 
