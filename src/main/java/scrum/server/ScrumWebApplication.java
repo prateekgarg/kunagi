@@ -249,6 +249,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void onShutdownWebApplication() {
 		getSubscriptionService().flush();
+		getTransactionService().commit();
 	}
 
 	@Override

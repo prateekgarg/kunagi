@@ -15,7 +15,6 @@
 package scrum.client.project;
 
 import ilarkesto.gwt.client.AAction;
-import ilarkesto.gwt.client.AFieldValueWidget;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
@@ -144,14 +143,15 @@ public class ProductBacklogWidget extends AScrumWidget {
 				}
 
 			});
-			tb.addField("Velocity History", new AFieldValueWidget() {
-
-				@Override
-				protected void onUpdate() {
-					setText(getCurrentProject().getVelocitiesFromLastSprints());
-					super.onUpdate();
-				}
-			});
+			// tb.addField("Velocity History", new AFieldValueWidget() {
+			//
+			// @Override
+			// protected void onUpdate() {
+			// setText(getCurrentProject().getVelocitiesFromLastSprints());
+			// super.onUpdate();
+			// }
+			// });
+			tb.addField("Velocity History", new VelocityHistoryWidget());
 			velocityWidget = tb.createTable();
 		}
 		return velocityWidget;

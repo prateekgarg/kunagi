@@ -39,6 +39,7 @@ public class Change extends GChange {
 	public static final String CREATED = "@created";
 	public static final String REQ_COMPLETED_IN_SPRINT = "@completedInSprint";
 	public static final String REQ_REJECTED_IN_SPRINT = "@rejectedInSprint";
+	public static final String NOTIFICATION_EMAILS_SENT = "@notificationEmailsSent";
 
 	public Change(Map data) {
 		super(data);
@@ -75,6 +76,8 @@ public class Change extends GChange {
 		String oldValue = getOldValue();
 		String newValue = getNewValue();
 
+		if (key.equals(NOTIFICATION_EMAILS_SENT)) return "Notification emails sent to subscribers";
+
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return Str.isBlank(newValue) ? "reopened issue" : "closed issue";
 			if (key.equals("storyId")) return "converted issue to story " + getEntityReferenceAndLabel(newValue);
@@ -108,6 +111,8 @@ public class Change extends GChange {
 		AGwtEntity parent = getParent();
 		String oldValue = getOldValue();
 		String newValue = getNewValue();
+
+		if (key.equals(NOTIFICATION_EMAILS_SENT)) return Str.toHtml(newValue);
 
 		if (parent instanceof Issue) {
 			if (key.equals("closeDate")) return null;

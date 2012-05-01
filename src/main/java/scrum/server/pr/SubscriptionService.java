@@ -21,6 +21,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.In;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.TransactionService;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,7 +30,9 @@ import java.util.Set;
 
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
+import scrum.client.journal.Change;
 import scrum.server.admin.SystemConfig;
+import scrum.server.journal.ChangeDao;
 import scrum.server.project.Project;
 
 public class SubscriptionService {
@@ -44,6 +47,12 @@ public class SubscriptionService {
 
 	@In
 	private SystemConfig systemConfig;
+
+	@In
+	private ChangeDao changeDao;
+
+	@In
+	private TransactionService transactionService;
 
 	private List<Notification> notifications = new LinkedList<Notification>();
 
@@ -128,6 +137,8 @@ public class SubscriptionService {
 				Notification notification = iterator.next();
 				if (!ignoreActionTime && notification.actionTime.isFuture()) continue;
 				sendEmails(notification);
+				changeDao.postChange(notification.subject, null, Change.NOTIFICATION_EMAILS_SENT, null,
+					Str.concat(notification.emails, ", "));
 				iterator.remove();
 				count++;
 			}
@@ -195,6 +206,7 @@ public class SubscriptionService {
 		@Override
 		protected void perform() throws InterruptedException {
 			processNotifications();
+			transactionService.commit();
 		}
 
 	}

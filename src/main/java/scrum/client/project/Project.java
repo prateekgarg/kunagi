@@ -165,6 +165,19 @@ public class Project extends GProject implements ForumSupport {
 		return tasks;
 	}
 
+	public List<Float> getVelocitiesFromPreviousSprints(int max) {
+		List<Float> velocities = new ArrayList<Float>(max);
+		int count = 0;
+		for (Sprint sprint : getCompletedSprintsInOrder()) {
+			Float velocity = sprint.getVelocity();
+			if (velocity == null) continue;
+			velocities.add(velocity);
+			count++;
+			if (count > max) break;
+		}
+		return velocities;
+	}
+
 	public String getVelocitiesFromLastSprints() {
 		StringBuilder sb = new StringBuilder();
 		List<Sprint> sprints = getCompletedSprintsInOrder();
