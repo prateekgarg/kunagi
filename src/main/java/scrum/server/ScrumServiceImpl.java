@@ -418,9 +418,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "closed");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "issueId");
 		}
+		Project project = conversation.getProject();
 		if (entity instanceof Task) {
 			// update sprint day snapshot before change
-			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+			if (project.isCurrentSprintSet())
+				project.getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 			postChangeIfChanged(conversation, entity, properties, currentUser, "label");
 			postChangeIfChanged(conversation, entity, properties, currentUser, "description");
 		}
@@ -460,7 +462,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity, properties);
 		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
 
-		Project currentProject = conversation.getProject();
+		Project currentProject = project;
 		if (currentUser != null && currentProject != null) {
 			ProjectUserConfig config = currentProject.getUserConfig(currentUser);
 			config.touch();
