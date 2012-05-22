@@ -22,6 +22,7 @@ import ilarkesto.email.Eml;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
+import scrum.server.ScrumWebApplication;
 import scrum.server.admin.SystemConfig;
 import scrum.server.project.Project;
 
@@ -30,13 +31,14 @@ public class EmailSender {
 	private static Log log = Log.get(Log.class);
 
 	@In
-	private SystemConfig systemConfig;
+	private ScrumWebApplication webApplication;
 
 	public void sendEmail(Project project, String to, String subject, String text) {
 		sendEmail(project == null ? null : project.getSupportEmail(), to, subject, text);
 	}
 
 	public void sendEmail(String from, String to, String subject, String text) {
+		SystemConfig systemConfig = getSystemConfig();
 		Session session = createSmtpSession();
 		if (session == null) {
 			log.debug("Skipping sending email.", from, "->", to, "|", subject, "|", text);
@@ -62,6 +64,7 @@ public class EmailSender {
 	}
 
 	public Session createSmtpSession() {
+		SystemConfig systemConfig = getSystemConfig();
 		String smtpServer = systemConfig.getSmtpServer();
 		Integer smtpPort = systemConfig.getSmtpPort();
 		boolean smtpTls = systemConfig.isSmtpTls();
@@ -71,5 +74,9 @@ public class EmailSender {
 		}
 		return Eml.createSmtpSession(smtpServer, smtpPort, smtpTls, systemConfig.getSmtpUser(),
 			systemConfig.getSmtpPassword());
+	}
+
+	private SystemConfig getSystemConfig() {
+		return webApplication.getSystemConfig();
 	}
 }
