@@ -45,7 +45,7 @@ public class ChangeHistoryManager extends GChangeHistoryManager {
 
 	public boolean isChangeHistoryActive(String entityId) {
 		if (currentChangeHistoryParent == null) return false;
-		return currentChangeHistoryParent.equals(entityId);
+		return currentChangeHistoryParent.getId().equals(entityId);
 	}
 
 	public List<Change> getChanges(AScrumGwtEntity entity) {
