@@ -365,10 +365,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
 		css.a().cursorPointer().color(cLink).textDecorationUnderline();
 		css.p().margin(0, 0, 10, 0);
-		css.h1().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(5, 0, 5, 0);
-		css.h2().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(5, 0, 5, 0);
-		css.h3().fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
-		css.h4().fontSize(fontSize).lineHeight(lineHeight).fontWeightBold().margin(0, 0, 5, 0);
+		css.h1().fontSize(fontSize + 6).lineHeight(lineHeight + 6).fontWeightBold().margin(5, 0, 5, 0);
+		css.h2().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(5, 0, 5, 0);
+		css.h3().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);
+		css.h4().fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
 		css.pre().margin(0, 0, 10, 0).color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
 		css.code().color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
 		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
