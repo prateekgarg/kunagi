@@ -54,6 +54,7 @@ public class WikiToPdfConverter extends APdfCreator {
 	private boolean firstParagraph = true;
 
 	public WikiToPdfConverter(WikiModel model, PdfContext pdfContext) {
+		super(pdfContext.getProject());
 		this.model = model;
 		this.pdfContext = pdfContext;
 	}

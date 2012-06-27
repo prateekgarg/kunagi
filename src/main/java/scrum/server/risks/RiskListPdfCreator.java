@@ -26,11 +26,8 @@ import scrum.server.project.Project;
 
 public class RiskListPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public RiskListPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

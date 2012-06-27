@@ -25,6 +25,11 @@ public class ScrumPdfContext implements PdfContext {
 
 	private Project project;
 
+	public ScrumPdfContext(Project project) {
+		super();
+		this.project = project;
+	}
+
 	@Override
 	public AImage appendImage(AParagraph p, Image wikiImage) {
 		if (wikiImage.isExternal()) {
@@ -32,10 +37,15 @@ public class ScrumPdfContext implements PdfContext {
 			return p.image(data);
 		}
 
-		File file = project.getFileByReference(wikiImage.getReference());
+		File file = project == null ? null : project.getFileByReference(wikiImage.getReference());
 		if (file == null) return null;
 		java.io.File javaFile = file.getJavaFile();
 		return p.image(javaFile);
+	}
+
+	@Override
+	public Project getProject() {
+		return project;
 	}
 
 }

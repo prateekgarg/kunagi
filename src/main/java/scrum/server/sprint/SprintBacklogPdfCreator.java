@@ -29,11 +29,8 @@ import scrum.server.project.Requirement;
 
 public class SprintBacklogPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public SprintBacklogPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

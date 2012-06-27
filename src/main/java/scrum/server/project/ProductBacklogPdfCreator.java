@@ -24,11 +24,8 @@ import scrum.server.common.APdfCreator;
 
 public class ProductBacklogPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public ProductBacklogPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

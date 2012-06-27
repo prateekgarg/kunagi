@@ -40,7 +40,7 @@ public class SprintReportPdfCreator extends APdfCreator {
 	private Sprint sprint;
 
 	public SprintReportPdfCreator(Sprint sprint) {
-		super();
+		super(sprint.getProject());
 		this.sprint = sprint;
 	}
 
@@ -68,9 +68,10 @@ public class SprintReportPdfCreator extends APdfCreator {
 		pdf.nl();
 		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
 
+		ScrumPdfContext pdfContext = new ScrumPdfContext(sprint.getProject());
 		if (sprint.isGoalSet()) {
 			sectionHeader(pdf, "Goal");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getGoal(), new ScrumPdfContext());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getGoal(), pdfContext);
 		}
 
 		if (report == null) {
@@ -83,12 +84,12 @@ public class SprintReportPdfCreator extends APdfCreator {
 
 		if (sprint.isReviewNoteSet()) {
 			sectionHeader(pdf, "Review notes");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote(), new ScrumPdfContext());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote(), pdfContext);
 		}
 
 		if (sprint.isRetrospectiveNoteSet()) {
 			sectionHeader(pdf, "Retrospecitve notes");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), new ScrumPdfContext());
+			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), pdfContext);
 		}
 
 	}

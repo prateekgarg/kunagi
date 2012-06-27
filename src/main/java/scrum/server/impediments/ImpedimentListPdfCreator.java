@@ -32,11 +32,8 @@ import scrum.server.sprint.Task;
 
 public class ImpedimentListPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public ImpedimentListPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

@@ -25,11 +25,8 @@ import scrum.server.project.Project;
 
 public class ReleaseHistoryPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public ReleaseHistoryPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

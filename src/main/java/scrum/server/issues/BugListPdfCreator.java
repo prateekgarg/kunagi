@@ -25,11 +25,8 @@ import scrum.server.project.Project;
 
 public class BugListPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public BugListPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

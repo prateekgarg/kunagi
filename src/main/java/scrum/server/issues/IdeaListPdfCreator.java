@@ -25,11 +25,8 @@ import scrum.server.project.Project;
 
 public class IdeaListPdfCreator extends APdfCreator {
 
-	private Project project;
-
 	public IdeaListPdfCreator(Project project) {
-		super();
-		this.project = project;
+		super(project);
 	}
 
 	@Override

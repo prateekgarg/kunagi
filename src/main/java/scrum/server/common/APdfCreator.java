@@ -29,6 +29,7 @@ import java.util.Collection;
 
 import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
+import scrum.server.project.Project;
 import scrum.server.project.Quality;
 import scrum.server.project.Requirement;
 import scrum.server.release.Release;
@@ -47,11 +48,15 @@ public abstract class APdfCreator {
 	protected FontStyle[] headerFonts = new FontStyle[4];
 	protected Color tableHeaderBackground = Color.LIGHT_GRAY;
 
+	protected Project project;
+
 	protected abstract void build(APdfContainerElement pdf);
 
 	protected abstract String getFilename();
 
-	public APdfCreator() {
+	public APdfCreator(Project project) {
+		this.project = project;
+
 		defaultFont = new FontStyle().setSize(3);
 		smallerFont = new FontStyle(defaultFont).setSize(defaultFont.getSize() - 0.5f);
 		tableHeaderFont = new FontStyle(defaultFont).setBold(true);
@@ -80,7 +85,7 @@ public abstract class APdfCreator {
 	}
 
 	protected void wiki(APdfContainerElement parent, String wikiCode) {
-		WikiToPdfConverter.buildPdf(parent, wikiCode, new ScrumPdfContext());
+		WikiToPdfConverter.buildPdf(parent, wikiCode, new ScrumPdfContext(project));
 	}
 
 	protected void requirement(APdfContainerElement pdf, Requirement req, Collection<Task> openTasks,

@@ -27,13 +27,11 @@ import scrum.server.project.Project;
 
 public class CalendarPdfCreator extends APdfCreator {
 
-	private Project project;
 	private Date from;
 	private Date to;
 
 	public CalendarPdfCreator(Project project, Date from, Date to) {
-		super();
-		this.project = project;
+		super(project);
 		this.from = from;
 		this.to = to;
 	}
