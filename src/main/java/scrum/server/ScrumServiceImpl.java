@@ -461,6 +461,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof BlogEntry) onBlogEntryChanged(conversation, (BlogEntry) entity, properties);
 		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity, properties);
 		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
+		if (entity instanceof Wikipage) onWikipageChanged(conversation, (Wikipage) entity, properties);
 
 		Project currentProject = project;
 		if (currentUser != null && currentProject != null) {
@@ -501,6 +502,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 			blogEntry.getProject().updateHomepage();
 		}
+	}
+
+	private void onWikipageChanged(GwtConversation conversation, Wikipage wikipage, Map properties) {
+		wikipage.getProject().updateHomepage(wikipage, false);
 	}
 
 	private void onIssueChanged(GwtConversation conversation, Issue issue, Map properties) {
