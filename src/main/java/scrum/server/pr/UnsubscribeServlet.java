@@ -60,6 +60,11 @@ public class UnsubscribeServlet extends AHttpServlet {
 		log.info("  Request-Data:");
 		log.info(Servlet.toString(req, "        "));
 
+		if (email == null) {
+			sendFailureResponse(req, resp, "email required");
+			return;
+		}
+
 		String message;
 		try {
 			AEntity subject = unsubscribe(email, subjectId, key);
@@ -67,10 +72,20 @@ public class UnsubscribeServlet extends AHttpServlet {
 					: "Succesfully unsubscribed from <strong>" + subject.toString() + "</strong>";
 		} catch (Throwable ex) {
 			log.error("Unsubscription failed.", "\n" + Servlet.toString(req, "  "), ex);
-			message = "<h2>Failure</h2><p>Unsubscription failed: <strong>" + Str.getRootCauseMessage(ex)
-					+ "</strong></p><p>We are sorry, please try again later.</p>";
+			sendFailureResponse(req, resp, Str.getRootCauseMessage(ex));
+			return;
 		}
 
+		sendResponse(req, resp, message);
+	}
+
+	private void sendFailureResponse(HttpServletRequest req, HttpServletResponse resp, String message)
+			throws IOException {
+		sendResponse(req, resp, "<h2>Failure</h2><p>Unsubscription failed: <strong>" + message
+				+ "</strong></p><p>We are sorry, please try again later.</p>");
+	}
+
+	private void sendResponse(HttpServletRequest req, HttpServletResponse resp, String message) throws IOException {
 		String returnUrl = req.getParameter("returnUrl");
 		if (returnUrl == null) returnUrl = "http://kunagi.org/message.html?#{message}";
 		returnUrl = returnUrl.replace("{message}", Str.encodeUrlParameter(message));
