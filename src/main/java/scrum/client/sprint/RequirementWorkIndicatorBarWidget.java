@@ -12,57 +12,43 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
-package scrum.client.project;
+package scrum.client.sprint;
 
 import ilarkesto.gwt.client.FloatingFlowPanel;
 import ilarkesto.gwt.client.Gwt;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import scrum.client.common.AScrumWidget;
+import scrum.client.project.Requirement;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class EstimationBarWidget extends AScrumWidget {
+public class RequirementWorkIndicatorBarWidget extends AScrumWidget {
 
 	private FloatingFlowPanel flowPanel;
-	private static int factor = 3;
+	private static int factor = 1;
 
 	private Requirement requirement;
 
-	public EstimationBarWidget(Requirement requirement) {
+	public RequirementWorkIndicatorBarWidget(Requirement requirement) {
 		this.requirement = requirement;
 	}
 
 	@Override
 	protected void onUpdate() {
-		EstimationBar bar = requirement == null ? null : requirement.getEstimationBar();
-		if (bar == null) bar = new EstimationBar(0, new ArrayList<Float>());
 		flowPanel.clear();
-		List<Float> estimations = bar.getWorkPerSprint();
-		int sprintOffset = bar.getSprintOffset();
 
-		for (int i = 0; i < estimations.size(); i++) {
+		int burnedHours = requirement.getBurnedWork();
+		Widget burnedWidget = Gwt.createEmptyDiv("EstimationBarWidget-bar1");
+		burnedWidget.setHeight("6px");
+		burnedWidget.setWidth((factor * burnedHours) + "px");
+		flowPanel.add(burnedWidget);
 
-			int barIndex;
-			if ((i + sprintOffset) % 2 == 0) {
-				barIndex = 0;
-			} else {
-				barIndex = 1;
-			}
-			Widget w = Gwt.createEmptyDiv("EstimationBarWidget-bar" + barIndex);
-			w.setHeight("6px");
-			w.setWidth((factor * estimations.get(i)) + "px");
-			flowPanel.add(w);
-		}
+		int remainingHours = requirement.getRemainingWork();
+		Widget remainingWidget = Gwt.createEmptyDiv("EstimationBarWidget-bar0");
+		remainingWidget.setHeight("6px");
+		remainingWidget.setWidth((factor * remainingHours) + "px");
+		flowPanel.add(remainingWidget);
 
-		String tip;
-
-		int requiredSprints = estimations.size() <= 1 ? sprintOffset + 1 : sprintOffset + estimations.size();
-		tip = "Expected  to be completed after " + requiredSprints + " sprint" + (requiredSprints == 1 ? "." : "s.");
-
-		flowPanel.getElement().setTitle(tip);
+		flowPanel.getElement().setTitle(burnedHours + " of " + (burnedHours + remainingHours) + " hours burned.");
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import scrum.client.project.ReopenRequirementAction;
 import scrum.client.project.Requirement;
 import scrum.client.project.RequirementWidget;
 import scrum.client.sprint.CreateTaskAction;
+import scrum.client.sprint.RequirementWorkIndicatorBarWidget;
 
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -45,6 +46,7 @@ public class RequirementInWhiteboardBlock extends ABlockWidget<Requirement> {
 		header.addText(requirement.getThemesAsStringModel(), true, false);
 		header.addText(requirement.getTaskStatusLabelModel(), true);
 		header.appendCell(new EmoticonsWidget(requirement), null, true);
+		header.appendCell(new RequirementWorkIndicatorBarWidget(requirement), "150px", true);
 		header.addMenuAction(new RejectRequirementAction(requirement));
 		header.addMenuAction(new FixRequirementAction(requirement));
 		header.addMenuAction(new CloseRequirementAction(requirement));
