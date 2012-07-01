@@ -297,6 +297,15 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 		@Override
 		public int compare(Sprint a, Sprint b) {
+			return Utl.compare(a.getEnd(), b.getEnd());
+		}
+
+	};
+
+	public static final Comparator<Sprint> END_DATE_REVERSE_COMPARATOR = new Comparator<Sprint>() {
+
+		@Override
+		public int compare(Sprint a, Sprint b) {
 			return Utl.compare(b.getEnd(), a.getEnd());
 		}
 

@@ -165,46 +165,6 @@ public class Project extends GProject implements ForumSupport {
 		return tasks;
 	}
 
-	public List<Float> getVelocitiesFromPreviousSprints(int max) {
-		List<Float> velocities = new ArrayList<Float>(max);
-		int count = 0;
-		for (Sprint sprint : getCompletedSprintsInOrder()) {
-			Float velocity = sprint.getVelocity();
-			if (velocity == null) continue;
-			velocities.add(velocity);
-			count++;
-			if (count > max) break;
-		}
-		return velocities;
-	}
-
-	public String getVelocitiesFromLastSprints() {
-		StringBuilder sb = new StringBuilder();
-		List<Sprint> sprints = getCompletedSprintsInOrder();
-		float sum = 0;
-		int count = 0;
-		for (Sprint sprint : sprints) {
-			Float velocity = sprint.getVelocity();
-			if (velocity == null) continue;
-			String velocityString = velocity < 1 ? velocity.toString() : String.valueOf(velocity.intValue());
-			sb.insert(0, velocityString + ", ");
-			sum += velocity;
-			count++;
-			if (count >= 12) break;
-		}
-
-		if (count > 0 && sum > 0) {
-			float avarage = sum / count;
-			String avarageString = String.valueOf(avarage);
-			int idx = avarageString.lastIndexOf('.');
-			if (idx > 0 && avarageString.length() > idx + 1) {
-				avarageString = avarageString.substring(0, idx + 2);
-			}
-			sb.append("[ ").append(avarageString).append(" avg. ]");
-		}
-		return sb.toString();
-	}
-
 	public Float getVelocityFromLastSprint() {
 		Sprint latest = getLatestCompletedSprint();
 		return latest == null ? null : latest.getVelocity();
@@ -229,6 +189,10 @@ public class Project extends GProject implements ForumSupport {
 
 	public List<Sprint> getCompletedSprintsInOrder() {
 		return Utl.sort(getCompletedSprints(), Sprint.END_DATE_COMPARATOR);
+	}
+
+	public List<Sprint> getCompletedSprintsInReverseOrder() {
+		return Utl.sort(getCompletedSprints(), Sprint.END_DATE_REVERSE_COMPARATOR);
 	}
 
 	public List<ProjectEvent> getLatestProjectEvents(int min) {

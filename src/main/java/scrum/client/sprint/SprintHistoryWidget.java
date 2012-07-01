@@ -50,7 +50,7 @@ public class SprintHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected void onUpdate() {
-		List<Sprint> sprints = getCurrentProject().getCompletedSprintsInOrder();
+		List<Sprint> sprints = getCurrentProject().getCompletedSprintsInReverseOrder();
 		if (changeIndicator.update(sprints)) {
 			page.clear();
 			for (Sprint sprint : sprints) {

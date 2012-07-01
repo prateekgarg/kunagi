@@ -14,10 +14,13 @@
  */
 package scrum.client.project;
 
+import ilarkesto.core.base.Utl;
+
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.SparklineChartWidget;
+import scrum.client.sprint.Sprint;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,8 +28,19 @@ public class VelocityHistoryWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		List<Float> velocities = getCurrentProject().getVelocitiesFromPreviousSprints(12);
-		return new SparklineChartWidget(14, 5, velocities);
-	}
+		List<Sprint> sprints = getCurrentProject().getCompletedSprintsInOrder();
+		Utl.removeFirstElements(sprints, sprints.size() - 150);
 
+		int barWidth = 300 / sprints.size();
+		if (barWidth > 10) barWidth = 10;
+		if (barWidth < 1) barWidth = 1;
+
+		SparklineChartWidget sparklineChartWidget = new SparklineChartWidget(14, barWidth);
+		for (Sprint sprint : sprints) {
+			Float velocity = sprint.getVelocity();
+			if (velocity == null) velocity = 0f;
+			sparklineChartWidget.addItem(velocity, velocity + " SP on " + sprint.getReferenceAndLabel());
+		}
+		return sparklineChartWidget;
+	}
 }

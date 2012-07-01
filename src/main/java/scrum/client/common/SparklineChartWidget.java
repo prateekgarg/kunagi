@@ -15,10 +15,11 @@
 package scrum.client.common;
 
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.Gwt;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,15 +27,18 @@ public class SparklineChartWidget extends AWidget {
 
 	private int height;
 	private int barWidth;
-	private List<Float> values;
+	private List<Item> items = new ArrayList<SparklineChartWidget.Item>();
 	private String barColor = "darkgray";
 	private float heightFactor;
 
-	public SparklineChartWidget(int height, int barWidth, List<Float> values) {
+	public SparklineChartWidget(int height, int barWidth) {
 		super();
 		this.height = height;
 		this.barWidth = barWidth;
-		this.values = values;
+	}
+
+	public void addItem(float value, String text) {
+		items.add(new Item(value, text));
 	}
 
 	@Override
@@ -43,34 +47,45 @@ public class SparklineChartWidget extends AWidget {
 
 		heightFactor = computeFactor();
 
-		boolean first = true;
-		for (Float value : values) {
-			if (first) {
-				first = false;
-			} else {
-				container.add(Gwt.createSpacer(1, 1));
-			}
-			container.add(createBar(value));
+		for (Item item : items) {
+			container.add(createBar(item));
 		}
 
 		return container;
 	}
 
-	private Widget createBar(Float value) {
+	private Widget createBar(Item item) {
 		FlowPanel bar = new FlowPanel();
-		int barheight = (int) (value * heightFactor);
+		int barheight = (int) (item.value * heightFactor);
 		bar.setHeight(barheight + "px");
 		bar.setWidth(barWidth + "px");
+		bar.getElement().getStyle().setMarginTop(height - barheight, Unit.PX);
+		bar.getElement().getStyle().setMarginRight(1, Unit.PX);
+		bar.getElement().getStyle().setFloat(com.google.gwt.dom.client.Style.Float.LEFT);
 		bar.getElement().getStyle().setBackgroundColor(barColor);
+		bar.getElement().setTitle(item.text);
 		return bar;
 	}
 
 	private float computeFactor() {
 		float max = 0;
-		for (Float value : values) {
-			if (value > max) max = value;
+		for (Item item : items) {
+			if (item.value > max) max = item.value;
 		}
 		return height / max;
+	}
+
+	public static class Item {
+
+		private float value;
+		private String text;
+
+		public Item(float value, String text) {
+			super();
+			this.value = value;
+			this.text = text;
+		}
+
 	}
 
 }
