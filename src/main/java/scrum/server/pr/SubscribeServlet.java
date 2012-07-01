@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.common.KunagiUtl;
+import scrum.server.common.KunagiUtl;
 
 public class SubscribeServlet extends AHttpServlet {
 
@@ -61,7 +63,8 @@ public class SubscribeServlet extends AHttpServlet {
 		String message;
 		try {
 			AEntity subject = subscribe(email, subjectId);
-			message = "Succesfully subscribed to <strong>" + subject.toString() + "</strong>";
+			message = "Succesfully subscribed to <strong>" + KunagiUtl.createExternalRelativeHtmlAnchor(subject)
+					+ "</strong>";
 		} catch (Throwable ex) {
 			log.error("Subscription failed.", "\n" + Servlet.toString(req, "  "), ex);
 			message = "<h2>Failure</h2><p>Subscription failed: <strong>" + Str.getRootCauseMessage(ex)

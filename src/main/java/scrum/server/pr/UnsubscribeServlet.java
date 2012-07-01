@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.common.KunagiUtl;
 
 public class UnsubscribeServlet extends AHttpServlet {
 
@@ -69,7 +70,8 @@ public class UnsubscribeServlet extends AHttpServlet {
 		try {
 			AEntity subject = unsubscribe(email, subjectId, key);
 			message = subject == null ? "Succesfully unsubscribed from all entities"
-					: "Succesfully unsubscribed from <strong>" + subject.toString() + "</strong>";
+					: "Succesfully unsubscribed from <strong>" + KunagiUtl.createExternalRelativeHtmlAnchor(subject)
+							+ "</strong>";
 		} catch (Throwable ex) {
 			log.error("Unsubscription failed.", "\n" + Servlet.toString(req, "  "), ex);
 			sendFailureResponse(req, resp, Str.getRootCauseMessage(ex));

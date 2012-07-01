@@ -33,6 +33,7 @@ import scrum.client.common.ReferenceSupport;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.common.KunagiUtl;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
@@ -114,8 +115,8 @@ public class CommentServlet extends AHttpServlet {
 
 		app.sendToConversationsByProject(project, event);
 
-		return "<h2>Comment posted</h2><p>Thank you for your comment!</p><p>Back to <a href=\"" + reference
-				+ ".html\">" + label + ".</p>";
+		return "<h2>Comment posted</h2><p>Thank you for your comment!</p><p>Back to "
+				+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + ".</p>";
 	}
 
 	@Override

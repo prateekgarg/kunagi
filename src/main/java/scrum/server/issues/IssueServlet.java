@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
+import scrum.server.common.KunagiUtl;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.journal.ProjectEventDao;
@@ -110,8 +111,8 @@ public class IssueServlet extends AHttpServlet {
 		app.sendToConversationsByProject(project, issue);
 		app.sendToConversationsByProject(project, event);
 
-		String issueLink = publish ? "<a href=\"" + issue.getReference() + ".html\">" + issue.getReference() + "</a>"
-				: "<code>" + issue.getReference() + "</code>";
+		String issueLink = publish ? KunagiUtl.createExternalRelativeHtmlAnchor(issue) : "<code>"
+				+ issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
 				+ issueLink + " and will be reviewed by our Product Owner.</p>";
 	}

@@ -24,12 +24,17 @@ import com.google.gwt.user.client.ui.Widget;
 public class RequirementWorkIndicatorBarWidget extends AScrumWidget {
 
 	private FloatingFlowPanel flowPanel;
-	private static int factor = 1;
+	private int factor = 1;
 
 	private Requirement requirement;
 
 	public RequirementWorkIndicatorBarWidget(Requirement requirement) {
 		this.requirement = requirement;
+
+		Sprint sprint = requirement.getSprint();
+		int totalWork = sprint.getRemainingWork() + sprint.getBurnedWork();
+
+		factor = 500 / totalWork;
 	}
 
 	@Override
