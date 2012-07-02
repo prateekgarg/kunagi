@@ -131,9 +131,9 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void preformated() {
-		Assert.assertEquals(toHtml(" preformated"), "<div class=\"codeBlock\"><pre> preformated</pre></div>");
-		Assert.assertEquals(toHtml("\tpreformated"), "<div class=\"codeBlock\"><pre>    preformated</pre></div>");
-		Assert.assertEquals(toHtml(" line 1\n line 2"), "<div class=\"codeBlock\"><pre> line 1\n line 2</pre></div>");
+		Assert.assertEquals(toHtml(" preformated"), "<pre class=\"codeBlock\"> preformated</pre>");
+		Assert.assertEquals(toHtml("\tpreformated"), "<pre class=\"codeBlock\">    preformated</pre>");
+		Assert.assertEquals(toHtml(" line 1\n line 2"), "<pre class=\"codeBlock\"> line 1\n line 2</pre>");
 	}
 
 	@Test
@@ -149,12 +149,11 @@ public class WikiTest extends Assert {
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiline\ncode</code>."),
-			"<p>here is <div class=\"codeBlock\"><code>multiline<br>code</code></div>.</p>");
+			"<p>here is <code class=\"codeBlock\">multiline<br>code</code>.</p>");
 		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
 		Assert.assertEquals(toHtml("<code>\n# enum\n# enum\n</code>"),
-			"<p><div class=\"codeBlock\"><code>#&nbsp;enum<br>#&nbsp;enum<br></code></div></p>");
-		Assert.assertEquals(toHtml("<code>a\n\nb</code>"),
-			"<p><div class=\"codeBlock\"><code>a<br><br>b</code></div></p>");
+			"<p><code class=\"codeBlock\">#&nbsp;enum<br>#&nbsp;enum<br></code></p>");
+		Assert.assertEquals(toHtml("<code>a\n\nb</code>"), "<p><code class=\"codeBlock\">a<br><br>b</code></p>");
 	}
 
 	@Test
