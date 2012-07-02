@@ -318,6 +318,7 @@ public abstract class GComment
 
     public final Comment setText(java.lang.String text) {
         if (isText(text)) return (Comment)this;
+        if (ilarkesto.core.base.Str.isBlank(text)) throw new RuntimeException("Field is mandatory.");
         this.text = text ;
         propertyChanged("text", this.text);
         return (Comment)this;

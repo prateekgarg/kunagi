@@ -79,6 +79,7 @@ public abstract class GFile
 
     public final File setFilename(java.lang.String filename) {
         if (isFilename(filename)) return (File)this;
+        if (ilarkesto.core.base.Str.isBlank(filename)) throw new RuntimeException("Field is mandatory.");
         this.filename = filename ;
         propertyChanged("filename", this.filename);
         return (File)this;
@@ -138,6 +139,7 @@ public abstract class GFile
 
     public final File setUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         if (isUploadTime(uploadTime)) return (File)this;
+        if (uploadTime == null) throw new RuntimeException("Field is mandatory.");
         this.uploadTime = uploadTime ;
         propertyChanged("uploadTime", this.uploadTime);
         return (File)this;
@@ -197,6 +199,7 @@ public abstract class GFile
 
     public final File setLabel(java.lang.String label) {
         if (isLabel(label)) return (File)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (File)this;

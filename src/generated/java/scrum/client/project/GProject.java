@@ -56,6 +56,7 @@ public abstract class GProject
 
     public final Project setLabel(java.lang.String label) {
         if (isLabel(label)) return (Project)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         if (label != null && getDao().getProjectByLabel(label) != null) throw new RuntimeException("\"" + label + "\" already exists.");
         this.label = label ;
         propertyChanged("label", this.label);
@@ -2068,7 +2069,7 @@ public abstract class GProject
         @Override
         public boolean isRichtext() { return true; }
         @Override
-        public String getTooltip() { return "Text template, which to use when sending change notifications to subscribers.<br><br>The following variables can be used: ${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}"; }
+        public String getTooltip() { return "Text template, which to use when sending change notifications to subscribers.<br><br>The following variables can be used: ${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${product.label} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {

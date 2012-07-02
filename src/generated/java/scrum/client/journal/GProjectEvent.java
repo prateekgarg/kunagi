@@ -81,6 +81,7 @@ public abstract class GProjectEvent
 
     public final ProjectEvent setLabel(java.lang.String label) {
         if (isLabel(label)) return (ProjectEvent)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (ProjectEvent)this;
@@ -165,6 +166,7 @@ public abstract class GProjectEvent
 
     public final ProjectEvent setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return (ProjectEvent)this;
+        if (dateAndTime == null) throw new RuntimeException("Field is mandatory.");
         this.dateAndTime = dateAndTime ;
         propertyChanged("dateAndTime", this.dateAndTime);
         return (ProjectEvent)this;

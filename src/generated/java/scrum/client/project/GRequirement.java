@@ -227,6 +227,7 @@ public abstract class GRequirement
 
     public final Requirement setLabel(java.lang.String label) {
         if (isLabel(label)) return (Requirement)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Requirement)this;

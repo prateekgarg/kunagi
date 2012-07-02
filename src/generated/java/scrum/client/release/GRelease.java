@@ -203,6 +203,7 @@ public abstract class GRelease
 
     public final Release setLabel(java.lang.String label) {
         if (isLabel(label)) return (Release)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Release)this;

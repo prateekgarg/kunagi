@@ -144,6 +144,7 @@ public abstract class GQuality
 
     public final Quality setLabel(java.lang.String label) {
         if (isLabel(label)) return (Quality)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Quality)this;

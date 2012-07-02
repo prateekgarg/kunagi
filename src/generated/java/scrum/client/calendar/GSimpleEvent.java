@@ -79,6 +79,7 @@ public abstract class GSimpleEvent
 
     public final SimpleEvent setLabel(java.lang.String label) {
         if (isLabel(label)) return (SimpleEvent)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (SimpleEvent)this;

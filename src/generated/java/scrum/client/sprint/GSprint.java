@@ -152,6 +152,7 @@ public abstract class GSprint
 
     public final Sprint setLabel(java.lang.String label) {
         if (isLabel(label)) return (Sprint)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Sprint)this;

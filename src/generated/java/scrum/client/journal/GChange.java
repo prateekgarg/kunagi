@@ -104,6 +104,7 @@ public abstract class GChange
 
     public final Change setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return (Change)this;
+        if (dateAndTime == null) throw new RuntimeException("Field is mandatory.");
         this.dateAndTime = dateAndTime ;
         propertyChanged("dateAndTime", this.dateAndTime);
         return (Change)this;

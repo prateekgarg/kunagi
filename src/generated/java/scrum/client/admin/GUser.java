@@ -54,6 +54,7 @@ public abstract class GUser
 
     public final User setName(java.lang.String name) {
         if (isName(name)) return (User)this;
+        if (ilarkesto.core.base.Str.isBlank(name)) throw new RuntimeException("Field is mandatory.");
         if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
         this.name = name ;
         propertyChanged("name", this.name);

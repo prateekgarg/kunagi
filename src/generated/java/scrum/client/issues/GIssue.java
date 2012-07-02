@@ -227,6 +227,7 @@ public abstract class GIssue
 
     public final Issue setDate(ilarkesto.core.time.DateAndTime date) {
         if (isDate(date)) return (Issue)this;
+        if (date == null) throw new RuntimeException("Field is mandatory.");
         this.date = date ;
         propertyChanged("date", this.date);
         return (Issue)this;
@@ -308,6 +309,7 @@ public abstract class GIssue
 
     public final Issue setLabel(java.lang.String label) {
         if (isLabel(label)) return (Issue)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Issue)this;

@@ -178,6 +178,7 @@ public abstract class GBlogEntry
 
     public final BlogEntry setTitle(java.lang.String title) {
         if (isTitle(title)) return (BlogEntry)this;
+        if (ilarkesto.core.base.Str.isBlank(title)) throw new RuntimeException("Field is mandatory.");
         this.title = title ;
         propertyChanged("title", this.title);
         return (BlogEntry)this;

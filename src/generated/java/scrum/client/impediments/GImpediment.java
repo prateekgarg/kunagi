@@ -142,6 +142,7 @@ public abstract class GImpediment
 
     public final Impediment setLabel(java.lang.String label) {
         if (isLabel(label)) return (Impediment)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Impediment)this;
@@ -200,6 +201,7 @@ public abstract class GImpediment
 
     public final Impediment setDate(ilarkesto.core.time.Date date) {
         if (isDate(date)) return (Impediment)this;
+        if (date == null) throw new RuntimeException("Field is mandatory.");
         this.date = date ;
         propertyChanged("date", this.date);
         return (Impediment)this;

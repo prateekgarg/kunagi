@@ -144,6 +144,7 @@ public abstract class GTask
 
     public final Task setLabel(java.lang.String label) {
         if (isLabel(label)) return (Task)this;
+        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Task)this;
