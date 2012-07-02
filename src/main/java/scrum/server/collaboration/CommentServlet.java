@@ -115,8 +115,8 @@ public class CommentServlet extends AHttpServlet {
 
 		app.sendToConversationsByProject(project, event);
 
-		return "<h2>Comment posted</h2><p>Thank you for your comment!</p><p>Back to "
-				+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + ".</p>";
+		return "<h2>Comment posted</h2><p>Thank you for your comment! It will be visible in a few minutes.</p><p>Back to <strong>"
+				+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + "</strong>.</p>";
 	}
 
 	@Override
