@@ -34,6 +34,7 @@ import scrum.server.impediments.Impediment;
 import scrum.server.impediments.ImpedimentListPdfCreator;
 import scrum.server.issues.BugListPdfCreator;
 import scrum.server.issues.IdeaListPdfCreator;
+import scrum.server.issues.Issue;
 import scrum.server.project.ProductBacklogPdfCreator;
 import scrum.server.project.Project;
 import scrum.server.project.QualityBacklogPdfCreator;
@@ -141,8 +142,11 @@ public class PdfTest extends ATest {
 		Project project = TestUtil.createProject();
 
 		TestUtil.createBug(project, 1);
-		TestUtil.createBug(project, 2);
-		TestUtil.createBug(project, 3);
+		TestUtil.createBug(project, 2).setOwner(TestUtil.getDuke());
+
+		Issue bug3 = TestUtil.createBug(project, 3);
+		bug3.setOwner(TestUtil.getDuke());
+		bug3.setFixDate(Date.beforeDays(2));
 
 		createPdf(new BugListPdfCreator(project));
 	}

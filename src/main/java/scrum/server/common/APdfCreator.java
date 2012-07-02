@@ -182,12 +182,24 @@ public abstract class APdfCreator {
 	protected void issue(APdfContainerElement pdf, Issue issue) {
 		pdf.nl();
 
-		ATable table = pdf.table(3, 20, 3);
+		ATable table = pdf.table(3, 20, 6);
 
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(issue.getReference());
 		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(issue.getLabel());
-		String sideinfo = issue.isBug() ? issue.getSeverityLabel() : issue.getAcceptDate().toString();
+		String sideinfo;
+		if (issue.isBug()) {
+			if (issue.isFixed()) {
+				sideinfo = issue.getSeverityLabel() + ", fixed by " + issue.getOwner().getName() + " on "
+						+ issue.getFixDate();
+			} else if (issue.isOwnerSet()) {
+				sideinfo = issue.getSeverityLabel() + ", claimed by " + issue.getOwner().getName();
+			} else {
+				sideinfo = issue.getSeverityLabel();
+			}
+		} else {
+			sideinfo = issue.getAcceptDate().toString();
+		}
 		rowHeader.cell().setFontStyle(defaultFont).text(sideinfo);
 
 		richtextRow(table, "Description", issue.getDescription());
