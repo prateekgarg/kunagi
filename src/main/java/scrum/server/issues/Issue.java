@@ -28,6 +28,14 @@ import scrum.server.release.Release;
 
 public class Issue extends GIssue implements Numbered, ReferenceSupport, LabelSupport {
 
+	public void appendToStatement(String text) {
+		if (!isStatementSet()) {
+			setStatement(text);
+			return;
+		}
+		setStatement(getStatement() + "\n\n" + text);
+	}
+
 	public String getStatusText() {
 		String releasesText = isFixReleasesEmpty() ? "" : " for " + getFixReleasesAsString();
 		if (isClosed()) return "Issue is closed" + releasesText + ".";

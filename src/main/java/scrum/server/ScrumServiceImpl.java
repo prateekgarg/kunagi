@@ -1014,8 +1014,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onConvertIssueToStory(GwtConversation conversation, String issueId) {
 		Issue issue = issueDao.getById(issueId);
 		Requirement story = requirementDao.postRequirement(issue);
-		issue.setStatement(issue.getStatement() + "\n\n" + "Created Story " + story.getReference()
-				+ " in Product Backlog.");
+		issue.appendToStatement("Created Story " + story.getReference() + " in Product Backlog.");
 		issue.setCloseDate(Date.today());
 		sendToClients(conversation, story);
 		sendToClients(conversation, issue);

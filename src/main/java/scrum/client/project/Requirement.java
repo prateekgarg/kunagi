@@ -68,12 +68,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		setDirty(true);
 	}
 
-	public Requirement(Issue issue) {
-		setProject(issue.getProject());
-		setLabel(issue.getLabel());
-		setDescription(issue.getDescription());
-	}
-
 	public Requirement(Map data) {
 		super(data);
 	}
