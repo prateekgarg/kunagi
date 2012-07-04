@@ -17,10 +17,12 @@ package scrum.client.wiki;
 public class Code extends AWikiElement {
 
 	private String text;
+	private boolean forceBlock;
 
-	public Code(String text) {
+	public Code(String text, boolean forceBlock) {
 		super();
 		this.text = text;
+		this.forceBlock = forceBlock;
 	}
 
 	@Override
@@ -45,7 +47,10 @@ public class Code extends AWikiElement {
 	}
 
 	public boolean isBlock() {
-		return text.contains("\n");
+		if (forceBlock) return true;
+		if (text.length() > 50) return true;
+		if (text.contains("\n")) return true;
+		return false;
 	}
 
 	public String getText() {

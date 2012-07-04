@@ -82,7 +82,7 @@ public class WikiParser {
 				String suffix = text.substring(end + 7);
 				if (content.trim().length() > 0) {
 					appendText(p, prefix);
-					p.add(new Code(content));
+					p.add(new Code(content, false));
 					appendText(p, suffix);
 					return p;
 				}
@@ -317,15 +317,12 @@ public class WikiParser {
 		if (input.startsWith("<code>")) {
 			int endIdx = input.indexOf("</code>");
 			if (endIdx > 0) {
-				int linebreakIdx = input.indexOf("\n");
-				if (linebreakIdx > 0 && endIdx > linebreakIdx) {
-					String code = input.substring(6, endIdx);
-					Paragraph p = new Paragraph(true);
-					p.add(new Code(code));
-					model.add(p);
-					burn(endIdx + 8);
-					return;
-				}
+				String code = input.substring(6, endIdx);
+				Paragraph p = new Paragraph(true);
+				p.add(new Code(code, true));
+				model.add(p);
+				burn(endIdx + 8);
+				return;
 			}
 		}
 

@@ -145,15 +145,21 @@ public class WikiTest extends Assert {
 
 	@Test
 	public void code() {
-		Assert.assertEquals(toHtml("<code>code</code> is here."), "<code>code</code> is here.");
+		Assert.assertEquals(toHtml("some <code>code</code> is here."), "some <code>code</code> is here.");
 		Assert.assertEquals(toHtml("here is <code>code</code>."), "here is <code>code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiword code</code>."), "here is <code>multiword&nbsp;code</code>.");
 		Assert.assertEquals(toHtml("here is <code>multiline\ncode</code>."),
 			"<p>here is <code class=\"codeBlock\">multiline<br>code</code>.</p>");
-		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"), "<p>simple line</p><p><code>code</code></p>");
+		Assert.assertEquals(toHtml("simple line\n\n<code>code</code>"),
+			"<p>simple line</p><p><code class=\"codeBlock\">code</code></p>");
 		Assert.assertEquals(toHtml("<code>\n# enum\n# enum\n</code>"),
 			"<p><code class=\"codeBlock\">#&nbsp;enum<br>#&nbsp;enum<br></code></p>");
 		Assert.assertEquals(toHtml("<code>a\n\nb</code>"), "<p><code class=\"codeBlock\">a<br><br>b</code></p>");
+		Assert.assertEquals(toHtml("<code>simple block</code>"),
+			"<p><code class=\"codeBlock\">simple&nbsp;block</code></p>");
+		Assert.assertEquals(
+			toHtml("some <code>looooooooooooooooooooooooooooooooooooooooooooooooooooooooooong code</code> is here."),
+			"some <code class=\"codeBlock\">looooooooooooooooooooooooooooooooooooooooooooooooooooooooooong&nbsp;code</code> is here.");
 	}
 
 	@Test
