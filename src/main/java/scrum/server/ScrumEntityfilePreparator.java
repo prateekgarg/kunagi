@@ -35,6 +35,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 	private static final Log LOG = Log.get(ScrumEntityfilePreparator.class);
 
 	@Override
+	public void prepareClusterfile(File file, Class type, String alias) {}
+
+	@Override
 	public void prepareEntityfile(File file, Class type, String alias) {
 
 		try {
@@ -56,11 +59,11 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		} catch (JDOMException ex) {
 			throw new RuntimeException(ex);
 		}
-		Element root = doc.getRootElement();
+		Element eSprint = doc.getRootElement();
 
-		Element eCompletedRequirementLabels = root.getChild("completedRequirementLabels");
+		Element eCompletedRequirementLabels = eSprint.getChild("completedRequirementLabels");
 		if (eCompletedRequirementLabels != null) {
-			root.removeContent(eCompletedRequirementLabels);
+			eSprint.removeContent(eCompletedRequirementLabels);
 			modified = true;
 		}
 
