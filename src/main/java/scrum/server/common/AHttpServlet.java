@@ -19,6 +19,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.logging.LogRecord;
+import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.Servlet;
@@ -61,6 +62,10 @@ public abstract class AHttpServlet extends HttpServlet {
 
 	@Override
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (webApplication.isShutdown()) {
+			resp.sendError(503, "Application shut down");
+			return;
+		}
 		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
@@ -101,6 +106,22 @@ public abstract class AHttpServlet extends HttpServlet {
 	}
 
 	// --- helper ---
+
+	protected HtmlRenderer createDefaultHtmlWithHeader(HttpServletResponse resp, String subtitle) throws IOException {
+		String charset = IO.UTF_8;
+		resp.setContentType("text/html");
+		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
+		html.startHTMLstandard();
+		String title = "Kunagi";
+		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
+		title += " " + subtitle;
+		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
+		html.startHEAD(title, "EN");
+		html.META("X-UA-Compatible", "chrome=1");
+		html.LINKfavicon();
+		html.endHEAD();
+		return html;
+	}
 
 	protected void logsTable(HtmlRenderer html, List<LogRecord> logs) {
 		startTABLE(html);
@@ -194,15 +215,15 @@ public abstract class AHttpServlet extends HttpServlet {
 		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
 	}
 
-	protected void adminLinks(HtmlRenderer html) {
+	protected void adminLinks(HtmlRenderer html, HttpServletRequest req) {
 		html.startP();
-		html.text("[");
+		html.text("[ ");
 		html.A("admin.html", "Admin page");
-		html.text("] [");
+		html.text(" ] [ ");
 		html.A("logs.html", "Latest logs");
-		html.text("] [");
-		html.A(config.getUrl(), "Kunagi");
-		html.text("]");
+		html.text(" ] [ ");
+		html.A(Servlet.getBaseUrl(req), "Kunagi");
+		html.text(" ]");
 		html.endP();
 	}
 

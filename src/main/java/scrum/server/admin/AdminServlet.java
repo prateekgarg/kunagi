@@ -22,7 +22,6 @@ import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.TimePeriod;
 import ilarkesto.core.logging.LogRecord;
 import ilarkesto.gwt.server.AGwtConversation;
-import ilarkesto.io.IO;
 import ilarkesto.logging.DefaultLogRecordHandler;
 import ilarkesto.ui.web.HtmlRenderer;
 import ilarkesto.webapp.AWebSession;
@@ -48,7 +47,6 @@ public class AdminServlet extends AHttpServlet {
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
-
 		tokenLogin(req, resp, session);
 
 		User user = session.getUser();
@@ -62,22 +60,11 @@ public class AdminServlet extends AHttpServlet {
 			return;
 		}
 
-		String charset = IO.UTF_8;
-		resp.setContentType("text/html");
-		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
-		html.startHTMLstandard();
-		String title = "Kunagi";
-		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
-		title += " Administration";
-		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
-		html.startHEAD(title, "EN");
-		html.META("X-UA-Compatible", "chrome=1");
-		html.LINKfavicon();
-		html.endHEAD();
+		HtmlRenderer html = createDefaultHtmlWithHeader(resp, "Administration");
 
 		html.startBODY().setStyle("font-size: 10px");
 
-		adminLinks(html);
+		adminLinks(html, req);
 
 		version(html);
 		sessions(html);
@@ -91,13 +78,23 @@ public class AdminServlet extends AHttpServlet {
 		// TODO: threadlocals
 		systemProperties(html);
 		environment(html);
+		actions(html);
+		html.BR();
+		html.BR();
 
-		adminLinks(html);
+		adminLinks(html, req);
 
 		html.endBODY();
 
 		html.endHTML();
 		html.flush();
+	}
+
+	private void actions(HtmlRenderer html) {
+		sectionHeader(html, "Functions");
+		html.text("[ ");
+		html.A("shutdown", "Shutdown application");
+		html.text(" ]");
 	}
 
 	private void errors(HtmlRenderer html) {
@@ -156,8 +153,9 @@ public class AdminServlet extends AHttpServlet {
 		headersRow(html, "Name", "Prio", "State", "Group", "Stack trace");
 		for (Thread thread : Utl.getAllThreads()) {
 			StackTraceElement[] stackTrace = thread.getStackTrace();
-			valuesRow(html, thread.getName(), thread.getPriority(), thread.getState(), thread.getThreadGroup()
-					.getName(), Utl.formatStackTrace(stackTrace, " -> "));
+			String groupName = thread.getThreadGroup().getName();
+			valuesRow(html, thread.getName(), thread.getPriority(), thread.getState(), groupName,
+				Utl.formatStackTrace(stackTrace, " -> "));
 		}
 		endTABLE(html);
 	}

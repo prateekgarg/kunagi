@@ -15,7 +15,6 @@
 package scrum.server.admin;
 
 import ilarkesto.core.logging.LogRecord;
-import ilarkesto.io.IO;
 import ilarkesto.logging.DefaultLogRecordHandler;
 import ilarkesto.ui.web.HtmlRenderer;
 
@@ -45,30 +44,20 @@ public class LogsServlet extends AHttpServlet {
 			return;
 		}
 
-		String charset = IO.UTF_8;
-		resp.setContentType("text/html");
-		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
-		html.startHTMLstandard();
-		String title = "Kunagi";
-		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
-		title += " Latest Logs";
-		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
-		html.startHEAD(title, "EN");
-		html.META("X-UA-Compatible", "chrome=1");
-		html.LINKfavicon();
-		html.endHEAD();
+		HtmlRenderer html = createDefaultHtmlWithHeader(resp, "Latest logs");
 
 		html.startBODY().setStyle("font-size: 10px");
 
-		adminLinks(html);
+		adminLinks(html, req);
 
 		List<LogRecord> logs = DefaultLogRecordHandler.getLatestRecords();
 		logsTable(html, logs);
 
-		adminLinks(html);
+		adminLinks(html, req);
 
 		html.SCRIPTjavascript(null, "window.onload=function() { window.scrollTo(0, document.body.scrollHeight); }");
 
+		html.endBODY();
 		html.endHTML();
 		html.flush();
 	}

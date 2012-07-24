@@ -65,6 +65,17 @@
         <url-pattern>/logs.html</url-pattern>
     </servlet-mapping>
 
+    <!-- shutdown command -->
+    <servlet>
+        <servlet-name>shutdown</servlet-name>
+        <servlet-class>scrum.server.admin.ShutdownServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>      
+    <servlet-mapping>
+        <servlet-name>shutdown</servlet-name>
+        <url-pattern>/shutdown</url-pattern>
+    </servlet-mapping>
+
 	<!-- main communication service -->
 	<servlet>
 		<servlet-name>scrum</servlet-name>
@@ -209,7 +220,7 @@
     </servlet-mapping>
 
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>10</session-timeout>
     </session-config>
     
 </web-app>
