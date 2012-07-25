@@ -158,8 +158,8 @@ public class WikiTest extends Assert {
 		Assert.assertEquals(toHtml("<code>simple block</code>"),
 			"<p><code class=\"codeBlock\">simple&nbsp;block</code></p>");
 		Assert.assertEquals(
-			toHtml("some <code>looooooooooooooooooooooooooooooooooooooooooooooooooooooooooong code</code> is here."),
-			"some <code class=\"codeBlock\">looooooooooooooooooooooooooooooooooooooooooooooooooooooooooong&nbsp;code</code> is here.");
+			toHtml("some <code>looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong code</code> is here."),
+			"some <code class=\"codeBlock\">looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong&nbsp;code</code> is here.");
 	}
 
 	@Test
