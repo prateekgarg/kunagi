@@ -48,7 +48,7 @@ public class Code extends AWikiElement {
 
 	public boolean isBlock() {
 		if (forceBlock) return true;
-		if (text.length() > 50) return true;
+		if (text.length() > 80) return true;
 		if (text.contains("\n")) return true;
 		return false;
 	}
