@@ -62,8 +62,8 @@ public abstract class AHttpServlet extends HttpServlet {
 
 	@Override
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (webApplication.isShutdown()) {
-			resp.sendError(503, "Application shut down");
+		if (webApplication != null && webApplication.isShuttingDown()) {
+			resp.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Application shutting down");
 			return;
 		}
 		Servlet.preventCaching(resp);
@@ -76,6 +76,10 @@ public abstract class AHttpServlet extends HttpServlet {
 
 	@Override
 	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (webApplication != null && webApplication.isShuttingDown()) {
+			resp.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Application shutting down");
+			return;
+		}
 		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
