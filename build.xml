@@ -134,12 +134,12 @@
 	</target>
 	
 	<target name="deployToLatest">
-        <copy file="${build.dir}/kunagi.war" tofile="/home/scrum-latest/tomcat/webapps/scrum-latest.war"
+        <copy file="${build.dir}/kunagi.war" tofile="/home/kunagi-latest/tomcat/webapps/kunagi-latest.war"
         	preservelastmodified="true" />
 	</target>
 
 	<target name="installScripts">
-		<copy file="etc/kunagi-release.py" tofile="/home/scrum/bin/kunagi-release" preservelastmodified="true" />
+		<copy file="etc/kunagi-release.py" tofile="/home/kunagi/bin/kunagi-release" preservelastmodified="true" />
 	</target>
 	
     <target name="continousIntegrationBuild" depends="clean,test,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
