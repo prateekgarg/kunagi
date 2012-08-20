@@ -70,6 +70,50 @@ public abstract class GUser
         return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
+    public final java.util.Set<scrum.server.project.Project> getProjects() {
+        return projectDao.getProjectsByParticipant((User)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
+        return sprintDao.getSprintsByProductOwner((User)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Emoticon> getEmoticons() {
+        return emoticonDao.getEmoticonsByOwner((User)this);
+    }
+
+    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return projectUserConfigDao.getProjectUserConfigsByUser((User)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
+        return issueDao.getIssuesByCreator((User)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
+        return taskDao.getTasksByOwner((User)this);
+    }
+
+    public final java.util.Set<scrum.server.journal.Change> getChanges() {
+        return changeDao.getChangesByUser((User)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Comment> getComments() {
+        return commentDao.getCommentsByAuthor((User)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.ChatMessage> getChatMessages() {
+        return chatMessageDao.getChatMessagesByAuthor((User)this);
+    }
+
+    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
+        return blogEntryDao.getBlogEntrysByAuthor((User)this);
+    }
+
+    public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return requirementEstimationVoteDao.getRequirementEstimationVotesByUser((User)this);
+    }
+
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GUser.class);
 
     public static final String TYPE = "user";
@@ -1076,6 +1120,66 @@ public abstract class GUser
 
     public static final void setUserDao(scrum.server.admin.UserDao userDao) {
         GUser.userDao = userDao;
+    }
+
+    static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GUser.sprintDao = sprintDao;
+    }
+
+    static scrum.server.collaboration.EmoticonDao emoticonDao;
+
+    public static final void setEmoticonDao(scrum.server.collaboration.EmoticonDao emoticonDao) {
+        GUser.emoticonDao = emoticonDao;
+    }
+
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
+
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
+        GUser.projectUserConfigDao = projectUserConfigDao;
+    }
+
+    static scrum.server.issues.IssueDao issueDao;
+
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        GUser.issueDao = issueDao;
+    }
+
+    static scrum.server.sprint.TaskDao taskDao;
+
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
+        GUser.taskDao = taskDao;
+    }
+
+    static scrum.server.journal.ChangeDao changeDao;
+
+    public static final void setChangeDao(scrum.server.journal.ChangeDao changeDao) {
+        GUser.changeDao = changeDao;
+    }
+
+    static scrum.server.collaboration.CommentDao commentDao;
+
+    public static final void setCommentDao(scrum.server.collaboration.CommentDao commentDao) {
+        GUser.commentDao = commentDao;
+    }
+
+    static scrum.server.collaboration.ChatMessageDao chatMessageDao;
+
+    public static final void setChatMessageDao(scrum.server.collaboration.ChatMessageDao chatMessageDao) {
+        GUser.chatMessageDao = chatMessageDao;
+    }
+
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
+        GUser.blogEntryDao = blogEntryDao;
+    }
+
+    static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;
+
+    public static final void setRequirementEstimationVoteDao(scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao) {
+        GUser.requirementEstimationVoteDao = requirementEstimationVoteDao;
     }
 
 }

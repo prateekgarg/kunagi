@@ -840,12 +840,12 @@ public abstract class GRequirement
         return getDao().getRequirementsByEpic((Requirement)this);
     }
 
-    public final java.util.List<scrum.client.sprint.Task> getTasks() {
-        return getDao().getTasksByRequirement((Requirement)this);
-    }
-
     public final java.util.List<scrum.client.sprint.SprintReport> getSprintReports() {
         return getDao().getSprintReportsByCompletedRequirement((Requirement)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Task> getTasks() {
+        return getDao().getTasksByRequirement((Requirement)this);
     }
 
     public final java.util.List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {

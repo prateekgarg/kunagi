@@ -1583,6 +1583,50 @@ public abstract class GUser
         properties.put("openId", this.openId);
     }
 
+    public final java.util.List<scrum.client.project.Project> getProjects() {
+        return getDao().getProjectsByParticipant((User)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Sprint> getSprints() {
+        return getDao().getSprintsByProductOwner((User)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Emoticon> getEmoticons() {
+        return getDao().getEmoticonsByOwner((User)this);
+    }
+
+    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return getDao().getProjectUserConfigsByUser((User)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getIssues() {
+        return getDao().getIssuesByCreator((User)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Task> getTasks() {
+        return getDao().getTasksByOwner((User)this);
+    }
+
+    public final java.util.List<scrum.client.journal.Change> getChanges() {
+        return getDao().getChangesByUser((User)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Comment> getComments() {
+        return getDao().getCommentsByAuthor((User)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.ChatMessage> getChatMessages() {
+        return getDao().getChatMessagesByAuthor((User)this);
+    }
+
+    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return getDao().getBlogEntrysByAuthor((User)this);
+    }
+
+    public final java.util.List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return getDao().getRequirementEstimationVotesByUser((User)this);
+    }
+
     @Override
     public boolean matchesKey(String key) {
         if (super.matchesKey(key)) return true;

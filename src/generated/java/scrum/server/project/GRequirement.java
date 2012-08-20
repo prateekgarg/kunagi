@@ -67,12 +67,12 @@ public abstract class GRequirement
         return requirementDao.getRequirementsByEpic((Requirement)this);
     }
 
-    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
-        return taskDao.getTasksByRequirement((Requirement)this);
-    }
-
     public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReports() {
         return sprintReportDao.getSprintReportsByCompletedRequirement((Requirement)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Task> getTasks() {
+        return taskDao.getTasksByRequirement((Requirement)this);
     }
 
     public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
@@ -757,7 +757,7 @@ public abstract class GRequirement
     }
 
     public final void setTasksOrderIdsAsCommaSeparatedString(String tasksOrderIds) {
-        this.tasksOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(tasksOrderIds));
+        setTasksOrderIds(Str.parseCommaSeparatedString(tasksOrderIds));
     }
 
     protected final void updateTasksOrderIds(Object value) {
@@ -850,7 +850,7 @@ public abstract class GRequirement
     }
 
     public final void setThemesAsCommaSeparatedString(String themes) {
-        this.themes = new java.util.ArrayList(Str.parseCommaSeparatedString(themes));
+        setThemes(Str.parseCommaSeparatedString(themes));
     }
 
     protected final void updateThemes(Object value) {
@@ -1027,16 +1027,16 @@ public abstract class GRequirement
         GRequirement.requirementDao = requirementDao;
     }
 
-    static scrum.server.sprint.TaskDao taskDao;
-
-    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
-        GRequirement.taskDao = taskDao;
-    }
-
     static scrum.server.sprint.SprintReportDao sprintReportDao;
 
     public static final void setSprintReportDao(scrum.server.sprint.SprintReportDao sprintReportDao) {
         GRequirement.sprintReportDao = sprintReportDao;
+    }
+
+    static scrum.server.sprint.TaskDao taskDao;
+
+    public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
+        GRequirement.taskDao = taskDao;
     }
 
     static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;

@@ -88,16 +88,8 @@ public abstract class GProject
         return sprintDao.getSprintsByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
-        return requirementDao.getRequirementsByProject((Project)this);
-    }
-
-    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
-        return issueDao.getIssuesByProject((Project)this);
-    }
-
-    public final java.util.Set<scrum.server.release.Release> getReleases() {
-        return releaseDao.getReleasesByProject((Project)this);
+    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return projectUserConfigDao.getProjectUserConfigsByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.project.Quality> getQualitys() {
@@ -108,20 +100,16 @@ public abstract class GProject
         return impedimentDao.getImpedimentsByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
-        return projectUserConfigDao.getProjectUserConfigsByProject((Project)this);
+    public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
+        return requirementDao.getRequirementsByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
-        return blogEntryDao.getBlogEntrysByProject((Project)this);
+    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
+        return issueDao.getIssuesByProject((Project)this);
     }
 
-    public final java.util.Set<scrum.server.risks.Risk> getRisks() {
-        return riskDao.getRisksByProject((Project)this);
-    }
-
-    public final java.util.Set<scrum.server.collaboration.Wikipage> getWikipages() {
-        return wikipageDao.getWikipagesByProject((Project)this);
+    public final java.util.Set<scrum.server.release.Release> getReleases() {
+        return releaseDao.getReleasesByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.journal.ProjectEvent> getProjectEvents() {
@@ -138,6 +126,18 @@ public abstract class GProject
 
     public final java.util.Set<scrum.server.collaboration.ChatMessage> getChatMessages() {
         return chatMessageDao.getChatMessagesByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.pr.BlogEntry> getBlogEntrys() {
+        return blogEntryDao.getBlogEntrysByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.risks.Risk> getRisks() {
+        return riskDao.getRisksByProject((Project)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Wikipage> getWikipages() {
+        return wikipageDao.getWikipagesByProject((Project)this);
     }
 
     public final java.util.Set<scrum.server.files.File> getFiles() {
@@ -1132,7 +1132,7 @@ public abstract class GProject
     }
 
     public final void setRequirementsOrderIdsAsCommaSeparatedString(String requirementsOrderIds) {
-        this.requirementsOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(requirementsOrderIds));
+        setRequirementsOrderIds(Str.parseCommaSeparatedString(requirementsOrderIds));
     }
 
     protected final void updateRequirementsOrderIds(Object value) {
@@ -1225,7 +1225,7 @@ public abstract class GProject
     }
 
     public final void setUrgentIssuesOrderIdsAsCommaSeparatedString(String urgentIssuesOrderIds) {
-        this.urgentIssuesOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(urgentIssuesOrderIds));
+        setUrgentIssuesOrderIds(Str.parseCommaSeparatedString(urgentIssuesOrderIds));
     }
 
     protected final void updateUrgentIssuesOrderIds(Object value) {
@@ -2161,6 +2161,24 @@ public abstract class GProject
         GProject.projectDao = projectDao;
     }
 
+    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
+
+    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
+        GProject.projectUserConfigDao = projectUserConfigDao;
+    }
+
+    static scrum.server.project.QualityDao qualityDao;
+
+    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
+        GProject.qualityDao = qualityDao;
+    }
+
+    static scrum.server.impediments.ImpedimentDao impedimentDao;
+
+    public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
+        GProject.impedimentDao = impedimentDao;
+    }
+
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
@@ -2177,42 +2195,6 @@ public abstract class GProject
 
     public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
         GProject.releaseDao = releaseDao;
-    }
-
-    static scrum.server.project.QualityDao qualityDao;
-
-    public static final void setQualityDao(scrum.server.project.QualityDao qualityDao) {
-        GProject.qualityDao = qualityDao;
-    }
-
-    static scrum.server.impediments.ImpedimentDao impedimentDao;
-
-    public static final void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {
-        GProject.impedimentDao = impedimentDao;
-    }
-
-    static scrum.server.admin.ProjectUserConfigDao projectUserConfigDao;
-
-    public static final void setProjectUserConfigDao(scrum.server.admin.ProjectUserConfigDao projectUserConfigDao) {
-        GProject.projectUserConfigDao = projectUserConfigDao;
-    }
-
-    static scrum.server.pr.BlogEntryDao blogEntryDao;
-
-    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
-        GProject.blogEntryDao = blogEntryDao;
-    }
-
-    static scrum.server.risks.RiskDao riskDao;
-
-    public static final void setRiskDao(scrum.server.risks.RiskDao riskDao) {
-        GProject.riskDao = riskDao;
-    }
-
-    static scrum.server.collaboration.WikipageDao wikipageDao;
-
-    public static final void setWikipageDao(scrum.server.collaboration.WikipageDao wikipageDao) {
-        GProject.wikipageDao = wikipageDao;
     }
 
     static scrum.server.journal.ProjectEventDao projectEventDao;
@@ -2237,6 +2219,24 @@ public abstract class GProject
 
     public static final void setChatMessageDao(scrum.server.collaboration.ChatMessageDao chatMessageDao) {
         GProject.chatMessageDao = chatMessageDao;
+    }
+
+    static scrum.server.pr.BlogEntryDao blogEntryDao;
+
+    public static final void setBlogEntryDao(scrum.server.pr.BlogEntryDao blogEntryDao) {
+        GProject.blogEntryDao = blogEntryDao;
+    }
+
+    static scrum.server.risks.RiskDao riskDao;
+
+    public static final void setRiskDao(scrum.server.risks.RiskDao riskDao) {
+        GProject.riskDao = riskDao;
+    }
+
+    static scrum.server.collaboration.WikipageDao wikipageDao;
+
+    public static final void setWikipageDao(scrum.server.collaboration.WikipageDao wikipageDao) {
+        GProject.wikipageDao = wikipageDao;
     }
 
     static scrum.server.files.FileDao fileDao;

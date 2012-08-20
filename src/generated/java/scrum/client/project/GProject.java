@@ -2357,16 +2357,8 @@ public abstract class GProject
         return getDao().getSprintsByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
-        return getDao().getRequirementsByProject((Project)this);
-    }
-
-    public final java.util.List<scrum.client.issues.Issue> getIssues() {
-        return getDao().getIssuesByProject((Project)this);
-    }
-
-    public final java.util.List<scrum.client.release.Release> getReleases() {
-        return getDao().getReleasesByProject((Project)this);
+    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return getDao().getProjectUserConfigsByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.project.Quality> getQualitys() {
@@ -2377,20 +2369,16 @@ public abstract class GProject
         return getDao().getImpedimentsByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
-        return getDao().getProjectUserConfigsByProject((Project)this);
+    public final java.util.List<scrum.client.project.Requirement> getRequirements() {
+        return getDao().getRequirementsByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
-        return getDao().getBlogEntrysByProject((Project)this);
+    public final java.util.List<scrum.client.issues.Issue> getIssues() {
+        return getDao().getIssuesByProject((Project)this);
     }
 
-    public final java.util.List<scrum.client.risks.Risk> getRisks() {
-        return getDao().getRisksByProject((Project)this);
-    }
-
-    public final java.util.List<scrum.client.collaboration.Wikipage> getWikipages() {
-        return getDao().getWikipagesByProject((Project)this);
+    public final java.util.List<scrum.client.release.Release> getReleases() {
+        return getDao().getReleasesByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.journal.ProjectEvent> getProjectEvents() {
@@ -2407,6 +2395,18 @@ public abstract class GProject
 
     public final java.util.List<scrum.client.collaboration.ChatMessage> getChatMessages() {
         return getDao().getChatMessagesByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return getDao().getBlogEntrysByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.risks.Risk> getRisks() {
+        return getDao().getRisksByProject((Project)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Wikipage> getWikipages() {
+        return getDao().getWikipagesByProject((Project)this);
     }
 
     public final java.util.List<scrum.client.files.File> getFiles() {

@@ -23,12 +23,10 @@ import ilarkesto.core.logging.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.pr.EmailSender;
-import scrum.server.project.Project;
 
 public class User extends GUser {
 
@@ -64,10 +62,6 @@ public class User extends GUser {
 		return getName();
 	}
 
-	public Set<Project> getProjects() {
-		return projectDao.getProjectsByParticipant(this);
-	}
-
 	private String password;
 
 	public void triggerEmailVerification() {
@@ -78,8 +72,6 @@ public class User extends GUser {
 
 		String urlBase = webApplication.createUrl(null);
 		StringBuilder sb = new StringBuilder();
-		String nameSuffix = webApplication.getSystemConfig().isInstanceNameSet() ? " @ "
-				+ webApplication.getSystemConfig().getInstanceName() : "";
 		sb.append(
 			"You have created an account for " + webApplication.getSystemConfig().getInstanceNameWithApplicationLabel())
 				.append(urlBase).append("\n");

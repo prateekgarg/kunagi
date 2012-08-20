@@ -66,6 +66,14 @@ public abstract class GSprint
         return projectDao.getProjectsByNextSprint((Sprint)this);
     }
 
+    public final java.util.Set<scrum.server.sprint.SprintDaySnapshot> getSprintDaySnapshots() {
+        return sprintDaySnapshotDao.getSprintDaySnapshotsBySprint((Sprint)this);
+    }
+
+    public final scrum.server.sprint.SprintReport getSprintReport() {
+        return sprintReportDao.getSprintReportBySprint((Sprint)this);
+    }
+
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
         return requirementDao.getRequirementsBySprint((Sprint)this);
     }
@@ -76,14 +84,6 @@ public abstract class GSprint
 
     public final java.util.Set<scrum.server.sprint.Task> getClosedTasksInPasts() {
         return taskDao.getTasksByClosedInPastSprint((Sprint)this);
-    }
-
-    public final java.util.Set<scrum.server.sprint.SprintDaySnapshot> getSprintDaySnapshots() {
-        return sprintDaySnapshotDao.getSprintDaySnapshotsBySprint((Sprint)this);
-    }
-
-    public final scrum.server.sprint.SprintReport getSprintReport() {
-        return sprintReportDao.getSprintReportBySprint((Sprint)this);
     }
 
     public final scrum.server.project.ProjectSprintSnapshot getProjectSprintSnapshot() {
@@ -636,7 +636,7 @@ public abstract class GSprint
     }
 
     public final void setRequirementsOrderIdsAsCommaSeparatedString(String requirementsOrderIds) {
-        this.requirementsOrderIds = new java.util.ArrayList(Str.parseCommaSeparatedString(requirementsOrderIds));
+        setRequirementsOrderIds(Str.parseCommaSeparatedString(requirementsOrderIds));
     }
 
     protected final void updateRequirementsOrderIds(Object value) {
@@ -1013,6 +1013,18 @@ public abstract class GSprint
         GSprint.sprintDao = sprintDao;
     }
 
+    static scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
+
+    public static final void setSprintDaySnapshotDao(scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao) {
+        GSprint.sprintDaySnapshotDao = sprintDaySnapshotDao;
+    }
+
+    static scrum.server.sprint.SprintReportDao sprintReportDao;
+
+    public static final void setSprintReportDao(scrum.server.sprint.SprintReportDao sprintReportDao) {
+        GSprint.sprintReportDao = sprintReportDao;
+    }
+
     static scrum.server.project.RequirementDao requirementDao;
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
@@ -1029,18 +1041,6 @@ public abstract class GSprint
 
     public static final void setTaskDao(scrum.server.sprint.TaskDao taskDao) {
         GSprint.taskDao = taskDao;
-    }
-
-    static scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao;
-
-    public static final void setSprintDaySnapshotDao(scrum.server.sprint.SprintDaySnapshotDao sprintDaySnapshotDao) {
-        GSprint.sprintDaySnapshotDao = sprintDaySnapshotDao;
-    }
-
-    static scrum.server.sprint.SprintReportDao sprintReportDao;
-
-    public static final void setSprintReportDao(scrum.server.sprint.SprintReportDao sprintReportDao) {
-        GSprint.sprintReportDao = sprintReportDao;
     }
 
     static scrum.server.project.ProjectSprintSnapshotDao projectSprintSnapshotDao;
