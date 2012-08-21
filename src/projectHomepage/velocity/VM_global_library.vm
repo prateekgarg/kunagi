@@ -303,7 +303,7 @@ pageTracker._trackPageview();
 
 
 #macro( socialbuttons $url )
-    <table border="0"><tr>
+    <table border="0" style="margin-top: 10px;"><tr>
     
     <td>
         <div class="g-plusone" data-size="medium"></div>
@@ -325,7 +325,7 @@ pageTracker._trackPageview();
           js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-        <div class="fb-like" data-href="$url" data-send="false" data-width="300" data-show-faces="false"></div>
+        <div class="fb-like" data-href="$url" data-send="false" data-width="350" data-show-faces="false"></div>
     </td>
     
     </tr></table>
