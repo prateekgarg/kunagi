@@ -4,7 +4,7 @@
     <h2>What is Kunagi?</h2>
     $project.description
     
-    #socialbuttons("http://kunagi.org")
+    #socialbuttonsmain()
     
     <p>Interested? Try the <strong>online demo</strong> or read the <strong>full description</strong> below!</p>
 </div>

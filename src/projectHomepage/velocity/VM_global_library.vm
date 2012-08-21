@@ -332,6 +332,10 @@ pageTracker._trackPageview();
 #end
 
 
+#macro( socialbuttonsmain )
+    #socialbuttons("http://kunagi.org")
+#end
+
 #macro( socialpages )
     <div class="socialpages">
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
