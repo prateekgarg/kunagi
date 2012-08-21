@@ -137,9 +137,6 @@
 
 	<target name="deployToLatest">
 		<copy file="${build.dir}/kunagi.war" tofile="/home/kunagi-latest/tomcat/webapps/kunagi-latest.war" preservelastmodified="true" />
-        <exec executable="touch" failonerror="true">
-            <arg value="/home/kunagi-latest/tomcat/restart-request/trigger" />
-        </exec>
 	</target>
 
 	<target name="installScripts">
