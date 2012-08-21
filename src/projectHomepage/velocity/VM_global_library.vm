@@ -303,7 +303,7 @@ pageTracker._trackPageview();
 
 
 #macro( socialbuttons $url )
-    <table border="0" style="margin-top: 10px;"><tr>
+    <table border="0" style="margin: 10px 0 10px 0;"><tr>
     
     <td>
         <div class="g-plusone" data-size="medium"></div>
