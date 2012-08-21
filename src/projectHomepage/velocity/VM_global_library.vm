@@ -328,7 +328,7 @@ pageTracker._trackPageview();
         <div class="fb-like" data-href="$url" data-send="false" data-width="300" data-show-faces="false"></div>
     </td>
     
-    </tr></td>
+    </tr></table>
 #end
 
 
