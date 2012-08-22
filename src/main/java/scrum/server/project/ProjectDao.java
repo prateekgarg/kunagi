@@ -17,9 +17,6 @@ package scrum.server.project;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
-
-import java.util.Collection;
-
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 
@@ -74,10 +71,6 @@ public class ProjectDao extends GProjectDao {
 	// --- test data ---
 
 	public Project postExampleProject(User owner, User po, User sm) {
-		Collection<User> team = userDao.getEntities();
-		// team.remove(po);
-		// team.remove(sm);
-
 		Project project = postProject(owner);
 		project.setBegin(Date.today().addMonths(-2));
 		project.setEnd(Date.today().addMonths(5));
