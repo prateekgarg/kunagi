@@ -29,6 +29,14 @@ public class SystemMessage implements Serializable, IsSerializable {
 
 	private DateAndTime expires;
 
+	public SystemMessage() {}
+
+	public SystemMessage(String text, DateAndTime expires, boolean active) {
+		this.text = text;
+		this.expires = expires;
+		this.active = active;
+	}
+
 	public boolean isActive() {
 		return active;
 	}

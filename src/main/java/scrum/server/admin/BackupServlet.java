@@ -47,6 +47,9 @@ public class BackupServlet extends AHttpServlet {
 		HtmlRenderer html = createDefaultHtmlWithHeader(resp, "Backup initiated");
 		html.startBODY();
 		html.H1("Backup initiated");
+		html.startP();
+		html.text("All clients are blocked until backup is completed. This page will not refresh.");
+		html.endP();
 		html.endBODY();
 		html.endHTML();
 		html.flush();

@@ -14,6 +14,10 @@
  */
 package scrum.server.admin;
 
+import ilarkesto.base.Utl;
+import ilarkesto.core.base.Str;
+import ilarkesto.core.time.DateAndTime;
+import ilarkesto.core.time.Tm;
 import ilarkesto.ui.web.HtmlRenderer;
 
 import java.io.IOException;
@@ -21,10 +25,13 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import scrum.client.admin.SystemMessage;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 
 public class ShutdownServlet extends AHttpServlet {
+
+	private boolean shutdownInitiated;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
@@ -41,14 +48,37 @@ public class ShutdownServlet extends AHttpServlet {
 			return;
 		}
 
-		webApplication.shutdown();
+		if (!shutdownInitiated) {
+			shutdownInitiated = true;
+			String sDelay = req.getParameter("delay");
+			if (Str.isBlank(sDelay)) {
+				webApplication.updateSystemMessage(new SystemMessage("Service is going down for maintenance now.",
+						new DateAndTime(System.currentTimeMillis()), true));
+				webApplication.shutdown();
+			} else {
+				final long delay = Long.parseLong(sDelay) * Tm.MINUTE;
+				new Thread() {
+
+					@Override
+					public void run() {
+						webApplication.updateSystemMessage(new SystemMessage("Service is going down for maintenance.",
+								new DateAndTime(System.currentTimeMillis() + delay), true));
+						if (delay > 0) Utl.sleep(delay);
+						webApplication.shutdown();
+					}
+				}.start();
+			}
+
+		}
 
 		HtmlRenderer html = createDefaultHtmlWithHeader(resp, "Shutdown initiated");
 		html.startBODY();
 		html.H1("Shutdown initiated");
+		html.startP();
+		html.text("This page will not refresh.");
+		html.endP();
 		html.endBODY();
 		html.endHTML();
 		html.flush();
 	}
-
 }
