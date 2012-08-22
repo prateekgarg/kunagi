@@ -23,6 +23,7 @@ import ilarkesto.base.Tm;
 import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
+import ilarkesto.base.time.TimePeriod;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
@@ -250,6 +251,35 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	protected void onShutdownWebApplication() {
 		getSubscriptionService().flush();
 		getTransactionService().commit();
+	}
+
+	public void shutdown(final long delayInMillis) {
+		updateSystemMessage(new SystemMessage("Service is going down for maintenance.", delayInMillis));
+		if (delayInMillis == 0) {
+			shutdown();
+		} else {
+			new Thread() {
+
+				@Override
+				public void run() {
+					Utl.sleep(delayInMillis);
+					shutdown();
+				}
+			}.start();
+		}
+		log.info("Shutdown scheduled in", new TimePeriod(delayInMillis), "ms.");
+	}
+
+	@Override
+	public void backupApplicationDataDir() {
+		updateSystemMessage(new SystemMessage(
+				"Data backup in progress. All your changes are delayed until backup finishes."));
+		Utl.sleep(3000);
+		try {
+			super.backupApplicationDataDir();
+		} finally {
+			updateSystemMessage(new SystemMessage());
+		}
 	}
 
 	@Override

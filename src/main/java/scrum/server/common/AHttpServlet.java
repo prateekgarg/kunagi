@@ -112,6 +112,11 @@ public abstract class AHttpServlet extends HttpServlet {
 	// --- helper ---
 
 	protected HtmlRenderer createDefaultHtmlWithHeader(HttpServletResponse resp, String subtitle) throws IOException {
+		return createDefaultHtmlWithHeader(resp, subtitle, 0, null);
+	}
+
+	protected HtmlRenderer createDefaultHtmlWithHeader(HttpServletResponse resp, String subtitle, int refreshSeconds,
+			String refreshUrl) throws IOException {
 		String charset = IO.UTF_8;
 		resp.setContentType("text/html");
 		HtmlRenderer html = new HtmlRenderer(resp.getOutputStream(), charset);
@@ -122,6 +127,7 @@ public abstract class AHttpServlet extends HttpServlet {
 		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "chrome=1");
+		if (!Str.isBlank(refreshUrl)) html.METArefresh(refreshSeconds, refreshUrl);
 		html.LINKfavicon();
 		html.endHEAD();
 		return html;
