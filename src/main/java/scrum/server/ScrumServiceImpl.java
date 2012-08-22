@@ -505,7 +505,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	private void onWikipageChanged(GwtConversation conversation, Wikipage wikipage, Map properties) {
-		wikipage.getProject().updateHomepage();
+		// don't do this! takes too long and blocks all clients!
+		// wikipage.getProject().updateHomepage();
 	}
 
 	private void onIssueChanged(GwtConversation conversation, Issue issue, Map properties) {
