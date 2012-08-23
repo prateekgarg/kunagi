@@ -126,7 +126,7 @@ public abstract class AHttpServlet extends HttpServlet {
 		title += " " + subtitle;
 		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
 		html.startHEAD(title, "EN");
-		html.META("X-UA-Compatible", "chrome=1");
+		html.META("X-UA-Compatible", "IE=edge");
 		if (!Str.isBlank(refreshUrl)) html.METArefresh(refreshSeconds, refreshUrl);
 		html.LINKfavicon();
 		html.endHEAD();
