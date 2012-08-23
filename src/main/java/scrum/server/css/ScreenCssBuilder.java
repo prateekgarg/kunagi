@@ -503,8 +503,8 @@ public class ScreenCssBuilder implements CssBuilder {
 				.border(1, cNavigatorSeparator).borderRadius(5);
 		css.style(".BlockHeaderWidget-anchor").displayBlock().floatLeft().width100().textDecorationNone();
 		css.style(".BlockHeaderWidget-dragHandle:hover").background("white", "../blockdraghandle-hover-bg.png");
-		css.style(".BlockHeaderWidget-cell").color(cBlockHeaderCellSecondary).fontWeightBold().color(cHeaderBackground)
-				.padding(4, 5, 0, 5);
+		css.style(".BlockHeaderWidget-cell").fontWeightBold().color(cHeaderBackground).padding(4, 5, 0, 5);
+		css.style("a.BlockHeaderWidget-anchor:hover, a.BlockHeaderWidget-anchor:visited").color(cHeaderBackground);
 		css.style(".BlockHeaderWidget-cell-secondary").color(cBlockHeaderCellSecondary).fontWeightNormal();
 		css.style(".BlockHeaderWidget-cell-small").fontSize(fontSizeSmall).fontWeightNormal().paddingTop(6);
 
