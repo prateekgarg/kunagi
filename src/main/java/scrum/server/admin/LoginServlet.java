@@ -403,7 +403,7 @@ public class LoginServlet extends AHttpServlet {
 		if (webApplication.getConfig().isShowRelease()) title += " " + applicationInfo.getRelease();
 		if (systemConfig.isInstanceNameSet()) title += " @ " + systemConfig.getInstanceName();
 		html.startHEAD(title, "EN");
-		html.META("X-UA-Compatible", "chrome=1");
+		html.META("X-UA-Compatible", "IE=edge");
 		html.LINKfavicon();
 		html.LINKcss("scrum.ScrumGwtApplication/screen.css");
 		html.endHEAD();
