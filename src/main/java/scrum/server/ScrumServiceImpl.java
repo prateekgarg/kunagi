@@ -462,6 +462,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof Comment) onCommentChanged(conversation, (Comment) entity, properties);
 		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
 		if (entity instanceof Wikipage) onWikipageChanged(conversation, (Wikipage) entity, properties);
+		if (entity instanceof Sprint) onSprintChanged(conversation, (Sprint) entity, properties);
 
 		Project currentProject = project;
 		if (currentUser != null && currentProject != null) {
@@ -472,6 +473,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.clearRemoteEntitiesByType(Change.class);
 		sendToClients(conversation, entity);
+	}
+
+	private void onSprintChanged(GwtConversation conversation, Sprint sprint, Map properties) {
+		Project project = sprint.getProject();
+		if (project.isCurrentSprint(sprint)) {
+			sendToClients(conversation, project.getNextSprint());
+		}
 	}
 
 	private void onSystemConfigChanged(GwtConversation conversation, SystemConfig config, Map properties) {
