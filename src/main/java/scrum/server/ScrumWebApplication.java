@@ -206,9 +206,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String createUrl(Project project, AEntity entity) {
-		String hashtag = "#project=" + project.getId();
+		String hashtag = "project=" + project.getId();
 		if (entity != null) hashtag += "|entity=" + entity.getId();
-		return createUrl(Str.encodeUrlParameter(hashtag));
+		return createUrl("#" + Str.encodeUrlParameter(hashtag));
 	}
 
 	private void createTestData() {
