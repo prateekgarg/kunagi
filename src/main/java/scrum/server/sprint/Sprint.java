@@ -263,16 +263,30 @@ public class Sprint extends GSprint implements Numbered {
 		super.ensureIntegrity();
 		updateNumber();
 
-		if (getProject().isCurrentSprint(this)) {
+		Project project = getProject();
+
+		if (project.isCurrentSprint(this)) {
 			if (!isBeginSet()) setBegin(Date.today());
 			if (!isEndSet()) setEnd(getBegin().addDays(14));
 
 			// auto stretch sprint
 			if (getEnd().isYesterday()) setEnd(Date.today());
 
+			// move next sprint
+			Sprint nextSprint = project.getNextSprint();
+			if (nextSprint != null) {
+				Date nextBegin = nextSprint.getBegin();
+				if (nextBegin != null && getEnd().isAfter(nextBegin)) {
+					Integer length = nextSprint.getLengthInDays();
+					nextSprint.setBegin(getEnd());
+					if (length != null) {
+						nextSprint.setEnd(getBegin().addDays(length));
+					}
+				}
+			}
 		}
 
-		if (getProject().isNextSprint(this)) {
+		if (project.isNextSprint(this)) {
 			// auto move next sprint
 			if (isBeginSet() && getBegin().isPast()) {
 				int len = 0;
