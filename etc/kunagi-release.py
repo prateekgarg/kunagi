@@ -42,7 +42,7 @@ print 'Releasing Kunagi ' + releaseLabel
 
 
 # configuration
-os.chdir('/home/scrum/')
+os.chdir('/home/kunagi/')
 workDir = os.path.abspath('kunagi-release-workdir')
 artifactsDestinationHomeDir = '/var/www/kunagi.org/releases'
 githubUser = 'git://github.com/Kunagi'
@@ -160,7 +160,7 @@ shutil.copyfile(packageZip, artifactsDestinationDir + '/kunagi-' + releaseLabel 
 # deploy
 print '  Deploy demo'
 shutil.copyfile(packageWar, '/home/kunagi-demo/tomcat/webapps/kunagi-demo.war')
-#shutil.copyfile(packageWar, '/home/scrum/tomcat/webapps/scrum.war')
+#shutil.copyfile(packageWar, '/home/kunagi/tomcat/webapps/kunagi.war')
 
 
 print 'Kunagi ' + releaseLabel + ' released'
