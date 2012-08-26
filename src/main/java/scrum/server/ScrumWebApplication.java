@@ -61,8 +61,6 @@ import scrum.server.project.DeleteOldProjectsTask;
 import scrum.server.project.HomepageUpdaterTask;
 import scrum.server.project.Project;
 
-import com.google.gwt.http.client.URL;
-
 public class ScrumWebApplication extends GScrumWebApplication {
 
 	private static final int DATA_VERSION = 33;
@@ -192,12 +190,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public String createUrl(String relativePath) {
-		String url = createUrlUnencoded(relativePath);
-		if (Str.isBlank(url)) return null;
-		return URL.encode(url);
-	}
-
-	private String createUrlUnencoded(String relativePath) {
 		if (relativePath == null) relativePath = "";
 		String prefix = getBaseUrl();
 
@@ -216,7 +208,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public String createUrl(Project project, AEntity entity) {
 		String hashtag = "#project=" + project.getId();
 		if (entity != null) hashtag += "|entity=" + entity.getId();
-		return createUrl(hashtag);
+		return createUrl(Str.encodeUrlParameter(hashtag));
 	}
 
 	private void createTestData() {

@@ -363,7 +363,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.lineHeight(lineHeight);
 		css.table().borderCollapseCollapse();
 		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
-		css.a().cursorPointer().color(cLink).textDecorationUnderline();
+		css.a().cursorPointer().color(cLink).textDecorationUnderline().outlineNone();
 		css.p().margin(0, 0, 10, 0);
 		css.h1().fontSize(fontSize + 6).lineHeight(lineHeight + 6).fontWeightBold().margin(5, 0, 5, 0);
 		css.h2().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(5, 0, 5, 0);

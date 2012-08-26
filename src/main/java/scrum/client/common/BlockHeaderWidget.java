@@ -147,6 +147,7 @@ public class BlockHeaderWidget extends AWidget {
 
 	public void addClickHandler(ClickHandler handler) {
 		centerAnchorPanel.addClickHandler(handler);
+
 		for (AnchorPanel ap : anchorPanels) {
 			ap.addClickHandler(handler);
 		}
