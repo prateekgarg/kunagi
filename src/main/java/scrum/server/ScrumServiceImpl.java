@@ -478,6 +478,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void onSprintChanged(GwtConversation conversation, Sprint sprint, Map properties) {
 		Project project = sprint.getProject();
 		if (project.isCurrentSprint(sprint)) {
+			sprint.updateNextSprintDates();
 			sendToClients(conversation, project.getNextSprint());
 		}
 	}
