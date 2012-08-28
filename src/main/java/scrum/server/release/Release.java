@@ -19,6 +19,7 @@ import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -66,6 +67,9 @@ public class Release extends GRelease implements Numbered, ReferenceSupport {
 			return;
 		}
 		if (isScriptAvailable()) {
+			File scriptFile = new File(getProject().getReleaseScriptPath());
+			if (!scriptFile.exists())
+				throw new RuntimeException("Release script does not exist: " + scriptFile.getAbsolutePath());
 			ReleaseTask task = new ReleaseTask(user, this);
 			webApplication.autowire(task);
 			taskManager.start(task);
