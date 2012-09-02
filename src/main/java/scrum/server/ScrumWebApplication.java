@@ -20,7 +20,6 @@ package scrum.server;
 import ilarkesto.auth.OpenId;
 import ilarkesto.base.Sys;
 import ilarkesto.base.Tm;
-import ilarkesto.base.Url;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.DateAndTime;
 import ilarkesto.base.time.TimePeriod;
@@ -280,11 +279,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		} finally {
 			updateSystemMessage(new SystemMessage());
 		}
-	}
-
-	@Override
-	public Url getHomeUrl() {
-		return new Url("index.html");
 	}
 
 	private String getBaseUrl() {
