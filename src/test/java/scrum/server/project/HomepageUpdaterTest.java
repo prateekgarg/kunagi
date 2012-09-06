@@ -41,6 +41,7 @@ public class HomepageUpdaterTest extends ATest {
 
 	@BeforeClass
 	public void createProject() {
+		TestUtil.getApp().getSystemConfig().setUrl("http://localhost/kunagi");
 		project = TestUtil.createProject(TestUtil.getDuke());
 	}
 

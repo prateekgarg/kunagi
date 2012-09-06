@@ -317,6 +317,7 @@ public class TestUtil {
 		project.setShortDescription(Str.generateRandomSentence(4, 4));
 		project.setDescription(Str.generateRandomParagraph());
 		project.setLongDescription(Str.generateRandomParagraphs(5, null, null, "\n\n"));
+		project.setHomepageUrl("http://kunagi.org");
 		return project;
 	}
 

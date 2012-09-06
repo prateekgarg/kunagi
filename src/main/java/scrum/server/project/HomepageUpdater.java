@@ -148,14 +148,8 @@ public class HomepageUpdater {
 		}
 	}
 
-	private void fillConfig(ContextBuilder context) {
-		SystemConfig config = ScrumWebApplication.get().getSystemConfig();
-		context.put("kunagiUrl", config.getUrl());
-		context.put("kunagiAdminEmail", config.getAdminEmail());
-		context.put("kunagiInstanceName", config.getInstanceName());
-	}
-
 	private void processEntityTemplate(ContextBuilder context, String reference) {
+		fillConfig(context.putSubContext("config"));
 		fillProject(context.putSubContext("project"));
 		fillProductBacklog(context.putSubContext("productBacklog"));
 		fillSprintBacklog(context.putSubContext("sprintBacklog"));
@@ -173,6 +167,13 @@ public class HomepageUpdater {
 			outputFileName = reference + "." + outputFileName;
 			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
 		}
+	}
+
+	private void fillConfig(ContextBuilder context) {
+		SystemConfig config = ScrumWebApplication.get().getSystemConfig();
+		context.put("kunagiUrl", config.getUrl());
+		context.put("kunagiAdminEmail", config.getAdminEmail());
+		context.put("kunagiInstanceName", config.getInstanceName());
 	}
 
 	private void processReleaseTemplates() {
