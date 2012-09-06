@@ -242,21 +242,21 @@ public abstract class GSimpleEventDao
     // - time
     // -----------------------------------------------------------
 
-    private final Cache<ilarkesto.base.time.Time,Set<SimpleEvent>> simpleEventsByTimeCache = new Cache<ilarkesto.base.time.Time,Set<SimpleEvent>>(
-            new Cache.Factory<ilarkesto.base.time.Time,Set<SimpleEvent>>() {
-                public Set<SimpleEvent> create(ilarkesto.base.time.Time time) {
+    private final Cache<ilarkesto.core.time.Time,Set<SimpleEvent>> simpleEventsByTimeCache = new Cache<ilarkesto.core.time.Time,Set<SimpleEvent>>(
+            new Cache.Factory<ilarkesto.core.time.Time,Set<SimpleEvent>>() {
+                public Set<SimpleEvent> create(ilarkesto.core.time.Time time) {
                     return getEntities(new IsTime(time));
                 }
             });
 
-    public final Set<SimpleEvent> getSimpleEventsByTime(ilarkesto.base.time.Time time) {
+    public final Set<SimpleEvent> getSimpleEventsByTime(ilarkesto.core.time.Time time) {
         return new HashSet<SimpleEvent>(simpleEventsByTimeCache.get(time));
     }
-    private Set<ilarkesto.base.time.Time> timesCache;
+    private Set<ilarkesto.core.time.Time> timesCache;
 
-    public final Set<ilarkesto.base.time.Time> getTimes() {
+    public final Set<ilarkesto.core.time.Time> getTimes() {
         if (timesCache == null) {
-            timesCache = new HashSet<ilarkesto.base.time.Time>();
+            timesCache = new HashSet<ilarkesto.core.time.Time>();
             for (SimpleEvent e : getEntities()) {
                 if (e.isTimeSet()) timesCache.add(e.getTime());
             }
@@ -266,9 +266,9 @@ public abstract class GSimpleEventDao
 
     private static class IsTime implements Predicate<SimpleEvent> {
 
-        private ilarkesto.base.time.Time value;
+        private ilarkesto.core.time.Time value;
 
-        public IsTime(ilarkesto.base.time.Time value) {
+        public IsTime(ilarkesto.core.time.Time value) {
             this.value = value;
         }
 

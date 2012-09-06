@@ -15,7 +15,7 @@
 package scrum.server.calendar;
 
 import ilarkesto.base.time.Date;
-import ilarkesto.base.time.Time;
+import ilarkesto.core.time.Time;
 import ilarkesto.fp.Predicate;
 import scrum.server.project.Project;
 

@@ -227,13 +227,13 @@ public abstract class GSimpleEvent
     // - time
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Time time;
+    private ilarkesto.core.time.Time time;
 
-    public final ilarkesto.base.time.Time getTime() {
+    public final ilarkesto.core.time.Time getTime() {
         return time;
     }
 
-    public final void setTime(ilarkesto.base.time.Time time) {
+    public final void setTime(ilarkesto.core.time.Time time) {
         time = prepareTime(time);
         if (isTime(time)) return;
         this.time = time;
@@ -241,7 +241,7 @@ public abstract class GSimpleEvent
         fireModified("time="+time);
     }
 
-    protected ilarkesto.base.time.Time prepareTime(ilarkesto.base.time.Time time) {
+    protected ilarkesto.core.time.Time prepareTime(ilarkesto.core.time.Time time) {
         return time;
     }
 
@@ -249,14 +249,14 @@ public abstract class GSimpleEvent
         return this.time != null;
     }
 
-    public final boolean isTime(ilarkesto.base.time.Time time) {
+    public final boolean isTime(ilarkesto.core.time.Time time) {
         if (this.time == null && time == null) return true;
         return this.time != null && this.time.equals(time);
     }
 
     protected final void updateTime(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.Time((String)value);
-        setTime((ilarkesto.base.time.Time)value);
+        value = value == null ? null : new ilarkesto.core.time.Time((String)value);
+        setTime((ilarkesto.core.time.Time)value);
     }
 
     // -----------------------------------------------------------

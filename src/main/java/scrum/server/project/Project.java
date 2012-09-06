@@ -19,7 +19,7 @@ import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.base.time.Date;
 import ilarkesto.base.time.DateAndTime;
-import ilarkesto.base.time.Time;
+import ilarkesto.core.time.Time;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
 import ilarkesto.rss.Rss20Builder;
