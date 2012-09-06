@@ -61,7 +61,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 			@Override
 			public void run() {
 				if (onTime > 0) {
-					long onDuration = System.currentTimeMillis() - onTime;
+					long onDuration = Tm.getCurrentTimeMillis() - onTime;
 					if (onDuration > 3000) {
 						statusStyle.setBackgroundColor("#f00");
 						status.setTitle("Waiting for server response since " + (onDuration / 1000) + " seconds...");
@@ -86,7 +86,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 	}
 
 	private void switchOn() {
-		onTime = System.currentTimeMillis();
+		onTime = Tm.getCurrentTimeMillis();
 		statusStyle.setBackgroundColor("#aa6");
 	}
 
