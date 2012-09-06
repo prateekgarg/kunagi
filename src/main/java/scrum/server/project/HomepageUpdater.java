@@ -121,11 +121,7 @@ public class HomepageUpdater {
 	private void processDefaultTemplates() {
 		ContextBuilder context = new ContextBuilder();
 
-		SystemConfig config = ScrumWebApplication.get().getSystemConfig();
-		context.put("kunagiUrl", config.getUrl());
-		context.put("kunagiAdminEmail", config.getAdminEmail());
-		context.put("kunagiInstanceName", config.getInstanceName());
-
+		fillConfig(context.putSubContext("config"));
 		fillProject(context.putSubContext("project"));
 		fillWiki(context.putSubContext("wiki"));
 		fillBlog(context.putSubContext("blog"));
@@ -150,6 +146,13 @@ public class HomepageUpdater {
 			String outputFileName = Str.removeSuffix(templateName, ".vm");
 			velocity.processTemplate(templateName, new File(outputDir.getPath() + "/" + outputFileName), context);
 		}
+	}
+
+	private void fillConfig(ContextBuilder context) {
+		SystemConfig config = ScrumWebApplication.get().getSystemConfig();
+		context.put("kunagiUrl", config.getUrl());
+		context.put("kunagiAdminEmail", config.getAdminEmail());
+		context.put("kunagiInstanceName", config.getInstanceName());
 	}
 
 	private void processEntityTemplate(ContextBuilder context, String reference) {
