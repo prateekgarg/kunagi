@@ -14,6 +14,7 @@
  */
 package scrum.client.dashboard;
 
+import ilarkesto.core.time.Tm;
 import scrum.client.common.AScrumWidget;
 
 import com.google.gwt.user.client.Window;

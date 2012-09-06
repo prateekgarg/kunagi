@@ -15,6 +15,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
+import ilarkesto.core.time.Tm;
 
 import java.util.List;
 
