@@ -14,11 +14,13 @@
 package scrum.server.calendar;
 
 import java.util.*;
-import ilarkesto.persistence.*;
 import ilarkesto.core.logging.Log;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
+import ilarkesto.persistence.ADatob;
+import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.AStructure;
+import ilarkesto.auth.AUser;
+import ilarkesto.persistence.EntityDoesNotExistException;
+import ilarkesto.base.Str;
 
 public abstract class GSimpleEvent
             extends AEntity
