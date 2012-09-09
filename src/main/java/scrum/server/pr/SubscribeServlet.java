@@ -32,7 +32,6 @@ import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 import scrum.server.common.KunagiUtl;
-import scrum.server.common.KunagiUtl;
 
 public class SubscribeServlet extends AHttpServlet {
 

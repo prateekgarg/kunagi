@@ -17,10 +17,10 @@ package scrum.server.project;
 import ilarkesto.base.Proc;
 import ilarkesto.base.Str;
 import ilarkesto.base.Sys;
+import ilarkesto.base.Tm;
 import ilarkesto.base.Utl;
-import ilarkesto.base.time.Date;
-import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.integration.velocity.ContextBuilder;
 import ilarkesto.integration.velocity.Velocity;
 import ilarkesto.io.IO;
@@ -305,10 +305,9 @@ public class HomepageUpdater {
 		if (author != null) {
 			context.put("authorRoles", toHtml(project.getUsersRolesAsString(author, null, null)));
 		}
-		context.put("date", comment.getDateAndTime()
-				.toString(DateAndTime.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE));
-		context.put("dateDe",
-			comment.getDateAndTime().toString(new SimpleDateFormat("EEE, d. MMMMM yyyy, HH:mm", Locale.GERMANY)));
+		context.put("date", Tm.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE.format(comment.getDateAndTime()));
+		context.put("dateDe", new SimpleDateFormat("EEE, d. MMMMM yyyy, HH:mm", Locale.GERMANY).format(comment
+				.getDateAndTime().toJavaDate()));
 	}
 
 	private void fillRelease(ContextBuilder context, Release release) {
@@ -317,7 +316,7 @@ public class HomepageUpdater {
 		context.put("label", toHtml(release.getLabel()));
 		context.put("note", wikiToHtml(release.getNote()));
 		context.put("releaseNotes", wikiToHtml(release.getReleaseNotes()));
-		context.put("releaseDate", release.getReleaseDate().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
+		context.put("releaseDate", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(release.getReleaseDate()));
 		context.put("released", release.isReleased());
 		context.put("major", release.isMajor());
 		context.put("bugfix", release.isBugfix());
@@ -370,9 +369,9 @@ public class HomepageUpdater {
 		context.put("textShort", wikiToHtml(Str.getFirstParagraph(entry.getText())));
 		context.put("plainText", wikiToText(entry.getText()));
 		DateAndTime date = entry.getDateAndTime();
-		context.put("date", date.toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
-		context.put("dateDe", date.toString(new SimpleDateFormat("dd. MMMM yyyy", Locale.GERMANY)));
-		context.put("rssDate", date.toString(DateAndTime.FORMAT_RFC822));
+		context.put("date", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(date));
+		context.put("dateDe", new SimpleDateFormat("dd. MMMM yyyy", Locale.GERMANY).format(date.toJavaDate()));
+		context.put("rssDate", Tm.FORMAT_RFC822.format(date));
 		fillComments(context, entry);
 	}
 
@@ -380,8 +379,8 @@ public class HomepageUpdater {
 		Sprint sprint = project.getCurrentSprint();
 		context.put("label", toHtml(sprint.getLabel()));
 		context.put("goal", wikiToHtml(sprint.getGoal()));
-		context.put("begin", sprint.getBegin().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
-		context.put("end", sprint.getEnd().toString(Date.FORMAT_LONGMONTH_DAY_YEAR));
+		context.put("begin", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getBegin()));
+		context.put("end", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getEnd()));
 		Release release = sprint.getNextRelease();
 		if (release != null) context.put("release", release.getLabel());
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());

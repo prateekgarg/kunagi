@@ -16,7 +16,7 @@ package scrum.server.project;
 
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
-import ilarkesto.base.time.Date;
+import ilarkesto.core.time.Date;
 import ilarkesto.io.IO;
 import ilarkesto.testng.ATest;
 

@@ -14,8 +14,8 @@
  */
 package scrum.mda;
 
-import ilarkesto.base.time.Date;
-import ilarkesto.base.time.DateAndTime;
+import ilarkesto.core.time.Date;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;
 import ilarkesto.mda.legacy.AGeneratorApplication;
 import ilarkesto.mda.legacy.generator.GwtActionGenerator;

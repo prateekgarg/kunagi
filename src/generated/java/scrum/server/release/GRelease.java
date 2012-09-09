@@ -388,13 +388,13 @@ public abstract class GRelease
     // - releaseDate
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.Date releaseDate;
+    private ilarkesto.core.time.Date releaseDate;
 
-    public final ilarkesto.base.time.Date getReleaseDate() {
+    public final ilarkesto.core.time.Date getReleaseDate() {
         return releaseDate;
     }
 
-    public final void setReleaseDate(ilarkesto.base.time.Date releaseDate) {
+    public final void setReleaseDate(ilarkesto.core.time.Date releaseDate) {
         releaseDate = prepareReleaseDate(releaseDate);
         if (isReleaseDate(releaseDate)) return;
         this.releaseDate = releaseDate;
@@ -402,7 +402,7 @@ public abstract class GRelease
         fireModified("releaseDate="+releaseDate);
     }
 
-    protected ilarkesto.base.time.Date prepareReleaseDate(ilarkesto.base.time.Date releaseDate) {
+    protected ilarkesto.core.time.Date prepareReleaseDate(ilarkesto.core.time.Date releaseDate) {
         return releaseDate;
     }
 
@@ -410,14 +410,14 @@ public abstract class GRelease
         return this.releaseDate != null;
     }
 
-    public final boolean isReleaseDate(ilarkesto.base.time.Date releaseDate) {
+    public final boolean isReleaseDate(ilarkesto.core.time.Date releaseDate) {
         if (this.releaseDate == null && releaseDate == null) return true;
         return this.releaseDate != null && this.releaseDate.equals(releaseDate);
     }
 
     protected final void updateReleaseDate(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.Date((String)value);
-        setReleaseDate((ilarkesto.base.time.Date)value);
+        value = value == null ? null : new ilarkesto.core.time.Date((String)value);
+        setReleaseDate((ilarkesto.core.time.Date)value);
     }
 
     // -----------------------------------------------------------

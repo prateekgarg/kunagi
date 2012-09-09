@@ -21,11 +21,9 @@ import ilarkesto.ui.web.HtmlRenderer;
 
 import java.io.IOException;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 import scrum.server.common.AHttpServlet;
 
@@ -33,8 +31,6 @@ public class ConfirmEmailServlet extends AHttpServlet {
 
 	private static Log log = Log.get(ConfirmEmailServlet.class);
 	private static final long serialVersionUID = 1;
-
-	private static ScrumWebApplication webApplication;
 
 	@Override
 	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
@@ -73,12 +69,6 @@ public class ConfirmEmailServlet extends AHttpServlet {
 		html.endBODY();
 		html.endHTML();
 		html.flush();
-	}
-
-	@Override
-	protected void onInit(ServletConfig config) {
-		super.onInit(config);
-		webApplication = ScrumWebApplication.get();
 	}
 
 }

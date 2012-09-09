@@ -16,12 +16,13 @@ package scrum.server.common;
 
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
-import ilarkesto.base.time.DateAndTime;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.logging.LogRecord;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.webapp.AServlet;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
@@ -29,7 +30,6 @@ import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,13 +43,12 @@ import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.project.Project;
 
-public abstract class AHttpServlet extends HttpServlet {
+public abstract class AHttpServlet extends AServlet<ScrumWebApplication> {
 
 	protected static final int LOGIN_TOKEN_COOKIE_MAXAGE = 1209600; // 14 days
 
 	private static final Log log = Log.get(AHttpServlet.class);
 
-	protected static ScrumWebApplication webApplication;
 	protected KunagiRootConfig config;
 	protected ApplicationInfo applicationInfo;
 	protected SystemConfig systemConfig;
@@ -58,14 +57,8 @@ public abstract class AHttpServlet extends HttpServlet {
 	protected abstract void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session)
 			throws IOException;
 
-	protected void onInit(ServletConfig config) {}
-
 	@Override
-	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (webApplication != null && webApplication.isShuttingDown()) {
-			resp.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Application shutting down");
-			return;
-		}
+	protected void onGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
@@ -75,11 +68,7 @@ public abstract class AHttpServlet extends HttpServlet {
 	}
 
 	@Override
-	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (webApplication != null && webApplication.isShuttingDown()) {
-			resp.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Application shutting down");
-			return;
-		}
+	protected void onPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Servlet.preventCaching(resp);
 		try {
 			onRequest(req, resp, (WebSession) ScrumWebApplication.get().getWebSession(req));
@@ -89,10 +78,8 @@ public abstract class AHttpServlet extends HttpServlet {
 	}
 
 	@Override
-	public final void init(ServletConfig servletConfig) throws ServletException {
-		super.init(servletConfig);
+	protected void onInit(ServletConfig servletConfig) throws ServletException {
 		try {
-			webApplication = ScrumWebApplication.get(servletConfig);
 			config = webApplication.getConfig();
 			applicationInfo = webApplication.getApplicationInfo();
 			systemConfig = webApplication.getSystemConfig();
@@ -102,11 +89,6 @@ public abstract class AHttpServlet extends HttpServlet {
 			log.fatal("Init failed:", getClass().getName(), "->", ex);
 			throw new ServletException(ex);
 		}
-	}
-
-	@Override
-	public final void init() throws ServletException {
-		super.init();
 	}
 
 	// --- helper ---

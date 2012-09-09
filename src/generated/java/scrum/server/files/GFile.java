@@ -157,13 +157,13 @@ public abstract class GFile
     // - uploadTime
     // -----------------------------------------------------------
 
-    private ilarkesto.base.time.DateAndTime uploadTime;
+    private ilarkesto.core.time.DateAndTime uploadTime;
 
-    public final ilarkesto.base.time.DateAndTime getUploadTime() {
+    public final ilarkesto.core.time.DateAndTime getUploadTime() {
         return uploadTime;
     }
 
-    public final void setUploadTime(ilarkesto.base.time.DateAndTime uploadTime) {
+    public final void setUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         uploadTime = prepareUploadTime(uploadTime);
         if (isUploadTime(uploadTime)) return;
         this.uploadTime = uploadTime;
@@ -171,7 +171,7 @@ public abstract class GFile
         fireModified("uploadTime="+uploadTime);
     }
 
-    protected ilarkesto.base.time.DateAndTime prepareUploadTime(ilarkesto.base.time.DateAndTime uploadTime) {
+    protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         return uploadTime;
     }
 
@@ -179,14 +179,14 @@ public abstract class GFile
         return this.uploadTime != null;
     }
 
-    public final boolean isUploadTime(ilarkesto.base.time.DateAndTime uploadTime) {
+    public final boolean isUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         if (this.uploadTime == null && uploadTime == null) return true;
         return this.uploadTime != null && this.uploadTime.equals(uploadTime);
     }
 
     protected final void updateUploadTime(Object value) {
-        value = value == null ? null : new ilarkesto.base.time.DateAndTime((String)value);
-        setUploadTime((ilarkesto.base.time.DateAndTime)value);
+        value = value == null ? null : new ilarkesto.core.time.DateAndTime((String)value);
+        setUploadTime((ilarkesto.core.time.DateAndTime)value);
     }
 
     // -----------------------------------------------------------
