@@ -21,11 +21,10 @@ import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
-import ilarkesto.base.*;
-import ilarkesto.base.time.*;
-import ilarkesto.auth.*;
-import ilarkesto.persistence.*;
-import ilarkesto.fp.*;
+import ilarkesto.auth.Auth;
+import ilarkesto.base.Cache;
+import ilarkesto.persistence.EntityEvent;
+import ilarkesto.fp.Predicate;
 
 public abstract class GSystemConfigDao
             extends ilarkesto.persistence.ADao<SystemConfig> {
