@@ -45,7 +45,7 @@ public class FileDownloadServlet extends AHttpServlet {
 			if (file == null) throw new RuntimeException("File does not exist: " + reference);
 		}
 
-		req.write(file.getJavaFile(), false);
+		req.serve(file.getJavaFile(), false, false);
 	}
 
 }
