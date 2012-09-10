@@ -20,13 +20,12 @@ import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
 import ilarkesto.persistence.TransactionService;
+import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
@@ -57,15 +56,15 @@ public class CommentServlet extends AHttpServlet {
 	private transient ScrumWebApplication app;
 
 	@Override
-	protected void onRequest(HttpServletRequest req, HttpServletResponse resp, WebSession session) throws IOException {
-		req.setCharacterEncoding(IO.UTF_8);
+	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
+		req.setRequestEncoding(IO.UTF_8);
 
-		String projectId = req.getParameter("projectId");
-		String entityId = req.getParameter("entityId");
-		String text = req.getParameter("text");
-		String name = Str.cutRight(req.getParameter("name"), 33);
+		String projectId = req.get("projectId");
+		String entityId = req.get("entityId");
+		String text = req.get("text");
+		String name = Str.cutRight(req.get("name"), 33);
 		if (Str.isBlank(name)) name = null;
-		String email = Str.cutRight(req.getParameter("email"), 33);
+		String email = Str.cutRight(req.get("email"), 33);
 		if (Str.isBlank(email)) email = null;
 
 		log.info("Comment from the internets");
@@ -75,23 +74,23 @@ public class CommentServlet extends AHttpServlet {
 		log.info("    email: " + email);
 		log.info("    text: " + text);
 		log.info("  Request-Data:");
-		log.info(Servlet.toString(req, "        "));
+		log.info(Servlet.toString(req.getHttpRequest(), "        "));
 
 		String message;
 		try {
 			SpamChecker.check(req);
 			message = postComment(projectId, entityId, text, name, email);
 		} catch (Throwable ex) {
-			log.error("Posting comment failed.", "\n" + Servlet.toString(req, "  "), ex);
+			log.error("Posting comment failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			message = "<h2>Failure</h2><p>Posting your comment failed: <strong>" + Str.getRootCauseMessage(ex)
 					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 
-		String returnUrl = req.getParameter("returnUrl");
+		String returnUrl = req.get("returnUrl");
 		if (returnUrl == null) returnUrl = "http://kunagi.org/message.html?#{message}";
 		returnUrl = returnUrl.replace("{message}", Str.encodeUrlParameter(message));
 
-		resp.sendRedirect(returnUrl);
+		req.sendRedirect(returnUrl);
 	}
 
 	private String postComment(String projectId, String entityId, String text, String name, String email) {
