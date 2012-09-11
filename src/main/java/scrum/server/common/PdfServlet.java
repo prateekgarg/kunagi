@@ -37,7 +37,7 @@ import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintBacklogPdfCreator;
 import scrum.server.sprint.SprintReportPdfCreator;
 
-public class PdfServlet extends AHttpServlet {
+public class PdfServlet extends AKunagiServlet {
 
 	private APdfCreator getPdfCreator(String pdfId, RequestWrapper<WebSession> req) {
 		if (pdfId.equals("sprintReport")) return createSprintReport(req);

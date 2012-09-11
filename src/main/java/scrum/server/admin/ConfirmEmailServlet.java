@@ -23,9 +23,9 @@ import ilarkesto.webapp.RequestWrapper;
 import java.io.IOException;
 
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class ConfirmEmailServlet extends AHttpServlet {
+public class ConfirmEmailServlet extends AKunagiServlet {
 
 	private static Log log = Log.get(ConfirmEmailServlet.class);
 	private static final long serialVersionUID = 1;

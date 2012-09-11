@@ -29,9 +29,8 @@ import javax.servlet.ServletConfig;
 
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 import scrum.server.common.KunagiUtl;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
@@ -40,7 +39,7 @@ import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
-public class CommentServlet extends AHttpServlet {
+public class CommentServlet extends AKunagiServlet {
 
 	private static final long serialVersionUID = 1;
 
@@ -52,8 +51,6 @@ public class CommentServlet extends AHttpServlet {
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
 	private transient SubscriptionService subscriptionService;
-
-	private transient ScrumWebApplication app;
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
@@ -112,7 +109,7 @@ public class CommentServlet extends AHttpServlet {
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, entity);
 		transactionService.commit();
 
-		app.sendToConversationsByProject(project, event);
+		webApplication.sendToConversationsByProject(project, event);
 
 		return "<h2>Comment posted</h2><p>Thank you for your comment! It will be visible in a few minutes.</p><p>Back to <strong>"
 				+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + "</strong>.</p>";
@@ -120,13 +117,13 @@ public class CommentServlet extends AHttpServlet {
 
 	@Override
 	protected void onInit(ServletConfig config) {
-		app = ScrumWebApplication.get(config);
-		daoService = app.getDaoService();
-		commentDao = app.getCommentDao();
-		projectDao = app.getProjectDao();
-		transactionService = app.getTransactionService();
-		projectEventDao = app.getProjectEventDao();
-		subscriptionService = app.getSubscriptionService();
+		super.onInit(config);
+		daoService = webApplication.getDaoService();
+		commentDao = webApplication.getCommentDao();
+		projectDao = webApplication.getProjectDao();
+		transactionService = webApplication.getTransactionService();
+		projectEventDao = webApplication.getProjectEventDao();
+		subscriptionService = webApplication.getSubscriptionService();
 	}
 
 }

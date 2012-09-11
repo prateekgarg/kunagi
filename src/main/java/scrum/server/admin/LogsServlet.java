@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class LogsServlet extends AHttpServlet {
+public class LogsServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {

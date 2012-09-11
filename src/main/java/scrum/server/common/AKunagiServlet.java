@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 
 import scrum.client.ApplicationInfo;
 import scrum.client.ScrumGwtApplication;
@@ -41,11 +40,11 @@ import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
 import scrum.server.project.Project;
 
-public abstract class AHttpServlet extends AServlet<ScrumWebApplication, WebSession> {
+public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSession> {
 
 	protected static final int LOGIN_TOKEN_COOKIE_MAXAGE = 1209600; // 14 days
 
-	private static final Log log = Log.get(AHttpServlet.class);
+	private static final Log log = Log.get(AKunagiServlet.class);
 
 	protected KunagiRootConfig config;
 	protected ApplicationInfo applicationInfo;
@@ -75,17 +74,12 @@ public abstract class AHttpServlet extends AServlet<ScrumWebApplication, WebSess
 	}
 
 	@Override
-	protected void onInit(ServletConfig servletConfig) throws ServletException {
-		try {
-			config = webApplication.getConfig();
-			applicationInfo = webApplication.getApplicationInfo();
-			systemConfig = webApplication.getSystemConfig();
-			userDao = webApplication.getUserDao();
-			onInit(servletConfig);
-		} catch (Throwable ex) {
-			log.fatal("Init failed:", getClass().getName(), "->", ex);
-			throw new ServletException(ex);
-		}
+	protected void onInit(ServletConfig servletConfig) {
+		super.onInit(servletConfig);
+		config = webApplication.getConfig();
+		applicationInfo = webApplication.getApplicationInfo();
+		systemConfig = webApplication.getSystemConfig();
+		userDao = webApplication.getUserDao();
 	}
 
 	// --- helper ---

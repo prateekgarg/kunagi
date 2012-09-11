@@ -34,9 +34,9 @@ import org.openid4java.consumer.VerificationResult;
 
 import scrum.client.ScrumGwtApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class LoginServlet extends AHttpServlet {
+public class LoginServlet extends AKunagiServlet {
 
 	private static final long serialVersionUID = 1;
 

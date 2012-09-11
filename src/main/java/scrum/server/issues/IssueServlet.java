@@ -25,9 +25,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 import scrum.server.common.KunagiUtl;
 import scrum.server.common.SpamChecker;
 import scrum.server.journal.ProjectEvent;
@@ -36,7 +35,7 @@ import scrum.server.pr.SubscriptionService;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
-public class IssueServlet extends AHttpServlet {
+public class IssueServlet extends AKunagiServlet {
 
 	private static final long serialVersionUID = 1;
 
@@ -47,8 +46,6 @@ public class IssueServlet extends AHttpServlet {
 	private transient ProjectEventDao projectEventDao;
 	private transient TransactionService transactionService;
 	private transient SubscriptionService subscriptionService;
-
-	private transient ScrumWebApplication app;
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
@@ -107,8 +104,8 @@ public class IssueServlet extends AHttpServlet {
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, issue);
 		transactionService.commit();
 
-		app.sendToConversationsByProject(project, issue);
-		app.sendToConversationsByProject(project, event);
+		webApplication.sendToConversationsByProject(project, issue);
+		webApplication.sendToConversationsByProject(project, event);
 
 		String issueLink = publish ? KunagiUtl.createExternalRelativeHtmlAnchor(issue) : "<code>"
 				+ issue.getReference() + "</code>";
@@ -118,12 +115,12 @@ public class IssueServlet extends AHttpServlet {
 
 	@Override
 	protected void onInit(ServletConfig config) {
-		app = ScrumWebApplication.get(config);
-		issueDao = app.getIssueDao();
-		projectDao = app.getProjectDao();
-		transactionService = app.getTransactionService();
-		projectEventDao = app.getProjectEventDao();
-		subscriptionService = app.getSubscriptionService();
+		super.onInit(config);
+		issueDao = webApplication.getIssueDao();
+		projectDao = webApplication.getProjectDao();
+		transactionService = webApplication.getTransactionService();
+		projectEventDao = webApplication.getProjectEventDao();
+		subscriptionService = webApplication.getSubscriptionService();
 	}
 
 }

@@ -21,18 +21,16 @@ import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 import scrum.server.project.Project;
 import scrum.server.project.ProjectDao;
 
-public class JournalRssServlet extends AHttpServlet {
+public class JournalRssServlet extends AKunagiServlet {
 
 	private static final long serialVersionUID = 1;
 
 	private ProjectDao projectDao;
-	private ScrumWebApplication app;
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
@@ -45,8 +43,8 @@ public class JournalRssServlet extends AHttpServlet {
 
 	@Override
 	protected void onInit(ServletConfig config) {
-		app = ScrumWebApplication.get(config);
-		projectDao = app.getProjectDao();
+		super.onInit(config);
+		projectDao = webApplication.getProjectDao();
 	}
 
 }

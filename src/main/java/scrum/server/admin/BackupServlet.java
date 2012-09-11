@@ -21,9 +21,9 @@ import ilarkesto.webapp.RequestWrapper;
 import java.io.IOException;
 
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class BackupServlet extends AHttpServlet {
+public class BackupServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {

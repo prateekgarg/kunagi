@@ -22,9 +22,9 @@ import java.io.IOException;
 
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class BackupDownloadServlet extends AHttpServlet {
+public class BackupDownloadServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {

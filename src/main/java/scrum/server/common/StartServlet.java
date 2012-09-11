@@ -22,9 +22,12 @@ import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
+
+import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
 
-public class StartServlet extends AHttpServlet {
+public class StartServlet extends AKunagiServlet {
 
 	private static Log log = Log.get(StartServlet.class);
 
@@ -70,4 +73,11 @@ public class StartServlet extends AHttpServlet {
 		html.endHTML();
 		html.flush();
 	}
+
+	@Override
+	protected void onPreInit(ServletConfig servletConfig) {
+		super.onPreInit(servletConfig);
+		ScrumWebApplication.get(servletConfig);
+	}
+
 }

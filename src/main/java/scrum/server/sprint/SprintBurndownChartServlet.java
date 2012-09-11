@@ -22,9 +22,9 @@ import java.io.IOException;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class SprintBurndownChartServlet extends AHttpServlet {
+public class SprintBurndownChartServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {

@@ -21,13 +21,11 @@ import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
 
-import javax.servlet.ServletConfig;
-
 import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class CssServlet extends AHttpServlet {
+public class CssServlet extends AKunagiServlet {
 
 	private static final Log LOG = Log.get(CssServlet.class);
 	private static final long serialVersionUID = 1;
@@ -58,11 +56,6 @@ public class CssServlet extends AHttpServlet {
 		} else {
 			return screenCssBuilder;
 		}
-	}
-
-	@Override
-	protected void onInit(ServletConfig config) {
-		ScrumWebApplication.get(config);
 	}
 
 }

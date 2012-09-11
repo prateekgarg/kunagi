@@ -39,9 +39,9 @@ import java.util.Properties;
 
 import scrum.server.GwtConversation;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class AdminServlet extends AHttpServlet {
+public class AdminServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {

@@ -22,9 +22,9 @@ import ilarkesto.webapp.RequestWrapper;
 import java.io.IOException;
 
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 
-public class ShutdownServlet extends AHttpServlet {
+public class ShutdownServlet extends AKunagiServlet {
 
 	private boolean shutdownInitiated;
 

@@ -27,12 +27,11 @@ import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 
-import scrum.server.ScrumWebApplication;
 import scrum.server.WebSession;
-import scrum.server.common.AHttpServlet;
+import scrum.server.common.AKunagiServlet;
 import scrum.server.common.KunagiUtl;
 
-public class UnsubscribeServlet extends AHttpServlet {
+public class UnsubscribeServlet extends AKunagiServlet {
 
 	private static final long serialVersionUID = 1;
 
@@ -41,8 +40,6 @@ public class UnsubscribeServlet extends AHttpServlet {
 	private transient SubscriptionService subscriptionService;
 	private transient DaoService daoService;
 	private transient TransactionService transactionService;
-
-	private transient ScrumWebApplication app;
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
@@ -102,10 +99,10 @@ public class UnsubscribeServlet extends AHttpServlet {
 
 	@Override
 	protected void onInit(ServletConfig config) {
-		app = ScrumWebApplication.get(config);
-		subscriptionService = app.getSubscriptionService();
-		daoService = app.getDaoService();
-		transactionService = app.getTransactionService();
+		super.onInit(config);
+		subscriptionService = webApplication.getSubscriptionService();
+		daoService = webApplication.getDaoService();
+		transactionService = webApplication.getTransactionService();
 	}
 
 }
