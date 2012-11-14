@@ -93,16 +93,13 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected boolean isUpdateRequired() {
 		if (object instanceof AGwtEntity) {
+			updateHref();
 			AGwtEntity entity = getHrefEntity();
 			long localModificationTime = entity.getLocalModificationTime();
-			if (localModificationTime == lastModificationTime) {
-				updateHref();
-				return false;
-			}
+			if (localModificationTime == lastModificationTime) return false;
 			lastModificationTime = localModificationTime;
 			return true;
 		}
-		updateHref();
 		return super.isUpdateRequired();
 	}
 
