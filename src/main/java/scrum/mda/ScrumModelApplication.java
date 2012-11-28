@@ -846,6 +846,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addListProperty("themes", String.class);
 			issueModel.addReference("sprint", getSprintModel());
 			issueModel.addReference("closedInPastSprint", getSprintModel()).setBackReferenceName("closedIssuesInPast");
+			issueModel.addProperty("remainingWork", int.class).setEditablePredicate("editable")
+					.setTooltip("The remaining time needed to get this Task done.");
+			issueModel.addProperty("burnedWork", int.class).setEditablePredicate("editable")
+					.setTooltip("Time already invested working on this Task.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");

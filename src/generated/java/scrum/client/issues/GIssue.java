@@ -1123,6 +1123,142 @@ public abstract class GIssue
         return equals(this.closedInPastSprintId, closedInPastSprint);
     }
 
+    // --- remainingWork ---
+
+    private int remainingWork ;
+
+    public final int getRemainingWork() {
+        return this.remainingWork ;
+    }
+
+    public final Issue setRemainingWork(int remainingWork) {
+        if (isRemainingWork(remainingWork)) return (Issue)this;
+        this.remainingWork = remainingWork ;
+        propertyChanged("remainingWork", this.remainingWork);
+        return (Issue)this;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return equals(this.remainingWork, remainingWork);
+    }
+
+    private transient RemainingWorkModel remainingWorkModel;
+
+    public RemainingWorkModel getRemainingWorkModel() {
+        if (remainingWorkModel == null) remainingWorkModel = createRemainingWorkModel();
+        return remainingWorkModel;
+    }
+
+    protected RemainingWorkModel createRemainingWorkModel() { return new RemainingWorkModel(); }
+
+    protected class RemainingWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_remainingWork";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getRemainingWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setRemainingWork(value);
+        }
+
+            @Override
+            public void increment() {
+                setRemainingWork(getRemainingWork() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setRemainingWork(getRemainingWork() - 1);
+            }
+
+        @Override
+        public boolean isEditable() { return GIssue.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "The remaining time needed to get this Task done."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
+    // --- burnedWork ---
+
+    private int burnedWork ;
+
+    public final int getBurnedWork() {
+        return this.burnedWork ;
+    }
+
+    public final Issue setBurnedWork(int burnedWork) {
+        if (isBurnedWork(burnedWork)) return (Issue)this;
+        this.burnedWork = burnedWork ;
+        propertyChanged("burnedWork", this.burnedWork);
+        return (Issue)this;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return equals(this.burnedWork, burnedWork);
+    }
+
+    private transient BurnedWorkModel burnedWorkModel;
+
+    public BurnedWorkModel getBurnedWorkModel() {
+        if (burnedWorkModel == null) burnedWorkModel = createBurnedWorkModel();
+        return burnedWorkModel;
+    }
+
+    protected BurnedWorkModel createBurnedWorkModel() { return new BurnedWorkModel(); }
+
+    protected class BurnedWorkModel extends ilarkesto.gwt.client.editor.AIntegerEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_burnedWork";
+        }
+
+        @Override
+        public java.lang.Integer getValue() {
+            return getBurnedWork();
+        }
+
+        @Override
+        public void setValue(java.lang.Integer value) {
+            setBurnedWork(value);
+        }
+
+            @Override
+            public void increment() {
+                setBurnedWork(getBurnedWork() + 1);
+            }
+
+            @Override
+            public void decrement() {
+                setBurnedWork(getBurnedWork() - 1);
+            }
+
+        @Override
+        public boolean isEditable() { return GIssue.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "Time already invested working on this Task."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1155,6 +1291,8 @@ public abstract class GIssue
         themes  = (java.util.List<java.lang.String>) props.get("themes");
         sprintId = (String) props.get("sprintId");
         closedInPastSprintId = (String) props.get("closedInPastSprintId");
+        remainingWork  = (Integer) props.get("remainingWork");
+        burnedWork  = (Integer) props.get("burnedWork");
         updateLocalModificationTime();
     }
 
@@ -1185,6 +1323,8 @@ public abstract class GIssue
         properties.put("themes", this.themes);
         properties.put("sprintId", this.sprintId);
         properties.put("closedInPastSprintId", this.closedInPastSprintId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("burnedWork", this.burnedWork);
     }
 
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {

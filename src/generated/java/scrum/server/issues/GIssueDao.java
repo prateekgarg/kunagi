@@ -87,6 +87,10 @@ public abstract class GIssueDao
         sprintsCache = null;
         issuesByClosedInPastSprintCache.clear();
         closedInPastSprintsCache = null;
+        issuesByRemainingWorkCache.clear();
+        remainingWorksCache = null;
+        issuesByBurnedWorkCache.clear();
+        burnedWorksCache = null;
     }
 
     @Override
@@ -1039,6 +1043,86 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isClosedInPastSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Issue>> issuesByRemainingWorkCache = new Cache<Integer,Set<Issue>>(
+            new Cache.Factory<Integer,Set<Issue>>() {
+                public Set<Issue> create(Integer remainingWork) {
+                    return getEntities(new IsRemainingWork(remainingWork));
+                }
+            });
+
+    public final Set<Issue> getIssuesByRemainingWork(int remainingWork) {
+        return new HashSet<Issue>(issuesByRemainingWorkCache.get(remainingWork));
+    }
+    private Set<Integer> remainingWorksCache;
+
+    public final Set<Integer> getRemainingWorks() {
+        if (remainingWorksCache == null) {
+            remainingWorksCache = new HashSet<Integer>();
+            for (Issue e : getEntities()) {
+                remainingWorksCache.add(e.getRemainingWork());
+            }
+        }
+        return remainingWorksCache;
+    }
+
+    private static class IsRemainingWork implements Predicate<Issue> {
+
+        private int value;
+
+        public IsRemainingWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isRemainingWork(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private final Cache<Integer,Set<Issue>> issuesByBurnedWorkCache = new Cache<Integer,Set<Issue>>(
+            new Cache.Factory<Integer,Set<Issue>>() {
+                public Set<Issue> create(Integer burnedWork) {
+                    return getEntities(new IsBurnedWork(burnedWork));
+                }
+            });
+
+    public final Set<Issue> getIssuesByBurnedWork(int burnedWork) {
+        return new HashSet<Issue>(issuesByBurnedWorkCache.get(burnedWork));
+    }
+    private Set<Integer> burnedWorksCache;
+
+    public final Set<Integer> getBurnedWorks() {
+        if (burnedWorksCache == null) {
+            burnedWorksCache = new HashSet<Integer>();
+            for (Issue e : getEntities()) {
+                burnedWorksCache.add(e.getBurnedWork());
+            }
+        }
+        return burnedWorksCache;
+    }
+
+    private static class IsBurnedWork implements Predicate<Issue> {
+
+        private int value;
+
+        public IsBurnedWork(int value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isBurnedWork(value);
         }
 
     }

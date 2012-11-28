@@ -1052,6 +1052,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByRemainingWork(int remainingWork) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isRemainingWork(remainingWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByBurnedWork(int burnedWork) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isBurnedWork(burnedWork)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
