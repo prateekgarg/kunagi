@@ -25,6 +25,8 @@ public abstract class GIssue
         return scrum.client.Dao.get();
     }
 
+    public abstract boolean isEditable();
+
     public GIssue() {
     }
 

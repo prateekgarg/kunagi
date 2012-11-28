@@ -16,6 +16,7 @@ package scrum.client.issues;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.TimePeriod;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import scrum.client.ScrumGwt;
+import scrum.client.admin.Auth;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.LabelSupport;
@@ -253,6 +255,13 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	@Override
 	public List<String> getTypeOptions() {
 		return Types.ALL;
+	}
+
+	@Override
+	public boolean isEditable() {
+		if (!isInSprint()) return false;
+		if (!getProject().isTeamMember(Scope.get().getComponent(Auth.class).getUser())) return false;
+		return true;
 	}
 
 	@Override

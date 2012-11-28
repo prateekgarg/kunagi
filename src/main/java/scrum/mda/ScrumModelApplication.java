@@ -850,6 +850,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip("The remaining time needed to get this Task done.");
 			issueModel.addProperty("burnedWork", int.class).setEditablePredicate("editable")
 					.setTooltip("Time already invested working on this Task.");
+			issueModel.addPredicate("editable");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");
