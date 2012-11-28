@@ -862,6 +862,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addAction("UnsuspendIssue");
 			issueModel.addAction("PublishIssue");
 			issueModel.addAction("ReplyToIssueAuthor");
+			issueModel.addAction("PullIssueToSprint");
+			issueModel.addAction("KickIssueFromSprint");
 		}
 		return issueModel;
 	}

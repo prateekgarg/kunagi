@@ -70,7 +70,11 @@ public interface ScrumService extends com.google.gwt.user.client.rpc.RemoteServi
 
     scrum.client.DataTransferObject search(int conversationNumber, String text);
 
+    scrum.client.DataTransferObject kickIssueFromSprint(int conversationNumber, String issueId);
+
     scrum.client.DataTransferObject kickStoryFromSprint(int conversationNumber, String storyId);
+
+    scrum.client.DataTransferObject pullIssueToSprint(int conversationNumber, String issueId);
 
     scrum.client.DataTransferObject pullStoryToSprint(int conversationNumber, String storyId);
 

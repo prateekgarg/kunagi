@@ -70,7 +70,11 @@ public interface ScrumServiceAsync {
 
     void search(int conversationNumber, String text, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void kickIssueFromSprint(int conversationNumber, String issueId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void kickStoryFromSprint(int conversationNumber, String storyId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
+    void pullIssueToSprint(int conversationNumber, String issueId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void pullStoryToSprint(int conversationNumber, String storyId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
