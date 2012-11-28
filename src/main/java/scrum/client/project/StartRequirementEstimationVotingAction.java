@@ -44,7 +44,7 @@ public class StartRequirementEstimationVotingAction extends GStartRequirementEst
 	public boolean isExecutable() {
 		if (requirement.isWorkEstimationVotingActive()) return false;
 		if (requirement.isClosed()) return false;
-		if (requirement.isInCurrentSprint()) return false;
+		if (requirement.isInSprint()) return false;
 		return true;
 	}
 

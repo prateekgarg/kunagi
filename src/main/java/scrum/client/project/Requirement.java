@@ -164,7 +164,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	public boolean isRejected() {
 		if (isClosed()) return false;
 		if (!isTasksClosed()) return false;
-		if (!isInCurrentSprint()) return false;
+		if (!isInSprint()) return false;
 		return getRejectDate() != null;
 	}
 
@@ -259,11 +259,11 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		StringBuilder sb = new StringBuilder();
 		sb.append(getLabel());
 		if (!isEstimatedWorkValid()) sb.append(" [requires estimation]");
-		if (isInCurrentSprint()) sb.append(" [In Sprint]");
+		if (isInSprint()) sb.append(" [In Sprint]");
 		return sb.toString();
 	}
 
-	public boolean isInCurrentSprint() {
+	public boolean isInSprint() {
 		return isSprintSet() && getProject().isCurrentSprint(getSprint());
 	}
 
@@ -415,7 +415,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	@Override
 	public boolean isEditable() {
 		if (isClosed()) return false;
-		if (isInCurrentSprint()) return false;
+		if (isInSprint()) return false;
 		if (!getProject().isProductOwner(Scope.get().getComponent(Auth.class).getUser())) return false;
 		return true;
 	}
@@ -432,7 +432,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	@Override
 	public Widget createForumItemWidget() {
-		return new HyperlinkWidget(new ShowEntityAction(isInCurrentSprint() ? WhiteboardWidget.class
+		return new HyperlinkWidget(new ShowEntityAction(isInSprint() ? WhiteboardWidget.class
 				: ProductBacklogWidget.class, this, getLabel()));
 	}
 

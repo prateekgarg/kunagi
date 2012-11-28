@@ -333,7 +333,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 
 		if (entity instanceof Requirement) {
 			Requirement requirement = (Requirement) entity;
-			if (requirement.isClosed() && !requirement.isInCurrentSprint()) return sprintHistory;
+			if (requirement.isClosed() && !requirement.isInSprint()) return sprintHistory;
 
 			if (getWorkarea().isShowing(sprintHistory)) {
 				// FIXME multiple requirements on same page
@@ -341,7 +341,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 				if (existsInHistory) return sprintHistory;
 			}
 
-			boolean inCurrentSprint = requirement.isInCurrentSprint();
+			boolean inCurrentSprint = requirement.isInSprint();
 			if (inCurrentSprint) {
 				if (getWorkarea().isShowing(sprintBacklog)) return sprintBacklog;
 				return whiteboard;

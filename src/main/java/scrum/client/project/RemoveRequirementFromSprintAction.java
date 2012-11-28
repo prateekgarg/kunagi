@@ -16,7 +16,6 @@ package scrum.client.project;
 
 import scrum.client.common.TooltipBuilder;
 import scrum.client.sprint.KickStoryFromSprintServiceCall;
-import scrum.client.sprint.Sprint;
 
 public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSprintAction {
 
@@ -41,7 +40,7 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 
 	@Override
 	public boolean isExecutable() {
-		if (!requirement.isInCurrentSprint()) return false;
+		if (!requirement.isInSprint()) return false;
 		return true;
 	}
 
@@ -54,38 +53,5 @@ public class RemoveRequirementFromSprintAction extends GRemoveRequirementFromSpr
 	@Override
 	protected void onExecute() {
 		new KickStoryFromSprintServiceCall(requirement.getId()).execute();
-		// Sprint sprint = requirement.getSprint();
-		// requirement.removeFromSprint();
-		//
-		// Project project = getCurrentProject();
-		// List<Requirement> requirements = project.getProductBacklogRequirements();
-		// requirements.remove(requirement);
-		// Collections.sort(requirements, project.getRequirementsOrderComparator());
-		// requirements.add(0, requirement);
-		// project.updateRequirementsOrder(requirements);
-
-		// addUndo(new Undo(requirement.getSprint()));
 	}
-
-	class Undo extends ALocalUndo {
-
-		private Sprint s;
-
-		public Undo(Sprint s) {
-			this.s = s;
-		}
-
-		@Override
-		public String getLabel() {
-			return "Undo Remove " + requirement.getReferenceAndLabel() + " from Sprint";
-		}
-
-		@Override
-		protected void onUndo() {
-			requirement.setSprint(s);
-			s.updateRequirementsOrder();
-		}
-
-	}
-
 }

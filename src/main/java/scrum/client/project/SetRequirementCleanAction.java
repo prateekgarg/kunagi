@@ -36,7 +36,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
 			if (!requirement.isDirty()) tb.addRemark("The estimation has already been confirmed.");
 			if (requirement.getEstimatedWork() == null) tb.addRemark("Story is not yet estimated.");
-			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in current Sprint and cannot be changed.");
+			if (requirement.isInSprint()) tb.addRemark("Story is in current Sprint and cannot be changed.");
 		}
 	}
 
@@ -51,7 +51,7 @@ public class SetRequirementCleanAction extends GSetRequirementCleanAction {
 		if (requirement.isClosed()) return false;
 		if (!requirement.isDirty()) return false;
 		if (requirement.getEstimatedWork() == null) return false;
-		if (requirement.isInCurrentSprint()) return false;
+		if (requirement.isInSprint()) return false;
 		if (requirement.isWorkEstimationVotingActive()) return false;
 		return true;
 	}

@@ -1036,4 +1036,27 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		subscriptionService.copySubscribers(issue, story);
 		subscriptionService.notifySubscribers(story, "Story created from " + issue, conversation.getProject(), null);
 	}
+
+	@Override
+	public void onPullIssueToSprint(GwtConversation conversation, String issueId) {
+		assertProjectSelected(conversation);
+		Issue issue = issueDao.getById(issueId);
+		Project project = conversation.getProject();
+		Sprint sprint = project.getCurrentSprint();
+		User currentUser = conversation.getSession().getUser();
+
+		sprint.pullIssue(issue, currentUser);
+
+		postProjectEvent(conversation, currentUser.getName() + " pulled " + issue.getReferenceAndLabel()
+				+ " to current sprint", issue);
+
+		sendToClients(conversation, sprint);
+		sendToClients(conversation, issue);
+	}
+
+	@Override
+	public void onKickIssueFromSprint(GwtConversation conversation, String issueId) {
+		// TODO Auto-generated method stub
+
+	}
 }

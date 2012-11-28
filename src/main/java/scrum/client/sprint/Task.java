@@ -55,7 +55,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	}
 
 	public boolean isInCurrentSprint() {
-		return getRequirement().isInCurrentSprint();
+		return getRequirement().isInSprint();
 	}
 
 	@Override
