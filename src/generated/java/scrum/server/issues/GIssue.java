@@ -62,6 +62,8 @@ public abstract class GIssue
         properties.put("themes", this.themes);
         properties.put("sprintId", this.sprintId);
         properties.put("closedInPastSprintId", this.closedInPastSprintId);
+        properties.put("remainingWork", this.remainingWork);
+        properties.put("burnedWork", this.burnedWork);
     }
 
     public int compareTo(Issue other) {
@@ -1190,6 +1192,66 @@ public abstract class GIssue
         setClosedInPastSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - remainingWork
+    // -----------------------------------------------------------
+
+    private int remainingWork;
+
+    public final int getRemainingWork() {
+        return remainingWork;
+    }
+
+    public final void setRemainingWork(int remainingWork) {
+        remainingWork = prepareRemainingWork(remainingWork);
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+        updateLastModified();
+        fireModified("remainingWork="+remainingWork);
+    }
+
+    protected int prepareRemainingWork(int remainingWork) {
+        return remainingWork;
+    }
+
+    public final boolean isRemainingWork(int remainingWork) {
+        return this.remainingWork == remainingWork;
+    }
+
+    protected final void updateRemainingWork(Object value) {
+        setRemainingWork((Integer)value);
+    }
+
+    // -----------------------------------------------------------
+    // - burnedWork
+    // -----------------------------------------------------------
+
+    private int burnedWork;
+
+    public final int getBurnedWork() {
+        return burnedWork;
+    }
+
+    public final void setBurnedWork(int burnedWork) {
+        burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+        updateLastModified();
+        fireModified("burnedWork="+burnedWork);
+    }
+
+    protected int prepareBurnedWork(int burnedWork) {
+        return burnedWork;
+    }
+
+    public final boolean isBurnedWork(int burnedWork) {
+        return this.burnedWork == burnedWork;
+    }
+
+    protected final void updateBurnedWork(Object value) {
+        setBurnedWork((Integer)value);
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1219,6 +1281,8 @@ public abstract class GIssue
             if (property.equals("themes")) updateThemes(value);
             if (property.equals("sprintId")) updateSprint(value);
             if (property.equals("closedInPastSprintId")) updateClosedInPastSprint(value);
+            if (property.equals("remainingWork")) updateRemainingWork(value);
+            if (property.equals("burnedWork")) updateBurnedWork(value);
         }
     }
 
