@@ -45,6 +45,7 @@ import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.journal.Change;
 import scrum.client.sprint.Sprint;
+import scrum.client.sprint.SprintTaskHelper;
 import scrum.client.sprint.Task;
 import scrum.client.tasks.WhiteboardWidget;
 
@@ -227,8 +228,8 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public String getTaskStatusLabel() {
 		List<Task> tasks = getTasksInSprint();
-		int burned = Task.sumBurnedWork(tasks);
-		int remaining = Task.sumRemainingWork(getTasksInSprint());
+		int burned = SprintTaskHelper.sumBurnedWork(tasks);
+		int remaining = SprintTaskHelper.sumRemainingWork(getTasksInSprint());
 		if (remaining == 0)
 			return tasks.isEmpty() ? "no tasks planned yet" : "100% completed, " + burned + " hrs burned";
 		int burnedPercent = Gwt.percent(burned + remaining, burned);
@@ -328,27 +329,27 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public int getBurnedWorkInClosedTasks() {
-		return Task.sumBurnedWork(getClosedTasks());
+		return SprintTaskHelper.sumBurnedWork(getClosedTasks());
 	}
 
 	public int getBurnedWork() {
-		return Task.sumBurnedWork(getTasksInSprint());
+		return SprintTaskHelper.sumBurnedWork(getTasksInSprint());
 	}
 
 	public int getBurnedWorkInClaimedTasks() {
-		return Task.sumBurnedWork(getClaimedTasks());
+		return SprintTaskHelper.sumBurnedWork(getClaimedTasks());
 	}
 
 	public int getRemainingWorkInClaimedTasks() {
-		return Task.sumRemainingWork(getClaimedTasks());
+		return SprintTaskHelper.sumRemainingWork(getClaimedTasks());
 	}
 
 	public int getRemainingWorkInUnclaimedTasks() {
-		return Task.sumRemainingWork(getUnclaimedTasks());
+		return SprintTaskHelper.sumRemainingWork(getUnclaimedTasks());
 	}
 
 	public int getRemainingWork() {
-		return Task.sumRemainingWork(getTasksInSprint());
+		return SprintTaskHelper.sumRemainingWork(getTasksInSprint());
 	}
 
 	public List<Task> getClaimedTasks() {

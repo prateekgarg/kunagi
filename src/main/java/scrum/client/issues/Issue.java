@@ -38,10 +38,11 @@ import scrum.client.common.ShowEntityAction;
 import scrum.client.common.ThemesContainer;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
+import scrum.client.sprint.SprintTask;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Issue extends GIssue implements ReferenceSupport, LabelSupport, ForumSupport, ThemesContainer {
+public class Issue extends GIssue implements ReferenceSupport, LabelSupport, ForumSupport, ThemesContainer, SprintTask {
 
 	private static Log log = Log.get(Issue.class);
 

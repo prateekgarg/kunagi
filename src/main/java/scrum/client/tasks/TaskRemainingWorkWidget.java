@@ -20,6 +20,7 @@ import ilarkesto.gwt.client.ToolbarWidget;
 import scrum.client.common.AScrumAction;
 import scrum.client.sprint.CloseTaskAction;
 import scrum.client.sprint.ReopenTaskAction;
+import scrum.client.sprint.SprintTaskHelper;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -98,12 +99,12 @@ public class TaskRemainingWorkWidget extends AWidget {
 
 		@Override
 		protected void onMinusClicked() {
-			task.decrementRemainingWork();
+			SprintTaskHelper.decrementRemainingWork(task);
 		}
 
 		@Override
 		protected void onPlusClicked() {
-			task.incrementRemainingWork();
+			SprintTaskHelper.incrementRemainingWork(task);
 		}
 
 		@Override

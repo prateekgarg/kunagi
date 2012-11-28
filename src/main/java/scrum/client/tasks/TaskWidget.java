@@ -29,6 +29,7 @@ import scrum.client.collaboration.CommentsWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.impediments.Impediment;
 import scrum.client.journal.ChangeHistoryWidget;
+import scrum.client.sprint.SprintTaskHelper;
 import scrum.client.sprint.Task;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -78,19 +79,19 @@ public class TaskWidget extends AScrumWidget {
 				int previous = task.getBurnedWork();
 				int diff = value - previous;
 				task.setBurnedWork(value);
-				task.adjustRemainingWork(diff);
+				SprintTaskHelper.adjustRemainingWork(task, diff);
 			}
 
 			@Override
 			protected void onMinusClicked() {
-				task.decrementBurnedWork();
-				task.adjustRemainingWork(-1);
+				SprintTaskHelper.decrementBurnedWork(task);
+				SprintTaskHelper.adjustRemainingWork(task, -1);
 			}
 
 			@Override
 			protected void onPlusClicked() {
-				task.incrementBurnedWork();
-				task.adjustRemainingWork(1);
+				SprintTaskHelper.incrementBurnedWork(task);
+				SprintTaskHelper.adjustRemainingWork(task, 1);
 			}
 
 			@Override

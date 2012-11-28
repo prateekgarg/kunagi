@@ -34,11 +34,12 @@ import scrum.client.tasks.WhiteboardWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Task extends GTask implements ReferenceSupport, LabelSupport, ForumSupport {
+public class Task extends GTask implements ReferenceSupport, LabelSupport, ForumSupport, SprintTask {
 
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";
 
+	@Override
 	public Sprint getSprint() {
 		return getRequirement().getSprint();
 	}
@@ -152,49 +153,6 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	@Override
 	public String toString() {
 		return getReference();
-	}
-
-	public void incrementBurnedWork() {
-		setBurnedWork(getBurnedWork() + 1);
-	}
-
-	public void decrementBurnedWork() {
-		if (getBurnedWork() == 0) return;
-		setBurnedWork(getBurnedWork() - 1);
-	}
-
-	public void adjustRemainingWork(int burned) {
-		int remaining = getRemainingWork();
-		if (remaining == 0) return;
-		remaining -= burned;
-		if (remaining < 1) remaining = 1;
-		setRemainingWork(remaining);
-	}
-
-	public void incrementRemainingWork() {
-		setRemainingWork(getRemainingWork() + 1);
-	}
-
-	public void decrementRemainingWork() {
-		int work = getRemainingWork();
-		if (work <= 1) return;
-		setRemainingWork(work - 1);
-	}
-
-	public static int sumBurnedWork(Iterable<Task> tasks) {
-		int sum = 0;
-		for (Task task : tasks) {
-			sum += task.getBurnedWork();
-		}
-		return sum;
-	}
-
-	public static int sumRemainingWork(Iterable<Task> tasks) {
-		int sum = 0;
-		for (Task task : tasks) {
-			sum += task.getRemainingWork();
-		}
-		return sum;
 	}
 
 	public Project getProject() {
