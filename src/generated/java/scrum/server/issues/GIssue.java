@@ -60,6 +60,8 @@ public abstract class GIssue
         properties.put("fixReleasesIds", this.fixReleasesIds);
         properties.put("published", this.published);
         properties.put("themes", this.themes);
+        properties.put("sprintId", this.sprintId);
+        properties.put("closedInPastSprintId", this.closedInPastSprintId);
     }
 
     public int compareTo(Issue other) {
@@ -1084,6 +1086,110 @@ public abstract class GIssue
         setThemes((java.util.List<java.lang.String>) value);
     }
 
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private String sprintId;
+    private transient scrum.server.sprint.Sprint sprintCache;
+
+    private void updateSprintCache() {
+        sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+    }
+
+    public final String getSprintId() {
+        return this.sprintId;
+    }
+
+    public final scrum.server.sprint.Sprint getSprint() {
+        if (sprintCache == null) updateSprintCache();
+        return sprintCache;
+    }
+
+    public final void setSprint(scrum.server.sprint.Sprint sprint) {
+        sprint = prepareSprint(sprint);
+        if (isSprint(sprint)) return;
+        this.sprintId = sprint == null ? null : sprint.getId();
+        sprintCache = sprint;
+        updateLastModified();
+        fireModified("sprint="+sprint);
+    }
+
+    protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
+        return sprint;
+    }
+
+    protected void repairDeadSprintReference(String entityId) {
+        if (this.sprintId == null || entityId.equals(this.sprintId)) {
+            setSprint(null);
+        }
+    }
+
+    public final boolean isSprintSet() {
+        return this.sprintId != null;
+    }
+
+    public final boolean isSprint(scrum.server.sprint.Sprint sprint) {
+        if (this.sprintId == null && sprint == null) return true;
+        return sprint != null && sprint.getId().equals(this.sprintId);
+    }
+
+    protected final void updateSprint(Object value) {
+        setSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
+    // -----------------------------------------------------------
+    // - closedInPastSprint
+    // -----------------------------------------------------------
+
+    private String closedInPastSprintId;
+    private transient scrum.server.sprint.Sprint closedInPastSprintCache;
+
+    private void updateClosedInPastSprintCache() {
+        closedInPastSprintCache = this.closedInPastSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.closedInPastSprintId);
+    }
+
+    public final String getClosedInPastSprintId() {
+        return this.closedInPastSprintId;
+    }
+
+    public final scrum.server.sprint.Sprint getClosedInPastSprint() {
+        if (closedInPastSprintCache == null) updateClosedInPastSprintCache();
+        return closedInPastSprintCache;
+    }
+
+    public final void setClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        closedInPastSprint = prepareClosedInPastSprint(closedInPastSprint);
+        if (isClosedInPastSprint(closedInPastSprint)) return;
+        this.closedInPastSprintId = closedInPastSprint == null ? null : closedInPastSprint.getId();
+        closedInPastSprintCache = closedInPastSprint;
+        updateLastModified();
+        fireModified("closedInPastSprint="+closedInPastSprint);
+    }
+
+    protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        return closedInPastSprint;
+    }
+
+    protected void repairDeadClosedInPastSprintReference(String entityId) {
+        if (this.closedInPastSprintId == null || entityId.equals(this.closedInPastSprintId)) {
+            setClosedInPastSprint(null);
+        }
+    }
+
+    public final boolean isClosedInPastSprintSet() {
+        return this.closedInPastSprintId != null;
+    }
+
+    public final boolean isClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        if (this.closedInPastSprintId == null && closedInPastSprint == null) return true;
+        return closedInPastSprint != null && closedInPastSprint.getId().equals(this.closedInPastSprintId);
+    }
+
+    protected final void updateClosedInPastSprint(Object value) {
+        setClosedInPastSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
+    }
+
     public void updateProperties(Map<?, ?> properties) {
         for (Map.Entry entry : properties.entrySet()) {
             String property = (String) entry.getKey();
@@ -1111,6 +1217,8 @@ public abstract class GIssue
             if (property.equals("fixReleasesIds")) updateFixReleases(value);
             if (property.equals("published")) updatePublished(value);
             if (property.equals("themes")) updateThemes(value);
+            if (property.equals("sprintId")) updateSprint(value);
+            if (property.equals("closedInPastSprintId")) updateClosedInPastSprint(value);
         }
     }
 
@@ -1125,6 +1233,8 @@ public abstract class GIssue
         if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
         repairDeadFixReleaseReference(entityId);
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        repairDeadSprintReference(entityId);
+        repairDeadClosedInPastSprintReference(entityId);
     }
 
     // --- ensure integrity ---
@@ -1180,6 +1290,18 @@ public abstract class GIssue
             }
         }
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        try {
+            getSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead sprint reference");
+            repairDeadSprintReference(this.sprintId);
+        }
+        try {
+            getClosedInPastSprint();
+        } catch (EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead closedInPastSprint reference");
+            repairDeadClosedInPastSprintReference(this.closedInPastSprintId);
+        }
     }
 
 
@@ -1203,6 +1325,12 @@ public abstract class GIssue
 
     public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
         GIssue.releaseDao = releaseDao;
+    }
+
+    static scrum.server.sprint.SprintDao sprintDao;
+
+    public static final void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        GIssue.sprintDao = sprintDao;
     }
 
     static scrum.server.issues.IssueDao issueDao;

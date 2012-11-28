@@ -924,6 +924,14 @@ public abstract class GSprint
         return getDao().getReleasesBySprint((Sprint)this);
     }
 
+    public final java.util.List<scrum.client.issues.Issue> getIssues() {
+        return getDao().getIssuesBySprint((Sprint)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getClosedIssuesInPasts() {
+        return getDao().getIssuesByClosedInPastSprint((Sprint)this);
+    }
+
     public final java.util.List<scrum.client.sprint.Task> getClosedTasksInPasts() {
         return getDao().getTasksByClosedInPastSprint((Sprint)this);
     }

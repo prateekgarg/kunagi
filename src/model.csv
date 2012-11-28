@@ -289,6 +289,8 @@
 "c94fc909-bec3-4ab6-94d6-d8bf6498dd6b","a5878a7d-a995-435a-87c3-90fac1f7401c","DateProperty","suspendedUntilDate"
 "00690fb5-87f1-41da-b391-057f2895b423","a5878a7d-a995-435a-87c3-90fac1f7401c","ReferenceProperty","story"
 "40f24dff-8d83-4ad3-867d-edcf41dc6256","a5878a7d-a995-435a-87c3-90fac1f7401c","BooleanProperty","published"
+"71afed9b-fb16-405c-93d2-ead8daf36a36","a5878a7d-a995-435a-87c3-90fac1f7401c","ReferenceProperty","closedInPastSprint"
+"09c48eae-4996-4095-b6a5-caa5ed7915b5","a5878a7d-a995-435a-87c3-90fac1f7401c","ReferenceProperty","sprint"
 "7f1b96d7-6912-4897-9393-728472dafc4b","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","issues"
 "6078581c-e3b9-49cb-94f7-e30aa8c9956b","7f1b96d7-6912-4897-9393-728472dafc4b","ServiceCall","ConvertIssueToStory"
 "3897a456-25ec-4baa-b655-6e99d8cca121","6078581c-e3b9-49cb-94f7-e30aa8c9956b","Parameter","issueId"

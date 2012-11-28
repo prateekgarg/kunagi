@@ -84,6 +84,14 @@ public abstract class GSprint
         return releaseDao.getReleasesBySprint((Sprint)this);
     }
 
+    public final java.util.Set<scrum.server.issues.Issue> getIssues() {
+        return issueDao.getIssuesBySprint((Sprint)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getClosedIssuesInPasts() {
+        return issueDao.getIssuesByClosedInPastSprint((Sprint)this);
+    }
+
     public final java.util.Set<scrum.server.sprint.Task> getClosedTasksInPasts() {
         return taskDao.getTasksByClosedInPastSprint((Sprint)this);
     }
@@ -1037,6 +1045,12 @@ public abstract class GSprint
 
     public static final void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
         GSprint.releaseDao = releaseDao;
+    }
+
+    static scrum.server.issues.IssueDao issueDao;
+
+    public static final void setIssueDao(scrum.server.issues.IssueDao issueDao) {
+        GSprint.issueDao = issueDao;
     }
 
     static scrum.server.sprint.TaskDao taskDao;

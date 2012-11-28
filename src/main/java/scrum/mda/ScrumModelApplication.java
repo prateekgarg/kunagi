@@ -844,6 +844,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addSetReference("fixReleases", getReleaseModel()).setBackReferenceName("fixIssue");
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			issueModel.addListProperty("themes", String.class);
+			issueModel.addReference("sprint", getSprintModel());
+			issueModel.addReference("closedInPastSprint", getSprintModel()).setBackReferenceName("closedIssuesInPast");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");

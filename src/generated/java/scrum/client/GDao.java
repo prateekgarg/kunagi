@@ -1036,6 +1036,22 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesBySprint(scrum.client.sprint.Sprint sprint) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isSprint(sprint)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.issues.Issue> getIssuesByClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isClosedInPastSprint(closedInPastSprint)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();

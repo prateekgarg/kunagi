@@ -83,6 +83,10 @@ public abstract class GIssueDao
         issuesByPublishedCache.clear();
         issuesByThemeCache.clear();
         themesCache = null;
+        issuesBySprintCache.clear();
+        sprintsCache = null;
+        issuesByClosedInPastSprintCache.clear();
+        closedInPastSprintsCache = null;
     }
 
     @Override
@@ -959,6 +963,86 @@ public abstract class GIssueDao
 
     }
 
+    // -----------------------------------------------------------
+    // - sprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Issue>> issuesBySprintCache = new Cache<scrum.server.sprint.Sprint,Set<Issue>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.sprint.Sprint sprint) {
+                    return getEntities(new IsSprint(sprint));
+                }
+            });
+
+    public final Set<Issue> getIssuesBySprint(scrum.server.sprint.Sprint sprint) {
+        return new HashSet<Issue>(issuesBySprintCache.get(sprint));
+    }
+    private Set<scrum.server.sprint.Sprint> sprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getSprints() {
+        if (sprintsCache == null) {
+            sprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Issue e : getEntities()) {
+                if (e.isSprintSet()) sprintsCache.add(e.getSprint());
+            }
+        }
+        return sprintsCache;
+    }
+
+    private static class IsSprint implements Predicate<Issue> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isSprint(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - closedInPastSprint
+    // -----------------------------------------------------------
+
+    private final Cache<scrum.server.sprint.Sprint,Set<Issue>> issuesByClosedInPastSprintCache = new Cache<scrum.server.sprint.Sprint,Set<Issue>>(
+            new Cache.Factory<scrum.server.sprint.Sprint,Set<Issue>>() {
+                public Set<Issue> create(scrum.server.sprint.Sprint closedInPastSprint) {
+                    return getEntities(new IsClosedInPastSprint(closedInPastSprint));
+                }
+            });
+
+    public final Set<Issue> getIssuesByClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
+        return new HashSet<Issue>(issuesByClosedInPastSprintCache.get(closedInPastSprint));
+    }
+    private Set<scrum.server.sprint.Sprint> closedInPastSprintsCache;
+
+    public final Set<scrum.server.sprint.Sprint> getClosedInPastSprints() {
+        if (closedInPastSprintsCache == null) {
+            closedInPastSprintsCache = new HashSet<scrum.server.sprint.Sprint>();
+            for (Issue e : getEntities()) {
+                if (e.isClosedInPastSprintSet()) closedInPastSprintsCache.add(e.getClosedInPastSprint());
+            }
+        }
+        return closedInPastSprintsCache;
+    }
+
+    private static class IsClosedInPastSprint implements Predicate<Issue> {
+
+        private scrum.server.sprint.Sprint value;
+
+        public IsClosedInPastSprint(scrum.server.sprint.Sprint value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isClosedInPastSprint(value);
+        }
+
+    }
+
     // --- valueObject classes ---
     @Override
     protected Set<Class> getValueObjectClasses() {
@@ -990,6 +1074,12 @@ public abstract class GIssueDao
 
     public void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {
         this.releaseDao = releaseDao;
+    }
+
+    scrum.server.sprint.SprintDao sprintDao;
+
+    public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {
+        this.sprintDao = sprintDao;
     }
 
 }

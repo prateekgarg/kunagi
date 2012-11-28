@@ -1073,6 +1073,56 @@ public abstract class GIssue
     }
 
 
+    // --- sprint ---
+
+    private String sprintId;
+
+    public final scrum.client.sprint.Sprint getSprint() {
+        if (sprintId == null) return null;
+        return getDao().getSprint(this.sprintId);
+    }
+
+    public final boolean isSprintSet() {
+        return sprintId != null;
+    }
+
+    public final Issue setSprint(scrum.client.sprint.Sprint sprint) {
+        String id = sprint == null ? null : sprint.getId();
+        if (equals(this.sprintId, id)) return (Issue) this;
+        this.sprintId = id;
+        propertyChanged("sprintId", this.sprintId);
+        return (Issue)this;
+    }
+
+    public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
+        return equals(this.sprintId, sprint);
+    }
+
+    // --- closedInPastSprint ---
+
+    private String closedInPastSprintId;
+
+    public final scrum.client.sprint.Sprint getClosedInPastSprint() {
+        if (closedInPastSprintId == null) return null;
+        return getDao().getSprint(this.closedInPastSprintId);
+    }
+
+    public final boolean isClosedInPastSprintSet() {
+        return closedInPastSprintId != null;
+    }
+
+    public final Issue setClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
+        String id = closedInPastSprint == null ? null : closedInPastSprint.getId();
+        if (equals(this.closedInPastSprintId, id)) return (Issue) this;
+        this.closedInPastSprintId = id;
+        propertyChanged("closedInPastSprintId", this.closedInPastSprintId);
+        return (Issue)this;
+    }
+
+    public final boolean isClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
+        return equals(this.closedInPastSprintId, closedInPastSprint);
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map props) {
@@ -1103,6 +1153,8 @@ public abstract class GIssue
         fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
         published  = (Boolean) props.get("published");
         themes  = (java.util.List<java.lang.String>) props.get("themes");
+        sprintId = (String) props.get("sprintId");
+        closedInPastSprintId = (String) props.get("closedInPastSprintId");
         updateLocalModificationTime();
     }
 
@@ -1131,6 +1183,8 @@ public abstract class GIssue
         properties.put("fixReleasesIds", this.fixReleasesIds);
         properties.put("published", this.published);
         properties.put("themes", this.themes);
+        properties.put("sprintId", this.sprintId);
+        properties.put("closedInPastSprintId", this.closedInPastSprintId);
     }
 
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {
