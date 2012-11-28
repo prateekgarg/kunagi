@@ -36,7 +36,7 @@ public class KickIssueFromSprintAction extends GKickIssueFromSprintAction {
 
 	@Override
 	protected void onExecute() {
-		new KickIssueFromSprintServiceCall(getId()).execute();
+		new KickIssueFromSprintServiceCall(issue.getId()).execute();
 	}
 
 }

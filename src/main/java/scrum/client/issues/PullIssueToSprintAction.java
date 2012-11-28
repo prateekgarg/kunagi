@@ -36,7 +36,7 @@ public class PullIssueToSprintAction extends GPullIssueToSprintAction {
 
 	@Override
 	protected void onExecute() {
-		new PullIssueToSprintServiceCall(getId());
+		new PullIssueToSprintServiceCall(issue.getId()).execute();
 	}
 
 }

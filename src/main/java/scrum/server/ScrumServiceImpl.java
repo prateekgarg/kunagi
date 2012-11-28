@@ -1056,7 +1056,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@Override
 	public void onKickIssueFromSprint(GwtConversation conversation, String issueId) {
-		// TODO Auto-generated method stub
+		assertProjectSelected(conversation);
+		Issue issue = issueDao.getById(issueId);
+		Sprint sprint = issue.getSprint();
+		User currentUser = conversation.getSession().getUser();
 
+		sprint.kickIssue(issue, currentUser);
+
+		postProjectEvent(conversation, currentUser.getName() + " kicked " + issue.getReferenceAndLabel()
+				+ " from current sprint", issue);
+
+		sendToClients(conversation, issue);
+		sendToClients(conversation, sprint);
+		sendToClients(conversation, sprint.getProject());
 	}
 }

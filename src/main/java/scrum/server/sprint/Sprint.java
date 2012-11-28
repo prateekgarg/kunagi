@@ -407,4 +407,15 @@ public class Sprint extends GSprint implements Numbered {
 		changeDao.postChange(issue, user, "sprintId", null, getId());
 	}
 
+	public void kickIssue(Issue issue, User user) {
+		int burned = 0;
+
+		issue.setSprint(null);
+		// requirement.getProject().moveRequirementToTop(requirement);
+		SprintDaySnapshot daySnapshot = getDaySnapshot(Date.today());
+		daySnapshot.addBurnedWorkFromDeleted(burned);
+		daySnapshot.updateWithCurrentSprint();
+
+		changeDao.postChange(issue, user, "sprintId", getId(), null);
+	}
 }
