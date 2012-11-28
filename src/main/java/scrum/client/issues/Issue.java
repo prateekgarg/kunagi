@@ -157,6 +157,10 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 		return getCloseDate() != null;
 	}
 
+	public boolean isInSprint() {
+		return isSprintSet() && getProject().isCurrentSprint(getSprint());
+	}
+
 	public String getStatusLabel() {
 		if (isClosed()) {
 			TimePeriod period = getCloseDate().getPeriodToToday();

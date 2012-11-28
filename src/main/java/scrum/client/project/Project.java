@@ -534,7 +534,7 @@ public class Project extends GProject implements ForumSupport {
 		List<Requirement> ret = new ArrayList<Requirement>();
 		for (Requirement requirement : getRequirements()) {
 			if (requirement.isClosed()) continue;
-			if (requirement.isInCurrentSprint()) continue;
+			if (requirement.isInSprint()) continue;
 			ret.add(requirement);
 		}
 		return ret;

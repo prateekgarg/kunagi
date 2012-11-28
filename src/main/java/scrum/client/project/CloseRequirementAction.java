@@ -49,7 +49,7 @@ public class CloseRequirementAction extends GCloseRequirementAction {
 	@Override
 	public boolean isExecutable() {
 		if (requirement.isClosed()) return false;
-		if (!requirement.isInCurrentSprint()) return false;
+		if (!requirement.isInSprint()) return false;
 		return true;
 	}
 

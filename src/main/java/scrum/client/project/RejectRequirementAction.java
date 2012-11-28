@@ -33,7 +33,7 @@ public class RejectRequirementAction extends GRejectRequirementAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (!requirement.isInCurrentSprint()) return false;
+		if (!requirement.isInSprint()) return false;
 		if (!requirement.isTasksClosed()) return false;
 		if (requirement.isClosed()) return false;
 		if (requirement.isRejected()) return false;

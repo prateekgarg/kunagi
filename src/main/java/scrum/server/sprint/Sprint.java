@@ -396,4 +396,15 @@ public class Sprint extends GSprint implements Numbered {
 
 	};
 
+	public void pullIssue(Issue issue, User user) {
+		issue.setSprint(this);
+
+		// TODO check if this matches issues (taken from stories)
+		// moveToBottom(issue);
+		getDaySnapshot(Date.today()).updateWithCurrentSprint();
+
+		// TODO check if this works correctly (taken from stories)
+		changeDao.postChange(issue, user, "sprintId", null, getId());
+	}
+
 }

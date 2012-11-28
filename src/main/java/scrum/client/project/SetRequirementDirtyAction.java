@@ -35,7 +35,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
 			if (requirement.isDirty()) tb.addRemark("Re-estmation has already been requested for this Story.");
-			if (requirement.isInCurrentSprint()) tb.addRemark("Story is in current Sprint.");
+			if (requirement.isInSprint()) tb.addRemark("Story is in current Sprint.");
 		}
 	}
 
@@ -43,7 +43,7 @@ public class SetRequirementDirtyAction extends GSetRequirementDirtyAction {
 	public boolean isExecutable() {
 		if (requirement.isClosed()) return false;
 		if (requirement.isDirty()) return false;
-		if (requirement.isInCurrentSprint()) return false;
+		if (requirement.isInSprint()) return false;
 		if (requirement.isWorkEstimationVotingActive()) return false;
 		return true;
 	}

@@ -30,13 +30,13 @@ public class AddRequirementToCurrentSprintAction extends GAddRequirementToCurren
 
 	@Override
 	protected void updateTooltip(TooltipBuilder tb) {
-		tb.setText("Add this Story to the current Sprint Backlog.");
+		tb.setText("Add this Story to the current Sprint.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) {
 			tb.addRemark(TooltipBuilder.NOT_TEAM);
 		} else {
 			if (requirement.isClosed()) tb.addRemark("Story is already closed.");
 			if (!requirement.isEstimatedWorkValid()) tb.addRemark("Story has no confirmed estimation yet.");
-			if (isCurrentSprint(requirement.getSprint())) tb.addRemark("Story is already in current sprint.");
+			if (isCurrentSprint(requirement.getSprint())) tb.addRemark("Story is already in the current Sprint.");
 		}
 	}
 
