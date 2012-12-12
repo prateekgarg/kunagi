@@ -214,7 +214,7 @@ public class Project extends GProject {
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<AEntity> search(String text) {
-		String[] keys = Str.tokenize(text, " ");
+		String[] keys = Str.tokenizeToArray(text, " ");
 		ArrayList ret = new ArrayList();
 		ret.addAll(getMatching(getRequirements(), keys));
 		ret.addAll(getMatching(getQualitys(), keys));
