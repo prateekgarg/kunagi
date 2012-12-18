@@ -98,7 +98,8 @@
 				<exclude name="**/gdata-*.jar" />
 				<exclude name="**/jaudiotagger-*.jar" />
 				<exclude name="**/jcip-annotations.jar" />
-				<exclude name="**/mysql-*.jar" />
+                <exclude name="**/mysql-*.jar" />
+                <exclude name="**/android*.jar" />
 			</fileset>
 		</copy>
 		<war destfile="${build.dir}/kunagi.war" basedir="${build.dir}/webapp" />
