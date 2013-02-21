@@ -69,6 +69,7 @@ import scrum.server.release.Release;
 import scrum.server.release.ReleaseDao;
 import scrum.server.risks.Risk;
 import scrum.server.sprint.Sprint;
+import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintReport;
 import scrum.server.sprint.SprintReportDao;
 import scrum.server.sprint.Task;
@@ -88,6 +89,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private transient CommentDao commentDao;
 	private transient ScrumWebApplication webApplication;
 	private transient ChangeDao changeDao;
+	private transient SprintDao sprintDao;
 
 	@In
 	private transient SubscriptionService subscriptionService;
@@ -153,6 +155,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			entities.addAll(getAssociatedEntities(report));
 		}
 		conversation.sendToClient(entities);
+	}
+
+	@Override
+	public void onRequestHistorySprint(GwtConversation conversation, String sprintId) {
+		assertProjectSelected(conversation);
+		Sprint sprint = sprintDao.getById(sprintId);
+		SprintReport report = sprint.getSprintReport();
+		conversation.sendToClient(report);
+		conversation.sendToClient(getAssociatedEntities(report));
 	}
 
 	@Override

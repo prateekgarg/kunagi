@@ -505,6 +505,8 @@
 "97bd287f-d10a-412e-94ae-71522b67b6eb","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","PullStoryToSprint"
 "f7e54299-668d-4a91-ac5a-f1eb1b170a3a","97bd287f-d10a-412e-94ae-71522b67b6eb","Parameter","storyId"
 "aa8379f5-adf7-4854-8e15-b4535bb22ccd","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","RequestHistory"
+"e5d411e8-cd22-4a15-a369-c53035b6d414","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","RequestHistorySprint"
+"03d6a4d2-5b1f-4989-9293-598fa1d93f4e","e5d411e8-cd22-4a15-a369-c53035b6d414","Parameter","sprintId"
 "57885464-6c80-4487-a1cd-e958b3696230","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","SwitchToNextSprint"
 "f4cfd7a4-2568-4fd2-a7aa-583c5b3e6846","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","undo"
 "d4d6b548-0fc1-40fc-8c36-88086601c3c2","f4cfd7a4-2568-4fd2-a7aa-583c5b3e6846","Component","Undo"
