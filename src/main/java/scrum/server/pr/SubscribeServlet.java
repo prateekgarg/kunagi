@@ -15,6 +15,7 @@
 package scrum.server.pr;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
@@ -62,7 +63,7 @@ public class SubscribeServlet extends AKunagiServlet {
 					+ "</strong>";
 		} catch (Throwable ex) {
 			log.error("Subscription failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
-			message = "<h2>Failure</h2><p>Subscription failed: <strong>" + Str.getRootCauseMessage(ex)
+			message = "<h2>Failure</h2><p>Subscription failed: <strong>" + Utl.getRootCauseMessage(ex)
 					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 
