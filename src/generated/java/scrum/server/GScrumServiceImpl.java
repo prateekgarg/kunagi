@@ -76,6 +76,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestHistory(GwtConversation conversation);
 
+    public abstract void onRequestHistorySprint(GwtConversation conversation, String sprintId);
+
     public abstract void onSwitchToNextSprint(GwtConversation conversation);
 
     @Override
@@ -1017,6 +1019,33 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestHistory", ex);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    @Override
+    public scrum.client.DataTransferObject requestHistorySprint(int conversationNumber, String sprintId) {
+        log.debug("Handling service call: RequestHistorySprint");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = null;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestHistorySprint");
+            context.bindCurrentThread();
+            try {
+                onRequestHistorySprint(conversation, sprintId);
+                onServiceMethodExecuted(context);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestHistorySprint", ex);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

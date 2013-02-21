@@ -76,6 +76,8 @@ public interface ScrumServiceAsync {
 
     void requestHistory(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
+    void requestHistorySprint(int conversationNumber, String sprintId, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void switchToNextSprint(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
 }
