@@ -15,6 +15,7 @@
 package scrum.server.pr;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
@@ -70,7 +71,7 @@ public class UnsubscribeServlet extends AKunagiServlet {
 							+ "</strong>";
 		} catch (Throwable ex) {
 			log.error("Unsubscription failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
-			sendFailureResponse(req, Str.getRootCauseMessage(ex));
+			sendFailureResponse(req, Utl.getRootCauseMessage(ex));
 			return;
 		}
 

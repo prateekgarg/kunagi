@@ -326,7 +326,7 @@ public class LoginServlet extends AKunagiServlet {
 			} catch (Exception ex) {
 				log.error("LDAP authentication failed.", ex);
 				renderLoginPage(req, username, null, historyToken,
-					"LDAP authentication failed: " + Str.getRootCauseMessage(ex), false, false);
+					"LDAP authentication failed: " + Utl.getRootCauseMessage(ex), false, false);
 				return;
 			}
 
@@ -348,7 +348,7 @@ public class LoginServlet extends AKunagiServlet {
 				} catch (Exception ex) {
 					log.warn(ex);
 					renderLoginPage(req, username, null, historyToken, "Creating a new user <" + username
-							+ "> with email <" + email + "> failed: " + Str.getRootCauseMessage(ex), false, false);
+							+ "> with email <" + email + "> failed: " + Utl.getRootCauseMessage(ex), false, false);
 					return;
 				}
 				if (Str.isEmail(email)) user.setEmail(email);

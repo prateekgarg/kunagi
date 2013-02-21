@@ -15,6 +15,7 @@
 package scrum.server.collaboration;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
@@ -79,7 +80,7 @@ public class CommentServlet extends AKunagiServlet {
 			message = postComment(projectId, entityId, text, name, email);
 		} catch (Throwable ex) {
 			log.error("Posting comment failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
-			message = "<h2>Failure</h2><p>Posting your comment failed: <strong>" + Str.getRootCauseMessage(ex)
+			message = "<h2>Failure</h2><p>Posting your comment failed: <strong>" + Utl.getRootCauseMessage(ex)
 					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 

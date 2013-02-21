@@ -15,6 +15,7 @@
 package scrum.server.issues;
 
 import ilarkesto.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.TransactionService;
@@ -76,7 +77,7 @@ public class IssueServlet extends AKunagiServlet {
 			message = submitIssue(projectId, subject, text, name, email, publish);
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
-			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Str.getRootCauseMessage(ex)
+			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Utl.getRootCauseMessage(ex)
 					+ "</strong></p><p>We are sorry, please try again later.</p>";
 		}
 
