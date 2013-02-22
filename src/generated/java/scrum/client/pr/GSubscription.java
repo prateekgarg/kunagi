@@ -62,7 +62,8 @@ public abstract class GSubscription
     }
 
     public final boolean isSubject(ilarkesto.gwt.client.AGwtEntity subject) {
-        return equals(this.subjectId, subject);
+        String id = subject==null ? null : subject.getId();
+        return equals(this.subjectId, id);
     }
 
     // --- subscribersEmails ---

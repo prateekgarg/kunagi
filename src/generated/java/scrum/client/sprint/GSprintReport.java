@@ -62,7 +62,8 @@ public abstract class GSprintReport
     }
 
     public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
-        return equals(this.sprintId, sprint);
+        String id = sprint==null ? null : sprint.getId();
+        return equals(this.sprintId, id);
     }
 
     // --- completedRequirements ---

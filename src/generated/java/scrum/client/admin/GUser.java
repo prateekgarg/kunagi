@@ -392,7 +392,8 @@ public abstract class GUser
     }
 
     public final boolean isCurrentProject(scrum.client.project.Project currentProject) {
-        return equals(this.currentProjectId, currentProject);
+        String id = currentProject==null ? null : currentProject.getId();
+        return equals(this.currentProjectId, id);
     }
 
     // --- color ---

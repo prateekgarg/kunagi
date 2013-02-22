@@ -62,7 +62,8 @@ public abstract class GWikipage
     }
 
     public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
+        String id = project==null ? null : project.getId();
+        return equals(this.projectId, id);
     }
 
     // --- name ---

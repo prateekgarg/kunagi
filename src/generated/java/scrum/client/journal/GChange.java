@@ -62,7 +62,8 @@ public abstract class GChange
     }
 
     public final boolean isParent(ilarkesto.gwt.client.AGwtEntity parent) {
-        return equals(this.parentId, parent);
+        String id = parent==null ? null : parent.getId();
+        return equals(this.parentId, id);
     }
 
     // --- user ---
@@ -87,7 +88,8 @@ public abstract class GChange
     }
 
     public final boolean isUser(scrum.client.admin.User user) {
-        return equals(this.userId, user);
+        String id = user==null ? null : user.getId();
+        return equals(this.userId, id);
     }
 
     // --- dateAndTime ---

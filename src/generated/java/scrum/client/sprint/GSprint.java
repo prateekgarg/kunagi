@@ -135,7 +135,8 @@ public abstract class GSprint
     }
 
     public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
+        String id = project==null ? null : project.getId();
+        return equals(this.projectId, id);
     }
 
     // --- label ---
@@ -215,11 +216,11 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
-    public abstract String getGoalTemplate();
-
     public final boolean isGoal(java.lang.String goal) {
         return equals(this.goal, goal);
     }
+
+    public abstract String getGoalTemplate();
 
     private transient GoalModel goalModel;
 
@@ -556,11 +557,11 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
-    public abstract String getPlanningNoteTemplate();
-
     public final boolean isPlanningNote(java.lang.String planningNote) {
         return equals(this.planningNote, planningNote);
     }
+
+    public abstract String getPlanningNoteTemplate();
 
     private transient PlanningNoteModel planningNoteModel;
 
@@ -622,11 +623,11 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
-    public abstract String getReviewNoteTemplate();
-
     public final boolean isReviewNote(java.lang.String reviewNote) {
         return equals(this.reviewNote, reviewNote);
     }
+
+    public abstract String getReviewNoteTemplate();
 
     private transient ReviewNoteModel reviewNoteModel;
 
@@ -688,11 +689,11 @@ public abstract class GSprint
         return (Sprint)this;
     }
 
-    public abstract String getRetrospectiveNoteTemplate();
-
     public final boolean isRetrospectiveNote(java.lang.String retrospectiveNote) {
         return equals(this.retrospectiveNote, retrospectiveNote);
     }
+
+    public abstract String getRetrospectiveNoteTemplate();
 
     private transient RetrospectiveNoteModel retrospectiveNoteModel;
 

@@ -679,7 +679,8 @@ public abstract class GProject
     }
 
     public final boolean isCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
-        return equals(this.currentSprintId, currentSprint);
+        String id = currentSprint==null ? null : currentSprint.getId();
+        return equals(this.currentSprintId, id);
     }
 
     // --- nextSprint ---
@@ -704,7 +705,8 @@ public abstract class GProject
     }
 
     public final boolean isNextSprint(scrum.client.sprint.Sprint nextSprint) {
-        return equals(this.nextSprintId, nextSprint);
+        String id = nextSprint==null ? null : nextSprint.getId();
+        return equals(this.nextSprintId, id);
     }
 
     // --- velocity ---

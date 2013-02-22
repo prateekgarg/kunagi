@@ -64,7 +64,8 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isProject(scrum.client.project.Project project) {
-        return equals(this.projectId, project);
+        String id = project==null ? null : project.getId();
+        return equals(this.projectId, id);
     }
 
     // --- user ---
@@ -89,7 +90,8 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isUser(scrum.client.admin.User user) {
-        return equals(this.userId, user);
+        String id = user==null ? null : user.getId();
+        return equals(this.userId, id);
     }
 
     // --- color ---
