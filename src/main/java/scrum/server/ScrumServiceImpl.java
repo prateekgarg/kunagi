@@ -778,7 +778,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onRequestReleaseIssues(GwtConversation conversation, String releaseId) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
-		Release release = releaseDao.getById(releaseId);
+		Release release;
+		try {
+			release = releaseDao.getById(releaseId);
+		} catch (EntityDoesNotExistException ex) {
+			// release does not exist yet (timing problem directly after creating a new release)
+			return;
+		}
 		if (!release.isProject(project)) throw new PermissionDeniedException();
 		conversation.sendToClient(release.getIssues());
 	}
