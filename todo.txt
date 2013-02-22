@@ -1,0 +1,35 @@
+Bug-Story
+- estimated / burned hours on bugs
+- show bugs on whiteboard
+- indicate pulled bugs in buglist
+- include sprint properties on whiteboard
+- include bugs in sums
+- include bugs in burndown
+- include bugs in reports
+- fix scaling problems on small screens
+
+Lazy Sprint History
+- load individual sprints
+
+Fisheye-Calendar
+- Calendar with dates and zooming
+- Fill zoomed day with data
+- Fill collapsed days
+- Animation
+
+Moving Avarage for Velocity
+- avarage output field
+
+Display view location on window/tab
+- change title on navigation
+
+RichTextEditor: BulletPoints on selection
+- parse lines
+
+Blog dates should be crated on publication
+- update blog date on publication if not set
+- show info
+
+Create tasks from qualities
+- create tasks on pull
+- prevent creation of existing tasks on re-pull

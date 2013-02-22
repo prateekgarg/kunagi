@@ -30,6 +30,7 @@ import scrum.client.common.BlockListWidget;
 import scrum.client.common.ElementPredicate;
 import scrum.client.common.UserGuideWidget;
 import scrum.client.context.UserHighlightSupport;
+import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.PullNextRequirementAction;
 import scrum.client.sprint.Sprint;
@@ -52,6 +53,11 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 	private Map<Requirement, TaskListWidget> openTasks;
 	private Map<Requirement, TaskListWidget> ownedTasks;
 	private Map<Requirement, TaskListWidget> closedTasks;
+
+	private IssueListWidget openIssues;
+	private IssueListWidget ownedIssues;
+	private IssueListWidget closedIssues;
+
 	private BlockListSelectionManager selectionManager = new BlockListSelectionManager();
 
 	private ElementPredicate<Task> predicate;
@@ -125,7 +131,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 		selectionManager = new BlockListSelectionManager();
 
-		grid.resize((requirements.size() * 2) + 1, 3);
+		grid.resize((requirements.size() * 2) + 1 + 1, 3);
 
 		for (Requirement requirement : requirements) {
 			openTasks.put(requirement, new TaskListWidget(requirement, this, new UnclaimTaskDropAction(requirement),
@@ -135,6 +141,10 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			closedTasks.put(requirement, new TaskListWidget(requirement, this, new CloseTaskDropAction(requirement),
 					false));
 		}
+
+		openIssues = new IssueListWidget(null);
+		ownedIssues = new IssueListWidget(null);
+		closedIssues = new IssueListWidget(null);
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-header");
 		setWidget(0, 1, ownedLabel, "33%", "WhiteboardWidget-header");
@@ -160,6 +170,12 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 			row++;
 		}
+
+		updateIssueLists();
+
+		setWidget(row, 0, openIssues, null, "WhiteboardWidget-open");
+		setWidget(row, 1, ownedIssues, null, "WhiteboardWidget-owned");
+		setWidget(row, 2, closedIssues, null, "WhiteboardWidget-done");
 
 		userGuide.update();
 		pullNextButton.update();
@@ -220,6 +236,37 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 		if (selectedTaskInOwned != null && !ownedTaskList.contains(selectedTaskInOwned))
 			selectionManager.select(selectedTaskInOwned);
 		if (selectedTaskInClosed != null && !closedTaskList.contains(selectedTaskInClosed))
+			selectionManager.select(selectedTaskInClosed);
+	}
+
+	private void updateIssueLists() {
+
+		Issue selectedTaskInOpen = closedIssues.getSelectedIssue();
+		Issue selectedTaskInOwned = openIssues.getSelectedIssue();
+		Issue selectedTaskInClosed = closedIssues.getSelectedIssue();
+
+		List<Issue> openIssueList = new ArrayList<Issue>();
+		List<Issue> ownedIssueList = new ArrayList<Issue>();
+		List<Issue> closedIssueList = new ArrayList<Issue>();
+		for (Issue issue : getCurrentSprint().getIssues()) {
+			if (issue.isClosed()) {
+				closedIssueList.add(issue);
+			} else if (issue.isOwnerSet()) {
+				ownedIssueList.add(issue);
+			} else {
+				openIssueList.add(issue);
+			}
+		}
+
+		openIssues.setIssues(openIssueList);
+		ownedIssues.setIssues(ownedIssueList);
+		closedIssues.setIssues(closedIssueList);
+
+		if (selectedTaskInOpen != null && !openIssueList.contains(selectedTaskInOpen))
+			selectionManager.select(selectedTaskInOpen);
+		if (selectedTaskInOwned != null && !ownedIssueList.contains(selectedTaskInOwned))
+			selectionManager.select(selectedTaskInOwned);
+		if (selectedTaskInClosed != null && !closedIssueList.contains(selectedTaskInClosed))
 			selectionManager.select(selectedTaskInClosed);
 	}
 
