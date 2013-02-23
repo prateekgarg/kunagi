@@ -53,6 +53,8 @@ public abstract class GSprintDao
         beginsCache = null;
         sprintsByEndCache.clear();
         endsCache = null;
+        sprintsByOriginallyEndCache.clear();
+        originallyEndsCache = null;
         sprintsByVelocityCache.clear();
         velocitysCache = null;
         sprintsByCompletedRequirementsDataCache.clear();
@@ -327,6 +329,46 @@ public abstract class GSprintDao
 
         public boolean test(Sprint e) {
             return e.isEnd(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - originallyEnd
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.core.time.Date,Set<Sprint>> sprintsByOriginallyEndCache = new Cache<ilarkesto.core.time.Date,Set<Sprint>>(
+            new Cache.Factory<ilarkesto.core.time.Date,Set<Sprint>>() {
+                public Set<Sprint> create(ilarkesto.core.time.Date originallyEnd) {
+                    return getEntities(new IsOriginallyEnd(originallyEnd));
+                }
+            });
+
+    public final Set<Sprint> getSprintsByOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        return new HashSet<Sprint>(sprintsByOriginallyEndCache.get(originallyEnd));
+    }
+    private Set<ilarkesto.core.time.Date> originallyEndsCache;
+
+    public final Set<ilarkesto.core.time.Date> getOriginallyEnds() {
+        if (originallyEndsCache == null) {
+            originallyEndsCache = new HashSet<ilarkesto.core.time.Date>();
+            for (Sprint e : getEntities()) {
+                if (e.isOriginallyEndSet()) originallyEndsCache.add(e.getOriginallyEnd());
+            }
+        }
+        return originallyEndsCache;
+    }
+
+    private static class IsOriginallyEnd implements Predicate<Sprint> {
+
+        private ilarkesto.core.time.Date value;
+
+        public IsOriginallyEnd(ilarkesto.core.time.Date value) {
+            this.value = value;
+        }
+
+        public boolean test(Sprint e) {
+            return e.isOriginallyEnd(value);
         }
 
     }

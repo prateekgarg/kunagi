@@ -508,6 +508,7 @@ public class Project extends GProject {
 		if (!newSprint.isBeginSet() || newSprint.getBegin().isPast()) newSprint.setBegin(Date.today());
 		if (!newSprint.isEndSet() || newSprint.getEnd().isBeforeOrSame(newSprint.getBegin()))
 			newSprint.setEnd(newSprint.getBegin().addDays(oldSprint.getLengthInDays()));
+		newSprint.setOriginallyEnd(newSprint.getEnd());
 
 		if (newSprint.isLabel(NEXT_SPRINT_LABEL)) newSprint.setLabel(CURRENT_SPRINT_LABEL);
 		setCurrentSprint(newSprint);

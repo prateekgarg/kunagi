@@ -383,6 +383,59 @@ public abstract class GSprint
 
     }
 
+    // --- originallyEnd ---
+
+    private ilarkesto.core.time.Date originallyEnd ;
+
+    public final ilarkesto.core.time.Date getOriginallyEnd() {
+        return this.originallyEnd ;
+    }
+
+    public final Sprint setOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        if (isOriginallyEnd(originallyEnd)) return (Sprint)this;
+        this.originallyEnd = originallyEnd ;
+        propertyChanged("originallyEnd", this.originallyEnd);
+        return (Sprint)this;
+    }
+
+    public final boolean isOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        return equals(this.originallyEnd, originallyEnd);
+    }
+
+    private transient OriginallyEndModel originallyEndModel;
+
+    public OriginallyEndModel getOriginallyEndModel() {
+        if (originallyEndModel == null) originallyEndModel = createOriginallyEndModel();
+        return originallyEndModel;
+    }
+
+    protected OriginallyEndModel createOriginallyEndModel() { return new OriginallyEndModel(); }
+
+    protected class OriginallyEndModel extends ilarkesto.gwt.client.editor.ADateEditorModel {
+
+        @Override
+        public String getId() {
+            return "Sprint_originallyEnd";
+        }
+
+        @Override
+        public ilarkesto.core.time.Date getValue() {
+            return getOriginallyEnd();
+        }
+
+        @Override
+        public void setValue(ilarkesto.core.time.Date value) {
+            setOriginallyEnd(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.core.time.Date oldValue, ilarkesto.core.time.Date newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- velocity ---
 
     private java.lang.Float velocity ;
@@ -870,6 +923,8 @@ public abstract class GSprint
         begin  =  beginAsString == null ? null : new ilarkesto.core.time.Date(beginAsString);
         String endAsString = (String) props.get("end");
         end  =  endAsString == null ? null : new ilarkesto.core.time.Date(endAsString);
+        String originallyEndAsString = (String) props.get("originallyEnd");
+        originallyEnd  =  originallyEndAsString == null ? null : new ilarkesto.core.time.Date(originallyEndAsString);
         velocity  = (java.lang.Float) props.get("velocity");
         completedRequirementsData  = (java.lang.String) props.get("completedRequirementsData");
         incompletedRequirementsData  = (java.lang.String) props.get("incompletedRequirementsData");
@@ -892,6 +947,7 @@ public abstract class GSprint
         properties.put("goal", this.goal);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("originallyEnd", this.originallyEnd == null ? null : this.originallyEnd.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementsData", this.completedRequirementsData);
         properties.put("incompletedRequirementsData", this.incompletedRequirementsData);

@@ -75,11 +75,14 @@ public class BurndownChartTest extends ATest {
 
 		Date sprintBeginDate = shots.get(0).getDate();
 		Date sprintEndDate = shots.get(shots.size() - 1).getDate().addDays(23);
+		Date sprintOriginallyEndDate = sprintEndDate.addDays(-3);
 
 		File file = new File(OUTPUT_DIR + "/sprintBurndownChart.png");
+		log.info(file.getAbsolutePath());
 		IO.createDirectory(file.getParentFile());
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-		BurndownChart.writeSprintBurndownChart(out, shots, sprintBeginDate, sprintEndDate, freeDays, 1000, 500);
+		BurndownChart.writeSprintBurndownChart(out, shots, sprintBeginDate, sprintEndDate, sprintOriginallyEndDate,
+			freeDays, 1000, 500);
 		out.close();
 	}
 

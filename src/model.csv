@@ -476,6 +476,7 @@
 "b6f8fd12-69ee-41ca-b211-da9a158ee597","b6622182-c56f-47fb-9917-dc9bb3310597","ReferenceProperty","completedOnCloseRequirements"
 "b8407091-6753-4b71-b6cb-b77d8de2a17b","b6622182-c56f-47fb-9917-dc9bb3310597","ReferenceProperty","rejectedOnCloseRequirements"
 "639475a3-1341-4dd6-8088-0b75d8c8acec","b6622182-c56f-47fb-9917-dc9bb3310597","IntegerProperty","onCloseBurnedWork"
+"7ff0a7df-c063-4594-aa83-9d34cbd71cfb","b6622182-c56f-47fb-9917-dc9bb3310597","DateProperty","originallyEnd"
 "b5ed153b-a419-4e03-9626-0e28873de64c","330c5af9-5809-4084-8f7a-79e09a84fe47","Entity","SprintReport"
 "8a641cd6-6ac6-405a-9f03-c0684373a173","b5ed153b-a419-4e03-9626-0e28873de64c","ReferenceProperty","sprint"
 "8e644464-cb64-4284-8205-bdb1dea4c2ab","b5ed153b-a419-4e03-9626-0e28873de64c","ReferenceProperty","completedRequirements"

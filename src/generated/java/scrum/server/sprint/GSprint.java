@@ -44,6 +44,7 @@ public abstract class GSprint
         properties.put("goal", this.goal);
         properties.put("begin", this.begin == null ? null : this.begin.toString());
         properties.put("end", this.end == null ? null : this.end.toString());
+        properties.put("originallyEnd", this.originallyEnd == null ? null : this.originallyEnd.toString());
         properties.put("velocity", this.velocity);
         properties.put("completedRequirementsData", this.completedRequirementsData);
         properties.put("incompletedRequirementsData", this.incompletedRequirementsData);
@@ -335,6 +336,42 @@ public abstract class GSprint
     protected final void updateEnd(Object value) {
         value = value == null ? null : new ilarkesto.core.time.Date((String)value);
         setEnd((ilarkesto.core.time.Date)value);
+    }
+
+    // -----------------------------------------------------------
+    // - originallyEnd
+    // -----------------------------------------------------------
+
+    private ilarkesto.core.time.Date originallyEnd;
+
+    public final ilarkesto.core.time.Date getOriginallyEnd() {
+        return originallyEnd;
+    }
+
+    public final void setOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        originallyEnd = prepareOriginallyEnd(originallyEnd);
+        if (isOriginallyEnd(originallyEnd)) return;
+        this.originallyEnd = originallyEnd;
+        updateLastModified();
+        fireModified("originallyEnd="+originallyEnd);
+    }
+
+    protected ilarkesto.core.time.Date prepareOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        return originallyEnd;
+    }
+
+    public final boolean isOriginallyEndSet() {
+        return this.originallyEnd != null;
+    }
+
+    public final boolean isOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
+        if (this.originallyEnd == null && originallyEnd == null) return true;
+        return this.originallyEnd != null && this.originallyEnd.equals(originallyEnd);
+    }
+
+    protected final void updateOriginallyEnd(Object value) {
+        value = value == null ? null : new ilarkesto.core.time.Date((String)value);
+        setOriginallyEnd((ilarkesto.core.time.Date)value);
     }
 
     // -----------------------------------------------------------
@@ -926,6 +963,7 @@ public abstract class GSprint
             if (property.equals("goal")) updateGoal(value);
             if (property.equals("begin")) updateBegin(value);
             if (property.equals("end")) updateEnd(value);
+            if (property.equals("originallyEnd")) updateOriginallyEnd(value);
             if (property.equals("velocity")) updateVelocity(value);
             if (property.equals("completedRequirementsData")) updateCompletedRequirementsData(value);
             if (property.equals("incompletedRequirementsData")) updateIncompletedRequirementsData(value);

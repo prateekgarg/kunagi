@@ -512,6 +512,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip(
 						"The date by which the Team will finish working on this Sprint. "
 								+ "A Sprint Review meeting should be scheduled to present results.");
+			sprintModel.addProperty("originallyEnd", Date.class);
 			sprintModel.addProperty("velocity", Float.class);
 			sprintModel.addStringProperty("completedRequirementsData");
 			sprintModel.addStringProperty("incompletedRequirementsData");
