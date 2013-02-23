@@ -718,6 +718,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onRequestProjectEvents(GwtConversation conversation) {
+		assertProjectSelected(conversation);
+		conversation.sendToClient(conversation.getProject().getLatestProjectEvents(50));
+	}
+
+	@Override
 	public void onCloseProject(GwtConversation conversation) {
 		Project project = conversation.getProject();
 		if (project != null && conversation.getSession().getGwtConversations().size() < 2) {

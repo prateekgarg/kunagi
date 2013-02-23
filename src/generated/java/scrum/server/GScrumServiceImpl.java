@@ -56,6 +56,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onRequestChanges(GwtConversation conversation, String parentId);
 
+    public abstract void onRequestProjectEvents(GwtConversation conversation);
+
     public abstract void onCloseProject(GwtConversation conversation);
 
     public abstract void onCreateExampleProject(GwtConversation conversation);
@@ -749,6 +751,33 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "RequestChanges", ex);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    @Override
+    public scrum.client.DataTransferObject requestProjectEvents(int conversationNumber) {
+        log.debug("Handling service call: RequestProjectEvents");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = null;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:RequestProjectEvents");
+            context.bindCurrentThread();
+            try {
+                onRequestProjectEvents(conversation);
+                onServiceMethodExecuted(context);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "RequestProjectEvents", ex);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
