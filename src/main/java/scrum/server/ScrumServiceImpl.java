@@ -653,7 +653,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void onTaskChanged(GwtConversation conversation, Task task, Map properties) {
 		// update sprint day snapshot after change
-		conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
+		Sprint sprint = conversation.getProject().getCurrentSprint();
+		sprint.getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		Requirement requirement = task.getRequirement();
 		if (requirement.isInCurrentSprint()) {
 			User currentUser = conversation.getSession().getUser();
@@ -673,6 +674,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			if (!task.isClosed() && requirement.isRejectDateSet()) {
 				requirement.setRejectDate(null);
 				sendToClients(conversation, requirement);
+			}
+			if (properties.containsKey("remainingWork") && sprint.getEnd().isPast()) {
+				sprint.setEnd(Date.today());
 			}
 		}
 	}
