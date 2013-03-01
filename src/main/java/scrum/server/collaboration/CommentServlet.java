@@ -77,7 +77,7 @@ public class CommentServlet extends AKunagiServlet {
 		String message;
 		try {
 			SpamChecker.check(req);
-			message = postComment(projectId, entityId, text, name, email);
+			message = postComment(projectId, entityId, text, name, email, req.getRemoteHost());
 		} catch (Throwable ex) {
 			log.error("Posting comment failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			message = "<h2>Failure</h2><p>Posting your comment failed: <strong>" + Utl.getRootCauseMessage(ex)
@@ -91,7 +91,8 @@ public class CommentServlet extends AKunagiServlet {
 		req.sendRedirect(returnUrl);
 	}
 
-	private String postComment(String projectId, String entityId, String text, String name, String email) {
+	private String postComment(String projectId, String entityId, String text, String name, String email,
+			String remoteHost) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		if (Str.isBlank(text)) throw new RuntimeException("Comment is empty.");
 		Project project = projectDao.getById(projectId);

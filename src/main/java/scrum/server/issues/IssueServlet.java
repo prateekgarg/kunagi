@@ -14,7 +14,6 @@
  */
 package scrum.server.issues;
 
-import ilarkesto.base.Net;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
@@ -102,7 +101,7 @@ public class IssueServlet extends AKunagiServlet {
 			project.updateHomepage(issue, true);
 		}
 		String issuer = issue.getIssuer();
-		if (Str.isBlank(issuer)) issuer = "anonymous @" + Net.getHostnameOrIp(remoteHost);
+		if (Str.isBlank(issuer)) issuer = "anonymous";
 		ProjectEvent event = projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(),
 			issue);
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, issue);
