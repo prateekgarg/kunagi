@@ -90,9 +90,10 @@ public class IssueServlet extends AKunagiServlet {
 
 	private String submitIssue(String projectId, String label, String text, String name, String email, boolean publish) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
-		if (Str.isBlank(label) && Str.isBlank(text))
-			throw new RuntimeException("Subject and Description are empty. At least one required.");
-		if (Str.isBlank(label)) label = "Message from the Internets";
+		if (Str.isBlank(label))
+			throw new RuntimeException("Subject is empty, but required. Please write a short title for your issue.");
+		if (Str.isBlank(text))
+			throw new RuntimeException("Text is empty, but required. Please wirte a short description of your issue.");
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, label, "<nowiki>" + text + "</nowiki>", name, email, publish);
 		if (publish) {
