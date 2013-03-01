@@ -14,6 +14,7 @@
  */
 package scrum.server.issues;
 
+import ilarkesto.base.Net;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
@@ -74,7 +75,7 @@ public class IssueServlet extends AKunagiServlet {
 		String message;
 		try {
 			SpamChecker.check(req);
-			message = submitIssue(projectId, subject, text, name, email, publish);
+			message = submitIssue(projectId, subject, text, name, email, publish, req.getRemoteHost());
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Utl.getRootCauseMessage(ex)
@@ -88,7 +89,8 @@ public class IssueServlet extends AKunagiServlet {
 		req.sendRedirect(returnUrl);
 	}
 
-	private String submitIssue(String projectId, String label, String text, String name, String email, boolean publish) {
+	private String submitIssue(String projectId, String label, String text, String name, String email, boolean publish,
+			String remoteHost) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		if (Str.isBlank(label))
 			throw new RuntimeException("Subject is empty, but required. Please write a short title for your issue.");
@@ -100,7 +102,7 @@ public class IssueServlet extends AKunagiServlet {
 			project.updateHomepage(issue, true);
 		}
 		String issuer = issue.getIssuer();
-		if (Str.isBlank(issuer)) issuer = "anonymous";
+		if (Str.isBlank(issuer)) issuer = "anonymous @" + Net.getHostnameOrIp(remoteHost);
 		ProjectEvent event = projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(),
 			issue);
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, issue);
