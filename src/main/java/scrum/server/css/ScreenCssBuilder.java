@@ -387,7 +387,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Workspace-header").height(headerHeight).background(cHeaderBackground, "../header-bg.png")
 				.positionFixed().width100();
 
-		css.style(".Workspace-sidebar").overflowHidden().positionFixed(headerHeight + 10, 0).width(200).zIndex(-1);
+		css.style(".Workspace-sidebar").positionFixed(headerHeight + 10, 0).width(200).overflowAuto();
 		css.style(".Workspace-sidebar .PagePanel").padding(0);
 		css.style(".Workspace-sidebar .PagePanel-header").color(cHeaderText);
 		css.style(".Workspace-sidebar .PagePanel-content").border("0");
