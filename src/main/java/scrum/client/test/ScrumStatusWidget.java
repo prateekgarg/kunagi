@@ -32,6 +32,7 @@ import scrum.client.collaboration.Comment;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.communication.Pinger;
 import scrum.client.core.DeleteEntityServiceCall;
 import scrum.client.core.ServiceCaller;
 import scrum.client.issues.Issue;
@@ -80,6 +81,7 @@ public class ScrumStatusWidget extends AScrumWidget {
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 		tb.setCellPadding(5);
+		tb.addRow(new ButtonWidget(new TogglePingerAction()));
 		tb.addRow(new ButtonWidget(new ToggleListAnimationsAction()));
 		tb.addRow(new ButtonWidget(new ThrowExceptionAction()));
 		tb.addRow(new ButtonWidget(new ThrowServerExceptionAction()));
@@ -112,6 +114,27 @@ public class ScrumStatusWidget extends AScrumWidget {
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
 		return tb.createTable();
+	}
+
+	class TogglePingerAction extends AScrumAction {
+
+		@Override
+		public String getLabel() {
+			Pinger pinger = Scope.get().getComponent(Pinger.class);
+			return pinger.isDisabled() ? "Enable Pinger" : "Disable Pinger";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Enable/disable background pings to the server.");
+		}
+
+		@Override
+		protected void onExecute() {
+			Pinger pinger = Scope.get().getComponent(Pinger.class);
+			pinger.setDisabled(!pinger.isDisabled());
+		}
+
 	}
 
 	class ToggleListAnimationsAction extends AScrumAction {
