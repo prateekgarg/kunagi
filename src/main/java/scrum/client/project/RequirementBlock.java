@@ -98,7 +98,7 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 			if (begin == null || begin.isPast()) begin = new Date();
 			int totalLength = sprintLengthInDays * (sprints + 1);
 			Date date = begin.addDays(totalLength);
-			sprintBorderIndicator.updateLabel(sprints + 1, date);
+			sprintBorderIndicator.updateLabel(sprints + 1, date, isUncertain(previous));
 			requirement.updateLocalModificationTime();
 		} else {
 			if (sprintBorderIndicator != null) {
@@ -109,12 +109,21 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		}
 	}
 
+	private boolean isUncertain(Requirement requirement) {
+		if (requirement == null) return false;
+		if (!requirement.isEstimatedWorkValid()) return true;
+		return isUncertain(getList().getPrevious(requirement));
+	}
+
 	@Override
 	protected String getUpdateSignature() {
+		// if (true) return null;
 		if (isExtended()) return null;
 		Requirement r = getObject();
-		return r.getLabel() + r.getEstimatedWork() + r.isEstimatedWorkValid() + r.isWorkEstimationVotingActive()
-				+ r.getEstimationBar().getSprintOffset();
+		EstimationBar eb = r.getEstimationBar();
+		return super.getUpdateSignature() + r.getLabel() + r.getEstimatedWork() + r.isEstimatedWorkValid()
+				+ r.isWorkEstimationVotingActive() + eb.getSprintOffset() + eb.getEndSprintOffset()
+				+ r.getProject().getVelocity();
 	}
 
 	@Override

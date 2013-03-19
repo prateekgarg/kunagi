@@ -193,7 +193,10 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".EstimationBarWidget-bar0").background(cEstimationBar0).lineHeight(1).fontSize(1);
 		css.style(".EstimationBarWidget-bar1").background(cEstimationBar1).lineHeight(1).fontSize(1);
 
-		css.style(".SprintBorderIndicatorWidget").background(cPagePanelHeaderBackground).color(cPagePanelHeader)
+		css.style(".SprintBorderIndicatorWidget-certain").background(cPagePanelHeaderBackground)
+				.color(cPagePanelHeader).border(1, cPagePanelBorder).textAlignCenter().borderRadius(10)
+				.fontSize(fontSizeSmall).margin(3, 100, 3, 100);
+		css.style(".SprintBorderIndicatorWidget-uncertain").background(cPagePanelHeaderBackground).colorGray()
 				.border(1, cPagePanelBorder).textAlignCenter().borderRadius(10).fontSize(fontSizeSmall)
 				.margin(3, 100, 3, 100);
 
