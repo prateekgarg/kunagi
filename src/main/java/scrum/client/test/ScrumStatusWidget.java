@@ -22,6 +22,7 @@ import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
 import ilarkesto.gwt.client.animation.AnimatingFlowPanel;
 
+import java.util.List;
 import java.util.Map;
 
 import scrum.client.Dao;
@@ -194,8 +195,15 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		protected void onExecute() {
 			DateAndTime time = DateAndTime.now();
-			Requirement req = getCurrentProject().getCurrentSprint().getRequirements().get(0);
+			List<Requirement> requirements = getCurrentProject().getCurrentSprint().getRequirements();
+			if (requirements.isEmpty()) return;
+			int reqIdx = 0;
 			for (int i = 0; i < COUNT; i++) {
+				if (reqIdx >= requirements.size()) {
+					reqIdx = 0;
+				}
+				Requirement req = requirements.get(reqIdx);
+				reqIdx++;
 				Task task = new Task(req);
 				task.setLabel("Generated Task " + time + " - #" + i);
 				task.setDescription(longText());
@@ -258,6 +266,6 @@ public class ScrumStatusWidget extends AScrumWidget {
 		return sb.toString();
 	}
 
-	private static final int COUNT = 10;
+	private static final int COUNT = 50;
 
 }
