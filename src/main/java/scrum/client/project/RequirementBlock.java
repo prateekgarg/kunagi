@@ -110,6 +110,14 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 	}
 
 	@Override
+	protected String getUpdateSignature() {
+		if (isExtended()) return null;
+		Requirement r = getObject();
+		return r.getLabel() + r.getEstimatedWork() + r.isEstimatedWorkValid() + r.isWorkEstimationVotingActive()
+				+ r.getEstimationBar().getSprintOffset();
+	}
+
+	@Override
 	protected Widget onExtendedInitialization() {
 		return new RequirementWidget(getObject(), true, false, false, true, true, true, false);
 	}

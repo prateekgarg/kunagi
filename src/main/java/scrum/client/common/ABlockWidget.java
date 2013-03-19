@@ -91,6 +91,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	@Override
 	protected String getUpdateSignature() {
 		updateHref();
+		if (isExtended()) return null;
 		if (object instanceof AGwtEntity) return String.valueOf(((AGwtEntity) object).getLocalModificationTime());
 		return super.getUpdateSignature();
 	}
