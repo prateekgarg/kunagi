@@ -85,6 +85,13 @@ public class IssueBlock extends ABlockWidget<Issue> implements TrashSupport {
 	}
 
 	@Override
+	protected String getUpdateSignature() {
+		if (isExtended()) return null;
+		Issue issue = getObject();
+		return issue.getLabel() + issue.isBug() + issue.isFixed() + issue.getOwner();
+	}
+
+	@Override
 	protected Widget onExtendedInitialization() {
 		return new IssueWidget(getObject());
 	}

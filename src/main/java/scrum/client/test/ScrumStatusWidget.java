@@ -31,6 +31,7 @@ import scrum.client.ScrumGwtApplication;
 import scrum.client.collaboration.Comment;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
+import scrum.client.common.TooltipBuilder;
 import scrum.client.core.DeleteEntityServiceCall;
 import scrum.client.core.ServiceCaller;
 import scrum.client.issues.Issue;
@@ -121,6 +122,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		}
 
 		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Enable/disable animations on all lists.");
+		}
+
+		@Override
 		protected void onExecute() {
 			AnimatingFlowPanel.animationsDisabled = !AnimatingFlowPanel.animationsDisabled;
 		}
@@ -131,6 +137,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		public String getLabel() {
 			return "Throw Client Exception";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Simulate an exception on the client.");
 		}
 
 		@Override
@@ -147,6 +158,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		}
 
 		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Simulate an exception on the server.");
+		}
+
+		@Override
 		protected void onExecute() {
 			new DeleteEntityServiceCall("bad-entity-id").execute();
 		}
@@ -157,6 +173,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		public String getLabel() {
 			return "Show widgets tester";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Show the widgets tester view.");
 		}
 
 		@Override
@@ -171,6 +192,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		public String getLabel() {
 			return "Generate Comments";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Generate " + COUNT + " comments on stories.");
 		}
 
 		@Override
@@ -190,6 +216,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		public String getLabel() {
 			return "Generate Tasks";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Generate " + COUNT + " tasks on stories in the current sprint.");
 		}
 
 		@Override
@@ -229,6 +260,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		}
 
 		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Generate " + COUNT + " issues.");
+		}
+
+		@Override
 		protected void onExecute() {
 			DateAndTime time = DateAndTime.now();
 			for (int i = 0; i < COUNT; i++) {
@@ -246,6 +282,11 @@ public class ScrumStatusWidget extends AScrumWidget {
 		@Override
 		public String getLabel() {
 			return "Generate Stories";
+		}
+
+		@Override
+		protected void updateTooltip(TooltipBuilder tb) {
+			tb.setText("Generate " + COUNT + " stories.");
 		}
 
 		@Override
