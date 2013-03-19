@@ -207,6 +207,14 @@ public class ScrumStatusWidget extends AScrumWidget {
 				Task task = new Task(req);
 				task.setLabel("Generated Task " + time + " - #" + i);
 				task.setDescription(longText());
+				task.setBurnedWork(i);
+				if (i % 2 == 0) {
+					task.setOwner(getCurrentUser());
+					task.setRemainingWork(0);
+				} else {
+					if (i % 5 == 0) task.setOwner(getCurrentUser());
+					task.setRemainingWork(i);
+				}
 				dao.createTask(task);
 			}
 		}
