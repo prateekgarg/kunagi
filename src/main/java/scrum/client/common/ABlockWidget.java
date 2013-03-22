@@ -14,7 +14,6 @@
  */
 package scrum.client.common;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 import scrum.client.ScrumScopeManager;
@@ -69,7 +68,6 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 		}
 
 		if (list.isDnd() && list.dndManager != null) {
-			Log.TEST("Making draggable:", getObject());
 			list.dndManager.makeDraggable(this, header.getDragHandle());
 		}
 

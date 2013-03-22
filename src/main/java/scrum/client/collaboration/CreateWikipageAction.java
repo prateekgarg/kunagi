@@ -14,15 +14,13 @@
  */
 package scrum.client.collaboration;
 
+import ilarkesto.core.scope.Scope;
 import scrum.client.common.TooltipBuilder;
+import scrum.client.workspace.ProjectWorkspaceWidgets;
 
 public class CreateWikipageAction extends GCreateWikipageAction {
 
-	private String pageName;
-
-	public CreateWikipageAction(String pageName) {
-		this.pageName = pageName;
-	}
+	public CreateWikipageAction() {}
 
 	@Override
 	protected void updateTooltip(TooltipBuilder tb) {
@@ -31,12 +29,14 @@ public class CreateWikipageAction extends GCreateWikipageAction {
 
 	@Override
 	public String getLabel() {
-		return "Create this Page";
+		return "Create new wiki page";
 	}
 
 	@Override
 	protected void onExecute() {
-		getCurrentProject().createNewWikipage(pageName);
+		Wikipage page = getCurrentProject().createNewWikipage(null);
+		// Scope.get().getComponent(WikiWidget.class).showPage(page);
+		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(page);
 	}
 
 }
