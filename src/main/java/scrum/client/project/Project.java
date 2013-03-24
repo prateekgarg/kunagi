@@ -151,7 +151,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public List<Issue> getClaimedBugs(User user) {
 		List<Issue> issues = new ArrayList<Issue>();
-		for (Issue issue : getBugs()) {
+		for (Issue issue : getOpenBugs()) {
 			if (issue.isOwner(user) && !issue.isFixed()) issues.add(issue);
 		}
 		return issues;
@@ -389,16 +389,16 @@ public class Project extends GProject implements ForumSupport {
 
 	public List<Issue> getUnclaimedBugs(int severity) {
 		List<Issue> ret = new ArrayList<Issue>();
-		for (Issue issue : getBugs()) {
+		for (Issue issue : getOpenBugs()) {
 			if (issue.getOwner() == null && issue.isSeverity(severity)) ret.add(issue);
 		}
 		return ret;
 	}
 
-	public List<Issue> getBugs() {
+	public List<Issue> getOpenBugs() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isBug()) ret.add(issue);
+			if (issue.isUnclosedBug()) ret.add(issue);
 		}
 		return ret;
 	}
