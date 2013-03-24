@@ -403,10 +403,10 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Issue> getFixedBugs() {
+	public List<Issue> getUnclosedFixedBugs() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isBug() && issue.isFixed()) ret.add(issue);
+			if (issue.isBug() && issue.isFixed() && !issue.isClosed()) ret.add(issue);
 		}
 		return ret;
 	}
