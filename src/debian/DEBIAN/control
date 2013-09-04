@@ -2,7 +2,7 @@ Package: kunagi
 Version: 0.24.4
 Section: devel
 Depends: tomcat6
-Recommends: msttcorefonts
+Recommends: msttcorefonts, ttf-dejavu
 Priority: optional
 Architecture: all
 Maintainer: Kunagi Team <support@kunagi.org>
