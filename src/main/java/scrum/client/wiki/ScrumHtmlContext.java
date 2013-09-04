@@ -14,7 +14,6 @@
  */
 package scrum.client.wiki;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 import scrum.client.Dao;
 import scrum.client.collaboration.ForumSupport;
@@ -39,7 +38,6 @@ public class ScrumHtmlContext implements HtmlContext {
 	@Override
 	public String getEntityReferenceHrefOrOnclickAParameter(String reference) {
 		// return "onclick='window.scrum.showEntityByReference(\"" + reference + "\")'";
-		Log.TEST("------------> reference:", reference);
 		return "href='" + Navigator.getEntityHref(reference) + "'";
 	}
 

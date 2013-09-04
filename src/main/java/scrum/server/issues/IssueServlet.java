@@ -23,6 +23,7 @@ import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 
@@ -82,10 +83,15 @@ public class IssueServlet extends AKunagiServlet {
 		}
 
 		String returnUrl = req.get("returnUrl");
-		if (returnUrl == null) returnUrl = "http://kunagi.org/message.html#{message}";
-		returnUrl = returnUrl.replace("{message}", Str.encodeUrlParameter(message));
+		if (returnUrl != null) {
+			returnUrl = returnUrl.replace("{message}", Str.encodeUrlParameter(message));
+			req.sendRedirect(returnUrl);
+			return;
+		}
 
-		req.sendRedirect(returnUrl);
+		req.setContentType("text/html");
+		PrintWriter out = req.getWriter();
+		out.print(message);
 	}
 
 	private String submitIssue(String projectId, String label, String text, String name, String email, boolean publish,
