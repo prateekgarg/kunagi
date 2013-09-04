@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi.deb" target="_blank">kunagi.deb</a>
+            <a href="releases/$project.currentRelease/kunagi_${project.currentRelease}.deb" target="_blank">kunagi.deb</a>
         </div>
     </div>
     <div class="clear"></div><br>
@@ -30,10 +30,10 @@
             <a href="releases/$project.currentRelease/kunagi.war" target="_blank">kunagi.war</a>
         </div>
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi.tar.gz" target="_blank">kunagi.tar.gz</a>
+            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.tar.gz" target="_blank">kunagi.tar.gz</a>
         </div>
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi.zip" target="_blank">kunagi.zip</a>
+            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.zip" target="_blank">kunagi.zip</a>
         </div>
     </div>
     <div class="clear"></div><br>
