@@ -204,7 +204,7 @@ public class HomepageUpdater {
 	private void processStoryTemplates() {
 		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
 		for (Requirement requirement : requirements) {
-			if (requirement.isClosed()) continue;
+			// if (requirement.isClosed()) continue;
 			processStoryTemplate(requirement);
 		}
 	}
