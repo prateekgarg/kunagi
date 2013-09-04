@@ -516,6 +516,7 @@ public class WikiParser {
 		if (s.startsWith("ftp://")) return true;
 		if (s.startsWith("apt://")) return true;
 		if (s.startsWith("mailto://")) return true;
+		if (s.startsWith("file://")) return true;
 		return false;
 	}
 
