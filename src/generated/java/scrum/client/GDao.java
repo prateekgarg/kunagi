@@ -25,7 +25,6 @@ public abstract class GDao
     protected Map<String, scrum.client.pr.BlogEntry> blogEntrys = new HashMap<String, scrum.client.pr.BlogEntry>();
 
     public final void clearBlogEntrys() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing BlogEntrys");
         blogEntrys.clear();
     }
 
@@ -54,10 +53,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.pr.BlogEntry(data);
             blogEntrys.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("BlogEntry received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("BlogEntry updated: " + entity);
         }
         return entity;
     }
@@ -151,7 +148,6 @@ public abstract class GDao
     protected Map<String, scrum.client.journal.Change> changes = new HashMap<String, scrum.client.journal.Change>();
 
     public final void clearChanges() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Changes");
         changes.clear();
     }
 
@@ -180,10 +176,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.journal.Change(data);
             changes.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Change received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Change updated: " + entity);
         }
         return entity;
     }
@@ -269,7 +263,6 @@ public abstract class GDao
     protected Map<String, scrum.client.collaboration.ChatMessage> chatMessages = new HashMap<String, scrum.client.collaboration.ChatMessage>();
 
     public final void clearChatMessages() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing ChatMessages");
         chatMessages.clear();
     }
 
@@ -298,10 +291,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.ChatMessage(data);
             chatMessages.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("ChatMessage received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("ChatMessage updated: " + entity);
         }
         return entity;
     }
@@ -363,7 +354,6 @@ public abstract class GDao
     protected Map<String, scrum.client.collaboration.Comment> comments = new HashMap<String, scrum.client.collaboration.Comment>();
 
     public final void clearComments() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Comments");
         comments.clear();
     }
 
@@ -392,10 +382,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Comment(data);
             comments.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Comment received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Comment updated: " + entity);
         }
         return entity;
     }
@@ -489,7 +477,6 @@ public abstract class GDao
     protected Map<String, scrum.client.collaboration.Emoticon> emoticons = new HashMap<String, scrum.client.collaboration.Emoticon>();
 
     public final void clearEmoticons() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Emoticons");
         emoticons.clear();
     }
 
@@ -518,10 +505,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Emoticon(data);
             emoticons.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Emoticon received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Emoticon updated: " + entity);
         }
         return entity;
     }
@@ -575,7 +560,6 @@ public abstract class GDao
     protected Map<String, scrum.client.files.File> files = new HashMap<String, scrum.client.files.File>();
 
     public final void clearFiles() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Files");
         files.clear();
     }
 
@@ -604,10 +588,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.files.File(data);
             files.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("File received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("File updated: " + entity);
         }
         return entity;
     }
@@ -685,7 +667,6 @@ public abstract class GDao
     protected Map<String, scrum.client.impediments.Impediment> impediments = new HashMap<String, scrum.client.impediments.Impediment>();
 
     public final void clearImpediments() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Impediments");
         impediments.clear();
     }
 
@@ -714,10 +695,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.impediments.Impediment(data);
             impediments.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Impediment received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Impediment updated: " + entity);
         }
         return entity;
     }
@@ -803,7 +782,6 @@ public abstract class GDao
     protected Map<String, scrum.client.issues.Issue> issues = new HashMap<String, scrum.client.issues.Issue>();
 
     public final void clearIssues() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Issues");
         issues.clear();
     }
 
@@ -832,10 +810,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.issues.Issue(data);
             issues.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Issue received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Issue updated: " + entity);
         }
         return entity;
     }
@@ -1041,7 +1017,6 @@ public abstract class GDao
     protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
 
     public final void clearProjects() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Projects");
         projects.clear();
     }
 
@@ -1070,10 +1045,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Project(data);
             projects.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Project received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Project updated: " + entity);
         }
         return entity;
     }
@@ -1438,7 +1411,6 @@ public abstract class GDao
     protected Map<String, scrum.client.journal.ProjectEvent> projectEvents = new HashMap<String, scrum.client.journal.ProjectEvent>();
 
     public final void clearProjectEvents() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing ProjectEvents");
         projectEvents.clear();
     }
 
@@ -1467,10 +1439,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.journal.ProjectEvent(data);
             projectEvents.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("ProjectEvent received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("ProjectEvent updated: " + entity);
         }
         return entity;
     }
@@ -1532,7 +1502,6 @@ public abstract class GDao
     protected Map<String, scrum.client.admin.ProjectUserConfig> projectUserConfigs = new HashMap<String, scrum.client.admin.ProjectUserConfig>();
 
     public final void clearProjectUserConfigs() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing ProjectUserConfigs");
         projectUserConfigs.clear();
     }
 
@@ -1561,10 +1530,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.ProjectUserConfig(data);
             projectUserConfigs.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("ProjectUserConfig received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("ProjectUserConfig updated: " + entity);
         }
         return entity;
     }
@@ -1730,7 +1697,6 @@ public abstract class GDao
     protected Map<String, scrum.client.project.Quality> qualitys = new HashMap<String, scrum.client.project.Quality>();
 
     public final void clearQualitys() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Qualitys");
         qualitys.clear();
     }
 
@@ -1759,10 +1725,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Quality(data);
             qualitys.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Quality received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Quality updated: " + entity);
         }
         return entity;
     }
@@ -1832,7 +1796,6 @@ public abstract class GDao
     protected Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();
 
     public final void clearReleases() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Releases");
         releases.clear();
     }
 
@@ -1861,10 +1824,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.release.Release(data);
             releases.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Release received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Release updated: " + entity);
         }
         return entity;
     }
@@ -1990,7 +1951,6 @@ public abstract class GDao
     protected Map<String, scrum.client.project.Requirement> requirements = new HashMap<String, scrum.client.project.Requirement>();
 
     public final void clearRequirements() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Requirements");
         requirements.clear();
     }
 
@@ -2019,10 +1979,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.project.Requirement(data);
             requirements.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Requirement received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Requirement updated: " + entity);
         }
         return entity;
     }
@@ -2188,7 +2146,6 @@ public abstract class GDao
     protected Map<String, scrum.client.estimation.RequirementEstimationVote> requirementEstimationVotes = new HashMap<String, scrum.client.estimation.RequirementEstimationVote>();
 
     public final void clearRequirementEstimationVotes() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing RequirementEstimationVotes");
         requirementEstimationVotes.clear();
     }
 
@@ -2217,10 +2174,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.estimation.RequirementEstimationVote(data);
             requirementEstimationVotes.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("RequirementEstimationVote received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("RequirementEstimationVote updated: " + entity);
         }
         return entity;
     }
@@ -2274,7 +2229,6 @@ public abstract class GDao
     protected Map<String, scrum.client.risks.Risk> risks = new HashMap<String, scrum.client.risks.Risk>();
 
     public final void clearRisks() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Risks");
         risks.clear();
     }
 
@@ -2303,10 +2257,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.risks.Risk(data);
             risks.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Risk received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Risk updated: " + entity);
         }
         return entity;
     }
@@ -2400,7 +2352,6 @@ public abstract class GDao
     protected Map<String, scrum.client.calendar.SimpleEvent> simpleEvents = new HashMap<String, scrum.client.calendar.SimpleEvent>();
 
     public final void clearSimpleEvents() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing SimpleEvents");
         simpleEvents.clear();
     }
 
@@ -2429,10 +2380,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.calendar.SimpleEvent(data);
             simpleEvents.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("SimpleEvent received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("SimpleEvent updated: " + entity);
         }
         return entity;
     }
@@ -2534,7 +2483,6 @@ public abstract class GDao
     protected Map<String, scrum.client.sprint.Sprint> sprints = new HashMap<String, scrum.client.sprint.Sprint>();
 
     public final void clearSprints() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Sprints");
         sprints.clear();
     }
 
@@ -2563,10 +2511,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Sprint(data);
             sprints.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Sprint received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Sprint updated: " + entity);
         }
         return entity;
     }
@@ -2732,7 +2678,6 @@ public abstract class GDao
     protected Map<String, scrum.client.sprint.SprintReport> sprintReports = new HashMap<String, scrum.client.sprint.SprintReport>();
 
     public final void clearSprintReports() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing SprintReports");
         sprintReports.clear();
     }
 
@@ -2761,10 +2706,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.SprintReport(data);
             sprintReports.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("SprintReport received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("SprintReport updated: " + entity);
         }
         return entity;
     }
@@ -2849,7 +2792,6 @@ public abstract class GDao
     protected Map<String, scrum.client.collaboration.Subject> subjects = new HashMap<String, scrum.client.collaboration.Subject>();
 
     public final void clearSubjects() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Subjects");
         subjects.clear();
     }
 
@@ -2878,10 +2820,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Subject(data);
             subjects.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Subject received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Subject updated: " + entity);
         }
         return entity;
     }
@@ -2943,7 +2883,6 @@ public abstract class GDao
     protected Map<String, scrum.client.pr.Subscription> subscriptions = new HashMap<String, scrum.client.pr.Subscription>();
 
     public final void clearSubscriptions() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Subscriptions");
         subscriptions.clear();
     }
 
@@ -2972,10 +2911,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.pr.Subscription(data);
             subscriptions.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Subscription received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Subscription updated: " + entity);
         }
         return entity;
     }
@@ -3020,7 +2957,6 @@ public abstract class GDao
     protected Map<String, scrum.client.admin.SystemConfig> systemConfigs = new HashMap<String, scrum.client.admin.SystemConfig>();
 
     public final void clearSystemConfigs() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing SystemConfigs");
         systemConfigs.clear();
     }
 
@@ -3049,10 +2985,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.SystemConfig(data);
             systemConfigs.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("SystemConfig received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("SystemConfig updated: " + entity);
         }
         return entity;
     }
@@ -3314,7 +3248,6 @@ public abstract class GDao
     protected Map<String, scrum.client.sprint.Task> tasks = new HashMap<String, scrum.client.sprint.Task>();
 
     public final void clearTasks() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Tasks");
         tasks.clear();
     }
 
@@ -3343,10 +3276,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.sprint.Task(data);
             tasks.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Task received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Task updated: " + entity);
         }
         return entity;
     }
@@ -3448,7 +3379,6 @@ public abstract class GDao
     protected Map<String, scrum.client.admin.User> users = new HashMap<String, scrum.client.admin.User>();
 
     public final void clearUsers() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Users");
         users.clear();
     }
 
@@ -3477,10 +3407,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.admin.User(data);
             users.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("User received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("User updated: " + entity);
         }
         return entity;
     }
@@ -3730,7 +3658,6 @@ public abstract class GDao
     protected Map<String, scrum.client.collaboration.Wikipage> wikipages = new HashMap<String, scrum.client.collaboration.Wikipage>();
 
     public final void clearWikipages() {
-        ilarkesto.core.logging.Log.DEBUG("Clearing Wikipages");
         wikipages.clear();
     }
 
@@ -3759,10 +3686,8 @@ public abstract class GDao
         if (entity == null) {
             entity = new scrum.client.collaboration.Wikipage(data);
             wikipages.put(id, entity);
-            ilarkesto.core.logging.Log.DEBUG("Wikipage received: " + entity.getId() + " ("+entity+")");
         } else {
             entity.updateProperties(data);
-            ilarkesto.core.logging.Log.DEBUG("Wikipage updated: " + entity);
         }
         return entity;
     }
