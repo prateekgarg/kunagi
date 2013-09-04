@@ -1,5 +1,5 @@
 Package: kunagi
-Version: 0.24.4
+Version: 0.24.5
 Section: devel
 Depends: tomcat6
 Recommends: msttcorefonts, ttf-dejavu
