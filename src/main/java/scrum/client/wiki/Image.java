@@ -51,7 +51,7 @@ public class Image extends AWikiElement {
 			sb.append("\" width=\"100px\" align=\"");
 			sb.append(thumbAlignmentLeft ? "left" : "right");
 		} else {
-			sb.append("\" style=\"max-width:500px;\"");
+			sb.append("\" style=\"max-width:500px;");
 		}
 		// TODO alt="label"
 		sb.append("\">");
