@@ -43,6 +43,7 @@ public class WikiTest extends Assert {
 			"<a href='fle1.html'><img src=\"fle1\" width=\"100px\" align=\"right\"></a>");
 		Assert.assertEquals(toHtml("[[Image:fle1|thumb|left]]"),
 			"<a href='fle1.html'><img src=\"fle1\" width=\"100px\" align=\"left\"></a>");
+		Assert.assertEquals(toHtml("[[Image:fle6 | text]]"), "<a href='fle6.html'><img src=\"fle6\"></a>");
 	}
 
 	@Test

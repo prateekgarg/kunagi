@@ -29,9 +29,10 @@ public class VelocityHistoryWidget extends AScrumWidget {
 	@Override
 	protected Widget onInitialization() {
 		List<Sprint> sprints = getCurrentProject().getCompletedSprintsInOrder();
-		Utl.removeFirstElements(sprints, sprints.size() - 150);
+		int sprintCount = sprints.size();
+		Utl.removeFirstElements(sprints, sprintCount - 150);
 
-		int barWidth = 300 / sprints.size();
+		int barWidth = sprintCount == 0 ? 300 : 300 / sprintCount;
 		if (barWidth > 10) barWidth = 10;
 		if (barWidth < 1) barWidth = 1;
 
