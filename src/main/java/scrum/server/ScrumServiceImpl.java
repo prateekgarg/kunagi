@@ -510,6 +510,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void onBlogEntryChanged(GwtConversation conversation, BlogEntry blogEntry, Map properties) {
 		User currentUser = conversation.getSession().getUser();
+		boolean homepageUpdated = false;
 
 		if (properties.containsKey("text")) {
 			blogEntry.addAuthor(currentUser);
@@ -521,6 +522,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					currentUser.getName() + " published " + blogEntry.getReferenceAndLabel(), blogEntry);
 			}
 			blogEntry.getProject().updateHomepage();
+			homepageUpdated = true;
+		}
+
+		if (blogEntry.isPublished() && !homepageUpdated) {
+			blogEntry.getProject().updateHomepage(blogEntry, true);
 		}
 	}
 
