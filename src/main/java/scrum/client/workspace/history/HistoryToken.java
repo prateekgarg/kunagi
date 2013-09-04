@@ -140,7 +140,7 @@ public class HistoryToken {
 	}
 
 	public boolean isToggle() {
-		return toggle > 0;
+		return toggle != 0;
 	}
 
 	class TokenChangeHandler implements ValueChangeHandler<String> {
