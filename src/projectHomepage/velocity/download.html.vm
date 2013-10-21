@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi_${project.currentRelease}.deb" target="_blank">kunagi.deb</a>
+            <a href="releases/$project.currentRelease/kunagi_${project.currentRelease}.deb" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','deb',this.href]);”>kunagi.deb</a>
         </div>
     </div>
     <div class="clear"></div><br>
@@ -27,13 +27,13 @@
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi.war" target="_blank">kunagi.war</a>
+            <a href="releases/$project.currentRelease/kunagi.war" target="_blank" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','war',this.href]);”>kunagi.war</a>
         </div>
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.tar.gz" target="_blank">kunagi.tar.gz</a>
+            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.tar.gz" target="_blank" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','tgz',this.href]);”>kunagi.tar.gz</a>
         </div>
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.zip" target="_blank">kunagi.zip</a>
+            <a href="releases/$project.currentRelease/kunagi-${project.currentRelease}.zip" target="_blank" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','zip',this.href]);”>kunagi.zip</a>
         </div>
     </div>
     <div class="clear"></div><br>
@@ -47,10 +47,10 @@
     </div>
     <div class="sidebar">
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi32.exe" target="_blank">kunagi32.exe</a>
+            <a href="releases/$project.currentRelease/kunagi32.exe" target="_blank" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','exe32',this.href]);”>kunagi32.exe</a>
         </div>
         <div class="starter">
-            <a href="releases/$project.currentRelease/kunagi64.exe" target="_blank">kunagi64.exe</a>
+            <a href="releases/$project.currentRelease/kunagi64.exe" target="_blank" target="_blank" onclick=”_gaq.push(['_trackEvent','Download','exe64',this.href]);”>kunagi64.exe</a>
         </div>
     </div>
     <div class="clear"></div>
