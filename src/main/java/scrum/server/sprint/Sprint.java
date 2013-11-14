@@ -131,6 +131,7 @@ public class Sprint extends GSprint implements Numbered {
 		requirement.setClosed(false);
 		requirement.setSprint(null);
 		requirement.setDirty(burned > 0);
+		removeRequirementsOrderId(requirement.getId());
 		requirement.getProject().moveRequirementToTop(requirement);
 		SprintDaySnapshot daySnapshot = getDaySnapshot(Date.today());
 		daySnapshot.addBurnedWorkFromDeleted(burned);
@@ -312,6 +313,15 @@ public class Sprint extends GSprint implements Numbered {
 			if (getEnd().isYesterday()) setEnd(Date.today());
 
 			updateNextSprintDates();
+
+			// update order ids
+			List<String> ids = new ArrayList<String>();
+			for (Requirement story : getRequirements()) {
+				ids.add(story.getId());
+			}
+			List<String> orderIds = getRequirementsOrderIds();
+			orderIds.retainAll(ids);
+			setRequirementsOrderIds(orderIds);
 		}
 
 		if (project.isNextSprint(this)) {

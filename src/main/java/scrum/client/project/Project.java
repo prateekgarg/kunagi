@@ -118,7 +118,6 @@ public class Project extends GProject implements ForumSupport {
 	public Requirement getNextProductBacklogRequirement() {
 		List<Requirement> requirements = getProductBacklogRequirements();
 		if (requirements.isEmpty()) return null;
-		Collections.sort(requirements, getRequirementsOrderComparator());
 		return requirements.get(0);
 	}
 
@@ -284,6 +283,7 @@ public class Project extends GProject implements ForumSupport {
 
 	public void updateRequirementsOrder(List<Requirement> requirements) {
 		setRequirementsOrderIds(Gwt.getIdsAsList(requirements));
+		productBacklogRequirements = null;
 		updateRequirementsModificationTimes();
 	}
 
@@ -530,15 +530,38 @@ public class Project extends GProject implements ForumSupport {
 		getDao().deleteQuality(item);
 	}
 
+	private transient List<Requirement> productBacklogRequirements;
+	private transient String productBacklogRequirementsChangeSignature = "";
+
 	public List<Requirement> getProductBacklogRequirements() {
-		List<Requirement> ret = new ArrayList<Requirement>();
+		if (productBacklogRequirements != null) {
+			String signature = createProductBacklogRequirementsChangeSignature();
+			if (signature.equals(productBacklogRequirementsChangeSignature)) return productBacklogRequirements;
+			productBacklogRequirementsChangeSignature = signature;
+		}
+		productBacklogRequirements = new ArrayList<Requirement>();
 		for (Requirement requirement : getRequirements()) {
 			if (requirement.isDeleted()) continue;
 			if (requirement.isClosed()) continue;
 			if (requirement.isInCurrentSprint()) continue;
-			ret.add(requirement);
+			productBacklogRequirements.add(requirement);
 		}
-		return ret;
+		Collections.sort(productBacklogRequirements, getRequirementsOrderComparator());
+		return productBacklogRequirements;
+	}
+
+	private String createProductBacklogRequirementsChangeSignature() {
+		StringBuilder sb = new StringBuilder();
+		for (String id : getRequirementsOrderIds()) {
+			sb.append(id);
+		}
+		for (Requirement requirement : getRequirements()) {
+			if (requirement.isDeleted()) continue;
+			if (requirement.isClosed()) continue;
+			if (requirement.isInCurrentSprint()) continue;
+			sb.append(requirement.getNumber());
+		}
+		return sb.toString();
 	}
 
 	public List<Task> getTasks() {
