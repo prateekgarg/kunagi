@@ -345,7 +345,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof BlogEntry) {
 			BlogEntry blogEntry = (BlogEntry) entity;
-			blogEntry.setDateAndTime(DateAndTime.now());
 			blogEntry.addAuthor(currentUser);
 		}
 
