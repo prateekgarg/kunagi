@@ -74,7 +74,7 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 		projectList.addStyleName("Available Projects to move the story to");
 		for (Project project : projects) {
-			if (project.isProductOwner(getCurrentUser())) {
+			if (project.isProductOwner(getCurrentUser()) && !project.getId().equals(projectId)) {
 				projectList.addItem(project.getLabel(), project.getId());
 			}
 		}
