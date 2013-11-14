@@ -14,7 +14,6 @@
  */
 package scrum.client.files;
 
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.Scope;
 
 import java.util.List;
@@ -34,11 +33,10 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectSelectionWidget extends AScrumWidget {
-
-	private static final Log log = Log.get(ProjectSelectionWidget.class);
 
 	private Button button = new Button();
 
@@ -58,7 +56,7 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
-		Panel panel = new FormFlowPanel();
+		Panel panel = new VerticalPanel();
 		List<Project> projects = getDao().getProjects();
 		ListBox projectList = new ListBox();
 		projectList.setVisibleItemCount(10);
