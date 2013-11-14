@@ -3,6 +3,7 @@
 	<name>kunagi</name>
 	<comment>scrum project</comment>
 	<projects>
+		<project>ilarkesto</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
