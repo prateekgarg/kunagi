@@ -316,7 +316,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			comment.setDateAndTime(DateAndTime.now());
 			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
 				comment.getParent());
-			currentProject.updateHomepage(comment.getParent(), true);
+			currentProject.updateHomepage(comment.getParent());
 		}
 
 		if (entity instanceof ChatMessage) {
@@ -520,7 +520,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	private void onCommentChanged(GwtConversation conversation, Comment comment, Map properties) {
-		conversation.getProject().updateHomepage(comment.getParent(), false);
+		conversation.getProject().updateHomepage(comment.getParent());
 		if (comment.isPublished() && properties.containsKey("published")) {
 			subscriptionService.notifySubscribers(comment.getParent(),
 				"New comment posted by " + comment.getAuthorLabel(), conversation.getProject(), null);
@@ -545,13 +545,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 
 		if (blogEntry.isPublished() && !homepageUpdated) {
-			blogEntry.getProject().updateHomepage(blogEntry, true);
+			blogEntry.getProject().updateHomepage(blogEntry);
 		}
 	}
 
 	private void onWikipageChanged(GwtConversation conversation, Wikipage wikipage, Map properties) {
-		// don't do this! takes too long and blocks all clients!
-		// wikipage.getProject().updateHomepage();
+		conversation.getProject().updateHomepage(wikipage);
 	}
 
 	private void onIssueChanged(GwtConversation conversation, Issue issue, Map properties) {
@@ -612,7 +611,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
-		issue.getProject().updateHomepage(issue, false);
+		issue.getProject().updateHomepage(issue);
 	}
 
 	private void onImpedimentChanged(GwtConversation conversation, Impediment impediment, Map properties) {

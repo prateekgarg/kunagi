@@ -104,7 +104,7 @@ public class IssueServlet extends AKunagiServlet {
 		Project project = projectDao.getById(projectId);
 		Issue issue = issueDao.postIssue(project, label, "<nowiki>" + text + "</nowiki>", name, email, publish);
 		if (publish) {
-			project.updateHomepage(issue, true);
+			project.updateHomepage(issue);
 		}
 		String issuer = issue.getIssuer();
 		if (Str.isBlank(issuer)) issuer = "anonymous";

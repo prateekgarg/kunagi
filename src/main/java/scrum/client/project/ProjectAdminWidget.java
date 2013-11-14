@@ -57,7 +57,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		TableBuilder tbHomepage = ScrumGwt.createFieldTable();
 		tbHomepage.addFieldRow("Homepage directory", project.getHomepageDirModel());
 		tbHomepage.addFieldRow("Homepage URL", project.getHomepageUrlModel());
-		tbHomepage.addFieldRow("Update automatically", project.getAutoUpdateHomepageModel());
+		// tbHomepage.addFieldRow("Update automatically", project.getAutoUpdateHomepageModel());
 		page.addSection(tbHomepage.createTable());
 
 		page.addHeader("Script integration");

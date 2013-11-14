@@ -189,9 +189,8 @@ public class Project extends GProject {
 		getHomepageUpdater().processAll();
 	}
 
-	public synchronized void updateHomepage(AEntity entity, boolean forceUpdate) {
+	public synchronized void updateHomepage(AEntity entity) {
 		if (!isHomepageDirSet()) return;
-		if (!forceUpdate && !isAutoUpdateHomepage()) return;
 		getHomepageUpdater().processEntityTemplate(entity);
 	}
 
