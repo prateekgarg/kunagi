@@ -31,6 +31,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Hidden;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -46,12 +47,15 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	private String requirementId;
 
+	private String currentProject;
+
 	/*
 	 * Provide a new project for a requirement
 	 */
 
-	public ProjectSelectionWidget(String requirementId) {
+	public ProjectSelectionWidget(String requirementId, String currentProject) {
 		this.requirementId = requirementId;
+		this.currentProject = currentProject;
 	}
 
 	@Override
@@ -67,31 +71,43 @@ public class ProjectSelectionWidget extends AScrumWidget {
 			public void onChange(ChangeEvent event) {
 				ListBox lb = (ListBox) event.getSource();
 				projectId = lb.getValue((lb.getSelectedIndex()));
-				// button.setEnabled(true);
 			}
 
 		});
 
 		projectList.addStyleName("Available Projects to move the story to");
 		for (Project project : projects) {
-			if (project.isProductOwner(getCurrentUser()) && !project.getId().equals(projectId)) {
+			if (project.isProductOwner(getCurrentUser()) && !project.getId().equals(currentProject)) {
 				projectList.addItem(project.getLabel(), project.getId());
 			}
 		}
 
-		Button button = new Button("Chose Project", new ClickHandler() {
+		Button btnMove = new Button("Chose Project", new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
+				if (projectId != null && !projectId.trim().equals("")) {
+					new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
+				}
 
 				dialog.hide();
 			}
 		});
-		// button.setEnabled(false);
+
+		Button btnCancel = new Button("Cancel", new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				dialog.hide();
+			}
+		});
+
+		Panel pnlButtons = new HorizontalPanel();
+		pnlButtons.add(btnMove);
+		pnlButtons.add(btnCancel);
 
 		panel.add(projectList);
-		panel.add(button);
+		panel.add(pnlButtons);
 
 		return panel;
 	}
@@ -102,8 +118,8 @@ public class ProjectSelectionWidget extends AScrumWidget {
 		button.setVisible(false);
 	}
 
-	public static ProjectSelectionWidget showDialog(Integer topPosition, String requirementId) {
-		ProjectSelectionWidget projectSelectionWidget = new ProjectSelectionWidget(requirementId);
+	public static ProjectSelectionWidget showDialog(Integer topPosition, String requirementId, String currentProject) {
+		ProjectSelectionWidget projectSelectionWidget = new ProjectSelectionWidget(requirementId, currentProject);
 
 		projectSelectionWidget.dialog = new DialogBox(true, true);
 		DialogBox dialog = projectSelectionWidget.dialog;

@@ -22,28 +22,30 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
 	@Override
 	public boolean isPermitted() {
-		// if (!requirement.getProject().isProductOwner(getCurrentUser())) return false;
+		if (!requirement.getProject().isProductOwner(getCurrentUser())) return false;
 		return true;
 	}
 
 	@Override
 	protected void onExecute() {
-		ProjectSelectionWidget.showDialog(null, requirement.getId());
+		ProjectSelectionWidget.showDialog(null, requirement.getId(), requirement.getProject().getId());
 	}
 
+	// not implemented yet
 	class Undo extends ALocalUndo {
 
-		// FIXME
-		private Requirement newRequirement;
+		// TODO
+		// private Requirement newRequirement;
 
 		public Undo(Requirement newRequirement) {
 			super();
-			this.newRequirement = newRequirement;
+			// this.newRequirement = newRequirement;
 		}
 
 		@Override
 		public String getLabel() {
-			return "Undo move story " + requirement.getReferenceAndLabel();
+			return "Undo move story not implemented";
+			// return "Undo move story " + requirement.getReferenceAndLabel();
 		}
 
 		@Override
