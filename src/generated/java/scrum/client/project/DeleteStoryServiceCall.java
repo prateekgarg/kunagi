@@ -4,20 +4,21 @@ package scrum.client.project;
 
 public class DeleteStoryServiceCall extends scrum.client.core.AServiceCall {
 
-	private String storyId;
+    private String storyId;
 
-	public DeleteStoryServiceCall(String storyId) {
-		this.storyId = storyId;
-	}
+    public  DeleteStoryServiceCall(String storyId) {
+        this.storyId = storyId;
+    }
 
-	@Override
-	public void execute(Runnable returnHandler) {
-		serviceCaller.onServiceCall(this);
-	}
+    public void execute(Runnable returnHandler) {
+        serviceCaller.onServiceCall(this);
+        serviceCaller.getService().deleteStory(serviceCaller.getConversationNumber(), storyId, new DefaultCallback(this, returnHandler));
+    }
 
-	@Override
-	public String toString() {
-		return "DeleteStory";
-	}
+    @Override
+    public String toString() {
+        return "DeleteStory";
+    }
 
 }
+

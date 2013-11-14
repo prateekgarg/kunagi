@@ -193,7 +193,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Sprint sprint = project.getCurrentSprint();
 		User currentUser = conversation.getSession().getUser();
 
-		sprint.pullRequirement(story, currentUser);
+		sprint.pullStory(story, currentUser);
 
 		postProjectEvent(conversation, currentUser.getName() + " pulled " + story.getReferenceAndLabel()
 				+ " to current sprint", story);

@@ -43,6 +43,7 @@ public class ProjectAdminWidget extends AScrumWidget {
 		ProjectBlock.addRolesFieldRows(project, tbPro);
 		tbPro.addFieldRow("Free days", new WeekdaySelectorEditorWidget(project.getFreeDaysWeekdaySelectorModel()));
 		tbPro.addFieldRow("Release info", project.getReleasingInfoModel());
+		tbPro.addFieldRow("Create tasks from qualities", project.getAutoCreateTasksFromQualitiesModel());
 		page.addSection(tbPro.createTable());
 
 		page.addHeader("Product descriptions");

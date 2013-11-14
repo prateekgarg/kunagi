@@ -264,6 +264,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 								+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${product.label} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
+			projectModel
+					.addProperty("autoCreateTasksFromQualities", boolean.class)
+					.setTooltip(
+						"When pulling stories into the sprint, automatically create a task for each quality assigned to the story.");
 			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addStringProperty("releasingInfo").setRichtext(true)
 					.setTooltip("Custom info text for the releases page. Could be used for a release checklist.");
