@@ -1,5 +1,4 @@
 /*
- * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
@@ -14,12 +13,10 @@
  */
 package scrum.client.files;
 
-import ilarkesto.core.scope.Scope;
-
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
-import scrum.client.project.MoveRequirementToProjectServiceCall;
+import scrum.client.project.MoveRequirementToOtherProject;
 import scrum.client.project.Project;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -28,9 +25,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
@@ -49,11 +43,14 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	private String currentProject;
 
+	private MoveRequirementToOtherProject caller;
+
 	/*
 	 * Provide a new project for a requirement
 	 */
 
-	public ProjectSelectionWidget(String requirementId, String currentProject) {
+	public ProjectSelectionWidget(MoveRequirementToOtherProject action, String requirementId, String currentProject) {
+		this.caller = action;
 		this.requirementId = requirementId;
 		this.currentProject = currentProject;
 	}
@@ -75,24 +72,25 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 		});
 
-		projectList.addStyleName("Available Projects to move the story to");
+		projectList.addStyleName("listAvailableProjects");
 		for (Project project : projects) {
 			if (project.isProductOwner(getCurrentUser()) && !project.getId().equals(currentProject)) {
 				projectList.addItem(project.getLabel(), project.getId());
 			}
 		}
 
-		Button btnMove = new Button("Chose Project", new ClickHandler() {
+		Button btnSelect = new Button("Choose Project", new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				if (projectId != null && !projectId.trim().equals("")) {
-					new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
+					caller.executeMove(projectId, requirementId);
 				}
 
 				dialog.hide();
 			}
 		});
+		btnSelect.setStyleName("btnSelectProject");
 
 		Button btnCancel = new Button("Cancel", new ClickHandler() {
 
@@ -101,9 +99,11 @@ public class ProjectSelectionWidget extends AScrumWidget {
 				dialog.hide();
 			}
 		});
+		btnCancel.setStyleName("btnCancelSelectProject");
 
 		Panel pnlButtons = new HorizontalPanel();
-		pnlButtons.add(btnMove);
+		pnlButtons.setStyleName("pnlSelectProject");
+		pnlButtons.add(btnSelect);
 		pnlButtons.add(btnCancel);
 
 		panel.add(projectList);
@@ -118,47 +118,18 @@ public class ProjectSelectionWidget extends AScrumWidget {
 		button.setVisible(false);
 	}
 
-	public static ProjectSelectionWidget showDialog(Integer topPosition, String requirementId, String currentProject) {
-		ProjectSelectionWidget projectSelectionWidget = new ProjectSelectionWidget(requirementId, currentProject);
+	public void showDialog() {
 
-		projectSelectionWidget.dialog = new DialogBox(true, true);
-		DialogBox dialog = projectSelectionWidget.dialog;
+		dialog = new DialogBox(true, true);
 		dialog.setAnimationEnabled(true);
-		dialog.setWidget(projectSelectionWidget.update());
+		dialog.setWidget(update());
 
 		dialog.center();
-		if (topPosition != null) dialog.setPopupPosition(dialog.getPopupLeft(), topPosition);
 		dialog.show();
 
-		return projectSelectionWidget;
 	}
 
 	public DialogBox getDialog() {
 		return dialog;
 	}
-
-	public class FormFlowPanel extends FormPanel {
-
-		FlowPanel formElements = new FlowPanel();
-		Widget fileField;
-
-		public FormFlowPanel() {
-			super.add(formElements);
-			Project project = Scope.get().getComponent(Project.class);
-			Hidden projectIdField = new Hidden("projectId", project.getId());
-			projectIdField.setID("uploadProjectId");
-			add(projectIdField);
-		}
-
-		@Override
-		public void add(Widget w) {
-			formElements.add(w);
-			if (w != button) fileField = w;
-		}
-
-		public void hideFileField() {
-			fileField.setVisible(false);
-		}
-	}
-
 }

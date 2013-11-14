@@ -5,18 +5,18 @@ import scrum.client.files.ProjectSelectionWidget;
 
 public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
-	public MoveRequirementToOtherProject(scrum.client.project.Requirement requirement) {
+	public MoveRequirementToOtherProject(Requirement requirement) {
 		super(requirement);
 	}
 
 	@Override
 	public String getLabel() {
-		return "Move Story to project";
+		return "Move Story to Project";
 	}
 
 	@Override
 	public void updateTooltip(TooltipBuilder tb) {
-		tb.setText("Move Story to other project");
+		tb.setText("Move Story to other Project");
 		if (!requirement.getProject().isProductOwner(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_PRODUCT_OWNER);
 	}
 
@@ -28,29 +28,37 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
 	@Override
 	protected void onExecute() {
-		ProjectSelectionWidget.showDialog(null, requirement.getId(), requirement.getProject().getId());
+		ProjectSelectionWidget widget = new ProjectSelectionWidget(this, requirement.getId(), requirement.getProject()
+				.getId());
+		widget.showDialog();
+
 	}
 
-	// not implemented yet
+	public void executeMove(String projectId, String requirementId) {
+		new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
+		addUndo(new Undo(requirement));
+	}
+
 	class Undo extends ALocalUndo {
 
-		// TODO
-		// private Requirement newRequirement;
+		private Requirement requirement;
 
-		public Undo(Requirement newRequirement) {
+		private Project oldProject;
+
+		public Undo(Requirement requirement) {
 			super();
-			// this.newRequirement = newRequirement;
+			oldProject = requirement.getProject();
+			this.requirement = requirement;
 		}
 
 		@Override
 		public String getLabel() {
-			return "Undo move story not implemented";
-			// return "Undo move story " + requirement.getReferenceAndLabel();
+			return "Undo move story " + requirement.getReferenceAndLabel();
 		}
 
 		@Override
 		protected void onUndo() {
-			// getDao().deleteRequirement(newRequirement);
+			new MoveRequirementToProjectServiceCall(oldProject.getId(), requirement.getId()).execute();
 		}
 	}
 }
