@@ -242,7 +242,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addStringProperty("homepageUrl")
 					.setTooltip("URL on which the project homepage is accessible.");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
-				"Automatically update the homepage.");
+				"Automatically update the homepage."); // TODO remove
 			projectModel.addStringProperty("releaseScriptPath").setTooltip(
 				"Full path to the script, which needs to be executed when publishing a release. "
 						+ "The Script recives the release label as the first argument.");
