@@ -1,6 +1,7 @@
 package scrum.client.project;
 
 import scrum.client.common.TooltipBuilder;
+import scrum.client.files.ProjectSelectionWidget;
 
 public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
@@ -27,6 +28,7 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
 	@Override
 	protected void onExecute() {
+		ProjectSelectionWidget uploadWidget = ProjectSelectionWidget.showDialog(null);
 		// Requirement newRequirement = requirement.getProject().createNewRequirement(requirement, true,
 		// true);
 		// Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(newRequirement);
@@ -51,7 +53,5 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 		protected void onUndo() {
 			// getDao().deleteRequirement(newRequirement);
 		}
-
 	}
-
 }
