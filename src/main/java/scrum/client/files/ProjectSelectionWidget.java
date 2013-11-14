@@ -20,13 +20,13 @@ import ilarkesto.core.scope.Scope;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
+import scrum.client.project.MoveRequirementToProjectServiceCall;
 import scrum.client.project.Project;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -44,9 +44,17 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	private DialogBox dialog;
 
-	protected int index;
+	protected String projectId;
 
-	public ProjectSelectionWidget() {}
+	private String requirementId;
+
+	/*
+	 * Provide a new project for a requirement
+	 */
+
+	public ProjectSelectionWidget(String requirementId) {
+		this.requirementId = requirementId;
+	}
 
 	@Override
 	protected Widget onInitialization() {
@@ -60,7 +68,7 @@ public class ProjectSelectionWidget extends AScrumWidget {
 			@Override
 			public void onChange(ChangeEvent event) {
 				ListBox lb = (ListBox) event.getSource();
-				index = lb.getSelectedIndex();
+				projectId = lb.getValue((lb.getSelectedIndex()));
 				// button.setEnabled(true);
 			}
 
@@ -77,8 +85,8 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Selected Index is " + index);
-				// TODO: call action here
+				new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
+
 				dialog.hide();
 			}
 		});
@@ -96,8 +104,8 @@ public class ProjectSelectionWidget extends AScrumWidget {
 		button.setVisible(false);
 	}
 
-	public static ProjectSelectionWidget showDialog(Integer topPosition) {
-		ProjectSelectionWidget projectSelectionWidget = new ProjectSelectionWidget();
+	public static ProjectSelectionWidget showDialog(Integer topPosition, String requirementId) {
+		ProjectSelectionWidget projectSelectionWidget = new ProjectSelectionWidget(requirementId);
 
 		projectSelectionWidget.dialog = new DialogBox(true, true);
 		DialogBox dialog = projectSelectionWidget.dialog;

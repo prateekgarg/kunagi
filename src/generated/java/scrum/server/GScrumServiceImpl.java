@@ -62,6 +62,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onCreateExampleProject(GwtConversation conversation);
 
+    public abstract void onMoveRequirementToProject(GwtConversation conversation, String projectId, String requirementId);
+
     public abstract void onSelectProject(GwtConversation conversation, String projectId);
 
     public abstract void onUpdateProjectHomepage(GwtConversation conversation);
@@ -832,6 +834,33 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "CreateExampleProject", ex);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    @Override
+    public scrum.client.DataTransferObject moveRequirementToProject(int conversationNumber, String projectId, String requirementId) {
+        log.debug("Handling service call: MoveRequirementToProject");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = null;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:MoveRequirementToProject");
+            context.bindCurrentThread();
+            try {
+                onMoveRequirementToProject(conversation, projectId, requirementId);
+                onServiceMethodExecuted(context);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "MoveRequirementToProject", ex);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

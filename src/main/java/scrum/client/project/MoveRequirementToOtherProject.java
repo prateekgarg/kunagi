@@ -28,15 +28,12 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 
 	@Override
 	protected void onExecute() {
-		ProjectSelectionWidget uploadWidget = ProjectSelectionWidget.showDialog(null);
-		// Requirement newRequirement = requirement.getProject().createNewRequirement(requirement, true,
-		// true);
-		// Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(newRequirement);
-		// addUndo(new Undo(newRequirement));
+		ProjectSelectionWidget.showDialog(null, requirement.getId());
 	}
 
 	class Undo extends ALocalUndo {
 
+		// FIXME
 		private Requirement newRequirement;
 
 		public Undo(Requirement newRequirement) {
