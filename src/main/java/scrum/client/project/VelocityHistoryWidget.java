@@ -16,6 +16,7 @@ package scrum.client.project;
 
 import ilarkesto.core.base.Utl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -36,12 +37,30 @@ public class VelocityHistoryWidget extends AScrumWidget {
 		if (barWidth > 10) barWidth = 10;
 		if (barWidth < 1) barWidth = 1;
 
-		SparklineChartWidget sparklineChartWidget = new SparklineChartWidget(14, barWidth);
+		SparklineChartWidget sparklineChartWidget = new SparklineChartWidget(18, barWidth);
 		for (Sprint sprint : sprints) {
 			Float velocity = sprint.getVelocity();
 			if (velocity == null) velocity = 0f;
 			sparklineChartWidget.addItem(velocity, velocity + " SP on " + sprint.getReferenceAndLabel());
 		}
+
+		if (sprintCount > 1) {
+
+			float velocityTotal = 0f;
+			int avarageSprintCount = 0;
+			for (int i = sprintCount - 1; i >= 0; i--) {
+				Sprint sprint = sprints.get(i);
+				Float velocity = sprint.getVelocity();
+				if (velocity != null) velocityTotal += velocity;
+				avarageSprintCount++;
+				if (avarageSprintCount >= 3) break;
+			}
+
+			float avarage = velocityTotal / avarageSprintCount;
+			BigDecimal bdAvarage = new BigDecimal(avarage).setScale(1, BigDecimal.ROUND_HALF_UP);
+			sparklineChartWidget.setSuffix(" " + bdAvarage + " SP AVG/" + avarageSprintCount);
+		}
+
 		return sparklineChartWidget;
 	}
 }
