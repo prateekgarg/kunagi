@@ -52,8 +52,9 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		header.addMenuAction(new RemoveRequirementFromSprintAction(requirement));
 		header.addMenuAction(new MoveRequirementToTopAction(requirement));
 		header.addMenuAction(new MoveRequirementToBottomAction(requirement));
+		header.addMenuAction(new MoveRequirementToOtherProject(requirement));
 		// BlockHeaderWidget dropDownMenu = new BlockHeaderWidget();
-		// dropDownMenu.addMenuAction(new MoveRequirementToOtherProject(requirement));
+		// dropDownMenu.addMenuAction();
 		// header.appendOuterCell(dropDownMenu, null, true);
 		header.addMenuAction(new SetRequirementDirtyAction(requirement));
 		header.addMenuAction(new SetRequirementCleanAction(requirement));
