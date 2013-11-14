@@ -569,15 +569,20 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
-		if (properties.containsKey("ownerId") && issue.isOwnerSet()) {
-			if (!issue.isFixed()) {
-				postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
-					issue);
-			}
+		if (properties.containsKey("ownerId")) {
+			if (issue.isOwnerSet()) {
+				if (!issue.isFixed()) {
+					postProjectEvent(conversation, currentUser.getName() + " claimed " + issue.getReferenceAndLabel(),
+						issue);
+				}
 
-			Release nextRelease = issue.getProject().getNextRelease();
-			if (nextRelease != null && issue.isFixReleasesEmpty()) {
-				issue.setFixReleases(Collections.singleton(nextRelease));
+				Release nextRelease = issue.getProject().getNextRelease();
+				if (nextRelease != null && issue.isFixReleasesEmpty()) {
+					issue.setFixReleases(Collections.singleton(nextRelease));
+				}
+			} else {
+				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + issue.getReferenceAndLabel(),
+					issue);
 			}
 		}
 
