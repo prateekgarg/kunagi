@@ -103,6 +103,13 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public Set<Sprint> getRelevantSprints() {
+		Set<Sprint> ret = new HashSet<Sprint>();
+		ret.add(getCurrentSprint());
+		ret.add(getNextSprint());
+		return ret;
+	}
+
 	public Set<Requirement> getProductBacklogRequirements() {
 		Set<Requirement> requirements = getRequirements();
 		Iterator<Requirement> iterator = requirements.iterator();

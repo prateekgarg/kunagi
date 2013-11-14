@@ -51,6 +51,45 @@ public class Sprint extends GSprint implements Numbered {
 
 	// --- ---
 
+	public void cleanup() {
+		if (!isCompleted())
+			throw new IllegalStateException("Sprint is not completed, therefor it can not be cleaned up.");
+
+		// TODO export PDF
+		// TODO export data (json)
+
+		setCompletedRequirementsData(null);
+		setIncompletedRequirementsData(null);
+		clearRequirementsOrderIds();
+		clearProductOwners();
+		clearScrumMasters();
+		clearTeamMembers();
+
+		SprintReport report = getSprintReport();
+		if (report != null) sprintReportDao.deleteEntity(report);
+
+		// getClosedRequirements()
+		// getClosedTasksInPasts()
+		// getCompletedRequirementsData()
+		// getDaySnapshots()
+		// getFixedIssues()
+		// getIncompletedRequirementsData()
+		// getProductOwners()
+		// getProjectSprintSnapshot()
+		// getReleases()
+		// getRequirements()
+		// getRequirementsOrderIds()
+		// getScrumMasters()
+		// getSprintDaySnapshots()
+		// getSprintReport()
+		// getTasks()
+		// getTeamMembers()
+	}
+
+	public boolean isCompleted() {
+		return isVelocitySet();
+	}
+
 	public List<Requirement> getClosedRequirementsAsList() {
 		return Utl.sort(getClosedRequirements(), getRequirementsOrderComparator());
 	}

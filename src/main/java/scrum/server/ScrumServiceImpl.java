@@ -701,8 +701,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		config.touch();
 
 		conversation.sendToClient(project);
-		conversation.sendToClient(project.getSprints());
-		conversation.sendToClient(project.getSprintReports());
+		for (Sprint sprint : project.getRelevantSprints()) {
+			conversation.sendToClient(sprint);
+			conversation.sendToClient(sprint.getSprintReport());
+		}
 		conversation.sendToClient(project.getParticipants());
 		for (Requirement requirement : project.getProductBacklogRequirements()) {
 			conversation.sendToClient(requirement);
