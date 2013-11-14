@@ -533,6 +533,7 @@ public class Project extends GProject implements ForumSupport {
 	public List<Requirement> getProductBacklogRequirements() {
 		List<Requirement> ret = new ArrayList<Requirement>();
 		for (Requirement requirement : getRequirements()) {
+			if (requirement.isDeleted()) continue;
 			if (requirement.isClosed()) continue;
 			if (requirement.isInCurrentSprint()) continue;
 			ret.add(requirement);

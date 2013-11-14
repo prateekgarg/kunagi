@@ -391,10 +391,9 @@ public class HomepageUpdater {
 	}
 
 	private void fillProductBacklog(ContextBuilder context) {
-		List<Requirement> requirements = new ArrayList<Requirement>(project.getRequirements());
+		List<Requirement> requirements = new ArrayList<Requirement>(project.getProductBacklogRequirements());
 		Collections.sort(requirements, project.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
-			if (requirement.isClosed() || requirement.isInCurrentSprint()) continue;
 			fillStory(context.addSubContext("stories"), requirement);
 		}
 	}

@@ -62,6 +62,8 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onCreateExampleProject(GwtConversation conversation);
 
+    public abstract void onDeleteStory(GwtConversation conversation, String storyId);
+
     public abstract void onSelectProject(GwtConversation conversation, String projectId);
 
     public abstract void onUpdateProjectHomepage(GwtConversation conversation);
@@ -832,6 +834,33 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "CreateExampleProject", ex);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    @Override
+    public scrum.client.DataTransferObject deleteStory(int conversationNumber, String storyId) {
+        log.debug("Handling service call: DeleteStory");
+        WebSession session = (WebSession) getSession();
+        synchronized (session) {
+            GwtConversation conversation = null;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:DeleteStory");
+            context.bindCurrentThread();
+            try {
+                onDeleteStory(conversation, storyId);
+                onServiceMethodExecuted(context);
+            } catch (Throwable ex) {
+                handleServiceMethodException(conversationNumber, "DeleteStory", ex);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

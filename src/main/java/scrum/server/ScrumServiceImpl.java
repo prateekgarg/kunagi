@@ -145,6 +145,25 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	public void onDeleteStory(GwtConversation conversation, String storyId) {
+		assertProjectSelected(conversation);
+		Project project = conversation.getProject();
+		Requirement requirement = requirementDao.getById(storyId);
+		if (requirement.isInCurrentSprint()) throw new IllegalStateException("Story is in sprint. Cannot be deleted");
+		if (project.isInHistory(requirement)) {
+			requirement.setDirty(false);
+			requirement.setIssue(null);
+			requirement.setDeleted(true);
+			sendToClients(conversation, requirement);
+		} else {
+			requirementDao.deleteEntity(requirement);
+			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
+				c.getNextData().addDeletedEntity(storyId);
+			}
+		}
+	}
+
+	@Override
 	public void onRequestHistory(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
@@ -688,48 +707,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onSelectProject(GwtConversation conversation, String projectId) {
-		Project project = projectDao.getById(projectId);
-		User user = conversation.getSession().getUser();
-		if (!project.isVisibleFor(user))
-			throw new PermissionDeniedException("Project '" + project + "' is not visible for user '" + user + "'");
-
-		project.setLastOpenedDateAndTime(DateAndTime.now());
-		conversation.setProject(project);
-		user.setCurrentProject(project);
-		ProjectUserConfig config = project.getUserConfig(user);
-		config.touch();
-
-		conversation.sendToClient(project);
-		for (Sprint sprint : project.getRelevantSprints()) {
-			conversation.sendToClient(sprint);
-			conversation.sendToClient(sprint.getSprintReport());
-		}
-		conversation.sendToClient(project.getParticipants());
-		for (Requirement requirement : project.getProductBacklogRequirements()) {
-			conversation.sendToClient(requirement);
-			conversation.sendToClient(requirement.getEstimationVotes());
-		}
-		for (Requirement requirement : project.getCurrentSprint().getRequirements()) {
-			conversation.sendToClient(requirement);
-			conversation.sendToClient(requirement.getTasksInSprint());
-		}
-		conversation.sendToClient(project.getQualitys());
-		conversation.sendToClient(project.getUserConfigs());
-		conversation.sendToClient(project.getWikipages());
-		conversation.sendToClient(project.getImpediments());
-		conversation.sendToClient(project.getRisks());
-		conversation.sendToClient(project.getLatestProjectEvents(5));
-		conversation.sendToClient(project.getCalendarEvents());
-		conversation.sendToClient(project.getFiles());
-		conversation.sendToClient(project.getOpenIssues());
-		conversation.sendToClient(project.getReleases());
-		conversation.sendToClient(project.getBlogEntrys());
-
-		sendToClients(conversation, config);
-	}
-
-	@Override
 	public void onRequestProjectEvents(GwtConversation conversation) {
 		assertProjectSelected(conversation);
 		conversation.sendToClient(conversation.getProject().getLatestProjectEvents(50));
@@ -915,12 +892,61 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 		Sprint newSprint = project.switchToNextSprint();
 		postProjectEvent(conversation, conversation.getSession().getUser() + " switched to next sprint ", newSprint);
-		sendToClients(conversation, project.getSprints());
-		sendToClients(conversation, project.getSprintReports());
-		sendToClients(conversation, project.getRequirements());
-		sendToClients(conversation, project.getTasks()); // TODO optimize: no history tasks
+
+		Set<Sprint> relevantSprints = project.getRelevantSprints();
+		relevantSprints.add(oldSprint);
+		relevantSprints.add(newSprint);
+		for (Sprint sprint : relevantSprints) {
+			sendToClients(conversation, sprint);
+			sendToClients(conversation, sprint.getSprintReport());
+			sendToClients(conversation, sprint.getRequirements());
+			sendToClients(conversation, sprint.getTasks());
+		}
+
 		sendToClients(conversation, oldSprint.getReleases());
 		sendToClients(conversation, project);
+	}
+
+	@Override
+	public void onSelectProject(GwtConversation conversation, String projectId) {
+		Project project = projectDao.getById(projectId);
+		User user = conversation.getSession().getUser();
+		if (!project.isVisibleFor(user))
+			throw new PermissionDeniedException("Project '" + project + "' is not visible for user '" + user + "'");
+
+		project.setLastOpenedDateAndTime(DateAndTime.now());
+		conversation.setProject(project);
+		user.setCurrentProject(project);
+		ProjectUserConfig config = project.getUserConfig(user);
+		config.touch();
+
+		conversation.sendToClient(project);
+		for (Sprint sprint : project.getRelevantSprints()) {
+			conversation.sendToClient(sprint);
+			conversation.sendToClient(sprint.getSprintReport());
+		}
+		conversation.sendToClient(project.getParticipants());
+		for (Requirement requirement : project.getProductBacklogRequirements()) {
+			conversation.sendToClient(requirement);
+			conversation.sendToClient(requirement.getEstimationVotes());
+		}
+		for (Requirement requirement : project.getCurrentSprint().getRequirements()) {
+			conversation.sendToClient(requirement);
+			conversation.sendToClient(requirement.getTasksInSprint());
+		}
+		conversation.sendToClient(project.getQualitys());
+		conversation.sendToClient(project.getUserConfigs());
+		conversation.sendToClient(project.getWikipages());
+		conversation.sendToClient(project.getImpediments());
+		conversation.sendToClient(project.getRisks());
+		conversation.sendToClient(project.getLatestProjectEvents(5));
+		conversation.sendToClient(project.getCalendarEvents());
+		conversation.sendToClient(project.getFiles());
+		conversation.sendToClient(project.getOpenIssues());
+		conversation.sendToClient(project.getReleases());
+		conversation.sendToClient(project.getBlogEntrys());
+
+		sendToClients(conversation, config);
 	}
 
 	@Override

@@ -103,6 +103,14 @@ public class Project extends GProject {
 
 	// --- ---
 
+	public boolean isInHistory(Requirement requirement) {
+		for (SprintReport report : getSprintReports()) {
+			if (report.containsCompletedRequirement(requirement)) return true;
+			if (report.containsRejectedRequirement(requirement)) return true;
+		}
+		return false;
+	}
+
 	public Set<Sprint> getRelevantSprints() {
 		Set<Sprint> ret = new HashSet<Sprint>();
 		ret.add(getCurrentSprint());
@@ -115,7 +123,8 @@ public class Project extends GProject {
 		Iterator<Requirement> iterator = requirements.iterator();
 		while (iterator.hasNext()) {
 			Requirement requirement = iterator.next();
-			if (requirement.isClosed() || requirement.isInCurrentSprint()) iterator.remove();
+			if (requirement.isDeleted() || requirement.isClosed() || requirement.isInCurrentSprint())
+				iterator.remove();
 		}
 		return requirements;
 	}
@@ -612,10 +621,6 @@ public class Project extends GProject {
 			ret.addAll(sprint.getExistingDaySnapshots());
 		}
 		return ret;
-	}
-
-	public Set<Comment> getAllComments() {
-		return getComments(false);
 	}
 
 	public Set<Comment> getLatestComments() {
