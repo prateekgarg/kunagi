@@ -320,7 +320,16 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public void sendToConversationsByProject(Project project, AEntity entity) {
-		for (AGwtConversation c : getConversationsByProject(project, null)) {
+		Set<GwtConversation> conversations;
+		if (project == null && entity instanceof User) {
+			conversations = new HashSet<GwtConversation>();
+			for (Project p : getProjectDao().getEntities()) {
+				conversations.addAll(getConversationsByProject(p, null));
+			}
+		} else {
+			conversations = getConversationsByProject(project, null);
+		}
+		for (AGwtConversation c : conversations) {
 			c.sendToClient(entity);
 		}
 	}
