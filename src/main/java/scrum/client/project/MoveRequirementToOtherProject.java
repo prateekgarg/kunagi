@@ -1,12 +1,15 @@
 package scrum.client.project;
 
+import scrum.client.common.AScrumAction;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.files.ProjectSelectionWidget;
 
-public class MoveRequirementToOtherProject extends GSplitRequirementAction {
+public class MoveRequirementToOtherProject extends AScrumAction {
+
+	private Requirement requirement;
 
 	public MoveRequirementToOtherProject(Requirement requirement) {
-		super(requirement);
+		this.requirement = requirement;
 	}
 
 	@Override
@@ -37,6 +40,16 @@ public class MoveRequirementToOtherProject extends GSplitRequirementAction {
 	public void executeMove(String projectId, String requirementId) {
 		new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
 		addUndo(new Undo(requirement));
+	}
+
+	@Override
+	public boolean isExecutable() {
+		return true;
+	}
+
+	@Override
+	public String getId() {
+		return ilarkesto.core.base.Str.getSimpleName(getClass()) + '_' + ilarkesto.core.base.Str.toHtmlId(requirement);
 	}
 
 	class Undo extends ALocalUndo {
