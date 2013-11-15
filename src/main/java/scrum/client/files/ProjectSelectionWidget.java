@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
@@ -57,10 +58,14 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	@Override
 	protected Widget onInitialization() {
+		CaptionPanel outerPanel = new CaptionPanel("Chose a destination Project");
 		Panel panel = new VerticalPanel();
+		outerPanel.add(panel);
+
 		List<Project> projects = getDao().getProjects();
 		ListBox projectList = new ListBox();
 		projectList.setVisibleItemCount(10);
+		projectList.addStyleName("ProjectList");
 
 		projectList.addChangeHandler(new ChangeHandler() {
 
@@ -109,7 +114,7 @@ public class ProjectSelectionWidget extends AScrumWidget {
 		panel.add(projectList);
 		panel.add(pnlButtons);
 
-		return panel;
+		return outerPanel;
 	}
 
 	@Override
