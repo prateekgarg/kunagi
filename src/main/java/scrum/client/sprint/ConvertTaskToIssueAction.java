@@ -57,11 +57,34 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 		issue.setCreator(getCurrentUser());
 		issue.setDescription(task.getDescription());
 		issue.setLabel(task.getLabel());
-		for (Comment taskComment : task.getComments()) {
-			Comment comment = new Comment(issue, taskComment.getAuthor(), taskComment.getText());
-			comment.setDateAndTime(taskComment.getDateAndTime());
+		for (Comment copyComment : task.getComments()) {
+			Comment comment = new Comment(issue, copyComment.getAuthor(), copyComment.getText());
+			comment.setDateAndTime(copyComment.getDateAndTime());
 			getDao().createComment(comment);
 		}
 		task.getRequirement().deleteTask(task);
+		addUndo(new Undo(issue));
 	}
+
+	class Undo extends ALocalUndo {
+
+		private Issue issue;
+
+		public Undo(Issue issue) {
+			this.issue = issue;
+		}
+
+		@Override
+		public String getLabel() {
+			return "Undo conversion of " + task.getReference() + " into issue " + issue.getReferenceAndLabel();
+		}
+
+		@Override
+		protected void onUndo() {
+			getDao().createTask(task);
+			getDao().deleteIssue(issue);
+		}
+
+	}
+
 }

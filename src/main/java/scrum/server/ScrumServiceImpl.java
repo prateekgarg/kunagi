@@ -294,10 +294,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		if (entity instanceof Comment) {
 			Comment comment = (Comment) entity;
-			comment.setDateAndTime(DateAndTime.now());
-			postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
-				comment.getParent());
-			currentProject.updateHomepage(comment.getParent(), true);
+			String myParent = "" + comment.getParent();
+			if (!myParent.contains("null")) {
+				comment.setDateAndTime(DateAndTime.now());
+				postProjectEvent(conversation, comment.getAuthor().getName() + " commented on " + comment.getParent(),
+					comment.getParent());
+				currentProject.updateHomepage(comment.getParent(), true);
+			}
 		}
 
 		if (entity instanceof ChatMessage) {
