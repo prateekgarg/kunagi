@@ -13,6 +13,8 @@
  */
 package scrum.client.files;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import scrum.client.common.AScrumWidget;
@@ -63,6 +65,14 @@ public class ProjectSelectionWidget extends AScrumWidget {
 		outerPanel.add(panel);
 
 		List<Project> projects = getDao().getProjects();
+		Collections.sort(projects, new Comparator<Project>() {
+
+			@Override
+			public int compare(Project project1, Project project2) {
+				return project1.getLabel().compareTo(project2.getLabel());
+			}
+		});
+
 		ListBox projectList = new ListBox();
 		projectList.setVisibleItemCount(10);
 		projectList.addStyleName("ProjectList");

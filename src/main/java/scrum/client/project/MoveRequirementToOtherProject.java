@@ -38,8 +38,8 @@ public class MoveRequirementToOtherProject extends AScrumAction {
 	}
 
 	public void executeMove(String projectId, String requirementId) {
-		new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
 		addUndo(new Undo(requirement));
+		new MoveRequirementToProjectServiceCall(projectId, requirementId).execute();
 	}
 
 	@Override
