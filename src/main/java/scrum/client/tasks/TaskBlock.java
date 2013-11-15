@@ -53,7 +53,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		if (container.isShowOwner()) header.addText(task.getOwnerModel(), true);
 		header.appendOuterCell(new EmoticonsWidget(task), null, true);
 		header.addMenuAction(new ClaimTaskAction(task));
-		if (!task.isClosed()) header.addMenuAction(new ConvertTaskToIssueAction(task));
+		header.addMenuAction(new ConvertTaskToIssueAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
 		header.addMenuAction(new UnclaimTaskAction(task));

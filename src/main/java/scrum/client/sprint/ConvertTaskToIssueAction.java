@@ -14,10 +14,14 @@
  */
 package scrum.client.sprint;
 
+import ilarkesto.core.logging.Log;
+import scrum.client.collaboration.Comment;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.issues.Issue;
 
 public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
+
+	private static final Log LOG = Log.get(ConvertTaskToIssueAction.class);
 
 	public ConvertTaskToIssueAction(scrum.client.sprint.Task task) {
 		super(task);
@@ -36,6 +40,7 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
 	@Override
 	public boolean isExecutable() {
+		if (task.isClosed()) return false;
 		if (task.isImpedimentSet()) return false;
 		return true;
 	}
@@ -48,11 +53,15 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
 	@Override
 	protected void onExecute() {
-
 		Issue issue = getCurrentProject().createNewIssue();
 		issue.setCreator(getCurrentUser());
 		issue.setDescription(task.getDescription());
 		issue.setLabel(task.getLabel());
+		for (Comment taskComment : task.getComments()) {
+			Comment comment = new Comment(issue, taskComment.getAuthor(), taskComment.getText());
+			comment.setDateAndTime(taskComment.getDateAndTime());
+			getDao().createComment(comment);
+		}
 		task.getRequirement().deleteTask(task);
 	}
 }
