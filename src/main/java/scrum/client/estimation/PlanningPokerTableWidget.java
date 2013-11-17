@@ -129,17 +129,15 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			if (value.length() == 0) continue;
 			final float estimation = Float.parseFloat(value);
 			PlanningPokerCardWidget card = null;
-			if (!showoff && (voteValue == null || estimation != voteValue)) {
-				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
-						"Put this card on the table.");
-				card.setMouseOverHandler(new MouseOverHandler() {
+			card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
+					"Put this card on the table.");
+			card.setMouseOverHandler(new MouseOverHandler() {
 
-					@Override
-					public void onMouseOver(MouseOverEvent event) {
-						estimationHelpDisplay.setWidget(createEstimationHelp(estimation));
-					}
-				});
-			}
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					estimationHelpDisplay.setWidget(createEstimationHelp(estimation));
+				}
+			});
 			tb.add(new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(), card));
 			tb.add(Gwt.createSpacer(5, 1));
 		}
@@ -191,7 +189,7 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		for (User user : getCurrentProject().getTeamMembers()) {
 			boolean currentUser = user == getCurrentUser();
 			RequirementEstimationVote vote = requirement.getEstimationVote(user);
-			Float estimation = vote == null ? null : vote.getEstimatedWork();
+			final Float estimation = vote == null ? null : vote.getEstimatedWork();
 			LOG.debug("Estimation:", user.getName(), "->", estimation);
 
 			Widget card;
@@ -209,6 +207,13 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 				}
 				boolean visible = requirement.isWorkEstimationVotingShowoff();
 				card = new PlanningPokerCardWidget(estimation, visible, clickHandler, clickTooltip);
+				((PlanningPokerCardWidget) card).setMouseOverHandler(new MouseOverHandler() {
+
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						estimationHelpDisplay.setWidget(createEstimationHelp(estimation));
+					}
+				});
 			}
 
 			tb.add(new PlanningPokerCardSlotWidget(user.getName(), card));
