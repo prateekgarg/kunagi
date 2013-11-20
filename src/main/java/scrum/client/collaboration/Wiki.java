@@ -213,7 +213,9 @@ public class Wiki extends GWiki implements RichtextFormater {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < lines.length; i++) {
 			if (i > 0 || text.startsWith("\n")) sb.append('\n');
-			sb.append(bulletPoint).append(" ").append(lines[i]);
+			String line = lines[i];
+			if (line.length() > 2 && (line.startsWith("* ") || line.startsWith("# "))) line = line.substring(2);
+			sb.append(bulletPoint).append(" ").append(line);
 		}
 		if (text.endsWith("\n")) sb.append("\n");
 		textArea.replaceSelection(sb.toString());
