@@ -16,6 +16,7 @@ package scrum.client.common;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.gwt.client.AWidget;
+import ilarkesto.gwt.client.Gwt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class SparklineChartWidget extends AWidget {
 	private String barColor = "#667B99";
 	private float heightFactor;
 	private String suffix;
+	private String suffixTitle;
 
 	public SparklineChartWidget(int height, int barWidth) {
 		super();
@@ -49,6 +51,10 @@ public class SparklineChartWidget extends AWidget {
 		this.suffix = suffix;
 	}
 
+	public void setSuffixTitle(String suffixTitle) {
+		this.suffixTitle = suffixTitle;
+	}
+
 	@Override
 	protected Widget onInitialization() {
 		FlowPanel container = new FlowPanel();
@@ -61,7 +67,8 @@ public class SparklineChartWidget extends AWidget {
 
 		if (!Str.isBlank(suffix)) {
 			Label label = new Label(suffix);
-			label.getElement().getStyle().setPaddingLeft(4, Unit.PX);
+			label.setTitle(suffixTitle);
+			container.add(Gwt.createSpacer(10, 1));
 			container.add(label);
 		}
 
