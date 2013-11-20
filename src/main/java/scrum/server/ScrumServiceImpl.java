@@ -579,8 +579,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 					issue.setFixReleases(Collections.singleton(nextRelease));
 				}
 			} else {
-				postProjectEvent(conversation, currentUser.getName() + " unclaimed " + issue.getReferenceAndLabel(),
-					issue);
+				if (!issue.isClosed())
+					postProjectEvent(conversation,
+						currentUser.getName() + " unclaimed " + issue.getReferenceAndLabel(), issue);
 			}
 		}
 

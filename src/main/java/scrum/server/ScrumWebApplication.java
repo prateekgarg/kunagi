@@ -389,6 +389,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	}
 
 	public void triggerRegisterNotification(User user, String host) {
+		if (getConfig().isAdminNotificationOnUserRegistrationDisabled()) return;
 		StringBuilder sb = new StringBuilder();
 		sb.append("Kunagi URL: ").append(createUrl(null)).append("\n");
 		sb.append("Name: ").append(user.getName()).append("\n");
