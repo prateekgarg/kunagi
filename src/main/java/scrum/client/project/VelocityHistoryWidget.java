@@ -58,7 +58,7 @@ public class VelocityHistoryWidget extends AScrumWidget {
 
 			float avarage = velocityTotal / avarageSprintCount;
 			BigDecimal bdAvarage = new BigDecimal(avarage).setScale(1, BigDecimal.ROUND_HALF_UP);
-			sparklineChartWidget.setSuffix(" " + bdAvarage + " SP AVG");
+			sparklineChartWidget.setSuffix(" " + bdAvarage + " SP avg.");
 			sparklineChartWidget
 					.setSuffixTitle("\"Average Velocity in past "
 							+ avarageSprintCount

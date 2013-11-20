@@ -21,9 +21,11 @@ import ilarkesto.gwt.client.Gwt;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SparklineChartWidget extends AWidget {
@@ -66,9 +68,13 @@ public class SparklineChartWidget extends AWidget {
 		}
 
 		if (!Str.isBlank(suffix)) {
+			SimplePanel spacer = Gwt.createSpacer(10, height);
+			spacer.getElement().getStyle().setFloat(Style.Float.LEFT);
+			container.add(spacer);
+
 			Label label = new Label(suffix);
 			label.setTitle(suffixTitle);
-			container.add(Gwt.createSpacer(10, 1));
+
 			container.add(label);
 		}
 
@@ -90,7 +96,7 @@ public class SparklineChartWidget extends AWidget {
 		frame.setWidth(barWidth + "px");
 		frame.getElement().setTitle(item.text);
 		frame.getElement().getStyle().setMarginRight(2, Unit.PX);
-		frame.getElement().getStyle().setFloat(com.google.gwt.dom.client.Style.Float.LEFT);
+		frame.getElement().getStyle().setFloat(Style.Float.LEFT);
 		frame.getElement().getStyle().setBackgroundColor(barBackgroundColor);
 
 		return frame;
