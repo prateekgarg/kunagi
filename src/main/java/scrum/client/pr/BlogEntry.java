@@ -111,6 +111,11 @@ public class BlogEntry extends GBlogEntry implements ReferenceSupport, ForumSupp
 					return isPublished();
 				}
 
+				@Override
+				public String getDisplayValueForNull() {
+					return "<publication date>";
+				}
+
 			};
 		}
 		return dateAndTimeModel;
