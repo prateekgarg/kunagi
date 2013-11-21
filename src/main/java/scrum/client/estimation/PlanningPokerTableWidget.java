@@ -110,14 +110,13 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 		final Project project = getCurrentProject();
 		RequirementEstimationVote vote = requirement.getEstimationVote(getCurrentUser());
 		Float voteValue = vote == null ? null : vote.getEstimatedWork();
-		boolean showoff = requirement.isWorkEstimationVotingShowoff();
 
 		TableBuilder tb = new TableBuilder();
 		tb.setWidth(null);
 
 		// ?-card
 		PlanningPokerCardWidget qCard = null;
-		if (!showoff && (voteValue == null || -1 != voteValue)) {
+		if (voteValue == null || -1 != voteValue) {
 			qCard = new PlanningPokerCardWidget(-1, true, new SetEstimationClickHandler(-1),
 					"Put this card on the table.");
 		}
@@ -129,16 +128,19 @@ public class PlanningPokerTableWidget extends AScrumWidget {
 			if (value.length() == 0) continue;
 			final float estimation = Float.parseFloat(value);
 			PlanningPokerCardWidget card = null;
-			card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
-					"Put this card on the table.");
-			card.setMouseOverHandler(new MouseOverHandler() {
+			if (voteValue == null || voteValue != estimation)
+				card = new PlanningPokerCardWidget(estimation, true, new SetEstimationClickHandler(estimation),
+						"Put this card on the table.");
+			PlanningPokerCardSlotWidget slot = new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(),
+					card);
+			slot.setMouseOverHandler(new MouseOverHandler() {
 
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
 					estimationHelpDisplay.setWidget(createEstimationHelp(estimation));
 				}
 			});
-			tb.add(new PlanningPokerCardSlotWidget(value + " " + project.getEffortUnit(), card));
+			tb.add(slot);
 			tb.add(Gwt.createSpacer(5, 1));
 		}
 
