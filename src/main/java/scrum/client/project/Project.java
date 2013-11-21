@@ -600,14 +600,6 @@ public class Project extends GProject implements ForumSupport {
 		return sprint;
 	}
 
-	public boolean deleteTask(Task task) {
-		for (Requirement requirement : getRequirements()) {
-			boolean b = requirement.getTasks().remove(task);
-			if (b) return true;
-		}
-		return false;
-	}
-
 	@Override
 	public String toString() {
 		return getLabel();
