@@ -230,6 +230,7 @@ public class PdfTest extends ATest {
 		creator.build(pdf);
 		File file = new File(OUTPUT_DIR + "/" + creator.getFilename() + ".pdf");
 		pdf.write(file);
+		log.info("PDF created:", file.getAbsolutePath());
 	}
 
 }
