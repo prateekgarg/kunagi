@@ -93,11 +93,16 @@ public class HomepageUpdater {
 	public void processEntityTemplate(AEntity entity) {
 		executeScript("pre-update");
 		if (entity instanceof Issue) {
-			processIssueTemplate((Issue) entity);
+			Issue issue = (Issue) entity;
+			if (!issue.isPublished()) return;
+			processIssueTemplate(issue);
 		} else if (entity instanceof Requirement) {
-			processStoryTemplate((Requirement) entity);
+			Requirement story = (Requirement) entity;
+			processStoryTemplate(story);
 		} else if (entity instanceof BlogEntry) {
-			processBlogEntryTemplate((BlogEntry) entity);
+			BlogEntry blogEntry = (BlogEntry) entity;
+			if (!blogEntry.isPublished()) return;
+			processBlogEntryTemplate(blogEntry);
 		}
 		executeScript("post-update");
 	}
