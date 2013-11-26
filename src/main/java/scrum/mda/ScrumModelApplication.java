@@ -425,6 +425,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("SetRequirementDirty");
 			requirementModel.addAction("SetRequirementClean");
 			requirementModel.addAction("CloseRequirement");
+			requirementModel.addAction("MoveRequirementToTop");
+			requirementModel.addAction("MoveRequirementToBottom");
+			requirementModel.addAction("CloseRequirement");
 			requirementModel.addAction("RejectRequirement");
 			requirementModel.addAction("FixRequirement");
 			requirementModel.addAction("ReopenRequirement");
@@ -434,6 +437,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addAction("ResetRequirementEstimationVoting");
 			requirementModel.addAction("RequirementEstimationVote").addParameter("estimatedWork", Float.class);
 			requirementModel.addAction("SplitRequirement");
+			requirementModel.addAction("MoveRequirementToOtherProject");
 		}
 		return requirementModel;
 	}

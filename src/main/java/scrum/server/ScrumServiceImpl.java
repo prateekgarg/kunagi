@@ -1098,4 +1098,24 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		subscriptionService.copySubscribers(issue, story);
 		subscriptionService.notifySubscribers(story, "Story created from " + issue, conversation.getProject(), null);
 	}
+
+	@Override
+	public void onMoveRequirementToProject(GwtConversation conversation, String projectId, String requirementId) {
+		User currentUser = conversation.getSession().getUser();
+		Requirement requirement = requirementDao.getById(requirementId);
+		Project project = projectDao.getById(projectId);
+		Project oldProject = requirement.getProject();
+
+		requirement.setProject(project);
+		project.getProductBacklogRequirements().add(requirement);
+		oldProject.getProductBacklogRequirements().remove(requirement);
+
+		postProjectEvent(conversation, currentUser.getName() + " moved " + requirement.getReferenceAndLabel()
+				+ " from " + oldProject.getLabel() + " to " + project.getLabel(), requirement);
+
+		sendToClients(conversation, requirement);
+		sendToClients(conversation, project);
+		sendToClients(conversation, oldProject);
+
+	}
 }
