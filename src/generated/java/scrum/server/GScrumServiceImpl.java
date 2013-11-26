@@ -64,7 +64,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onDeleteStory(GwtConversation conversation, String storyId);
 
-    public abstract void onMoveRequirementToProject(GwtConversation conversation, String projectId, String requirementId);
+    public abstract void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId, String requirementId);
 
     public abstract void onSelectProject(GwtConversation conversation, String projectId);
 
@@ -869,7 +869,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
     }
 
     @Override
-    public scrum.client.DataTransferObject moveRequirementToProject(int conversationNumber, String projectId, String requirementId) {
+    public scrum.client.DataTransferObject moveRequirementToProject(int conversationNumber, String destinationProjectId, String requirementId) {
         log.debug("Handling service call: MoveRequirementToProject");
         WebSession session = (WebSession) getSession();
         synchronized (session) {
@@ -886,7 +886,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
             context.setName("gwt-srv:MoveRequirementToProject");
             context.bindCurrentThread();
             try {
-                onMoveRequirementToProject(conversation, projectId, requirementId);
+                onMoveRequirementToProject(conversation, destinationProjectId, requirementId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "MoveRequirementToProject", ex);

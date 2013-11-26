@@ -1100,22 +1100,23 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onMoveRequirementToProject(GwtConversation conversation, String projectId, String requirementId) {
+	public void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId,
+			String requirementId) {
 		User currentUser = conversation.getSession().getUser();
 		Requirement requirement = requirementDao.getById(requirementId);
-		Project project = projectDao.getById(projectId);
-		Project oldProject = requirement.getProject();
+		Project destinationProject = projectDao.getById(destinationProjectId);
+		Project project = requirement.getProject();
 
-		requirement.setProject(project);
-		project.getProductBacklogRequirements().add(requirement);
-		oldProject.getProductBacklogRequirements().remove(requirement);
+		requirement.setProject(destinationProject);
+		destinationProject.getProductBacklogRequirements().add(requirement);
+		project.getProductBacklogRequirements().remove(requirement);
 
 		postProjectEvent(conversation, currentUser.getName() + " moved " + requirement.getReferenceAndLabel()
-				+ " from " + oldProject.getLabel() + " to " + project.getLabel(), requirement);
+				+ " from " + project.getLabel() + " to " + destinationProject.getLabel(), requirement);
 
 		sendToClients(conversation, requirement);
+		sendToClients(conversation, destinationProject);
 		sendToClients(conversation, project);
-		sendToClients(conversation, oldProject);
-
 	}
+
 }

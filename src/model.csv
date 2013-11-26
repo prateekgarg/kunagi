@@ -419,7 +419,7 @@
 "ffa1fe9a-3c00-400a-a7cc-7da4fd148597","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","DeleteStory"
 "a4ebe8cd-17b8-478e-a98c-4acc5eb73f6c","ffa1fe9a-3c00-400a-a7cc-7da4fd148597","Parameter","storyId"
 "534bc9fe-0d93-4112-be52-6718fdde0987","c829a32f-5300-49a9-983a-75bc0e214ae4","ServiceCall","MoveRequirementToProject"
-"a00b5462-a264-4fb2-8cdb-0acdbbda4369","534bc9fe-0d93-4112-be52-6718fdde0987","Parameter","projectId"
+"a00b5462-a264-4fb2-8cdb-0acdbbda4369","534bc9fe-0d93-4112-be52-6718fdde0987","Parameter","destinationProjectId"
 "7a92cb62-a3cd-441c-a4ee-b6e8e05ec5ea","a00b5462-a264-4fb2-8cdb-0acdbbda4369","Type","String"
 "6a2d279e-47f9-4404-a2a3-1ff903a0e822","534bc9fe-0d93-4112-be52-6718fdde0987","Parameter","requirementId"
 "d3b81f0b-5fc4-439f-9aec-ed1a648f40d6","6a2d279e-47f9-4404-a2a3-1ff903a0e822","Type","String"
