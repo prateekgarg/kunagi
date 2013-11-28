@@ -25,6 +25,7 @@ import scrum.client.img.Img;
 import scrum.client.journal.ActivateChangeHistoryAction;
 import scrum.client.sprint.ClaimTaskAction;
 import scrum.client.sprint.CloseTaskAction;
+import scrum.client.sprint.ConvertTaskToIssueAction;
 import scrum.client.sprint.CreateTaskImpedimentAction;
 import scrum.client.sprint.DeleteTaskAction;
 import scrum.client.sprint.ReopenTaskAction;
@@ -52,6 +53,7 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 		if (container.isShowOwner()) header.addText(task.getOwnerModel(), true);
 		header.appendOuterCell(new EmoticonsWidget(task), null, true);
 		header.addMenuAction(new ClaimTaskAction(task));
+		header.addMenuAction(new ConvertTaskToIssueAction(task));
 		header.addMenuAction(new CloseTaskAction(task));
 		header.addMenuAction(new ReopenTaskAction(task));
 		header.addMenuAction(new UnclaimTaskAction(task));
@@ -90,13 +92,6 @@ public class TaskBlock extends ABlockWidget<Task> implements TrashSupport {
 
 	public TaskBlockContainer getContainer() {
 		return this.container;
-	}
-
-	@Override
-	protected String getUpdateSignature() {
-		if (isExtended()) return null;
-		Task task = getObject();
-		return task.getLabel() + task.getRemainingWork() + task.getBurnedWork() + task.isBlocked();
 	}
 
 	public static class TaskBlockFactory implements BlockWidgetFactory<Task> {
