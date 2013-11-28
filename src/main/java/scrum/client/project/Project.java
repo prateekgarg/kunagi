@@ -379,10 +379,10 @@ public class Project extends GProject implements ForumSupport {
 		return ret;
 	}
 
-	public List<Issue> getIdeas() {
+	public List<Issue> getOpenIdeas() {
 		List<Issue> ret = new ArrayList<Issue>();
 		for (Issue issue : getIssues()) {
-			if (issue.isIdea()) ret.add(issue);
+			if (!issue.isClosed() && issue.isIdea()) ret.add(issue);
 		}
 		return ret;
 	}
