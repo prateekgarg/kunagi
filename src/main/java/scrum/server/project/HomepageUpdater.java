@@ -418,6 +418,7 @@ public class HomepageUpdater {
 		context.put("testDescription", wikiToHtml(requirement.getTestDescription()));
 		if (requirement.isEstimatedWorkSet() && !requirement.isDirty())
 			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
+		context.put("themes", toHtml(requirement.getThemes()));
 		fillComments(context, requirement);
 	}
 
@@ -449,6 +450,14 @@ public class HomepageUpdater {
 	public static String wikiToText(String wikitext) {
 		if (Str.isBlank(wikitext)) return null;
 		return wikitext;
+	}
+
+	public static List<String> toHtml(Collection<String> strings) {
+		List<String> ret = new ArrayList<String>(strings.size());
+		for (String string : strings) {
+			ret.add(toHtml(string));
+		}
+		return ret;
 	}
 
 	public static String toHtml(String text) {
