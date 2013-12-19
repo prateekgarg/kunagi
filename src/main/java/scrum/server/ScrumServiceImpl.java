@@ -149,6 +149,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
 		Requirement requirement = requirementDao.getById(storyId);
+		deleteRequirement(conversation, requirement);
+	}
+
+	private void deleteRequirement(GwtConversation conversation, Requirement requirement) {
+		Project project = requirement.getProject();
 		if (requirement.isInCurrentSprint()) throw new IllegalStateException("Story is in sprint. Cannot be deleted");
 		if (project.isInHistory(requirement)) {
 			requirement.setDirty(false);
@@ -158,7 +163,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		} else {
 			requirementDao.deleteEntity(requirement);
 			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
-				c.getNextData().addDeletedEntity(storyId);
+				c.getNextData().addDeletedEntity(requirement.getId());
 			}
 		}
 	}
@@ -1102,15 +1107,16 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId,
 			String requirementId) {
-		User currentUser = conversation.getSession().getUser();
+		assertProjectSelected(conversation);
 		Requirement requirement = requirementDao.getById(requirementId);
-		Project destinationProject = projectDao.getById(destinationProjectId);
 		Project project = requirement.getProject();
 
-		requirement.setProject(destinationProject);
-		destinationProject.getProductBacklogRequirements().add(requirement);
-		project.getProductBacklogRequirements().remove(requirement);
+		Project destinationProject = projectDao.getById(destinationProjectId);
+		requirementDao.postRequirement(destinationProject, requirement);
 
+		deleteRequirement(conversation, requirement);
+
+		User currentUser = conversation.getSession().getUser();
 		postProjectEvent(conversation, currentUser.getName() + " moved " + requirement.getReferenceAndLabel()
 				+ " from " + project.getLabel() + " to " + destinationProject.getLabel(), requirement);
 
@@ -1118,5 +1124,4 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sendToClients(conversation, destinationProject);
 		sendToClients(conversation, project);
 	}
-
 }

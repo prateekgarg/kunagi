@@ -34,36 +34,14 @@ public class MoveRequirementToOtherProjectAction extends GMoveRequirementToOther
 
 	@Override
 	protected void onExecute() {
-		ProjectSelectionWidget widget = new ProjectSelectionWidget(this, requirement.getId(), requirement.getProject()
-				.getId());
+		ProjectSelectionWidget widget = new ProjectSelectionWidget(new ProjectSelectionWidget.Callback() {
+
+			@Override
+			public void onProjectSelected(Project project) {
+				new MoveRequirementToProjectServiceCall(project.getId(), requirement.getId()).execute();
+			}
+		});
 		widget.showDialog();
 	}
 
-	public void executeMove(String destinationProjectId) {
-		new MoveRequirementToProjectServiceCall(destinationProjectId, requirement.getId()).execute();
-		addUndo(new Undo(requirement));
-	}
-
-	class Undo extends ALocalUndo {
-
-		private Requirement requirement;
-
-		private Project oldProject;
-
-		public Undo(Requirement requirement) {
-			super();
-			oldProject = requirement.getProject();
-			this.requirement = requirement;
-		}
-
-		@Override
-		public String getLabel() {
-			return "Undo move story " + requirement.getReferenceAndLabel();
-		}
-
-		@Override
-		protected void onUndo() {
-			new MoveRequirementToProjectServiceCall(oldProject.getId(), requirement.getId()).execute();
-		}
-	}
 }

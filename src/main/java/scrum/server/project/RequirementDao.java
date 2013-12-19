@@ -60,4 +60,18 @@ public class RequirementDao extends GRequirementDao {
 		requirement.updateNumber();
 		return requirement;
 	}
+
+	public void postRequirement(Project destinationProject, Requirement template) {
+		Requirement requirement = newEntityInstance();
+		requirement.setProject(destinationProject);
+		requirement.setLabel(template.getLabel());
+		requirement.setDescription(template.getDescription());
+		requirement.setThemes(template.getThemes());
+		for (Quality templateQuality : template.getQualitys()) {
+			Quality quality = destinationProject.getQualityByLabel(templateQuality.getLabel());
+			if (quality == null) continue;
+			requirement.addQuality(quality);
+		}
+	}
+
 }

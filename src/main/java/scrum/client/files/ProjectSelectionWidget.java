@@ -13,12 +13,14 @@
  */
 package scrum.client.files;
 
+import ilarkesto.core.base.Str;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import scrum.client.ScrumScopeManager;
 import scrum.client.common.AScrumWidget;
-import scrum.client.project.MoveRequirementToOtherProjectAction;
 import scrum.client.project.Project;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -40,28 +42,21 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	private DialogBox dialog;
 
-	protected String projectId;
+	protected Project selectedProject;
 
-	private String requirementId;
-
-	private String currentProject;
-
-	private MoveRequirementToOtherProjectAction caller;
+	private Callback callback;
 
 	/*
 	 * Provide a new project for a requirement
 	 */
 
-	public ProjectSelectionWidget(MoveRequirementToOtherProjectAction action, String requirementId,
-			String currentProject) {
-		this.caller = action;
-		this.requirementId = requirementId;
-		this.currentProject = currentProject;
+	public ProjectSelectionWidget(Callback callback) {
+		this.callback = callback;
 	}
 
 	@Override
 	protected Widget onInitialization() {
-		CaptionPanel outerPanel = new CaptionPanel("Chose a destination Project");
+		CaptionPanel outerPanel = new CaptionPanel("Select destination Project");
 		Panel panel = new VerticalPanel();
 		outerPanel.add(panel);
 
@@ -83,24 +78,26 @@ public class ProjectSelectionWidget extends AScrumWidget {
 			@Override
 			public void onChange(ChangeEvent event) {
 				ListBox lb = (ListBox) event.getSource();
-				projectId = lb.getValue((lb.getSelectedIndex()));
+				String projectId = lb.getValue((lb.getSelectedIndex()));
+				if (Str.isBlank(projectId)) return;
+				selectedProject = getDao().getProject(projectId);
 			}
 
 		});
 
 		projectList.addStyleName("listAvailableProjects");
 		for (Project project : projects) {
-			if (project.isProductOwner(getCurrentUser()) && !project.getId().equals(currentProject)) {
-				projectList.addItem(project.getLabel(), project.getId());
-			}
+			if (project.equals(ScrumScopeManager.getProject())) continue;
+			if (!project.isProductOwner(getCurrentUser())) continue;
+			projectList.addItem(project.getLabel(), project.getId());
 		}
 
-		Button btnSelect = new Button("Choose Project", new ClickHandler() {
+		Button btnSelect = new Button("Apply", new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (projectId != null && !projectId.trim().equals("")) {
-					caller.executeMove(projectId);
+				if (selectedProject != null) {
+					callback.onProjectSelected(selectedProject);
 				}
 
 				dialog.hide();
@@ -147,5 +144,11 @@ public class ProjectSelectionWidget extends AScrumWidget {
 
 	public DialogBox getDialog() {
 		return dialog;
+	}
+
+	public static interface Callback {
+
+		void onProjectSelected(Project project);
+
 	}
 }

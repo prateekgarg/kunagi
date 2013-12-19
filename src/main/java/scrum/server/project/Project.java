@@ -997,4 +997,11 @@ public class Project extends GProject {
 		return requirementsOrderComparator;
 	}
 
+	public Quality getQualityByLabel(String label) {
+		for (Quality quality : getQualitys()) {
+			if (quality.isLabel(label)) return quality;
+		}
+		return null;
+	}
+
 }
