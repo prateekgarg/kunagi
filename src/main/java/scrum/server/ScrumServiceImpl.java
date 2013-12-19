@@ -147,7 +147,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onDeleteStory(GwtConversation conversation, String storyId) {
 		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
 		Requirement requirement = requirementDao.getById(storyId);
 		deleteRequirement(conversation, requirement);
 	}
@@ -166,6 +165,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				c.getNextData().addDeletedEntity(requirement.getId());
 			}
 		}
+		project.removeRequirementsOrderId(requirement.getId());
+		sendToClients(conversation, project);
 	}
 
 	@Override
@@ -1034,6 +1035,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postProjectEvent(GwtConversation conversation, String message, AEntity subject) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
+		postProjectEvent(conversation, project, message, subject);
+	}
+
+	private void postProjectEvent(GwtConversation conversation, Project project, String message, AEntity subject) {
 		webApplication.postProjectEvent(project, message, subject);
 
 		try {
@@ -1109,19 +1114,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			String requirementId) {
 		assertProjectSelected(conversation);
 		Requirement requirement = requirementDao.getById(requirementId);
-		Project project = requirement.getProject();
 
 		Project destinationProject = projectDao.getById(destinationProjectId);
-		requirementDao.postRequirement(destinationProject, requirement);
+		Requirement newRequirement = requirementDao.postRequirement(destinationProject, requirement);
+		webApplication.sendToConversationsByProject(destinationProject, newRequirement);
+		sendToClients(conversation, destinationProject);
 
 		deleteRequirement(conversation, requirement);
-
-		User currentUser = conversation.getSession().getUser();
-		postProjectEvent(conversation, currentUser.getName() + " moved " + requirement.getReferenceAndLabel()
-				+ " from " + project.getLabel() + " to " + destinationProject.getLabel(), requirement);
-
-		sendToClients(conversation, requirement);
-		sendToClients(conversation, destinationProject);
-		sendToClients(conversation, project);
 	}
 }
