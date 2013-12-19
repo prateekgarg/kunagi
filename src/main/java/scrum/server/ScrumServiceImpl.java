@@ -154,6 +154,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void deleteRequirement(GwtConversation conversation, Requirement requirement) {
 		Project project = requirement.getProject();
 		if (requirement.isInCurrentSprint()) throw new IllegalStateException("Story is in sprint. Cannot be deleted");
+		requirement.setDeleted(true);
 		if (project.isInHistory(requirement)) {
 			requirement.setDirty(false);
 			requirement.setIssue(null);
@@ -161,7 +162,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			sendToClients(conversation, requirement);
 		} else {
 			requirementDao.deleteEntity(requirement);
-			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
+			for (GwtConversation c : webApplication.getConversationsByProject(project, null)) {
 				c.getNextData().addDeletedEntity(requirement.getId());
 			}
 		}

@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -692,6 +693,7 @@ public class Project extends GProject {
 		if (!isNextSprintSet()) {
 			createNextSprint();
 		}
+		updateRequirementsOrder();
 		if (!isPunishmentUnitSet()) {
 			setPunishmentUnit(Money.EUR);
 		}
@@ -702,6 +704,12 @@ public class Project extends GProject {
 		if (!isIssueReplyTemplateSet()) setIssueReplyTemplate(createDefaultIssueReplyTemplate());
 		if (!isSubscriberNotificationTemplateSet())
 			setSubscriberNotificationTemplate(createDefaultSubscriberNotificationTemplate());
+	}
+
+	private void updateRequirementsOrder() {
+		List<Requirement> requirements = new ArrayList<Requirement>(getProductBacklogRequirements());
+		Collections.sort(requirements, getRequirementsOrderComparator());
+		setRequirementsOrderIds(AEntity.getIdsAsList(requirements));
 	}
 
 	private String createDefaultIssueReplyTemplate() {

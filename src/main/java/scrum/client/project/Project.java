@@ -726,4 +726,5 @@ public class Project extends GProject implements ForumSupport {
 		};
 		return freeDaysWeekdaySelectorModel;
 	}
+
 }
