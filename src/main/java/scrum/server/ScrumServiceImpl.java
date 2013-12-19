@@ -407,6 +407,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		}
 
+		if (entity instanceof Project) {
+			Project project = (Project) entity;
+			Set<User> users = project.getCurrentProjectUsers();
+			for (User u : users) {
+				u.setCurrentProject(null);
+			}
+		}
+
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
 
