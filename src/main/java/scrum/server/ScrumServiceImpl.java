@@ -147,9 +147,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onDeleteStory(GwtConversation conversation, String storyId) {
 		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
 		Requirement requirement = requirementDao.getById(storyId);
+		deleteRequirement(conversation, requirement);
+	}
+
+	private void deleteRequirement(GwtConversation conversation, Requirement requirement) {
+		Project project = requirement.getProject();
 		if (requirement.isInCurrentSprint()) throw new IllegalStateException("Story is in sprint. Cannot be deleted");
+		requirement.setDeleted(true);
 		if (project.isInHistory(requirement)) {
 			requirement.setDirty(false);
 			requirement.setIssue(null);
@@ -157,10 +162,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			sendToClients(conversation, requirement);
 		} else {
 			requirementDao.deleteEntity(requirement);
-			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
-				c.getNextData().addDeletedEntity(storyId);
+			for (GwtConversation c : webApplication.getConversationsByProject(project, null)) {
+				c.getNextData().addDeletedEntity(requirement.getId());
 			}
 		}
+		project.removeRequirementsOrderId(requirement.getId());
+		sendToClients(conversation, project);
 	}
 
 	@Override
@@ -1029,6 +1036,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postProjectEvent(GwtConversation conversation, String message, AEntity subject) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
+		postProjectEvent(conversation, project, message, subject);
+	}
+
+	private void postProjectEvent(GwtConversation conversation, Project project, String message, AEntity subject) {
 		webApplication.postProjectEvent(project, message, subject);
 
 		try {
@@ -1097,5 +1108,19 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		changeDao.postChange(story, currentUser, "issueId", null, issue.getId());
 		subscriptionService.copySubscribers(issue, story);
 		subscriptionService.notifySubscribers(story, "Story created from " + issue, conversation.getProject(), null);
+	}
+
+	@Override
+	public void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId,
+			String requirementId) {
+		assertProjectSelected(conversation);
+		Requirement requirement = requirementDao.getById(requirementId);
+
+		Project destinationProject = projectDao.getById(destinationProjectId);
+		Requirement newRequirement = requirementDao.postRequirement(destinationProject, requirement);
+		webApplication.sendToConversationsByProject(destinationProject, newRequirement);
+		sendToClients(conversation, destinationProject);
+
+		deleteRequirement(conversation, requirement);
 	}
 }
