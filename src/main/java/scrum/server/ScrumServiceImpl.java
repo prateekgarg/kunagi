@@ -1122,10 +1122,20 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	public void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId,
 			String requirementId) {
 		assertProjectSelected(conversation);
+		User currentUser = conversation.getSession().getUser();
 		Requirement requirement = requirementDao.getById(requirementId);
 
 		Project destinationProject = projectDao.getById(destinationProjectId);
-		Requirement newRequirement = requirementDao.postRequirement(destinationProject, requirement);
+
+		AEntity newRequirement;
+		if (destinationProject.containsProductOwner(currentUser)) {
+			newRequirement = requirementDao.postRequirement(destinationProject, requirement);
+		} else {
+			newRequirement = issueDao.postIssue(destinationProject, requirement);
+		}
+		subscriptionService.copySubscribers(requirement, newRequirement);
+		changeDao.postChange(newRequirement, currentUser, "projectId", null, conversation.getProject().getId());
+
 		webApplication.sendToConversationsByProject(destinationProject, newRequirement);
 		sendToClients(conversation, destinationProject);
 
