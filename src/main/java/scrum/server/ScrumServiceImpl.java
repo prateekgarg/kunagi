@@ -258,6 +258,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		List<AEntity> foundEntities = project.search(text);
 		log.debug("Found entities for search", "\"" + text + "\"", "->", foundEntities);
 		conversation.sendToClient(foundEntities);
+		for (AEntity entity : foundEntities) {
+			if (entity instanceof Task) {
+				Task task = (Task) entity;
+				conversation.sendToClient(task.getRequirement());
+			}
+		}
 	}
 
 	@Override
