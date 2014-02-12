@@ -25,7 +25,6 @@ import scrum.client.core.AServiceCall;
 import scrum.client.core.ServiceCaller;
 import scrum.client.test.ScrumStatusWidget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -58,7 +57,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget {
 		focusPanel = new FocusPanel(status);
 		focusPanel.addClickHandler(new StatusClickHandler());
 
-		if (GWT.isProdMode()) new Timer() {
+		new Timer() {
 
 			@Override
 			public void run() {
