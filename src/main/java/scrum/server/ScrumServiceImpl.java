@@ -1119,6 +1119,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Issue issue = issueDao.getById(issueId);
 		Requirement story = requirementDao.postRequirement(issue);
 		issue.appendToStatement("Created Story " + story.getReference() + " in Product Backlog.");
+		issue.setUrgent(false);
+		issue.clearFixReleases();
 		issue.setCloseDate(Date.today());
 		sendToClients(conversation, story);
 		sendToClients(conversation, issue);
