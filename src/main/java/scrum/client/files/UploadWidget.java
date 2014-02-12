@@ -135,12 +135,11 @@ public class UploadWidget extends AScrumWidget {
 		@Override
 		public void setFileNames(List<String> names) {
 			if (names != null && !names.isEmpty()) this.filename = names.get(0);
+			log.info("Filename:", this.filename);
 		}
 
 		@Override
-		public void setI18Constants(UploadStatusConstants strs) {
-
-		}
+		public void setI18Constants(UploadStatusConstants strs) {}
 
 		@Override
 		public void setStatus(Status status) {
@@ -188,6 +187,7 @@ public class UploadWidget extends AScrumWidget {
 
 		public FormFlowPanel() {
 			setEncoding(FormPanel.ENCODING_MULTIPART);
+			getElement().setAttribute("accept-charset", "UTF-8");
 			super.add(formElements);
 			Project project = Scope.get().getComponent(Project.class);
 			Hidden projectIdField = new Hidden("projectId", project.getId());
