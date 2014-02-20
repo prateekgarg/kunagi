@@ -147,9 +147,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	@Override
 	public void onDeleteStory(GwtConversation conversation, String storyId) {
 		assertProjectSelected(conversation);
-		Project project = conversation.getProject();
 		Requirement requirement = requirementDao.getById(storyId);
+		deleteRequirement(conversation, requirement);
+	}
+
+	private void deleteRequirement(GwtConversation conversation, Requirement requirement) {
+		Project project = requirement.getProject();
 		if (requirement.isInCurrentSprint()) throw new IllegalStateException("Story is in sprint. Cannot be deleted");
+		requirement.setDeleted(true);
 		if (project.isInHistory(requirement)) {
 			requirement.setDirty(false);
 			requirement.setIssue(null);
@@ -157,10 +162,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			sendToClients(conversation, requirement);
 		} else {
 			requirementDao.deleteEntity(requirement);
-			for (GwtConversation c : webApplication.getConversationsByProject(project, conversation)) {
-				c.getNextData().addDeletedEntity(storyId);
+			for (GwtConversation c : webApplication.getConversationsByProject(project, null)) {
+				c.getNextData().addDeletedEntity(requirement.getId());
 			}
 		}
+		project.removeRequirementsOrderId(requirement.getId());
+		sendToClients(conversation, project);
 	}
 
 	@Override
@@ -251,6 +258,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		List<AEntity> foundEntities = project.search(text);
 		log.debug("Found entities for search", "\"" + text + "\"", "->", foundEntities);
 		conversation.sendToClient(foundEntities);
+		for (AEntity entity : foundEntities) {
+			if (entity instanceof Task) {
+				Task task = (Task) entity;
+				conversation.sendToClient(task.getRequirement());
+			}
+		}
 	}
 
 	@Override
@@ -400,6 +413,14 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			conversation.getProject().getCurrentSprint().getDaySnapshot(Date.today()).updateWithCurrentSprint();
 		}
 
+		if (entity instanceof Project) {
+			Project project = (Project) entity;
+			Set<User> users = project.getCurrentProjectUsers();
+			for (User u : users) {
+				u.setCurrentProject(null);
+			}
+		}
+
 		ADao dao = getDaoService().getDao(entity);
 		dao.deleteEntity(entity);
 
@@ -492,6 +513,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (entity instanceof SystemConfig) onSystemConfigChanged(conversation, (SystemConfig) entity, properties);
 		if (entity instanceof Wikipage) onWikipageChanged(conversation, (Wikipage) entity, properties);
 		if (entity instanceof Sprint) onSprintChanged(conversation, (Sprint) entity, properties);
+		if (entity instanceof Project) onProjectChanged(conversation, (Project) entity, properties);
 
 		Project currentProject = project;
 		if (currentUser != null && currentProject != null) {
@@ -502,6 +524,12 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.clearRemoteEntitiesByType(Change.class);
 		sendToClients(conversation, entity);
+	}
+
+	private void onProjectChanged(GwtConversation conversation, Project project, Map properties) {
+		if (properties.containsKey("participants")) {
+			sendToClients(conversation, project.getUserConfigs());
+		}
 	}
 
 	private void onSprintChanged(GwtConversation conversation, Sprint sprint, Map properties) {
@@ -1029,6 +1057,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	private void postProjectEvent(GwtConversation conversation, String message, AEntity subject) {
 		assertProjectSelected(conversation);
 		Project project = conversation.getProject();
+		postProjectEvent(conversation, project, message, subject);
+	}
+
+	private void postProjectEvent(GwtConversation conversation, Project project, String message, AEntity subject) {
 		webApplication.postProjectEvent(project, message, subject);
 
 		try {
@@ -1087,6 +1119,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Issue issue = issueDao.getById(issueId);
 		Requirement story = requirementDao.postRequirement(issue);
 		issue.appendToStatement("Created Story " + story.getReference() + " in Product Backlog.");
+		issue.setUrgent(false);
+		issue.clearFixReleases();
 		issue.setCloseDate(Date.today());
 		sendToClients(conversation, story);
 		sendToClients(conversation, issue);
@@ -1097,5 +1131,29 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		changeDao.postChange(story, currentUser, "issueId", null, issue.getId());
 		subscriptionService.copySubscribers(issue, story);
 		subscriptionService.notifySubscribers(story, "Story created from " + issue, conversation.getProject(), null);
+	}
+
+	@Override
+	public void onMoveRequirementToProject(GwtConversation conversation, String destinationProjectId,
+			String requirementId) {
+		assertProjectSelected(conversation);
+		User currentUser = conversation.getSession().getUser();
+		Requirement requirement = requirementDao.getById(requirementId);
+
+		Project destinationProject = projectDao.getById(destinationProjectId);
+
+		AEntity newRequirement;
+		if (destinationProject.containsProductOwner(currentUser)) {
+			newRequirement = requirementDao.postRequirement(destinationProject, requirement);
+		} else {
+			newRequirement = issueDao.postIssue(destinationProject, requirement);
+		}
+		subscriptionService.copySubscribers(requirement, newRequirement);
+		changeDao.postChange(newRequirement, currentUser, "@moved", null, conversation.getProject().getId());
+
+		webApplication.sendToConversationsByProject(destinationProject, newRequirement);
+		sendToClients(conversation, destinationProject);
+
+		deleteRequirement(conversation, requirement);
 	}
 }

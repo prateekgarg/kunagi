@@ -18,7 +18,7 @@ import java.util.List;
 
 import scrum.client.common.TooltipBuilder;
 
-public class MoveRequirementToTopAction extends GCloseRequirementAction {
+public class MoveRequirementToTopAction extends GMoveRequirementToTopAction {
 
 	public MoveRequirementToTopAction(scrum.client.project.Requirement requirement) {
 		super(requirement);
