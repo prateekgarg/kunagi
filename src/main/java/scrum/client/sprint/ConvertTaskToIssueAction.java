@@ -15,9 +15,7 @@
 package scrum.client.sprint;
 
 import ilarkesto.core.logging.Log;
-import scrum.client.collaboration.Comment;
 import scrum.client.common.TooltipBuilder;
-import scrum.client.issues.Issue;
 
 public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
@@ -34,14 +32,13 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
 	@Override
 	protected void updateTooltip(TooltipBuilder tb) {
-		tb.setText("Convert current Task to Issue.");
+		tb.setText("Convert this Task to Issue.");
 		if (!getCurrentProject().isTeamMember(getCurrentUser())) tb.addRemark(TooltipBuilder.NOT_TEAM);
 	}
 
 	@Override
 	public boolean isExecutable() {
 		if (task.isClosed()) return false;
-		if (task.isImpedimentSet()) return false;
 		return true;
 	}
 
@@ -53,38 +50,7 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
 	@Override
 	protected void onExecute() {
-		Issue issue = getCurrentProject().createNewIssue();
-		issue.setCreator(getCurrentUser());
-		issue.setDescription(task.getDescription());
-		issue.setLabel(task.getLabel());
-		for (Comment copyComment : task.getComments()) {
-			Comment comment = new Comment(issue, copyComment.getAuthor(), copyComment.getText());
-			comment.setDateAndTime(copyComment.getDateAndTime());
-			getDao().createComment(comment);
-		}
-		task.getRequirement().deleteTask(task);
-		addUndo(new Undo(issue));
-	}
-
-	class Undo extends ALocalUndo {
-
-		private Issue issue;
-
-		public Undo(Issue issue) {
-			this.issue = issue;
-		}
-
-		@Override
-		public String getLabel() {
-			return "Undo conversion of " + task.getReference() + " into issue " + issue.getReferenceAndLabel();
-		}
-
-		@Override
-		protected void onUndo() {
-			getDao().createTask(task);
-			getDao().deleteIssue(issue);
-		}
-
+		new CreateIssueFromTaskServiceCall(task.getId()).execute();
 	}
 
 }

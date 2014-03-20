@@ -73,6 +73,7 @@ import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintReport;
 import scrum.server.sprint.SprintReportDao;
 import scrum.server.sprint.Task;
+import scrum.server.sprint.TaskDao;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
 
@@ -99,6 +100,9 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	@In
 	private transient EmailSender emailSender;
+
+	@In
+	private transient TaskDao taskDao;
 
 	public void setReleaseDao(ReleaseDao releaseDao) {
 		this.releaseDao = releaseDao;
@@ -142,6 +146,34 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		conversation.sendToClient(webApplication.getSystemConfig());
 		conversation.getNextData().setUserId(user.getId());
 		conversation.sendUserScopeDataToClient(user);
+	}
+
+	@Override
+	public void onCreateIssueFromTask(GwtConversation conversation, String taskId) {
+		assertProjectSelected(conversation);
+		Task task = taskDao.getById(taskId);
+		User currentUser = conversation.getSession().getUser();
+
+		Issue issue = issueDao.postIssue(task);
+		issue.setCreator(currentUser);
+		sendToClients(conversation, issue);
+
+		task.appendToDescription("Created from " + task.getReferenceAndLabel() + " in "
+				+ task.getProject().getCurrentSprint().getReferenceAndLabel());
+		if (task.getBurnedWork() == 0) {
+			taskDao.deleteEntity(task);
+			for (GwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), null)) {
+				c.getNextData().addDeletedEntity(task.getId());
+			}
+		} else {
+			task.setOwner(currentUser);
+			task.setRemainingWork(0);
+			sendToClients(conversation, task);
+		}
+		changeDao.postChange(task, currentUser, "issueId", null, issue.getId());
+		changeDao.postChange(issue, currentUser, "taskId", null, task.getId());
+		postProjectEvent(conversation,
+			currentUser + " created " + issue.getReferenceAndLabel() + " from " + task.getReferenceAndLabel(), issue);
 	}
 
 	@Override

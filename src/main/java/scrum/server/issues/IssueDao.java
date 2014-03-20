@@ -21,6 +21,7 @@ import java.util.Set;
 
 import scrum.server.project.Project;
 import scrum.server.project.Requirement;
+import scrum.server.sprint.Task;
 
 public class IssueDao extends GIssueDao {
 
@@ -115,6 +116,7 @@ public class IssueDao extends GIssueDao {
 		issue.setPublished(publish);
 		issue.updateNumber();
 		saveEntity(issue);
+		issue.updateNumber();
 		return issue;
 	}
 
@@ -123,6 +125,7 @@ public class IssueDao extends GIssueDao {
 		issue.setProject(project);
 		issue.setLabel(label);
 		saveEntity(issue);
+		issue.updateNumber();
 		return issue;
 	}
 
@@ -135,6 +138,17 @@ public class IssueDao extends GIssueDao {
 		if (requirement.isTestDescriptionSet()) sb.append("\n\n").append(requirement.getTestDescription());
 		issue.addThemes(requirement.getThemes());
 		saveEntity(issue);
+		issue.updateNumber();
+		return issue;
+	}
+
+	public Issue postIssue(Task task) {
+		Issue issue = newEntityInstance();
+		issue.setProject(task.getProject());
+		issue.setLabel(task.getLabel());
+		issue.setDescription(task.getDescription());
+		saveEntity(issue);
+		issue.updateNumber();
 		return issue;
 	}
 
