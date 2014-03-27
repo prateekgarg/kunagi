@@ -147,6 +147,7 @@ public class IssueDao extends GIssueDao {
 		issue.setProject(task.getProject());
 		issue.setLabel(task.getLabel());
 		issue.setDescription(task.getDescription());
+		issue.setDate(DateAndTime.now());
 		saveEntity(issue);
 		issue.updateNumber();
 		return issue;
