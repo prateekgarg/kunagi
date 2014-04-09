@@ -155,19 +155,22 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		User currentUser = conversation.getSession().getUser();
 
 		Issue issue = issueDao.postIssue(task);
+		issue.appendToDescription("Created from " + task.getReferenceAndLabel() + " in "
+				+ conversation.getProject().getCurrentSprint().getReferenceAndLabel() + ".");
 		issue.setCreator(currentUser);
 		sendToClients(conversation, issue);
 
-		task.appendToDescription("Created from " + task.getReferenceAndLabel() + " in "
-				+ task.getProject().getCurrentSprint().getReferenceAndLabel());
+		task.appendToDescription(task.getReferenceAndLabel() + " created.");
 		if (task.getBurnedWork() == 0) {
 			taskDao.deleteEntity(task);
 			for (GwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), null)) {
 				c.getNextData().addDeletedEntity(task.getId());
 			}
 		} else {
-			task.setOwner(currentUser);
-			task.setRemainingWork(0);
+			if (!task.isClosed()) {
+				task.setOwner(currentUser);
+				task.setRemainingWork(0);
+			}
 			sendToClients(conversation, task);
 		}
 		changeDao.postChange(task, currentUser, "issueId", null, issue.getId());

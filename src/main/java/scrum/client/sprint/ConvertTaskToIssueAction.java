@@ -38,7 +38,6 @@ public class ConvertTaskToIssueAction extends GConvertTaskToIssueAction {
 
 	@Override
 	public boolean isExecutable() {
-		if (task.isClosed()) return false;
 		return true;
 	}
 
