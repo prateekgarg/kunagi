@@ -160,7 +160,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		issue.setCreator(currentUser);
 		sendToClients(conversation, issue);
 
-		task.appendToDescription(task.getReferenceAndLabel() + " created.");
+		task.appendToDescription(issue.getReferenceAndLabel() + " created.");
 		if (task.getBurnedWork() == 0) {
 			taskDao.deleteEntity(task);
 			for (GwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), null)) {
