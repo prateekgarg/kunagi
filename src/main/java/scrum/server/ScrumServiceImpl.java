@@ -1182,6 +1182,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			newRequirement = requirementDao.postRequirement(destinationProject, requirement);
 		} else {
 			newRequirement = issueDao.postIssue(destinationProject, requirement);
+			((Issue) newRequirement).setCreator(currentUser);
 		}
 		subscriptionService.copySubscribers(requirement, newRequirement);
 		changeDao.postChange(newRequirement, currentUser, "@moved", null, conversation.getProject().getId());

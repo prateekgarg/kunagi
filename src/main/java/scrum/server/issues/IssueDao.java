@@ -136,6 +136,7 @@ public class IssueDao extends GIssueDao {
 		StringBuilder sb = new StringBuilder();
 		if (requirement.isDescriptionSet()) sb.append(requirement.getDescription());
 		if (requirement.isTestDescriptionSet()) sb.append("\n\n").append(requirement.getTestDescription());
+		issue.setDescription(sb.toString());
 		issue.addThemes(requirement.getThemes());
 		saveEntity(issue);
 		issue.updateNumber();
