@@ -6,6 +6,21 @@ kunagihp.subscribe = function(baseUrl) {
     window.location = baseUrl + email;
 }
 
+kunagihp.requestinvoice = function() {
+    var amount = $("#amountslider").slider("value");
+    var wish = kunagihp.getWish();
+    var subject = "Kunagi invoice request";
+    text = "Please send me an invoice for a voluntary payment for Kunagi. My address is:\n\n";
+    text += "<name or company>\n";
+    text += "<address>\n";
+    text += "<country>\n\n";
+    if (wish) text += "I would like you to spend more time on: " + wish;
+    var url = "mailto:support@kunagi.org?subject=" + encodeURIComponent(subject);
+    url += "&body=" + encodeURIComponent(text);
+    window.open(url,'_blank');
+    window.location = "download-file.html";
+}
+
 kunagihp.paypal = function() {
     var amount = $("#amountslider").slider("value");
     var tax = "0";
@@ -35,9 +50,9 @@ kunagihp.getWish = function () {
 $(function() {
     $("#amountslider").slider({
         value: 10,
-        min: 5,
-        max: 90,
-        step: 5,
+        min: 3,
+        max: 99,
+        step: 1,
         slide: function(event, ui) {
             $("#amount").val(ui.value + " EUR");
         }

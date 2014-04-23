@@ -29,6 +29,11 @@
             <a href="javascript:kunagihp.paypal();">Pay with PayPal</a>
         </div>
     </div>
+    <div style="float: left; margin-right: 10px;">
+        <div class="starter" style="width: 200px;">
+            <a href="javascript:kunagihp.requestinvoice();">Request an invoice</a>
+        </div>
+    </div>
     <div style="clear: both;"></div>
 </div>
 
