@@ -14,6 +14,7 @@ kunagihp.requestinvoice = function() {
     text += "<name or company>\n";
     text += "<address>\n";
     text += "<country>\n\n";
+    text += "Amount: " + amount + " EUR\n\n";
     if (wish) text += "I would like you to spend more time on: " + wish;
     var url = "mailto:support@kunagi.org?subject=" + encodeURIComponent(subject);
     url += "&body=" + encodeURIComponent(text);
