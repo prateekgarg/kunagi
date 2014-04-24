@@ -17,19 +17,19 @@ public class SpamChecker {
 
 		if (name != null) {
 			name = name.toLowerCase();
-			if (name.contains("pharm")) spamScore += 30;
+			if (name.contains("pharm")) spamScore += 25;
 			if (Str.containsDigit(name)) spamScore += 10;
 		}
 
 		if (text != null) {
 			text = text.toLowerCase();
-			if (text.contains("http://")) spamScore += 10;
-			if (text.contains("https://")) spamScore += 10;
-			if (text.contains("Very nice site!")) spamScore += 30;
-			if (text.contains("cheap goods")) spamScore += 30;
+			if (text.contains("http://") || text.contains("https://")) spamScore += 25;
+			if (text.contains("Very nice site!")) spamScore += 25;
+			if (text.contains("cheap goods")) spamScore += 25;
+			if (text.contains("opeaixy2.com")) spamScore += 49;
 		}
 
-		if (spamScore > 50) throw new RuntimeException("HTTP Request identified as SPAM.");
+		if (spamScore >= 50) throw new RuntimeException("HTTP Request identified as SPAM.");
 	}
 
 }
