@@ -14,10 +14,10 @@
  */
 package scrum.client.workspace;
 
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
-import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.SwitcherWidget;
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;

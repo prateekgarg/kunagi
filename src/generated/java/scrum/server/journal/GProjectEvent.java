@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GProjectEvent
@@ -128,6 +127,7 @@ public abstract class GProjectEvent
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -216,6 +216,7 @@ public abstract class GProjectEvent
     public final void setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
+        if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
@@ -267,13 +268,13 @@ public abstract class GProjectEvent
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
         try {
             getSubject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead subject reference");
             repairDeadSubjectReference(this.subjectId);
         }

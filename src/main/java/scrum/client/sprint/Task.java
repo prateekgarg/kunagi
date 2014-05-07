@@ -14,8 +14,8 @@
  */
 package scrum.client.sprint;
 
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
-import ilarkesto.gwt.client.EntityDoesNotExistException;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 

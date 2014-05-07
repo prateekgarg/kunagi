@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GEmoticon
@@ -218,7 +217,7 @@ public abstract class GEmoticon
         }
         try {
             getParent();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead parent reference");
             repairDeadParentReference(this.parentId);
         }
@@ -228,7 +227,7 @@ public abstract class GEmoticon
         }
         try {
             getOwner();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }

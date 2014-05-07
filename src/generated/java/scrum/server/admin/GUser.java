@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GUser
@@ -147,7 +146,8 @@ public abstract class GUser
     public final void setName(java.lang.String name) {
         name = prepareName(name);
         if (isName(name)) return;
-        if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "name", name);
+        if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
+        if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
         this.name = name;
         updateLastModified();
         fireModified("name="+name);
@@ -316,7 +316,7 @@ public abstract class GUser
     public final void setEmail(java.lang.String email) {
         email = prepareEmail(email);
         if (isEmail(email)) return;
-        if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "email", email);
+        if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
         this.email = email;
         updateLastModified();
         fireModified("email="+email);
@@ -993,7 +993,7 @@ public abstract class GUser
     public final void setLoginToken(java.lang.String loginToken) {
         loginToken = prepareLoginToken(loginToken);
         if (isLoginToken(loginToken)) return;
-        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "loginToken", loginToken);
+        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
         this.loginToken = loginToken;
         updateLastModified();
         fireModified("loginToken="+loginToken);
@@ -1030,7 +1030,7 @@ public abstract class GUser
     public final void setOpenId(java.lang.String openId) {
         openId = prepareOpenId(openId);
         if (isOpenId(openId)) return;
-        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "openId", openId);
+        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
         this.openId = openId;
         updateLastModified();
         fireModified("openId="+openId);
@@ -1101,7 +1101,7 @@ public abstract class GUser
         super.ensureIntegrity();
         try {
             getCurrentProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead currentProject reference");
             repairDeadCurrentProjectReference(this.currentProjectId);
         }

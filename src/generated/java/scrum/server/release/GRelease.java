@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GRelease
@@ -327,6 +326,7 @@ public abstract class GRelease
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -628,13 +628,13 @@ public abstract class GRelease
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
         try {
             getParentRelease();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead parentRelease reference");
             repairDeadParentReleaseReference(this.parentReleaseId);
         }
@@ -643,7 +643,7 @@ public abstract class GRelease
         for (String entityId : sprints) {
             try {
                 sprintDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead sprint reference");
                 repairDeadSprintReference(entityId);
             }

@@ -14,10 +14,10 @@
  */
 package scrum.client;
 
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.ADataTransferObject;
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.EntityDoesNotExistException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

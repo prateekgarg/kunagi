@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GWikipage
@@ -128,6 +127,7 @@ public abstract class GWikipage
     public final void setName(java.lang.String name) {
         name = prepareName(name);
         if (isName(name)) return;
+        if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         this.name = name;
         updateLastModified();
         fireModified("name="+name);
@@ -213,7 +213,7 @@ public abstract class GWikipage
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }

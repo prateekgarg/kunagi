@@ -17,10 +17,10 @@ package scrum.client.journal;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.diff.HtmlDiffMarker;
 import ilarkesto.core.diff.TokenDiff;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.AGwtEntity;
-import ilarkesto.gwt.client.EntityDoesNotExistException;
 
 import java.util.Comparator;
 import java.util.Map;

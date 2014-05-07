@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GProjectUserConfig
@@ -896,7 +895,7 @@ public abstract class GProjectUserConfig
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
@@ -906,7 +905,7 @@ public abstract class GProjectUserConfig
         }
         try {
             getUser();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead user reference");
             repairDeadUserReference(this.userId);
         }
@@ -917,7 +916,7 @@ public abstract class GProjectUserConfig
         for (String entityId : pblFilterQualitys) {
             try {
                 qualityDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead pblFilterQuality reference");
                 repairDeadPblFilterQualityReference(entityId);
             }

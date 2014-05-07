@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GChange
@@ -172,6 +171,7 @@ public abstract class GChange
     public final void setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
+        if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
         fireModified("dateAndTime="+dateAndTime);
@@ -370,13 +370,13 @@ public abstract class GChange
         }
         try {
             getParent();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead parent reference");
             repairDeadParentReference(this.parentId);
         }
         try {
             getUser();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead user reference");
             repairDeadUserReference(this.userId);
         }

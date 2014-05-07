@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GFile
@@ -132,6 +131,7 @@ public abstract class GFile
     public final void setFilename(java.lang.String filename) {
         filename = prepareFilename(filename);
         if (isFilename(filename)) return;
+        if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
         this.filename = filename;
         updateLastModified();
         fireModified("filename="+filename);
@@ -168,6 +168,7 @@ public abstract class GFile
     public final void setUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         uploadTime = prepareUploadTime(uploadTime);
         if (isUploadTime(uploadTime)) return;
+        if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
         this.uploadTime = uploadTime;
         updateLastModified();
         fireModified("uploadTime="+uploadTime);
@@ -204,6 +205,7 @@ public abstract class GFile
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -322,7 +324,7 @@ public abstract class GFile
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }

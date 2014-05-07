@@ -22,13 +22,13 @@ import ilarkesto.base.Reflect;
 import ilarkesto.base.Utl;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.In;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.webapp.AWebApplication;
 
 import java.util.Collection;

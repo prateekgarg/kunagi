@@ -61,7 +61,7 @@ public abstract class GDao
 
     public final scrum.client.pr.BlogEntry getBlogEntry(String id) {
         scrum.client.pr.BlogEntry ret = blogEntrys.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -69,7 +69,7 @@ public abstract class GDao
         Set<scrum.client.pr.BlogEntry> ret = new HashSet<scrum.client.pr.BlogEntry>();
         for (String id : ids) {
             scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -184,7 +184,7 @@ public abstract class GDao
 
     public final scrum.client.journal.Change getChange(String id) {
         scrum.client.journal.Change ret = changes.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -192,7 +192,7 @@ public abstract class GDao
         Set<scrum.client.journal.Change> ret = new HashSet<scrum.client.journal.Change>();
         for (String id : ids) {
             scrum.client.journal.Change entity = changes.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -299,7 +299,7 @@ public abstract class GDao
 
     public final scrum.client.collaboration.ChatMessage getChatMessage(String id) {
         scrum.client.collaboration.ChatMessage ret = chatMessages.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -307,7 +307,7 @@ public abstract class GDao
         Set<scrum.client.collaboration.ChatMessage> ret = new HashSet<scrum.client.collaboration.ChatMessage>();
         for (String id : ids) {
             scrum.client.collaboration.ChatMessage entity = chatMessages.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -390,7 +390,7 @@ public abstract class GDao
 
     public final scrum.client.collaboration.Comment getComment(String id) {
         scrum.client.collaboration.Comment ret = comments.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -398,7 +398,7 @@ public abstract class GDao
         Set<scrum.client.collaboration.Comment> ret = new HashSet<scrum.client.collaboration.Comment>();
         for (String id : ids) {
             scrum.client.collaboration.Comment entity = comments.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -513,7 +513,7 @@ public abstract class GDao
 
     public final scrum.client.collaboration.Emoticon getEmoticon(String id) {
         scrum.client.collaboration.Emoticon ret = emoticons.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -521,7 +521,7 @@ public abstract class GDao
         Set<scrum.client.collaboration.Emoticon> ret = new HashSet<scrum.client.collaboration.Emoticon>();
         for (String id : ids) {
             scrum.client.collaboration.Emoticon entity = emoticons.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -596,7 +596,7 @@ public abstract class GDao
 
     public final scrum.client.files.File getFile(String id) {
         scrum.client.files.File ret = files.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -604,7 +604,7 @@ public abstract class GDao
         Set<scrum.client.files.File> ret = new HashSet<scrum.client.files.File>();
         for (String id : ids) {
             scrum.client.files.File entity = files.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -703,7 +703,7 @@ public abstract class GDao
 
     public final scrum.client.impediments.Impediment getImpediment(String id) {
         scrum.client.impediments.Impediment ret = impediments.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -711,7 +711,7 @@ public abstract class GDao
         Set<scrum.client.impediments.Impediment> ret = new HashSet<scrum.client.impediments.Impediment>();
         for (String id : ids) {
             scrum.client.impediments.Impediment entity = impediments.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -818,7 +818,7 @@ public abstract class GDao
 
     public final scrum.client.issues.Issue getIssue(String id) {
         scrum.client.issues.Issue ret = issues.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -826,7 +826,7 @@ public abstract class GDao
         Set<scrum.client.issues.Issue> ret = new HashSet<scrum.client.issues.Issue>();
         for (String id : ids) {
             scrum.client.issues.Issue entity = issues.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1053,7 +1053,7 @@ public abstract class GDao
 
     public final scrum.client.project.Project getProject(String id) {
         scrum.client.project.Project ret = projects.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -1061,7 +1061,7 @@ public abstract class GDao
         Set<scrum.client.project.Project> ret = new HashSet<scrum.client.project.Project>();
         for (String id : ids) {
             scrum.client.project.Project entity = projects.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1455,7 +1455,7 @@ public abstract class GDao
 
     public final scrum.client.journal.ProjectEvent getProjectEvent(String id) {
         scrum.client.journal.ProjectEvent ret = projectEvents.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -1463,7 +1463,7 @@ public abstract class GDao
         Set<scrum.client.journal.ProjectEvent> ret = new HashSet<scrum.client.journal.ProjectEvent>();
         for (String id : ids) {
             scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1546,7 +1546,7 @@ public abstract class GDao
 
     public final scrum.client.admin.ProjectUserConfig getProjectUserConfig(String id) {
         scrum.client.admin.ProjectUserConfig ret = projectUserConfigs.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -1554,7 +1554,7 @@ public abstract class GDao
         Set<scrum.client.admin.ProjectUserConfig> ret = new HashSet<scrum.client.admin.ProjectUserConfig>();
         for (String id : ids) {
             scrum.client.admin.ProjectUserConfig entity = projectUserConfigs.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1741,7 +1741,7 @@ public abstract class GDao
 
     public final scrum.client.project.Quality getQuality(String id) {
         scrum.client.project.Quality ret = qualitys.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -1749,7 +1749,7 @@ public abstract class GDao
         Set<scrum.client.project.Quality> ret = new HashSet<scrum.client.project.Quality>();
         for (String id : ids) {
             scrum.client.project.Quality entity = qualitys.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1840,7 +1840,7 @@ public abstract class GDao
 
     public final scrum.client.release.Release getRelease(String id) {
         scrum.client.release.Release ret = releases.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -1848,7 +1848,7 @@ public abstract class GDao
         Set<scrum.client.release.Release> ret = new HashSet<scrum.client.release.Release>();
         for (String id : ids) {
             scrum.client.release.Release entity = releases.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -1995,7 +1995,7 @@ public abstract class GDao
 
     public final scrum.client.project.Requirement getRequirement(String id) {
         scrum.client.project.Requirement ret = requirements.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2003,7 +2003,7 @@ public abstract class GDao
         Set<scrum.client.project.Requirement> ret = new HashSet<scrum.client.project.Requirement>();
         for (String id : ids) {
             scrum.client.project.Requirement entity = requirements.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2198,7 +2198,7 @@ public abstract class GDao
 
     public final scrum.client.estimation.RequirementEstimationVote getRequirementEstimationVote(String id) {
         scrum.client.estimation.RequirementEstimationVote ret = requirementEstimationVotes.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2206,7 +2206,7 @@ public abstract class GDao
         Set<scrum.client.estimation.RequirementEstimationVote> ret = new HashSet<scrum.client.estimation.RequirementEstimationVote>();
         for (String id : ids) {
             scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2281,7 +2281,7 @@ public abstract class GDao
 
     public final scrum.client.risks.Risk getRisk(String id) {
         scrum.client.risks.Risk ret = risks.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2289,7 +2289,7 @@ public abstract class GDao
         Set<scrum.client.risks.Risk> ret = new HashSet<scrum.client.risks.Risk>();
         for (String id : ids) {
             scrum.client.risks.Risk entity = risks.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2404,7 +2404,7 @@ public abstract class GDao
 
     public final scrum.client.calendar.SimpleEvent getSimpleEvent(String id) {
         scrum.client.calendar.SimpleEvent ret = simpleEvents.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2412,7 +2412,7 @@ public abstract class GDao
         Set<scrum.client.calendar.SimpleEvent> ret = new HashSet<scrum.client.calendar.SimpleEvent>();
         for (String id : ids) {
             scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2535,7 +2535,7 @@ public abstract class GDao
 
     public final scrum.client.sprint.Sprint getSprint(String id) {
         scrum.client.sprint.Sprint ret = sprints.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2543,7 +2543,7 @@ public abstract class GDao
         Set<scrum.client.sprint.Sprint> ret = new HashSet<scrum.client.sprint.Sprint>();
         for (String id : ids) {
             scrum.client.sprint.Sprint entity = sprints.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2730,7 +2730,7 @@ public abstract class GDao
 
     public final scrum.client.sprint.SprintReport getSprintReport(String id) {
         scrum.client.sprint.SprintReport ret = sprintReports.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2738,7 +2738,7 @@ public abstract class GDao
         Set<scrum.client.sprint.SprintReport> ret = new HashSet<scrum.client.sprint.SprintReport>();
         for (String id : ids) {
             scrum.client.sprint.SprintReport entity = sprintReports.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2844,7 +2844,7 @@ public abstract class GDao
 
     public final scrum.client.collaboration.Subject getSubject(String id) {
         scrum.client.collaboration.Subject ret = subjects.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2852,7 +2852,7 @@ public abstract class GDao
         Set<scrum.client.collaboration.Subject> ret = new HashSet<scrum.client.collaboration.Subject>();
         for (String id : ids) {
             scrum.client.collaboration.Subject entity = subjects.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -2935,7 +2935,7 @@ public abstract class GDao
 
     public final scrum.client.pr.Subscription getSubscription(String id) {
         scrum.client.pr.Subscription ret = subscriptions.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -2943,7 +2943,7 @@ public abstract class GDao
         Set<scrum.client.pr.Subscription> ret = new HashSet<scrum.client.pr.Subscription>();
         for (String id : ids) {
             scrum.client.pr.Subscription entity = subscriptions.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -3009,7 +3009,7 @@ public abstract class GDao
 
     public final scrum.client.admin.SystemConfig getSystemConfig(String id) {
         scrum.client.admin.SystemConfig ret = systemConfigs.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -3017,7 +3017,7 @@ public abstract class GDao
         Set<scrum.client.admin.SystemConfig> ret = new HashSet<scrum.client.admin.SystemConfig>();
         for (String id : ids) {
             scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -3300,7 +3300,7 @@ public abstract class GDao
 
     public final scrum.client.sprint.Task getTask(String id) {
         scrum.client.sprint.Task ret = tasks.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -3308,7 +3308,7 @@ public abstract class GDao
         Set<scrum.client.sprint.Task> ret = new HashSet<scrum.client.sprint.Task>();
         for (String id : ids) {
             scrum.client.sprint.Task entity = tasks.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -3431,7 +3431,7 @@ public abstract class GDao
 
     public final scrum.client.admin.User getUser(String id) {
         scrum.client.admin.User ret = users.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -3439,7 +3439,7 @@ public abstract class GDao
         Set<scrum.client.admin.User> ret = new HashSet<scrum.client.admin.User>();
         for (String id : ids) {
             scrum.client.admin.User entity = users.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;
@@ -3710,7 +3710,7 @@ public abstract class GDao
 
     public final scrum.client.collaboration.Wikipage getWikipage(String id) {
         scrum.client.collaboration.Wikipage ret = wikipages.get(id);
-        if (ret == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+        if (ret == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
         return ret;
     }
 
@@ -3718,7 +3718,7 @@ public abstract class GDao
         Set<scrum.client.collaboration.Wikipage> ret = new HashSet<scrum.client.collaboration.Wikipage>();
         for (String id : ids) {
             scrum.client.collaboration.Wikipage entity = wikipages.get(id);
-            if (entity == null) throw new ilarkesto.gwt.client.EntityDoesNotExistException(id);
+            if (entity == null) throw new ilarkesto.core.persistance.EntityDoesNotExistException(id);
             ret.add(entity);
         }
         return ret;

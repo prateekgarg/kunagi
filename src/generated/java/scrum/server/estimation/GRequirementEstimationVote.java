@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GRequirementEstimationVote
@@ -217,7 +216,7 @@ public abstract class GRequirementEstimationVote
         }
         try {
             getRequirement();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
@@ -227,7 +226,7 @@ public abstract class GRequirementEstimationVote
         }
         try {
             getUser();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead user reference");
             repairDeadUserReference(this.userId);
         }

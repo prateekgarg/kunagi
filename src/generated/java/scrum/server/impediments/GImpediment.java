@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GImpediment
@@ -167,6 +166,7 @@ public abstract class GImpediment
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -203,6 +203,7 @@ public abstract class GImpediment
     public final void setDate(ilarkesto.core.time.Date date) {
         date = prepareDate(date);
         if (isDate(date)) return;
+        if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
         fireModified("date="+date);
@@ -358,7 +359,7 @@ public abstract class GImpediment
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }

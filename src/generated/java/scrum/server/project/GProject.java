@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GProject
@@ -184,7 +183,8 @@ public abstract class GProject
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
-        if (label != null && getDao().getProjectByLabel(label) != null) throw new ilarkesto.persistence.UniqueFieldConstraintException(this, "label", label);
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
+        if (label != null && getDao().getProjectByLabel(label) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("Project" ,"label", label);
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -2117,7 +2117,7 @@ public abstract class GProject
         for (String entityId : participants) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead participant reference");
                 repairDeadParticipantReference(entityId);
             }
@@ -2127,7 +2127,7 @@ public abstract class GProject
         for (String entityId : admins) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead admin reference");
                 repairDeadAdminReference(entityId);
             }
@@ -2137,7 +2137,7 @@ public abstract class GProject
         for (String entityId : productOwners) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead productOwner reference");
                 repairDeadProductOwnerReference(entityId);
             }
@@ -2147,7 +2147,7 @@ public abstract class GProject
         for (String entityId : scrumMasters) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead scrumMaster reference");
                 repairDeadScrumMasterReference(entityId);
             }
@@ -2157,20 +2157,20 @@ public abstract class GProject
         for (String entityId : teamMembers) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead teamMember reference");
                 repairDeadTeamMemberReference(entityId);
             }
         }
         try {
             getCurrentSprint();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead currentSprint reference");
             repairDeadCurrentSprintReference(this.currentSprintId);
         }
         try {
             getNextSprint();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead nextSprint reference");
             repairDeadNextSprintReference(this.nextSprintId);
         }

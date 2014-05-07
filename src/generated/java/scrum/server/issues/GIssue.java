@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GIssue
@@ -270,6 +269,7 @@ public abstract class GIssue
     public final void setDate(ilarkesto.core.time.DateAndTime date) {
         date = prepareDate(date);
         if (isDate(date)) return;
+        if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
         fireModified("date="+date);
@@ -358,6 +358,7 @@ public abstract class GIssue
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -1137,25 +1138,25 @@ public abstract class GIssue
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
         try {
             getStory();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead story reference");
             repairDeadStoryReference(this.storyId);
         }
         try {
             getCreator();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead creator reference");
             repairDeadCreatorReference(this.creatorId);
         }
         try {
             getOwner();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
@@ -1164,7 +1165,7 @@ public abstract class GIssue
         for (String entityId : affectedReleases) {
             try {
                 releaseDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead affectedRelease reference");
                 repairDeadAffectedReleaseReference(entityId);
             }
@@ -1174,7 +1175,7 @@ public abstract class GIssue
         for (String entityId : fixReleases) {
             try {
                 releaseDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead fixRelease reference");
                 repairDeadFixReleaseReference(entityId);
             }

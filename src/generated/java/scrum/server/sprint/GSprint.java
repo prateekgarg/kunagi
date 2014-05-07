@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GSprint
@@ -207,6 +206,7 @@ public abstract class GSprint
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -999,7 +999,7 @@ public abstract class GSprint
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
@@ -1009,7 +1009,7 @@ public abstract class GSprint
         for (String entityId : productOwners) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead productOwner reference");
                 repairDeadProductOwnerReference(entityId);
             }
@@ -1019,7 +1019,7 @@ public abstract class GSprint
         for (String entityId : scrumMasters) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead scrumMaster reference");
                 repairDeadScrumMasterReference(entityId);
             }
@@ -1029,7 +1029,7 @@ public abstract class GSprint
         for (String entityId : teamMembers) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead teamMember reference");
                 repairDeadTeamMemberReference(entityId);
             }

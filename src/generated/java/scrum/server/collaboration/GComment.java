@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GComment
@@ -316,6 +315,7 @@ public abstract class GComment
     public final void setText(java.lang.String text) {
         text = prepareText(text);
         if (isText(text)) return;
+        if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
         updateLastModified();
         fireModified("text="+text);
@@ -407,13 +407,13 @@ public abstract class GComment
         }
         try {
             getParent();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead parent reference");
             repairDeadParentReference(this.parentId);
         }
         try {
             getAuthor();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead author reference");
             repairDeadAuthorReference(this.authorId);
         }

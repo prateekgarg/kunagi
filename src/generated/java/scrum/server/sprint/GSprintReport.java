@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GSprintReport
@@ -629,7 +628,7 @@ public abstract class GSprintReport
         }
         try {
             getSprint();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
@@ -638,7 +637,7 @@ public abstract class GSprintReport
         for (String entityId : completedRequirements) {
             try {
                 requirementDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead completedRequirement reference");
                 repairDeadCompletedRequirementReference(entityId);
             }
@@ -648,7 +647,7 @@ public abstract class GSprintReport
         for (String entityId : rejectedRequirements) {
             try {
                 requirementDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead rejectedRequirement reference");
                 repairDeadRejectedRequirementReference(entityId);
             }
@@ -659,7 +658,7 @@ public abstract class GSprintReport
         for (String entityId : closedTasks) {
             try {
                 taskDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead closedTask reference");
                 repairDeadClosedTaskReference(entityId);
             }
@@ -669,7 +668,7 @@ public abstract class GSprintReport
         for (String entityId : openTasks) {
             try {
                 taskDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead openTask reference");
                 repairDeadOpenTaskReference(entityId);
             }

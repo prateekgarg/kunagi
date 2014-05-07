@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GBlogEntry
@@ -253,6 +252,7 @@ public abstract class GBlogEntry
     public final void setTitle(java.lang.String title) {
         title = prepareTitle(title);
         if (isTitle(title)) return;
+        if (title == null) throw new IllegalArgumentException("Mandatory field can not be set to null: title");
         this.title = title;
         updateLastModified();
         fireModified("title="+title);
@@ -503,7 +503,7 @@ public abstract class GBlogEntry
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
@@ -512,7 +512,7 @@ public abstract class GBlogEntry
         for (String entityId : authors) {
             try {
                 userDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead author reference");
                 repairDeadAuthorReference(entityId);
             }
@@ -522,7 +522,7 @@ public abstract class GBlogEntry
         for (String entityId : releases) {
             try {
                 releaseDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead release reference");
                 repairDeadReleaseReference(entityId);
             }

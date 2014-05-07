@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GTask
@@ -168,6 +167,7 @@ public abstract class GTask
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -478,25 +478,25 @@ public abstract class GTask
         }
         try {
             getRequirement();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
         try {
             getOwner();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
         try {
             getImpediment();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead impediment reference");
             repairDeadImpedimentReference(this.impedimentId);
         }
         try {
             getClosedInPastSprint();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead closedInPastSprint reference");
             repairDeadClosedInPastSprintReference(this.closedInPastSprintId);
         }

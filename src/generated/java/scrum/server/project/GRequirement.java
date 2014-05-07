@@ -19,7 +19,6 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.persistence.EntityDoesNotExistException;
 import ilarkesto.base.Str;
 
 public abstract class GRequirement
@@ -388,6 +387,7 @@ public abstract class GRequirement
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
         if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
         fireModified("label="+label);
@@ -990,19 +990,19 @@ public abstract class GRequirement
         }
         try {
             getProject();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
         try {
             getSprint();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
         try {
             getIssue();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead issue reference");
             repairDeadIssueReference(this.issueId);
         }
@@ -1011,7 +1011,7 @@ public abstract class GRequirement
         for (String entityId : qualitys) {
             try {
                 qualityDao.getById(entityId);
-            } catch (EntityDoesNotExistException ex) {
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead quality reference");
                 repairDeadQualityReference(entityId);
             }
@@ -1020,7 +1020,7 @@ public abstract class GRequirement
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         try {
             getEpic();
-        } catch (EntityDoesNotExistException ex) {
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead epic reference");
             repairDeadEpicReference(this.epicId);
         }
