@@ -17,7 +17,7 @@ package scrum.server.common;
 import ilarkesto.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
-import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class StartServlet extends AKunagiServlet {
 		String charset = IO.UTF_8;
 		req.setContentTypeHtml();
 
-		HtmlRenderer html = new HtmlRenderer(req.getWriter(), charset);
+		HtmlBuilder html = new HtmlBuilder(req.getWriter(), charset);
 		html.startHTMLstandard();
 
 		String title = "Kunagi";

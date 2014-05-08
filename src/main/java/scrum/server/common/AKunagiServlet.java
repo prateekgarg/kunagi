@@ -21,7 +21,7 @@ import ilarkesto.core.logging.LogRecord;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.AServlet;
 import ilarkesto.webapp.RequestWrapper;
 
@@ -84,16 +84,16 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 
 	// --- helper ---
 
-	protected HtmlRenderer createDefaultHtmlWithHeader(RequestWrapper<WebSession> req, String subtitle)
+	protected HtmlBuilder createDefaultHtmlWithHeader(RequestWrapper<WebSession> req, String subtitle)
 			throws IOException {
 		return createDefaultHtmlWithHeader(req, subtitle, 0, null);
 	}
 
-	protected HtmlRenderer createDefaultHtmlWithHeader(RequestWrapper<WebSession> req, String subtitle,
+	protected HtmlBuilder createDefaultHtmlWithHeader(RequestWrapper<WebSession> req, String subtitle,
 			int refreshSeconds, String refreshUrl) throws IOException {
 		String charset = IO.UTF_8;
 		req.setContentTypeHtml();
-		HtmlRenderer html = new HtmlRenderer(req.getWriter(), charset);
+		HtmlBuilder html = new HtmlBuilder(req.getWriter(), charset);
 		html.startHTMLstandard();
 		String title = "Kunagi";
 		if (config.isShowRelease()) title += " " + applicationInfo.getRelease();
@@ -107,7 +107,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		return html;
 	}
 
-	protected void logsTable(HtmlRenderer html, List<LogRecord> logs) {
+	protected void logsTable(HtmlBuilder html, List<LogRecord> logs) {
 		startTABLE(html);
 		headersRow(html, "Level", "Logger", "Message", "Context");
 		for (LogRecord log : logs) {
@@ -120,11 +120,11 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		endTABLE(html);
 	}
 
-	protected void startTABLE(HtmlRenderer html) {
+	protected void startTABLE(HtmlBuilder html) {
 		html.startTABLE();
 	}
 
-	protected void headersRow(HtmlRenderer html, String... headers) {
+	protected void headersRow(HtmlBuilder html, String... headers) {
 		html.startTR();
 
 		for (String header : headers) {
@@ -137,7 +137,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		html.flush();
 	}
 
-	protected void valuesRowColored(HtmlRenderer html, String color, Object... values) {
+	protected void valuesRowColored(HtmlBuilder html, String color, Object... values) {
 		html.startTR();
 
 		for (Object value : values) {
@@ -150,7 +150,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		html.flush();
 	}
 
-	protected void valuesRow(HtmlRenderer html, Object... values) {
+	protected void valuesRow(HtmlBuilder html, Object... values) {
 		html.startTR();
 
 		for (Object value : values) {
@@ -163,7 +163,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		html.flush();
 	}
 
-	protected void keyValueRow(HtmlRenderer html, String key, Object value) {
+	protected void keyValueRow(HtmlBuilder html, String key, Object value) {
 		html.startTR();
 
 		html.startTD().setStyle(getLabelStyle());
@@ -178,12 +178,12 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		html.flush();
 	}
 
-	protected void endTABLE(HtmlRenderer html) {
+	protected void endTABLE(HtmlBuilder html) {
 		html.endTABLE();
 		html.flush();
 	}
 
-	protected void sectionHeader(HtmlRenderer html, String title) {
+	protected void sectionHeader(HtmlBuilder html, String title) {
 		html.H2(title);
 	}
 
@@ -199,7 +199,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
 	}
 
-	protected void adminLinks(HtmlRenderer html, RequestWrapper<WebSession> req) {
+	protected void adminLinks(HtmlBuilder html, RequestWrapper<WebSession> req) {
 		html.startP();
 		html.text("[ ");
 		html.A("admin.html", "Admin page");

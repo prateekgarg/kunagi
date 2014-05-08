@@ -7,9 +7,9 @@ public class CreateExampleProjectServiceCall extends scrum.client.core.AServiceC
     public  CreateExampleProjectServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().createExampleProject(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().createExampleProject(conversationNumber, callback);
     }
 
     @Override

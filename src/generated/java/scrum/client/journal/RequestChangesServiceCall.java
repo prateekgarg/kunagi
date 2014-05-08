@@ -10,9 +10,9 @@ public class RequestChangesServiceCall extends scrum.client.core.AServiceCall {
         this.parentId = parentId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().requestChanges(serviceCaller.getConversationNumber(), parentId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().requestChanges(conversationNumber, parentId, callback);
     }
 
     @Override

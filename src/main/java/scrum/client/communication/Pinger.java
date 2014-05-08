@@ -16,6 +16,7 @@ package scrum.client.communication;
 
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.Tm;
+import ilarkesto.gwt.client.AServiceCall;
 
 import java.util.LinkedList;
 
@@ -51,7 +52,7 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 
 			@Override
 			public void run() {
-				if (!disabled && !serviceCaller.containsServiceCall(PingServiceCall.class)) {
+				if (!disabled && !AServiceCall.containsServiceCall(PingServiceCall.class)) {
 					final long start = Tm.getCurrentTimeMillis();
 					new PingServiceCall().execute(new Runnable() {
 

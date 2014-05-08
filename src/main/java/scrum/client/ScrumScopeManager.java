@@ -30,7 +30,6 @@ import scrum.client.collaboration.Wiki;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.ServerErrorManager;
 import scrum.client.core.RichtextAutosaver;
-import scrum.client.core.ServiceCaller;
 import scrum.client.files.Uploader;
 import scrum.client.i18n.Localizer;
 import scrum.client.issues.IssueManager;
@@ -64,7 +63,6 @@ public class ScrumScopeManager {
 
 		scope.putComponent("app", app);
 		scope.putComponent(dao);
-		scope.putComponent(new ServiceCaller());
 		scope.putComponent(new Pinger());
 		scope.putComponent(new Ui());
 		scope.putComponent(new SystemMessageManager());

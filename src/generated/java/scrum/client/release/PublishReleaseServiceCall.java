@@ -10,9 +10,9 @@ public class PublishReleaseServiceCall extends scrum.client.core.AServiceCall {
         this.releaseId = releaseId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().publishRelease(serviceCaller.getConversationNumber(), releaseId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().publishRelease(conversationNumber, releaseId, callback);
     }
 
     @Override

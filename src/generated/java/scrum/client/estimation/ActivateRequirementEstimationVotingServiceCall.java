@@ -10,9 +10,9 @@ public class ActivateRequirementEstimationVotingServiceCall extends scrum.client
         this.requirementId = requirementId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().activateRequirementEstimationVoting(serviceCaller.getConversationNumber(), requirementId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().activateRequirementEstimationVoting(conversationNumber, requirementId, callback);
     }
 
     @Override

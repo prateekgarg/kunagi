@@ -20,7 +20,6 @@ import ilarkesto.core.time.Time;
 import ilarkesto.mda.legacy.AGeneratorApplication;
 import ilarkesto.mda.legacy.generator.GwtActionGenerator;
 import ilarkesto.mda.legacy.generator.GwtActionTemplateGenerator;
-import ilarkesto.mda.legacy.generator.GwtApplicationGenerator;
 import ilarkesto.mda.legacy.generator.GwtDaoGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityTemplateGenerator;
@@ -1061,7 +1060,6 @@ public class ScrumModelApplication extends AGeneratorApplication {
 	protected void onGeneration() {
 		super.onGeneration();
 		generateActions(getApplicationModel().getActions());
-		new GwtApplicationGenerator(getApplicationModel()).generate();
 		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
 		new GwtImageBundleGenerator("scrum.client.img").generate();
 	}

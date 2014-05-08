@@ -159,7 +159,8 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		}
 
 		log.info("Activating USER mode");
-		Scope.get().getComponent(UsersWorkspaceWidgets.class).activate(page);
+		UsersWorkspaceWidgets usersWorkspaceWidgets = Scope.get().getComponent(UsersWorkspaceWidgets.class);
+		usersWorkspaceWidgets.activate(page);
 		currentMode = Mode.USER;
 	}
 

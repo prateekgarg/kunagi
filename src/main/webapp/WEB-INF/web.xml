@@ -24,8 +24,7 @@
   <servlet>
     <servlet-name>start</servlet-name>
     <servlet-class>scrum.server.common.StartServlet</servlet-class>
-    <load-on-startup>1
-    </load-on-startup>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>start</servlet-name>
@@ -211,5 +210,10 @@
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>
+
+  <!-- shutdown hook -->
+  <listener>
+    <listener-class>ilarkesto.webapp.WebappListener</listener-class>
+  </listener>
 
 </web-app>

@@ -13,9 +13,9 @@ public class CreateEntityServiceCall extends scrum.client.core.AServiceCall {
         this.properties = properties;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().createEntity(serviceCaller.getConversationNumber(), type, properties, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().createEntity(conversationNumber, type, properties, callback);
     }
 
     @Override

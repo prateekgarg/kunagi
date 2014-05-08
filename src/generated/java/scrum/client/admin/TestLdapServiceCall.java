@@ -7,9 +7,9 @@ public class TestLdapServiceCall extends scrum.client.core.AServiceCall {
     public  TestLdapServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().testLdap(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().testLdap(conversationNumber, callback);
     }
 
     @Override

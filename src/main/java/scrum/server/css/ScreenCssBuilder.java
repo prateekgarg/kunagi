@@ -15,12 +15,12 @@
 package scrum.server.css;
 
 import ilarkesto.base.Colors;
-import ilarkesto.ui.web.CssRenderer;
+import ilarkesto.ui.web.CssBuilder;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class ScreenCssBuilder implements CssBuilder {
+public class ScreenCssBuilder implements ICssBuilder {
 
 	// http://www.colorcombos.com/color-scheme-203.html
 
@@ -111,7 +111,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	public static String cBurndownOptimalLine = cPagePanelBorder;
 
 	@Override
-	public void buildCss(CssRenderer css) {
+	public void buildCss(CssBuilder css) {
 		html(css);
 		gwt(css);
 		ilarkesto(css);
@@ -222,7 +222,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".draggable").cursorMove();
 	}
 
-	private void loginPage(CssRenderer css) {
+	private void loginPage(CssBuilder css) {
 		css.style(".loginPage");
 		css.style(".loginPage a").color("moccasin");
 		css.style(".loginPage code").color("#FFA");
@@ -254,7 +254,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".loginPage .kunagiLink a").color(Colors.lighten(labelColor));
 	}
 
-	private void planningPoker(CssRenderer css) {
+	private void planningPoker(CssBuilder css) {
 		css.style(".PlanningPokerWidget-table-border").background("#333").border(2, "#2A2A2A").padding(12)
 				.borderRadius(60).marginBottom(10);
 		css.style(".PlanningPokerWidget-table").border(2, "#2A2A2A").borderRadius(45)
@@ -281,7 +281,7 @@ public class ScreenCssBuilder implements CssBuilder {
 
 	}
 
-	private void calendar(CssRenderer css) {
+	private void calendar(CssBuilder css) {
 		css.style(".DateSelectorWidget").background("white").textAlignCenter().border(1, "white");
 		css.style(".DateSelectorWidget-weekday").background("white").textAlignCenter().color(cBlockHeaderCellSecondary)
 				.border(1, "white");
@@ -302,7 +302,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".DayListWidget-month").color(cBlockHeaderCellSecondary);
 	}
 
-	private void dashboard(CssRenderer css) {
+	private void dashboard(CssBuilder css) {
 		css.style(
 			".TeamTasksWidget, .UpcomingTasksWidget, .AcceptedIssuesWidget, .OpenImpedimentsWidget, .HighestRisksWidget, .LatestEventsWidget td")
 				.lineHeight(lineHeight + 4);
@@ -313,7 +313,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".LatestEventsWidget-time").whiteSpaceNowrap().color(cCommentDate);
 	}
 
-	private void whiteboard(CssRenderer css) {
+	private void whiteboard(CssBuilder css) {
 		String cOpen = "#f99";
 		css.style(".WhiteboardWidget-open").borderTop(3, cOpen);
 		String cOwned = "#ff9";
@@ -331,7 +331,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".WhiteboardWidget-requirement-list").padding(0).paddingTop(10);
 	}
 
-	private void ilarkesto(CssRenderer css) {
+	private void ilarkesto(CssBuilder css) {
 		css.style(".AWidget-height100").height100();
 		css.style(".ImageAnchor img").floatLeft().marginRight(3);
 		css.style(".ImageAnchor .text").displayInline();
@@ -352,7 +352,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".DropdownMenuButtonWidget .gwt-MenuItem-selected").backgroundNone();
 	}
 
-	private void gwt(CssRenderer css) {
+	private void gwt(CssBuilder css) {
 		css.style(".gwt-Hyperlink a").whiteSpaceNowrap();
 		css.style(".gwt-Button").fontFamily(fontFamily).fontSize(fontSize).fontWeightBold().color(cButtonText)
 				.padding(2).margin(0).whiteSpaceNowrap().border(1, cButtonBorder);
@@ -362,7 +362,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".MenuItem-disabled").color(cButtonTextDisabled);
 	}
 
-	private void html(CssRenderer css) {
+	private void html(CssBuilder css) {
 		css.html().padding(0).margin(0);
 		css.body().padding(0).margin(0).background(cBackground).fontFamily(fontFamily).fontSize(fontSize)
 				.lineHeight(lineHeight);
@@ -383,7 +383,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.textarea().border(1, cPagePanelBorder);
 	}
 
-	private void workspace(CssRenderer css) {
+	private void workspace(CssBuilder css) {
 		int headerHeight = 25;
 		css.style(".Workspace");
 
@@ -411,14 +411,14 @@ public class ScreenCssBuilder implements CssBuilder {
 				.padding(1);
 	}
 
-	private void systemMessage(CssRenderer css) {
+	private void systemMessage(CssBuilder css) {
 		css.style(".SystemMessageWidget-box").background(cErrorBackground).color(cError).border(1, cError).padding(10)
 				.marginBottom(10);
 		css.style(".SystemMessageWidget-box-title").fontWeightBold().marginBottom(5);
 		css.style(".SystemMessageWidget-box-time").fontStyleItalic().marginTop(5).textAlignRight();
 	}
 
-	private void chat(CssRenderer css) {
+	private void chat(CssBuilder css) {
 		css.style(".ChatWidget-outputScroller").background(cChatBackground).border(1, cChatBorder).padding(5);
 		css.style(".ChatWidget-output .author").color("green").fontStyleItalic();
 		css.style(".ChatWidget-output .author-system").color("red").fontStyleItalic();
@@ -428,7 +428,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChatWidget-input").marginTop(5).width(97, "%");
 	}
 
-	private void navigator(CssRenderer css) {
+	private void navigator(CssBuilder css) {
 		css.style(".NavigatorWidget");
 		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator).overflowHidden();
@@ -441,13 +441,13 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30).overflowHidden();
 	}
 
-	private void actions(CssRenderer css) {
+	private void actions(CssBuilder css) {
 		css.style(".ActionsPanel").background(cActionsBackground, "../specialarea-bg.png", "repeat-x")
 				.border(1, cActionsBorder).padding(7).borderRadius(10);
 		css.style(".ProjectList").width100();
 	}
 
-	private void userGuide(CssRenderer css) {
+	private void userGuide(CssBuilder css) {
 		css.style(".UserGuideWidget").color(cUserguide)
 				.background(cUserguideBackground, "../specialarea-bg.png", "repeat-x").border(1, cUserguideBorder)
 				.borderRadius(10);
@@ -460,7 +460,7 @@ public class ScreenCssBuilder implements CssBuilder {
 				.fontWeightBold();
 	}
 
-	private void comments(CssRenderer css) {
+	private void comments(CssBuilder css) {
 		css.style(".CommentsWidget").background(cCommentsBackground, "../specialarea-bg.png", "repeat-x")
 				.border(1, cCommentsBorder).padding(7).borderRadius(10);
 		css.style(".CommentsWidget-pageNavigator").borderTop(1, cPagePanelBorder).paddingTop(3);
@@ -483,7 +483,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".Comment-Widget-header-pub .gwt-Button").fontSize(fontSizeSmall);
 	}
 
-	private void changeHistory(CssRenderer css) {
+	private void changeHistory(CssBuilder css) {
 		css.style(".ChangeHistoryWidget").background(cChangesBackground, "../specialarea-bg.png", "repeat-x")
 				.border(1, cChangesBorder).padding(7).borderRadius(10);
 		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
@@ -496,7 +496,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".ChangeWidget-diff span.removed").color("darkred").textDecorationLineThrough();
 	}
 
-	private void blockList(CssRenderer css) {
+	private void blockList(CssBuilder css) {
 		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
 		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground).background(cBlockBackground);
 
@@ -531,7 +531,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UsersOnBlockWidget").padding(3, 5, 0, 5).textAlignRight();
 	}
 
-	private void userStatus(CssRenderer css) {
+	private void userStatus(CssBuilder css) {
 		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
 
 		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
@@ -542,7 +542,7 @@ public class ScreenCssBuilder implements CssBuilder {
 		css.style(".UserStatusWidget .AFieldValueWidget").backgroundNone().borderNone();
 	}
 
-	private void pagePanel(CssRenderer css) {
+	private void pagePanel(CssBuilder css) {
 		css.style(".PagePanel");// .padding(10);
 		css.style(".PagePanel-content").background("white").border(1, cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
@@ -557,7 +557,7 @@ public class ScreenCssBuilder implements CssBuilder {
 	@Override
 	public String toString() {
 		StringWriter out = new StringWriter();
-		CssRenderer renderer = new CssRenderer(new PrintWriter(out));
+		CssBuilder renderer = new CssBuilder(new PrintWriter(out));
 		buildCss(renderer);
 		renderer.flush();
 		return out.toString();

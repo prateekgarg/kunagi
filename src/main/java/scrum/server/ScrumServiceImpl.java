@@ -21,7 +21,6 @@ import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
 import ilarkesto.base.Utl;
 import ilarkesto.core.base.Str;
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.In;
 import ilarkesto.core.time.Date;
@@ -77,7 +76,6 @@ import scrum.server.sprint.TaskDao;
 
 public class ScrumServiceImpl extends GScrumServiceImpl {
 
-	private static final Log log = Log.get(ScrumServiceImpl.class);
 	private static final long serialVersionUID = 1;
 
 	// --- dependencies ---
@@ -1068,13 +1066,13 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		WebSession session = (WebSession) getSession();
 		GwtConversation conversation = session.getGwtConversation(-1);
 		ilarkesto.di.Context context = ilarkesto.di.Context.get();
-		context.setName("gwt-srv:startSession");
+		context.setName("gwt-srv:startConversation");
 		context.bindCurrentThread();
 		try {
 			onStartConversation(conversation);
 			onServiceMethodExecuted(context);
 		} catch (Throwable t) {
-			handleServiceMethodException(conversation.getNumber(), "startSession", t);
+			handleServiceMethodException(conversation.getNumber(), "startConversation", t);
 		}
 		return (scrum.client.DataTransferObject) conversation.popNextData();
 	}
@@ -1137,11 +1135,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	private void assertProjectSelected(GwtConversation conversation) {
 		if (conversation.getProject() == null) throw new RuntimeException("No project selected.");
-	}
-
-	@Override
-	protected Class<? extends AWebApplication> getWebApplicationClass() {
-		return ScrumWebApplication.class;
 	}
 
 	@Override

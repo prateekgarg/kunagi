@@ -28,7 +28,7 @@ import scrum.server.collaboration.Emoticon;
 import scrum.server.collaboration.EmoticonDao;
 import scrum.server.project.Project;
 
-public class GwtConversation extends AGwtConversation {
+public class GwtConversation extends AGwtConversation<WebSession, AEntity> {
 
 	private static final Log LOG = Log.get(GwtConversation.class);
 	private TimePeriod TIMEOUT = new TimePeriod(Pinger.MAX_DELAY * 10);
@@ -105,11 +105,6 @@ public class GwtConversation extends AGwtConversation {
 	@Override
 	protected DataTransferObject createDataTransferObject() {
 		return new DataTransferObject();
-	}
-
-	@Override
-	public WebSession getSession() {
-		return (WebSession) super.getSession();
 	}
 
 	@Override

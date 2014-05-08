@@ -13,9 +13,9 @@ public class MoveRequirementToProjectServiceCall extends scrum.client.core.AServ
         this.requirementId = requirementId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().moveRequirementToProject(serviceCaller.getConversationNumber(), destinationProjectId, requirementId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().moveRequirementToProject(conversationNumber, destinationProjectId, requirementId, callback);
     }
 
     @Override

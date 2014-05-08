@@ -10,9 +10,9 @@ public class RequestCommentsServiceCall extends scrum.client.core.AServiceCall {
         this.parentId = parentId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().requestComments(serviceCaller.getConversationNumber(), parentId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().requestComments(conversationNumber, parentId, callback);
     }
 
     @Override

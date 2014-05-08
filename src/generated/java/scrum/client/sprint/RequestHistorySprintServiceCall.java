@@ -10,9 +10,9 @@ public class RequestHistorySprintServiceCall extends scrum.client.core.AServiceC
         this.sprintId = sprintId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().requestHistorySprint(serviceCaller.getConversationNumber(), sprintId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().requestHistorySprint(conversationNumber, sprintId, callback);
     }
 
     @Override

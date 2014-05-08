@@ -13,9 +13,9 @@ public class ChangePasswordServiceCall extends scrum.client.core.AServiceCall {
         this.oldPassword = oldPassword;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().changePassword(serviceCaller.getConversationNumber(), newPassword, oldPassword, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().changePassword(conversationNumber, newPassword, oldPassword, callback);
     }
 
     @Override

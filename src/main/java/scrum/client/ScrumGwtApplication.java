@@ -47,7 +47,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ScrumGwtApplication extends GScrumGwtApplication {
+public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 
 	public static final String LOGIN_TOKEN_COOKIE = "kunagiLoginToken";
 

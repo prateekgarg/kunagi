@@ -15,7 +15,6 @@
 package scrum.server;
 
 import ilarkesto.base.Tm;
-import ilarkesto.core.logging.Log;
 import ilarkesto.core.scope.In;
 import ilarkesto.core.time.TimePeriod;
 import ilarkesto.di.Context;
@@ -28,8 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import scrum.server.admin.User;
 
 public class WebSession extends AWebSession {
-
-	private static final Log LOG = Log.get(WebSession.class);
 
 	@In
 	private TransactionService transactionService;
@@ -58,7 +55,7 @@ public class WebSession extends AWebSession {
 	}
 
 	public void setUser(User user) {
-		LOG.info("User set:", user);
+		log.info("User set:", user);
 		this.user = user;
 		getContext().setName(toString());
 	}

@@ -10,9 +10,9 @@ public class ResetPasswordServiceCall extends scrum.client.core.AServiceCall {
         this.userId = userId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().resetPassword(serviceCaller.getConversationNumber(), userId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().resetPassword(conversationNumber, userId, callback);
     }
 
     @Override

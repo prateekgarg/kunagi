@@ -7,9 +7,9 @@ public class RequestProjectEventsServiceCall extends scrum.client.core.AServiceC
     public  RequestProjectEventsServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().requestProjectEvents(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().requestProjectEvents(conversationNumber, callback);
     }
 
     @Override

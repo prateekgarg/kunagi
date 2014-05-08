@@ -10,9 +10,9 @@ public class UpdateSystemMessageServiceCall extends scrum.client.core.AServiceCa
         this.systemMessage = systemMessage;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().updateSystemMessage(serviceCaller.getConversationNumber(), systemMessage, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().updateSystemMessage(conversationNumber, systemMessage, callback);
     }
 
     @Override

@@ -7,9 +7,9 @@ public class RequestRisksServiceCall extends scrum.client.core.AServiceCall {
     public  RequestRisksServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().requestRisks(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().requestRisks(conversationNumber, callback);
     }
 
     @Override

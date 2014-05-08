@@ -16,7 +16,7 @@ package scrum.server.css;
 
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.DynamicClassLoader;
-import ilarkesto.ui.web.CssRenderer;
+import ilarkesto.ui.web.CssBuilder;
 import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
@@ -35,19 +35,19 @@ public class CssServlet extends AKunagiServlet {
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
 		req.setContentTypeCss();
-		CssRenderer css = new CssRenderer(req.getWriter());
-		CssBuilder builder = getCssBuilder();
+		CssBuilder css = new CssBuilder(req.getWriter());
+		ICssBuilder builder = getCssBuilder();
 		builder.buildCss(css);
 		css.flush();
 		// LOG.debug(builder);
 	}
 
-	private CssBuilder getCssBuilder() {
+	private ICssBuilder getCssBuilder() {
 		if (ScrumWebApplication.get().isDevelopmentMode()) {
 			ClassLoader loader = new DynamicClassLoader(getClass().getClassLoader(), ScreenCssBuilder.class.getName());
-			Class<? extends CssBuilder> type;
+			Class<? extends ICssBuilder> type;
 			try {
-				type = (Class<? extends CssBuilder>) loader.loadClass(ScreenCssBuilder.class.getName());
+				type = (Class<? extends ICssBuilder>) loader.loadClass(ScreenCssBuilder.class.getName());
 				return type.newInstance();
 			} catch (Throwable ex) {
 				LOG.fatal(ex);

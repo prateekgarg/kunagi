@@ -17,6 +17,8 @@ package scrum.client.test;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.DateAndTime;
+import ilarkesto.gwt.client.AGwtApplication;
+import ilarkesto.gwt.client.AServiceCall;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 import ilarkesto.gwt.client.TableBuilder;
@@ -34,7 +36,6 @@ import scrum.client.common.AScrumWidget;
 import scrum.client.common.TooltipBuilder;
 import scrum.client.communication.Pinger;
 import scrum.client.core.DeleteEntityServiceCall;
-import scrum.client.core.ServiceCaller;
 import scrum.client.issues.Issue;
 import scrum.client.project.Requirement;
 import scrum.client.sprint.Task;
@@ -48,7 +49,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ScrumStatusWidget extends AScrumWidget {
 
 	private Dao dao;
-	private ServiceCaller serviceCaller;
 
 	private SimplePanel entityCountWrapper;
 	private SimplePanel stateInformationWrapper;
@@ -57,7 +57,6 @@ public class ScrumStatusWidget extends AScrumWidget {
 	protected Widget onInitialization() {
 		dao = Scope.get().getComponent(Dao.class);
 		ScrumGwtApplication app = (ScrumGwtApplication) Scope.get().getComponent("app");
-		serviceCaller = Scope.get().getComponent(ServiceCaller.class);
 
 		entityCountWrapper = new SimplePanel();
 		stateInformationWrapper = new SimplePanel();
@@ -109,8 +108,8 @@ public class ScrumStatusWidget extends AScrumWidget {
 	private Widget createStateInformation() {
 		TableBuilder tb = ScrumGwt.createFieldTable();
 		tb.addFieldRow("activeServiceCallCount",
-			new Label(String.valueOf(Str.concat(serviceCaller.getActiveServiceCalls(), ", "))));
-		tb.addFieldRow("conversationNumber", new Label(String.valueOf(serviceCaller.getConversationNumber())));
+			new Label(String.valueOf(Str.concat(AServiceCall.getActiveServiceCalls(), ", "))));
+		tb.addFieldRow("conversationNumber", new Label(String.valueOf(AGwtApplication.get().getConversationNumber())));
 		tb.addFieldRow("entityIdBase", new Label(dao.getEntityIdBase()));
 		tb.addFieldRow("entityIdCounter", new Label(String.valueOf(dao.getEntityIdCounter())));
 		return tb.createTable();

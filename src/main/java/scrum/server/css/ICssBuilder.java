@@ -14,10 +14,10 @@
  */
 package scrum.server.css;
 
-import ilarkesto.ui.web.CssRenderer;
+import ilarkesto.ui.web.CssBuilder;
 
-public interface CssBuilder {
+public interface ICssBuilder {
 
-	void buildCss(CssRenderer css);
+	void buildCss(CssBuilder css);
 
 }

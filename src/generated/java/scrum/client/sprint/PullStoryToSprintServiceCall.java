@@ -10,9 +10,9 @@ public class PullStoryToSprintServiceCall extends scrum.client.core.AServiceCall
         this.storyId = storyId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().pullStoryToSprint(serviceCaller.getConversationNumber(), storyId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().pullStoryToSprint(conversationNumber, storyId, callback);
     }
 
     @Override

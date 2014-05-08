@@ -10,9 +10,9 @@ public class ConvertIssueToStoryServiceCall extends scrum.client.core.AServiceCa
         this.issueId = issueId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().convertIssueToStory(serviceCaller.getConversationNumber(), issueId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().convertIssueToStory(conversationNumber, issueId, callback);
     }
 
     @Override

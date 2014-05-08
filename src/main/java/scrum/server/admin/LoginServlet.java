@@ -22,7 +22,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.io.IO;
-import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
@@ -386,7 +386,7 @@ public class LoginServlet extends AKunagiServlet {
 		String charset = IO.UTF_8;
 		req.setContentTypeHtml();
 
-		HtmlRenderer html = new HtmlRenderer(req.getWriter(), charset);
+		HtmlBuilder html = new HtmlBuilder(req.getWriter(), charset);
 		html.startHTMLstandard();
 
 		String title = "Kunagi Login";
@@ -428,7 +428,7 @@ public class LoginServlet extends AKunagiServlet {
 		html.flush();
 	}
 
-	private void renderLogin(HtmlRenderer html, String username, String historyToken) {
+	private void renderLogin(HtmlBuilder html, String username, String historyToken) {
 		if (!webApplication.getSystemConfig().isOpenIdDisabled()) {
 			html.H2("Login with OpenID");
 			renderOpenIdLoginForm(html, historyToken);
@@ -461,7 +461,7 @@ public class LoginServlet extends AKunagiServlet {
 		}
 	}
 
-	public void renderRetroLoginForm(HtmlRenderer html, String username, String historyToken) {
+	public void renderRetroLoginForm(HtmlBuilder html, String username, String historyToken) {
 		html.startFORM(null, "loginForm", false);
 		html.INPUThidden("historyToken", historyToken);
 		html.startTABLE().setAlignCenter();
@@ -498,7 +498,7 @@ public class LoginServlet extends AKunagiServlet {
 		html.endFORM();
 	}
 
-	public void renderOpenIdLoginForm(HtmlRenderer html, String historyToken) {
+	public void renderOpenIdLoginForm(HtmlBuilder html, String historyToken) {
 		renderOpenIdLink(OpenId.MYOPENID, "MyOpenID", historyToken, html);
 		renderOpenIdLink(OpenId.GOOGLE, "Google", historyToken, html);
 		renderOpenIdLink(OpenId.YAHOO, "Yahoo!", historyToken, html);
@@ -545,7 +545,7 @@ public class LoginServlet extends AKunagiServlet {
 		html.endFORM();
 	}
 
-	private void renderOpenIdLink(String openId, String label, String historyToken, HtmlRenderer html) {
+	private void renderOpenIdLink(String openId, String label, String historyToken, HtmlBuilder html) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("login.html?openid=").append(Str.encodeUrlParameter(openId));
 		sb.append("&login=Login");
@@ -557,7 +557,7 @@ public class LoginServlet extends AKunagiServlet {
 		html.endA();
 	}
 
-	private void renderPasswordRequest(HtmlRenderer html, String username, String historyToken) {
+	private void renderPasswordRequest(HtmlBuilder html, String username, String historyToken) {
 		html.H2("Request new password");
 		html.startFORM(null, "passwordRequestForm", false);
 		html.INPUThidden("historyToken", historyToken);
@@ -586,7 +586,7 @@ public class LoginServlet extends AKunagiServlet {
 		html.A("login.html", "Back to Login");
 	}
 
-	private void renderCreateAccount(HtmlRenderer html, String username, String email, String historyToken) {
+	private void renderCreateAccount(HtmlBuilder html, String username, String email, String historyToken) {
 		html.H2("Create account");
 		html.startDIV("createAccount");
 		html.startFORM(null, "loginForm", false);
@@ -644,7 +644,7 @@ public class LoginServlet extends AKunagiServlet {
 		}
 	}
 
-	private void renderMessage(HtmlRenderer html, String message) {
+	private void renderMessage(HtmlBuilder html, String message) {
 		html.startDIV("message");
 		html.text(message);
 		html.endDIV();

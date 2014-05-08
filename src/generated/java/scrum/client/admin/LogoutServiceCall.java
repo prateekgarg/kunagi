@@ -7,9 +7,9 @@ public class LogoutServiceCall extends scrum.client.core.AServiceCall {
     public  LogoutServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().logout(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().logout(conversationNumber, callback);
     }
 
     @Override

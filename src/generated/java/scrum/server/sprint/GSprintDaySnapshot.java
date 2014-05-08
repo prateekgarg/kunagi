@@ -19,11 +19,13 @@ import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
-import ilarkesto.base.Str;
+import ilarkesto.core.base.Str;
 
 public abstract class GSprintDaySnapshot
             extends AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SprintDaySnapshot> {
+
+    protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(SprintDaySnapshot.class);
 
     // --- AEntity ---
 

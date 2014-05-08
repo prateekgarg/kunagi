@@ -10,9 +10,9 @@ public class SelectProjectServiceCall extends scrum.client.core.AServiceCall {
         this.projectId = projectId;
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().selectProject(serviceCaller.getConversationNumber(), projectId, new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().selectProject(conversationNumber, projectId, callback);
     }
 
     @Override

@@ -17,7 +17,7 @@ package scrum.server.admin;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.io.IO;
-import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.RequestWrapper;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class ConfirmEmailServlet extends AKunagiServlet {
 	private void returnConfirmationPage(RequestWrapper<WebSession> req) throws IOException {
 		req.setContentTypeHtml();
 		String url = webApplication.createUrl(null);
-		HtmlRenderer html = new HtmlRenderer(req.getWriter(), IO.UTF_8);
+		HtmlBuilder html = new HtmlBuilder(req.getWriter(), IO.UTF_8);
 		html.startHTML();
 		html.startHEAD("Email confirmed", "en");
 		html.METArefresh(3, url);

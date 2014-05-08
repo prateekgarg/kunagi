@@ -7,9 +7,9 @@ public class SwitchToNextSprintServiceCall extends scrum.client.core.AServiceCal
     public  SwitchToNextSprintServiceCall() {
     }
 
-    public void execute(Runnable returnHandler) {
-        serviceCaller.onServiceCall(this);
-        serviceCaller.getService().switchToNextSprint(serviceCaller.getConversationNumber(), new DefaultCallback(this, returnHandler));
+    @Override
+    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        getService().switchToNextSprint(conversationNumber, callback);
     }
 
     @Override

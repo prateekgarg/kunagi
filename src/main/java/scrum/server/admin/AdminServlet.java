@@ -23,7 +23,7 @@ import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.TimePeriod;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.logging.DefaultLogRecordHandler;
-import ilarkesto.ui.web.HtmlRenderer;
+import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.RequestWrapper;
 
@@ -58,7 +58,7 @@ public class AdminServlet extends AKunagiServlet {
 			return;
 		}
 
-		HtmlRenderer html = createDefaultHtmlWithHeader(req, "Administration");
+		HtmlBuilder html = createDefaultHtmlWithHeader(req, "Administration");
 
 		html.startBODY().setStyle("font-size: 10px");
 
@@ -88,7 +88,7 @@ public class AdminServlet extends AKunagiServlet {
 		html.flush();
 	}
 
-	private void actions(HtmlRenderer html) {
+	private void actions(HtmlBuilder html) {
 		sectionHeader(html, "Functions");
 		html.text("[ ");
 		html.A("backup", "Create backup");
@@ -103,13 +103,13 @@ public class AdminServlet extends AKunagiServlet {
 		html.text(" ]");
 	}
 
-	private void errors(HtmlRenderer html) {
+	private void errors(HtmlBuilder html) {
 		sectionHeader(html, "Warnings and Errors");
 		List<LogRecord> logs = DefaultLogRecordHandler.getErrors();
 		logsTable(html, logs);
 	}
 
-	private void runtime(HtmlRenderer html) {
+	private void runtime(HtmlBuilder html) {
 		sectionHeader(html, "Runtime");
 		startTABLE(html);
 
@@ -141,7 +141,7 @@ public class AdminServlet extends AKunagiServlet {
 		html.flush();
 	}
 
-	private void systemProperties(HtmlRenderer html) {
+	private void systemProperties(HtmlBuilder html) {
 		sectionHeader(html, "Java System Properties");
 		startTABLE(html);
 		Properties properties = System.getProperties();
@@ -153,7 +153,7 @@ public class AdminServlet extends AKunagiServlet {
 		html.flush();
 	}
 
-	private void threads(HtmlRenderer html) {
+	private void threads(HtmlBuilder html) {
 		sectionHeader(html, "Threads");
 		startTABLE(html);
 		headersRow(html, "Name", "Prio", "State", "Group", "Stack trace");
@@ -166,7 +166,7 @@ public class AdminServlet extends AKunagiServlet {
 		endTABLE(html);
 	}
 
-	private void processes(HtmlRenderer html) {
+	private void processes(HtmlBuilder html) {
 		sectionHeader(html, "Spawned processes");
 		startTABLE(html);
 		headersRow(html, "Command", "Start time", "Run time");
@@ -178,7 +178,7 @@ public class AdminServlet extends AKunagiServlet {
 		endTABLE(html);
 	}
 
-	private void conversations(HtmlRenderer html) {
+	private void conversations(HtmlBuilder html) {
 		sectionHeader(html, "Active Conversations");
 		startTABLE(html);
 		headersRow(html, "#", "User", "Project", "Last request");
@@ -192,7 +192,7 @@ public class AdminServlet extends AKunagiServlet {
 		endTABLE(html);
 	}
 
-	private void sessions(HtmlRenderer html) {
+	private void sessions(HtmlBuilder html) {
 		sectionHeader(html, "Active Sessions");
 		startTABLE(html);
 		headersRow(html, "User", "Last request", "Age", "Host", "Agent");
@@ -207,7 +207,7 @@ public class AdminServlet extends AKunagiServlet {
 		endTABLE(html);
 	}
 
-	private void version(HtmlRenderer html) {
+	private void version(HtmlBuilder html) {
 		sectionHeader(html, "Version");
 		startTABLE(html);
 		keyValueRow(html, "Release", applicationInfo.getRelease());
@@ -215,7 +215,7 @@ public class AdminServlet extends AKunagiServlet {
 		endTABLE(html);
 	}
 
-	private void environment(HtmlRenderer html) {
+	private void environment(HtmlBuilder html) {
 		sectionHeader(html, "Environment");
 		startTABLE(html);
 		Map<String, String> env = System.getenv();
