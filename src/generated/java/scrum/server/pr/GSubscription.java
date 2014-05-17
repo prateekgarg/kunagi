@@ -77,7 +77,7 @@ public abstract class GSubscription
         this.subjectId = subject == null ? null : subject.getId();
         subjectCache = subject;
         updateLastModified();
-        fireModified("subject="+subject);
+        fireModified("subject", subject);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -119,7 +119,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
         updateLastModified();
-        fireModified("subscribersEmails="+Str.format(subscribersEmails));
+        fireModified("subscribersEmails", subscribersEmails);
     }
 
     protected Collection<java.lang.String> prepareSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
@@ -143,7 +143,7 @@ public abstract class GSubscription
         if (subscribersEmail == null) throw new IllegalArgumentException("subscribersEmail == null");
         boolean added = this.subscribersEmails.add(subscribersEmail);
         if (added) updateLastModified();
-        if (added) fireModified("subscribersEmails+=" + subscribersEmail);
+        if (added) fireModified("subscribersEmails", subscribersEmail);
         return added;
     }
 
@@ -161,7 +161,7 @@ public abstract class GSubscription
         if (this.subscribersEmails == null) return false;
         boolean removed = this.subscribersEmails.remove(subscribersEmail);
         if (removed) updateLastModified();
-        if (removed) fireModified("subscribersEmails-=" + subscribersEmail);
+        if (removed) fireModified("subscribersEmails", subscribersEmail);
         return removed;
     }
 
@@ -179,7 +179,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.isEmpty()) return false;
         this.subscribersEmails.clear();
         updateLastModified();
-        fireModified("subscribersEmails cleared");
+        fireModified("subscribersEmails", null);
         return true;
     }
 

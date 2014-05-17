@@ -114,7 +114,7 @@ public abstract class GIssue
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -166,7 +166,7 @@ public abstract class GIssue
         this.storyId = story == null ? null : story.getId();
         storyCache = story;
         updateLastModified();
-        fireModified("story="+story);
+        fireModified("story", story);
     }
 
     protected scrum.server.project.Requirement prepareStory(scrum.server.project.Requirement story) {
@@ -207,7 +207,7 @@ public abstract class GIssue
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {
@@ -237,7 +237,7 @@ public abstract class GIssue
         if (isType(type)) return;
         this.type = type;
         updateLastModified();
-        fireModified("type="+type);
+        fireModified("type", type);
     }
 
     protected java.lang.String prepareType(java.lang.String type) {
@@ -274,7 +274,7 @@ public abstract class GIssue
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
-        fireModified("date="+date);
+        fireModified("date", date);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDate(ilarkesto.core.time.DateAndTime date) {
@@ -321,7 +321,7 @@ public abstract class GIssue
         this.creatorId = creator == null ? null : creator.getId();
         creatorCache = creator;
         updateLastModified();
-        fireModified("creator="+creator);
+        fireModified("creator", creator);
     }
 
     protected scrum.server.admin.User prepareCreator(scrum.server.admin.User creator) {
@@ -363,7 +363,7 @@ public abstract class GIssue
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -399,7 +399,7 @@ public abstract class GIssue
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description="+description);
+        fireModified("description", description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -435,7 +435,7 @@ public abstract class GIssue
         if (isStatement(statement)) return;
         this.statement = statement;
         updateLastModified();
-        fireModified("statement="+statement);
+        fireModified("statement", statement);
     }
 
     protected java.lang.String prepareStatement(java.lang.String statement) {
@@ -471,7 +471,7 @@ public abstract class GIssue
         if (isIssuerName(issuerName)) return;
         this.issuerName = issuerName;
         updateLastModified();
-        fireModified("issuerName="+issuerName);
+        fireModified("issuerName", issuerName);
     }
 
     protected java.lang.String prepareIssuerName(java.lang.String issuerName) {
@@ -507,7 +507,7 @@ public abstract class GIssue
         if (isIssuerEmail(issuerEmail)) return;
         this.issuerEmail = issuerEmail;
         updateLastModified();
-        fireModified("issuerEmail="+issuerEmail);
+        fireModified("issuerEmail", issuerEmail);
     }
 
     protected java.lang.String prepareIssuerEmail(java.lang.String issuerEmail) {
@@ -543,7 +543,7 @@ public abstract class GIssue
         if (isAcceptDate(acceptDate)) return;
         this.acceptDate = acceptDate;
         updateLastModified();
-        fireModified("acceptDate="+acceptDate);
+        fireModified("acceptDate", acceptDate);
     }
 
     protected ilarkesto.core.time.Date prepareAcceptDate(ilarkesto.core.time.Date acceptDate) {
@@ -579,7 +579,7 @@ public abstract class GIssue
         if (isUrgent(urgent)) return;
         this.urgent = urgent;
         updateLastModified();
-        fireModified("urgent="+urgent);
+        fireModified("urgent", urgent);
     }
 
     protected boolean prepareUrgent(boolean urgent) {
@@ -609,7 +609,7 @@ public abstract class GIssue
         if (isSeverity(severity)) return;
         this.severity = severity;
         updateLastModified();
-        fireModified("severity="+severity);
+        fireModified("severity", severity);
     }
 
     protected int prepareSeverity(int severity) {
@@ -650,7 +650,7 @@ public abstract class GIssue
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
         updateLastModified();
-        fireModified("owner="+owner);
+        fireModified("owner", owner);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -691,7 +691,7 @@ public abstract class GIssue
         if (isFixDate(fixDate)) return;
         this.fixDate = fixDate;
         updateLastModified();
-        fireModified("fixDate="+fixDate);
+        fireModified("fixDate", fixDate);
     }
 
     protected ilarkesto.core.time.Date prepareFixDate(ilarkesto.core.time.Date fixDate) {
@@ -727,7 +727,7 @@ public abstract class GIssue
         if (isCloseDate(closeDate)) return;
         this.closeDate = closeDate;
         updateLastModified();
-        fireModified("closeDate="+closeDate);
+        fireModified("closeDate", closeDate);
     }
 
     protected ilarkesto.core.time.Date prepareCloseDate(ilarkesto.core.time.Date closeDate) {
@@ -763,7 +763,7 @@ public abstract class GIssue
         if (isSuspendedUntilDate(suspendedUntilDate)) return;
         this.suspendedUntilDate = suspendedUntilDate;
         updateLastModified();
-        fireModified("suspendedUntilDate="+suspendedUntilDate);
+        fireModified("suspendedUntilDate", suspendedUntilDate);
     }
 
     protected ilarkesto.core.time.Date prepareSuspendedUntilDate(ilarkesto.core.time.Date suspendedUntilDate) {
@@ -801,7 +801,7 @@ public abstract class GIssue
         if (this.affectedReleasesIds.equals(ids)) return;
         this.affectedReleasesIds = ids;
         updateLastModified();
-        fireModified("affectedReleases="+Str.format(affectedReleases));
+        fireModified("affectedReleases", affectedReleases);
     }
 
     protected Collection<scrum.server.release.Release> prepareAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
@@ -809,7 +809,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadAffectedReleaseReference(String entityId) {
-        if (this.affectedReleasesIds.remove(entityId)) fireModified("affectedReleases-=" + entityId);
+        if (this.affectedReleasesIds.remove(entityId)) fireModified("affectedReleases", entityId);
     }
 
     public final boolean containsAffectedRelease(scrum.server.release.Release affectedRelease) {
@@ -829,7 +829,7 @@ public abstract class GIssue
         if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
         boolean added = this.affectedReleasesIds.add(affectedRelease.getId());
         if (added) updateLastModified();
-        if (added) fireModified("affectedReleases+=" + affectedRelease);
+        if (added) fireModified("affectedReleases", affectedRelease);
         return added;
     }
 
@@ -847,7 +847,7 @@ public abstract class GIssue
         if (this.affectedReleasesIds == null) return false;
         boolean removed = this.affectedReleasesIds.remove(affectedRelease.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("affectedReleases-=" + affectedRelease);
+        if (removed) fireModified("affectedReleases", affectedRelease);
         return removed;
     }
 
@@ -865,12 +865,12 @@ public abstract class GIssue
         if (this.affectedReleasesIds.isEmpty()) return false;
         this.affectedReleasesIds.clear();
         updateLastModified();
-        fireModified("affectedReleases cleared");
+        fireModified("affectedReleases", null);
         return true;
     }
 
     protected final void updateAffectedReleases(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setAffectedReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
     }
 
@@ -891,7 +891,7 @@ public abstract class GIssue
         if (this.fixReleasesIds.equals(ids)) return;
         this.fixReleasesIds = ids;
         updateLastModified();
-        fireModified("fixReleases="+Str.format(fixReleases));
+        fireModified("fixReleases", fixReleases);
     }
 
     protected Collection<scrum.server.release.Release> prepareFixReleases(Collection<scrum.server.release.Release> fixReleases) {
@@ -899,7 +899,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadFixReleaseReference(String entityId) {
-        if (this.fixReleasesIds.remove(entityId)) fireModified("fixReleases-=" + entityId);
+        if (this.fixReleasesIds.remove(entityId)) fireModified("fixReleases", entityId);
     }
 
     public final boolean containsFixRelease(scrum.server.release.Release fixRelease) {
@@ -919,7 +919,7 @@ public abstract class GIssue
         if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
         boolean added = this.fixReleasesIds.add(fixRelease.getId());
         if (added) updateLastModified();
-        if (added) fireModified("fixReleases+=" + fixRelease);
+        if (added) fireModified("fixReleases", fixRelease);
         return added;
     }
 
@@ -937,7 +937,7 @@ public abstract class GIssue
         if (this.fixReleasesIds == null) return false;
         boolean removed = this.fixReleasesIds.remove(fixRelease.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("fixReleases-=" + fixRelease);
+        if (removed) fireModified("fixReleases", fixRelease);
         return removed;
     }
 
@@ -955,12 +955,12 @@ public abstract class GIssue
         if (this.fixReleasesIds.isEmpty()) return false;
         this.fixReleasesIds.clear();
         updateLastModified();
-        fireModified("fixReleases cleared");
+        fireModified("fixReleases", null);
         return true;
     }
 
     protected final void updateFixReleases(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setFixReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
     }
 
@@ -979,7 +979,7 @@ public abstract class GIssue
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published="+published);
+        fireModified("published", published);
     }
 
     protected boolean preparePublished(boolean published) {
@@ -1010,7 +1010,7 @@ public abstract class GIssue
         if (this.themes.equals(themes)) return;
         this.themes = new java.util.ArrayList<java.lang.String>(themes);
         updateLastModified();
-        fireModified("themes="+Str.format(themes));
+        fireModified("themes", themes);
     }
 
     protected Collection<java.lang.String> prepareThemes(Collection<java.lang.String> themes) {
@@ -1034,7 +1034,7 @@ public abstract class GIssue
         if (theme == null) throw new IllegalArgumentException("theme == null");
         boolean added = this.themes.add(theme);
         if (added) updateLastModified();
-        if (added) fireModified("themes+=" + theme);
+        if (added) fireModified("themes", theme);
         return added;
     }
 
@@ -1052,7 +1052,7 @@ public abstract class GIssue
         if (this.themes == null) return false;
         boolean removed = this.themes.remove(theme);
         if (removed) updateLastModified();
-        if (removed) fireModified("themes-=" + theme);
+        if (removed) fireModified("themes", theme);
         return removed;
     }
 
@@ -1070,7 +1070,7 @@ public abstract class GIssue
         if (this.themes.isEmpty()) return false;
         this.themes.clear();
         updateLastModified();
-        fireModified("themes cleared");
+        fireModified("themes", null);
         return true;
     }
 

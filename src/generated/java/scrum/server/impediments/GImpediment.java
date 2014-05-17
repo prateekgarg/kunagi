@@ -99,7 +99,7 @@ public abstract class GImpediment
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -140,7 +140,7 @@ public abstract class GImpediment
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {
@@ -171,7 +171,7 @@ public abstract class GImpediment
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -208,7 +208,7 @@ public abstract class GImpediment
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
-        fireModified("date="+date);
+        fireModified("date", date);
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -244,7 +244,7 @@ public abstract class GImpediment
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description="+description);
+        fireModified("description", description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -280,7 +280,7 @@ public abstract class GImpediment
         if (isSolution(solution)) return;
         this.solution = solution;
         updateLastModified();
-        fireModified("solution="+solution);
+        fireModified("solution", solution);
     }
 
     protected java.lang.String prepareSolution(java.lang.String solution) {
@@ -316,7 +316,7 @@ public abstract class GImpediment
         if (isClosed(closed)) return;
         this.closed = closed;
         updateLastModified();
-        fireModified("closed="+closed);
+        fireModified("closed", closed);
     }
 
     protected boolean prepareClosed(boolean closed) {

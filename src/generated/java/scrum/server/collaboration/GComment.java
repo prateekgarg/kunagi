@@ -94,7 +94,7 @@ public abstract class GComment
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
         updateLastModified();
-        fireModified("parent="+parent);
+        fireModified("parent", parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -146,7 +146,7 @@ public abstract class GComment
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
         updateLastModified();
-        fireModified("author="+author);
+        fireModified("author", author);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -187,7 +187,7 @@ public abstract class GComment
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published="+published);
+        fireModified("published", published);
     }
 
     protected boolean preparePublished(boolean published) {
@@ -217,7 +217,7 @@ public abstract class GComment
         if (isAuthorName(authorName)) return;
         this.authorName = authorName;
         updateLastModified();
-        fireModified("authorName="+authorName);
+        fireModified("authorName", authorName);
     }
 
     protected java.lang.String prepareAuthorName(java.lang.String authorName) {
@@ -253,7 +253,7 @@ public abstract class GComment
         if (isAuthorEmail(authorEmail)) return;
         this.authorEmail = authorEmail;
         updateLastModified();
-        fireModified("authorEmail="+authorEmail);
+        fireModified("authorEmail", authorEmail);
     }
 
     protected java.lang.String prepareAuthorEmail(java.lang.String authorEmail) {
@@ -289,7 +289,7 @@ public abstract class GComment
         if (isAuthorNameVisible(authorNameVisible)) return;
         this.authorNameVisible = authorNameVisible;
         updateLastModified();
-        fireModified("authorNameVisible="+authorNameVisible);
+        fireModified("authorNameVisible", authorNameVisible);
     }
 
     protected boolean prepareAuthorNameVisible(boolean authorNameVisible) {
@@ -320,7 +320,7 @@ public abstract class GComment
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
         updateLastModified();
-        fireModified("text="+text);
+        fireModified("text", text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -356,7 +356,7 @@ public abstract class GComment
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime="+dateAndTime);
+        fireModified("dateAndTime", dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

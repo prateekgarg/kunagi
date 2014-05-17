@@ -94,7 +94,7 @@ public abstract class GFile
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -136,7 +136,7 @@ public abstract class GFile
         if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
         this.filename = filename;
         updateLastModified();
-        fireModified("filename="+filename);
+        fireModified("filename", filename);
     }
 
     protected java.lang.String prepareFilename(java.lang.String filename) {
@@ -173,7 +173,7 @@ public abstract class GFile
         if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
         this.uploadTime = uploadTime;
         updateLastModified();
-        fireModified("uploadTime="+uploadTime);
+        fireModified("uploadTime", uploadTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
@@ -210,7 +210,7 @@ public abstract class GFile
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -246,7 +246,7 @@ public abstract class GFile
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {
@@ -276,7 +276,7 @@ public abstract class GFile
         if (isNote(note)) return;
         this.note = note;
         updateLastModified();
-        fireModified("note="+note);
+        fireModified("note", note);
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {

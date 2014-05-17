@@ -90,7 +90,7 @@ public abstract class GProjectEvent
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -132,7 +132,7 @@ public abstract class GProjectEvent
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -179,7 +179,7 @@ public abstract class GProjectEvent
         this.subjectId = subject == null ? null : subject.getId();
         subjectCache = subject;
         updateLastModified();
-        fireModified("subject="+subject);
+        fireModified("subject", subject);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -221,7 +221,7 @@ public abstract class GProjectEvent
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime="+dateAndTime);
+        fireModified("dateAndTime", dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

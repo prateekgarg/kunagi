@@ -168,13 +168,13 @@ public class User extends GUser {
 	@Override
 	public void setPassword(String value) {
 		this.password = hashPassword(value);
-		fireModified("password=xxx");
+		fireModified("password", "xxx");
 	}
 
 	private String hashPassword(String password) {
 		if (passwordSalt == null) {
 			passwordSalt = Str.generatePassword(32);
-			fireModified("passwordSalt=" + this.passwordSalt);
+			fireModified("passwordSalt", this.passwordSalt);
 		}
 		return PasswordHasher.hashPassword(password, this.passwordSalt, "SHA-256:");
 	}

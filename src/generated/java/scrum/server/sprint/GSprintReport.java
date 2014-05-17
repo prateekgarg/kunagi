@@ -82,7 +82,7 @@ public abstract class GSprintReport
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
         updateLastModified();
-        fireModified("sprint="+sprint);
+        fireModified("sprint", sprint);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -125,7 +125,7 @@ public abstract class GSprintReport
         if (this.completedRequirementsIds.equals(ids)) return;
         this.completedRequirementsIds = ids;
         updateLastModified();
-        fireModified("completedRequirements="+Str.format(completedRequirements));
+        fireModified("completedRequirements", completedRequirements);
     }
 
     protected Collection<scrum.server.project.Requirement> prepareCompletedRequirements(Collection<scrum.server.project.Requirement> completedRequirements) {
@@ -133,7 +133,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadCompletedRequirementReference(String entityId) {
-        if (this.completedRequirementsIds.remove(entityId)) fireModified("completedRequirements-=" + entityId);
+        if (this.completedRequirementsIds.remove(entityId)) fireModified("completedRequirements", entityId);
     }
 
     public final boolean containsCompletedRequirement(scrum.server.project.Requirement completedRequirement) {
@@ -153,7 +153,7 @@ public abstract class GSprintReport
         if (completedRequirement == null) throw new IllegalArgumentException("completedRequirement == null");
         boolean added = this.completedRequirementsIds.add(completedRequirement.getId());
         if (added) updateLastModified();
-        if (added) fireModified("completedRequirements+=" + completedRequirement);
+        if (added) fireModified("completedRequirements", completedRequirement);
         return added;
     }
 
@@ -171,7 +171,7 @@ public abstract class GSprintReport
         if (this.completedRequirementsIds == null) return false;
         boolean removed = this.completedRequirementsIds.remove(completedRequirement.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("completedRequirements-=" + completedRequirement);
+        if (removed) fireModified("completedRequirements", completedRequirement);
         return removed;
     }
 
@@ -189,12 +189,12 @@ public abstract class GSprintReport
         if (this.completedRequirementsIds.isEmpty()) return false;
         this.completedRequirementsIds.clear();
         updateLastModified();
-        fireModified("completedRequirements cleared");
+        fireModified("completedRequirements", null);
         return true;
     }
 
     protected final void updateCompletedRequirements(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setCompletedRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
     }
 
@@ -215,7 +215,7 @@ public abstract class GSprintReport
         if (this.rejectedRequirementsIds.equals(ids)) return;
         this.rejectedRequirementsIds = ids;
         updateLastModified();
-        fireModified("rejectedRequirements="+Str.format(rejectedRequirements));
+        fireModified("rejectedRequirements", rejectedRequirements);
     }
 
     protected Collection<scrum.server.project.Requirement> prepareRejectedRequirements(Collection<scrum.server.project.Requirement> rejectedRequirements) {
@@ -223,7 +223,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadRejectedRequirementReference(String entityId) {
-        if (this.rejectedRequirementsIds.remove(entityId)) fireModified("rejectedRequirements-=" + entityId);
+        if (this.rejectedRequirementsIds.remove(entityId)) fireModified("rejectedRequirements", entityId);
     }
 
     public final boolean containsRejectedRequirement(scrum.server.project.Requirement rejectedRequirement) {
@@ -243,7 +243,7 @@ public abstract class GSprintReport
         if (rejectedRequirement == null) throw new IllegalArgumentException("rejectedRequirement == null");
         boolean added = this.rejectedRequirementsIds.add(rejectedRequirement.getId());
         if (added) updateLastModified();
-        if (added) fireModified("rejectedRequirements+=" + rejectedRequirement);
+        if (added) fireModified("rejectedRequirements", rejectedRequirement);
         return added;
     }
 
@@ -261,7 +261,7 @@ public abstract class GSprintReport
         if (this.rejectedRequirementsIds == null) return false;
         boolean removed = this.rejectedRequirementsIds.remove(rejectedRequirement.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("rejectedRequirements-=" + rejectedRequirement);
+        if (removed) fireModified("rejectedRequirements", rejectedRequirement);
         return removed;
     }
 
@@ -279,12 +279,12 @@ public abstract class GSprintReport
         if (this.rejectedRequirementsIds.isEmpty()) return false;
         this.rejectedRequirementsIds.clear();
         updateLastModified();
-        fireModified("rejectedRequirements cleared");
+        fireModified("rejectedRequirements", null);
         return true;
     }
 
     protected final void updateRejectedRequirements(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setRejectedRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
     }
 
@@ -304,7 +304,7 @@ public abstract class GSprintReport
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
         updateLastModified();
-        fireModified("requirementsOrderIds="+Str.format(requirementsOrderIds));
+        fireModified("requirementsOrderIds", requirementsOrderIds);
     }
 
     protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
@@ -328,7 +328,7 @@ public abstract class GSprintReport
         if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
         boolean added = this.requirementsOrderIds.add(requirementsOrderId);
         if (added) updateLastModified();
-        if (added) fireModified("requirementsOrderIds+=" + requirementsOrderId);
+        if (added) fireModified("requirementsOrderIds", requirementsOrderId);
         return added;
     }
 
@@ -346,7 +346,7 @@ public abstract class GSprintReport
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
-        if (removed) fireModified("requirementsOrderIds-=" + requirementsOrderId);
+        if (removed) fireModified("requirementsOrderIds", requirementsOrderId);
         return removed;
     }
 
@@ -364,7 +364,7 @@ public abstract class GSprintReport
         if (this.requirementsOrderIds.isEmpty()) return false;
         this.requirementsOrderIds.clear();
         updateLastModified();
-        fireModified("requirementsOrderIds cleared");
+        fireModified("requirementsOrderIds", null);
         return true;
     }
 
@@ -398,7 +398,7 @@ public abstract class GSprintReport
         if (this.closedTasksIds.equals(ids)) return;
         this.closedTasksIds = ids;
         updateLastModified();
-        fireModified("closedTasks="+Str.format(closedTasks));
+        fireModified("closedTasks", closedTasks);
     }
 
     protected Collection<scrum.server.sprint.Task> prepareClosedTasks(Collection<scrum.server.sprint.Task> closedTasks) {
@@ -406,7 +406,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadClosedTaskReference(String entityId) {
-        if (this.closedTasksIds.remove(entityId)) fireModified("closedTasks-=" + entityId);
+        if (this.closedTasksIds.remove(entityId)) fireModified("closedTasks", entityId);
     }
 
     public final boolean containsClosedTask(scrum.server.sprint.Task closedTask) {
@@ -426,7 +426,7 @@ public abstract class GSprintReport
         if (closedTask == null) throw new IllegalArgumentException("closedTask == null");
         boolean added = this.closedTasksIds.add(closedTask.getId());
         if (added) updateLastModified();
-        if (added) fireModified("closedTasks+=" + closedTask);
+        if (added) fireModified("closedTasks", closedTask);
         return added;
     }
 
@@ -444,7 +444,7 @@ public abstract class GSprintReport
         if (this.closedTasksIds == null) return false;
         boolean removed = this.closedTasksIds.remove(closedTask.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("closedTasks-=" + closedTask);
+        if (removed) fireModified("closedTasks", closedTask);
         return removed;
     }
 
@@ -462,12 +462,12 @@ public abstract class GSprintReport
         if (this.closedTasksIds.isEmpty()) return false;
         this.closedTasksIds.clear();
         updateLastModified();
-        fireModified("closedTasks cleared");
+        fireModified("closedTasks", null);
         return true;
     }
 
     protected final void updateClosedTasks(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setClosedTasks((java.util.Set) taskDao.getByIdsAsSet(ids));
     }
 
@@ -488,7 +488,7 @@ public abstract class GSprintReport
         if (this.openTasksIds.equals(ids)) return;
         this.openTasksIds = ids;
         updateLastModified();
-        fireModified("openTasks="+Str.format(openTasks));
+        fireModified("openTasks", openTasks);
     }
 
     protected Collection<scrum.server.sprint.Task> prepareOpenTasks(Collection<scrum.server.sprint.Task> openTasks) {
@@ -496,7 +496,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadOpenTaskReference(String entityId) {
-        if (this.openTasksIds.remove(entityId)) fireModified("openTasks-=" + entityId);
+        if (this.openTasksIds.remove(entityId)) fireModified("openTasks", entityId);
     }
 
     public final boolean containsOpenTask(scrum.server.sprint.Task openTask) {
@@ -516,7 +516,7 @@ public abstract class GSprintReport
         if (openTask == null) throw new IllegalArgumentException("openTask == null");
         boolean added = this.openTasksIds.add(openTask.getId());
         if (added) updateLastModified();
-        if (added) fireModified("openTasks+=" + openTask);
+        if (added) fireModified("openTasks", openTask);
         return added;
     }
 
@@ -534,7 +534,7 @@ public abstract class GSprintReport
         if (this.openTasksIds == null) return false;
         boolean removed = this.openTasksIds.remove(openTask.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("openTasks-=" + openTask);
+        if (removed) fireModified("openTasks", openTask);
         return removed;
     }
 
@@ -552,12 +552,12 @@ public abstract class GSprintReport
         if (this.openTasksIds.isEmpty()) return false;
         this.openTasksIds.clear();
         updateLastModified();
-        fireModified("openTasks cleared");
+        fireModified("openTasks", null);
         return true;
     }
 
     protected final void updateOpenTasks(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setOpenTasks((java.util.Set) taskDao.getByIdsAsSet(ids));
     }
 
@@ -576,7 +576,7 @@ public abstract class GSprintReport
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork="+burnedWork);
+        fireModified("burnedWork", burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {

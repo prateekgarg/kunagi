@@ -80,7 +80,7 @@ public abstract class GSprintDaySnapshot
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
         updateLastModified();
-        fireModified("sprint="+sprint);
+        fireModified("sprint", sprint);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -121,7 +121,7 @@ public abstract class GSprintDaySnapshot
         if (isDate(date)) return;
         this.date = date;
         updateLastModified();
-        fireModified("date="+date);
+        fireModified("date", date);
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -157,7 +157,7 @@ public abstract class GSprintDaySnapshot
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork="+remainingWork);
+        fireModified("remainingWork", remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -187,7 +187,7 @@ public abstract class GSprintDaySnapshot
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork="+burnedWork);
+        fireModified("burnedWork", burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -217,7 +217,7 @@ public abstract class GSprintDaySnapshot
         if (isBurnedWorkFromDeleted(burnedWorkFromDeleted)) return;
         this.burnedWorkFromDeleted = burnedWorkFromDeleted;
         updateLastModified();
-        fireModified("burnedWorkFromDeleted="+burnedWorkFromDeleted);
+        fireModified("burnedWorkFromDeleted", burnedWorkFromDeleted);
     }
 
     protected int prepareBurnedWorkFromDeleted(int burnedWorkFromDeleted) {

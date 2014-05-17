@@ -97,7 +97,7 @@ public abstract class GRisk
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -138,7 +138,7 @@ public abstract class GRisk
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {
@@ -169,7 +169,7 @@ public abstract class GRisk
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -205,7 +205,7 @@ public abstract class GRisk
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description="+description);
+        fireModified("description", description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -241,7 +241,7 @@ public abstract class GRisk
         if (isProbabilityMitigation(probabilityMitigation)) return;
         this.probabilityMitigation = probabilityMitigation;
         updateLastModified();
-        fireModified("probabilityMitigation="+probabilityMitigation);
+        fireModified("probabilityMitigation", probabilityMitigation);
     }
 
     protected java.lang.String prepareProbabilityMitigation(java.lang.String probabilityMitigation) {
@@ -277,7 +277,7 @@ public abstract class GRisk
         if (isImpactMitigation(impactMitigation)) return;
         this.impactMitigation = impactMitigation;
         updateLastModified();
-        fireModified("impactMitigation="+impactMitigation);
+        fireModified("impactMitigation", impactMitigation);
     }
 
     protected java.lang.String prepareImpactMitigation(java.lang.String impactMitigation) {
@@ -313,7 +313,7 @@ public abstract class GRisk
         if (isProbability(probability)) return;
         this.probability = probability;
         updateLastModified();
-        fireModified("probability="+probability);
+        fireModified("probability", probability);
     }
 
     protected int prepareProbability(int probability) {
@@ -343,7 +343,7 @@ public abstract class GRisk
         if (isImpact(impact)) return;
         this.impact = impact;
         updateLastModified();
-        fireModified("impact="+impact);
+        fireModified("impact", impact);
     }
 
     protected int prepareImpact(int impact) {

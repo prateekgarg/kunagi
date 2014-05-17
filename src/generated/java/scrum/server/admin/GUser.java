@@ -149,10 +149,13 @@ public abstract class GUser
         name = prepareName(name);
         if (isName(name)) return;
         if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
-        if (name != null && getDao().getUserByName(name) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
+        if (name != null) {
+            Object existing = getDao().getUserByName(name);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
+        }
         this.name = name;
         updateLastModified();
-        fireModified("name="+name);
+        fireModified("name", name);
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -188,7 +191,7 @@ public abstract class GUser
         if (isPublicName(publicName)) return;
         this.publicName = publicName;
         updateLastModified();
-        fireModified("publicName="+publicName);
+        fireModified("publicName", publicName);
     }
 
     protected java.lang.String preparePublicName(java.lang.String publicName) {
@@ -224,7 +227,7 @@ public abstract class GUser
         if (isFullName(fullName)) return;
         this.fullName = fullName;
         updateLastModified();
-        fireModified("fullName="+fullName);
+        fireModified("fullName", fullName);
     }
 
     protected java.lang.String prepareFullName(java.lang.String fullName) {
@@ -260,7 +263,7 @@ public abstract class GUser
         if (isAdmin(admin)) return;
         this.admin = admin;
         updateLastModified();
-        fireModified("admin="+admin);
+        fireModified("admin", admin);
     }
 
     protected boolean prepareAdmin(boolean admin) {
@@ -290,7 +293,7 @@ public abstract class GUser
         if (isEmailVerified(emailVerified)) return;
         this.emailVerified = emailVerified;
         updateLastModified();
-        fireModified("emailVerified="+emailVerified);
+        fireModified("emailVerified", emailVerified);
     }
 
     protected boolean prepareEmailVerified(boolean emailVerified) {
@@ -318,10 +321,13 @@ public abstract class GUser
     public final void setEmail(java.lang.String email) {
         email = prepareEmail(email);
         if (isEmail(email)) return;
-        if (email != null && getDao().getUserByEmail(email) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
+        if (email != null) {
+            Object existing = getDao().getUserByEmail(email);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
+        }
         this.email = email;
         updateLastModified();
-        fireModified("email="+email);
+        fireModified("email", email);
     }
 
     protected java.lang.String prepareEmail(java.lang.String email) {
@@ -368,7 +374,7 @@ public abstract class GUser
         this.currentProjectId = currentProject == null ? null : currentProject.getId();
         currentProjectCache = currentProject;
         updateLastModified();
-        fireModified("currentProject="+currentProject);
+        fireModified("currentProject", currentProject);
     }
 
     protected scrum.server.project.Project prepareCurrentProject(scrum.server.project.Project currentProject) {
@@ -409,7 +415,7 @@ public abstract class GUser
         if (isColor(color)) return;
         this.color = color;
         updateLastModified();
-        fireModified("color="+color);
+        fireModified("color", color);
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -445,7 +451,7 @@ public abstract class GUser
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
         this.lastLoginDateAndTime = lastLoginDateAndTime;
         updateLastModified();
-        fireModified("lastLoginDateAndTime="+lastLoginDateAndTime);
+        fireModified("lastLoginDateAndTime", lastLoginDateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
@@ -481,7 +487,7 @@ public abstract class GUser
         if (isRegistrationDateAndTime(registrationDateAndTime)) return;
         this.registrationDateAndTime = registrationDateAndTime;
         updateLastModified();
-        fireModified("registrationDateAndTime="+registrationDateAndTime);
+        fireModified("registrationDateAndTime", registrationDateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
@@ -517,7 +523,7 @@ public abstract class GUser
         if (isDisabled(disabled)) return;
         this.disabled = disabled;
         updateLastModified();
-        fireModified("disabled="+disabled);
+        fireModified("disabled", disabled);
     }
 
     protected boolean prepareDisabled(boolean disabled) {
@@ -547,7 +553,7 @@ public abstract class GUser
         if (isHideUserGuideBlog(hideUserGuideBlog)) return;
         this.hideUserGuideBlog = hideUserGuideBlog;
         updateLastModified();
-        fireModified("hideUserGuideBlog="+hideUserGuideBlog);
+        fireModified("hideUserGuideBlog", hideUserGuideBlog);
     }
 
     protected boolean prepareHideUserGuideBlog(boolean hideUserGuideBlog) {
@@ -577,7 +583,7 @@ public abstract class GUser
         if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
         this.hideUserGuideCalendar = hideUserGuideCalendar;
         updateLastModified();
-        fireModified("hideUserGuideCalendar="+hideUserGuideCalendar);
+        fireModified("hideUserGuideCalendar", hideUserGuideCalendar);
     }
 
     protected boolean prepareHideUserGuideCalendar(boolean hideUserGuideCalendar) {
@@ -607,7 +613,7 @@ public abstract class GUser
         if (isHideUserGuideFiles(hideUserGuideFiles)) return;
         this.hideUserGuideFiles = hideUserGuideFiles;
         updateLastModified();
-        fireModified("hideUserGuideFiles="+hideUserGuideFiles);
+        fireModified("hideUserGuideFiles", hideUserGuideFiles);
     }
 
     protected boolean prepareHideUserGuideFiles(boolean hideUserGuideFiles) {
@@ -637,7 +643,7 @@ public abstract class GUser
         if (isHideUserGuideForum(hideUserGuideForum)) return;
         this.hideUserGuideForum = hideUserGuideForum;
         updateLastModified();
-        fireModified("hideUserGuideForum="+hideUserGuideForum);
+        fireModified("hideUserGuideForum", hideUserGuideForum);
     }
 
     protected boolean prepareHideUserGuideForum(boolean hideUserGuideForum) {
@@ -667,7 +673,7 @@ public abstract class GUser
         if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
         this.hideUserGuideImpediments = hideUserGuideImpediments;
         updateLastModified();
-        fireModified("hideUserGuideImpediments="+hideUserGuideImpediments);
+        fireModified("hideUserGuideImpediments", hideUserGuideImpediments);
     }
 
     protected boolean prepareHideUserGuideImpediments(boolean hideUserGuideImpediments) {
@@ -697,7 +703,7 @@ public abstract class GUser
         if (isHideUserGuideIssues(hideUserGuideIssues)) return;
         this.hideUserGuideIssues = hideUserGuideIssues;
         updateLastModified();
-        fireModified("hideUserGuideIssues="+hideUserGuideIssues);
+        fireModified("hideUserGuideIssues", hideUserGuideIssues);
     }
 
     protected boolean prepareHideUserGuideIssues(boolean hideUserGuideIssues) {
@@ -727,7 +733,7 @@ public abstract class GUser
         if (isHideUserGuideJournal(hideUserGuideJournal)) return;
         this.hideUserGuideJournal = hideUserGuideJournal;
         updateLastModified();
-        fireModified("hideUserGuideJournal="+hideUserGuideJournal);
+        fireModified("hideUserGuideJournal", hideUserGuideJournal);
     }
 
     protected boolean prepareHideUserGuideJournal(boolean hideUserGuideJournal) {
@@ -757,7 +763,7 @@ public abstract class GUser
         if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
         this.hideUserGuideNextSprint = hideUserGuideNextSprint;
         updateLastModified();
-        fireModified("hideUserGuideNextSprint="+hideUserGuideNextSprint);
+        fireModified("hideUserGuideNextSprint", hideUserGuideNextSprint);
     }
 
     protected boolean prepareHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
@@ -787,7 +793,7 @@ public abstract class GUser
         if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
         this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
         updateLastModified();
-        fireModified("hideUserGuideProductBacklog="+hideUserGuideProductBacklog);
+        fireModified("hideUserGuideProductBacklog", hideUserGuideProductBacklog);
     }
 
     protected boolean prepareHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
@@ -817,7 +823,7 @@ public abstract class GUser
         if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
         this.hideUserGuideCourtroom = hideUserGuideCourtroom;
         updateLastModified();
-        fireModified("hideUserGuideCourtroom="+hideUserGuideCourtroom);
+        fireModified("hideUserGuideCourtroom", hideUserGuideCourtroom);
     }
 
     protected boolean prepareHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
@@ -847,7 +853,7 @@ public abstract class GUser
         if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
         this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
         updateLastModified();
-        fireModified("hideUserGuideQualityBacklog="+hideUserGuideQualityBacklog);
+        fireModified("hideUserGuideQualityBacklog", hideUserGuideQualityBacklog);
     }
 
     protected boolean prepareHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
@@ -877,7 +883,7 @@ public abstract class GUser
         if (isHideUserGuideReleases(hideUserGuideReleases)) return;
         this.hideUserGuideReleases = hideUserGuideReleases;
         updateLastModified();
-        fireModified("hideUserGuideReleases="+hideUserGuideReleases);
+        fireModified("hideUserGuideReleases", hideUserGuideReleases);
     }
 
     protected boolean prepareHideUserGuideReleases(boolean hideUserGuideReleases) {
@@ -907,7 +913,7 @@ public abstract class GUser
         if (isHideUserGuideRisks(hideUserGuideRisks)) return;
         this.hideUserGuideRisks = hideUserGuideRisks;
         updateLastModified();
-        fireModified("hideUserGuideRisks="+hideUserGuideRisks);
+        fireModified("hideUserGuideRisks", hideUserGuideRisks);
     }
 
     protected boolean prepareHideUserGuideRisks(boolean hideUserGuideRisks) {
@@ -937,7 +943,7 @@ public abstract class GUser
         if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
         this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
         updateLastModified();
-        fireModified("hideUserGuideSprintBacklog="+hideUserGuideSprintBacklog);
+        fireModified("hideUserGuideSprintBacklog", hideUserGuideSprintBacklog);
     }
 
     protected boolean prepareHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
@@ -967,7 +973,7 @@ public abstract class GUser
         if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
         this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
         updateLastModified();
-        fireModified("hideUserGuideWhiteboard="+hideUserGuideWhiteboard);
+        fireModified("hideUserGuideWhiteboard", hideUserGuideWhiteboard);
     }
 
     protected boolean prepareHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
@@ -995,10 +1001,13 @@ public abstract class GUser
     public final void setLoginToken(java.lang.String loginToken) {
         loginToken = prepareLoginToken(loginToken);
         if (isLoginToken(loginToken)) return;
-        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
+        if (loginToken != null) {
+            Object existing = getDao().getUserByLoginToken(loginToken);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
+        }
         this.loginToken = loginToken;
         updateLastModified();
-        fireModified("loginToken="+loginToken);
+        fireModified("loginToken", loginToken);
     }
 
     protected java.lang.String prepareLoginToken(java.lang.String loginToken) {
@@ -1032,10 +1041,13 @@ public abstract class GUser
     public final void setOpenId(java.lang.String openId) {
         openId = prepareOpenId(openId);
         if (isOpenId(openId)) return;
-        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
+        if (openId != null) {
+            Object existing = getDao().getUserByOpenId(openId);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
+        }
         this.openId = openId;
         updateLastModified();
-        fireModified("openId="+openId);
+        fireModified("openId", openId);
     }
 
     protected java.lang.String prepareOpenId(java.lang.String openId) {

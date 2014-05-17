@@ -79,7 +79,7 @@ public abstract class GChatMessage
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -131,7 +131,7 @@ public abstract class GChatMessage
         this.authorId = author == null ? null : author.getId();
         authorCache = author;
         updateLastModified();
-        fireModified("author="+author);
+        fireModified("author", author);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -173,7 +173,7 @@ public abstract class GChatMessage
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
         updateLastModified();
-        fireModified("text="+text);
+        fireModified("text", text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -209,7 +209,7 @@ public abstract class GChatMessage
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime="+dateAndTime);
+        fireModified("dateAndTime", dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

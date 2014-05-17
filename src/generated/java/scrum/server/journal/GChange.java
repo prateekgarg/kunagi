@@ -82,7 +82,7 @@ public abstract class GChange
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
         updateLastModified();
-        fireModified("parent="+parent);
+        fireModified("parent", parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -134,7 +134,7 @@ public abstract class GChange
         this.userId = user == null ? null : user.getId();
         userCache = user;
         updateLastModified();
-        fireModified("user="+user);
+        fireModified("user", user);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -176,7 +176,7 @@ public abstract class GChange
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime="+dateAndTime);
+        fireModified("dateAndTime", dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -212,7 +212,7 @@ public abstract class GChange
         if (isKey(key)) return;
         this.key = key;
         updateLastModified();
-        fireModified("key="+key);
+        fireModified("key", key);
     }
 
     protected java.lang.String prepareKey(java.lang.String key) {
@@ -248,7 +248,7 @@ public abstract class GChange
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
         updateLastModified();
-        fireModified("oldValue="+oldValue);
+        fireModified("oldValue", oldValue);
     }
 
     protected java.lang.String prepareOldValue(java.lang.String oldValue) {
@@ -284,7 +284,7 @@ public abstract class GChange
         if (isNewValue(newValue)) return;
         this.newValue = newValue;
         updateLastModified();
-        fireModified("newValue="+newValue);
+        fireModified("newValue", newValue);
     }
 
     protected java.lang.String prepareNewValue(java.lang.String newValue) {
@@ -320,7 +320,7 @@ public abstract class GChange
         if (isComment(comment)) return;
         this.comment = comment;
         updateLastModified();
-        fireModified("comment="+comment);
+        fireModified("comment", comment);
     }
 
     protected java.lang.String prepareComment(java.lang.String comment) {

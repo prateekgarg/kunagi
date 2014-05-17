@@ -95,7 +95,7 @@ public abstract class GBlogEntry
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -136,7 +136,7 @@ public abstract class GBlogEntry
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {
@@ -168,7 +168,7 @@ public abstract class GBlogEntry
         if (this.authorsIds.equals(ids)) return;
         this.authorsIds = ids;
         updateLastModified();
-        fireModified("authors="+Str.format(authors));
+        fireModified("authors", authors);
     }
 
     protected Collection<scrum.server.admin.User> prepareAuthors(Collection<scrum.server.admin.User> authors) {
@@ -176,7 +176,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (this.authorsIds.remove(entityId)) fireModified("authors-=" + entityId);
+        if (this.authorsIds.remove(entityId)) fireModified("authors", entityId);
     }
 
     public final boolean containsAuthor(scrum.server.admin.User author) {
@@ -196,7 +196,7 @@ public abstract class GBlogEntry
         if (author == null) throw new IllegalArgumentException("author == null");
         boolean added = this.authorsIds.add(author.getId());
         if (added) updateLastModified();
-        if (added) fireModified("authors+=" + author);
+        if (added) fireModified("authors", author);
         return added;
     }
 
@@ -214,7 +214,7 @@ public abstract class GBlogEntry
         if (this.authorsIds == null) return false;
         boolean removed = this.authorsIds.remove(author.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("authors-=" + author);
+        if (removed) fireModified("authors", author);
         return removed;
     }
 
@@ -232,12 +232,12 @@ public abstract class GBlogEntry
         if (this.authorsIds.isEmpty()) return false;
         this.authorsIds.clear();
         updateLastModified();
-        fireModified("authors cleared");
+        fireModified("authors", null);
         return true;
     }
 
     protected final void updateAuthors(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setAuthors((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -257,7 +257,7 @@ public abstract class GBlogEntry
         if (title == null) throw new IllegalArgumentException("Mandatory field can not be set to null: title");
         this.title = title;
         updateLastModified();
-        fireModified("title="+title);
+        fireModified("title", title);
     }
 
     protected java.lang.String prepareTitle(java.lang.String title) {
@@ -293,7 +293,7 @@ public abstract class GBlogEntry
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text="+text);
+        fireModified("text", text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -329,7 +329,7 @@ public abstract class GBlogEntry
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime="+dateAndTime);
+        fireModified("dateAndTime", dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -367,7 +367,7 @@ public abstract class GBlogEntry
         if (this.releasesIds.equals(ids)) return;
         this.releasesIds = ids;
         updateLastModified();
-        fireModified("releases="+Str.format(releases));
+        fireModified("releases", releases);
     }
 
     protected Collection<scrum.server.release.Release> prepareReleases(Collection<scrum.server.release.Release> releases) {
@@ -375,7 +375,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReleaseReference(String entityId) {
-        if (this.releasesIds.remove(entityId)) fireModified("releases-=" + entityId);
+        if (this.releasesIds.remove(entityId)) fireModified("releases", entityId);
     }
 
     public final boolean containsRelease(scrum.server.release.Release release) {
@@ -395,7 +395,7 @@ public abstract class GBlogEntry
         if (release == null) throw new IllegalArgumentException("release == null");
         boolean added = this.releasesIds.add(release.getId());
         if (added) updateLastModified();
-        if (added) fireModified("releases+=" + release);
+        if (added) fireModified("releases", release);
         return added;
     }
 
@@ -413,7 +413,7 @@ public abstract class GBlogEntry
         if (this.releasesIds == null) return false;
         boolean removed = this.releasesIds.remove(release.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("releases-=" + release);
+        if (removed) fireModified("releases", release);
         return removed;
     }
 
@@ -431,12 +431,12 @@ public abstract class GBlogEntry
         if (this.releasesIds.isEmpty()) return false;
         this.releasesIds.clear();
         updateLastModified();
-        fireModified("releases cleared");
+        fireModified("releases", null);
         return true;
     }
 
     protected final void updateReleases(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setReleases((java.util.Set) releaseDao.getByIdsAsSet(ids));
     }
 
@@ -455,7 +455,7 @@ public abstract class GBlogEntry
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published="+published);
+        fireModified("published", published);
     }
 
     protected boolean preparePublished(boolean published) {

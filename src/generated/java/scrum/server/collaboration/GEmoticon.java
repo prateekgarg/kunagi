@@ -78,7 +78,7 @@ public abstract class GEmoticon
         this.parentId = parent == null ? null : parent.getId();
         parentCache = parent;
         updateLastModified();
-        fireModified("parent="+parent);
+        fireModified("parent", parent);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -130,7 +130,7 @@ public abstract class GEmoticon
         this.ownerId = owner == null ? null : owner.getId();
         ownerCache = owner;
         updateLastModified();
-        fireModified("owner="+owner);
+        fireModified("owner", owner);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -171,7 +171,7 @@ public abstract class GEmoticon
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
         updateLastModified();
-        fireModified("emotion="+emotion);
+        fireModified("emotion", emotion);
     }
 
     protected java.lang.String prepareEmotion(java.lang.String emotion) {

@@ -186,10 +186,13 @@ public abstract class GProject
         label = prepareLabel(label);
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
-        if (label != null && getDao().getProjectByLabel(label) != null) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("Project" ,"label", label);
+        if (label != null) {
+            Object existing = getDao().getProjectByLabel(label);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("Project" ,"label", label);
+        }
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -225,7 +228,7 @@ public abstract class GProject
         if (isVision(vision)) return;
         this.vision = vision;
         updateLastModified();
-        fireModified("vision="+vision);
+        fireModified("vision", vision);
     }
 
     protected java.lang.String prepareVision(java.lang.String vision) {
@@ -261,7 +264,7 @@ public abstract class GProject
         if (isProductLabel(productLabel)) return;
         this.productLabel = productLabel;
         updateLastModified();
-        fireModified("productLabel="+productLabel);
+        fireModified("productLabel", productLabel);
     }
 
     protected java.lang.String prepareProductLabel(java.lang.String productLabel) {
@@ -297,7 +300,7 @@ public abstract class GProject
         if (isShortDescription(shortDescription)) return;
         this.shortDescription = shortDescription;
         updateLastModified();
-        fireModified("shortDescription="+shortDescription);
+        fireModified("shortDescription", shortDescription);
     }
 
     protected java.lang.String prepareShortDescription(java.lang.String shortDescription) {
@@ -333,7 +336,7 @@ public abstract class GProject
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description="+description);
+        fireModified("description", description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -369,7 +372,7 @@ public abstract class GProject
         if (isLongDescription(longDescription)) return;
         this.longDescription = longDescription;
         updateLastModified();
-        fireModified("longDescription="+longDescription);
+        fireModified("longDescription", longDescription);
     }
 
     protected java.lang.String prepareLongDescription(java.lang.String longDescription) {
@@ -405,7 +408,7 @@ public abstract class GProject
         if (isBegin(begin)) return;
         this.begin = begin;
         updateLastModified();
-        fireModified("begin="+begin);
+        fireModified("begin", begin);
     }
 
     protected ilarkesto.core.time.Date prepareBegin(ilarkesto.core.time.Date begin) {
@@ -441,7 +444,7 @@ public abstract class GProject
         if (isEnd(end)) return;
         this.end = end;
         updateLastModified();
-        fireModified("end="+end);
+        fireModified("end", end);
     }
 
     protected ilarkesto.core.time.Date prepareEnd(ilarkesto.core.time.Date end) {
@@ -479,7 +482,7 @@ public abstract class GProject
         if (this.participantsIds.equals(ids)) return;
         this.participantsIds = ids;
         updateLastModified();
-        fireModified("participants="+Str.format(participants));
+        fireModified("participants", participants);
     }
 
     protected Collection<scrum.server.admin.User> prepareParticipants(Collection<scrum.server.admin.User> participants) {
@@ -487,7 +490,7 @@ public abstract class GProject
     }
 
     protected void repairDeadParticipantReference(String entityId) {
-        if (this.participantsIds.remove(entityId)) fireModified("participants-=" + entityId);
+        if (this.participantsIds.remove(entityId)) fireModified("participants", entityId);
     }
 
     public final boolean containsParticipant(scrum.server.admin.User participant) {
@@ -507,7 +510,7 @@ public abstract class GProject
         if (participant == null) throw new IllegalArgumentException("participant == null");
         boolean added = this.participantsIds.add(participant.getId());
         if (added) updateLastModified();
-        if (added) fireModified("participants+=" + participant);
+        if (added) fireModified("participants", participant);
         return added;
     }
 
@@ -525,7 +528,7 @@ public abstract class GProject
         if (this.participantsIds == null) return false;
         boolean removed = this.participantsIds.remove(participant.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("participants-=" + participant);
+        if (removed) fireModified("participants", participant);
         return removed;
     }
 
@@ -543,12 +546,12 @@ public abstract class GProject
         if (this.participantsIds.isEmpty()) return false;
         this.participantsIds.clear();
         updateLastModified();
-        fireModified("participants cleared");
+        fireModified("participants", null);
         return true;
     }
 
     protected final void updateParticipants(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setParticipants((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -569,7 +572,7 @@ public abstract class GProject
         if (this.adminsIds.equals(ids)) return;
         this.adminsIds = ids;
         updateLastModified();
-        fireModified("admins="+Str.format(admins));
+        fireModified("admins", admins);
     }
 
     protected Collection<scrum.server.admin.User> prepareAdmins(Collection<scrum.server.admin.User> admins) {
@@ -577,7 +580,7 @@ public abstract class GProject
     }
 
     protected void repairDeadAdminReference(String entityId) {
-        if (this.adminsIds.remove(entityId)) fireModified("admins-=" + entityId);
+        if (this.adminsIds.remove(entityId)) fireModified("admins", entityId);
     }
 
     public final boolean containsAdmin(scrum.server.admin.User admin) {
@@ -597,7 +600,7 @@ public abstract class GProject
         if (admin == null) throw new IllegalArgumentException("admin == null");
         boolean added = this.adminsIds.add(admin.getId());
         if (added) updateLastModified();
-        if (added) fireModified("admins+=" + admin);
+        if (added) fireModified("admins", admin);
         return added;
     }
 
@@ -615,7 +618,7 @@ public abstract class GProject
         if (this.adminsIds == null) return false;
         boolean removed = this.adminsIds.remove(admin.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("admins-=" + admin);
+        if (removed) fireModified("admins", admin);
         return removed;
     }
 
@@ -633,12 +636,12 @@ public abstract class GProject
         if (this.adminsIds.isEmpty()) return false;
         this.adminsIds.clear();
         updateLastModified();
-        fireModified("admins cleared");
+        fireModified("admins", null);
         return true;
     }
 
     protected final void updateAdmins(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setAdmins((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -659,7 +662,7 @@ public abstract class GProject
         if (this.productOwnersIds.equals(ids)) return;
         this.productOwnersIds = ids;
         updateLastModified();
-        fireModified("productOwners="+Str.format(productOwners));
+        fireModified("productOwners", productOwners);
     }
 
     protected Collection<scrum.server.admin.User> prepareProductOwners(Collection<scrum.server.admin.User> productOwners) {
@@ -667,7 +670,7 @@ public abstract class GProject
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
-        if (this.productOwnersIds.remove(entityId)) fireModified("productOwners-=" + entityId);
+        if (this.productOwnersIds.remove(entityId)) fireModified("productOwners", entityId);
     }
 
     public final boolean containsProductOwner(scrum.server.admin.User productOwner) {
@@ -687,7 +690,7 @@ public abstract class GProject
         if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
         boolean added = this.productOwnersIds.add(productOwner.getId());
         if (added) updateLastModified();
-        if (added) fireModified("productOwners+=" + productOwner);
+        if (added) fireModified("productOwners", productOwner);
         return added;
     }
 
@@ -705,7 +708,7 @@ public abstract class GProject
         if (this.productOwnersIds == null) return false;
         boolean removed = this.productOwnersIds.remove(productOwner.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("productOwners-=" + productOwner);
+        if (removed) fireModified("productOwners", productOwner);
         return removed;
     }
 
@@ -723,12 +726,12 @@ public abstract class GProject
         if (this.productOwnersIds.isEmpty()) return false;
         this.productOwnersIds.clear();
         updateLastModified();
-        fireModified("productOwners cleared");
+        fireModified("productOwners", null);
         return true;
     }
 
     protected final void updateProductOwners(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setProductOwners((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -749,7 +752,7 @@ public abstract class GProject
         if (this.scrumMastersIds.equals(ids)) return;
         this.scrumMastersIds = ids;
         updateLastModified();
-        fireModified("scrumMasters="+Str.format(scrumMasters));
+        fireModified("scrumMasters", scrumMasters);
     }
 
     protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
@@ -757,7 +760,7 @@ public abstract class GProject
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
-        if (this.scrumMastersIds.remove(entityId)) fireModified("scrumMasters-=" + entityId);
+        if (this.scrumMastersIds.remove(entityId)) fireModified("scrumMasters", entityId);
     }
 
     public final boolean containsScrumMaster(scrum.server.admin.User scrumMaster) {
@@ -777,7 +780,7 @@ public abstract class GProject
         if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
         boolean added = this.scrumMastersIds.add(scrumMaster.getId());
         if (added) updateLastModified();
-        if (added) fireModified("scrumMasters+=" + scrumMaster);
+        if (added) fireModified("scrumMasters", scrumMaster);
         return added;
     }
 
@@ -795,7 +798,7 @@ public abstract class GProject
         if (this.scrumMastersIds == null) return false;
         boolean removed = this.scrumMastersIds.remove(scrumMaster.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("scrumMasters-=" + scrumMaster);
+        if (removed) fireModified("scrumMasters", scrumMaster);
         return removed;
     }
 
@@ -813,12 +816,12 @@ public abstract class GProject
         if (this.scrumMastersIds.isEmpty()) return false;
         this.scrumMastersIds.clear();
         updateLastModified();
-        fireModified("scrumMasters cleared");
+        fireModified("scrumMasters", null);
         return true;
     }
 
     protected final void updateScrumMasters(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setScrumMasters((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -839,7 +842,7 @@ public abstract class GProject
         if (this.teamMembersIds.equals(ids)) return;
         this.teamMembersIds = ids;
         updateLastModified();
-        fireModified("teamMembers="+Str.format(teamMembers));
+        fireModified("teamMembers", teamMembers);
     }
 
     protected Collection<scrum.server.admin.User> prepareTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
@@ -847,7 +850,7 @@ public abstract class GProject
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (this.teamMembersIds.remove(entityId)) fireModified("teamMembers-=" + entityId);
+        if (this.teamMembersIds.remove(entityId)) fireModified("teamMembers", entityId);
     }
 
     public final boolean containsTeamMember(scrum.server.admin.User teamMember) {
@@ -867,7 +870,7 @@ public abstract class GProject
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         boolean added = this.teamMembersIds.add(teamMember.getId());
         if (added) updateLastModified();
-        if (added) fireModified("teamMembers+=" + teamMember);
+        if (added) fireModified("teamMembers", teamMember);
         return added;
     }
 
@@ -885,7 +888,7 @@ public abstract class GProject
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("teamMembers-=" + teamMember);
+        if (removed) fireModified("teamMembers", teamMember);
         return removed;
     }
 
@@ -903,12 +906,12 @@ public abstract class GProject
         if (this.teamMembersIds.isEmpty()) return false;
         this.teamMembersIds.clear();
         updateLastModified();
-        fireModified("teamMembers cleared");
+        fireModified("teamMembers", null);
         return true;
     }
 
     protected final void updateTeamMembers(Object value) {
-        Collection<String> ids = (Collection<String>) value;
+        java.util.Set<String> ids = (java.util.Set<String>) value;
         setTeamMembers((java.util.Set) userDao.getByIdsAsSet(ids));
     }
 
@@ -938,7 +941,7 @@ public abstract class GProject
         this.currentSprintId = currentSprint == null ? null : currentSprint.getId();
         currentSprintCache = currentSprint;
         updateLastModified();
-        fireModified("currentSprint="+currentSprint);
+        fireModified("currentSprint", currentSprint);
     }
 
     protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
@@ -990,7 +993,7 @@ public abstract class GProject
         this.nextSprintId = nextSprint == null ? null : nextSprint.getId();
         nextSprintCache = nextSprint;
         updateLastModified();
-        fireModified("nextSprint="+nextSprint);
+        fireModified("nextSprint", nextSprint);
     }
 
     protected scrum.server.sprint.Sprint prepareNextSprint(scrum.server.sprint.Sprint nextSprint) {
@@ -1031,7 +1034,7 @@ public abstract class GProject
         if (isVelocity(velocity)) return;
         this.velocity = velocity;
         updateLastModified();
-        fireModified("velocity="+velocity);
+        fireModified("velocity", velocity);
     }
 
     protected java.lang.Integer prepareVelocity(java.lang.Integer velocity) {
@@ -1067,7 +1070,7 @@ public abstract class GProject
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
         updateLastModified();
-        fireModified("requirementsOrderIds="+Str.format(requirementsOrderIds));
+        fireModified("requirementsOrderIds", requirementsOrderIds);
     }
 
     protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
@@ -1091,7 +1094,7 @@ public abstract class GProject
         if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
         boolean added = this.requirementsOrderIds.add(requirementsOrderId);
         if (added) updateLastModified();
-        if (added) fireModified("requirementsOrderIds+=" + requirementsOrderId);
+        if (added) fireModified("requirementsOrderIds", requirementsOrderId);
         return added;
     }
 
@@ -1109,7 +1112,7 @@ public abstract class GProject
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
-        if (removed) fireModified("requirementsOrderIds-=" + requirementsOrderId);
+        if (removed) fireModified("requirementsOrderIds", requirementsOrderId);
         return removed;
     }
 
@@ -1127,7 +1130,7 @@ public abstract class GProject
         if (this.requirementsOrderIds.isEmpty()) return false;
         this.requirementsOrderIds.clear();
         updateLastModified();
-        fireModified("requirementsOrderIds cleared");
+        fireModified("requirementsOrderIds", null);
         return true;
     }
 
@@ -1160,7 +1163,7 @@ public abstract class GProject
         if (this.urgentIssuesOrderIds.equals(urgentIssuesOrderIds)) return;
         this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
         updateLastModified();
-        fireModified("urgentIssuesOrderIds="+Str.format(urgentIssuesOrderIds));
+        fireModified("urgentIssuesOrderIds", urgentIssuesOrderIds);
     }
 
     protected Collection<java.lang.String> prepareUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
@@ -1184,7 +1187,7 @@ public abstract class GProject
         if (urgentIssuesOrderId == null) throw new IllegalArgumentException("urgentIssuesOrderId == null");
         boolean added = this.urgentIssuesOrderIds.add(urgentIssuesOrderId);
         if (added) updateLastModified();
-        if (added) fireModified("urgentIssuesOrderIds+=" + urgentIssuesOrderId);
+        if (added) fireModified("urgentIssuesOrderIds", urgentIssuesOrderId);
         return added;
     }
 
@@ -1202,7 +1205,7 @@ public abstract class GProject
         if (this.urgentIssuesOrderIds == null) return false;
         boolean removed = this.urgentIssuesOrderIds.remove(urgentIssuesOrderId);
         if (removed) updateLastModified();
-        if (removed) fireModified("urgentIssuesOrderIds-=" + urgentIssuesOrderId);
+        if (removed) fireModified("urgentIssuesOrderIds", urgentIssuesOrderId);
         return removed;
     }
 
@@ -1220,7 +1223,7 @@ public abstract class GProject
         if (this.urgentIssuesOrderIds.isEmpty()) return false;
         this.urgentIssuesOrderIds.clear();
         updateLastModified();
-        fireModified("urgentIssuesOrderIds cleared");
+        fireModified("urgentIssuesOrderIds", null);
         return true;
     }
 
@@ -1252,7 +1255,7 @@ public abstract class GProject
         if (isLastSprintNumber(lastSprintNumber)) return;
         this.lastSprintNumber = lastSprintNumber;
         updateLastModified();
-        fireModified("lastSprintNumber="+lastSprintNumber);
+        fireModified("lastSprintNumber", lastSprintNumber);
     }
 
     protected int prepareLastSprintNumber(int lastSprintNumber) {
@@ -1282,7 +1285,7 @@ public abstract class GProject
         if (isLastTaskNumber(lastTaskNumber)) return;
         this.lastTaskNumber = lastTaskNumber;
         updateLastModified();
-        fireModified("lastTaskNumber="+lastTaskNumber);
+        fireModified("lastTaskNumber", lastTaskNumber);
     }
 
     protected int prepareLastTaskNumber(int lastTaskNumber) {
@@ -1312,7 +1315,7 @@ public abstract class GProject
         if (isLastRequirementNumber(lastRequirementNumber)) return;
         this.lastRequirementNumber = lastRequirementNumber;
         updateLastModified();
-        fireModified("lastRequirementNumber="+lastRequirementNumber);
+        fireModified("lastRequirementNumber", lastRequirementNumber);
     }
 
     protected int prepareLastRequirementNumber(int lastRequirementNumber) {
@@ -1342,7 +1345,7 @@ public abstract class GProject
         if (isLastQualityNumber(lastQualityNumber)) return;
         this.lastQualityNumber = lastQualityNumber;
         updateLastModified();
-        fireModified("lastQualityNumber="+lastQualityNumber);
+        fireModified("lastQualityNumber", lastQualityNumber);
     }
 
     protected int prepareLastQualityNumber(int lastQualityNumber) {
@@ -1372,7 +1375,7 @@ public abstract class GProject
         if (isLastRiskNumber(lastRiskNumber)) return;
         this.lastRiskNumber = lastRiskNumber;
         updateLastModified();
-        fireModified("lastRiskNumber="+lastRiskNumber);
+        fireModified("lastRiskNumber", lastRiskNumber);
     }
 
     protected int prepareLastRiskNumber(int lastRiskNumber) {
@@ -1402,7 +1405,7 @@ public abstract class GProject
         if (isLastIssueNumber(lastIssueNumber)) return;
         this.lastIssueNumber = lastIssueNumber;
         updateLastModified();
-        fireModified("lastIssueNumber="+lastIssueNumber);
+        fireModified("lastIssueNumber", lastIssueNumber);
     }
 
     protected int prepareLastIssueNumber(int lastIssueNumber) {
@@ -1432,7 +1435,7 @@ public abstract class GProject
         if (isLastImpedimentNumber(lastImpedimentNumber)) return;
         this.lastImpedimentNumber = lastImpedimentNumber;
         updateLastModified();
-        fireModified("lastImpedimentNumber="+lastImpedimentNumber);
+        fireModified("lastImpedimentNumber", lastImpedimentNumber);
     }
 
     protected int prepareLastImpedimentNumber(int lastImpedimentNumber) {
@@ -1462,7 +1465,7 @@ public abstract class GProject
         if (isLastFileNumber(lastFileNumber)) return;
         this.lastFileNumber = lastFileNumber;
         updateLastModified();
-        fireModified("lastFileNumber="+lastFileNumber);
+        fireModified("lastFileNumber", lastFileNumber);
     }
 
     protected int prepareLastFileNumber(int lastFileNumber) {
@@ -1492,7 +1495,7 @@ public abstract class GProject
         if (isLastSubjectNumber(lastSubjectNumber)) return;
         this.lastSubjectNumber = lastSubjectNumber;
         updateLastModified();
-        fireModified("lastSubjectNumber="+lastSubjectNumber);
+        fireModified("lastSubjectNumber", lastSubjectNumber);
     }
 
     protected int prepareLastSubjectNumber(int lastSubjectNumber) {
@@ -1522,7 +1525,7 @@ public abstract class GProject
         if (isLastEventNumber(lastEventNumber)) return;
         this.lastEventNumber = lastEventNumber;
         updateLastModified();
-        fireModified("lastEventNumber="+lastEventNumber);
+        fireModified("lastEventNumber", lastEventNumber);
     }
 
     protected int prepareLastEventNumber(int lastEventNumber) {
@@ -1552,7 +1555,7 @@ public abstract class GProject
         if (isLastReleaseNumber(lastReleaseNumber)) return;
         this.lastReleaseNumber = lastReleaseNumber;
         updateLastModified();
-        fireModified("lastReleaseNumber="+lastReleaseNumber);
+        fireModified("lastReleaseNumber", lastReleaseNumber);
     }
 
     protected int prepareLastReleaseNumber(int lastReleaseNumber) {
@@ -1582,7 +1585,7 @@ public abstract class GProject
         if (isLastBlogEntryNumber(lastBlogEntryNumber)) return;
         this.lastBlogEntryNumber = lastBlogEntryNumber;
         updateLastModified();
-        fireModified("lastBlogEntryNumber="+lastBlogEntryNumber);
+        fireModified("lastBlogEntryNumber", lastBlogEntryNumber);
     }
 
     protected int prepareLastBlogEntryNumber(int lastBlogEntryNumber) {
@@ -1612,7 +1615,7 @@ public abstract class GProject
         if (isPunishmentUnit(punishmentUnit)) return;
         this.punishmentUnit = punishmentUnit;
         updateLastModified();
-        fireModified("punishmentUnit="+punishmentUnit);
+        fireModified("punishmentUnit", punishmentUnit);
     }
 
     protected java.lang.String preparePunishmentUnit(java.lang.String punishmentUnit) {
@@ -1648,7 +1651,7 @@ public abstract class GProject
         if (isPunishmentFactor(punishmentFactor)) return;
         this.punishmentFactor = punishmentFactor;
         updateLastModified();
-        fireModified("punishmentFactor="+punishmentFactor);
+        fireModified("punishmentFactor", punishmentFactor);
     }
 
     protected int preparePunishmentFactor(int punishmentFactor) {
@@ -1678,7 +1681,7 @@ public abstract class GProject
         if (isHomepageDir(homepageDir)) return;
         this.homepageDir = homepageDir;
         updateLastModified();
-        fireModified("homepageDir="+homepageDir);
+        fireModified("homepageDir", homepageDir);
     }
 
     protected java.lang.String prepareHomepageDir(java.lang.String homepageDir) {
@@ -1714,7 +1717,7 @@ public abstract class GProject
         if (isHomepageUrl(homepageUrl)) return;
         this.homepageUrl = homepageUrl;
         updateLastModified();
-        fireModified("homepageUrl="+homepageUrl);
+        fireModified("homepageUrl", homepageUrl);
     }
 
     protected java.lang.String prepareHomepageUrl(java.lang.String homepageUrl) {
@@ -1750,7 +1753,7 @@ public abstract class GProject
         if (isAutoUpdateHomepage(autoUpdateHomepage)) return;
         this.autoUpdateHomepage = autoUpdateHomepage;
         updateLastModified();
-        fireModified("autoUpdateHomepage="+autoUpdateHomepage);
+        fireModified("autoUpdateHomepage", autoUpdateHomepage);
     }
 
     protected boolean prepareAutoUpdateHomepage(boolean autoUpdateHomepage) {
@@ -1780,7 +1783,7 @@ public abstract class GProject
         if (isReleaseScriptPath(releaseScriptPath)) return;
         this.releaseScriptPath = releaseScriptPath;
         updateLastModified();
-        fireModified("releaseScriptPath="+releaseScriptPath);
+        fireModified("releaseScriptPath", releaseScriptPath);
     }
 
     protected java.lang.String prepareReleaseScriptPath(java.lang.String releaseScriptPath) {
@@ -1816,7 +1819,7 @@ public abstract class GProject
         if (isSupportEmail(supportEmail)) return;
         this.supportEmail = supportEmail;
         updateLastModified();
-        fireModified("supportEmail="+supportEmail);
+        fireModified("supportEmail", supportEmail);
     }
 
     protected java.lang.String prepareSupportEmail(java.lang.String supportEmail) {
@@ -1852,7 +1855,7 @@ public abstract class GProject
         if (isIssueReplyTemplate(issueReplyTemplate)) return;
         this.issueReplyTemplate = issueReplyTemplate;
         updateLastModified();
-        fireModified("issueReplyTemplate="+issueReplyTemplate);
+        fireModified("issueReplyTemplate", issueReplyTemplate);
     }
 
     protected java.lang.String prepareIssueReplyTemplate(java.lang.String issueReplyTemplate) {
@@ -1888,7 +1891,7 @@ public abstract class GProject
         if (isSubscriberNotificationTemplate(subscriberNotificationTemplate)) return;
         this.subscriberNotificationTemplate = subscriberNotificationTemplate;
         updateLastModified();
-        fireModified("subscriberNotificationTemplate="+subscriberNotificationTemplate);
+        fireModified("subscriberNotificationTemplate", subscriberNotificationTemplate);
     }
 
     protected java.lang.String prepareSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
@@ -1924,7 +1927,7 @@ public abstract class GProject
         if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return;
         this.lastOpenedDateAndTime = lastOpenedDateAndTime;
         updateLastModified();
-        fireModified("lastOpenedDateAndTime="+lastOpenedDateAndTime);
+        fireModified("lastOpenedDateAndTime", lastOpenedDateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {
@@ -1960,7 +1963,7 @@ public abstract class GProject
         if (isFreeDays(freeDays)) return;
         this.freeDays = freeDays;
         updateLastModified();
-        fireModified("freeDays="+freeDays);
+        fireModified("freeDays", freeDays);
     }
 
     protected int prepareFreeDays(int freeDays) {
@@ -1990,7 +1993,7 @@ public abstract class GProject
         if (isAutoCreateTasksFromQualities(autoCreateTasksFromQualities)) return;
         this.autoCreateTasksFromQualities = autoCreateTasksFromQualities;
         updateLastModified();
-        fireModified("autoCreateTasksFromQualities="+autoCreateTasksFromQualities);
+        fireModified("autoCreateTasksFromQualities", autoCreateTasksFromQualities);
     }
 
     protected boolean prepareAutoCreateTasksFromQualities(boolean autoCreateTasksFromQualities) {
@@ -2020,7 +2023,7 @@ public abstract class GProject
         if (isReleasingInfo(releasingInfo)) return;
         this.releasingInfo = releasingInfo;
         updateLastModified();
-        fireModified("releasingInfo="+releasingInfo);
+        fireModified("releasingInfo", releasingInfo);
     }
 
     protected java.lang.String prepareReleasingInfo(java.lang.String releasingInfo) {

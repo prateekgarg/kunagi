@@ -78,7 +78,7 @@ public abstract class GProjectSprintSnapshot
         this.sprintId = sprint == null ? null : sprint.getId();
         sprintCache = sprint;
         updateLastModified();
-        fireModified("sprint="+sprint);
+        fireModified("sprint", sprint);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -119,7 +119,7 @@ public abstract class GProjectSprintSnapshot
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork="+remainingWork);
+        fireModified("remainingWork", remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -149,7 +149,7 @@ public abstract class GProjectSprintSnapshot
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork="+burnedWork);
+        fireModified("burnedWork", burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {

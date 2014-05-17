@@ -91,7 +91,7 @@ public abstract class GSubject
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -133,7 +133,7 @@ public abstract class GSubject
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label="+label);
+        fireModified("label", label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -169,7 +169,7 @@ public abstract class GSubject
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text="+text);
+        fireModified("text", text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -205,7 +205,7 @@ public abstract class GSubject
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number="+number);
+        fireModified("number", number);
     }
 
     protected int prepareNumber(int number) {

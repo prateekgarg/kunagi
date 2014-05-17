@@ -90,7 +90,7 @@ public abstract class GWikipage
         this.projectId = project == null ? null : project.getId();
         projectCache = project;
         updateLastModified();
-        fireModified("project="+project);
+        fireModified("project", project);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -132,7 +132,7 @@ public abstract class GWikipage
         if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         this.name = name;
         updateLastModified();
-        fireModified("name="+name);
+        fireModified("name", name);
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -168,7 +168,7 @@ public abstract class GWikipage
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text="+text);
+        fireModified("text", text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
