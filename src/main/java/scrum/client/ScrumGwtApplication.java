@@ -16,12 +16,15 @@ package scrum.client;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.persistance.AEntity;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.AGwtDao;
 import ilarkesto.gwt.client.ErrorWrapper;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import scrum.client.admin.Auth;
 import scrum.client.admin.LogoutServiceCall;
@@ -149,6 +152,12 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	@Override
 	protected AGwtDao getDao() {
 		return Dao.get();
+	}
+
+	@Override
+	public void sendChangesToServer(Collection<AEntity> modified, Collection<String> deleted,
+			Map<String, Map<String, Object>> modifiedProperties) {
+		throw new IllegalStateException();
 	}
 
 	public static ScrumGwtApplication get() {
