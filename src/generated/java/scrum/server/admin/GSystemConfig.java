@@ -14,6 +14,7 @@
 package scrum.server.admin;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -93,7 +94,7 @@ public abstract class GSystemConfig
         if (isUrl(url)) return;
         this.url = url;
         updateLastModified();
-        fireModified("url", url);
+        fireModified("url", this.url);
     }
 
     protected java.lang.String prepareUrl(java.lang.String url) {
@@ -129,7 +130,7 @@ public abstract class GSystemConfig
         if (isAdminEmail(adminEmail)) return;
         this.adminEmail = adminEmail;
         updateLastModified();
-        fireModified("adminEmail", adminEmail);
+        fireModified("adminEmail", this.adminEmail);
     }
 
     protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
@@ -165,7 +166,7 @@ public abstract class GSystemConfig
         if (isGoogleAnalyticsId(googleAnalyticsId)) return;
         this.googleAnalyticsId = googleAnalyticsId;
         updateLastModified();
-        fireModified("googleAnalyticsId", googleAnalyticsId);
+        fireModified("googleAnalyticsId", this.googleAnalyticsId);
     }
 
     protected java.lang.String prepareGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
@@ -201,7 +202,7 @@ public abstract class GSystemConfig
         if (isSmtpServer(smtpServer)) return;
         this.smtpServer = smtpServer;
         updateLastModified();
-        fireModified("smtpServer", smtpServer);
+        fireModified("smtpServer", this.smtpServer);
     }
 
     protected java.lang.String prepareSmtpServer(java.lang.String smtpServer) {
@@ -237,7 +238,7 @@ public abstract class GSystemConfig
         if (isSmtpPort(smtpPort)) return;
         this.smtpPort = smtpPort;
         updateLastModified();
-        fireModified("smtpPort", smtpPort);
+        fireModified("smtpPort", this.smtpPort);
     }
 
     protected java.lang.Integer prepareSmtpPort(java.lang.Integer smtpPort) {
@@ -272,7 +273,7 @@ public abstract class GSystemConfig
         if (isSmtpTls(smtpTls)) return;
         this.smtpTls = smtpTls;
         updateLastModified();
-        fireModified("smtpTls", smtpTls);
+        fireModified("smtpTls", this.smtpTls);
     }
 
     protected boolean prepareSmtpTls(boolean smtpTls) {
@@ -302,7 +303,7 @@ public abstract class GSystemConfig
         if (isSmtpUser(smtpUser)) return;
         this.smtpUser = smtpUser;
         updateLastModified();
-        fireModified("smtpUser", smtpUser);
+        fireModified("smtpUser", this.smtpUser);
     }
 
     protected java.lang.String prepareSmtpUser(java.lang.String smtpUser) {
@@ -338,7 +339,7 @@ public abstract class GSystemConfig
         if (isSmtpPassword(smtpPassword)) return;
         this.smtpPassword = smtpPassword;
         updateLastModified();
-        fireModified("smtpPassword", smtpPassword);
+        fireModified("smtpPassword", this.smtpPassword);
     }
 
     protected java.lang.String prepareSmtpPassword(java.lang.String smtpPassword) {
@@ -374,7 +375,7 @@ public abstract class GSystemConfig
         if (isSmtpFrom(smtpFrom)) return;
         this.smtpFrom = smtpFrom;
         updateLastModified();
-        fireModified("smtpFrom", smtpFrom);
+        fireModified("smtpFrom", this.smtpFrom);
     }
 
     protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
@@ -410,7 +411,7 @@ public abstract class GSystemConfig
         if (isInstanceName(instanceName)) return;
         this.instanceName = instanceName;
         updateLastModified();
-        fireModified("instanceName", instanceName);
+        fireModified("instanceName", this.instanceName);
     }
 
     protected java.lang.String prepareInstanceName(java.lang.String instanceName) {
@@ -446,7 +447,7 @@ public abstract class GSystemConfig
         if (isLoginPageLogoUrl(loginPageLogoUrl)) return;
         this.loginPageLogoUrl = loginPageLogoUrl;
         updateLastModified();
-        fireModified("loginPageLogoUrl", loginPageLogoUrl);
+        fireModified("loginPageLogoUrl", this.loginPageLogoUrl);
     }
 
     protected java.lang.String prepareLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
@@ -482,7 +483,7 @@ public abstract class GSystemConfig
         if (isLoginPageMessage(loginPageMessage)) return;
         this.loginPageMessage = loginPageMessage;
         updateLastModified();
-        fireModified("loginPageMessage", loginPageMessage);
+        fireModified("loginPageMessage", this.loginPageMessage);
     }
 
     protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
@@ -518,7 +519,7 @@ public abstract class GSystemConfig
         if (isRegisterPageMessage(registerPageMessage)) return;
         this.registerPageMessage = registerPageMessage;
         updateLastModified();
-        fireModified("registerPageMessage", registerPageMessage);
+        fireModified("registerPageMessage", this.registerPageMessage);
     }
 
     protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
@@ -554,7 +555,7 @@ public abstract class GSystemConfig
         if (isAboutPageMessage(aboutPageMessage)) return;
         this.aboutPageMessage = aboutPageMessage;
         updateLastModified();
-        fireModified("aboutPageMessage", aboutPageMessage);
+        fireModified("aboutPageMessage", this.aboutPageMessage);
     }
 
     protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {
@@ -590,7 +591,7 @@ public abstract class GSystemConfig
         if (isUserEmailMandatory(userEmailMandatory)) return;
         this.userEmailMandatory = userEmailMandatory;
         updateLastModified();
-        fireModified("userEmailMandatory", userEmailMandatory);
+        fireModified("userEmailMandatory", this.userEmailMandatory);
     }
 
     protected boolean prepareUserEmailMandatory(boolean userEmailMandatory) {
@@ -620,7 +621,7 @@ public abstract class GSystemConfig
         if (isRegistrationDisabled(registrationDisabled)) return;
         this.registrationDisabled = registrationDisabled;
         updateLastModified();
-        fireModified("registrationDisabled", registrationDisabled);
+        fireModified("registrationDisabled", this.registrationDisabled);
     }
 
     protected boolean prepareRegistrationDisabled(boolean registrationDisabled) {
@@ -650,7 +651,7 @@ public abstract class GSystemConfig
         if (isProjectCreationDisabled(projectCreationDisabled)) return;
         this.projectCreationDisabled = projectCreationDisabled;
         updateLastModified();
-        fireModified("projectCreationDisabled", projectCreationDisabled);
+        fireModified("projectCreationDisabled", this.projectCreationDisabled);
     }
 
     protected boolean prepareProjectCreationDisabled(boolean projectCreationDisabled) {
@@ -680,7 +681,7 @@ public abstract class GSystemConfig
         if (isDefaultUserPassword(defaultUserPassword)) return;
         this.defaultUserPassword = defaultUserPassword;
         updateLastModified();
-        fireModified("defaultUserPassword", defaultUserPassword);
+        fireModified("defaultUserPassword", this.defaultUserPassword);
     }
 
     protected java.lang.String prepareDefaultUserPassword(java.lang.String defaultUserPassword) {
@@ -716,7 +717,7 @@ public abstract class GSystemConfig
         if (isOpenIdDisabled(openIdDisabled)) return;
         this.openIdDisabled = openIdDisabled;
         updateLastModified();
-        fireModified("openIdDisabled", openIdDisabled);
+        fireModified("openIdDisabled", this.openIdDisabled);
     }
 
     protected boolean prepareOpenIdDisabled(boolean openIdDisabled) {
@@ -746,7 +747,7 @@ public abstract class GSystemConfig
         if (isOpenIdDomains(openIdDomains)) return;
         this.openIdDomains = openIdDomains;
         updateLastModified();
-        fireModified("openIdDomains", openIdDomains);
+        fireModified("openIdDomains", this.openIdDomains);
     }
 
     protected java.lang.String prepareOpenIdDomains(java.lang.String openIdDomains) {
@@ -782,7 +783,7 @@ public abstract class GSystemConfig
         if (isVersionCheckEnabled(versionCheckEnabled)) return;
         this.versionCheckEnabled = versionCheckEnabled;
         updateLastModified();
-        fireModified("versionCheckEnabled", versionCheckEnabled);
+        fireModified("versionCheckEnabled", this.versionCheckEnabled);
     }
 
     protected boolean prepareVersionCheckEnabled(boolean versionCheckEnabled) {
@@ -812,7 +813,7 @@ public abstract class GSystemConfig
         if (isLdapEnabled(ldapEnabled)) return;
         this.ldapEnabled = ldapEnabled;
         updateLastModified();
-        fireModified("ldapEnabled", ldapEnabled);
+        fireModified("ldapEnabled", this.ldapEnabled);
     }
 
     protected boolean prepareLdapEnabled(boolean ldapEnabled) {
@@ -842,7 +843,7 @@ public abstract class GSystemConfig
         if (isLdapUrl(ldapUrl)) return;
         this.ldapUrl = ldapUrl;
         updateLastModified();
-        fireModified("ldapUrl", ldapUrl);
+        fireModified("ldapUrl", this.ldapUrl);
     }
 
     protected java.lang.String prepareLdapUrl(java.lang.String ldapUrl) {
@@ -878,7 +879,7 @@ public abstract class GSystemConfig
         if (isLdapUser(ldapUser)) return;
         this.ldapUser = ldapUser;
         updateLastModified();
-        fireModified("ldapUser", ldapUser);
+        fireModified("ldapUser", this.ldapUser);
     }
 
     protected java.lang.String prepareLdapUser(java.lang.String ldapUser) {
@@ -914,7 +915,7 @@ public abstract class GSystemConfig
         if (isLdapPassword(ldapPassword)) return;
         this.ldapPassword = ldapPassword;
         updateLastModified();
-        fireModified("ldapPassword", ldapPassword);
+        fireModified("ldapPassword", this.ldapPassword);
     }
 
     protected java.lang.String prepareLdapPassword(java.lang.String ldapPassword) {
@@ -950,7 +951,7 @@ public abstract class GSystemConfig
         if (isLdapBaseDn(ldapBaseDn)) return;
         this.ldapBaseDn = ldapBaseDn;
         updateLastModified();
-        fireModified("ldapBaseDn", ldapBaseDn);
+        fireModified("ldapBaseDn", this.ldapBaseDn);
     }
 
     protected java.lang.String prepareLdapBaseDn(java.lang.String ldapBaseDn) {
@@ -986,7 +987,7 @@ public abstract class GSystemConfig
         if (isLdapUserFilterRegex(ldapUserFilterRegex)) return;
         this.ldapUserFilterRegex = ldapUserFilterRegex;
         updateLastModified();
-        fireModified("ldapUserFilterRegex", ldapUserFilterRegex);
+        fireModified("ldapUserFilterRegex", this.ldapUserFilterRegex);
     }
 
     protected java.lang.String prepareLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
@@ -1022,7 +1023,7 @@ public abstract class GSystemConfig
         if (isMaxFileSize(maxFileSize)) return;
         this.maxFileSize = maxFileSize;
         updateLastModified();
-        fireModified("maxFileSize", maxFileSize);
+        fireModified("maxFileSize", this.maxFileSize);
     }
 
     protected java.lang.Integer prepareMaxFileSize(java.lang.Integer maxFileSize) {
@@ -1057,7 +1058,7 @@ public abstract class GSystemConfig
         if (isSubscriptionKeySeed(subscriptionKeySeed)) return;
         this.subscriptionKeySeed = subscriptionKeySeed;
         updateLastModified();
-        fireModified("subscriptionKeySeed", subscriptionKeySeed);
+        fireModified("subscriptionKeySeed", this.subscriptionKeySeed);
     }
 
     protected java.lang.String prepareSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {

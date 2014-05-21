@@ -14,6 +14,7 @@
 package scrum.server.admin;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -89,10 +90,16 @@ public abstract class GProjectUserConfig
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -141,10 +148,16 @@ public abstract class GProjectUserConfig
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
-        this.userId = user == null ? null : user.getId();
+        setUserId(user == null ? null : user.getId());
         userCache = user;
+    }
+
+    public final void setUserId(String id) {
+        if (Utl.equals(userId, id)) return;
+        this.userId = id;
+        userCache = null;
         updateLastModified();
-        fireModified("user", user);
+        fireModified("userId", this.userId);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -185,7 +198,7 @@ public abstract class GProjectUserConfig
         if (isColor(color)) return;
         this.color = color;
         updateLastModified();
-        fireModified("color", color);
+        fireModified("color", this.color);
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -221,7 +234,7 @@ public abstract class GProjectUserConfig
         if (isReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents)) return;
         this.receiveEmailsOnProjectEvents = receiveEmailsOnProjectEvents;
         updateLastModified();
-        fireModified("receiveEmailsOnProjectEvents", receiveEmailsOnProjectEvents);
+        fireModified("receiveEmailsOnProjectEvents", this.receiveEmailsOnProjectEvents);
     }
 
     protected boolean prepareReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
@@ -251,7 +264,7 @@ public abstract class GProjectUserConfig
         if (isMisconducts(misconducts)) return;
         this.misconducts = misconducts;
         updateLastModified();
-        fireModified("misconducts", misconducts);
+        fireModified("misconducts", this.misconducts);
     }
 
     protected int prepareMisconducts(int misconducts) {
@@ -281,7 +294,7 @@ public abstract class GProjectUserConfig
         if (isRichtextAutosaveText(richtextAutosaveText)) return;
         this.richtextAutosaveText = richtextAutosaveText;
         updateLastModified();
-        fireModified("richtextAutosaveText", richtextAutosaveText);
+        fireModified("richtextAutosaveText", this.richtextAutosaveText);
     }
 
     protected java.lang.String prepareRichtextAutosaveText(java.lang.String richtextAutosaveText) {
@@ -317,7 +330,7 @@ public abstract class GProjectUserConfig
         if (isRichtextAutosaveField(richtextAutosaveField)) return;
         this.richtextAutosaveField = richtextAutosaveField;
         updateLastModified();
-        fireModified("richtextAutosaveField", richtextAutosaveField);
+        fireModified("richtextAutosaveField", this.richtextAutosaveField);
     }
 
     protected java.lang.String prepareRichtextAutosaveField(java.lang.String richtextAutosaveField) {
@@ -402,7 +415,7 @@ public abstract class GProjectUserConfig
         if (selectedEntitysIds.isEmpty()) return false;
         boolean removed = false;
         for (java.lang.String _element: selectedEntitysIds) {
-            removed = removed | removeSelectedEntitysId(_element);
+            removed = removed | this.selectedEntitysIds.remove(_element);
         }
         return removed;
     }
@@ -507,7 +520,7 @@ public abstract class GProjectUserConfig
         if (this.pblFilterThemes.equals(pblFilterThemes)) return;
         this.pblFilterThemes = new java.util.ArrayList<java.lang.String>(pblFilterThemes);
         updateLastModified();
-        fireModified("pblFilterThemes", pblFilterThemes);
+        fireModified("pblFilterThemes", this.pblFilterThemes);
     }
 
     protected Collection<java.lang.String> preparePblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
@@ -531,7 +544,9 @@ public abstract class GProjectUserConfig
         if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
         boolean added = this.pblFilterThemes.add(pblFilterTheme);
         if (added) updateLastModified();
-        if (added) fireModified("pblFilterThemes", pblFilterTheme);
+        if (added) {
+        fireModified("pblFilterThemes", this.pblFilterThemes);
+        }
         return added;
     }
 
@@ -541,6 +556,9 @@ public abstract class GProjectUserConfig
         for (java.lang.String pblFilterTheme : pblFilterThemes) {
             added = added | this.pblFilterThemes.add(pblFilterTheme);
         }
+        if (added) {
+        fireModified("pblFilterThemes", this.pblFilterThemes);
+        }
         return added;
     }
 
@@ -549,7 +567,9 @@ public abstract class GProjectUserConfig
         if (this.pblFilterThemes == null) return false;
         boolean removed = this.pblFilterThemes.remove(pblFilterTheme);
         if (removed) updateLastModified();
-        if (removed) fireModified("pblFilterThemes", pblFilterTheme);
+        if (removed) {
+        fireModified("pblFilterThemes", this.pblFilterThemes);
+        }
         return removed;
     }
 
@@ -558,7 +578,10 @@ public abstract class GProjectUserConfig
         if (pblFilterThemes.isEmpty()) return false;
         boolean removed = false;
         for (java.lang.String _element: pblFilterThemes) {
-            removed = removed | removePblFilterTheme(_element);
+            removed = removed | this.pblFilterThemes.remove(_element);
+        }
+        if (removed) {
+        fireModified("pblFilterThemes", this.pblFilterThemes);
         }
         return removed;
     }
@@ -567,7 +590,7 @@ public abstract class GProjectUserConfig
         if (this.pblFilterThemes.isEmpty()) return false;
         this.pblFilterThemes.clear();
         updateLastModified();
-        fireModified("pblFilterThemes", null);
+        fireModified("pblFilterThemes", this.pblFilterThemes);
         return true;
     }
 
@@ -598,10 +621,14 @@ public abstract class GProjectUserConfig
         pblFilterQualitys = preparePblFilterQualitys(pblFilterQualitys);
         if (pblFilterQualitys == null) pblFilterQualitys = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(pblFilterQualitys);
-        if (this.pblFilterQualitysIds.equals(ids)) return;
-        this.pblFilterQualitysIds = ids;
+        setPblFilterQualitysIds(ids);
+    }
+
+    public final void setPblFilterQualitysIds(java.util.Set<String> ids) {
+        if (Utl.equals(pblFilterQualitysIds, ids)) return;
+        pblFilterQualitysIds = ids;
         updateLastModified();
-        fireModified("pblFilterQualitys", pblFilterQualitys);
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
     }
 
     protected Collection<scrum.server.project.Quality> preparePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
@@ -609,7 +636,9 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadPblFilterQualityReference(String entityId) {
-        if (this.pblFilterQualitysIds.remove(entityId)) fireModified("pblFilterQualitys", entityId);
+        if (this.pblFilterQualitysIds.remove(entityId)) {
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        }
     }
 
     public final boolean containsPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
@@ -629,7 +658,9 @@ public abstract class GProjectUserConfig
         if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
         boolean added = this.pblFilterQualitysIds.add(pblFilterQuality.getId());
         if (added) updateLastModified();
-        if (added) fireModified("pblFilterQualitys", pblFilterQuality);
+        if (added) {
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        }
         return added;
     }
 
@@ -639,6 +670,9 @@ public abstract class GProjectUserConfig
         for (scrum.server.project.Quality pblFilterQuality : pblFilterQualitys) {
             added = added | this.pblFilterQualitysIds.add(pblFilterQuality.getId());
         }
+        if (added) {
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        }
         return added;
     }
 
@@ -647,7 +681,9 @@ public abstract class GProjectUserConfig
         if (this.pblFilterQualitysIds == null) return false;
         boolean removed = this.pblFilterQualitysIds.remove(pblFilterQuality.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("pblFilterQualitys", pblFilterQuality);
+        if (removed) {
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
+        }
         return removed;
     }
 
@@ -656,7 +692,10 @@ public abstract class GProjectUserConfig
         if (pblFilterQualitys.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.project.Quality _element: pblFilterQualitys) {
-            removed = removed | removePblFilterQuality(_element);
+            removed = removed | this.pblFilterQualitysIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
         }
         return removed;
     }
@@ -665,7 +704,7 @@ public abstract class GProjectUserConfig
         if (this.pblFilterQualitysIds.isEmpty()) return false;
         this.pblFilterQualitysIds.clear();
         updateLastModified();
-        fireModified("pblFilterQualitys", null);
+        fireModified("pblFilterQualitysIds", this.pblFilterQualitysIds);
         return true;
     }
 
@@ -689,7 +728,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterDateFrom(pblFilterDateFrom)) return;
         this.pblFilterDateFrom = pblFilterDateFrom;
         updateLastModified();
-        fireModified("pblFilterDateFrom", pblFilterDateFrom);
+        fireModified("pblFilterDateFrom", this.pblFilterDateFrom);
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateFrom(ilarkesto.core.time.Date pblFilterDateFrom) {
@@ -725,7 +764,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterDateTo(pblFilterDateTo)) return;
         this.pblFilterDateTo = pblFilterDateTo;
         updateLastModified();
-        fireModified("pblFilterDateTo", pblFilterDateTo);
+        fireModified("pblFilterDateTo", this.pblFilterDateTo);
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateTo(ilarkesto.core.time.Date pblFilterDateTo) {
@@ -761,7 +800,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterEstimationFrom(pblFilterEstimationFrom)) return;
         this.pblFilterEstimationFrom = pblFilterEstimationFrom;
         updateLastModified();
-        fireModified("pblFilterEstimationFrom", pblFilterEstimationFrom);
+        fireModified("pblFilterEstimationFrom", this.pblFilterEstimationFrom);
     }
 
     protected java.lang.Float preparePblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
@@ -796,7 +835,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterEstimationTo(pblFilterEstimationTo)) return;
         this.pblFilterEstimationTo = pblFilterEstimationTo;
         updateLastModified();
-        fireModified("pblFilterEstimationTo", pblFilterEstimationTo);
+        fireModified("pblFilterEstimationTo", this.pblFilterEstimationTo);
     }
 
     protected java.lang.Float preparePblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
@@ -831,7 +870,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterText(pblFilterText)) return;
         this.pblFilterText = pblFilterText;
         updateLastModified();
-        fireModified("pblFilterText", pblFilterText);
+        fireModified("pblFilterText", this.pblFilterText);
     }
 
     protected java.lang.String preparePblFilterText(java.lang.String pblFilterText) {

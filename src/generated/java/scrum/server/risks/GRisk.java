@@ -14,6 +14,7 @@
 package scrum.server.risks;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -94,10 +95,16 @@ public abstract class GRisk
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -138,7 +145,7 @@ public abstract class GRisk
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -169,7 +176,7 @@ public abstract class GRisk
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -205,7 +212,7 @@ public abstract class GRisk
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description", description);
+        fireModified("description", this.description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -241,7 +248,7 @@ public abstract class GRisk
         if (isProbabilityMitigation(probabilityMitigation)) return;
         this.probabilityMitigation = probabilityMitigation;
         updateLastModified();
-        fireModified("probabilityMitigation", probabilityMitigation);
+        fireModified("probabilityMitigation", this.probabilityMitigation);
     }
 
     protected java.lang.String prepareProbabilityMitigation(java.lang.String probabilityMitigation) {
@@ -277,7 +284,7 @@ public abstract class GRisk
         if (isImpactMitigation(impactMitigation)) return;
         this.impactMitigation = impactMitigation;
         updateLastModified();
-        fireModified("impactMitigation", impactMitigation);
+        fireModified("impactMitigation", this.impactMitigation);
     }
 
     protected java.lang.String prepareImpactMitigation(java.lang.String impactMitigation) {
@@ -313,7 +320,7 @@ public abstract class GRisk
         if (isProbability(probability)) return;
         this.probability = probability;
         updateLastModified();
-        fireModified("probability", probability);
+        fireModified("probability", this.probability);
     }
 
     protected int prepareProbability(int probability) {
@@ -343,7 +350,7 @@ public abstract class GRisk
         if (isImpact(impact)) return;
         this.impact = impact;
         updateLastModified();
-        fireModified("impact", impact);
+        fireModified("impact", this.impact);
     }
 
     protected int prepareImpact(int impact) {

@@ -14,6 +14,7 @@
 package scrum.server.collaboration;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -91,10 +92,16 @@ public abstract class GComment
     public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
-        this.parentId = parent == null ? null : parent.getId();
+        setParentId(parent == null ? null : parent.getId());
         parentCache = parent;
+    }
+
+    public final void setParentId(String id) {
+        if (Utl.equals(parentId, id)) return;
+        this.parentId = id;
+        parentCache = null;
         updateLastModified();
-        fireModified("parent", parent);
+        fireModified("parentId", this.parentId);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -143,10 +150,16 @@ public abstract class GComment
     public final void setAuthor(scrum.server.admin.User author) {
         author = prepareAuthor(author);
         if (isAuthor(author)) return;
-        this.authorId = author == null ? null : author.getId();
+        setAuthorId(author == null ? null : author.getId());
         authorCache = author;
+    }
+
+    public final void setAuthorId(String id) {
+        if (Utl.equals(authorId, id)) return;
+        this.authorId = id;
+        authorCache = null;
         updateLastModified();
-        fireModified("author", author);
+        fireModified("authorId", this.authorId);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -187,7 +200,7 @@ public abstract class GComment
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published", published);
+        fireModified("published", this.published);
     }
 
     protected boolean preparePublished(boolean published) {
@@ -217,7 +230,7 @@ public abstract class GComment
         if (isAuthorName(authorName)) return;
         this.authorName = authorName;
         updateLastModified();
-        fireModified("authorName", authorName);
+        fireModified("authorName", this.authorName);
     }
 
     protected java.lang.String prepareAuthorName(java.lang.String authorName) {
@@ -253,7 +266,7 @@ public abstract class GComment
         if (isAuthorEmail(authorEmail)) return;
         this.authorEmail = authorEmail;
         updateLastModified();
-        fireModified("authorEmail", authorEmail);
+        fireModified("authorEmail", this.authorEmail);
     }
 
     protected java.lang.String prepareAuthorEmail(java.lang.String authorEmail) {
@@ -289,7 +302,7 @@ public abstract class GComment
         if (isAuthorNameVisible(authorNameVisible)) return;
         this.authorNameVisible = authorNameVisible;
         updateLastModified();
-        fireModified("authorNameVisible", authorNameVisible);
+        fireModified("authorNameVisible", this.authorNameVisible);
     }
 
     protected boolean prepareAuthorNameVisible(boolean authorNameVisible) {
@@ -320,7 +333,7 @@ public abstract class GComment
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
         updateLastModified();
-        fireModified("text", text);
+        fireModified("text", this.text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -356,7 +369,7 @@ public abstract class GComment
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", dateAndTime);
+        fireModified("dateAndTime", this.dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

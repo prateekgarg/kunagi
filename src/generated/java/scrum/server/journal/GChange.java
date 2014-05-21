@@ -14,6 +14,7 @@
 package scrum.server.journal;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -79,10 +80,16 @@ public abstract class GChange
     public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
-        this.parentId = parent == null ? null : parent.getId();
+        setParentId(parent == null ? null : parent.getId());
         parentCache = parent;
+    }
+
+    public final void setParentId(String id) {
+        if (Utl.equals(parentId, id)) return;
+        this.parentId = id;
+        parentCache = null;
         updateLastModified();
-        fireModified("parent", parent);
+        fireModified("parentId", this.parentId);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -131,10 +138,16 @@ public abstract class GChange
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
-        this.userId = user == null ? null : user.getId();
+        setUserId(user == null ? null : user.getId());
         userCache = user;
+    }
+
+    public final void setUserId(String id) {
+        if (Utl.equals(userId, id)) return;
+        this.userId = id;
+        userCache = null;
         updateLastModified();
-        fireModified("user", user);
+        fireModified("userId", this.userId);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -176,7 +189,7 @@ public abstract class GChange
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", dateAndTime);
+        fireModified("dateAndTime", this.dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -212,7 +225,7 @@ public abstract class GChange
         if (isKey(key)) return;
         this.key = key;
         updateLastModified();
-        fireModified("key", key);
+        fireModified("key", this.key);
     }
 
     protected java.lang.String prepareKey(java.lang.String key) {
@@ -248,7 +261,7 @@ public abstract class GChange
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
         updateLastModified();
-        fireModified("oldValue", oldValue);
+        fireModified("oldValue", this.oldValue);
     }
 
     protected java.lang.String prepareOldValue(java.lang.String oldValue) {
@@ -284,7 +297,7 @@ public abstract class GChange
         if (isNewValue(newValue)) return;
         this.newValue = newValue;
         updateLastModified();
-        fireModified("newValue", newValue);
+        fireModified("newValue", this.newValue);
     }
 
     protected java.lang.String prepareNewValue(java.lang.String newValue) {
@@ -320,7 +333,7 @@ public abstract class GChange
         if (isComment(comment)) return;
         this.comment = comment;
         updateLastModified();
-        fireModified("comment", comment);
+        fireModified("comment", this.comment);
     }
 
     protected java.lang.String prepareComment(java.lang.String comment) {

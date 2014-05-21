@@ -14,6 +14,7 @@
 package scrum.server.project;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -75,10 +76,16 @@ public abstract class GProjectSprintSnapshot
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
-        this.sprintId = sprint == null ? null : sprint.getId();
+        setSprintId(sprint == null ? null : sprint.getId());
         sprintCache = sprint;
+    }
+
+    public final void setSprintId(String id) {
+        if (Utl.equals(sprintId, id)) return;
+        this.sprintId = id;
+        sprintCache = null;
         updateLastModified();
-        fireModified("sprint", sprint);
+        fireModified("sprintId", this.sprintId);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -119,7 +126,7 @@ public abstract class GProjectSprintSnapshot
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork", remainingWork);
+        fireModified("remainingWork", this.remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -149,7 +156,7 @@ public abstract class GProjectSprintSnapshot
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", burnedWork);
+        fireModified("burnedWork", this.burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {

@@ -14,6 +14,7 @@
 package scrum.server.estimation;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -75,10 +76,16 @@ public abstract class GRequirementEstimationVote
     public final void setRequirement(scrum.server.project.Requirement requirement) {
         requirement = prepareRequirement(requirement);
         if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
+        setRequirementId(requirement == null ? null : requirement.getId());
         requirementCache = requirement;
+    }
+
+    public final void setRequirementId(String id) {
+        if (Utl.equals(requirementId, id)) return;
+        this.requirementId = id;
+        requirementCache = null;
         updateLastModified();
-        fireModified("requirement", requirement);
+        fireModified("requirementId", this.requirementId);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -127,10 +134,16 @@ public abstract class GRequirementEstimationVote
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
-        this.userId = user == null ? null : user.getId();
+        setUserId(user == null ? null : user.getId());
         userCache = user;
+    }
+
+    public final void setUserId(String id) {
+        if (Utl.equals(userId, id)) return;
+        this.userId = id;
+        userCache = null;
         updateLastModified();
-        fireModified("user", user);
+        fireModified("userId", this.userId);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -171,7 +184,7 @@ public abstract class GRequirementEstimationVote
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
         updateLastModified();
-        fireModified("estimatedWork", estimatedWork);
+        fireModified("estimatedWork", this.estimatedWork);
     }
 
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {

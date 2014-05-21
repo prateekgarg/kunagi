@@ -14,6 +14,7 @@
 package scrum.server.impediments;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -96,10 +97,16 @@ public abstract class GImpediment
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -140,7 +147,7 @@ public abstract class GImpediment
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -171,7 +178,7 @@ public abstract class GImpediment
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -208,7 +215,7 @@ public abstract class GImpediment
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
-        fireModified("date", date);
+        fireModified("date", this.date);
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -244,7 +251,7 @@ public abstract class GImpediment
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description", description);
+        fireModified("description", this.description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -280,7 +287,7 @@ public abstract class GImpediment
         if (isSolution(solution)) return;
         this.solution = solution;
         updateLastModified();
-        fireModified("solution", solution);
+        fireModified("solution", this.solution);
     }
 
     protected java.lang.String prepareSolution(java.lang.String solution) {
@@ -316,7 +323,7 @@ public abstract class GImpediment
         if (isClosed(closed)) return;
         this.closed = closed;
         updateLastModified();
-        fireModified("closed", closed);
+        fireModified("closed", this.closed);
     }
 
     protected boolean prepareClosed(boolean closed) {

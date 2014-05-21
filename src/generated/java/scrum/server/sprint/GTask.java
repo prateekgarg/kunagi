@@ -14,6 +14,7 @@
 package scrum.server.sprint;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -97,10 +98,16 @@ public abstract class GTask
     public final void setRequirement(scrum.server.project.Requirement requirement) {
         requirement = prepareRequirement(requirement);
         if (isRequirement(requirement)) return;
-        this.requirementId = requirement == null ? null : requirement.getId();
+        setRequirementId(requirement == null ? null : requirement.getId());
         requirementCache = requirement;
+    }
+
+    public final void setRequirementId(String id) {
+        if (Utl.equals(requirementId, id)) return;
+        this.requirementId = id;
+        requirementCache = null;
         updateLastModified();
-        fireModified("requirement", requirement);
+        fireModified("requirementId", this.requirementId);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -141,7 +148,7 @@ public abstract class GTask
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -172,7 +179,7 @@ public abstract class GTask
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -208,7 +215,7 @@ public abstract class GTask
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description", description);
+        fireModified("description", this.description);
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -244,7 +251,7 @@ public abstract class GTask
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork", remainingWork);
+        fireModified("remainingWork", this.remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -274,7 +281,7 @@ public abstract class GTask
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", burnedWork);
+        fireModified("burnedWork", this.burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -312,10 +319,16 @@ public abstract class GTask
     public final void setOwner(scrum.server.admin.User owner) {
         owner = prepareOwner(owner);
         if (isOwner(owner)) return;
-        this.ownerId = owner == null ? null : owner.getId();
+        setOwnerId(owner == null ? null : owner.getId());
         ownerCache = owner;
+    }
+
+    public final void setOwnerId(String id) {
+        if (Utl.equals(ownerId, id)) return;
+        this.ownerId = id;
+        ownerCache = null;
         updateLastModified();
-        fireModified("owner", owner);
+        fireModified("ownerId", this.ownerId);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -364,10 +377,16 @@ public abstract class GTask
     public final void setImpediment(scrum.server.impediments.Impediment impediment) {
         impediment = prepareImpediment(impediment);
         if (isImpediment(impediment)) return;
-        this.impedimentId = impediment == null ? null : impediment.getId();
+        setImpedimentId(impediment == null ? null : impediment.getId());
         impedimentCache = impediment;
+    }
+
+    public final void setImpedimentId(String id) {
+        if (Utl.equals(impedimentId, id)) return;
+        this.impedimentId = id;
+        impedimentCache = null;
         updateLastModified();
-        fireModified("impediment", impediment);
+        fireModified("impedimentId", this.impedimentId);
     }
 
     protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
@@ -416,10 +435,16 @@ public abstract class GTask
     public final void setClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
         closedInPastSprint = prepareClosedInPastSprint(closedInPastSprint);
         if (isClosedInPastSprint(closedInPastSprint)) return;
-        this.closedInPastSprintId = closedInPastSprint == null ? null : closedInPastSprint.getId();
+        setClosedInPastSprintId(closedInPastSprint == null ? null : closedInPastSprint.getId());
         closedInPastSprintCache = closedInPastSprint;
+    }
+
+    public final void setClosedInPastSprintId(String id) {
+        if (Utl.equals(closedInPastSprintId, id)) return;
+        this.closedInPastSprintId = id;
+        closedInPastSprintCache = null;
         updateLastModified();
-        fireModified("closedInPastSprint", closedInPastSprint);
+        fireModified("closedInPastSprintId", this.closedInPastSprintId);
     }
 
     protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {

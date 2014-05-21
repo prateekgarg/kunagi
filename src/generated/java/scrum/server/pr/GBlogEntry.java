@@ -14,6 +14,7 @@
 package scrum.server.pr;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -92,10 +93,16 @@ public abstract class GBlogEntry
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -136,7 +143,7 @@ public abstract class GBlogEntry
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -165,10 +172,14 @@ public abstract class GBlogEntry
         authors = prepareAuthors(authors);
         if (authors == null) authors = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(authors);
-        if (this.authorsIds.equals(ids)) return;
-        this.authorsIds = ids;
+        setAuthorsIds(ids);
+    }
+
+    public final void setAuthorsIds(java.util.Set<String> ids) {
+        if (Utl.equals(authorsIds, ids)) return;
+        authorsIds = ids;
         updateLastModified();
-        fireModified("authors", authors);
+        fireModified("authorsIds", this.authorsIds);
     }
 
     protected Collection<scrum.server.admin.User> prepareAuthors(Collection<scrum.server.admin.User> authors) {
@@ -176,7 +187,9 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (this.authorsIds.remove(entityId)) fireModified("authors", entityId);
+        if (this.authorsIds.remove(entityId)) {
+        fireModified("authorsIds", this.authorsIds);
+        }
     }
 
     public final boolean containsAuthor(scrum.server.admin.User author) {
@@ -196,7 +209,9 @@ public abstract class GBlogEntry
         if (author == null) throw new IllegalArgumentException("author == null");
         boolean added = this.authorsIds.add(author.getId());
         if (added) updateLastModified();
-        if (added) fireModified("authors", author);
+        if (added) {
+        fireModified("authorsIds", this.authorsIds);
+        }
         return added;
     }
 
@@ -206,6 +221,9 @@ public abstract class GBlogEntry
         for (scrum.server.admin.User author : authors) {
             added = added | this.authorsIds.add(author.getId());
         }
+        if (added) {
+        fireModified("authorsIds", this.authorsIds);
+        }
         return added;
     }
 
@@ -214,7 +232,9 @@ public abstract class GBlogEntry
         if (this.authorsIds == null) return false;
         boolean removed = this.authorsIds.remove(author.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("authors", author);
+        if (removed) {
+        fireModified("authorsIds", this.authorsIds);
+        }
         return removed;
     }
 
@@ -223,7 +243,10 @@ public abstract class GBlogEntry
         if (authors.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: authors) {
-            removed = removed | removeAuthor(_element);
+            removed = removed | this.authorsIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("authorsIds", this.authorsIds);
         }
         return removed;
     }
@@ -232,7 +255,7 @@ public abstract class GBlogEntry
         if (this.authorsIds.isEmpty()) return false;
         this.authorsIds.clear();
         updateLastModified();
-        fireModified("authors", null);
+        fireModified("authorsIds", this.authorsIds);
         return true;
     }
 
@@ -257,7 +280,7 @@ public abstract class GBlogEntry
         if (title == null) throw new IllegalArgumentException("Mandatory field can not be set to null: title");
         this.title = title;
         updateLastModified();
-        fireModified("title", title);
+        fireModified("title", this.title);
     }
 
     protected java.lang.String prepareTitle(java.lang.String title) {
@@ -293,7 +316,7 @@ public abstract class GBlogEntry
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text", text);
+        fireModified("text", this.text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -329,7 +352,7 @@ public abstract class GBlogEntry
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", dateAndTime);
+        fireModified("dateAndTime", this.dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -364,10 +387,14 @@ public abstract class GBlogEntry
         releases = prepareReleases(releases);
         if (releases == null) releases = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(releases);
-        if (this.releasesIds.equals(ids)) return;
-        this.releasesIds = ids;
+        setReleasesIds(ids);
+    }
+
+    public final void setReleasesIds(java.util.Set<String> ids) {
+        if (Utl.equals(releasesIds, ids)) return;
+        releasesIds = ids;
         updateLastModified();
-        fireModified("releases", releases);
+        fireModified("releasesIds", this.releasesIds);
     }
 
     protected Collection<scrum.server.release.Release> prepareReleases(Collection<scrum.server.release.Release> releases) {
@@ -375,7 +402,9 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReleaseReference(String entityId) {
-        if (this.releasesIds.remove(entityId)) fireModified("releases", entityId);
+        if (this.releasesIds.remove(entityId)) {
+        fireModified("releasesIds", this.releasesIds);
+        }
     }
 
     public final boolean containsRelease(scrum.server.release.Release release) {
@@ -395,7 +424,9 @@ public abstract class GBlogEntry
         if (release == null) throw new IllegalArgumentException("release == null");
         boolean added = this.releasesIds.add(release.getId());
         if (added) updateLastModified();
-        if (added) fireModified("releases", release);
+        if (added) {
+        fireModified("releasesIds", this.releasesIds);
+        }
         return added;
     }
 
@@ -405,6 +436,9 @@ public abstract class GBlogEntry
         for (scrum.server.release.Release release : releases) {
             added = added | this.releasesIds.add(release.getId());
         }
+        if (added) {
+        fireModified("releasesIds", this.releasesIds);
+        }
         return added;
     }
 
@@ -413,7 +447,9 @@ public abstract class GBlogEntry
         if (this.releasesIds == null) return false;
         boolean removed = this.releasesIds.remove(release.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("releases", release);
+        if (removed) {
+        fireModified("releasesIds", this.releasesIds);
+        }
         return removed;
     }
 
@@ -422,7 +458,10 @@ public abstract class GBlogEntry
         if (releases.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.release.Release _element: releases) {
-            removed = removed | removeRelease(_element);
+            removed = removed | this.releasesIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("releasesIds", this.releasesIds);
         }
         return removed;
     }
@@ -431,7 +470,7 @@ public abstract class GBlogEntry
         if (this.releasesIds.isEmpty()) return false;
         this.releasesIds.clear();
         updateLastModified();
-        fireModified("releases", null);
+        fireModified("releasesIds", this.releasesIds);
         return true;
     }
 
@@ -455,7 +494,7 @@ public abstract class GBlogEntry
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published", published);
+        fireModified("published", this.published);
     }
 
     protected boolean preparePublished(boolean published) {

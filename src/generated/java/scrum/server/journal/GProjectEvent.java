@@ -14,6 +14,7 @@
 package scrum.server.journal;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -87,10 +88,16 @@ public abstract class GProjectEvent
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -132,7 +139,7 @@ public abstract class GProjectEvent
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -176,10 +183,16 @@ public abstract class GProjectEvent
     public final void setSubject(ilarkesto.persistence.AEntity subject) {
         subject = prepareSubject(subject);
         if (isSubject(subject)) return;
-        this.subjectId = subject == null ? null : subject.getId();
+        setSubjectId(subject == null ? null : subject.getId());
         subjectCache = subject;
+    }
+
+    public final void setSubjectId(String id) {
+        if (Utl.equals(subjectId, id)) return;
+        this.subjectId = id;
+        subjectCache = null;
         updateLastModified();
-        fireModified("subject", subject);
+        fireModified("subjectId", this.subjectId);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -221,7 +234,7 @@ public abstract class GProjectEvent
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", dateAndTime);
+        fireModified("dateAndTime", this.dateAndTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

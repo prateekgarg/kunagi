@@ -14,6 +14,7 @@
 package scrum.client.impediments;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import scrum.client.common.*;
 import ilarkesto.gwt.client.*;

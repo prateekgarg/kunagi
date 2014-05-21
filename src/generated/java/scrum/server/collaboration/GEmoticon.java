@@ -14,6 +14,7 @@
 package scrum.server.collaboration;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -75,10 +76,16 @@ public abstract class GEmoticon
     public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
-        this.parentId = parent == null ? null : parent.getId();
+        setParentId(parent == null ? null : parent.getId());
         parentCache = parent;
+    }
+
+    public final void setParentId(String id) {
+        if (Utl.equals(parentId, id)) return;
+        this.parentId = id;
+        parentCache = null;
         updateLastModified();
-        fireModified("parent", parent);
+        fireModified("parentId", this.parentId);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -127,10 +134,16 @@ public abstract class GEmoticon
     public final void setOwner(scrum.server.admin.User owner) {
         owner = prepareOwner(owner);
         if (isOwner(owner)) return;
-        this.ownerId = owner == null ? null : owner.getId();
+        setOwnerId(owner == null ? null : owner.getId());
         ownerCache = owner;
+    }
+
+    public final void setOwnerId(String id) {
+        if (Utl.equals(ownerId, id)) return;
+        this.ownerId = id;
+        ownerCache = null;
         updateLastModified();
-        fireModified("owner", owner);
+        fireModified("ownerId", this.ownerId);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -171,7 +184,7 @@ public abstract class GEmoticon
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
         updateLastModified();
-        fireModified("emotion", emotion);
+        fireModified("emotion", this.emotion);
     }
 
     protected java.lang.String prepareEmotion(java.lang.String emotion) {

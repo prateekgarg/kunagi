@@ -14,6 +14,7 @@
 package scrum.server.files;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -91,10 +92,16 @@ public abstract class GFile
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -136,7 +143,7 @@ public abstract class GFile
         if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
         this.filename = filename;
         updateLastModified();
-        fireModified("filename", filename);
+        fireModified("filename", this.filename);
     }
 
     protected java.lang.String prepareFilename(java.lang.String filename) {
@@ -173,7 +180,7 @@ public abstract class GFile
         if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
         this.uploadTime = uploadTime;
         updateLastModified();
-        fireModified("uploadTime", uploadTime);
+        fireModified("uploadTime", this.uploadTime);
     }
 
     protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
@@ -210,7 +217,7 @@ public abstract class GFile
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -246,7 +253,7 @@ public abstract class GFile
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -276,7 +283,7 @@ public abstract class GFile
         if (isNote(note)) return;
         this.note = note;
         updateLastModified();
-        fireModified("note", note);
+        fireModified("note", this.note);
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {

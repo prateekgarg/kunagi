@@ -14,6 +14,7 @@
 package scrum.server.collaboration;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -87,10 +88,16 @@ public abstract class GWikipage
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -132,7 +139,7 @@ public abstract class GWikipage
         if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         this.name = name;
         updateLastModified();
-        fireModified("name", name);
+        fireModified("name", this.name);
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -168,7 +175,7 @@ public abstract class GWikipage
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text", text);
+        fireModified("text", this.text);
     }
 
     protected java.lang.String prepareText(java.lang.String text) {

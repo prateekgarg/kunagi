@@ -14,6 +14,7 @@
 package scrum.server.sprint;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -77,10 +78,16 @@ public abstract class GSprintDaySnapshot
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
-        this.sprintId = sprint == null ? null : sprint.getId();
+        setSprintId(sprint == null ? null : sprint.getId());
         sprintCache = sprint;
+    }
+
+    public final void setSprintId(String id) {
+        if (Utl.equals(sprintId, id)) return;
+        this.sprintId = id;
+        sprintCache = null;
         updateLastModified();
-        fireModified("sprint", sprint);
+        fireModified("sprintId", this.sprintId);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -121,7 +128,7 @@ public abstract class GSprintDaySnapshot
         if (isDate(date)) return;
         this.date = date;
         updateLastModified();
-        fireModified("date", date);
+        fireModified("date", this.date);
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -157,7 +164,7 @@ public abstract class GSprintDaySnapshot
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork", remainingWork);
+        fireModified("remainingWork", this.remainingWork);
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -187,7 +194,7 @@ public abstract class GSprintDaySnapshot
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", burnedWork);
+        fireModified("burnedWork", this.burnedWork);
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -217,7 +224,7 @@ public abstract class GSprintDaySnapshot
         if (isBurnedWorkFromDeleted(burnedWorkFromDeleted)) return;
         this.burnedWorkFromDeleted = burnedWorkFromDeleted;
         updateLastModified();
-        fireModified("burnedWorkFromDeleted", burnedWorkFromDeleted);
+        fireModified("burnedWorkFromDeleted", this.burnedWorkFromDeleted);
     }
 
     protected int prepareBurnedWorkFromDeleted(int burnedWorkFromDeleted) {

@@ -14,6 +14,7 @@
 package scrum.server.sprint;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -128,7 +129,7 @@ public abstract class GSprint
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", number);
+        fireModified("number", this.number);
     }
 
     protected int prepareNumber(int number) {
@@ -166,10 +167,16 @@ public abstract class GSprint
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
-        this.projectId = project == null ? null : project.getId();
+        setProjectId(project == null ? null : project.getId());
         projectCache = project;
+    }
+
+    public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+        projectCache = null;
         updateLastModified();
-        fireModified("project", project);
+        fireModified("projectId", this.projectId);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -211,7 +218,7 @@ public abstract class GSprint
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", label);
+        fireModified("label", this.label);
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -247,7 +254,7 @@ public abstract class GSprint
         if (isGoal(goal)) return;
         this.goal = goal;
         updateLastModified();
-        fireModified("goal", goal);
+        fireModified("goal", this.goal);
     }
 
     protected java.lang.String prepareGoal(java.lang.String goal) {
@@ -283,7 +290,7 @@ public abstract class GSprint
         if (isBegin(begin)) return;
         this.begin = begin;
         updateLastModified();
-        fireModified("begin", begin);
+        fireModified("begin", this.begin);
     }
 
     protected ilarkesto.core.time.Date prepareBegin(ilarkesto.core.time.Date begin) {
@@ -319,7 +326,7 @@ public abstract class GSprint
         if (isEnd(end)) return;
         this.end = end;
         updateLastModified();
-        fireModified("end", end);
+        fireModified("end", this.end);
     }
 
     protected ilarkesto.core.time.Date prepareEnd(ilarkesto.core.time.Date end) {
@@ -355,7 +362,7 @@ public abstract class GSprint
         if (isOriginallyEnd(originallyEnd)) return;
         this.originallyEnd = originallyEnd;
         updateLastModified();
-        fireModified("originallyEnd", originallyEnd);
+        fireModified("originallyEnd", this.originallyEnd);
     }
 
     protected ilarkesto.core.time.Date prepareOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
@@ -391,7 +398,7 @@ public abstract class GSprint
         if (isVelocity(velocity)) return;
         this.velocity = velocity;
         updateLastModified();
-        fireModified("velocity", velocity);
+        fireModified("velocity", this.velocity);
     }
 
     protected java.lang.Float prepareVelocity(java.lang.Float velocity) {
@@ -426,7 +433,7 @@ public abstract class GSprint
         if (isCompletedRequirementsData(completedRequirementsData)) return;
         this.completedRequirementsData = completedRequirementsData;
         updateLastModified();
-        fireModified("completedRequirementsData", completedRequirementsData);
+        fireModified("completedRequirementsData", this.completedRequirementsData);
     }
 
     protected java.lang.String prepareCompletedRequirementsData(java.lang.String completedRequirementsData) {
@@ -462,7 +469,7 @@ public abstract class GSprint
         if (isIncompletedRequirementsData(incompletedRequirementsData)) return;
         this.incompletedRequirementsData = incompletedRequirementsData;
         updateLastModified();
-        fireModified("incompletedRequirementsData", incompletedRequirementsData);
+        fireModified("incompletedRequirementsData", this.incompletedRequirementsData);
     }
 
     protected java.lang.String prepareIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
@@ -498,7 +505,7 @@ public abstract class GSprint
         if (isPlanningNote(planningNote)) return;
         this.planningNote = planningNote;
         updateLastModified();
-        fireModified("planningNote", planningNote);
+        fireModified("planningNote", this.planningNote);
     }
 
     protected java.lang.String preparePlanningNote(java.lang.String planningNote) {
@@ -534,7 +541,7 @@ public abstract class GSprint
         if (isReviewNote(reviewNote)) return;
         this.reviewNote = reviewNote;
         updateLastModified();
-        fireModified("reviewNote", reviewNote);
+        fireModified("reviewNote", this.reviewNote);
     }
 
     protected java.lang.String prepareReviewNote(java.lang.String reviewNote) {
@@ -570,7 +577,7 @@ public abstract class GSprint
         if (isRetrospectiveNote(retrospectiveNote)) return;
         this.retrospectiveNote = retrospectiveNote;
         updateLastModified();
-        fireModified("retrospectiveNote", retrospectiveNote);
+        fireModified("retrospectiveNote", this.retrospectiveNote);
     }
 
     protected java.lang.String prepareRetrospectiveNote(java.lang.String retrospectiveNote) {
@@ -607,7 +614,7 @@ public abstract class GSprint
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
         updateLastModified();
-        fireModified("requirementsOrderIds", requirementsOrderIds);
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
     }
 
     protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
@@ -631,7 +638,9 @@ public abstract class GSprint
         if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
         boolean added = this.requirementsOrderIds.add(requirementsOrderId);
         if (added) updateLastModified();
-        if (added) fireModified("requirementsOrderIds", requirementsOrderId);
+        if (added) {
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        }
         return added;
     }
 
@@ -641,6 +650,9 @@ public abstract class GSprint
         for (java.lang.String requirementsOrderId : requirementsOrderIds) {
             added = added | this.requirementsOrderIds.add(requirementsOrderId);
         }
+        if (added) {
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        }
         return added;
     }
 
@@ -649,7 +661,9 @@ public abstract class GSprint
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
-        if (removed) fireModified("requirementsOrderIds", requirementsOrderId);
+        if (removed) {
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        }
         return removed;
     }
 
@@ -658,7 +672,10 @@ public abstract class GSprint
         if (requirementsOrderIds.isEmpty()) return false;
         boolean removed = false;
         for (java.lang.String _element: requirementsOrderIds) {
-            removed = removed | removeRequirementsOrderId(_element);
+            removed = removed | this.requirementsOrderIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
         }
         return removed;
     }
@@ -667,7 +684,7 @@ public abstract class GSprint
         if (this.requirementsOrderIds.isEmpty()) return false;
         this.requirementsOrderIds.clear();
         updateLastModified();
-        fireModified("requirementsOrderIds", null);
+        fireModified("requirementsOrderIds", this.requirementsOrderIds);
         return true;
     }
 
@@ -698,10 +715,14 @@ public abstract class GSprint
         productOwners = prepareProductOwners(productOwners);
         if (productOwners == null) productOwners = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(productOwners);
-        if (this.productOwnersIds.equals(ids)) return;
-        this.productOwnersIds = ids;
+        setProductOwnersIds(ids);
+    }
+
+    public final void setProductOwnersIds(java.util.Set<String> ids) {
+        if (Utl.equals(productOwnersIds, ids)) return;
+        productOwnersIds = ids;
         updateLastModified();
-        fireModified("productOwners", productOwners);
+        fireModified("productOwnersIds", this.productOwnersIds);
     }
 
     protected Collection<scrum.server.admin.User> prepareProductOwners(Collection<scrum.server.admin.User> productOwners) {
@@ -709,7 +730,9 @@ public abstract class GSprint
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
-        if (this.productOwnersIds.remove(entityId)) fireModified("productOwners", entityId);
+        if (this.productOwnersIds.remove(entityId)) {
+        fireModified("productOwnersIds", this.productOwnersIds);
+        }
     }
 
     public final boolean containsProductOwner(scrum.server.admin.User productOwner) {
@@ -729,7 +752,9 @@ public abstract class GSprint
         if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
         boolean added = this.productOwnersIds.add(productOwner.getId());
         if (added) updateLastModified();
-        if (added) fireModified("productOwners", productOwner);
+        if (added) {
+        fireModified("productOwnersIds", this.productOwnersIds);
+        }
         return added;
     }
 
@@ -739,6 +764,9 @@ public abstract class GSprint
         for (scrum.server.admin.User productOwner : productOwners) {
             added = added | this.productOwnersIds.add(productOwner.getId());
         }
+        if (added) {
+        fireModified("productOwnersIds", this.productOwnersIds);
+        }
         return added;
     }
 
@@ -747,7 +775,9 @@ public abstract class GSprint
         if (this.productOwnersIds == null) return false;
         boolean removed = this.productOwnersIds.remove(productOwner.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("productOwners", productOwner);
+        if (removed) {
+        fireModified("productOwnersIds", this.productOwnersIds);
+        }
         return removed;
     }
 
@@ -756,7 +786,10 @@ public abstract class GSprint
         if (productOwners.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: productOwners) {
-            removed = removed | removeProductOwner(_element);
+            removed = removed | this.productOwnersIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("productOwnersIds", this.productOwnersIds);
         }
         return removed;
     }
@@ -765,7 +798,7 @@ public abstract class GSprint
         if (this.productOwnersIds.isEmpty()) return false;
         this.productOwnersIds.clear();
         updateLastModified();
-        fireModified("productOwners", null);
+        fireModified("productOwnersIds", this.productOwnersIds);
         return true;
     }
 
@@ -788,10 +821,14 @@ public abstract class GSprint
         scrumMasters = prepareScrumMasters(scrumMasters);
         if (scrumMasters == null) scrumMasters = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(scrumMasters);
-        if (this.scrumMastersIds.equals(ids)) return;
-        this.scrumMastersIds = ids;
+        setScrumMastersIds(ids);
+    }
+
+    public final void setScrumMastersIds(java.util.Set<String> ids) {
+        if (Utl.equals(scrumMastersIds, ids)) return;
+        scrumMastersIds = ids;
         updateLastModified();
-        fireModified("scrumMasters", scrumMasters);
+        fireModified("scrumMastersIds", this.scrumMastersIds);
     }
 
     protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
@@ -799,7 +836,9 @@ public abstract class GSprint
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
-        if (this.scrumMastersIds.remove(entityId)) fireModified("scrumMasters", entityId);
+        if (this.scrumMastersIds.remove(entityId)) {
+        fireModified("scrumMastersIds", this.scrumMastersIds);
+        }
     }
 
     public final boolean containsScrumMaster(scrum.server.admin.User scrumMaster) {
@@ -819,7 +858,9 @@ public abstract class GSprint
         if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
         boolean added = this.scrumMastersIds.add(scrumMaster.getId());
         if (added) updateLastModified();
-        if (added) fireModified("scrumMasters", scrumMaster);
+        if (added) {
+        fireModified("scrumMastersIds", this.scrumMastersIds);
+        }
         return added;
     }
 
@@ -829,6 +870,9 @@ public abstract class GSprint
         for (scrum.server.admin.User scrumMaster : scrumMasters) {
             added = added | this.scrumMastersIds.add(scrumMaster.getId());
         }
+        if (added) {
+        fireModified("scrumMastersIds", this.scrumMastersIds);
+        }
         return added;
     }
 
@@ -837,7 +881,9 @@ public abstract class GSprint
         if (this.scrumMastersIds == null) return false;
         boolean removed = this.scrumMastersIds.remove(scrumMaster.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("scrumMasters", scrumMaster);
+        if (removed) {
+        fireModified("scrumMastersIds", this.scrumMastersIds);
+        }
         return removed;
     }
 
@@ -846,7 +892,10 @@ public abstract class GSprint
         if (scrumMasters.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: scrumMasters) {
-            removed = removed | removeScrumMaster(_element);
+            removed = removed | this.scrumMastersIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("scrumMastersIds", this.scrumMastersIds);
         }
         return removed;
     }
@@ -855,7 +904,7 @@ public abstract class GSprint
         if (this.scrumMastersIds.isEmpty()) return false;
         this.scrumMastersIds.clear();
         updateLastModified();
-        fireModified("scrumMasters", null);
+        fireModified("scrumMastersIds", this.scrumMastersIds);
         return true;
     }
 
@@ -878,10 +927,14 @@ public abstract class GSprint
         teamMembers = prepareTeamMembers(teamMembers);
         if (teamMembers == null) teamMembers = Collections.emptyList();
         java.util.Set<String> ids = getIdsAsSet(teamMembers);
-        if (this.teamMembersIds.equals(ids)) return;
-        this.teamMembersIds = ids;
+        setTeamMembersIds(ids);
+    }
+
+    public final void setTeamMembersIds(java.util.Set<String> ids) {
+        if (Utl.equals(teamMembersIds, ids)) return;
+        teamMembersIds = ids;
         updateLastModified();
-        fireModified("teamMembers", teamMembers);
+        fireModified("teamMembersIds", this.teamMembersIds);
     }
 
     protected Collection<scrum.server.admin.User> prepareTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
@@ -889,7 +942,9 @@ public abstract class GSprint
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (this.teamMembersIds.remove(entityId)) fireModified("teamMembers", entityId);
+        if (this.teamMembersIds.remove(entityId)) {
+        fireModified("teamMembersIds", this.teamMembersIds);
+        }
     }
 
     public final boolean containsTeamMember(scrum.server.admin.User teamMember) {
@@ -909,7 +964,9 @@ public abstract class GSprint
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
         boolean added = this.teamMembersIds.add(teamMember.getId());
         if (added) updateLastModified();
-        if (added) fireModified("teamMembers", teamMember);
+        if (added) {
+        fireModified("teamMembersIds", this.teamMembersIds);
+        }
         return added;
     }
 
@@ -919,6 +976,9 @@ public abstract class GSprint
         for (scrum.server.admin.User teamMember : teamMembers) {
             added = added | this.teamMembersIds.add(teamMember.getId());
         }
+        if (added) {
+        fireModified("teamMembersIds", this.teamMembersIds);
+        }
         return added;
     }
 
@@ -927,7 +987,9 @@ public abstract class GSprint
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
         if (removed) updateLastModified();
-        if (removed) fireModified("teamMembers", teamMember);
+        if (removed) {
+        fireModified("teamMembersIds", this.teamMembersIds);
+        }
         return removed;
     }
 
@@ -936,7 +998,10 @@ public abstract class GSprint
         if (teamMembers.isEmpty()) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: teamMembers) {
-            removed = removed | removeTeamMember(_element);
+            removed = removed | this.teamMembersIds.remove(_element);
+        }
+        if (removed) {
+        fireModified("teamMembersIds", this.teamMembersIds);
         }
         return removed;
     }
@@ -945,7 +1010,7 @@ public abstract class GSprint
         if (this.teamMembersIds.isEmpty()) return false;
         this.teamMembersIds.clear();
         updateLastModified();
-        fireModified("teamMembers", null);
+        fireModified("teamMembersIds", this.teamMembersIds);
         return true;
     }
 

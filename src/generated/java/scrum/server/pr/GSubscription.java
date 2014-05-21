@@ -14,6 +14,7 @@
 package scrum.server.pr;
 
 import java.util.*;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
@@ -74,10 +75,16 @@ public abstract class GSubscription
     public final void setSubject(ilarkesto.persistence.AEntity subject) {
         subject = prepareSubject(subject);
         if (isSubject(subject)) return;
-        this.subjectId = subject == null ? null : subject.getId();
+        setSubjectId(subject == null ? null : subject.getId());
         subjectCache = subject;
+    }
+
+    public final void setSubjectId(String id) {
+        if (Utl.equals(subjectId, id)) return;
+        this.subjectId = id;
+        subjectCache = null;
         updateLastModified();
-        fireModified("subject", subject);
+        fireModified("subjectId", this.subjectId);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -119,7 +126,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
         updateLastModified();
-        fireModified("subscribersEmails", subscribersEmails);
+        fireModified("subscribersEmails", this.subscribersEmails);
     }
 
     protected Collection<java.lang.String> prepareSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
@@ -143,7 +150,9 @@ public abstract class GSubscription
         if (subscribersEmail == null) throw new IllegalArgumentException("subscribersEmail == null");
         boolean added = this.subscribersEmails.add(subscribersEmail);
         if (added) updateLastModified();
-        if (added) fireModified("subscribersEmails", subscribersEmail);
+        if (added) {
+        fireModified("subscribersEmails", this.subscribersEmails);
+        }
         return added;
     }
 
@@ -153,6 +162,9 @@ public abstract class GSubscription
         for (java.lang.String subscribersEmail : subscribersEmails) {
             added = added | this.subscribersEmails.add(subscribersEmail);
         }
+        if (added) {
+        fireModified("subscribersEmails", this.subscribersEmails);
+        }
         return added;
     }
 
@@ -161,7 +173,9 @@ public abstract class GSubscription
         if (this.subscribersEmails == null) return false;
         boolean removed = this.subscribersEmails.remove(subscribersEmail);
         if (removed) updateLastModified();
-        if (removed) fireModified("subscribersEmails", subscribersEmail);
+        if (removed) {
+        fireModified("subscribersEmails", this.subscribersEmails);
+        }
         return removed;
     }
 
@@ -170,7 +184,10 @@ public abstract class GSubscription
         if (subscribersEmails.isEmpty()) return false;
         boolean removed = false;
         for (java.lang.String _element: subscribersEmails) {
-            removed = removed | removeSubscribersEmail(_element);
+            removed = removed | this.subscribersEmails.remove(_element);
+        }
+        if (removed) {
+        fireModified("subscribersEmails", this.subscribersEmails);
         }
         return removed;
     }
@@ -179,7 +196,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.isEmpty()) return false;
         this.subscribersEmails.clear();
         updateLastModified();
-        fireModified("subscribersEmails", null);
+        fireModified("subscribersEmails", this.subscribersEmails);
         return true;
     }
 
