@@ -50,7 +50,7 @@ public class ReleaseDao extends GReleaseDao {
 		Set<Release> releases = getReleasesByProject(project);
 		for (Release release : releases) {
 			if (!release.isReleased()) continue;
-			if (latest == null || release.getReleaseDate().isAfter(latest.getReleaseDate())) {
+			if (latest == null || release.getReleaseDateAndTime().isAfter(latest.getReleaseDateAndTime())) {
 				latest = release;
 			}
 		}

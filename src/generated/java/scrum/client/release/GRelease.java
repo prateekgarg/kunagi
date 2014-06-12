@@ -366,6 +366,59 @@ public abstract class GRelease
 
     }
 
+    // --- releaseTime ---
+
+    private ilarkesto.core.time.Time releaseTime ;
+
+    public final ilarkesto.core.time.Time getReleaseTime() {
+        return this.releaseTime ;
+    }
+
+    public final Release setReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        if (isReleaseTime(releaseTime)) return (Release)this;
+        this.releaseTime = releaseTime ;
+        propertyChanged("releaseTime", this.releaseTime);
+        return (Release)this;
+    }
+
+    public final boolean isReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        return equals(this.releaseTime, releaseTime);
+    }
+
+    private transient ReleaseTimeModel releaseTimeModel;
+
+    public ReleaseTimeModel getReleaseTimeModel() {
+        if (releaseTimeModel == null) releaseTimeModel = createReleaseTimeModel();
+        return releaseTimeModel;
+    }
+
+    protected ReleaseTimeModel createReleaseTimeModel() { return new ReleaseTimeModel(); }
+
+    protected class ReleaseTimeModel extends ilarkesto.gwt.client.editor.ATimeEditorModel {
+
+        @Override
+        public String getId() {
+            return "Release_releaseTime";
+        }
+
+        @Override
+        public ilarkesto.core.time.Time getValue() {
+            return getReleaseTime();
+        }
+
+        @Override
+        public void setValue(ilarkesto.core.time.Time value) {
+            setReleaseTime(value);
+        }
+
+        @Override
+        protected void onChangeValue(ilarkesto.core.time.Time oldValue, ilarkesto.core.time.Time newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- released ---
 
     private boolean released ;
@@ -649,6 +702,8 @@ public abstract class GRelease
         note  = (java.lang.String) props.get("note");
         String releaseDateAsString = (String) props.get("releaseDate");
         releaseDate  =  releaseDateAsString == null ? null : new ilarkesto.core.time.Date(releaseDateAsString);
+        String releaseTimeAsString = (String) props.get("releaseTime");
+        releaseTime  =  releaseTimeAsString == null ? null : new ilarkesto.core.time.Time(releaseTimeAsString);
         released  = (Boolean) props.get("released");
         releaseNotes  = (java.lang.String) props.get("releaseNotes");
         scmTag  = (java.lang.String) props.get("scmTag");
@@ -667,6 +722,7 @@ public abstract class GRelease
         properties.put("label", this.label);
         properties.put("note", this.note);
         properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
+        properties.put("releaseTime", this.releaseTime == null ? null : this.releaseTime.toString());
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
         properties.put("scmTag", this.scmTag);

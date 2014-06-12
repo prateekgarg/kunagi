@@ -47,6 +47,7 @@ public abstract class GRelease
         properties.put("label", this.label);
         properties.put("note", this.note);
         properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
+        properties.put("releaseTime", this.releaseTime == null ? null : this.releaseTime.toString());
         properties.put("released", this.released);
         properties.put("releaseNotes", this.releaseNotes);
         properties.put("scmTag", this.scmTag);
@@ -454,6 +455,42 @@ public abstract class GRelease
     }
 
     // -----------------------------------------------------------
+    // - releaseTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.core.time.Time releaseTime;
+
+    public final ilarkesto.core.time.Time getReleaseTime() {
+        return releaseTime;
+    }
+
+    public final void setReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        releaseTime = prepareReleaseTime(releaseTime);
+        if (isReleaseTime(releaseTime)) return;
+        this.releaseTime = releaseTime;
+        updateLastModified();
+        fireModified("releaseTime", this.releaseTime == null ? null : this.releaseTime.toString());
+    }
+
+    protected ilarkesto.core.time.Time prepareReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        return releaseTime;
+    }
+
+    public final boolean isReleaseTimeSet() {
+        return this.releaseTime != null;
+    }
+
+    public final boolean isReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        if (this.releaseTime == null && releaseTime == null) return true;
+        return this.releaseTime != null && this.releaseTime.equals(releaseTime);
+    }
+
+    protected final void updateReleaseTime(Object value) {
+        value = value == null ? null : new ilarkesto.core.time.Time((String)value);
+        setReleaseTime((ilarkesto.core.time.Time)value);
+    }
+
+    // -----------------------------------------------------------
     // - released
     // -----------------------------------------------------------
 
@@ -633,6 +670,7 @@ public abstract class GRelease
             if (property.equals("label")) updateLabel(value);
             if (property.equals("note")) updateNote(value);
             if (property.equals("releaseDate")) updateReleaseDate(value);
+            if (property.equals("releaseTime")) updateReleaseTime(value);
             if (property.equals("released")) updateReleased(value);
             if (property.equals("releaseNotes")) updateReleaseNotes(value);
             if (property.equals("scmTag")) updateScmTag(value);

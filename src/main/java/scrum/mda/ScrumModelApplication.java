@@ -334,6 +334,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 								+ "project participants and stakeholders while working on the release.");
 			releaseModel.addProperty("releaseDate", Date.class).setTooltip(
 				"The intended or actual release date for planned and finished releases, respectively.");
+			releaseModel.addProperty("releaseTime", Time.class);
 			releaseModel.addProperty("released", boolean.class);
 			releaseModel
 					.addStringProperty("releaseNotes")

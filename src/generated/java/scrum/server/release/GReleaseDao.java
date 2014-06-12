@@ -56,6 +56,8 @@ public abstract class GReleaseDao
         notesCache = null;
         releasesByReleaseDateCache.clear();
         releaseDatesCache = null;
+        releasesByReleaseTimeCache.clear();
+        releaseTimesCache = null;
         releasesByReleasedCache.clear();
         releasesByReleaseNotesCache.clear();
         releaseNotessCache = null;
@@ -358,6 +360,46 @@ public abstract class GReleaseDao
 
         public boolean test(Release e) {
             return e.isReleaseDate(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - releaseTime
+    // -----------------------------------------------------------
+
+    private final Cache<ilarkesto.core.time.Time,Set<Release>> releasesByReleaseTimeCache = new Cache<ilarkesto.core.time.Time,Set<Release>>(
+            new Cache.Factory<ilarkesto.core.time.Time,Set<Release>>() {
+                public Set<Release> create(ilarkesto.core.time.Time releaseTime) {
+                    return getEntities(new IsReleaseTime(releaseTime));
+                }
+            });
+
+    public final Set<Release> getReleasesByReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        return new HashSet<Release>(releasesByReleaseTimeCache.get(releaseTime));
+    }
+    private Set<ilarkesto.core.time.Time> releaseTimesCache;
+
+    public final Set<ilarkesto.core.time.Time> getReleaseTimes() {
+        if (releaseTimesCache == null) {
+            releaseTimesCache = new HashSet<ilarkesto.core.time.Time>();
+            for (Release e : getEntities()) {
+                if (e.isReleaseTimeSet()) releaseTimesCache.add(e.getReleaseTime());
+            }
+        }
+        return releaseTimesCache;
+    }
+
+    private static class IsReleaseTime implements Predicate<Release> {
+
+        private ilarkesto.core.time.Time value;
+
+        public IsReleaseTime(ilarkesto.core.time.Time value) {
+            this.value = value;
+        }
+
+        public boolean test(Release e) {
+            return e.isReleaseTime(value);
         }
 
     }

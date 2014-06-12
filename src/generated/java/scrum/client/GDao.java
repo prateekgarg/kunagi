@@ -1914,6 +1914,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.release.Release> getReleasesByReleaseTime(ilarkesto.core.time.Time releaseTime) {
+        List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
+        for (scrum.client.release.Release entity : releases.values()) {
+            if (entity.isReleaseTime(releaseTime)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.release.Release> getReleasesByReleased(boolean released) {
         List<scrum.client.release.Release> ret = new ArrayList<scrum.client.release.Release>();
         for (scrum.client.release.Release entity : releases.values()) {
