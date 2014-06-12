@@ -15,7 +15,9 @@
 package scrum.client.release;
 
 import ilarkesto.core.base.Utl;
+import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
+import ilarkesto.core.time.Time;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
@@ -48,8 +50,11 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 	}
 
 	public DateAndTime getReleaseDateAndTime() {
-		if (getReleaseDate() == null) return null;
-		return new DateAndTime(getReleaseDate(), getReleaseTime());
+		Date date = getReleaseDate();
+		if (date == null) return null;
+		Time time = getReleaseTime();
+		if (time == null) time = new Time(12, 0);
+		return new DateAndTime(getReleaseDate(), time);
 	}
 
 	public boolean isMajor() {
