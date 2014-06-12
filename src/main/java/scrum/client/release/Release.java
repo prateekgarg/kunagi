@@ -15,7 +15,7 @@
 package scrum.client.release;
 
 import ilarkesto.core.base.Utl;
-import ilarkesto.core.time.Date;
+import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
@@ -45,6 +45,11 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public Release(Map data) {
 		super(data);
+	}
+
+	public DateAndTime getReleaseDateAndTime() {
+		if (getReleaseDate() == null) return null;
+		return new DateAndTime(getReleaseDate(), getReleaseTime());
 	}
 
 	public boolean isMajor() {
@@ -155,8 +160,8 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 		@Override
 		public int compare(Release ra, Release rb) {
-			Date a = ra.getReleaseDate();
-			Date b = rb.getReleaseDate();
+			DateAndTime a = ra.getReleaseDateAndTime();
+			DateAndTime b = rb.getReleaseDateAndTime();
 			if (a == null && b == null) return Utl.compare(ra.getLabel(), rb.getLabel());
 			if (a == null) return 1;
 			if (b == null) return -1;
