@@ -411,7 +411,7 @@ public class LoginServlet extends AKunagiServlet {
 		if (createAccount) renderCreateAccount(html, username, email, historyToken);
 		html.DIV("separator", null);
 		html.startDIV("kunagiLink");
-		html.text("Kunagi " + webApplication.getReleaseLabel() + " | ");
+		html.text("Kunagi " + webApplication.getBuildProperties().getReleaseLabel() + " | ");
 		html.A("http://kunagi.org", "kunagi.org");
 		html.endDIV();
 		html.endDIV();

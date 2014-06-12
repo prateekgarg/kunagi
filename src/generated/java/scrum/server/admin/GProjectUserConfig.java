@@ -728,7 +728,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterDateFrom(pblFilterDateFrom)) return;
         this.pblFilterDateFrom = pblFilterDateFrom;
         updateLastModified();
-        fireModified("pblFilterDateFrom", this.pblFilterDateFrom);
+        fireModified("pblFilterDateFrom", this.pblFilterDateFrom == null ? null : this.pblFilterDateFrom.toString());
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateFrom(ilarkesto.core.time.Date pblFilterDateFrom) {
@@ -764,7 +764,7 @@ public abstract class GProjectUserConfig
         if (isPblFilterDateTo(pblFilterDateTo)) return;
         this.pblFilterDateTo = pblFilterDateTo;
         updateLastModified();
-        fireModified("pblFilterDateTo", this.pblFilterDateTo);
+        fireModified("pblFilterDateTo", this.pblFilterDateTo == null ? null : this.pblFilterDateTo.toString());
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateTo(ilarkesto.core.time.Date pblFilterDateTo) {

@@ -369,7 +369,7 @@ public abstract class GComment
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", this.dateAndTime);
+        fireModified("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

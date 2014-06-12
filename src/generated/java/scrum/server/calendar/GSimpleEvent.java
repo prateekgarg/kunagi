@@ -213,7 +213,7 @@ public abstract class GSimpleEvent
         if (isDate(date)) return;
         this.date = date;
         updateLastModified();
-        fireModified("date", this.date);
+        fireModified("date", this.date == null ? null : this.date.toString());
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -249,7 +249,7 @@ public abstract class GSimpleEvent
         if (isTime(time)) return;
         this.time = time;
         updateLastModified();
-        fireModified("time", this.time);
+        fireModified("time", this.time == null ? null : this.time.toString());
     }
 
     protected ilarkesto.core.time.Time prepareTime(ilarkesto.core.time.Time time) {

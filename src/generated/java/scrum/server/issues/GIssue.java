@@ -287,7 +287,7 @@ public abstract class GIssue
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
-        fireModified("date", this.date);
+        fireModified("date", this.date == null ? null : this.date.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDate(ilarkesto.core.time.DateAndTime date) {
@@ -562,7 +562,7 @@ public abstract class GIssue
         if (isAcceptDate(acceptDate)) return;
         this.acceptDate = acceptDate;
         updateLastModified();
-        fireModified("acceptDate", this.acceptDate);
+        fireModified("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareAcceptDate(ilarkesto.core.time.Date acceptDate) {
@@ -716,7 +716,7 @@ public abstract class GIssue
         if (isFixDate(fixDate)) return;
         this.fixDate = fixDate;
         updateLastModified();
-        fireModified("fixDate", this.fixDate);
+        fireModified("fixDate", this.fixDate == null ? null : this.fixDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareFixDate(ilarkesto.core.time.Date fixDate) {
@@ -752,7 +752,7 @@ public abstract class GIssue
         if (isCloseDate(closeDate)) return;
         this.closeDate = closeDate;
         updateLastModified();
-        fireModified("closeDate", this.closeDate);
+        fireModified("closeDate", this.closeDate == null ? null : this.closeDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareCloseDate(ilarkesto.core.time.Date closeDate) {
@@ -788,7 +788,7 @@ public abstract class GIssue
         if (isSuspendedUntilDate(suspendedUntilDate)) return;
         this.suspendedUntilDate = suspendedUntilDate;
         updateLastModified();
-        fireModified("suspendedUntilDate", this.suspendedUntilDate);
+        fireModified("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareSuspendedUntilDate(ilarkesto.core.time.Date suspendedUntilDate) {

@@ -385,12 +385,18 @@ public class HomepageUpdater {
 		Sprint sprint = project.getCurrentSprint();
 		context.put("label", toHtml(sprint.getLabel()));
 		context.put("goal", wikiToHtml(sprint.getGoal()));
-		context.put("begin", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getBegin()));
-		context.put("end", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getEnd()));
+		if (sprint.isBeginSet()) {
+			context.put("begin", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getBegin()));
+			context.put("beginDe", sprint.getBegin().formatDayMonthYear());
+		}
+		if (sprint.isEndSet()) {
+			context.put("end", Tm.FORMAT_LONGMONTH_DAY_YEAR.format(sprint.getEnd()));
+			context.put("endDe", sprint.getEnd().formatDayMonthYear());
+		}
 		Release release = sprint.getNextRelease();
 		if (release != null) context.put("release", release.getLabel());
 		List<Requirement> requirements = new ArrayList<Requirement>(sprint.getRequirements());
-		Collections.sort(requirements, project.getRequirementsOrderComparator());
+		Collections.sort(requirements, sprint.getRequirementsOrderComparator());
 		for (Requirement requirement : requirements) {
 			fillStory(context.addSubContext("stories"), requirement);
 		}

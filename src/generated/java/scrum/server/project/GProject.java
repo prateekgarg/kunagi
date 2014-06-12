@@ -409,7 +409,7 @@ public abstract class GProject
         if (isBegin(begin)) return;
         this.begin = begin;
         updateLastModified();
-        fireModified("begin", this.begin);
+        fireModified("begin", this.begin == null ? null : this.begin.toString());
     }
 
     protected ilarkesto.core.time.Date prepareBegin(ilarkesto.core.time.Date begin) {
@@ -445,7 +445,7 @@ public abstract class GProject
         if (isEnd(end)) return;
         this.end = end;
         updateLastModified();
-        fireModified("end", this.end);
+        fireModified("end", this.end == null ? null : this.end.toString());
     }
 
     protected ilarkesto.core.time.Date prepareEnd(ilarkesto.core.time.Date end) {
@@ -2040,7 +2040,7 @@ public abstract class GProject
         if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return;
         this.lastOpenedDateAndTime = lastOpenedDateAndTime;
         updateLastModified();
-        fireModified("lastOpenedDateAndTime", this.lastOpenedDateAndTime);
+        fireModified("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {

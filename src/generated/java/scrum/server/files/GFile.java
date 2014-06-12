@@ -180,7 +180,7 @@ public abstract class GFile
         if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
         this.uploadTime = uploadTime;
         updateLastModified();
-        fireModified("uploadTime", this.uploadTime);
+        fireModified("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {

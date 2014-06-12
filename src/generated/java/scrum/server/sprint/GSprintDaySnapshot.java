@@ -128,7 +128,7 @@ public abstract class GSprintDaySnapshot
         if (isDate(date)) return;
         this.date = date;
         updateLastModified();
-        fireModified("date", this.date);
+        fireModified("date", this.date == null ? null : this.date.toString());
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {

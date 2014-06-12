@@ -113,8 +113,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public ApplicationInfo getApplicationInfo() {
 		boolean defaultAdminPassword = isAdminPasswordDefault();
-		return new ApplicationInfo(getApplicationLabel(), getReleaseLabel(), getBuild(), defaultAdminPassword,
-				getCurrentRelease(), getApplicationDataDir());
+		return new ApplicationInfo(getApplicationLabel(), getBuildProperties().getReleaseLabel(), getBuildProperties()
+				.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
 	}
 
 	@Override

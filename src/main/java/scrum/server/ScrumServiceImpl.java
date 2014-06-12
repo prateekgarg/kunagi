@@ -1046,6 +1046,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		Release release = (Release) getDaoService().getEntityById(releaseId);
 		if (!release.isProject(project)) throw new PermissionDeniedException();
 		release.release(project, conversation.getSession().getUser(), webApplication);
+		project.updateHomepage();
 	}
 
 	@Override

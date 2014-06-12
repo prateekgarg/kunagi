@@ -14,9 +14,9 @@
  */
 package scrum.server.project;
 
-import ilarkesto.base.Money;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
+import ilarkesto.core.money.Money;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;

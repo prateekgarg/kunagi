@@ -458,7 +458,7 @@ public abstract class GUser
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
         this.lastLoginDateAndTime = lastLoginDateAndTime;
         updateLastModified();
-        fireModified("lastLoginDateAndTime", this.lastLoginDateAndTime);
+        fireModified("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
@@ -494,7 +494,7 @@ public abstract class GUser
         if (isRegistrationDateAndTime(registrationDateAndTime)) return;
         this.registrationDateAndTime = registrationDateAndTime;
         updateLastModified();
-        fireModified("registrationDateAndTime", this.registrationDateAndTime);
+        fireModified("registrationDateAndTime", this.registrationDateAndTime == null ? null : this.registrationDateAndTime.toString());
     }
 
     protected ilarkesto.core.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {

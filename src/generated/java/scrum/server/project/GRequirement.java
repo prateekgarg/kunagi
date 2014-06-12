@@ -570,7 +570,7 @@ public abstract class GRequirement
         if (isRejectDate(rejectDate)) return;
         this.rejectDate = rejectDate;
         updateLastModified();
-        fireModified("rejectDate", this.rejectDate);
+        fireModified("rejectDate", this.rejectDate == null ? null : this.rejectDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareRejectDate(ilarkesto.core.time.Date rejectDate) {

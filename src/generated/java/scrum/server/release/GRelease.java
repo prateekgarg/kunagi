@@ -432,7 +432,7 @@ public abstract class GRelease
         if (isReleaseDate(releaseDate)) return;
         this.releaseDate = releaseDate;
         updateLastModified();
-        fireModified("releaseDate", this.releaseDate);
+        fireModified("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
     }
 
     protected ilarkesto.core.time.Date prepareReleaseDate(ilarkesto.core.time.Date releaseDate) {

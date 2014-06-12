@@ -215,7 +215,7 @@ public abstract class GImpediment
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
         updateLastModified();
-        fireModified("date", this.date);
+        fireModified("date", this.date == null ? null : this.date.toString());
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
