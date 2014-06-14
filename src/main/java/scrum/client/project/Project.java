@@ -482,14 +482,7 @@ public class Project extends GProject implements ForumSupport {
 		String s = parentRelease.getLabel();
 
 		int dotIdx = s.lastIndexOf('.');
-		if (dotIdx > 0) {
-			String suffix = s.substring(dotIdx + 1);
-			try {
-				int number = Integer.parseInt(suffix);
-				return s.substring(0, dotIdx + 1) + (number + 1);
-			} catch (NumberFormatException ex) {}
-		}
-
+		if (dotIdx > 0) return s.substring(0, dotIdx + 1) + (parentRelease.getBugfixReleases().size() + 1);
 		return s + " Bugfix " + (parentRelease.getBugfixReleases().size() + 1);
 	}
 
