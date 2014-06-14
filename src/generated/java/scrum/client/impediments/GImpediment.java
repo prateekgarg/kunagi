@@ -140,7 +140,6 @@ public abstract class GImpediment
 
     public final Impediment setLabel(java.lang.String label) {
         if (isLabel(label)) return (Impediment)this;
-        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Impediment)this;
@@ -175,16 +174,12 @@ public abstract class GImpediment
         public void setValue(java.lang.String value) {
             setLabel(value);
         }
-
-        @Override
-        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "The label should be short (as it appears where the Impediment is referenced), yet give a hint strong enough to make the content of it come to mind."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
-            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

@@ -385,8 +385,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"Qualities are non-functional or cross-story requirements. "
 						+ "Qualities linked to Stories indicate that not only the Story's requirements, "
 						+ "but also the Quality's requirements need to be met in order to complete a Story.");
-			requirementModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable")
-					.setSearchable(true).setTooltip(createLabelTooltipText("Story"));
+			requirementModel.addStringProperty("label").setEditablePredicate("editable").setSearchable(true)
+					.setTooltip(createLabelTooltipText("Story"));
 			requirementModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -464,8 +464,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.addPredicate("editable");
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
-			qualityModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-					.setEditablePredicate("editable").setTooltip(createLabelTooltipText("Quality"));
+			qualityModel.addStringProperty("label").setSearchable(true).setEditablePredicate("editable")
+					.setTooltip(createLabelTooltipText("Quality"));
 			qualityModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -501,8 +501,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addPredicate("datesEditable");
 			sprintModel.addProperty("number", int.class);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
-			sprintModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-					.setEditablePredicate("editable").setTooltip(createLabelTooltipText("Sprint"));
+			sprintModel.addStringProperty("label").setSearchable(true).setEditablePredicate("editable")
+					.setTooltip(createLabelTooltipText("Sprint"));
 			sprintModel
 					.addStringProperty("goal")
 					.setRichtext(true)
@@ -600,8 +600,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addPredicate("editable");
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
-			taskModel.addStringProperty("label").setMandatory(true).setEditablePredicate("editable")
-					.setSearchable(true).setTooltip(createLabelTooltipText("Task"));
+			taskModel.addStringProperty("label").setEditablePredicate("editable").setSearchable(true)
+					.setTooltip(createLabelTooltipText("Task"));
 			taskModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -645,7 +645,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			impedimentModel.setGwtSupport(true);
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("number", int.class);
-			impedimentModel.addStringProperty("label").setMandatory(true).setSearchable(true)
+			impedimentModel.addStringProperty("label").setSearchable(true)
 					.setTooltip(createLabelTooltipText("Impediment"));
 			impedimentModel.addProperty("date", Date.class).setMandatory(true)
 					.setTooltip("The date the Impediment came up.");
@@ -680,8 +680,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addReference("project", getProjectModel()).setMaster(true);
 			riskModel.addPredicate("priorityEditable");
 			riskModel.addProperty("number", int.class);
-			riskModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-					.setTooltip(createLabelTooltipText("Risk"));
+			riskModel.addStringProperty("label").setSearchable(true).setTooltip(createLabelTooltipText("Risk"));
 			riskModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -733,8 +732,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.setGwtSupport(true);
 			userModel.setSuperbean(super.getUserModel());
 			userModel.setEditProtected(true);
-			userModel.addStringProperty("name").setMandatory(true).setSearchable(true).setUnique(true)
-					.setTooltip("Login name.");
+			userModel.addStringProperty("name").setSearchable(true).setUnique(true).setTooltip("Login name.");
 			userModel.addStringProperty("publicName").setSearchable(true)
 					.setTooltip("Name, which is displayed to the public on blog entries or emails.");
 			userModel.addStringProperty("fullName").setSearchable(true).setTooltip("Full name of the person.");

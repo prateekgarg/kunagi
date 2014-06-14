@@ -142,7 +142,6 @@ public abstract class GTask
 
     public final Task setLabel(java.lang.String label) {
         if (isLabel(label)) return (Task)this;
-        if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
         propertyChanged("label", this.label);
         return (Task)this;
@@ -179,9 +178,6 @@ public abstract class GTask
         }
 
         @Override
-        public boolean isMandatory() { return true; }
-
-        @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
         @Override
         public String getTooltip() { return "The label should be short (as it appears where the Task is referenced), yet give a hint strong enough to make the content of it come to mind."; }
@@ -189,7 +185,6 @@ public abstract class GTask
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
-            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

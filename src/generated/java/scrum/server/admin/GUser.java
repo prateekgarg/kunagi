@@ -149,7 +149,6 @@ public abstract class GUser
     public final void setName(java.lang.String name) {
         name = prepareName(name);
         if (isName(name)) return;
-        if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         if (name != null) {
             Object existing = getDao().getUserByName(name);
             if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);

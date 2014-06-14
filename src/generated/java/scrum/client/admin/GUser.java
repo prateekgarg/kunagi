@@ -51,7 +51,6 @@ public abstract class GUser
 
     public final User setName(java.lang.String name) {
         if (isName(name)) return (User)this;
-        if (ilarkesto.core.base.Str.isBlank(name)) throw new RuntimeException("Field is mandatory.");
         if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
         this.name = name ;
         propertyChanged("name", this.name);
@@ -87,16 +86,12 @@ public abstract class GUser
         public void setValue(java.lang.String value) {
             setName(value);
         }
-
-        @Override
-        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Login name."; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
             super.onChangeValue(oldValue, newValue);
-            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
