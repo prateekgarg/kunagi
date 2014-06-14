@@ -17,7 +17,6 @@ package scrum.server.pr;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
-import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
 import ilarkesto.persistence.TransactionService;
@@ -44,8 +43,6 @@ public class SubscribeServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
-		req.setRequestEncoding(IO.UTF_8);
-
 		String subjectId = req.get("subject");
 		String email = Str.cutRight(req.get("email"), 64);
 		if (Str.isBlank(email)) email = null;

@@ -17,7 +17,6 @@ package scrum.server.collaboration;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
-import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
 import ilarkesto.persistence.TransactionService;
@@ -55,8 +54,6 @@ public class CommentServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
-		req.setRequestEncoding(IO.UTF_8);
-
 		String projectId = req.get("projectId");
 		String entityId = req.get("entityId");
 		String text = req.get("text");

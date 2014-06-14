@@ -466,15 +466,14 @@ public class Project extends GProject implements ForumSupport {
 	}
 
 	public Release createNewRelease(Release parentRelease) {
-		Release release = new Release(this);
 		Date date = Date.today();
+		Release release = new Release(this, date);
 		if (parentRelease != null) {
 			release.setParentRelease(parentRelease);
 			release.setLabel(parentRelease.getLabel() + " Bugfix " + (parentRelease.getBugfixReleases().size() + 1));
 			Date parentDate = parentRelease.getReleaseDate();
-			if (parentDate != null && parentDate.isAfter(date)) date = parentDate;
+			if (parentDate != null && parentDate.isAfter(date)) release.setReleaseDate(parentDate);
 		}
-		release.setReleaseDate(date);
 		getDao().createRelease(release);
 		return release;
 	}

@@ -17,7 +17,6 @@ package scrum.server.issues;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
-import ilarkesto.io.IO;
 import ilarkesto.persistence.TransactionService;
 import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
@@ -51,7 +50,6 @@ public class IssueServlet extends AKunagiServlet {
 
 	@Override
 	protected void onRequest(RequestWrapper<WebSession> req) throws IOException {
-		req.setRequestEncoding(IO.UTF_8);
 
 		String projectId = req.get("projectId");
 		String subject = req.get("subject");
