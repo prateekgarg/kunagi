@@ -470,12 +470,27 @@ public class Project extends GProject implements ForumSupport {
 		Release release = new Release(this, date);
 		if (parentRelease != null) {
 			release.setParentRelease(parentRelease);
-			release.setLabel(parentRelease.getLabel() + " Bugfix " + (parentRelease.getBugfixReleases().size() + 1));
+			release.setLabel(createBugfixLabel(parentRelease));
 			Date parentDate = parentRelease.getReleaseDate();
 			if (parentDate != null && parentDate.isAfter(date)) release.setReleaseDate(parentDate);
 		}
 		getDao().createRelease(release);
 		return release;
+	}
+
+	private String createBugfixLabel(Release parentRelease) {
+		String s = parentRelease.getLabel();
+
+		int dotIdx = s.lastIndexOf('.');
+		if (dotIdx > 0) {
+			String suffix = s.substring(dotIdx + 1);
+			try {
+				int number = Integer.parseInt(suffix);
+				return s.substring(0, dotIdx + 1) + (number + 1);
+			} catch (NumberFormatException ex) {}
+		}
+
+		return s + " Bugfix " + (parentRelease.getBugfixReleases().size() + 1);
 	}
 
 	/**
