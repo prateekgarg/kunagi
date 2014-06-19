@@ -38,7 +38,7 @@ public class TrashWidget extends AScrumWidget {
 
 		trash = new HorizontalPanel();
 		trash.setStyleName("TrashWidget");
-		trash.add(Img.bundle.trash32().createImage());
+		trash.add(Img.trash32());
 		// trash.add(new Label("Trash"));
 
 		dndManager.getDragController().registerDropController(trashDropController);

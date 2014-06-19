@@ -34,8 +34,10 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
+import ilarkesto.webapp.GwtSuperDevMode;
 import ilarkesto.webapp.Servlet;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -144,6 +146,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void ensureIntegrity() {
+		startGwtSuperDevModeCodeServer();
+
 		if (getConfig().isStartupDelete()) {
 			log.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
 			IO.delete(getApplicationDataDir() + "/entities");
@@ -186,6 +190,22 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		for (ProjectUserConfig config : getProjectUserConfigDao().getEntities()) {
 			config.reset();
 		}
+	}
+
+	private void startGwtSuperDevModeCodeServer() {
+		if (!Sys.isDevelopmentMode()) return;
+
+		File nocachefile = new File("src/main/webapp/scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js");
+		if (!nocachefile.exists()) {
+			// IO.copyFile(new File("etc/" + nocachefile.getName()), nocachefile);
+			throw new IllegalStateException("GWT file " + nocachefile.getPath()
+					+ " was missing. It is created now. Just restart your web application server.");
+		}
+
+		GwtSuperDevMode sdm = getGwtSuperDevMode();
+		sdm.addSources("src/main/java", "src/generated/java", "../ilarkesto/src/main/java");
+		sdm.addModules("scrum.ScrumGwtApplication");
+		sdm.startCodeServer();
 	}
 
 	public String createUrl(String relativePath) {
@@ -271,6 +291,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	@Override
 	public void backupApplicationDataDir() {
+		if (isDevelopmentMode()) return;
+
 		updateSystemMessage(new SystemMessage(
 				"Data backup in progress. All your changes are delayed until backup finishes."));
 		Utl.sleep(3000);

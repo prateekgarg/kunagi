@@ -60,11 +60,14 @@ public class StartServlet extends AKunagiServlet {
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "IE=edge");
 		html.LINKfavicon();
+		html.startSTYLEcss();
+		html.html(getCss());
+		html.endSTYLE();
 		html.SCRIPTjavascript("scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js", null);
 		html.SCRIPTjavascript("codemirror/js/codemirror.js", null);
 		html.endHEAD();
 
-		html.startBODY();
+		html.startBODY().setId("kunagi");
 		html.comment(applicationInfo.toString());
 		String analyticsId = systemConfig.getGoogleAnalyticsId();
 		if (analyticsId != null) html.googleAnalytics(analyticsId);

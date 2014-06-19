@@ -20,7 +20,7 @@ import ilarkesto.ui.web.CssBuilder;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class ScreenCssBuilder implements ICssBuilder {
+public class KunagiCssBuilder implements ICssBuilder {
 
 	// http://www.colorcombos.com/color-scheme-203.html
 
@@ -219,7 +219,7 @@ public class ScreenCssBuilder implements ICssBuilder {
 		css.style(".ReleaseWidget-script-empty").fontFamilyMonospace().overflowHidden();
 		css.style(".ReleaseWidget-script-failed").fontFamilyMonospace().overflowHidden().color("red");
 
-		css.style(".draggable").cursorMove();
+		css.style("#body .draggable").cursorMove();
 	}
 
 	private void loginPage(CssBuilder css) {
@@ -364,30 +364,30 @@ public class ScreenCssBuilder implements ICssBuilder {
 
 	private void html(CssBuilder css) {
 		css.html().padding(0).margin(0);
-		css.body().padding(0).margin(0).background(cBackground).fontFamily(fontFamily).fontSize(fontSize)
+		css.style("#body").padding(0).margin(0).background(cBackground).fontFamily(fontFamily).fontSize(fontSize)
 				.lineHeight(lineHeight);
-		css.table().borderCollapseCollapse();
-		css.td().verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
-		css.a().cursorPointer().color(cLink).textDecorationUnderline().outlineNone();
-		css.p().margin(0, 0, 10, 0);
-		css.h1().fontSize(fontSize + 6).lineHeight(lineHeight + 6).fontWeightBold().margin(5, 0, 5, 0);
-		css.h2().fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(5, 0, 5, 0);
-		css.h3().fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);
-		css.h4().fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
-		css.pre().margin(0, 0, 10, 0).color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
-		css.code().color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
-		css.ul().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
-		css.ol().margin(0, 0, 10, 0).padding(0, 0, 0, 20);
-		css.img().border("0");
-		css.input().border(1, cPagePanelBorder);
-		css.textarea().border(1, cPagePanelBorder);
+		css.style("#body table").borderCollapseCollapse();
+		css.style("#body td").verticalAlignTop().fontFamily(fontFamily).fontSize(fontSize).lineHeight(lineHeight);
+		css.style("#body a").cursorPointer().color(cLink).textDecorationUnderline().outlineNone();
+		css.style("#body p").margin(0, 0, 10, 0);
+		css.style("#body h1").fontSize(fontSize + 6).lineHeight(lineHeight + 6).fontWeightBold().margin(5, 0, 5, 0);
+		css.style("#body h2").fontSize(fontSize + 4).lineHeight(lineHeight + 4).fontWeightBold().margin(5, 0, 5, 0);
+		css.style("#body h3").fontSize(fontSize + 2).lineHeight(lineHeight + 2).fontWeightBold().margin(0, 0, 5, 0);
+		css.style("#body h4").fontSize(fontSize + 1).lineHeight(lineHeight + 1).fontWeightBold().margin(0, 0, 5, 0);
+		css.style("#body pre").margin(0, 0, 10, 0).color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
+		css.style("#body code").color(cHeaderBackground).fontSize(fontSize).lineHeight(lineHeight);
+		css.style("#body ul").margin(0, 0, 10, 0).padding(0, 0, 0, 20);
+		css.style("#body ol").margin(0, 0, 10, 0).padding(0, 0, 0, 20);
+		css.style("#body img").border("0");
+		css.style("#body input").border(1, cPagePanelBorder);
+		css.style("#body textarea").border(1, cPagePanelBorder);
 	}
 
 	private void workspace(CssBuilder css) {
 		int headerHeight = 25;
 		css.style(".Workspace");
 
-		css.style(".Workspace-header").height(headerHeight).background(cHeaderBackground, "../header-bg.png")
+		css.style(".Workspace-header").height(headerHeight).background(cHeaderBackground, "header-bg.png")
 				.positionFixed().width100();
 
 		css.style(".Workspace-sidebar").positionFixed(headerHeight + 10, 0).width(200).overflowAuto();
@@ -432,36 +432,36 @@ public class ScreenCssBuilder implements ICssBuilder {
 		css.style(".NavigatorWidget");
 		css.style(".NavigatorWidget-head").borderBottom(1, cNavigatorSeparator).overflowHidden();
 		css.style(".NavigatorWidget-item-link").borderBottom(1, cNavigatorSeparator).overflowHidden();
-		css.style(".NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
+		css.style("#body .NavigatorWidget-item-link a").color(cNavigatorLink).displayBlock().padding(5, 3, 5, 3)
 				.textDecorationNone().overflowHidden();
-		css.style(".NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
-		css.style(".NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
-		css.style(".NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
+		css.style("#body .NavigatorWidget-item-link a:hover").background(cNavigatorHoverItemBackground);
+		css.style("#body .NavigatorWidget-item-link-selected a").background(cNavigatorSelectedItemBackground);
+		css.style("#body .NavigatorWidget-item-link-selected a:hover").background(cNavigatorSelectedItemBackground);
 
-		css.style(".NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30).overflowHidden();
+		css.style("#body .NavigatorWidget-submenu .NavigatorWidget-item-link a").paddingLeft(30).overflowHidden();
 	}
 
 	private void actions(CssBuilder css) {
-		css.style(".ActionsPanel").background(cActionsBackground, "../specialarea-bg.png", "repeat-x")
+		css.style(".ActionsPanel").background(cActionsBackground, "specialarea-bg.png", "repeat-x")
 				.border(1, cActionsBorder).padding(7).borderRadius(10);
 		css.style(".ProjectList").width100();
 	}
 
 	private void userGuide(CssBuilder css) {
 		css.style(".UserGuideWidget").color(cUserguide)
-				.background(cUserguideBackground, "../specialarea-bg.png", "repeat-x").border(1, cUserguideBorder)
+				.background(cUserguideBackground, "specialarea-bg.png", "repeat-x").border(1, cUserguideBorder)
 				.borderRadius(10);
 		css.style(".UserGuideWidget-header").padding(7);
 		css.style(".UserGuideWidget-content").margin(0, 7, 7, 7).paddingTop(7).borderTop(1, cUserguideBorder)
 				.columnWidth(310).columnGap(25).textAlignJustify();
-		css.style(".UserGuideWidget-content table").width100().marginBottom(10);
-		css.style(".UserGuideWidget-content table td").fontSize(fontSizeSmall);
-		css.style(".UserGuideWidget-content table td.headerCell").background(cUserguideTableHeaderBackground)
+		css.style("#body .UserGuideWidget-content table").width100().marginBottom(10);
+		css.style("#body .UserGuideWidget-content table td").fontSize(fontSizeSmall);
+		css.style("#body .UserGuideWidget-content table td.headerCell").background(cUserguideTableHeaderBackground)
 				.fontWeightBold();
 	}
 
 	private void comments(CssBuilder css) {
-		css.style(".CommentsWidget").background(cCommentsBackground, "../specialarea-bg.png", "repeat-x")
+		css.style(".CommentsWidget").background(cCommentsBackground, "specialarea-bg.png", "repeat-x")
 				.border(1, cCommentsBorder).padding(7).borderRadius(10);
 		css.style(".CommentsWidget-pageNavigator").borderTop(1, cPagePanelBorder).paddingTop(3);
 		css.style(".CommentsWidget-pageNavigator-currentPage").border(1, cPagePanelBorder).padding(1, 5)
@@ -484,7 +484,7 @@ public class ScreenCssBuilder implements ICssBuilder {
 	}
 
 	private void changeHistory(CssBuilder css) {
-		css.style(".ChangeHistoryWidget").background(cChangesBackground, "../specialarea-bg.png", "repeat-x")
+		css.style(".ChangeHistoryWidget").background(cChangesBackground, "specialarea-bg.png", "repeat-x")
 				.border(1, cChangesBorder).padding(7).borderRadius(10);
 		css.style(".ChangeWidget").margin(15, 0, 10, 0).borderTop(1, cPagePanelBorder);
 		css.style(".ChangeWidget-header").margin(4, 0, 2, 0);
@@ -497,36 +497,38 @@ public class ScreenCssBuilder implements ICssBuilder {
 	}
 
 	private void blockList(CssBuilder css) {
-		css.style(".ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
-		css.style(".ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground).background(cBlockBackground);
+		css.style("#body .ABlockWidget-extended").border(2, cBlockSelectionBorder).padding(3).backgroundWhite();
+		css.style("#body .ABlockWidget-body").padding(10).border(1, cBlockHeaderBackground)
+				.background(cBlockBackground);
 
 		// css.style(".BlockListWidget").border(1, "yellow").minHeight(50, "px");
-		css.style(".BlockHeaderWidget").background(cBlockHeaderBackground, "../blockheader-bg.png", "repeat-x");
-		css.style(".BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
-		css.style(".BlockHeaderWidget-dragHandle, .CreateStoryButtonWidget-dragHandle").margin(2).padding(2)
+		css.style("#body .BlockHeaderWidget").background(cBlockHeaderBackground, "blockheader-bg.png", "repeat-x");
+		css.style("#body .BlockHeaderWidget:hover").background(cBlockHeaderHoverBackground);
+		css.style("#body .BlockHeaderWidget-dragHandle, .CreateStoryButtonWidget-dragHandle").margin(2).padding(2)
 				.fontSize(fontSize - 1).lineHeight(lineHeight - 2).textAlignCenter()
-				.background(cBlockHeaderDragHandleBackground, "../blockdraghandle-bg.png")
-				.border(1, cNavigatorSeparator).borderRadius(5);
-		css.style(".BlockHeaderWidget-anchor").displayBlock().floatLeft().width100().textDecorationNone();
-		css.style(".BlockHeaderWidget-dragHandle:hover").background("white", "../blockdraghandle-hover-bg.png");
+				.background(cBlockHeaderDragHandleBackground, "blockdraghandle-bg.png").border(1, cNavigatorSeparator)
+				.borderRadius(5);
+		css.style("#body .BlockHeaderWidget-anchor").displayBlock().floatLeft().width100().textDecorationNone();
+		css.style("#body .BlockHeaderWidget-dragHandle:hover").background("white", "blockdraghandle-hover-bg.png");
 
-		css.style(".BlockHeaderWidget-cell").fontWeightBold().color(cHeaderBackground).padding(4, 5, 0, 5);
+		css.style("#body .BlockHeaderWidget-cell").fontWeightBold().color(cHeaderBackground).padding(4, 5, 0, 5);
 
-		css.style("a.BlockHeaderWidget-anchor:hover, a.BlockHeaderWidget-anchor:visited").color(cHeaderBackground);
+		css.style("#body a.BlockHeaderWidget-anchor:hover, a.BlockHeaderWidget-anchor:visited")
+				.color(cHeaderBackground);
 		css.style(
-			".BlockHeaderWidget-cell-secondary, a.BlockHeaderWidget-cell-secondary:visited, a.BlockHeaderWidget-cell-secondary:hover")
+			"#body .BlockHeaderWidget-cell-secondary, a.BlockHeaderWidget-cell-secondary:visited, a.BlockHeaderWidget-cell-secondary:hover")
 				.color(cBlockHeaderCellSecondary).fontWeightNormal();
 		css.style(
-			".BlockHeaderWidget-cell-small, a.BlockHeaderWidget-cell-small:visited, a.BlockHeaderWidget-cell-small:hover")
+			"#body .BlockHeaderWidget-cell-small, a.BlockHeaderWidget-cell-small:visited, a.BlockHeaderWidget-cell-small:hover")
 				.color(cBlockHeaderCellSecondary).fontSize(fontSizeSmall).fontWeightNormal().paddingTop(6);
 
-		css.style(".BlockHeaderWidget .ButtonWidget").padding(2, 5, 0, 5).margin(0);
-		css.style(".BlockHeaderWidget .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
-		css.style(".BlockHeaderWidget .EmoticonsWidget").padding(3, 5, 0, 5);
-		css.style(".BlockHeaderWidget .DropdownMenuButtonWidget").padding(2, 3, 0, 5);
+		css.style("#body .BlockHeaderWidget .ButtonWidget").padding(2, 5, 0, 5).margin(0);
+		css.style("#body .BlockHeaderWidget .ButtonWidget .gwt-Button").fontSize(fontSizeSmall).margin(0).padding(1);
+		css.style("#body .BlockHeaderWidget .EmoticonsWidget").padding(3, 5, 0, 5);
+		css.style("#body .BlockHeaderWidget .DropdownMenuButtonWidget").padding(2, 3, 0, 5);
 
-		css.style(".BlockDndMarkerWidget").background("none");
-		css.style(".BlockDndMarkerWidget-active").background(cError);
+		css.style("#body .BlockDndMarkerWidget").background("none");
+		css.style("#body .BlockDndMarkerWidget-active").background(cError);
 
 		css.style(".UsersOnBlockWidget").padding(3, 5, 0, 5).textAlignRight();
 	}
@@ -546,7 +548,7 @@ public class ScreenCssBuilder implements ICssBuilder {
 		css.style(".PagePanel");// .padding(10);
 		css.style(".PagePanel-content").background("white").border(1, cPagePanelBorder);
 		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
-				.background(cPagePanelHeaderBackground, "../page-header-bg.png").color(cPagePanelHeader);
+				.background(cPagePanelHeaderBackground, "page-header-bg.png").color(cPagePanelHeader);
 		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header input").fontSize(fontSizeSmall);
 		css.style(".PagePanel-header .gwt-Hyperlink").fontSize(fontSizeSmall);

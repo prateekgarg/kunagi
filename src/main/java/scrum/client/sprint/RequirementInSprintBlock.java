@@ -87,16 +87,16 @@ public class RequirementInSprintBlock extends ABlockWidget<Requirement> {
 		header.setDragHandle(requirement.getReference());
 		Image statusImage = null;
 		if (requirement.isRejected()) {
-			statusImage = Img.bundle.reqRejected().createImage();
+			statusImage = Img.reqRejected();
 			statusImage.setTitle("Rejected.");
 		} else if (requirement.isClosed()) {
-			statusImage = Img.bundle.reqClosed().createImage();
+			statusImage = Img.reqClosed();
 			statusImage.setTitle("Accepted.");
 		} else if (requirement.isTasksClosed()) {
-			statusImage = Img.bundle.reqTasksClosed().createImage();
+			statusImage = Img.reqTasksClosed();
 			statusImage.setTitle("All tasks done.");
 		} else if (requirement.isBlocked()) {
-			statusImage = Img.bundle.tskBlocked().createImage();
+			statusImage = Img.tskBlocked();
 			statusImage.setTitle("Blocked by " + requirement.getImpediment().getReferenceAndLabel() + ".");
 		}
 		statusIcon.setWidget(statusImage);

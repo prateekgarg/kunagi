@@ -30,13 +30,13 @@ import scrum.client.admin.LogoutAction;
 import scrum.client.common.AScrumAction;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.TooltipBuilder;
-import scrum.client.img.Img;
 import scrum.client.project.ChangeProjectAction;
 import scrum.client.project.Project;
 import scrum.client.search.SearchInputWidget;
 import scrum.client.undo.Undo;
 
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -164,7 +164,8 @@ public class HeaderWidget extends AScrumWidget {
 	}
 
 	private Widget createLogo() {
-		SimplePanel div = Gwt.createDiv("HeaderWidget-logo", Img.bundle.logo25().createImage());
+		// SimplePanel div = Gwt.createDiv("HeaderWidget-logo", Img.bundle.logo25().createImage());
+		SimplePanel div = Gwt.createDiv("HeaderWidget-logo", new Image("img/logo25.png"));
 		ApplicationInfo applicationInfo = getApp().getApplicationInfo();
 		if (applicationInfo != null) div.setTitle(applicationInfo.getVersionDescription());
 		return div;

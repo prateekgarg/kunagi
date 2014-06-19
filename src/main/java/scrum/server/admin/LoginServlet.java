@@ -395,10 +395,12 @@ public class LoginServlet extends AKunagiServlet {
 		html.startHEAD(title, "EN");
 		html.META("X-UA-Compatible", "IE=edge");
 		html.LINKfavicon();
-		html.LINKcss("scrum.ScrumGwtApplication/screen.css");
+		html.startSTYLEcss();
+		html.html(getCss());
+		html.endSTYLE();
 		html.endHEAD();
 
-		html.startBODY();
+		html.startBODY().setId("body");
 		html.startDIV("loginPage");
 		html.startDIV("panel");
 		String logoUrl = webApplication.getSystemConfig().getLoginPageLogoUrl();

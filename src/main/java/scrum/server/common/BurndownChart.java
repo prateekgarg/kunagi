@@ -45,7 +45,7 @@ import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYDataset;
 
 import scrum.client.common.WeekdaySelector;
-import scrum.server.css.ScreenCssBuilder;
+import scrum.server.css.KunagiCssBuilder;
 import scrum.server.sprint.Sprint;
 import scrum.server.sprint.SprintDao;
 import scrum.server.sprint.SprintDaySnapshot;
@@ -54,9 +54,9 @@ public class BurndownChart {
 
 	private static final Log LOG = Log.get(BurndownChart.class);
 
-	private static final Color COLOR_PAST_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownLine);
-	private static final Color COLOR_PROJECTION_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownProjectionLine);
-	private static final Color COLOR_OPTIMUM_LINE = Utl.parseHtmlColor(ScreenCssBuilder.cBurndownOptimalLine);
+	private static final Color COLOR_PAST_LINE = Utl.parseHtmlColor(KunagiCssBuilder.cBurndownLine);
+	private static final Color COLOR_PROJECTION_LINE = Utl.parseHtmlColor(KunagiCssBuilder.cBurndownProjectionLine);
+	private static final Color COLOR_OPTIMUM_LINE = Utl.parseHtmlColor(KunagiCssBuilder.cBurndownOptimalLine);
 
 	// --- dependencies ---
 

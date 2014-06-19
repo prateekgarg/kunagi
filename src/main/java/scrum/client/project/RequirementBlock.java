@@ -67,16 +67,16 @@ public class RequirementBlock extends ABlockWidget<Requirement> implements Trash
 		header.setDragHandle(requirement.getReference());
 		Image statusImage = null;
 		if (requirement.isWorkEstimationVotingActive()) {
-			statusImage = Img.bundle.reqPoker().createImage();
+			statusImage = Img.reqPoker();
 			statusImage.setTitle("Estimation game \"Planning Poker\" active.");
 		} else if (requirement.isInCurrentSprint()) {
-			statusImage = Img.bundle.reqInSprint().createImage();
+			statusImage = Img.reqInSprint();
 			statusImage.setTitle("In current sprint.");
 		} else if (requirement.isClosed()) {
-			statusImage = Img.bundle.reqClosed().createImage();
+			statusImage = Img.reqClosed();
 			statusImage.setTitle("Closed.");
 		} else if (!requirement.isEstimatedWorkValid()) {
-			statusImage = Img.bundle.reqDirty().createImage();
+			statusImage = Img.reqDirty();
 			statusImage.setTitle("Needs estimation.");
 		}
 		statusIcon.setWidget(statusImage);

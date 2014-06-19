@@ -16,9 +16,11 @@ package scrum.server.common;
 
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
+import ilarkesto.base.Sys;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.logging.LogRecord;
 import ilarkesto.core.time.DateAndTime;
+import ilarkesto.io.DynamicClassLoader;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.ui.web.HtmlBuilder;
@@ -38,6 +40,7 @@ import scrum.server.WebSession;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
 import scrum.server.admin.UserDao;
+import scrum.server.css.KunagiCssBuilder;
 import scrum.server.project.Project;
 
 public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSession> {
@@ -196,7 +199,7 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 	}
 
 	protected String getDefaultStartPage() {
-		return webApplication.isDevelopmentMode() ? "index.html?gwt.codesvr=127.0.0.1:9997" : "";
+		return "";
 	}
 
 	protected void adminLinks(HtmlBuilder html, RequestWrapper<WebSession> req) {
@@ -248,6 +251,18 @@ public abstract class AKunagiServlet extends AServlet<ScrumWebApplication, WebSe
 		Project project = getEntityByParameter(req, "projectId", Project.class);
 		if (!project.isVisibleFor(req.getSession().getUser())) throw new PermissionDeniedException();
 		return project;
+	}
+
+	protected String getCss() {
+		if (!Sys.isDevelopmentMode()) return new KunagiCssBuilder().toString();
+
+		try {
+			ClassLoader loader = new DynamicClassLoader(getClass().getClassLoader(), KunagiCssBuilder.class.getName());
+			Class type = loader.loadClass(KunagiCssBuilder.class.getName());
+			return type.newInstance().toString();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 }
