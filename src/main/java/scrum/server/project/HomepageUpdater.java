@@ -426,6 +426,10 @@ public class HomepageUpdater {
 		if (requirement.isEstimatedWorkSet() && !requirement.isDirty())
 			context.put("estimatedWork", requirement.getEstimatedWorkAsString());
 		context.put("themes", toHtml(requirement.getThemes()));
+		context.put("tasksClosed", requirement.isTasksClosed());
+		context.put("closed", requirement.isClosed());
+		context.put("burnedWork", requirement.getBurnedWork());
+		context.put("remainingWork", requirement.getRemainingWork());
 		fillComments(context, requirement);
 	}
 
