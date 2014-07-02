@@ -15,7 +15,6 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
-import ilarkesto.core.service.ServiceCall;
 import ilarkesto.core.time.Tm;
 import ilarkesto.gwt.client.AServiceCall;
 
@@ -81,7 +80,7 @@ public class CommunicationIndicatorWidget extends AScrumWidget implements Runnab
 
 	@Override
 	protected void onUpdate() {
-		List<ServiceCall> calls = AServiceCall.getActiveServiceCalls();
+		List<AServiceCall> calls = AServiceCall.getActiveServiceCalls();
 		if (calls.isEmpty()) {
 			if (isOn()) switchOff();
 		} else {
