@@ -538,26 +538,27 @@ public class KunagiCssBuilder implements ICssBuilder {
 	}
 
 	private void userStatus(CssBuilder css) {
-		css.style(".UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
+		css.style("#body .UsersStatusWidget").borderBottom(1, cNavigatorSeparator);
 
-		css.style(".UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
-		css.style(".UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic().cursorPointer();
-		css.style(".UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
-		css.style(".UserStatusWidget-selectedEntities a").fontFamilyMonospace();
-		css.style(".UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall + 1);
-		css.style(".UserStatusWidget .AFieldValueWidget").backgroundNone().borderNone();
+		css.style("#body .UserStatusWidget").padding(3).borderTop(1, cNavigatorSeparator);
+		css.style("#body .UserStatusWidget-name").floatLeft().textDecorationLineThrough().fontStyleItalic()
+				.cursorPointer();
+		css.style("#body .UserStatusWidget-name-online").textDecorationNone().fontStyleNormal();
+		css.style("#body .UserStatusWidget-selectedEntities a").fontFamilyMonospace();
+		css.style("#body .UserStatusWidget-selectedEntities").floatRight().fontSize(fontSizeSmall + 1);
+		css.style("#body .UserStatusWidget .AFieldValueWidget").backgroundNone().borderNone();
 	}
 
 	private void pagePanel(CssBuilder css) {
-		css.style(".PagePanel");// .padding(10);
-		css.style(".PagePanel-content").background("white").border(1, cPagePanelBorder);
-		css.style(".PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
+		css.style("#body .PagePanel");// .padding(10);
+		css.style("#body .PagePanel-content").background("white").border(1, cPagePanelBorder);
+		css.style("#body .PagePanel-header").padding(6, 10, 6, 10).fontSize(fontSizeTitle).lineHeight(lineHeightTitle)
 		.background(cPagePanelHeaderBackground, "page-header-bg.png").color(cPagePanelHeader);
-		css.style(".PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
-		css.style(".PagePanel-header input").fontSize(fontSizeSmall);
-		css.style(".PagePanel-header .gwt-Hyperlink").fontSize(fontSizeSmall);
-		css.style(".PagePanel-section").margin(0, 10, 0, 10);
-		css.style(".PagePanel-spacer").height(10);
+		css.style("#body .PagePanel-header .gwt-Button").fontSize(fontSizeSmall);
+		css.style("#body .PagePanel-header input").fontSize(fontSizeSmall);
+		css.style("#body .PagePanel-header .gwt-Hyperlink").fontSize(fontSizeSmall);
+		css.style("#body .PagePanel-section").margin(0, 10, 0, 10);
+		css.style("#body .PagePanel-spacer").height(10);
 	}
 
 	@Override
