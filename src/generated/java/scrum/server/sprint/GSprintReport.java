@@ -185,7 +185,7 @@ public abstract class GSprintReport
     }
 
     public final boolean removeCompletedRequirement(scrum.server.project.Requirement completedRequirement) {
-        if (completedRequirement == null) throw new IllegalArgumentException("completedRequirement == null");
+        if (completedRequirement == null) return false;
         if (this.completedRequirementsIds == null) return false;
         boolean removed = this.completedRequirementsIds.remove(completedRequirement.getId());
         if (removed) updateLastModified();
@@ -291,7 +291,7 @@ public abstract class GSprintReport
     }
 
     public final boolean removeRejectedRequirement(scrum.server.project.Requirement rejectedRequirement) {
-        if (rejectedRequirement == null) throw new IllegalArgumentException("rejectedRequirement == null");
+        if (rejectedRequirement == null) return false;
         if (this.rejectedRequirementsIds == null) return false;
         boolean removed = this.rejectedRequirementsIds.remove(rejectedRequirement.getId());
         if (removed) updateLastModified();
@@ -386,7 +386,7 @@ public abstract class GSprintReport
     }
 
     public final boolean removeRequirementsOrderId(java.lang.String requirementsOrderId) {
-        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (requirementsOrderId == null) return false;
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
@@ -500,7 +500,7 @@ public abstract class GSprintReport
     }
 
     public final boolean removeClosedTask(scrum.server.sprint.Task closedTask) {
-        if (closedTask == null) throw new IllegalArgumentException("closedTask == null");
+        if (closedTask == null) return false;
         if (this.closedTasksIds == null) return false;
         boolean removed = this.closedTasksIds.remove(closedTask.getId());
         if (removed) updateLastModified();
@@ -606,7 +606,7 @@ public abstract class GSprintReport
     }
 
     public final boolean removeOpenTask(scrum.server.sprint.Task openTask) {
-        if (openTask == null) throw new IllegalArgumentException("openTask == null");
+        if (openTask == null) return false;
         if (this.openTasksIds == null) return false;
         boolean removed = this.openTasksIds.remove(openTask.getId());
         if (removed) updateLastModified();
@@ -702,12 +702,11 @@ public abstract class GSprintReport
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isSprintSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getSprint();
@@ -715,6 +714,9 @@ public abstract class GSprintReport
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
+        try {
+            if (isDeleted() && isSprintSet()) getSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (this.completedRequirementsIds == null) this.completedRequirementsIds = new java.util.HashSet<String>();
         Set<String> completedRequirements = new HashSet<String>(this.completedRequirementsIds);
         for (String entityId : completedRequirements) {
@@ -725,6 +727,11 @@ public abstract class GSprintReport
                 repairDeadCompletedRequirementReference(entityId);
             }
         }
+        if (isDeleted()) {
+            for (String entityId : this.completedRequirementsIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
         if (this.rejectedRequirementsIds == null) this.rejectedRequirementsIds = new java.util.HashSet<String>();
         Set<String> rejectedRequirements = new HashSet<String>(this.rejectedRequirementsIds);
         for (String entityId : rejectedRequirements) {
@@ -733,6 +740,11 @@ public abstract class GSprintReport
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead rejectedRequirement reference");
                 repairDeadRejectedRequirementReference(entityId);
+            }
+        }
+        if (isDeleted()) {
+            for (String entityId : this.rejectedRequirementsIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
@@ -746,6 +758,11 @@ public abstract class GSprintReport
                 repairDeadClosedTaskReference(entityId);
             }
         }
+        if (isDeleted()) {
+            for (String entityId : this.closedTasksIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
         if (this.openTasksIds == null) this.openTasksIds = new java.util.HashSet<String>();
         Set<String> openTasks = new HashSet<String>(this.openTasksIds);
         for (String entityId : openTasks) {
@@ -754,6 +771,11 @@ public abstract class GSprintReport
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead openTask reference");
                 repairDeadOpenTaskReference(entityId);
+            }
+        }
+        if (isDeleted()) {
+            for (String entityId : this.openTasksIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
     }

@@ -274,12 +274,11 @@ public abstract class GProjectEvent
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();

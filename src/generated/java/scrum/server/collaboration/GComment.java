@@ -413,12 +413,11 @@ public abstract class GComment
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isParentSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getParent();

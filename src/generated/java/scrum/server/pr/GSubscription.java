@@ -169,7 +169,7 @@ public abstract class GSubscription
     }
 
     public final boolean removeSubscribersEmail(java.lang.String subscribersEmail) {
-        if (subscribersEmail == null) throw new IllegalArgumentException("subscribersEmail == null");
+        if (subscribersEmail == null) return false;
         if (this.subscribersEmails == null) return false;
         boolean removed = this.subscribersEmails.remove(subscribersEmail);
         if (removed) updateLastModified();
@@ -230,12 +230,11 @@ public abstract class GSubscription
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isSubjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getSubject();

@@ -656,7 +656,7 @@ public abstract class GSprint
     }
 
     public final boolean removeRequirementsOrderId(java.lang.String requirementsOrderId) {
-        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (requirementsOrderId == null) return false;
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
@@ -770,7 +770,7 @@ public abstract class GSprint
     }
 
     public final boolean removeProductOwner(scrum.server.admin.User productOwner) {
-        if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
+        if (productOwner == null) return false;
         if (this.productOwnersIds == null) return false;
         boolean removed = this.productOwnersIds.remove(productOwner.getId());
         if (removed) updateLastModified();
@@ -876,7 +876,7 @@ public abstract class GSprint
     }
 
     public final boolean removeScrumMaster(scrum.server.admin.User scrumMaster) {
-        if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
+        if (scrumMaster == null) return false;
         if (this.scrumMastersIds == null) return false;
         boolean removed = this.scrumMastersIds.remove(scrumMaster.getId());
         if (removed) updateLastModified();
@@ -982,7 +982,7 @@ public abstract class GSprint
     }
 
     public final boolean removeTeamMember(scrum.server.admin.User teamMember) {
-        if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
+        if (teamMember == null) return false;
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
         if (removed) updateLastModified();
@@ -1056,12 +1056,11 @@ public abstract class GSprint
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -1099,6 +1098,13 @@ public abstract class GSprint
                 LOG.info("Repairing dead teamMember reference");
                 repairDeadTeamMemberReference(entityId);
             }
+        }
+        if (isDeleted()) {
+            for (scrum.server.sprint.SprintDaySnapshot entity : getSprintDaySnapshots()) {
+                entity.ensureIntegrity();
+            }
+            if (getSprintReport() != null) getSprintReport().ensureIntegrity();
+            if (getProjectSprintSnapshot() != null) getProjectSprintSnapshot().ensureIntegrity();
         }
     }
 

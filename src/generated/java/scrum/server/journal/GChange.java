@@ -376,12 +376,11 @@ public abstract class GChange
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isParentSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getParent();

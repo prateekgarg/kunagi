@@ -536,7 +536,7 @@ public abstract class GProject
     }
 
     public final boolean removeParticipant(scrum.server.admin.User participant) {
-        if (participant == null) throw new IllegalArgumentException("participant == null");
+        if (participant == null) return false;
         if (this.participantsIds == null) return false;
         boolean removed = this.participantsIds.remove(participant.getId());
         if (removed) updateLastModified();
@@ -642,7 +642,7 @@ public abstract class GProject
     }
 
     public final boolean removeAdmin(scrum.server.admin.User admin) {
-        if (admin == null) throw new IllegalArgumentException("admin == null");
+        if (admin == null) return false;
         if (this.adminsIds == null) return false;
         boolean removed = this.adminsIds.remove(admin.getId());
         if (removed) updateLastModified();
@@ -748,7 +748,7 @@ public abstract class GProject
     }
 
     public final boolean removeProductOwner(scrum.server.admin.User productOwner) {
-        if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
+        if (productOwner == null) return false;
         if (this.productOwnersIds == null) return false;
         boolean removed = this.productOwnersIds.remove(productOwner.getId());
         if (removed) updateLastModified();
@@ -854,7 +854,7 @@ public abstract class GProject
     }
 
     public final boolean removeScrumMaster(scrum.server.admin.User scrumMaster) {
-        if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
+        if (scrumMaster == null) return false;
         if (this.scrumMastersIds == null) return false;
         boolean removed = this.scrumMastersIds.remove(scrumMaster.getId());
         if (removed) updateLastModified();
@@ -960,7 +960,7 @@ public abstract class GProject
     }
 
     public final boolean removeTeamMember(scrum.server.admin.User teamMember) {
-        if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
+        if (teamMember == null) return false;
         if (this.teamMembersIds == null) return false;
         boolean removed = this.teamMembersIds.remove(teamMember.getId());
         if (removed) updateLastModified();
@@ -1206,7 +1206,7 @@ public abstract class GProject
     }
 
     public final boolean removeRequirementsOrderId(java.lang.String requirementsOrderId) {
-        if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (requirementsOrderId == null) return false;
         if (this.requirementsOrderIds == null) return false;
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
@@ -1309,7 +1309,7 @@ public abstract class GProject
     }
 
     public final boolean removeUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
-        if (urgentIssuesOrderId == null) throw new IllegalArgumentException("urgentIssuesOrderId == null");
+        if (urgentIssuesOrderId == null) return false;
         if (this.urgentIssuesOrderIds == null) return false;
         boolean removed = this.urgentIssuesOrderIds.remove(urgentIssuesOrderId);
         if (removed) updateLastModified();
@@ -2227,7 +2227,7 @@ public abstract class GProject
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
@@ -2287,13 +2287,66 @@ public abstract class GProject
             repairDeadCurrentSprintReference(this.currentSprintId);
         }
         try {
+            if (isDeleted() && isCurrentSprintSet()) getCurrentSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
+        try {
             getNextSprint();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead nextSprint reference");
             repairDeadNextSprintReference(this.nextSprintId);
         }
+        try {
+            if (isDeleted() && isNextSprintSet()) getNextSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
+        if (isDeleted()) {
+            for (scrum.server.sprint.Sprint entity : getSprints()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.admin.ProjectUserConfig entity : getProjectUserConfigs()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.project.Quality entity : getQualitys()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.impediments.Impediment entity : getImpediments()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.project.Requirement entity : getRequirements()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.issues.Issue entity : getIssues()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.release.Release entity : getReleases()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.journal.ProjectEvent entity : getProjectEvents()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.calendar.SimpleEvent entity : getSimpleEvents()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.collaboration.Subject entity : getSubjects()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.collaboration.ChatMessage entity : getChatMessages()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.pr.BlogEntry entity : getBlogEntrys()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.risks.Risk entity : getRisks()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.collaboration.Wikipage entity : getWikipages()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.files.File entity : getFiles()) {
+                entity.ensureIntegrity();
+            }
+        }
     }
 
 

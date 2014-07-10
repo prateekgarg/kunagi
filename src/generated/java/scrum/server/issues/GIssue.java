@@ -879,7 +879,7 @@ public abstract class GIssue
     }
 
     public final boolean removeAffectedRelease(scrum.server.release.Release affectedRelease) {
-        if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
+        if (affectedRelease == null) return false;
         if (this.affectedReleasesIds == null) return false;
         boolean removed = this.affectedReleasesIds.remove(affectedRelease.getId());
         if (removed) updateLastModified();
@@ -985,7 +985,7 @@ public abstract class GIssue
     }
 
     public final boolean removeFixRelease(scrum.server.release.Release fixRelease) {
-        if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
+        if (fixRelease == null) return false;
         if (this.fixReleasesIds == null) return false;
         boolean removed = this.fixReleasesIds.remove(fixRelease.getId());
         if (removed) updateLastModified();
@@ -1110,7 +1110,7 @@ public abstract class GIssue
     }
 
     public final boolean removeTheme(java.lang.String theme) {
-        if (theme == null) throw new IllegalArgumentException("theme == null");
+        if (theme == null) return false;
         if (this.themes == null) return false;
         boolean removed = this.themes.remove(theme);
         if (removed) updateLastModified();
@@ -1198,12 +1198,11 @@ public abstract class GIssue
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -1217,6 +1216,9 @@ public abstract class GIssue
             LOG.info("Repairing dead story reference");
             repairDeadStoryReference(this.storyId);
         }
+        try {
+            if (isDeleted() && isStorySet()) getStory().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         try {
             getCreator();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
@@ -1239,6 +1241,11 @@ public abstract class GIssue
                 repairDeadAffectedReleaseReference(entityId);
             }
         }
+        if (isDeleted()) {
+            for (String entityId : this.affectedReleasesIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
         if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
         Set<String> fixReleases = new HashSet<String>(this.fixReleasesIds);
         for (String entityId : fixReleases) {
@@ -1249,7 +1256,14 @@ public abstract class GIssue
                 repairDeadFixReleaseReference(entityId);
             }
         }
+        if (isDeleted()) {
+            for (String entityId : this.fixReleasesIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        if (isDeleted()) {
+        }
     }
 
 

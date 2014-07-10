@@ -1116,7 +1116,7 @@ public abstract class GUser
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         try {
@@ -1124,6 +1124,20 @@ public abstract class GUser
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead currentProject reference");
             repairDeadCurrentProjectReference(this.currentProjectId);
+        }
+        if (isDeleted()) {
+            for (scrum.server.collaboration.Emoticon entity : getEmoticons()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.admin.ProjectUserConfig entity : getProjectUserConfigs()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.estimation.RequirementEstimationVote entity : getRequirementEstimationVotes()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.collaboration.Emoticon entity : getEmoticons()) {
+                entity.ensureIntegrity();
+            }
         }
     }
 

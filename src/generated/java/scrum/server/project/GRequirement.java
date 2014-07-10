@@ -375,7 +375,7 @@ public abstract class GRequirement
     }
 
     public final boolean removeQuality(scrum.server.project.Quality quality) {
-        if (quality == null) throw new IllegalArgumentException("quality == null");
+        if (quality == null) return false;
         if (this.qualitysIds == null) return false;
         boolean removed = this.qualitysIds.remove(quality.getId());
         if (removed) updateLastModified();
@@ -799,7 +799,7 @@ public abstract class GRequirement
     }
 
     public final boolean removeTasksOrderId(java.lang.String tasksOrderId) {
-        if (tasksOrderId == null) throw new IllegalArgumentException("tasksOrderId == null");
+        if (tasksOrderId == null) return false;
         if (this.tasksOrderIds == null) return false;
         boolean removed = this.tasksOrderIds.remove(tasksOrderId);
         if (removed) updateLastModified();
@@ -902,7 +902,7 @@ public abstract class GRequirement
     }
 
     public final boolean removeTheme(java.lang.String theme) {
-        if (theme == null) throw new IllegalArgumentException("theme == null");
+        if (theme == null) return false;
         if (this.themes == null) return false;
         boolean removed = this.themes.remove(theme);
         if (removed) updateLastModified();
@@ -1043,12 +1043,11 @@ public abstract class GRequirement
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -1063,11 +1062,17 @@ public abstract class GRequirement
             repairDeadSprintReference(this.sprintId);
         }
         try {
+            if (isDeleted() && isSprintSet()) getSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
+        try {
             getIssue();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead issue reference");
             repairDeadIssueReference(this.issueId);
         }
+        try {
+            if (isDeleted() && isIssueSet()) getIssue().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         Set<String> qualitys = new HashSet<String>(this.qualitysIds);
         for (String entityId : qualitys) {
@@ -1078,6 +1083,11 @@ public abstract class GRequirement
                 repairDeadQualityReference(entityId);
             }
         }
+        if (isDeleted()) {
+            for (String entityId : this.qualitysIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
         if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         try {
@@ -1085,6 +1095,17 @@ public abstract class GRequirement
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead epic reference");
             repairDeadEpicReference(this.epicId);
+        }
+        try {
+            if (isDeleted() && isEpicSet()) getEpic().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
+        if (isDeleted()) {
+            for (scrum.server.sprint.Task entity : getTasks()) {
+                entity.ensureIntegrity();
+            }
+            for (scrum.server.estimation.RequirementEstimationVote entity : getRequirementEstimationVotes()) {
+                entity.ensureIntegrity();
+            }
         }
     }
 

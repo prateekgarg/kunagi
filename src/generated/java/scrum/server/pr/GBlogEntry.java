@@ -228,7 +228,7 @@ public abstract class GBlogEntry
     }
 
     public final boolean removeAuthor(scrum.server.admin.User author) {
-        if (author == null) throw new IllegalArgumentException("author == null");
+        if (author == null) return false;
         if (this.authorsIds == null) return false;
         boolean removed = this.authorsIds.remove(author.getId());
         if (removed) updateLastModified();
@@ -443,7 +443,7 @@ public abstract class GBlogEntry
     }
 
     public final boolean removeRelease(scrum.server.release.Release release) {
-        if (release == null) throw new IllegalArgumentException("release == null");
+        if (release == null) return false;
         if (this.releasesIds == null) return false;
         boolean removed = this.releasesIds.remove(release.getId());
         if (removed) updateLastModified();
@@ -535,12 +535,11 @@ public abstract class GBlogEntry
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -566,6 +565,11 @@ public abstract class GBlogEntry
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead release reference");
                 repairDeadReleaseReference(entityId);
+            }
+        }
+        if (isDeleted()) {
+            for (String entityId : this.releasesIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
     }

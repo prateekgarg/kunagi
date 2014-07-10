@@ -222,12 +222,11 @@ public abstract class GRequirementEstimationVote
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isRequirementSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getRequirement();
@@ -235,9 +234,11 @@ public abstract class GRequirementEstimationVote
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
+        try {
+            if (isDeleted() && isRequirementSet()) getRequirement().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (!isUserSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getUser();

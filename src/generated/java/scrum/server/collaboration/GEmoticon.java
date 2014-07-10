@@ -223,12 +223,11 @@ public abstract class GEmoticon
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isParentSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getParent();
@@ -238,7 +237,6 @@ public abstract class GEmoticon
         }
         if (!isOwnerSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getOwner();

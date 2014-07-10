@@ -279,7 +279,7 @@ public abstract class GRelease
     }
 
     public final boolean removeSprint(scrum.server.sprint.Sprint sprint) {
-        if (sprint == null) throw new IllegalArgumentException("sprint == null");
+        if (sprint == null) return false;
         if (this.sprintsIds == null) return false;
         boolean removed = this.sprintsIds.remove(sprint.getId());
         if (removed) updateLastModified();
@@ -688,12 +688,11 @@ public abstract class GRelease
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -707,6 +706,9 @@ public abstract class GRelease
             LOG.info("Repairing dead parentRelease reference");
             repairDeadParentReleaseReference(this.parentReleaseId);
         }
+        try {
+            if (isDeleted() && isParentReleaseSet()) getParentRelease().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (this.sprintsIds == null) this.sprintsIds = new java.util.HashSet<String>();
         Set<String> sprints = new HashSet<String>(this.sprintsIds);
         for (String entityId : sprints) {
@@ -716,6 +718,13 @@ public abstract class GRelease
                 LOG.info("Repairing dead sprint reference");
                 repairDeadSprintReference(entityId);
             }
+        }
+        if (isDeleted()) {
+            for (String entityId : this.sprintsIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
+            }
+        }
+        if (isDeleted()) {
         }
     }
 

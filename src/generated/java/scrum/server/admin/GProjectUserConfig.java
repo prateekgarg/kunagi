@@ -403,7 +403,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean removeSelectedEntitysId(java.lang.String selectedEntitysId) {
-        if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
+        if (selectedEntitysId == null) return false;
         if (this.selectedEntitysIds == null) return false;
         boolean removed = this.selectedEntitysIds.remove(selectedEntitysId);
         if (removed) updateLastModified();
@@ -563,7 +563,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean removePblFilterTheme(java.lang.String pblFilterTheme) {
-        if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
+        if (pblFilterTheme == null) return false;
         if (this.pblFilterThemes == null) return false;
         boolean removed = this.pblFilterThemes.remove(pblFilterTheme);
         if (removed) updateLastModified();
@@ -677,7 +677,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean removePblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
-        if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
+        if (pblFilterQuality == null) return false;
         if (this.pblFilterQualitysIds == null) return false;
         boolean removed = this.pblFilterQualitysIds.remove(pblFilterQuality.getId());
         if (removed) updateLastModified();
@@ -927,12 +927,11 @@ public abstract class GProjectUserConfig
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getProject();
@@ -942,7 +941,6 @@ public abstract class GProjectUserConfig
         }
         if (!isUserSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getUser();
@@ -960,6 +958,11 @@ public abstract class GProjectUserConfig
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead pblFilterQuality reference");
                 repairDeadPblFilterQualityReference(entityId);
+            }
+        }
+        if (isDeleted()) {
+            for (String entityId : this.pblFilterQualitysIds) {
+                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
     }

@@ -1121,7 +1121,7 @@ public abstract class GSystemConfig
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
     }

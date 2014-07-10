@@ -495,12 +495,11 @@ public abstract class GTask
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isRequirementSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getRequirement();
@@ -508,6 +507,9 @@ public abstract class GTask
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
+        try {
+            if (isDeleted() && isRequirementSet()) getRequirement().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         try {
             getOwner();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
@@ -521,10 +523,18 @@ public abstract class GTask
             repairDeadImpedimentReference(this.impedimentId);
         }
         try {
+            if (isDeleted() && isImpedimentSet()) getImpediment().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
+        try {
             getClosedInPastSprint();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead closedInPastSprint reference");
             repairDeadClosedInPastSprintReference(this.closedInPastSprintId);
+        }
+        try {
+            if (isDeleted() && isClosedInPastSprintSet()) getClosedInPastSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
+        if (isDeleted()) {
         }
     }
 

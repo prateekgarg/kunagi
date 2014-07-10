@@ -188,12 +188,11 @@ public abstract class GProjectSprintSnapshot
     }
 
     // --- ensure integrity ---
-
+    @Override
     public void ensureIntegrity() {
         super.ensureIntegrity();
         if (!isSprintSet()) {
             repairMissingMaster();
-            return;
         }
         try {
             getSprint();
@@ -201,6 +200,9 @@ public abstract class GProjectSprintSnapshot
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
+        try {
+            if (isDeleted() && isSprintSet()) getSprint().ensureIntegrity();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
     }
 
 
