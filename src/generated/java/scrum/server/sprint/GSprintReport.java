@@ -38,15 +38,15 @@ public abstract class GSprintReport
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
-        properties.put("completedRequirementsIds", this.completedRequirementsIds);
-        properties.put("rejectedRequirementsIds", this.rejectedRequirementsIds);
-        properties.put("requirementsOrderIds", this.requirementsOrderIds);
-        properties.put("closedTasksIds", this.closedTasksIds);
-        properties.put("openTasksIds", this.openTasksIds);
-        properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        properties.put("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
+        properties.put("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
+        properties.put("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+        properties.put("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
+        properties.put("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
+        properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     public int compareTo(SprintReport other) {
@@ -89,7 +89,7 @@ public abstract class GSprintReport
         this.sprintId = id;
         sprintCache = null;
         updateLastModified();
-        fireModified("sprintId", this.sprintId);
+        fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -136,7 +136,7 @@ public abstract class GSprintReport
         if (Utl.equals(completedRequirementsIds, ids)) return;
         completedRequirementsIds = ids;
         updateLastModified();
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
     }
 
     protected Collection<scrum.server.project.Requirement> prepareCompletedRequirements(Collection<scrum.server.project.Requirement> completedRequirements) {
@@ -145,7 +145,7 @@ public abstract class GSprintReport
 
     protected void repairDeadCompletedRequirementReference(String entityId) {
         if (this.completedRequirementsIds.remove(entityId)) {
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         }
     }
 
@@ -167,7 +167,7 @@ public abstract class GSprintReport
         boolean added = this.completedRequirementsIds.add(completedRequirement.getId());
         if (added) updateLastModified();
         if (added) {
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         }
         return added;
     }
@@ -179,7 +179,7 @@ public abstract class GSprintReport
             added = added | this.completedRequirementsIds.add(completedRequirement.getId());
         }
         if (added) {
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         }
         return added;
     }
@@ -190,7 +190,7 @@ public abstract class GSprintReport
         boolean removed = this.completedRequirementsIds.remove(completedRequirement.getId());
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         }
         return removed;
     }
@@ -203,7 +203,7 @@ public abstract class GSprintReport
             removed = removed | this.completedRequirementsIds.remove(_element);
         }
         if (removed) {
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         }
         return removed;
     }
@@ -212,13 +212,8 @@ public abstract class GSprintReport
         if (this.completedRequirementsIds.isEmpty()) return false;
         this.completedRequirementsIds.clear();
         updateLastModified();
-        fireModified("completedRequirementsIds", this.completedRequirementsIds);
+        fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
         return true;
-    }
-
-    protected final void updateCompletedRequirements(Object value) {
-        java.util.Set<String> ids = (java.util.Set<String>) value;
-        setCompletedRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
     }
 
     // -----------------------------------------------------------
@@ -242,7 +237,7 @@ public abstract class GSprintReport
         if (Utl.equals(rejectedRequirementsIds, ids)) return;
         rejectedRequirementsIds = ids;
         updateLastModified();
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
     }
 
     protected Collection<scrum.server.project.Requirement> prepareRejectedRequirements(Collection<scrum.server.project.Requirement> rejectedRequirements) {
@@ -251,7 +246,7 @@ public abstract class GSprintReport
 
     protected void repairDeadRejectedRequirementReference(String entityId) {
         if (this.rejectedRequirementsIds.remove(entityId)) {
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         }
     }
 
@@ -273,7 +268,7 @@ public abstract class GSprintReport
         boolean added = this.rejectedRequirementsIds.add(rejectedRequirement.getId());
         if (added) updateLastModified();
         if (added) {
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         }
         return added;
     }
@@ -285,7 +280,7 @@ public abstract class GSprintReport
             added = added | this.rejectedRequirementsIds.add(rejectedRequirement.getId());
         }
         if (added) {
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         }
         return added;
     }
@@ -296,7 +291,7 @@ public abstract class GSprintReport
         boolean removed = this.rejectedRequirementsIds.remove(rejectedRequirement.getId());
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         }
         return removed;
     }
@@ -309,7 +304,7 @@ public abstract class GSprintReport
             removed = removed | this.rejectedRequirementsIds.remove(_element);
         }
         if (removed) {
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         }
         return removed;
     }
@@ -318,13 +313,8 @@ public abstract class GSprintReport
         if (this.rejectedRequirementsIds.isEmpty()) return false;
         this.rejectedRequirementsIds.clear();
         updateLastModified();
-        fireModified("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
         return true;
-    }
-
-    protected final void updateRejectedRequirements(Object value) {
-        java.util.Set<String> ids = (java.util.Set<String>) value;
-        setRejectedRequirements((java.util.Set) requirementDao.getByIdsAsSet(ids));
     }
 
     // -----------------------------------------------------------
@@ -343,7 +333,7 @@ public abstract class GSprintReport
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
         updateLastModified();
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
     }
 
     protected Collection<java.lang.String> prepareRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
@@ -368,7 +358,7 @@ public abstract class GSprintReport
         boolean added = this.requirementsOrderIds.add(requirementsOrderId);
         if (added) updateLastModified();
         if (added) {
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
         }
         return added;
     }
@@ -380,7 +370,7 @@ public abstract class GSprintReport
             added = added | this.requirementsOrderIds.add(requirementsOrderId);
         }
         if (added) {
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
         }
         return added;
     }
@@ -391,7 +381,7 @@ public abstract class GSprintReport
         boolean removed = this.requirementsOrderIds.remove(requirementsOrderId);
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
         }
         return removed;
     }
@@ -404,7 +394,7 @@ public abstract class GSprintReport
             removed = removed | this.requirementsOrderIds.remove(_element);
         }
         if (removed) {
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
         }
         return removed;
     }
@@ -413,7 +403,7 @@ public abstract class GSprintReport
         if (this.requirementsOrderIds.isEmpty()) return false;
         this.requirementsOrderIds.clear();
         updateLastModified();
-        fireModified("requirementsOrderIds", this.requirementsOrderIds);
+        fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
         return true;
     }
 
@@ -424,10 +414,6 @@ public abstract class GSprintReport
 
     public final void setRequirementsOrderIdsAsCommaSeparatedString(String requirementsOrderIds) {
         setRequirementsOrderIds(Str.parseCommaSeparatedString(requirementsOrderIds));
-    }
-
-    protected final void updateRequirementsOrderIds(Object value) {
-        setRequirementsOrderIds((java.util.List<java.lang.String>) value);
     }
 
     // -----------------------------------------------------------
@@ -451,7 +437,7 @@ public abstract class GSprintReport
         if (Utl.equals(closedTasksIds, ids)) return;
         closedTasksIds = ids;
         updateLastModified();
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
     }
 
     protected Collection<scrum.server.sprint.Task> prepareClosedTasks(Collection<scrum.server.sprint.Task> closedTasks) {
@@ -460,7 +446,7 @@ public abstract class GSprintReport
 
     protected void repairDeadClosedTaskReference(String entityId) {
         if (this.closedTasksIds.remove(entityId)) {
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         }
     }
 
@@ -482,7 +468,7 @@ public abstract class GSprintReport
         boolean added = this.closedTasksIds.add(closedTask.getId());
         if (added) updateLastModified();
         if (added) {
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         }
         return added;
     }
@@ -494,7 +480,7 @@ public abstract class GSprintReport
             added = added | this.closedTasksIds.add(closedTask.getId());
         }
         if (added) {
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         }
         return added;
     }
@@ -505,7 +491,7 @@ public abstract class GSprintReport
         boolean removed = this.closedTasksIds.remove(closedTask.getId());
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         }
         return removed;
     }
@@ -518,7 +504,7 @@ public abstract class GSprintReport
             removed = removed | this.closedTasksIds.remove(_element);
         }
         if (removed) {
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         }
         return removed;
     }
@@ -527,13 +513,8 @@ public abstract class GSprintReport
         if (this.closedTasksIds.isEmpty()) return false;
         this.closedTasksIds.clear();
         updateLastModified();
-        fireModified("closedTasksIds", this.closedTasksIds);
+        fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
         return true;
-    }
-
-    protected final void updateClosedTasks(Object value) {
-        java.util.Set<String> ids = (java.util.Set<String>) value;
-        setClosedTasks((java.util.Set) taskDao.getByIdsAsSet(ids));
     }
 
     // -----------------------------------------------------------
@@ -557,7 +538,7 @@ public abstract class GSprintReport
         if (Utl.equals(openTasksIds, ids)) return;
         openTasksIds = ids;
         updateLastModified();
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
     }
 
     protected Collection<scrum.server.sprint.Task> prepareOpenTasks(Collection<scrum.server.sprint.Task> openTasks) {
@@ -566,7 +547,7 @@ public abstract class GSprintReport
 
     protected void repairDeadOpenTaskReference(String entityId) {
         if (this.openTasksIds.remove(entityId)) {
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         }
     }
 
@@ -588,7 +569,7 @@ public abstract class GSprintReport
         boolean added = this.openTasksIds.add(openTask.getId());
         if (added) updateLastModified();
         if (added) {
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         }
         return added;
     }
@@ -600,7 +581,7 @@ public abstract class GSprintReport
             added = added | this.openTasksIds.add(openTask.getId());
         }
         if (added) {
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         }
         return added;
     }
@@ -611,7 +592,7 @@ public abstract class GSprintReport
         boolean removed = this.openTasksIds.remove(openTask.getId());
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         }
         return removed;
     }
@@ -624,7 +605,7 @@ public abstract class GSprintReport
             removed = removed | this.openTasksIds.remove(_element);
         }
         if (removed) {
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         }
         return removed;
     }
@@ -633,13 +614,8 @@ public abstract class GSprintReport
         if (this.openTasksIds.isEmpty()) return false;
         this.openTasksIds.clear();
         updateLastModified();
-        fireModified("openTasksIds", this.openTasksIds);
+        fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
         return true;
-    }
-
-    protected final void updateOpenTasks(Object value) {
-        java.util.Set<String> ids = (java.util.Set<String>) value;
-        setOpenTasks((java.util.Set) taskDao.getByIdsAsSet(ids));
     }
 
     // -----------------------------------------------------------
@@ -657,7 +633,7 @@ public abstract class GSprintReport
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", this.burnedWork);
+        fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -672,18 +648,18 @@ public abstract class GSprintReport
         setBurnedWork((Integer)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("sprintId")) updateSprint(value);
-            if (property.equals("completedRequirementsIds")) updateCompletedRequirements(value);
-            if (property.equals("rejectedRequirementsIds")) updateRejectedRequirements(value);
-            if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(value);
-            if (property.equals("closedTasksIds")) updateClosedTasks(value);
-            if (property.equals("openTasksIds")) updateOpenTasks(value);
-            if (property.equals("burnedWork")) updateBurnedWork(value);
+            String value = entry.getValue();
+            if (property.equals("sprintId")) setSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("completedRequirementsIds")) setCompletedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("rejectedRequirementsIds")) setRejectedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("requirementsOrderIds")) setRequirementsOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("closedTasksIds")) setClosedTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("openTasksIds")) setOpenTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
         }
     }
 

@@ -1114,30 +1114,30 @@ public abstract class GIssue
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("storyId", this.storyId);
-        properties.put("number", this.number);
-        properties.put("type", this.type);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("creatorId", this.creatorId);
-        properties.put("label", this.label);
-        properties.put("description", this.description);
-        properties.put("statement", this.statement);
-        properties.put("issuerName", this.issuerName);
-        properties.put("issuerEmail", this.issuerEmail);
-        properties.put("acceptDate", this.acceptDate == null ? null : this.acceptDate.toString());
-        properties.put("urgent", this.urgent);
-        properties.put("severity", this.severity);
-        properties.put("ownerId", this.ownerId);
-        properties.put("fixDate", this.fixDate == null ? null : this.fixDate.toString());
-        properties.put("closeDate", this.closeDate == null ? null : this.closeDate.toString());
-        properties.put("suspendedUntilDate", this.suspendedUntilDate == null ? null : this.suspendedUntilDate.toString());
-        properties.put("affectedReleasesIds", this.affectedReleasesIds);
-        properties.put("fixReleasesIds", this.fixReleasesIds);
-        properties.put("published", this.published);
-        properties.put("themes", this.themes);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("storyId", ilarkesto.core.persistance.Persistence.propertyAsString(this.storyId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("type", ilarkesto.core.persistance.Persistence.propertyAsString(this.type));
+        properties.put("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+        properties.put("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("statement", ilarkesto.core.persistance.Persistence.propertyAsString(this.statement));
+        properties.put("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
+        properties.put("issuerEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerEmail));
+        properties.put("acceptDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.acceptDate));
+        properties.put("urgent", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgent));
+        properties.put("severity", ilarkesto.core.persistance.Persistence.propertyAsString(this.severity));
+        properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        properties.put("fixDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixDate));
+        properties.put("closeDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.closeDate));
+        properties.put("suspendedUntilDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.suspendedUntilDate));
+        properties.put("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
+        properties.put("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
+        properties.put("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+        properties.put("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
     }
 
     public final java.util.List<scrum.client.project.Requirement> getRequirements() {

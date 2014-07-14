@@ -38,10 +38,10 @@ public abstract class GSubscription
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("subjectId", this.subjectId);
-        properties.put("subscribersEmails", this.subscribersEmails);
+        properties.put("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        properties.put("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
     }
 
     public int compareTo(Subscription other) {
@@ -84,7 +84,7 @@ public abstract class GSubscription
         this.subjectId = id;
         subjectCache = null;
         updateLastModified();
-        fireModified("subjectId", this.subjectId);
+        fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -126,7 +126,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
         updateLastModified();
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
     }
 
     protected Collection<java.lang.String> prepareSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
@@ -151,7 +151,7 @@ public abstract class GSubscription
         boolean added = this.subscribersEmails.add(subscribersEmail);
         if (added) updateLastModified();
         if (added) {
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return added;
     }
@@ -163,7 +163,7 @@ public abstract class GSubscription
             added = added | this.subscribersEmails.add(subscribersEmail);
         }
         if (added) {
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return added;
     }
@@ -174,7 +174,7 @@ public abstract class GSubscription
         boolean removed = this.subscribersEmails.remove(subscribersEmail);
         if (removed) updateLastModified();
         if (removed) {
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return removed;
     }
@@ -187,7 +187,7 @@ public abstract class GSubscription
             removed = removed | this.subscribersEmails.remove(_element);
         }
         if (removed) {
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return removed;
     }
@@ -196,7 +196,7 @@ public abstract class GSubscription
         if (this.subscribersEmails.isEmpty()) return false;
         this.subscribersEmails.clear();
         updateLastModified();
-        fireModified("subscribersEmails", this.subscribersEmails);
+        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         return true;
     }
 
@@ -209,17 +209,13 @@ public abstract class GSubscription
         setSubscribersEmails(Str.parseCommaSeparatedString(subscribersEmails));
     }
 
-    protected final void updateSubscribersEmails(Object value) {
-        setSubscribersEmails((java.util.Set<java.lang.String>) value);
-    }
-
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("subjectId")) updateSubject(value);
-            if (property.equals("subscribersEmails")) updateSubscribersEmails(value);
+            String value = entry.getValue();
+            if (property.equals("subjectId")) setSubjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("subscribersEmails")) setSubscribersEmails(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
         }
     }
 

@@ -388,14 +388,14 @@ public abstract class GFile
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("filename", this.filename);
-        properties.put("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
-        properties.put("label", this.label);
-        properties.put("number", this.number);
-        properties.put("note", this.note);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("filename", ilarkesto.core.persistance.Persistence.propertyAsString(this.filename));
+        properties.put("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     @Override

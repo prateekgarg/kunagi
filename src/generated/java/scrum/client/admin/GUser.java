@@ -1545,36 +1545,36 @@ public abstract class GUser
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("name", this.name);
-        properties.put("publicName", this.publicName);
-        properties.put("fullName", this.fullName);
-        properties.put("admin", this.admin);
-        properties.put("emailVerified", this.emailVerified);
-        properties.put("email", this.email);
-        properties.put("currentProjectId", this.currentProjectId);
-        properties.put("color", this.color);
-        properties.put("lastLoginDateAndTime", this.lastLoginDateAndTime == null ? null : this.lastLoginDateAndTime.toString());
-        properties.put("registrationDateAndTime", this.registrationDateAndTime == null ? null : this.registrationDateAndTime.toString());
-        properties.put("disabled", this.disabled);
-        properties.put("hideUserGuideBlog", this.hideUserGuideBlog);
-        properties.put("hideUserGuideCalendar", this.hideUserGuideCalendar);
-        properties.put("hideUserGuideFiles", this.hideUserGuideFiles);
-        properties.put("hideUserGuideForum", this.hideUserGuideForum);
-        properties.put("hideUserGuideImpediments", this.hideUserGuideImpediments);
-        properties.put("hideUserGuideIssues", this.hideUserGuideIssues);
-        properties.put("hideUserGuideJournal", this.hideUserGuideJournal);
-        properties.put("hideUserGuideNextSprint", this.hideUserGuideNextSprint);
-        properties.put("hideUserGuideProductBacklog", this.hideUserGuideProductBacklog);
-        properties.put("hideUserGuideCourtroom", this.hideUserGuideCourtroom);
-        properties.put("hideUserGuideQualityBacklog", this.hideUserGuideQualityBacklog);
-        properties.put("hideUserGuideReleases", this.hideUserGuideReleases);
-        properties.put("hideUserGuideRisks", this.hideUserGuideRisks);
-        properties.put("hideUserGuideSprintBacklog", this.hideUserGuideSprintBacklog);
-        properties.put("hideUserGuideWhiteboard", this.hideUserGuideWhiteboard);
-        properties.put("loginToken", this.loginToken);
-        properties.put("openId", this.openId);
+        properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+        properties.put("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
+        properties.put("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
+        properties.put("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
+        properties.put("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
+        properties.put("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
+        properties.put("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
+        properties.put("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+        properties.put("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
+        properties.put("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
+        properties.put("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
+        properties.put("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
+        properties.put("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
+        properties.put("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
+        properties.put("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
+        properties.put("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
+        properties.put("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
+        properties.put("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
+        properties.put("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
+        properties.put("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
+        properties.put("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
+        properties.put("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
+        properties.put("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
+        properties.put("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
+        properties.put("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
+        properties.put("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
+        properties.put("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
+        properties.put("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
     }
 
     public final java.util.List<scrum.client.project.Project> getProjects() {

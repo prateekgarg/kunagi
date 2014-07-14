@@ -844,25 +844,25 @@ public abstract class GProjectUserConfig
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("userId", this.userId);
-        properties.put("color", this.color);
-        properties.put("receiveEmailsOnProjectEvents", this.receiveEmailsOnProjectEvents);
-        properties.put("misconducts", this.misconducts);
-        properties.put("richtextAutosaveText", this.richtextAutosaveText);
-        properties.put("richtextAutosaveField", this.richtextAutosaveField);
-        properties.put("selectedEntitysIds", this.selectedEntitysIds);
-        properties.put("online", this.online);
-        properties.put("lastActivityDateAndTime", this.lastActivityDateAndTime == null ? null : this.lastActivityDateAndTime.toString());
-        properties.put("pblFilterThemes", this.pblFilterThemes);
-        properties.put("pblFilterQualitysIds", this.pblFilterQualitysIds);
-        properties.put("pblFilterDateFrom", this.pblFilterDateFrom == null ? null : this.pblFilterDateFrom.toString());
-        properties.put("pblFilterDateTo", this.pblFilterDateTo == null ? null : this.pblFilterDateTo.toString());
-        properties.put("pblFilterEstimationFrom", this.pblFilterEstimationFrom);
-        properties.put("pblFilterEstimationTo", this.pblFilterEstimationTo);
-        properties.put("pblFilterText", this.pblFilterText);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        properties.put("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+        properties.put("receiveEmailsOnProjectEvents", ilarkesto.core.persistance.Persistence.propertyAsString(this.receiveEmailsOnProjectEvents));
+        properties.put("misconducts", ilarkesto.core.persistance.Persistence.propertyAsString(this.misconducts));
+        properties.put("richtextAutosaveText", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveText));
+        properties.put("richtextAutosaveField", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveField));
+        properties.put("selectedEntitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.selectedEntitysIds));
+        properties.put("online", ilarkesto.core.persistance.Persistence.propertyAsString(this.online));
+        properties.put("lastActivityDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastActivityDateAndTime));
+        properties.put("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+        properties.put("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+        properties.put("pblFilterDateFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateFrom));
+        properties.put("pblFilterDateTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateTo));
+        properties.put("pblFilterEstimationFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationFrom));
+        properties.put("pblFilterEstimationTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationTo));
+        properties.put("pblFilterText", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterText));
     }
 
 }

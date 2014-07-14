@@ -506,16 +506,16 @@ public abstract class GRisk
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("number", this.number);
-        properties.put("label", this.label);
-        properties.put("description", this.description);
-        properties.put("probabilityMitigation", this.probabilityMitigation);
-        properties.put("impactMitigation", this.impactMitigation);
-        properties.put("probability", this.probability);
-        properties.put("impact", this.impact);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("probabilityMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.probabilityMitigation));
+        properties.put("impactMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.impactMitigation));
+        properties.put("probability", ilarkesto.core.persistance.Persistence.propertyAsString(this.probability));
+        properties.put("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
     }
 
     @Override

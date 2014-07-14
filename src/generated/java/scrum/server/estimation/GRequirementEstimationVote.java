@@ -38,11 +38,11 @@ public abstract class GRequirementEstimationVote
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("requirementId", this.requirementId);
-        properties.put("userId", this.userId);
-        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        properties.put("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        properties.put("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
     public int compareTo(RequirementEstimationVote other) {
@@ -85,7 +85,7 @@ public abstract class GRequirementEstimationVote
         this.requirementId = id;
         requirementCache = null;
         updateLastModified();
-        fireModified("requirementId", this.requirementId);
+        fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -143,7 +143,7 @@ public abstract class GRequirementEstimationVote
         this.userId = id;
         userCache = null;
         updateLastModified();
-        fireModified("userId", this.userId);
+        fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -184,7 +184,7 @@ public abstract class GRequirementEstimationVote
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
         updateLastModified();
-        fireModified("estimatedWork", this.estimatedWork);
+        fireModified("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {
@@ -204,14 +204,14 @@ public abstract class GRequirementEstimationVote
         setEstimatedWork((java.lang.Float)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("requirementId")) updateRequirement(value);
-            if (property.equals("userId")) updateUser(value);
-            if (property.equals("estimatedWork")) updateEstimatedWork(value);
+            String value = entry.getValue();
+            if (property.equals("requirementId")) setRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("userId")) setUserId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("estimatedWork")) setEstimatedWork(ilarkesto.core.persistance.Persistence.parsePropertyFloat(value));
         }
     }
 

@@ -38,12 +38,12 @@ public abstract class GSubject
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("text", this.text);
-        properties.put("number", this.number);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     public int compareTo(Subject other) {
@@ -98,7 +98,7 @@ public abstract class GSubject
         this.projectId = id;
         projectCache = null;
         updateLastModified();
-        fireModified("projectId", this.projectId);
+        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -140,7 +140,7 @@ public abstract class GSubject
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", this.label);
+        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -176,7 +176,7 @@ public abstract class GSubject
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text", this.text);
+        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -212,7 +212,7 @@ public abstract class GSubject
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", this.number);
+        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -227,15 +227,15 @@ public abstract class GSubject
         setNumber((Integer)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("projectId")) updateProject(value);
-            if (property.equals("label")) updateLabel(value);
-            if (property.equals("text")) updateText(value);
-            if (property.equals("number")) updateNumber(value);
+            String value = entry.getValue();
+            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
         }
     }
 

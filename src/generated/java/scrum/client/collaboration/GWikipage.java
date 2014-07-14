@@ -191,11 +191,11 @@ public abstract class GWikipage
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("name", this.name);
-        properties.put("text", this.text);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     @Override

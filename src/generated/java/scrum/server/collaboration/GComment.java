@@ -38,16 +38,16 @@ public abstract class GComment
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("parentId", this.parentId);
-        properties.put("authorId", this.authorId);
-        properties.put("published", this.published);
-        properties.put("authorName", this.authorName);
-        properties.put("authorEmail", this.authorEmail);
-        properties.put("authorNameVisible", this.authorNameVisible);
-        properties.put("text", this.text);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        properties.put("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
+        properties.put("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+        properties.put("authorName", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorName));
+        properties.put("authorEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorEmail));
+        properties.put("authorNameVisible", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorNameVisible));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     public int compareTo(Comment other) {
@@ -101,7 +101,7 @@ public abstract class GComment
         this.parentId = id;
         parentCache = null;
         updateLastModified();
-        fireModified("parentId", this.parentId);
+        fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -159,7 +159,7 @@ public abstract class GComment
         this.authorId = id;
         authorCache = null;
         updateLastModified();
-        fireModified("authorId", this.authorId);
+        fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -200,7 +200,7 @@ public abstract class GComment
         if (isPublished(published)) return;
         this.published = published;
         updateLastModified();
-        fireModified("published", this.published);
+        fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
     protected boolean preparePublished(boolean published) {
@@ -230,7 +230,7 @@ public abstract class GComment
         if (isAuthorName(authorName)) return;
         this.authorName = authorName;
         updateLastModified();
-        fireModified("authorName", this.authorName);
+        fireModified("authorName", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorName));
     }
 
     protected java.lang.String prepareAuthorName(java.lang.String authorName) {
@@ -266,7 +266,7 @@ public abstract class GComment
         if (isAuthorEmail(authorEmail)) return;
         this.authorEmail = authorEmail;
         updateLastModified();
-        fireModified("authorEmail", this.authorEmail);
+        fireModified("authorEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorEmail));
     }
 
     protected java.lang.String prepareAuthorEmail(java.lang.String authorEmail) {
@@ -302,7 +302,7 @@ public abstract class GComment
         if (isAuthorNameVisible(authorNameVisible)) return;
         this.authorNameVisible = authorNameVisible;
         updateLastModified();
-        fireModified("authorNameVisible", this.authorNameVisible);
+        fireModified("authorNameVisible", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorNameVisible));
     }
 
     protected boolean prepareAuthorNameVisible(boolean authorNameVisible) {
@@ -333,7 +333,7 @@ public abstract class GComment
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
         updateLastModified();
-        fireModified("text", this.text);
+        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -369,7 +369,7 @@ public abstract class GComment
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -390,19 +390,19 @@ public abstract class GComment
         setDateAndTime((ilarkesto.core.time.DateAndTime)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("parentId")) updateParent(value);
-            if (property.equals("authorId")) updateAuthor(value);
-            if (property.equals("published")) updatePublished(value);
-            if (property.equals("authorName")) updateAuthorName(value);
-            if (property.equals("authorEmail")) updateAuthorEmail(value);
-            if (property.equals("authorNameVisible")) updateAuthorNameVisible(value);
-            if (property.equals("text")) updateText(value);
-            if (property.equals("dateAndTime")) updateDateAndTime(value);
+            String value = entry.getValue();
+            if (property.equals("parentId")) setParentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("authorId")) setAuthorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("published")) setPublished(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("authorName")) setAuthorName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("authorEmail")) setAuthorEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("authorNameVisible")) setAuthorNameVisible(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("dateAndTime")) setDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
         }
     }
 

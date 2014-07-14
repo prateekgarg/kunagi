@@ -38,11 +38,11 @@ public abstract class GEmoticon
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("parentId", this.parentId);
-        properties.put("ownerId", this.ownerId);
-        properties.put("emotion", this.emotion);
+        properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        properties.put("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
     }
 
     public int compareTo(Emoticon other) {
@@ -85,7 +85,7 @@ public abstract class GEmoticon
         this.parentId = id;
         parentCache = null;
         updateLastModified();
-        fireModified("parentId", this.parentId);
+        fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -143,7 +143,7 @@ public abstract class GEmoticon
         this.ownerId = id;
         ownerCache = null;
         updateLastModified();
-        fireModified("ownerId", this.ownerId);
+        fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -184,7 +184,7 @@ public abstract class GEmoticon
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
         updateLastModified();
-        fireModified("emotion", this.emotion);
+        fireModified("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
     }
 
     protected java.lang.String prepareEmotion(java.lang.String emotion) {
@@ -205,14 +205,14 @@ public abstract class GEmoticon
         setEmotion((java.lang.String)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("parentId")) updateParent(value);
-            if (property.equals("ownerId")) updateOwner(value);
-            if (property.equals("emotion")) updateEmotion(value);
+            String value = entry.getValue();
+            if (property.equals("parentId")) setParentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("ownerId")) setOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("emotion")) setEmotion(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

@@ -263,12 +263,12 @@ public abstract class GSubject
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("text", this.text);
-        properties.put("number", this.number);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     @Override

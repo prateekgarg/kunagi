@@ -229,12 +229,12 @@ public abstract class GProjectEvent
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("subjectId", this.subjectId);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     @Override

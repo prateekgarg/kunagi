@@ -38,12 +38,12 @@ public abstract class GProjectEvent
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("subjectId", this.subjectId);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     public int compareTo(ProjectEvent other) {
@@ -97,7 +97,7 @@ public abstract class GProjectEvent
         this.projectId = id;
         projectCache = null;
         updateLastModified();
-        fireModified("projectId", this.projectId);
+        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -139,7 +139,7 @@ public abstract class GProjectEvent
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", this.label);
+        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -192,7 +192,7 @@ public abstract class GProjectEvent
         this.subjectId = id;
         subjectCache = null;
         updateLastModified();
-        fireModified("subjectId", this.subjectId);
+        fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -234,7 +234,7 @@ public abstract class GProjectEvent
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
         updateLastModified();
-        fireModified("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -255,15 +255,15 @@ public abstract class GProjectEvent
         setDateAndTime((ilarkesto.core.time.DateAndTime)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("projectId")) updateProject(value);
-            if (property.equals("label")) updateLabel(value);
-            if (property.equals("subjectId")) updateSubject(value);
-            if (property.equals("dateAndTime")) updateDateAndTime(value);
+            String value = entry.getValue();
+            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("subjectId")) setSubjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("dateAndTime")) setDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
         }
     }
 

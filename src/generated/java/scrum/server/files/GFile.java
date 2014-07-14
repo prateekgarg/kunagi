@@ -38,14 +38,14 @@ public abstract class GFile
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("filename", this.filename);
-        properties.put("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
-        properties.put("label", this.label);
-        properties.put("number", this.number);
-        properties.put("note", this.note);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("filename", ilarkesto.core.persistance.Persistence.propertyAsString(this.filename));
+        properties.put("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     public int compareTo(File other) {
@@ -101,7 +101,7 @@ public abstract class GFile
         this.projectId = id;
         projectCache = null;
         updateLastModified();
-        fireModified("projectId", this.projectId);
+        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -143,7 +143,7 @@ public abstract class GFile
         if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
         this.filename = filename;
         updateLastModified();
-        fireModified("filename", this.filename);
+        fireModified("filename", ilarkesto.core.persistance.Persistence.propertyAsString(this.filename));
     }
 
     protected java.lang.String prepareFilename(java.lang.String filename) {
@@ -180,7 +180,7 @@ public abstract class GFile
         if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
         this.uploadTime = uploadTime;
         updateLastModified();
-        fireModified("uploadTime", this.uploadTime == null ? null : this.uploadTime.toString());
+        fireModified("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
@@ -217,7 +217,7 @@ public abstract class GFile
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", this.label);
+        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -253,7 +253,7 @@ public abstract class GFile
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", this.number);
+        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -283,7 +283,7 @@ public abstract class GFile
         if (isNote(note)) return;
         this.note = note;
         updateLastModified();
-        fireModified("note", this.note);
+        fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {
@@ -304,17 +304,17 @@ public abstract class GFile
         setNote((java.lang.String)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("projectId")) updateProject(value);
-            if (property.equals("filename")) updateFilename(value);
-            if (property.equals("uploadTime")) updateUploadTime(value);
-            if (property.equals("label")) updateLabel(value);
-            if (property.equals("number")) updateNumber(value);
-            if (property.equals("note")) updateNote(value);
+            String value = entry.getValue();
+            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("filename")) setFilename(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("uploadTime")) setUploadTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("note")) setNote(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

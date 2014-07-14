@@ -296,15 +296,15 @@ public abstract class GSprintReport
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
-        properties.put("completedRequirementsIds", this.completedRequirementsIds);
-        properties.put("rejectedRequirementsIds", this.rejectedRequirementsIds);
-        properties.put("requirementsOrderIds", this.requirementsOrderIds);
-        properties.put("closedTasksIds", this.closedTasksIds);
-        properties.put("openTasksIds", this.openTasksIds);
-        properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        properties.put("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
+        properties.put("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
+        properties.put("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+        properties.put("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
+        properties.put("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
+        properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
 }

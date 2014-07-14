@@ -38,17 +38,17 @@ public abstract class GSimpleEvent
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("number", this.number);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("time", this.time == null ? null : this.time.toString());
-        properties.put("location", this.location);
-        properties.put("duration", this.duration);
-        properties.put("agenda", this.agenda);
-        properties.put("note", this.note);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+        properties.put("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
+        properties.put("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
+        properties.put("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
+        properties.put("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
+        properties.put("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     public int compareTo(SimpleEvent other) {
@@ -105,7 +105,7 @@ public abstract class GSimpleEvent
         this.projectId = id;
         projectCache = null;
         updateLastModified();
-        fireModified("projectId", this.projectId);
+        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -147,7 +147,7 @@ public abstract class GSimpleEvent
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", this.label);
+        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -183,7 +183,7 @@ public abstract class GSimpleEvent
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", this.number);
+        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -213,7 +213,7 @@ public abstract class GSimpleEvent
         if (isDate(date)) return;
         this.date = date;
         updateLastModified();
-        fireModified("date", this.date == null ? null : this.date.toString());
+        fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -249,7 +249,7 @@ public abstract class GSimpleEvent
         if (isTime(time)) return;
         this.time = time;
         updateLastModified();
-        fireModified("time", this.time == null ? null : this.time.toString());
+        fireModified("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
     }
 
     protected ilarkesto.core.time.Time prepareTime(ilarkesto.core.time.Time time) {
@@ -285,7 +285,7 @@ public abstract class GSimpleEvent
         if (isLocation(location)) return;
         this.location = location;
         updateLastModified();
-        fireModified("location", this.location);
+        fireModified("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
     }
 
     protected java.lang.String prepareLocation(java.lang.String location) {
@@ -321,7 +321,7 @@ public abstract class GSimpleEvent
         if (isDuration(duration)) return;
         this.duration = duration;
         updateLastModified();
-        fireModified("duration", this.duration);
+        fireModified("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
     }
 
     protected java.lang.Integer prepareDuration(java.lang.Integer duration) {
@@ -356,7 +356,7 @@ public abstract class GSimpleEvent
         if (isAgenda(agenda)) return;
         this.agenda = agenda;
         updateLastModified();
-        fireModified("agenda", this.agenda);
+        fireModified("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
     }
 
     protected java.lang.String prepareAgenda(java.lang.String agenda) {
@@ -392,7 +392,7 @@ public abstract class GSimpleEvent
         if (isNote(note)) return;
         this.note = note;
         updateLastModified();
-        fireModified("note", this.note);
+        fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {
@@ -413,20 +413,20 @@ public abstract class GSimpleEvent
         setNote((java.lang.String)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("projectId")) updateProject(value);
-            if (property.equals("label")) updateLabel(value);
-            if (property.equals("number")) updateNumber(value);
-            if (property.equals("date")) updateDate(value);
-            if (property.equals("time")) updateTime(value);
-            if (property.equals("location")) updateLocation(value);
-            if (property.equals("duration")) updateDuration(value);
-            if (property.equals("agenda")) updateAgenda(value);
-            if (property.equals("note")) updateNote(value);
+            String value = entry.getValue();
+            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("date")) setDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("time")) setTime(ilarkesto.core.persistance.Persistence.parsePropertyTime(value));
+            if (property.equals("location")) setLocation(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("duration")) setDuration(ilarkesto.core.persistance.Persistence.parsePropertyInteger(value));
+            if (property.equals("agenda")) setAgenda(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("note")) setNote(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

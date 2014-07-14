@@ -713,21 +713,21 @@ public abstract class GRelease
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("parentReleaseId", this.parentReleaseId);
-        properties.put("sprintsIds", this.sprintsIds);
-        properties.put("number", this.number);
-        properties.put("label", this.label);
-        properties.put("note", this.note);
-        properties.put("releaseDate", this.releaseDate == null ? null : this.releaseDate.toString());
-        properties.put("releaseTime", this.releaseTime == null ? null : this.releaseTime.toString());
-        properties.put("released", this.released);
-        properties.put("releaseNotes", this.releaseNotes);
-        properties.put("scmTag", this.scmTag);
-        properties.put("scriptRunning", this.scriptRunning);
-        properties.put("scriptOutput", this.scriptOutput);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("parentReleaseId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentReleaseId));
+        properties.put("sprintsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintsIds));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
+        properties.put("releaseDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.releaseDate));
+        properties.put("releaseTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.releaseTime));
+        properties.put("released", ilarkesto.core.persistance.Persistence.propertyAsString(this.released));
+        properties.put("releaseNotes", ilarkesto.core.persistance.Persistence.propertyAsString(this.releaseNotes));
+        properties.put("scmTag", ilarkesto.core.persistance.Persistence.propertyAsString(this.scmTag));
+        properties.put("scriptRunning", ilarkesto.core.persistance.Persistence.propertyAsString(this.scriptRunning));
+        properties.put("scriptOutput", ilarkesto.core.persistance.Persistence.propertyAsString(this.scriptOutput));
     }
 
     public final java.util.List<scrum.client.release.Release> getReleases() {

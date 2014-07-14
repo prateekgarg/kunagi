@@ -440,16 +440,16 @@ public abstract class GComment
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("parentId", this.parentId);
-        properties.put("authorId", this.authorId);
-        properties.put("published", this.published);
-        properties.put("authorName", this.authorName);
-        properties.put("authorEmail", this.authorEmail);
-        properties.put("authorNameVisible", this.authorNameVisible);
-        properties.put("text", this.text);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
+        properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        properties.put("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
+        properties.put("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+        properties.put("authorName", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorName));
+        properties.put("authorEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorEmail));
+        properties.put("authorNameVisible", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorNameVisible));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     @Override

@@ -38,11 +38,11 @@ public abstract class GWikipage
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("name", this.name);
-        properties.put("text", this.text);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     public int compareTo(Wikipage other) {
@@ -97,7 +97,7 @@ public abstract class GWikipage
         this.projectId = id;
         projectCache = null;
         updateLastModified();
-        fireModified("projectId", this.projectId);
+        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -139,7 +139,7 @@ public abstract class GWikipage
         if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         this.name = name;
         updateLastModified();
-        fireModified("name", this.name);
+        fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -175,7 +175,7 @@ public abstract class GWikipage
         if (isText(text)) return;
         this.text = text;
         updateLastModified();
-        fireModified("text", this.text);
+        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -196,14 +196,14 @@ public abstract class GWikipage
         setText((java.lang.String)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("projectId")) updateProject(value);
-            if (property.equals("name")) updateName(value);
-            if (property.equals("text")) updateText(value);
+            String value = entry.getValue();
+            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("name")) setName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

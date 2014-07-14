@@ -2369,51 +2369,51 @@ public abstract class GProject
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("label", this.label);
-        properties.put("vision", this.vision);
-        properties.put("productLabel", this.productLabel);
-        properties.put("shortDescription", this.shortDescription);
-        properties.put("description", this.description);
-        properties.put("longDescription", this.longDescription);
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
-        properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("participantsIds", this.participantsIds);
-        properties.put("adminsIds", this.adminsIds);
-        properties.put("productOwnersIds", this.productOwnersIds);
-        properties.put("scrumMastersIds", this.scrumMastersIds);
-        properties.put("teamMembersIds", this.teamMembersIds);
-        properties.put("currentSprintId", this.currentSprintId);
-        properties.put("nextSprintId", this.nextSprintId);
-        properties.put("velocity", this.velocity);
-        properties.put("requirementsOrderIds", this.requirementsOrderIds);
-        properties.put("urgentIssuesOrderIds", this.urgentIssuesOrderIds);
-        properties.put("lastSprintNumber", this.lastSprintNumber);
-        properties.put("lastTaskNumber", this.lastTaskNumber);
-        properties.put("lastRequirementNumber", this.lastRequirementNumber);
-        properties.put("lastQualityNumber", this.lastQualityNumber);
-        properties.put("lastRiskNumber", this.lastRiskNumber);
-        properties.put("lastIssueNumber", this.lastIssueNumber);
-        properties.put("lastImpedimentNumber", this.lastImpedimentNumber);
-        properties.put("lastFileNumber", this.lastFileNumber);
-        properties.put("lastSubjectNumber", this.lastSubjectNumber);
-        properties.put("lastEventNumber", this.lastEventNumber);
-        properties.put("lastReleaseNumber", this.lastReleaseNumber);
-        properties.put("lastBlogEntryNumber", this.lastBlogEntryNumber);
-        properties.put("punishmentUnit", this.punishmentUnit);
-        properties.put("punishmentFactor", this.punishmentFactor);
-        properties.put("homepageDir", this.homepageDir);
-        properties.put("homepageUrl", this.homepageUrl);
-        properties.put("autoUpdateHomepage", this.autoUpdateHomepage);
-        properties.put("releaseScriptPath", this.releaseScriptPath);
-        properties.put("supportEmail", this.supportEmail);
-        properties.put("issueReplyTemplate", this.issueReplyTemplate);
-        properties.put("subscriberNotificationTemplate", this.subscriberNotificationTemplate);
-        properties.put("lastOpenedDateAndTime", this.lastOpenedDateAndTime == null ? null : this.lastOpenedDateAndTime.toString());
-        properties.put("freeDays", this.freeDays);
-        properties.put("autoCreateTasksFromQualities", this.autoCreateTasksFromQualities);
-        properties.put("releasingInfo", this.releasingInfo);
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("vision", ilarkesto.core.persistance.Persistence.propertyAsString(this.vision));
+        properties.put("productLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.productLabel));
+        properties.put("shortDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.shortDescription));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("longDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.longDescription));
+        properties.put("begin", ilarkesto.core.persistance.Persistence.propertyAsString(this.begin));
+        properties.put("end", ilarkesto.core.persistance.Persistence.propertyAsString(this.end));
+        properties.put("participantsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.participantsIds));
+        properties.put("adminsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminsIds));
+        properties.put("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
+        properties.put("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
+        properties.put("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
+        properties.put("currentSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentSprintId));
+        properties.put("nextSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.nextSprintId));
+        properties.put("velocity", ilarkesto.core.persistance.Persistence.propertyAsString(this.velocity));
+        properties.put("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+        properties.put("urgentIssuesOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgentIssuesOrderIds));
+        properties.put("lastSprintNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSprintNumber));
+        properties.put("lastTaskNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastTaskNumber));
+        properties.put("lastRequirementNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRequirementNumber));
+        properties.put("lastQualityNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastQualityNumber));
+        properties.put("lastRiskNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRiskNumber));
+        properties.put("lastIssueNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastIssueNumber));
+        properties.put("lastImpedimentNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastImpedimentNumber));
+        properties.put("lastFileNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastFileNumber));
+        properties.put("lastSubjectNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSubjectNumber));
+        properties.put("lastEventNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastEventNumber));
+        properties.put("lastReleaseNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastReleaseNumber));
+        properties.put("lastBlogEntryNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastBlogEntryNumber));
+        properties.put("punishmentUnit", ilarkesto.core.persistance.Persistence.propertyAsString(this.punishmentUnit));
+        properties.put("punishmentFactor", ilarkesto.core.persistance.Persistence.propertyAsString(this.punishmentFactor));
+        properties.put("homepageDir", ilarkesto.core.persistance.Persistence.propertyAsString(this.homepageDir));
+        properties.put("homepageUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.homepageUrl));
+        properties.put("autoUpdateHomepage", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoUpdateHomepage));
+        properties.put("releaseScriptPath", ilarkesto.core.persistance.Persistence.propertyAsString(this.releaseScriptPath));
+        properties.put("supportEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.supportEmail));
+        properties.put("issueReplyTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueReplyTemplate));
+        properties.put("subscriberNotificationTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriberNotificationTemplate));
+        properties.put("lastOpenedDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastOpenedDateAndTime));
+        properties.put("freeDays", ilarkesto.core.persistance.Persistence.propertyAsString(this.freeDays));
+        properties.put("autoCreateTasksFromQualities", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoCreateTasksFromQualities));
+        properties.put("releasingInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasingInfo));
     }
 
     public final java.util.List<scrum.client.sprint.Sprint> getSprints() {

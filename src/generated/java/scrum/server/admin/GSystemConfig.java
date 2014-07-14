@@ -38,37 +38,37 @@ public abstract class GSystemConfig
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("url", this.url);
-        properties.put("adminEmail", this.adminEmail);
-        properties.put("googleAnalyticsId", this.googleAnalyticsId);
-        properties.put("smtpServer", this.smtpServer);
-        properties.put("smtpPort", this.smtpPort);
-        properties.put("smtpTls", this.smtpTls);
-        properties.put("smtpUser", this.smtpUser);
-        properties.put("smtpPassword", this.smtpPassword);
-        properties.put("smtpFrom", this.smtpFrom);
-        properties.put("instanceName", this.instanceName);
-        properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
-        properties.put("loginPageMessage", this.loginPageMessage);
-        properties.put("registerPageMessage", this.registerPageMessage);
-        properties.put("aboutPageMessage", this.aboutPageMessage);
-        properties.put("userEmailMandatory", this.userEmailMandatory);
-        properties.put("registrationDisabled", this.registrationDisabled);
-        properties.put("projectCreationDisabled", this.projectCreationDisabled);
-        properties.put("defaultUserPassword", this.defaultUserPassword);
-        properties.put("openIdDisabled", this.openIdDisabled);
-        properties.put("openIdDomains", this.openIdDomains);
-        properties.put("versionCheckEnabled", this.versionCheckEnabled);
-        properties.put("ldapEnabled", this.ldapEnabled);
-        properties.put("ldapUrl", this.ldapUrl);
-        properties.put("ldapUser", this.ldapUser);
-        properties.put("ldapPassword", this.ldapPassword);
-        properties.put("ldapBaseDn", this.ldapBaseDn);
-        properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
-        properties.put("maxFileSize", this.maxFileSize);
-        properties.put("subscriptionKeySeed", this.subscriptionKeySeed);
+        properties.put("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
+        properties.put("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
+        properties.put("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
+        properties.put("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
+        properties.put("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
+        properties.put("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
+        properties.put("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
+        properties.put("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
+        properties.put("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
+        properties.put("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
+        properties.put("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
+        properties.put("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
+        properties.put("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
+        properties.put("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
+        properties.put("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
+        properties.put("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
+        properties.put("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
+        properties.put("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
+        properties.put("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
+        properties.put("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
+        properties.put("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
+        properties.put("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
+        properties.put("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
+        properties.put("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
+        properties.put("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
+        properties.put("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
+        properties.put("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
+        properties.put("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
+        properties.put("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
     }
 
     public int compareTo(SystemConfig other) {
@@ -94,7 +94,7 @@ public abstract class GSystemConfig
         if (isUrl(url)) return;
         this.url = url;
         updateLastModified();
-        fireModified("url", this.url);
+        fireModified("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
     }
 
     protected java.lang.String prepareUrl(java.lang.String url) {
@@ -130,7 +130,7 @@ public abstract class GSystemConfig
         if (isAdminEmail(adminEmail)) return;
         this.adminEmail = adminEmail;
         updateLastModified();
-        fireModified("adminEmail", this.adminEmail);
+        fireModified("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
     }
 
     protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
@@ -166,7 +166,7 @@ public abstract class GSystemConfig
         if (isGoogleAnalyticsId(googleAnalyticsId)) return;
         this.googleAnalyticsId = googleAnalyticsId;
         updateLastModified();
-        fireModified("googleAnalyticsId", this.googleAnalyticsId);
+        fireModified("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
     }
 
     protected java.lang.String prepareGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
@@ -202,7 +202,7 @@ public abstract class GSystemConfig
         if (isSmtpServer(smtpServer)) return;
         this.smtpServer = smtpServer;
         updateLastModified();
-        fireModified("smtpServer", this.smtpServer);
+        fireModified("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
     }
 
     protected java.lang.String prepareSmtpServer(java.lang.String smtpServer) {
@@ -238,7 +238,7 @@ public abstract class GSystemConfig
         if (isSmtpPort(smtpPort)) return;
         this.smtpPort = smtpPort;
         updateLastModified();
-        fireModified("smtpPort", this.smtpPort);
+        fireModified("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
     }
 
     protected java.lang.Integer prepareSmtpPort(java.lang.Integer smtpPort) {
@@ -273,7 +273,7 @@ public abstract class GSystemConfig
         if (isSmtpTls(smtpTls)) return;
         this.smtpTls = smtpTls;
         updateLastModified();
-        fireModified("smtpTls", this.smtpTls);
+        fireModified("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
     }
 
     protected boolean prepareSmtpTls(boolean smtpTls) {
@@ -303,7 +303,7 @@ public abstract class GSystemConfig
         if (isSmtpUser(smtpUser)) return;
         this.smtpUser = smtpUser;
         updateLastModified();
-        fireModified("smtpUser", this.smtpUser);
+        fireModified("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
     }
 
     protected java.lang.String prepareSmtpUser(java.lang.String smtpUser) {
@@ -339,7 +339,7 @@ public abstract class GSystemConfig
         if (isSmtpPassword(smtpPassword)) return;
         this.smtpPassword = smtpPassword;
         updateLastModified();
-        fireModified("smtpPassword", this.smtpPassword);
+        fireModified("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
     }
 
     protected java.lang.String prepareSmtpPassword(java.lang.String smtpPassword) {
@@ -375,7 +375,7 @@ public abstract class GSystemConfig
         if (isSmtpFrom(smtpFrom)) return;
         this.smtpFrom = smtpFrom;
         updateLastModified();
-        fireModified("smtpFrom", this.smtpFrom);
+        fireModified("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
     }
 
     protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
@@ -411,7 +411,7 @@ public abstract class GSystemConfig
         if (isInstanceName(instanceName)) return;
         this.instanceName = instanceName;
         updateLastModified();
-        fireModified("instanceName", this.instanceName);
+        fireModified("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
     }
 
     protected java.lang.String prepareInstanceName(java.lang.String instanceName) {
@@ -447,7 +447,7 @@ public abstract class GSystemConfig
         if (isLoginPageLogoUrl(loginPageLogoUrl)) return;
         this.loginPageLogoUrl = loginPageLogoUrl;
         updateLastModified();
-        fireModified("loginPageLogoUrl", this.loginPageLogoUrl);
+        fireModified("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
     }
 
     protected java.lang.String prepareLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
@@ -483,7 +483,7 @@ public abstract class GSystemConfig
         if (isLoginPageMessage(loginPageMessage)) return;
         this.loginPageMessage = loginPageMessage;
         updateLastModified();
-        fireModified("loginPageMessage", this.loginPageMessage);
+        fireModified("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
     }
 
     protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
@@ -519,7 +519,7 @@ public abstract class GSystemConfig
         if (isRegisterPageMessage(registerPageMessage)) return;
         this.registerPageMessage = registerPageMessage;
         updateLastModified();
-        fireModified("registerPageMessage", this.registerPageMessage);
+        fireModified("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
     }
 
     protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
@@ -555,7 +555,7 @@ public abstract class GSystemConfig
         if (isAboutPageMessage(aboutPageMessage)) return;
         this.aboutPageMessage = aboutPageMessage;
         updateLastModified();
-        fireModified("aboutPageMessage", this.aboutPageMessage);
+        fireModified("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
     }
 
     protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {
@@ -591,7 +591,7 @@ public abstract class GSystemConfig
         if (isUserEmailMandatory(userEmailMandatory)) return;
         this.userEmailMandatory = userEmailMandatory;
         updateLastModified();
-        fireModified("userEmailMandatory", this.userEmailMandatory);
+        fireModified("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
     }
 
     protected boolean prepareUserEmailMandatory(boolean userEmailMandatory) {
@@ -621,7 +621,7 @@ public abstract class GSystemConfig
         if (isRegistrationDisabled(registrationDisabled)) return;
         this.registrationDisabled = registrationDisabled;
         updateLastModified();
-        fireModified("registrationDisabled", this.registrationDisabled);
+        fireModified("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
     }
 
     protected boolean prepareRegistrationDisabled(boolean registrationDisabled) {
@@ -651,7 +651,7 @@ public abstract class GSystemConfig
         if (isProjectCreationDisabled(projectCreationDisabled)) return;
         this.projectCreationDisabled = projectCreationDisabled;
         updateLastModified();
-        fireModified("projectCreationDisabled", this.projectCreationDisabled);
+        fireModified("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
     }
 
     protected boolean prepareProjectCreationDisabled(boolean projectCreationDisabled) {
@@ -681,7 +681,7 @@ public abstract class GSystemConfig
         if (isDefaultUserPassword(defaultUserPassword)) return;
         this.defaultUserPassword = defaultUserPassword;
         updateLastModified();
-        fireModified("defaultUserPassword", this.defaultUserPassword);
+        fireModified("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
     }
 
     protected java.lang.String prepareDefaultUserPassword(java.lang.String defaultUserPassword) {
@@ -717,7 +717,7 @@ public abstract class GSystemConfig
         if (isOpenIdDisabled(openIdDisabled)) return;
         this.openIdDisabled = openIdDisabled;
         updateLastModified();
-        fireModified("openIdDisabled", this.openIdDisabled);
+        fireModified("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
     }
 
     protected boolean prepareOpenIdDisabled(boolean openIdDisabled) {
@@ -747,7 +747,7 @@ public abstract class GSystemConfig
         if (isOpenIdDomains(openIdDomains)) return;
         this.openIdDomains = openIdDomains;
         updateLastModified();
-        fireModified("openIdDomains", this.openIdDomains);
+        fireModified("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
     }
 
     protected java.lang.String prepareOpenIdDomains(java.lang.String openIdDomains) {
@@ -783,7 +783,7 @@ public abstract class GSystemConfig
         if (isVersionCheckEnabled(versionCheckEnabled)) return;
         this.versionCheckEnabled = versionCheckEnabled;
         updateLastModified();
-        fireModified("versionCheckEnabled", this.versionCheckEnabled);
+        fireModified("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
     }
 
     protected boolean prepareVersionCheckEnabled(boolean versionCheckEnabled) {
@@ -813,7 +813,7 @@ public abstract class GSystemConfig
         if (isLdapEnabled(ldapEnabled)) return;
         this.ldapEnabled = ldapEnabled;
         updateLastModified();
-        fireModified("ldapEnabled", this.ldapEnabled);
+        fireModified("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
     }
 
     protected boolean prepareLdapEnabled(boolean ldapEnabled) {
@@ -843,7 +843,7 @@ public abstract class GSystemConfig
         if (isLdapUrl(ldapUrl)) return;
         this.ldapUrl = ldapUrl;
         updateLastModified();
-        fireModified("ldapUrl", this.ldapUrl);
+        fireModified("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
     }
 
     protected java.lang.String prepareLdapUrl(java.lang.String ldapUrl) {
@@ -879,7 +879,7 @@ public abstract class GSystemConfig
         if (isLdapUser(ldapUser)) return;
         this.ldapUser = ldapUser;
         updateLastModified();
-        fireModified("ldapUser", this.ldapUser);
+        fireModified("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
     }
 
     protected java.lang.String prepareLdapUser(java.lang.String ldapUser) {
@@ -915,7 +915,7 @@ public abstract class GSystemConfig
         if (isLdapPassword(ldapPassword)) return;
         this.ldapPassword = ldapPassword;
         updateLastModified();
-        fireModified("ldapPassword", this.ldapPassword);
+        fireModified("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
     }
 
     protected java.lang.String prepareLdapPassword(java.lang.String ldapPassword) {
@@ -951,7 +951,7 @@ public abstract class GSystemConfig
         if (isLdapBaseDn(ldapBaseDn)) return;
         this.ldapBaseDn = ldapBaseDn;
         updateLastModified();
-        fireModified("ldapBaseDn", this.ldapBaseDn);
+        fireModified("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
     }
 
     protected java.lang.String prepareLdapBaseDn(java.lang.String ldapBaseDn) {
@@ -987,7 +987,7 @@ public abstract class GSystemConfig
         if (isLdapUserFilterRegex(ldapUserFilterRegex)) return;
         this.ldapUserFilterRegex = ldapUserFilterRegex;
         updateLastModified();
-        fireModified("ldapUserFilterRegex", this.ldapUserFilterRegex);
+        fireModified("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
     }
 
     protected java.lang.String prepareLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
@@ -1023,7 +1023,7 @@ public abstract class GSystemConfig
         if (isMaxFileSize(maxFileSize)) return;
         this.maxFileSize = maxFileSize;
         updateLastModified();
-        fireModified("maxFileSize", this.maxFileSize);
+        fireModified("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
     }
 
     protected java.lang.Integer prepareMaxFileSize(java.lang.Integer maxFileSize) {
@@ -1058,7 +1058,7 @@ public abstract class GSystemConfig
         if (isSubscriptionKeySeed(subscriptionKeySeed)) return;
         this.subscriptionKeySeed = subscriptionKeySeed;
         updateLastModified();
-        fireModified("subscriptionKeySeed", this.subscriptionKeySeed);
+        fireModified("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
     }
 
     protected java.lang.String prepareSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
@@ -1079,40 +1079,40 @@ public abstract class GSystemConfig
         setSubscriptionKeySeed((java.lang.String)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("url")) updateUrl(value);
-            if (property.equals("adminEmail")) updateAdminEmail(value);
-            if (property.equals("googleAnalyticsId")) updateGoogleAnalyticsId(value);
-            if (property.equals("smtpServer")) updateSmtpServer(value);
-            if (property.equals("smtpPort")) updateSmtpPort(value);
-            if (property.equals("smtpTls")) updateSmtpTls(value);
-            if (property.equals("smtpUser")) updateSmtpUser(value);
-            if (property.equals("smtpPassword")) updateSmtpPassword(value);
-            if (property.equals("smtpFrom")) updateSmtpFrom(value);
-            if (property.equals("instanceName")) updateInstanceName(value);
-            if (property.equals("loginPageLogoUrl")) updateLoginPageLogoUrl(value);
-            if (property.equals("loginPageMessage")) updateLoginPageMessage(value);
-            if (property.equals("registerPageMessage")) updateRegisterPageMessage(value);
-            if (property.equals("aboutPageMessage")) updateAboutPageMessage(value);
-            if (property.equals("userEmailMandatory")) updateUserEmailMandatory(value);
-            if (property.equals("registrationDisabled")) updateRegistrationDisabled(value);
-            if (property.equals("projectCreationDisabled")) updateProjectCreationDisabled(value);
-            if (property.equals("defaultUserPassword")) updateDefaultUserPassword(value);
-            if (property.equals("openIdDisabled")) updateOpenIdDisabled(value);
-            if (property.equals("openIdDomains")) updateOpenIdDomains(value);
-            if (property.equals("versionCheckEnabled")) updateVersionCheckEnabled(value);
-            if (property.equals("ldapEnabled")) updateLdapEnabled(value);
-            if (property.equals("ldapUrl")) updateLdapUrl(value);
-            if (property.equals("ldapUser")) updateLdapUser(value);
-            if (property.equals("ldapPassword")) updateLdapPassword(value);
-            if (property.equals("ldapBaseDn")) updateLdapBaseDn(value);
-            if (property.equals("ldapUserFilterRegex")) updateLdapUserFilterRegex(value);
-            if (property.equals("maxFileSize")) updateMaxFileSize(value);
-            if (property.equals("subscriptionKeySeed")) updateSubscriptionKeySeed(value);
+            String value = entry.getValue();
+            if (property.equals("url")) setUrl(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("adminEmail")) setAdminEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("googleAnalyticsId")) setGoogleAnalyticsId(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("smtpServer")) setSmtpServer(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("smtpPort")) setSmtpPort(ilarkesto.core.persistance.Persistence.parsePropertyInteger(value));
+            if (property.equals("smtpTls")) setSmtpTls(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("smtpUser")) setSmtpUser(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("smtpPassword")) setSmtpPassword(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("smtpFrom")) setSmtpFrom(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("instanceName")) setInstanceName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("loginPageLogoUrl")) setLoginPageLogoUrl(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("loginPageMessage")) setLoginPageMessage(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("registerPageMessage")) setRegisterPageMessage(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("aboutPageMessage")) setAboutPageMessage(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("userEmailMandatory")) setUserEmailMandatory(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("registrationDisabled")) setRegistrationDisabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("projectCreationDisabled")) setProjectCreationDisabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("defaultUserPassword")) setDefaultUserPassword(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("openIdDisabled")) setOpenIdDisabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("openIdDomains")) setOpenIdDomains(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("versionCheckEnabled")) setVersionCheckEnabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("ldapEnabled")) setLdapEnabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("ldapUrl")) setLdapUrl(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("ldapUser")) setLdapUser(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("ldapPassword")) setLdapPassword(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("ldapBaseDn")) setLdapBaseDn(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("ldapUserFilterRegex")) setLdapUserFilterRegex(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("maxFileSize")) setMaxFileSize(ilarkesto.core.persistance.Persistence.parsePropertyInteger(value));
+            if (property.equals("subscriptionKeySeed")) setSubscriptionKeySeed(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

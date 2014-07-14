@@ -38,11 +38,11 @@ public abstract class GProjectSprintSnapshot
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("sprintId", this.sprintId);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("burnedWork", this.burnedWork);
+        properties.put("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        properties.put("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+        properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     public int compareTo(ProjectSprintSnapshot other) {
@@ -85,7 +85,7 @@ public abstract class GProjectSprintSnapshot
         this.sprintId = id;
         sprintCache = null;
         updateLastModified();
-        fireModified("sprintId", this.sprintId);
+        fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -126,7 +126,7 @@ public abstract class GProjectSprintSnapshot
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork", this.remainingWork);
+        fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -156,7 +156,7 @@ public abstract class GProjectSprintSnapshot
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", this.burnedWork);
+        fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -171,14 +171,14 @@ public abstract class GProjectSprintSnapshot
         setBurnedWork((Integer)value);
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("sprintId")) updateSprint(value);
-            if (property.equals("remainingWork")) updateRemainingWork(value);
-            if (property.equals("burnedWork")) updateBurnedWork(value);
+            String value = entry.getValue();
+            if (property.equals("sprintId")) setSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("remainingWork")) setRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
         }
     }
 

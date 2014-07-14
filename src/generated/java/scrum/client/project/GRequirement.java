@@ -862,26 +862,26 @@ public abstract class GRequirement
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("sprintId", this.sprintId);
-        properties.put("issueId", this.issueId);
-        properties.put("number", this.number);
-        properties.put("qualitysIds", this.qualitysIds);
-        properties.put("label", this.label);
-        properties.put("description", this.description);
-        properties.put("testDescription", this.testDescription);
-        properties.put("estimatedWork", this.estimatedWork);
-        properties.put("rejectDate", this.rejectDate == null ? null : this.rejectDate.toString());
-        properties.put("closed", this.closed);
-        properties.put("deleted", this.deleted);
-        properties.put("dirty", this.dirty);
-        properties.put("workEstimationVotingActive", this.workEstimationVotingActive);
-        properties.put("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
-        properties.put("tasksOrderIds", this.tasksOrderIds);
-        properties.put("themes", this.themes);
-        properties.put("epicId", this.epicId);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        properties.put("issueId", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
+        properties.put("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
+        properties.put("rejectDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectDate));
+        properties.put("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
+        properties.put("deleted", ilarkesto.core.persistance.Persistence.propertyAsString(this.deleted));
+        properties.put("dirty", ilarkesto.core.persistance.Persistence.propertyAsString(this.dirty));
+        properties.put("workEstimationVotingActive", ilarkesto.core.persistance.Persistence.propertyAsString(this.workEstimationVotingActive));
+        properties.put("workEstimationVotingShowoff", ilarkesto.core.persistance.Persistence.propertyAsString(this.workEstimationVotingShowoff));
+        properties.put("tasksOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.tasksOrderIds));
+        properties.put("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
+        properties.put("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
     }
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {

@@ -38,17 +38,17 @@ public abstract class GTask
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("requirementId", this.requirementId);
-        properties.put("number", this.number);
-        properties.put("label", this.label);
-        properties.put("description", this.description);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("ownerId", this.ownerId);
-        properties.put("impedimentId", this.impedimentId);
-        properties.put("closedInPastSprintId", this.closedInPastSprintId);
+        properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+        properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+        properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        properties.put("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+        properties.put("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 
     public int compareTo(Task other) {
@@ -107,7 +107,7 @@ public abstract class GTask
         this.requirementId = id;
         requirementCache = null;
         updateLastModified();
-        fireModified("requirementId", this.requirementId);
+        fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -148,7 +148,7 @@ public abstract class GTask
         if (isNumber(number)) return;
         this.number = number;
         updateLastModified();
-        fireModified("number", this.number);
+        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -179,7 +179,7 @@ public abstract class GTask
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
         updateLastModified();
-        fireModified("label", this.label);
+        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -215,7 +215,7 @@ public abstract class GTask
         if (isDescription(description)) return;
         this.description = description;
         updateLastModified();
-        fireModified("description", this.description);
+        fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -251,7 +251,7 @@ public abstract class GTask
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
         updateLastModified();
-        fireModified("remainingWork", this.remainingWork);
+        fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -281,7 +281,7 @@ public abstract class GTask
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
         updateLastModified();
-        fireModified("burnedWork", this.burnedWork);
+        fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -328,7 +328,7 @@ public abstract class GTask
         this.ownerId = id;
         ownerCache = null;
         updateLastModified();
-        fireModified("ownerId", this.ownerId);
+        fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -386,7 +386,7 @@ public abstract class GTask
         this.impedimentId = id;
         impedimentCache = null;
         updateLastModified();
-        fireModified("impedimentId", this.impedimentId);
+        fireModified("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
     }
 
     protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
@@ -444,7 +444,7 @@ public abstract class GTask
         this.closedInPastSprintId = id;
         closedInPastSprintCache = null;
         updateLastModified();
-        fireModified("closedInPastSprintId", this.closedInPastSprintId);
+        fireModified("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 
     protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
@@ -470,20 +470,20 @@ public abstract class GTask
         setClosedInPastSprint(value == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById((String)value));
     }
 
-    public void updateProperties(Map<?, ?> properties) {
-        for (Map.Entry entry : properties.entrySet()) {
-            String property = (String) entry.getKey();
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
             if (property.equals("id")) continue;
-            Object value = entry.getValue();
-            if (property.equals("requirementId")) updateRequirement(value);
-            if (property.equals("number")) updateNumber(value);
-            if (property.equals("label")) updateLabel(value);
-            if (property.equals("description")) updateDescription(value);
-            if (property.equals("remainingWork")) updateRemainingWork(value);
-            if (property.equals("burnedWork")) updateBurnedWork(value);
-            if (property.equals("ownerId")) updateOwner(value);
-            if (property.equals("impedimentId")) updateImpediment(value);
-            if (property.equals("closedInPastSprintId")) updateClosedInPastSprint(value);
+            String value = entry.getValue();
+            if (property.equals("requirementId")) setRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("remainingWork")) setRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("ownerId")) setOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("impedimentId")) setImpedimentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("closedInPastSprintId")) setClosedInPastSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
         }
     }
 

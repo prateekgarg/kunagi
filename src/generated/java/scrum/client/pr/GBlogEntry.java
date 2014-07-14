@@ -442,16 +442,16 @@ public abstract class GBlogEntry
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("number", this.number);
-        properties.put("authorsIds", this.authorsIds);
-        properties.put("title", this.title);
-        properties.put("text", this.text);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
-        properties.put("releasesIds", this.releasesIds);
-        properties.put("published", this.published);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+        properties.put("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
+        properties.put("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+        properties.put("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+        properties.put("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
     @Override

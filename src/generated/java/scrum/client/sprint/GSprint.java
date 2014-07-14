@@ -936,25 +936,25 @@ public abstract class GSprint
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("number", this.number);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("goal", this.goal);
-        properties.put("begin", this.begin == null ? null : this.begin.toString());
-        properties.put("end", this.end == null ? null : this.end.toString());
-        properties.put("originallyEnd", this.originallyEnd == null ? null : this.originallyEnd.toString());
-        properties.put("velocity", this.velocity);
-        properties.put("completedRequirementsData", this.completedRequirementsData);
-        properties.put("incompletedRequirementsData", this.incompletedRequirementsData);
-        properties.put("planningNote", this.planningNote);
-        properties.put("reviewNote", this.reviewNote);
-        properties.put("retrospectiveNote", this.retrospectiveNote);
-        properties.put("requirementsOrderIds", this.requirementsOrderIds);
-        properties.put("productOwnersIds", this.productOwnersIds);
-        properties.put("scrumMastersIds", this.scrumMastersIds);
-        properties.put("teamMembersIds", this.teamMembersIds);
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("goal", ilarkesto.core.persistance.Persistence.propertyAsString(this.goal));
+        properties.put("begin", ilarkesto.core.persistance.Persistence.propertyAsString(this.begin));
+        properties.put("end", ilarkesto.core.persistance.Persistence.propertyAsString(this.end));
+        properties.put("originallyEnd", ilarkesto.core.persistance.Persistence.propertyAsString(this.originallyEnd));
+        properties.put("velocity", ilarkesto.core.persistance.Persistence.propertyAsString(this.velocity));
+        properties.put("completedRequirementsData", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsData));
+        properties.put("incompletedRequirementsData", ilarkesto.core.persistance.Persistence.propertyAsString(this.incompletedRequirementsData));
+        properties.put("planningNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.planningNote));
+        properties.put("reviewNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.reviewNote));
+        properties.put("retrospectiveNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.retrospectiveNote));
+        properties.put("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+        properties.put("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
+        properties.put("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
+        properties.put("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
     }
 
     public final java.util.List<scrum.client.project.Project> getCurrentSprintProjects() {

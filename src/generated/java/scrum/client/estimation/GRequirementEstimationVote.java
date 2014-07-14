@@ -156,11 +156,11 @@ public abstract class GRequirementEstimationVote
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("requirementId", this.requirementId);
-        properties.put("userId", this.userId);
-        properties.put("estimatedWork", this.estimatedWork);
+        properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        properties.put("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        properties.put("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
 }

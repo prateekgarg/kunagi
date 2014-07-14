@@ -156,11 +156,11 @@ public abstract class GEmoticon
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("parentId", this.parentId);
-        properties.put("ownerId", this.ownerId);
-        properties.put("emotion", this.emotion);
+        properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        properties.put("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
     }
 
 }

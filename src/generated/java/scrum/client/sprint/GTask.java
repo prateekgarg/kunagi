@@ -486,17 +486,17 @@ public abstract class GTask
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("requirementId", this.requirementId);
-        properties.put("number", this.number);
-        properties.put("label", this.label);
-        properties.put("description", this.description);
-        properties.put("remainingWork", this.remainingWork);
-        properties.put("burnedWork", this.burnedWork);
-        properties.put("ownerId", this.ownerId);
-        properties.put("impedimentId", this.impedimentId);
-        properties.put("closedInPastSprintId", this.closedInPastSprintId);
+        properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+        properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+        properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        properties.put("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+        properties.put("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 
     public final java.util.List<scrum.client.sprint.SprintReport> getSprintReports() {

@@ -544,17 +544,17 @@ public abstract class GSimpleEvent
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("label", this.label);
-        properties.put("number", this.number);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("time", this.time == null ? null : this.time.toString());
-        properties.put("location", this.location);
-        properties.put("duration", this.duration);
-        properties.put("agenda", this.agenda);
-        properties.put("note", this.note);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+        properties.put("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
+        properties.put("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
+        properties.put("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
+        properties.put("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
+        properties.put("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     @Override

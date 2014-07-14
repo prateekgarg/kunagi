@@ -1706,37 +1706,37 @@ public abstract class GSystemConfig
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("url", this.url);
-        properties.put("adminEmail", this.adminEmail);
-        properties.put("googleAnalyticsId", this.googleAnalyticsId);
-        properties.put("smtpServer", this.smtpServer);
-        properties.put("smtpPort", this.smtpPort);
-        properties.put("smtpTls", this.smtpTls);
-        properties.put("smtpUser", this.smtpUser);
-        properties.put("smtpPassword", this.smtpPassword);
-        properties.put("smtpFrom", this.smtpFrom);
-        properties.put("instanceName", this.instanceName);
-        properties.put("loginPageLogoUrl", this.loginPageLogoUrl);
-        properties.put("loginPageMessage", this.loginPageMessage);
-        properties.put("registerPageMessage", this.registerPageMessage);
-        properties.put("aboutPageMessage", this.aboutPageMessage);
-        properties.put("userEmailMandatory", this.userEmailMandatory);
-        properties.put("registrationDisabled", this.registrationDisabled);
-        properties.put("projectCreationDisabled", this.projectCreationDisabled);
-        properties.put("defaultUserPassword", this.defaultUserPassword);
-        properties.put("openIdDisabled", this.openIdDisabled);
-        properties.put("openIdDomains", this.openIdDomains);
-        properties.put("versionCheckEnabled", this.versionCheckEnabled);
-        properties.put("ldapEnabled", this.ldapEnabled);
-        properties.put("ldapUrl", this.ldapUrl);
-        properties.put("ldapUser", this.ldapUser);
-        properties.put("ldapPassword", this.ldapPassword);
-        properties.put("ldapBaseDn", this.ldapBaseDn);
-        properties.put("ldapUserFilterRegex", this.ldapUserFilterRegex);
-        properties.put("maxFileSize", this.maxFileSize);
-        properties.put("subscriptionKeySeed", this.subscriptionKeySeed);
+        properties.put("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
+        properties.put("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
+        properties.put("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
+        properties.put("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
+        properties.put("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
+        properties.put("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
+        properties.put("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
+        properties.put("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
+        properties.put("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
+        properties.put("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
+        properties.put("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
+        properties.put("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
+        properties.put("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
+        properties.put("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
+        properties.put("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
+        properties.put("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
+        properties.put("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
+        properties.put("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
+        properties.put("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
+        properties.put("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
+        properties.put("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
+        properties.put("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
+        properties.put("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
+        properties.put("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
+        properties.put("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
+        properties.put("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
+        properties.put("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
+        properties.put("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
+        properties.put("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
     }
 
 }

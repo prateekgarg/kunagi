@@ -381,15 +381,15 @@ public abstract class GChange
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("parentId", this.parentId);
-        properties.put("userId", this.userId);
-        properties.put("dateAndTime", this.dateAndTime == null ? null : this.dateAndTime.toString());
-        properties.put("key", this.key);
-        properties.put("oldValue", this.oldValue);
-        properties.put("newValue", this.newValue);
-        properties.put("comment", this.comment);
+        properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        properties.put("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+        properties.put("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
+        properties.put("oldValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.oldValue));
+        properties.put("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
+        properties.put("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
     }
 
 }

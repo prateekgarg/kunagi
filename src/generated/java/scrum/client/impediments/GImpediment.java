@@ -429,15 +429,15 @@ public abstract class GImpediment
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("projectId", this.projectId);
-        properties.put("number", this.number);
-        properties.put("label", this.label);
-        properties.put("date", this.date == null ? null : this.date.toString());
-        properties.put("description", this.description);
-        properties.put("solution", this.solution);
-        properties.put("closed", this.closed);
+        properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+        properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+        properties.put("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+        properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
+        properties.put("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
     }
 
     public final java.util.List<scrum.client.sprint.Task> getTasks() {

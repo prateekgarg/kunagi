@@ -96,10 +96,10 @@ public abstract class GSubscription
     }
 
     @Override
-    public void storeProperties(Map properties) {
+    public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
-        properties.put("subjectId", this.subjectId);
-        properties.put("subscribersEmails", this.subscribersEmails);
+        properties.put("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        properties.put("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
     }
 
 }
