@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GChatMessage
             extends AEntity
@@ -59,34 +60,26 @@ public abstract class GChatMessage
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -117,34 +110,26 @@ public abstract class GChatMessage
     // -----------------------------------------------------------
 
     private String authorId;
-    private transient scrum.server.admin.User authorCache;
-
-    private void updateAuthorCache() {
-        authorCache = this.authorId == null ? null : (scrum.server.admin.User)userDao.getById(this.authorId);
-    }
 
     public final String getAuthorId() {
         return this.authorId;
     }
 
     public final scrum.server.admin.User getAuthor() {
-        if (authorCache == null) updateAuthorCache();
-        return authorCache;
+        return this.authorId == null ? null : (scrum.server.admin.User)userDao.getById(this.authorId);
     }
 
     public final void setAuthor(scrum.server.admin.User author) {
         author = prepareAuthor(author);
         if (isAuthor(author)) return;
         setAuthorId(author == null ? null : author.getId());
-        authorCache = author;
     }
 
     public final void setAuthorId(String id) {
         if (Utl.equals(authorId, id)) return;
         this.authorId = id;
-        authorCache = null;
-        updateLastModified();
-        fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
+            updateLastModified();
+            fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -185,8 +170,8 @@ public abstract class GChatMessage
         if (isText(text)) return;
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
-        updateLastModified();
-        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -221,8 +206,8 @@ public abstract class GChatMessage
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
-        updateLastModified();
-        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

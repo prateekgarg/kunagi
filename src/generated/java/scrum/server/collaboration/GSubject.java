@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSubject
             extends AEntity
@@ -71,34 +72,26 @@ public abstract class GSubject
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -139,8 +132,8 @@ public abstract class GSubject
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -175,8 +168,8 @@ public abstract class GSubject
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        updateLastModified();
-        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -211,8 +204,8 @@ public abstract class GSubject
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {

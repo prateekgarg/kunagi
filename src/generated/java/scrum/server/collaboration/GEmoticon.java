@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GEmoticon
             extends AEntity
@@ -58,34 +59,26 @@ public abstract class GEmoticon
     // -----------------------------------------------------------
 
     private String parentId;
-    private transient ilarkesto.persistence.AEntity parentCache;
-
-    private void updateParentCache() {
-        parentCache = this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
-    }
 
     public final String getParentId() {
         return this.parentId;
     }
 
     public final ilarkesto.persistence.AEntity getParent() {
-        if (parentCache == null) updateParentCache();
-        return parentCache;
+        return this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
     }
 
     public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
         setParentId(parent == null ? null : parent.getId());
-        parentCache = parent;
     }
 
     public final void setParentId(String id) {
         if (Utl.equals(parentId, id)) return;
         this.parentId = id;
-        parentCache = null;
-        updateLastModified();
-        fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+            updateLastModified();
+            fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -116,34 +109,26 @@ public abstract class GEmoticon
     // -----------------------------------------------------------
 
     private String ownerId;
-    private transient scrum.server.admin.User ownerCache;
-
-    private void updateOwnerCache() {
-        ownerCache = this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
-    }
 
     public final String getOwnerId() {
         return this.ownerId;
     }
 
     public final scrum.server.admin.User getOwner() {
-        if (ownerCache == null) updateOwnerCache();
-        return ownerCache;
+        return this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
     }
 
     public final void setOwner(scrum.server.admin.User owner) {
         owner = prepareOwner(owner);
         if (isOwner(owner)) return;
         setOwnerId(owner == null ? null : owner.getId());
-        ownerCache = owner;
     }
 
     public final void setOwnerId(String id) {
         if (Utl.equals(ownerId, id)) return;
         this.ownerId = id;
-        ownerCache = null;
-        updateLastModified();
-        fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+            updateLastModified();
+            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -183,8 +168,8 @@ public abstract class GEmoticon
         emotion = prepareEmotion(emotion);
         if (isEmotion(emotion)) return;
         this.emotion = emotion;
-        updateLastModified();
-        fireModified("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
+            updateLastModified();
+            fireModified("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
     }
 
     protected java.lang.String prepareEmotion(java.lang.String emotion) {

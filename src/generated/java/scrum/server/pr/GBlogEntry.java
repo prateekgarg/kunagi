@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GBlogEntry
             extends AEntity
@@ -75,34 +76,26 @@ public abstract class GBlogEntry
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -142,8 +135,8 @@ public abstract class GBlogEntry
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -178,8 +171,8 @@ public abstract class GBlogEntry
     public final void setAuthorsIds(java.util.Set<String> ids) {
         if (Utl.equals(authorsIds, ids)) return;
         authorsIds = ids;
-        updateLastModified();
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
     }
 
     protected Collection<scrum.server.admin.User> prepareAuthors(Collection<scrum.server.admin.User> authors) {
@@ -188,7 +181,8 @@ public abstract class GBlogEntry
 
     protected void repairDeadAuthorReference(String entityId) {
         if (this.authorsIds.remove(entityId)) {
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         }
     }
 
@@ -208,9 +202,9 @@ public abstract class GBlogEntry
     public final boolean addAuthor(scrum.server.admin.User author) {
         if (author == null) throw new IllegalArgumentException("author == null");
         boolean added = this.authorsIds.add(author.getId());
-        if (added) updateLastModified();
         if (added) {
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         }
         return added;
     }
@@ -222,7 +216,8 @@ public abstract class GBlogEntry
             added = added | this.authorsIds.add(author.getId());
         }
         if (added) {
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         }
         return added;
     }
@@ -231,9 +226,9 @@ public abstract class GBlogEntry
         if (author == null) return false;
         if (this.authorsIds == null) return false;
         boolean removed = this.authorsIds.remove(author.getId());
-        if (removed) updateLastModified();
         if (removed) {
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         }
         return removed;
     }
@@ -246,7 +241,8 @@ public abstract class GBlogEntry
             removed = removed | this.authorsIds.remove(_element);
         }
         if (removed) {
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         }
         return removed;
     }
@@ -254,8 +250,8 @@ public abstract class GBlogEntry
     public final boolean clearAuthors() {
         if (this.authorsIds.isEmpty()) return false;
         this.authorsIds.clear();
-        updateLastModified();
-        fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
         return true;
     }
 
@@ -274,8 +270,8 @@ public abstract class GBlogEntry
         if (isTitle(title)) return;
         if (title == null) throw new IllegalArgumentException("Mandatory field can not be set to null: title");
         this.title = title;
-        updateLastModified();
-        fireModified("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
+            updateLastModified();
+            fireModified("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
     }
 
     protected java.lang.String prepareTitle(java.lang.String title) {
@@ -310,8 +306,8 @@ public abstract class GBlogEntry
         text = prepareText(text);
         if (isText(text)) return;
         this.text = text;
-        updateLastModified();
-        fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
     protected java.lang.String prepareText(java.lang.String text) {
@@ -346,8 +342,8 @@ public abstract class GBlogEntry
         dateAndTime = prepareDateAndTime(dateAndTime);
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
-        updateLastModified();
-        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -388,8 +384,8 @@ public abstract class GBlogEntry
     public final void setReleasesIds(java.util.Set<String> ids) {
         if (Utl.equals(releasesIds, ids)) return;
         releasesIds = ids;
-        updateLastModified();
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
     }
 
     protected Collection<scrum.server.release.Release> prepareReleases(Collection<scrum.server.release.Release> releases) {
@@ -398,7 +394,8 @@ public abstract class GBlogEntry
 
     protected void repairDeadReleaseReference(String entityId) {
         if (this.releasesIds.remove(entityId)) {
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         }
     }
 
@@ -418,9 +415,9 @@ public abstract class GBlogEntry
     public final boolean addRelease(scrum.server.release.Release release) {
         if (release == null) throw new IllegalArgumentException("release == null");
         boolean added = this.releasesIds.add(release.getId());
-        if (added) updateLastModified();
         if (added) {
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         }
         return added;
     }
@@ -432,7 +429,8 @@ public abstract class GBlogEntry
             added = added | this.releasesIds.add(release.getId());
         }
         if (added) {
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         }
         return added;
     }
@@ -441,9 +439,9 @@ public abstract class GBlogEntry
         if (release == null) return false;
         if (this.releasesIds == null) return false;
         boolean removed = this.releasesIds.remove(release.getId());
-        if (removed) updateLastModified();
         if (removed) {
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         }
         return removed;
     }
@@ -456,7 +454,8 @@ public abstract class GBlogEntry
             removed = removed | this.releasesIds.remove(_element);
         }
         if (removed) {
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         }
         return removed;
     }
@@ -464,8 +463,8 @@ public abstract class GBlogEntry
     public final boolean clearReleases() {
         if (this.releasesIds.isEmpty()) return false;
         this.releasesIds.clear();
-        updateLastModified();
-        fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
         return true;
     }
 
@@ -483,8 +482,8 @@ public abstract class GBlogEntry
         published = preparePublished(published);
         if (isPublished(published)) return;
         this.published = published;
-        updateLastModified();
-        fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+            updateLastModified();
+            fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
     protected boolean preparePublished(boolean published) {
@@ -555,11 +554,6 @@ public abstract class GBlogEntry
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead release reference");
                 repairDeadReleaseReference(entityId);
-            }
-        }
-        if (isDeleted()) {
-            for (String entityId : this.releasesIds) {
-                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
     }

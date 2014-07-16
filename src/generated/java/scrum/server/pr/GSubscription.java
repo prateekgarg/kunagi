@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSubscription
             extends AEntity
@@ -57,34 +58,26 @@ public abstract class GSubscription
     // -----------------------------------------------------------
 
     private String subjectId;
-    private transient ilarkesto.persistence.AEntity subjectCache;
-
-    private void updateSubjectCache() {
-        subjectCache = this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
-    }
 
     public final String getSubjectId() {
         return this.subjectId;
     }
 
     public final ilarkesto.persistence.AEntity getSubject() {
-        if (subjectCache == null) updateSubjectCache();
-        return subjectCache;
+        return this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
     }
 
     public final void setSubject(ilarkesto.persistence.AEntity subject) {
         subject = prepareSubject(subject);
         if (isSubject(subject)) return;
         setSubjectId(subject == null ? null : subject.getId());
-        subjectCache = subject;
     }
 
     public final void setSubjectId(String id) {
         if (Utl.equals(subjectId, id)) return;
         this.subjectId = id;
-        subjectCache = null;
-        updateLastModified();
-        fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+            updateLastModified();
+            fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -125,8 +118,8 @@ public abstract class GSubscription
         if (subscribersEmails == null) subscribersEmails = Collections.emptyList();
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
-        updateLastModified();
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
     }
 
     protected Collection<java.lang.String> prepareSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
@@ -149,9 +142,9 @@ public abstract class GSubscription
     public final boolean addSubscribersEmail(java.lang.String subscribersEmail) {
         if (subscribersEmail == null) throw new IllegalArgumentException("subscribersEmail == null");
         boolean added = this.subscribersEmails.add(subscribersEmail);
-        if (added) updateLastModified();
         if (added) {
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return added;
     }
@@ -163,7 +156,8 @@ public abstract class GSubscription
             added = added | this.subscribersEmails.add(subscribersEmail);
         }
         if (added) {
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return added;
     }
@@ -172,9 +166,9 @@ public abstract class GSubscription
         if (subscribersEmail == null) return false;
         if (this.subscribersEmails == null) return false;
         boolean removed = this.subscribersEmails.remove(subscribersEmail);
-        if (removed) updateLastModified();
         if (removed) {
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return removed;
     }
@@ -187,7 +181,8 @@ public abstract class GSubscription
             removed = removed | this.subscribersEmails.remove(_element);
         }
         if (removed) {
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         }
         return removed;
     }
@@ -195,8 +190,8 @@ public abstract class GSubscription
     public final boolean clearSubscribersEmails() {
         if (this.subscribersEmails.isEmpty()) return false;
         this.subscribersEmails.clear();
-        updateLastModified();
-        fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
         return true;
     }
 

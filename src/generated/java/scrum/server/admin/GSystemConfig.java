@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSystemConfig
             extends AEntity
@@ -93,8 +94,8 @@ public abstract class GSystemConfig
         url = prepareUrl(url);
         if (isUrl(url)) return;
         this.url = url;
-        updateLastModified();
-        fireModified("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
+            updateLastModified();
+            fireModified("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
     }
 
     protected java.lang.String prepareUrl(java.lang.String url) {
@@ -129,8 +130,8 @@ public abstract class GSystemConfig
         adminEmail = prepareAdminEmail(adminEmail);
         if (isAdminEmail(adminEmail)) return;
         this.adminEmail = adminEmail;
-        updateLastModified();
-        fireModified("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
+            updateLastModified();
+            fireModified("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
     }
 
     protected java.lang.String prepareAdminEmail(java.lang.String adminEmail) {
@@ -165,8 +166,8 @@ public abstract class GSystemConfig
         googleAnalyticsId = prepareGoogleAnalyticsId(googleAnalyticsId);
         if (isGoogleAnalyticsId(googleAnalyticsId)) return;
         this.googleAnalyticsId = googleAnalyticsId;
-        updateLastModified();
-        fireModified("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
+            updateLastModified();
+            fireModified("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
     }
 
     protected java.lang.String prepareGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
@@ -201,8 +202,8 @@ public abstract class GSystemConfig
         smtpServer = prepareSmtpServer(smtpServer);
         if (isSmtpServer(smtpServer)) return;
         this.smtpServer = smtpServer;
-        updateLastModified();
-        fireModified("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
+            updateLastModified();
+            fireModified("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
     }
 
     protected java.lang.String prepareSmtpServer(java.lang.String smtpServer) {
@@ -237,8 +238,8 @@ public abstract class GSystemConfig
         smtpPort = prepareSmtpPort(smtpPort);
         if (isSmtpPort(smtpPort)) return;
         this.smtpPort = smtpPort;
-        updateLastModified();
-        fireModified("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
+            updateLastModified();
+            fireModified("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
     }
 
     protected java.lang.Integer prepareSmtpPort(java.lang.Integer smtpPort) {
@@ -272,8 +273,8 @@ public abstract class GSystemConfig
         smtpTls = prepareSmtpTls(smtpTls);
         if (isSmtpTls(smtpTls)) return;
         this.smtpTls = smtpTls;
-        updateLastModified();
-        fireModified("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
+            updateLastModified();
+            fireModified("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
     }
 
     protected boolean prepareSmtpTls(boolean smtpTls) {
@@ -302,8 +303,8 @@ public abstract class GSystemConfig
         smtpUser = prepareSmtpUser(smtpUser);
         if (isSmtpUser(smtpUser)) return;
         this.smtpUser = smtpUser;
-        updateLastModified();
-        fireModified("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
+            updateLastModified();
+            fireModified("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
     }
 
     protected java.lang.String prepareSmtpUser(java.lang.String smtpUser) {
@@ -338,8 +339,8 @@ public abstract class GSystemConfig
         smtpPassword = prepareSmtpPassword(smtpPassword);
         if (isSmtpPassword(smtpPassword)) return;
         this.smtpPassword = smtpPassword;
-        updateLastModified();
-        fireModified("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
+            updateLastModified();
+            fireModified("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
     }
 
     protected java.lang.String prepareSmtpPassword(java.lang.String smtpPassword) {
@@ -374,8 +375,8 @@ public abstract class GSystemConfig
         smtpFrom = prepareSmtpFrom(smtpFrom);
         if (isSmtpFrom(smtpFrom)) return;
         this.smtpFrom = smtpFrom;
-        updateLastModified();
-        fireModified("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
+            updateLastModified();
+            fireModified("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
     }
 
     protected java.lang.String prepareSmtpFrom(java.lang.String smtpFrom) {
@@ -410,8 +411,8 @@ public abstract class GSystemConfig
         instanceName = prepareInstanceName(instanceName);
         if (isInstanceName(instanceName)) return;
         this.instanceName = instanceName;
-        updateLastModified();
-        fireModified("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
+            updateLastModified();
+            fireModified("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
     }
 
     protected java.lang.String prepareInstanceName(java.lang.String instanceName) {
@@ -446,8 +447,8 @@ public abstract class GSystemConfig
         loginPageLogoUrl = prepareLoginPageLogoUrl(loginPageLogoUrl);
         if (isLoginPageLogoUrl(loginPageLogoUrl)) return;
         this.loginPageLogoUrl = loginPageLogoUrl;
-        updateLastModified();
-        fireModified("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
+            updateLastModified();
+            fireModified("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
     }
 
     protected java.lang.String prepareLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
@@ -482,8 +483,8 @@ public abstract class GSystemConfig
         loginPageMessage = prepareLoginPageMessage(loginPageMessage);
         if (isLoginPageMessage(loginPageMessage)) return;
         this.loginPageMessage = loginPageMessage;
-        updateLastModified();
-        fireModified("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
+            updateLastModified();
+            fireModified("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
     }
 
     protected java.lang.String prepareLoginPageMessage(java.lang.String loginPageMessage) {
@@ -518,8 +519,8 @@ public abstract class GSystemConfig
         registerPageMessage = prepareRegisterPageMessage(registerPageMessage);
         if (isRegisterPageMessage(registerPageMessage)) return;
         this.registerPageMessage = registerPageMessage;
-        updateLastModified();
-        fireModified("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
+            updateLastModified();
+            fireModified("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
     }
 
     protected java.lang.String prepareRegisterPageMessage(java.lang.String registerPageMessage) {
@@ -554,8 +555,8 @@ public abstract class GSystemConfig
         aboutPageMessage = prepareAboutPageMessage(aboutPageMessage);
         if (isAboutPageMessage(aboutPageMessage)) return;
         this.aboutPageMessage = aboutPageMessage;
-        updateLastModified();
-        fireModified("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
+            updateLastModified();
+            fireModified("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
     }
 
     protected java.lang.String prepareAboutPageMessage(java.lang.String aboutPageMessage) {
@@ -590,8 +591,8 @@ public abstract class GSystemConfig
         userEmailMandatory = prepareUserEmailMandatory(userEmailMandatory);
         if (isUserEmailMandatory(userEmailMandatory)) return;
         this.userEmailMandatory = userEmailMandatory;
-        updateLastModified();
-        fireModified("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
+            updateLastModified();
+            fireModified("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
     }
 
     protected boolean prepareUserEmailMandatory(boolean userEmailMandatory) {
@@ -620,8 +621,8 @@ public abstract class GSystemConfig
         registrationDisabled = prepareRegistrationDisabled(registrationDisabled);
         if (isRegistrationDisabled(registrationDisabled)) return;
         this.registrationDisabled = registrationDisabled;
-        updateLastModified();
-        fireModified("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
+            updateLastModified();
+            fireModified("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
     }
 
     protected boolean prepareRegistrationDisabled(boolean registrationDisabled) {
@@ -650,8 +651,8 @@ public abstract class GSystemConfig
         projectCreationDisabled = prepareProjectCreationDisabled(projectCreationDisabled);
         if (isProjectCreationDisabled(projectCreationDisabled)) return;
         this.projectCreationDisabled = projectCreationDisabled;
-        updateLastModified();
-        fireModified("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
+            updateLastModified();
+            fireModified("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
     }
 
     protected boolean prepareProjectCreationDisabled(boolean projectCreationDisabled) {
@@ -680,8 +681,8 @@ public abstract class GSystemConfig
         defaultUserPassword = prepareDefaultUserPassword(defaultUserPassword);
         if (isDefaultUserPassword(defaultUserPassword)) return;
         this.defaultUserPassword = defaultUserPassword;
-        updateLastModified();
-        fireModified("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
+            updateLastModified();
+            fireModified("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
     }
 
     protected java.lang.String prepareDefaultUserPassword(java.lang.String defaultUserPassword) {
@@ -716,8 +717,8 @@ public abstract class GSystemConfig
         openIdDisabled = prepareOpenIdDisabled(openIdDisabled);
         if (isOpenIdDisabled(openIdDisabled)) return;
         this.openIdDisabled = openIdDisabled;
-        updateLastModified();
-        fireModified("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
+            updateLastModified();
+            fireModified("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
     }
 
     protected boolean prepareOpenIdDisabled(boolean openIdDisabled) {
@@ -746,8 +747,8 @@ public abstract class GSystemConfig
         openIdDomains = prepareOpenIdDomains(openIdDomains);
         if (isOpenIdDomains(openIdDomains)) return;
         this.openIdDomains = openIdDomains;
-        updateLastModified();
-        fireModified("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
+            updateLastModified();
+            fireModified("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
     }
 
     protected java.lang.String prepareOpenIdDomains(java.lang.String openIdDomains) {
@@ -782,8 +783,8 @@ public abstract class GSystemConfig
         versionCheckEnabled = prepareVersionCheckEnabled(versionCheckEnabled);
         if (isVersionCheckEnabled(versionCheckEnabled)) return;
         this.versionCheckEnabled = versionCheckEnabled;
-        updateLastModified();
-        fireModified("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
+            updateLastModified();
+            fireModified("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
     }
 
     protected boolean prepareVersionCheckEnabled(boolean versionCheckEnabled) {
@@ -812,8 +813,8 @@ public abstract class GSystemConfig
         ldapEnabled = prepareLdapEnabled(ldapEnabled);
         if (isLdapEnabled(ldapEnabled)) return;
         this.ldapEnabled = ldapEnabled;
-        updateLastModified();
-        fireModified("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
+            updateLastModified();
+            fireModified("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
     }
 
     protected boolean prepareLdapEnabled(boolean ldapEnabled) {
@@ -842,8 +843,8 @@ public abstract class GSystemConfig
         ldapUrl = prepareLdapUrl(ldapUrl);
         if (isLdapUrl(ldapUrl)) return;
         this.ldapUrl = ldapUrl;
-        updateLastModified();
-        fireModified("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
+            updateLastModified();
+            fireModified("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
     }
 
     protected java.lang.String prepareLdapUrl(java.lang.String ldapUrl) {
@@ -878,8 +879,8 @@ public abstract class GSystemConfig
         ldapUser = prepareLdapUser(ldapUser);
         if (isLdapUser(ldapUser)) return;
         this.ldapUser = ldapUser;
-        updateLastModified();
-        fireModified("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
+            updateLastModified();
+            fireModified("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
     }
 
     protected java.lang.String prepareLdapUser(java.lang.String ldapUser) {
@@ -914,8 +915,8 @@ public abstract class GSystemConfig
         ldapPassword = prepareLdapPassword(ldapPassword);
         if (isLdapPassword(ldapPassword)) return;
         this.ldapPassword = ldapPassword;
-        updateLastModified();
-        fireModified("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
+            updateLastModified();
+            fireModified("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
     }
 
     protected java.lang.String prepareLdapPassword(java.lang.String ldapPassword) {
@@ -950,8 +951,8 @@ public abstract class GSystemConfig
         ldapBaseDn = prepareLdapBaseDn(ldapBaseDn);
         if (isLdapBaseDn(ldapBaseDn)) return;
         this.ldapBaseDn = ldapBaseDn;
-        updateLastModified();
-        fireModified("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
+            updateLastModified();
+            fireModified("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
     }
 
     protected java.lang.String prepareLdapBaseDn(java.lang.String ldapBaseDn) {
@@ -986,8 +987,8 @@ public abstract class GSystemConfig
         ldapUserFilterRegex = prepareLdapUserFilterRegex(ldapUserFilterRegex);
         if (isLdapUserFilterRegex(ldapUserFilterRegex)) return;
         this.ldapUserFilterRegex = ldapUserFilterRegex;
-        updateLastModified();
-        fireModified("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
+            updateLastModified();
+            fireModified("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
     }
 
     protected java.lang.String prepareLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
@@ -1022,8 +1023,8 @@ public abstract class GSystemConfig
         maxFileSize = prepareMaxFileSize(maxFileSize);
         if (isMaxFileSize(maxFileSize)) return;
         this.maxFileSize = maxFileSize;
-        updateLastModified();
-        fireModified("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
+            updateLastModified();
+            fireModified("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
     }
 
     protected java.lang.Integer prepareMaxFileSize(java.lang.Integer maxFileSize) {
@@ -1057,8 +1058,8 @@ public abstract class GSystemConfig
         subscriptionKeySeed = prepareSubscriptionKeySeed(subscriptionKeySeed);
         if (isSubscriptionKeySeed(subscriptionKeySeed)) return;
         this.subscriptionKeySeed = subscriptionKeySeed;
-        updateLastModified();
-        fireModified("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
+            updateLastModified();
+            fireModified("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
     }
 
     protected java.lang.String prepareSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {

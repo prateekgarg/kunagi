@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GQuality
             extends AEntity
@@ -81,34 +82,26 @@ public abstract class GQuality
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -148,8 +141,8 @@ public abstract class GQuality
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -178,8 +171,8 @@ public abstract class GQuality
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -214,8 +207,8 @@ public abstract class GQuality
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        updateLastModified();
-        fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -250,8 +243,8 @@ public abstract class GQuality
         testDescription = prepareTestDescription(testDescription);
         if (isTestDescription(testDescription)) return;
         this.testDescription = testDescription;
-        updateLastModified();
-        fireModified("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
+            updateLastModified();
+            fireModified("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
     }
 
     protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
@@ -302,8 +295,6 @@ public abstract class GQuality
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
-        }
-        if (isDeleted()) {
         }
     }
 

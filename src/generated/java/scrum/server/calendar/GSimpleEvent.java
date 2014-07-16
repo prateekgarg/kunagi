@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSimpleEvent
             extends AEntity
@@ -78,34 +79,26 @@ public abstract class GSimpleEvent
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -146,8 +139,8 @@ public abstract class GSimpleEvent
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -182,8 +175,8 @@ public abstract class GSimpleEvent
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -212,8 +205,8 @@ public abstract class GSimpleEvent
         date = prepareDate(date);
         if (isDate(date)) return;
         this.date = date;
-        updateLastModified();
-        fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+            updateLastModified();
+            fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -248,8 +241,8 @@ public abstract class GSimpleEvent
         time = prepareTime(time);
         if (isTime(time)) return;
         this.time = time;
-        updateLastModified();
-        fireModified("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
+            updateLastModified();
+            fireModified("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
     }
 
     protected ilarkesto.core.time.Time prepareTime(ilarkesto.core.time.Time time) {
@@ -284,8 +277,8 @@ public abstract class GSimpleEvent
         location = prepareLocation(location);
         if (isLocation(location)) return;
         this.location = location;
-        updateLastModified();
-        fireModified("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
+            updateLastModified();
+            fireModified("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
     }
 
     protected java.lang.String prepareLocation(java.lang.String location) {
@@ -320,8 +313,8 @@ public abstract class GSimpleEvent
         duration = prepareDuration(duration);
         if (isDuration(duration)) return;
         this.duration = duration;
-        updateLastModified();
-        fireModified("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
+            updateLastModified();
+            fireModified("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
     }
 
     protected java.lang.Integer prepareDuration(java.lang.Integer duration) {
@@ -355,8 +348,8 @@ public abstract class GSimpleEvent
         agenda = prepareAgenda(agenda);
         if (isAgenda(agenda)) return;
         this.agenda = agenda;
-        updateLastModified();
-        fireModified("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
+            updateLastModified();
+            fireModified("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
     }
 
     protected java.lang.String prepareAgenda(java.lang.String agenda) {
@@ -391,8 +384,8 @@ public abstract class GSimpleEvent
         note = prepareNote(note);
         if (isNote(note)) return;
         this.note = note;
-        updateLastModified();
-        fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
+            updateLastModified();
+            fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
     protected java.lang.String prepareNote(java.lang.String note) {

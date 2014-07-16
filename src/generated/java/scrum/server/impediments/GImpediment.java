@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GImpediment
             extends AEntity
@@ -79,34 +80,26 @@ public abstract class GImpediment
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -146,8 +139,8 @@ public abstract class GImpediment
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -176,8 +169,8 @@ public abstract class GImpediment
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -213,8 +206,8 @@ public abstract class GImpediment
         if (isDate(date)) return;
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
-        updateLastModified();
-        fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+            updateLastModified();
+            fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
     }
 
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
@@ -249,8 +242,8 @@ public abstract class GImpediment
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        updateLastModified();
-        fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -285,8 +278,8 @@ public abstract class GImpediment
         solution = prepareSolution(solution);
         if (isSolution(solution)) return;
         this.solution = solution;
-        updateLastModified();
-        fireModified("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
+            updateLastModified();
+            fireModified("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
     }
 
     protected java.lang.String prepareSolution(java.lang.String solution) {
@@ -321,8 +314,8 @@ public abstract class GImpediment
         closed = prepareClosed(closed);
         if (isClosed(closed)) return;
         this.closed = closed;
-        updateLastModified();
-        fireModified("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
+            updateLastModified();
+            fireModified("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
     }
 
     protected boolean prepareClosed(boolean closed) {
@@ -369,8 +362,6 @@ public abstract class GImpediment
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
-        }
-        if (isDeleted()) {
         }
     }
 

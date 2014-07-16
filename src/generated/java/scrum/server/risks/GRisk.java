@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GRisk
             extends AEntity
@@ -77,34 +78,26 @@ public abstract class GRisk
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -144,8 +137,8 @@ public abstract class GRisk
         number = prepareNumber(number);
         if (isNumber(number)) return;
         this.number = number;
-        updateLastModified();
-        fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
     protected int prepareNumber(int number) {
@@ -174,8 +167,8 @@ public abstract class GRisk
         label = prepareLabel(label);
         if (isLabel(label)) return;
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -210,8 +203,8 @@ public abstract class GRisk
         description = prepareDescription(description);
         if (isDescription(description)) return;
         this.description = description;
-        updateLastModified();
-        fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
     protected java.lang.String prepareDescription(java.lang.String description) {
@@ -246,8 +239,8 @@ public abstract class GRisk
         probabilityMitigation = prepareProbabilityMitigation(probabilityMitigation);
         if (isProbabilityMitigation(probabilityMitigation)) return;
         this.probabilityMitigation = probabilityMitigation;
-        updateLastModified();
-        fireModified("probabilityMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.probabilityMitigation));
+            updateLastModified();
+            fireModified("probabilityMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.probabilityMitigation));
     }
 
     protected java.lang.String prepareProbabilityMitigation(java.lang.String probabilityMitigation) {
@@ -282,8 +275,8 @@ public abstract class GRisk
         impactMitigation = prepareImpactMitigation(impactMitigation);
         if (isImpactMitigation(impactMitigation)) return;
         this.impactMitigation = impactMitigation;
-        updateLastModified();
-        fireModified("impactMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.impactMitigation));
+            updateLastModified();
+            fireModified("impactMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.impactMitigation));
     }
 
     protected java.lang.String prepareImpactMitigation(java.lang.String impactMitigation) {
@@ -318,8 +311,8 @@ public abstract class GRisk
         probability = prepareProbability(probability);
         if (isProbability(probability)) return;
         this.probability = probability;
-        updateLastModified();
-        fireModified("probability", ilarkesto.core.persistance.Persistence.propertyAsString(this.probability));
+            updateLastModified();
+            fireModified("probability", ilarkesto.core.persistance.Persistence.propertyAsString(this.probability));
     }
 
     protected int prepareProbability(int probability) {
@@ -348,8 +341,8 @@ public abstract class GRisk
         impact = prepareImpact(impact);
         if (isImpact(impact)) return;
         this.impact = impact;
-        updateLastModified();
-        fireModified("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
+            updateLastModified();
+            fireModified("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
     }
 
     protected int prepareImpact(int impact) {

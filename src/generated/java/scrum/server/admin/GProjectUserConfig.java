@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GProjectUserConfig
             extends AEntity
@@ -72,34 +73,26 @@ public abstract class GProjectUserConfig
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -130,34 +123,26 @@ public abstract class GProjectUserConfig
     // -----------------------------------------------------------
 
     private String userId;
-    private transient scrum.server.admin.User userCache;
-
-    private void updateUserCache() {
-        userCache = this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
-    }
 
     public final String getUserId() {
         return this.userId;
     }
 
     public final scrum.server.admin.User getUser() {
-        if (userCache == null) updateUserCache();
-        return userCache;
+        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
     }
 
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
         setUserId(user == null ? null : user.getId());
-        userCache = user;
     }
 
     public final void setUserId(String id) {
         if (Utl.equals(userId, id)) return;
         this.userId = id;
-        userCache = null;
-        updateLastModified();
-        fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+            updateLastModified();
+            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -197,8 +182,8 @@ public abstract class GProjectUserConfig
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
-        updateLastModified();
-        fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+            updateLastModified();
+            fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -233,8 +218,8 @@ public abstract class GProjectUserConfig
         receiveEmailsOnProjectEvents = prepareReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents);
         if (isReceiveEmailsOnProjectEvents(receiveEmailsOnProjectEvents)) return;
         this.receiveEmailsOnProjectEvents = receiveEmailsOnProjectEvents;
-        updateLastModified();
-        fireModified("receiveEmailsOnProjectEvents", ilarkesto.core.persistance.Persistence.propertyAsString(this.receiveEmailsOnProjectEvents));
+            updateLastModified();
+            fireModified("receiveEmailsOnProjectEvents", ilarkesto.core.persistance.Persistence.propertyAsString(this.receiveEmailsOnProjectEvents));
     }
 
     protected boolean prepareReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
@@ -263,8 +248,8 @@ public abstract class GProjectUserConfig
         misconducts = prepareMisconducts(misconducts);
         if (isMisconducts(misconducts)) return;
         this.misconducts = misconducts;
-        updateLastModified();
-        fireModified("misconducts", ilarkesto.core.persistance.Persistence.propertyAsString(this.misconducts));
+            updateLastModified();
+            fireModified("misconducts", ilarkesto.core.persistance.Persistence.propertyAsString(this.misconducts));
     }
 
     protected int prepareMisconducts(int misconducts) {
@@ -293,8 +278,8 @@ public abstract class GProjectUserConfig
         richtextAutosaveText = prepareRichtextAutosaveText(richtextAutosaveText);
         if (isRichtextAutosaveText(richtextAutosaveText)) return;
         this.richtextAutosaveText = richtextAutosaveText;
-        updateLastModified();
-        fireModified("richtextAutosaveText", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveText));
+            updateLastModified();
+            fireModified("richtextAutosaveText", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveText));
     }
 
     protected java.lang.String prepareRichtextAutosaveText(java.lang.String richtextAutosaveText) {
@@ -329,8 +314,8 @@ public abstract class GProjectUserConfig
         richtextAutosaveField = prepareRichtextAutosaveField(richtextAutosaveField);
         if (isRichtextAutosaveField(richtextAutosaveField)) return;
         this.richtextAutosaveField = richtextAutosaveField;
-        updateLastModified();
-        fireModified("richtextAutosaveField", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveField));
+            updateLastModified();
+            fireModified("richtextAutosaveField", ilarkesto.core.persistance.Persistence.propertyAsString(this.richtextAutosaveField));
     }
 
     protected java.lang.String prepareRichtextAutosaveField(java.lang.String richtextAutosaveField) {
@@ -366,7 +351,7 @@ public abstract class GProjectUserConfig
         if (selectedEntitysIds == null) selectedEntitysIds = Collections.emptyList();
         if (this.selectedEntitysIds.equals(selectedEntitysIds)) return;
         this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>(selectedEntitysIds);
-        updateLastModified();
+            updateLastModified();
     }
 
     protected Collection<java.lang.String> prepareSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
@@ -389,7 +374,6 @@ public abstract class GProjectUserConfig
     public final boolean addSelectedEntitysId(java.lang.String selectedEntitysId) {
         if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
         boolean added = this.selectedEntitysIds.add(selectedEntitysId);
-        if (added) updateLastModified();
         return added;
     }
 
@@ -406,7 +390,6 @@ public abstract class GProjectUserConfig
         if (selectedEntitysId == null) return false;
         if (this.selectedEntitysIds == null) return false;
         boolean removed = this.selectedEntitysIds.remove(selectedEntitysId);
-        if (removed) updateLastModified();
         return removed;
     }
 
@@ -423,7 +406,7 @@ public abstract class GProjectUserConfig
     public final boolean clearSelectedEntitysIds() {
         if (this.selectedEntitysIds.isEmpty()) return false;
         this.selectedEntitysIds.clear();
-        updateLastModified();
+            updateLastModified();
         return true;
     }
 
@@ -450,7 +433,7 @@ public abstract class GProjectUserConfig
         online = prepareOnline(online);
         if (isOnline(online)) return;
         this.online = online;
-        updateLastModified();
+            updateLastModified();
     }
 
     protected boolean prepareOnline(boolean online) {
@@ -479,7 +462,7 @@ public abstract class GProjectUserConfig
         lastActivityDateAndTime = prepareLastActivityDateAndTime(lastActivityDateAndTime);
         if (isLastActivityDateAndTime(lastActivityDateAndTime)) return;
         this.lastActivityDateAndTime = lastActivityDateAndTime;
-        updateLastModified();
+            updateLastModified();
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastActivityDateAndTime(ilarkesto.core.time.DateAndTime lastActivityDateAndTime) {
@@ -515,8 +498,8 @@ public abstract class GProjectUserConfig
         if (pblFilterThemes == null) pblFilterThemes = Collections.emptyList();
         if (this.pblFilterThemes.equals(pblFilterThemes)) return;
         this.pblFilterThemes = new java.util.ArrayList<java.lang.String>(pblFilterThemes);
-        updateLastModified();
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
     }
 
     protected Collection<java.lang.String> preparePblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
@@ -539,9 +522,9 @@ public abstract class GProjectUserConfig
     public final boolean addPblFilterTheme(java.lang.String pblFilterTheme) {
         if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
         boolean added = this.pblFilterThemes.add(pblFilterTheme);
-        if (added) updateLastModified();
         if (added) {
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
         }
         return added;
     }
@@ -553,7 +536,8 @@ public abstract class GProjectUserConfig
             added = added | this.pblFilterThemes.add(pblFilterTheme);
         }
         if (added) {
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
         }
         return added;
     }
@@ -562,9 +546,9 @@ public abstract class GProjectUserConfig
         if (pblFilterTheme == null) return false;
         if (this.pblFilterThemes == null) return false;
         boolean removed = this.pblFilterThemes.remove(pblFilterTheme);
-        if (removed) updateLastModified();
         if (removed) {
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
         }
         return removed;
     }
@@ -577,7 +561,8 @@ public abstract class GProjectUserConfig
             removed = removed | this.pblFilterThemes.remove(_element);
         }
         if (removed) {
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
         }
         return removed;
     }
@@ -585,8 +570,8 @@ public abstract class GProjectUserConfig
     public final boolean clearPblFilterThemes() {
         if (this.pblFilterThemes.isEmpty()) return false;
         this.pblFilterThemes.clear();
-        updateLastModified();
-        fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
+            updateLastModified();
+            fireModified("pblFilterThemes", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterThemes));
         return true;
     }
 
@@ -619,8 +604,8 @@ public abstract class GProjectUserConfig
     public final void setPblFilterQualitysIds(java.util.Set<String> ids) {
         if (Utl.equals(pblFilterQualitysIds, ids)) return;
         pblFilterQualitysIds = ids;
-        updateLastModified();
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
     }
 
     protected Collection<scrum.server.project.Quality> preparePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
@@ -629,7 +614,8 @@ public abstract class GProjectUserConfig
 
     protected void repairDeadPblFilterQualityReference(String entityId) {
         if (this.pblFilterQualitysIds.remove(entityId)) {
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         }
     }
 
@@ -649,9 +635,9 @@ public abstract class GProjectUserConfig
     public final boolean addPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
         if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
         boolean added = this.pblFilterQualitysIds.add(pblFilterQuality.getId());
-        if (added) updateLastModified();
         if (added) {
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         }
         return added;
     }
@@ -663,7 +649,8 @@ public abstract class GProjectUserConfig
             added = added | this.pblFilterQualitysIds.add(pblFilterQuality.getId());
         }
         if (added) {
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         }
         return added;
     }
@@ -672,9 +659,9 @@ public abstract class GProjectUserConfig
         if (pblFilterQuality == null) return false;
         if (this.pblFilterQualitysIds == null) return false;
         boolean removed = this.pblFilterQualitysIds.remove(pblFilterQuality.getId());
-        if (removed) updateLastModified();
         if (removed) {
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         }
         return removed;
     }
@@ -687,7 +674,8 @@ public abstract class GProjectUserConfig
             removed = removed | this.pblFilterQualitysIds.remove(_element);
         }
         if (removed) {
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         }
         return removed;
     }
@@ -695,8 +683,8 @@ public abstract class GProjectUserConfig
     public final boolean clearPblFilterQualitys() {
         if (this.pblFilterQualitysIds.isEmpty()) return false;
         this.pblFilterQualitysIds.clear();
-        updateLastModified();
-        fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+            updateLastModified();
+            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
         return true;
     }
 
@@ -714,8 +702,8 @@ public abstract class GProjectUserConfig
         pblFilterDateFrom = preparePblFilterDateFrom(pblFilterDateFrom);
         if (isPblFilterDateFrom(pblFilterDateFrom)) return;
         this.pblFilterDateFrom = pblFilterDateFrom;
-        updateLastModified();
-        fireModified("pblFilterDateFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateFrom));
+            updateLastModified();
+            fireModified("pblFilterDateFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateFrom));
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateFrom(ilarkesto.core.time.Date pblFilterDateFrom) {
@@ -750,8 +738,8 @@ public abstract class GProjectUserConfig
         pblFilterDateTo = preparePblFilterDateTo(pblFilterDateTo);
         if (isPblFilterDateTo(pblFilterDateTo)) return;
         this.pblFilterDateTo = pblFilterDateTo;
-        updateLastModified();
-        fireModified("pblFilterDateTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateTo));
+            updateLastModified();
+            fireModified("pblFilterDateTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterDateTo));
     }
 
     protected ilarkesto.core.time.Date preparePblFilterDateTo(ilarkesto.core.time.Date pblFilterDateTo) {
@@ -786,8 +774,8 @@ public abstract class GProjectUserConfig
         pblFilterEstimationFrom = preparePblFilterEstimationFrom(pblFilterEstimationFrom);
         if (isPblFilterEstimationFrom(pblFilterEstimationFrom)) return;
         this.pblFilterEstimationFrom = pblFilterEstimationFrom;
-        updateLastModified();
-        fireModified("pblFilterEstimationFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationFrom));
+            updateLastModified();
+            fireModified("pblFilterEstimationFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationFrom));
     }
 
     protected java.lang.Float preparePblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
@@ -821,8 +809,8 @@ public abstract class GProjectUserConfig
         pblFilterEstimationTo = preparePblFilterEstimationTo(pblFilterEstimationTo);
         if (isPblFilterEstimationTo(pblFilterEstimationTo)) return;
         this.pblFilterEstimationTo = pblFilterEstimationTo;
-        updateLastModified();
-        fireModified("pblFilterEstimationTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationTo));
+            updateLastModified();
+            fireModified("pblFilterEstimationTo", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterEstimationTo));
     }
 
     protected java.lang.Float preparePblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
@@ -856,8 +844,8 @@ public abstract class GProjectUserConfig
         pblFilterText = preparePblFilterText(pblFilterText);
         if (isPblFilterText(pblFilterText)) return;
         this.pblFilterText = pblFilterText;
-        updateLastModified();
-        fireModified("pblFilterText", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterText));
+            updateLastModified();
+            fireModified("pblFilterText", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterText));
     }
 
     protected java.lang.String preparePblFilterText(java.lang.String pblFilterText) {
@@ -945,11 +933,6 @@ public abstract class GProjectUserConfig
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead pblFilterQuality reference");
                 repairDeadPblFilterQualityReference(entityId);
-            }
-        }
-        if (isDeleted()) {
-            for (String entityId : this.pblFilterQualitysIds) {
-                ilarkesto.core.persistance.Persistence.ensureIntegrity(entityId);
             }
         }
     }

@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GChange
             extends AEntity
@@ -62,34 +63,26 @@ public abstract class GChange
     // -----------------------------------------------------------
 
     private String parentId;
-    private transient ilarkesto.persistence.AEntity parentCache;
-
-    private void updateParentCache() {
-        parentCache = this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
-    }
 
     public final String getParentId() {
         return this.parentId;
     }
 
     public final ilarkesto.persistence.AEntity getParent() {
-        if (parentCache == null) updateParentCache();
-        return parentCache;
+        return this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
     }
 
     public final void setParent(ilarkesto.persistence.AEntity parent) {
         parent = prepareParent(parent);
         if (isParent(parent)) return;
         setParentId(parent == null ? null : parent.getId());
-        parentCache = parent;
     }
 
     public final void setParentId(String id) {
         if (Utl.equals(parentId, id)) return;
         this.parentId = id;
-        parentCache = null;
-        updateLastModified();
-        fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+            updateLastModified();
+            fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -120,34 +113,26 @@ public abstract class GChange
     // -----------------------------------------------------------
 
     private String userId;
-    private transient scrum.server.admin.User userCache;
-
-    private void updateUserCache() {
-        userCache = this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
-    }
 
     public final String getUserId() {
         return this.userId;
     }
 
     public final scrum.server.admin.User getUser() {
-        if (userCache == null) updateUserCache();
-        return userCache;
+        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
     }
 
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
         setUserId(user == null ? null : user.getId());
-        userCache = user;
     }
 
     public final void setUserId(String id) {
         if (Utl.equals(userId, id)) return;
         this.userId = id;
-        userCache = null;
-        updateLastModified();
-        fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+            updateLastModified();
+            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -188,8 +173,8 @@ public abstract class GChange
         if (isDateAndTime(dateAndTime)) return;
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
-        updateLastModified();
-        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
@@ -224,8 +209,8 @@ public abstract class GChange
         key = prepareKey(key);
         if (isKey(key)) return;
         this.key = key;
-        updateLastModified();
-        fireModified("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
+            updateLastModified();
+            fireModified("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
     }
 
     protected java.lang.String prepareKey(java.lang.String key) {
@@ -260,8 +245,8 @@ public abstract class GChange
         oldValue = prepareOldValue(oldValue);
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
-        updateLastModified();
-        fireModified("oldValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.oldValue));
+            updateLastModified();
+            fireModified("oldValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.oldValue));
     }
 
     protected java.lang.String prepareOldValue(java.lang.String oldValue) {
@@ -296,8 +281,8 @@ public abstract class GChange
         newValue = prepareNewValue(newValue);
         if (isNewValue(newValue)) return;
         this.newValue = newValue;
-        updateLastModified();
-        fireModified("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
+            updateLastModified();
+            fireModified("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
     }
 
     protected java.lang.String prepareNewValue(java.lang.String newValue) {
@@ -332,8 +317,8 @@ public abstract class GChange
         comment = prepareComment(comment);
         if (isComment(comment)) return;
         this.comment = comment;
-        updateLastModified();
-        fireModified("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
+            updateLastModified();
+            fireModified("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
     }
 
     protected java.lang.String prepareComment(java.lang.String comment) {

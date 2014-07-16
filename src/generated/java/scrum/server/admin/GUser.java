@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GUser
             extends AUser
@@ -154,8 +155,8 @@ public abstract class GUser
             if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
         }
         this.name = name;
-        updateLastModified();
-        fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+            updateLastModified();
+            fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
     }
 
     protected java.lang.String prepareName(java.lang.String name) {
@@ -190,8 +191,8 @@ public abstract class GUser
         publicName = preparePublicName(publicName);
         if (isPublicName(publicName)) return;
         this.publicName = publicName;
-        updateLastModified();
-        fireModified("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
+            updateLastModified();
+            fireModified("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
     }
 
     protected java.lang.String preparePublicName(java.lang.String publicName) {
@@ -226,8 +227,8 @@ public abstract class GUser
         fullName = prepareFullName(fullName);
         if (isFullName(fullName)) return;
         this.fullName = fullName;
-        updateLastModified();
-        fireModified("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
+            updateLastModified();
+            fireModified("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
     }
 
     protected java.lang.String prepareFullName(java.lang.String fullName) {
@@ -262,8 +263,8 @@ public abstract class GUser
         admin = prepareAdmin(admin);
         if (isAdmin(admin)) return;
         this.admin = admin;
-        updateLastModified();
-        fireModified("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
+            updateLastModified();
+            fireModified("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
     }
 
     protected boolean prepareAdmin(boolean admin) {
@@ -292,8 +293,8 @@ public abstract class GUser
         emailVerified = prepareEmailVerified(emailVerified);
         if (isEmailVerified(emailVerified)) return;
         this.emailVerified = emailVerified;
-        updateLastModified();
-        fireModified("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
+            updateLastModified();
+            fireModified("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
     }
 
     protected boolean prepareEmailVerified(boolean emailVerified) {
@@ -326,8 +327,8 @@ public abstract class GUser
             if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
         }
         this.email = email;
-        updateLastModified();
-        fireModified("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
+            updateLastModified();
+            fireModified("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
     }
 
     protected java.lang.String prepareEmail(java.lang.String email) {
@@ -353,34 +354,26 @@ public abstract class GUser
     // -----------------------------------------------------------
 
     private String currentProjectId;
-    private transient scrum.server.project.Project currentProjectCache;
-
-    private void updateCurrentProjectCache() {
-        currentProjectCache = this.currentProjectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.currentProjectId);
-    }
 
     public final String getCurrentProjectId() {
         return this.currentProjectId;
     }
 
     public final scrum.server.project.Project getCurrentProject() {
-        if (currentProjectCache == null) updateCurrentProjectCache();
-        return currentProjectCache;
+        return this.currentProjectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.currentProjectId);
     }
 
     public final void setCurrentProject(scrum.server.project.Project currentProject) {
         currentProject = prepareCurrentProject(currentProject);
         if (isCurrentProject(currentProject)) return;
         setCurrentProjectId(currentProject == null ? null : currentProject.getId());
-        currentProjectCache = currentProject;
     }
 
     public final void setCurrentProjectId(String id) {
         if (Utl.equals(currentProjectId, id)) return;
         this.currentProjectId = id;
-        currentProjectCache = null;
-        updateLastModified();
-        fireModified("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
+            updateLastModified();
+            fireModified("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
     }
 
     protected scrum.server.project.Project prepareCurrentProject(scrum.server.project.Project currentProject) {
@@ -420,8 +413,8 @@ public abstract class GUser
         color = prepareColor(color);
         if (isColor(color)) return;
         this.color = color;
-        updateLastModified();
-        fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+            updateLastModified();
+            fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
     }
 
     protected java.lang.String prepareColor(java.lang.String color) {
@@ -456,8 +449,8 @@ public abstract class GUser
         lastLoginDateAndTime = prepareLastLoginDateAndTime(lastLoginDateAndTime);
         if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
         this.lastLoginDateAndTime = lastLoginDateAndTime;
-        updateLastModified();
-        fireModified("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
+            updateLastModified();
+            fireModified("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
@@ -492,8 +485,8 @@ public abstract class GUser
         registrationDateAndTime = prepareRegistrationDateAndTime(registrationDateAndTime);
         if (isRegistrationDateAndTime(registrationDateAndTime)) return;
         this.registrationDateAndTime = registrationDateAndTime;
-        updateLastModified();
-        fireModified("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
+            updateLastModified();
+            fireModified("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
@@ -528,8 +521,8 @@ public abstract class GUser
         disabled = prepareDisabled(disabled);
         if (isDisabled(disabled)) return;
         this.disabled = disabled;
-        updateLastModified();
-        fireModified("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
+            updateLastModified();
+            fireModified("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
     }
 
     protected boolean prepareDisabled(boolean disabled) {
@@ -558,8 +551,8 @@ public abstract class GUser
         hideUserGuideBlog = prepareHideUserGuideBlog(hideUserGuideBlog);
         if (isHideUserGuideBlog(hideUserGuideBlog)) return;
         this.hideUserGuideBlog = hideUserGuideBlog;
-        updateLastModified();
-        fireModified("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
+            updateLastModified();
+            fireModified("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
     }
 
     protected boolean prepareHideUserGuideBlog(boolean hideUserGuideBlog) {
@@ -588,8 +581,8 @@ public abstract class GUser
         hideUserGuideCalendar = prepareHideUserGuideCalendar(hideUserGuideCalendar);
         if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
         this.hideUserGuideCalendar = hideUserGuideCalendar;
-        updateLastModified();
-        fireModified("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
+            updateLastModified();
+            fireModified("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
     }
 
     protected boolean prepareHideUserGuideCalendar(boolean hideUserGuideCalendar) {
@@ -618,8 +611,8 @@ public abstract class GUser
         hideUserGuideFiles = prepareHideUserGuideFiles(hideUserGuideFiles);
         if (isHideUserGuideFiles(hideUserGuideFiles)) return;
         this.hideUserGuideFiles = hideUserGuideFiles;
-        updateLastModified();
-        fireModified("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
+            updateLastModified();
+            fireModified("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
     }
 
     protected boolean prepareHideUserGuideFiles(boolean hideUserGuideFiles) {
@@ -648,8 +641,8 @@ public abstract class GUser
         hideUserGuideForum = prepareHideUserGuideForum(hideUserGuideForum);
         if (isHideUserGuideForum(hideUserGuideForum)) return;
         this.hideUserGuideForum = hideUserGuideForum;
-        updateLastModified();
-        fireModified("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
+            updateLastModified();
+            fireModified("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
     }
 
     protected boolean prepareHideUserGuideForum(boolean hideUserGuideForum) {
@@ -678,8 +671,8 @@ public abstract class GUser
         hideUserGuideImpediments = prepareHideUserGuideImpediments(hideUserGuideImpediments);
         if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
         this.hideUserGuideImpediments = hideUserGuideImpediments;
-        updateLastModified();
-        fireModified("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
+            updateLastModified();
+            fireModified("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
     }
 
     protected boolean prepareHideUserGuideImpediments(boolean hideUserGuideImpediments) {
@@ -708,8 +701,8 @@ public abstract class GUser
         hideUserGuideIssues = prepareHideUserGuideIssues(hideUserGuideIssues);
         if (isHideUserGuideIssues(hideUserGuideIssues)) return;
         this.hideUserGuideIssues = hideUserGuideIssues;
-        updateLastModified();
-        fireModified("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
+            updateLastModified();
+            fireModified("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
     }
 
     protected boolean prepareHideUserGuideIssues(boolean hideUserGuideIssues) {
@@ -738,8 +731,8 @@ public abstract class GUser
         hideUserGuideJournal = prepareHideUserGuideJournal(hideUserGuideJournal);
         if (isHideUserGuideJournal(hideUserGuideJournal)) return;
         this.hideUserGuideJournal = hideUserGuideJournal;
-        updateLastModified();
-        fireModified("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
+            updateLastModified();
+            fireModified("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
     }
 
     protected boolean prepareHideUserGuideJournal(boolean hideUserGuideJournal) {
@@ -768,8 +761,8 @@ public abstract class GUser
         hideUserGuideNextSprint = prepareHideUserGuideNextSprint(hideUserGuideNextSprint);
         if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
         this.hideUserGuideNextSprint = hideUserGuideNextSprint;
-        updateLastModified();
-        fireModified("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
+            updateLastModified();
+            fireModified("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
     }
 
     protected boolean prepareHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
@@ -798,8 +791,8 @@ public abstract class GUser
         hideUserGuideProductBacklog = prepareHideUserGuideProductBacklog(hideUserGuideProductBacklog);
         if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
         this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
-        updateLastModified();
-        fireModified("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
+            updateLastModified();
+            fireModified("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
     }
 
     protected boolean prepareHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
@@ -828,8 +821,8 @@ public abstract class GUser
         hideUserGuideCourtroom = prepareHideUserGuideCourtroom(hideUserGuideCourtroom);
         if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
         this.hideUserGuideCourtroom = hideUserGuideCourtroom;
-        updateLastModified();
-        fireModified("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
+            updateLastModified();
+            fireModified("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
     }
 
     protected boolean prepareHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
@@ -858,8 +851,8 @@ public abstract class GUser
         hideUserGuideQualityBacklog = prepareHideUserGuideQualityBacklog(hideUserGuideQualityBacklog);
         if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
         this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
-        updateLastModified();
-        fireModified("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
+            updateLastModified();
+            fireModified("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
     }
 
     protected boolean prepareHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
@@ -888,8 +881,8 @@ public abstract class GUser
         hideUserGuideReleases = prepareHideUserGuideReleases(hideUserGuideReleases);
         if (isHideUserGuideReleases(hideUserGuideReleases)) return;
         this.hideUserGuideReleases = hideUserGuideReleases;
-        updateLastModified();
-        fireModified("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
+            updateLastModified();
+            fireModified("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
     }
 
     protected boolean prepareHideUserGuideReleases(boolean hideUserGuideReleases) {
@@ -918,8 +911,8 @@ public abstract class GUser
         hideUserGuideRisks = prepareHideUserGuideRisks(hideUserGuideRisks);
         if (isHideUserGuideRisks(hideUserGuideRisks)) return;
         this.hideUserGuideRisks = hideUserGuideRisks;
-        updateLastModified();
-        fireModified("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
+            updateLastModified();
+            fireModified("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
     }
 
     protected boolean prepareHideUserGuideRisks(boolean hideUserGuideRisks) {
@@ -948,8 +941,8 @@ public abstract class GUser
         hideUserGuideSprintBacklog = prepareHideUserGuideSprintBacklog(hideUserGuideSprintBacklog);
         if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
         this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
-        updateLastModified();
-        fireModified("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
+            updateLastModified();
+            fireModified("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
     }
 
     protected boolean prepareHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
@@ -978,8 +971,8 @@ public abstract class GUser
         hideUserGuideWhiteboard = prepareHideUserGuideWhiteboard(hideUserGuideWhiteboard);
         if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
         this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
-        updateLastModified();
-        fireModified("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
+            updateLastModified();
+            fireModified("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
     }
 
     protected boolean prepareHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
@@ -1012,8 +1005,8 @@ public abstract class GUser
             if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
         }
         this.loginToken = loginToken;
-        updateLastModified();
-        fireModified("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
+            updateLastModified();
+            fireModified("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
     }
 
     protected java.lang.String prepareLoginToken(java.lang.String loginToken) {
@@ -1052,8 +1045,8 @@ public abstract class GUser
             if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
         }
         this.openId = openId;
-        updateLastModified();
-        fireModified("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
+            updateLastModified();
+            fireModified("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
     }
 
     protected java.lang.String prepareOpenId(java.lang.String openId) {
@@ -1124,20 +1117,6 @@ public abstract class GUser
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
             LOG.info("Repairing dead currentProject reference");
             repairDeadCurrentProjectReference(this.currentProjectId);
-        }
-        if (isDeleted()) {
-            for (scrum.server.collaboration.Emoticon entity : getEmoticons()) {
-                entity.ensureIntegrity();
-            }
-            for (scrum.server.admin.ProjectUserConfig entity : getProjectUserConfigs()) {
-                entity.ensureIntegrity();
-            }
-            for (scrum.server.estimation.RequirementEstimationVote entity : getRequirementEstimationVotes()) {
-                entity.ensureIntegrity();
-            }
-            for (scrum.server.collaboration.Emoticon entity : getEmoticons()) {
-                entity.ensureIntegrity();
-            }
         }
     }
 

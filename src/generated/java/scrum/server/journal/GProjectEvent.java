@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GProjectEvent
             extends AEntity
@@ -70,34 +71,26 @@ public abstract class GProjectEvent
     // -----------------------------------------------------------
 
     private String projectId;
-    private transient scrum.server.project.Project projectCache;
-
-    private void updateProjectCache() {
-        projectCache = this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
-    }
 
     public final String getProjectId() {
         return this.projectId;
     }
 
     public final scrum.server.project.Project getProject() {
-        if (projectCache == null) updateProjectCache();
-        return projectCache;
+        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
     }
 
     public final void setProject(scrum.server.project.Project project) {
         project = prepareProject(project);
         if (isProject(project)) return;
         setProjectId(project == null ? null : project.getId());
-        projectCache = project;
     }
 
     public final void setProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
-        projectCache = null;
-        updateLastModified();
-        fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -138,8 +131,8 @@ public abstract class GProjectEvent
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
-        updateLastModified();
-        fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
     protected java.lang.String prepareLabel(java.lang.String label) {
@@ -165,34 +158,26 @@ public abstract class GProjectEvent
     // -----------------------------------------------------------
 
     private String subjectId;
-    private transient ilarkesto.persistence.AEntity subjectCache;
-
-    private void updateSubjectCache() {
-        subjectCache = this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
-    }
 
     public final String getSubjectId() {
         return this.subjectId;
     }
 
     public final ilarkesto.persistence.AEntity getSubject() {
-        if (subjectCache == null) updateSubjectCache();
-        return subjectCache;
+        return this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
     }
 
     public final void setSubject(ilarkesto.persistence.AEntity subject) {
         subject = prepareSubject(subject);
         if (isSubject(subject)) return;
         setSubjectId(subject == null ? null : subject.getId());
-        subjectCache = subject;
     }
 
     public final void setSubjectId(String id) {
         if (Utl.equals(subjectId, id)) return;
         this.subjectId = id;
-        subjectCache = null;
-        updateLastModified();
-        fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+            updateLastModified();
+            fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -233,8 +218,8 @@ public abstract class GProjectEvent
         if (isDateAndTime(dateAndTime)) return;
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
-        updateLastModified();
-        fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {

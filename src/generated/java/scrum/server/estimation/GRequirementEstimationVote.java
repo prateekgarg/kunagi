@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GRequirementEstimationVote
             extends AEntity
@@ -58,34 +59,26 @@ public abstract class GRequirementEstimationVote
     // -----------------------------------------------------------
 
     private String requirementId;
-    private transient scrum.server.project.Requirement requirementCache;
-
-    private void updateRequirementCache() {
-        requirementCache = this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
-    }
 
     public final String getRequirementId() {
         return this.requirementId;
     }
 
     public final scrum.server.project.Requirement getRequirement() {
-        if (requirementCache == null) updateRequirementCache();
-        return requirementCache;
+        return this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
     }
 
     public final void setRequirement(scrum.server.project.Requirement requirement) {
         requirement = prepareRequirement(requirement);
         if (isRequirement(requirement)) return;
         setRequirementId(requirement == null ? null : requirement.getId());
-        requirementCache = requirement;
     }
 
     public final void setRequirementId(String id) {
         if (Utl.equals(requirementId, id)) return;
         this.requirementId = id;
-        requirementCache = null;
-        updateLastModified();
-        fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+            updateLastModified();
+            fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -116,34 +109,26 @@ public abstract class GRequirementEstimationVote
     // -----------------------------------------------------------
 
     private String userId;
-    private transient scrum.server.admin.User userCache;
-
-    private void updateUserCache() {
-        userCache = this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
-    }
 
     public final String getUserId() {
         return this.userId;
     }
 
     public final scrum.server.admin.User getUser() {
-        if (userCache == null) updateUserCache();
-        return userCache;
+        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
     }
 
     public final void setUser(scrum.server.admin.User user) {
         user = prepareUser(user);
         if (isUser(user)) return;
         setUserId(user == null ? null : user.getId());
-        userCache = user;
     }
 
     public final void setUserId(String id) {
         if (Utl.equals(userId, id)) return;
         this.userId = id;
-        userCache = null;
-        updateLastModified();
-        fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+            updateLastModified();
+            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -183,8 +168,8 @@ public abstract class GRequirementEstimationVote
         estimatedWork = prepareEstimatedWork(estimatedWork);
         if (isEstimatedWork(estimatedWork)) return;
         this.estimatedWork = estimatedWork;
-        updateLastModified();
-        fireModified("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
+            updateLastModified();
+            fireModified("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {
@@ -234,9 +219,6 @@ public abstract class GRequirementEstimationVote
             LOG.info("Repairing dead requirement reference");
             repairDeadRequirementReference(this.requirementId);
         }
-        try {
-            if (isDeleted() && isRequirementSet()) getRequirement().ensureIntegrity();
-        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
         if (!isUserSet()) {
             repairMissingMaster();
         }

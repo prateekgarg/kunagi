@@ -21,6 +21,7 @@ import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
 import ilarkesto.auth.AUser;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GProjectSprintSnapshot
             extends AEntity
@@ -58,34 +59,26 @@ public abstract class GProjectSprintSnapshot
     // -----------------------------------------------------------
 
     private String sprintId;
-    private transient scrum.server.sprint.Sprint sprintCache;
-
-    private void updateSprintCache() {
-        sprintCache = this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
-    }
 
     public final String getSprintId() {
         return this.sprintId;
     }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        if (sprintCache == null) updateSprintCache();
-        return sprintCache;
+        return this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
         sprint = prepareSprint(sprint);
         if (isSprint(sprint)) return;
         setSprintId(sprint == null ? null : sprint.getId());
-        sprintCache = sprint;
     }
 
     public final void setSprintId(String id) {
         if (Utl.equals(sprintId, id)) return;
         this.sprintId = id;
-        sprintCache = null;
-        updateLastModified();
-        fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+            updateLastModified();
+            fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -125,8 +118,8 @@ public abstract class GProjectSprintSnapshot
         remainingWork = prepareRemainingWork(remainingWork);
         if (isRemainingWork(remainingWork)) return;
         this.remainingWork = remainingWork;
-        updateLastModified();
-        fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+            updateLastModified();
+            fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
     }
 
     protected int prepareRemainingWork(int remainingWork) {
@@ -155,8 +148,8 @@ public abstract class GProjectSprintSnapshot
         burnedWork = prepareBurnedWork(burnedWork);
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
-        updateLastModified();
-        fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+            updateLastModified();
+            fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
     protected int prepareBurnedWork(int burnedWork) {
@@ -200,9 +193,6 @@ public abstract class GProjectSprintSnapshot
             LOG.info("Repairing dead sprint reference");
             repairDeadSprintReference(this.sprintId);
         }
-        try {
-            if (isDeleted() && isSprintSet()) getSprint().ensureIntegrity();
-        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {}
     }
 
 
