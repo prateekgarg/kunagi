@@ -66,7 +66,11 @@ public abstract class GChatMessage
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("ChatMessage.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -116,7 +120,11 @@ public abstract class GChatMessage
     }
 
     public final scrum.server.admin.User getAuthor() {
-        return this.authorId == null ? null : (scrum.server.admin.User)userDao.getById(this.authorId);
+        try {
+            return this.authorId == null ? null : (scrum.server.admin.User) AEntity.getById(this.authorId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("ChatMessage.author");
+        }
     }
 
     public final void setAuthor(scrum.server.admin.User author) {

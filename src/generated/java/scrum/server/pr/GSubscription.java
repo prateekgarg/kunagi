@@ -64,7 +64,11 @@ public abstract class GSubscription
     }
 
     public final ilarkesto.persistence.AEntity getSubject() {
-        return this.subjectId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.subjectId);
+        try {
+            return this.subjectId == null ? null : (ilarkesto.persistence.AEntity) AEntity.getById(this.subjectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Subscription.subject");
+        }
     }
 
     public final void setSubject(ilarkesto.persistence.AEntity subject) {

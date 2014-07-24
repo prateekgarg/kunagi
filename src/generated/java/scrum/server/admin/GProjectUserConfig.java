@@ -79,7 +79,11 @@ public abstract class GProjectUserConfig
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("ProjectUserConfig.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -129,7 +133,11 @@ public abstract class GProjectUserConfig
     }
 
     public final scrum.server.admin.User getUser() {
-        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
+        try {
+            return this.userId == null ? null : (scrum.server.admin.User) AEntity.getById(this.userId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("ProjectUserConfig.user");
+        }
     }
 
     public final void setUser(scrum.server.admin.User user) {
@@ -591,7 +599,11 @@ public abstract class GProjectUserConfig
     private java.util.Set<String> pblFilterQualitysIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.project.Quality> getPblFilterQualitys() {
-        return (java.util.Set) qualityDao.getByIdsAsSet(this.pblFilterQualitysIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.pblFilterQualitysIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("ProjectUserConfig.pblFilterQualitys");
+        }
     }
 
     public final void setPblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
@@ -929,7 +941,7 @@ public abstract class GProjectUserConfig
         Set<String> pblFilterQualitys = new HashSet<String>(this.pblFilterQualitysIds);
         for (String entityId : pblFilterQualitys) {
             try {
-                qualityDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead pblFilterQuality reference");
                 repairDeadPblFilterQualityReference(entityId);

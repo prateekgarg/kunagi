@@ -1581,8 +1581,32 @@ public abstract class GUser
         return getDao().getProjectsByParticipant((User)this);
     }
 
+    public final java.util.List<scrum.client.project.Project> getProjectWithAdminss() {
+        return getDao().getProjectsByAdmin((User)this);
+    }
+
+    public final java.util.List<scrum.client.project.Project> getProjectWithProductOwnerss() {
+        return getDao().getProjectsByProductOwner((User)this);
+    }
+
+    public final java.util.List<scrum.client.project.Project> getProjectWithScrumMasterss() {
+        return getDao().getProjectsByScrumMaster((User)this);
+    }
+
+    public final java.util.List<scrum.client.project.Project> getProjectWithTeamMemberss() {
+        return getDao().getProjectsByTeamMember((User)this);
+    }
+
     public final java.util.List<scrum.client.sprint.Sprint> getSprints() {
         return getDao().getSprintsByProductOwner((User)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Sprint> getSprintWithScrumMasterss() {
+        return getDao().getSprintsByScrumMaster((User)this);
+    }
+
+    public final java.util.List<scrum.client.sprint.Sprint> getSprintWithTeamMemberss() {
+        return getDao().getSprintsByTeamMember((User)this);
     }
 
     public final java.util.List<scrum.client.collaboration.Emoticon> getEmoticons() {
@@ -1595,6 +1619,10 @@ public abstract class GUser
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {
         return getDao().getIssuesByCreator((User)this);
+    }
+
+    public final java.util.List<scrum.client.issues.Issue> getIssueWithOwners() {
+        return getDao().getIssuesByOwner((User)this);
     }
 
     public final java.util.List<scrum.client.sprint.Task> getTasks() {
@@ -1619,6 +1647,10 @@ public abstract class GUser
 
     public final java.util.List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
         return getDao().getRequirementEstimationVotesByUser((User)this);
+    }
+
+    public final java.util.List<scrum.client.collaboration.Emoticon> getEmoticonWithOwners() {
+        return getDao().getEmoticonsByOwner((User)this);
     }
 
     @Override

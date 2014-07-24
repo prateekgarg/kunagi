@@ -81,7 +81,11 @@ public abstract class GComment
     }
 
     public final ilarkesto.persistence.AEntity getParent() {
-        return this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
+        try {
+            return this.parentId == null ? null : (ilarkesto.persistence.AEntity) AEntity.getById(this.parentId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Comment.parent");
+        }
     }
 
     public final void setParent(ilarkesto.persistence.AEntity parent) {
@@ -131,7 +135,11 @@ public abstract class GComment
     }
 
     public final scrum.server.admin.User getAuthor() {
-        return this.authorId == null ? null : (scrum.server.admin.User)userDao.getById(this.authorId);
+        try {
+            return this.authorId == null ? null : (scrum.server.admin.User) AEntity.getById(this.authorId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Comment.author");
+        }
     }
 
     public final void setAuthor(scrum.server.admin.User author) {

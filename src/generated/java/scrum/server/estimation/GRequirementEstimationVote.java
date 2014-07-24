@@ -65,7 +65,11 @@ public abstract class GRequirementEstimationVote
     }
 
     public final scrum.server.project.Requirement getRequirement() {
-        return this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+        try {
+            return this.requirementId == null ? null : (scrum.server.project.Requirement) AEntity.getById(this.requirementId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("RequirementEstimationVote.requirement");
+        }
     }
 
     public final void setRequirement(scrum.server.project.Requirement requirement) {
@@ -115,7 +119,11 @@ public abstract class GRequirementEstimationVote
     }
 
     public final scrum.server.admin.User getUser() {
-        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
+        try {
+            return this.userId == null ? null : (scrum.server.admin.User) AEntity.getById(this.userId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("RequirementEstimationVote.user");
+        }
     }
 
     public final void setUser(scrum.server.admin.User user) {

@@ -14,7 +14,7 @@
  */
 package scrum.server.project;
 
-import ilarkesto.fp.Predicate;
+import ilarkesto.core.fp.Predicate;
 import scrum.server.issues.Issue;
 
 public class RequirementDao extends GRequirementDao {

@@ -77,6 +77,10 @@ public abstract class GRequirement
         return sprintReportDao.getSprintReportsByCompletedRequirement((Requirement)this);
     }
 
+    public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReportWithRejectedRequirementss() {
+        return sprintReportDao.getSprintReportsByRejectedRequirement((Requirement)this);
+    }
+
     public final java.util.Set<scrum.server.sprint.Task> getTasks() {
         return taskDao.getTasksByRequirement((Requirement)this);
     }
@@ -113,7 +117,11 @@ public abstract class GRequirement
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Requirement.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -163,7 +171,11 @@ public abstract class GRequirement
     }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        return this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+        try {
+            return this.sprintId == null ? null : (scrum.server.sprint.Sprint) AEntity.getById(this.sprintId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Requirement.sprint");
+        }
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
@@ -213,7 +225,11 @@ public abstract class GRequirement
     }
 
     public final scrum.server.issues.Issue getIssue() {
-        return this.issueId == null ? null : (scrum.server.issues.Issue)issueDao.getById(this.issueId);
+        try {
+            return this.issueId == null ? null : (scrum.server.issues.Issue) AEntity.getById(this.issueId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Requirement.issue");
+        }
     }
 
     public final void setIssue(scrum.server.issues.Issue issue) {
@@ -289,7 +305,11 @@ public abstract class GRequirement
     private java.util.Set<String> qualitysIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.project.Quality> getQualitys() {
-        return (java.util.Set) qualityDao.getByIdsAsSet(this.qualitysIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.qualitysIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Requirement.qualitys");
+        }
     }
 
     public final void setQualitys(Collection<scrum.server.project.Quality> qualitys) {
@@ -928,7 +948,11 @@ public abstract class GRequirement
     }
 
     public final scrum.server.project.Requirement getEpic() {
-        return this.epicId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.epicId);
+        try {
+            return this.epicId == null ? null : (scrum.server.project.Requirement) AEntity.getById(this.epicId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Requirement.epic");
+        }
     }
 
     public final void setEpic(scrum.server.project.Requirement epic) {
@@ -1034,7 +1058,7 @@ public abstract class GRequirement
         Set<String> qualitys = new HashSet<String>(this.qualitysIds);
         for (String entityId : qualitys) {
             try {
-                qualityDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead quality reference");
                 repairDeadQualityReference(entityId);

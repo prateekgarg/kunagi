@@ -65,7 +65,11 @@ public abstract class GEmoticon
     }
 
     public final ilarkesto.persistence.AEntity getParent() {
-        return this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
+        try {
+            return this.parentId == null ? null : (ilarkesto.persistence.AEntity) AEntity.getById(this.parentId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Emoticon.parent");
+        }
     }
 
     public final void setParent(ilarkesto.persistence.AEntity parent) {
@@ -115,7 +119,11 @@ public abstract class GEmoticon
     }
 
     public final scrum.server.admin.User getOwner() {
-        return this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+        try {
+            return this.ownerId == null ? null : (scrum.server.admin.User) AEntity.getById(this.ownerId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Emoticon.owner");
+        }
     }
 
     public final void setOwner(scrum.server.admin.User owner) {

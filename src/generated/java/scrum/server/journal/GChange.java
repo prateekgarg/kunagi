@@ -69,7 +69,11 @@ public abstract class GChange
     }
 
     public final ilarkesto.persistence.AEntity getParent() {
-        return this.parentId == null ? null : (ilarkesto.persistence.AEntity)getDaoService().getById(this.parentId);
+        try {
+            return this.parentId == null ? null : (ilarkesto.persistence.AEntity) AEntity.getById(this.parentId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Change.parent");
+        }
     }
 
     public final void setParent(ilarkesto.persistence.AEntity parent) {
@@ -119,7 +123,11 @@ public abstract class GChange
     }
 
     public final scrum.server.admin.User getUser() {
-        return this.userId == null ? null : (scrum.server.admin.User)userDao.getById(this.userId);
+        try {
+            return this.userId == null ? null : (scrum.server.admin.User) AEntity.getById(this.userId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Change.user");
+        }
     }
 
     public final void setUser(scrum.server.admin.User user) {

@@ -105,7 +105,11 @@ public abstract class GRelease
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Release.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -155,7 +159,11 @@ public abstract class GRelease
     }
 
     public final scrum.server.release.Release getParentRelease() {
-        return this.parentReleaseId == null ? null : (scrum.server.release.Release)releaseDao.getById(this.parentReleaseId);
+        try {
+            return this.parentReleaseId == null ? null : (scrum.server.release.Release) AEntity.getById(this.parentReleaseId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Release.parentRelease");
+        }
     }
 
     public final void setParentRelease(scrum.server.release.Release parentRelease) {
@@ -201,7 +209,11 @@ public abstract class GRelease
     private java.util.Set<String> sprintsIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
-        return (java.util.Set) sprintDao.getByIdsAsSet(this.sprintsIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.sprintsIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Release.sprints");
+        }
     }
 
     public final void setSprints(Collection<scrum.server.sprint.Sprint> sprints) {
@@ -693,7 +705,7 @@ public abstract class GRelease
         Set<String> sprints = new HashSet<String>(this.sprintsIds);
         for (String entityId : sprints) {
             try {
-                sprintDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead sprint reference");
                 repairDeadSprintReference(entityId);

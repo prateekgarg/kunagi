@@ -156,7 +156,11 @@ public abstract class GSprint
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Sprint.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -698,7 +702,11 @@ public abstract class GSprint
     private java.util.Set<String> productOwnersIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.admin.User> getProductOwners() {
-        return (java.util.Set) userDao.getByIdsAsSet(this.productOwnersIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.productOwnersIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Sprint.productOwners");
+        }
     }
 
     public final void setProductOwners(Collection<scrum.server.admin.User> productOwners) {
@@ -802,7 +810,11 @@ public abstract class GSprint
     private java.util.Set<String> scrumMastersIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.admin.User> getScrumMasters() {
-        return (java.util.Set) userDao.getByIdsAsSet(this.scrumMastersIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.scrumMastersIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Sprint.scrumMasters");
+        }
     }
 
     public final void setScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
@@ -906,7 +918,11 @@ public abstract class GSprint
     private java.util.Set<String> teamMembersIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.admin.User> getTeamMembers() {
-        return (java.util.Set) userDao.getByIdsAsSet(this.teamMembersIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.teamMembersIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Sprint.teamMembers");
+        }
     }
 
     public final void setTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
@@ -1058,7 +1074,7 @@ public abstract class GSprint
         Set<String> productOwners = new HashSet<String>(this.productOwnersIds);
         for (String entityId : productOwners) {
             try {
-                userDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead productOwner reference");
                 repairDeadProductOwnerReference(entityId);
@@ -1068,7 +1084,7 @@ public abstract class GSprint
         Set<String> scrumMasters = new HashSet<String>(this.scrumMastersIds);
         for (String entityId : scrumMasters) {
             try {
-                userDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead scrumMaster reference");
                 repairDeadScrumMasterReference(entityId);
@@ -1078,7 +1094,7 @@ public abstract class GSprint
         Set<String> teamMembers = new HashSet<String>(this.teamMembersIds);
         for (String entityId : teamMembers) {
             try {
-                userDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead teamMember reference");
                 repairDeadTeamMemberReference(entityId);

@@ -69,7 +69,11 @@ public abstract class GSprintReport
     }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        return this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+        try {
+            return this.sprintId == null ? null : (scrum.server.sprint.Sprint) AEntity.getById(this.sprintId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintReport.sprint");
+        }
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {
@@ -115,7 +119,11 @@ public abstract class GSprintReport
     private java.util.Set<String> completedRequirementsIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.project.Requirement> getCompletedRequirements() {
-        return (java.util.Set) requirementDao.getByIdsAsSet(this.completedRequirementsIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.completedRequirementsIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintReport.completedRequirements");
+        }
     }
 
     public final void setCompletedRequirements(Collection<scrum.server.project.Requirement> completedRequirements) {
@@ -219,7 +227,11 @@ public abstract class GSprintReport
     private java.util.Set<String> rejectedRequirementsIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.project.Requirement> getRejectedRequirements() {
-        return (java.util.Set) requirementDao.getByIdsAsSet(this.rejectedRequirementsIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.rejectedRequirementsIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintReport.rejectedRequirements");
+        }
     }
 
     public final void setRejectedRequirements(Collection<scrum.server.project.Requirement> rejectedRequirements) {
@@ -424,7 +436,11 @@ public abstract class GSprintReport
     private java.util.Set<String> closedTasksIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.sprint.Task> getClosedTasks() {
-        return (java.util.Set) taskDao.getByIdsAsSet(this.closedTasksIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.closedTasksIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintReport.closedTasks");
+        }
     }
 
     public final void setClosedTasks(Collection<scrum.server.sprint.Task> closedTasks) {
@@ -528,7 +544,11 @@ public abstract class GSprintReport
     private java.util.Set<String> openTasksIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.sprint.Task> getOpenTasks() {
-        return (java.util.Set) taskDao.getByIdsAsSet(this.openTasksIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.openTasksIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintReport.openTasks");
+        }
     }
 
     public final void setOpenTasks(Collection<scrum.server.sprint.Task> openTasks) {
@@ -701,7 +721,7 @@ public abstract class GSprintReport
         Set<String> completedRequirements = new HashSet<String>(this.completedRequirementsIds);
         for (String entityId : completedRequirements) {
             try {
-                requirementDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead completedRequirement reference");
                 repairDeadCompletedRequirementReference(entityId);
@@ -711,7 +731,7 @@ public abstract class GSprintReport
         Set<String> rejectedRequirements = new HashSet<String>(this.rejectedRequirementsIds);
         for (String entityId : rejectedRequirements) {
             try {
-                requirementDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead rejectedRequirement reference");
                 repairDeadRejectedRequirementReference(entityId);
@@ -722,7 +742,7 @@ public abstract class GSprintReport
         Set<String> closedTasks = new HashSet<String>(this.closedTasksIds);
         for (String entityId : closedTasks) {
             try {
-                taskDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead closedTask reference");
                 repairDeadClosedTaskReference(entityId);
@@ -732,7 +752,7 @@ public abstract class GSprintReport
         Set<String> openTasks = new HashSet<String>(this.openTasksIds);
         for (String entityId : openTasks) {
             try {
-                taskDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead openTask reference");
                 repairDeadOpenTaskReference(entityId);

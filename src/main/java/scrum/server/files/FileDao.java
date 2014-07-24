@@ -14,8 +14,8 @@
  */
 package scrum.server.files;
 
+import ilarkesto.core.fp.Predicate;
 import ilarkesto.core.time.DateAndTime;
-import ilarkesto.fp.Predicate;
 import scrum.server.project.Project;
 
 public class FileDao extends GFileDao {

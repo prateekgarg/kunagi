@@ -60,6 +60,10 @@ public abstract class GTask
         return sprintReportDao.getSprintReportsByClosedTask((Task)this);
     }
 
+    public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReportWithOpenTaskss() {
+        return sprintReportDao.getSprintReportsByOpenTask((Task)this);
+    }
+
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GTask.class);
 
     public static final String TYPE = "task";
@@ -87,7 +91,11 @@ public abstract class GTask
     }
 
     public final scrum.server.project.Requirement getRequirement() {
-        return this.requirementId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.requirementId);
+        try {
+            return this.requirementId == null ? null : (scrum.server.project.Requirement) AEntity.getById(this.requirementId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Task.requirement");
+        }
     }
 
     public final void setRequirement(scrum.server.project.Requirement requirement) {
@@ -300,7 +308,11 @@ public abstract class GTask
     }
 
     public final scrum.server.admin.User getOwner() {
-        return this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+        try {
+            return this.ownerId == null ? null : (scrum.server.admin.User) AEntity.getById(this.ownerId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Task.owner");
+        }
     }
 
     public final void setOwner(scrum.server.admin.User owner) {
@@ -350,7 +362,11 @@ public abstract class GTask
     }
 
     public final scrum.server.impediments.Impediment getImpediment() {
-        return this.impedimentId == null ? null : (scrum.server.impediments.Impediment)impedimentDao.getById(this.impedimentId);
+        try {
+            return this.impedimentId == null ? null : (scrum.server.impediments.Impediment) AEntity.getById(this.impedimentId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Task.impediment");
+        }
     }
 
     public final void setImpediment(scrum.server.impediments.Impediment impediment) {
@@ -400,7 +416,11 @@ public abstract class GTask
     }
 
     public final scrum.server.sprint.Sprint getClosedInPastSprint() {
-        return this.closedInPastSprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.closedInPastSprintId);
+        try {
+            return this.closedInPastSprintId == null ? null : (scrum.server.sprint.Sprint) AEntity.getById(this.closedInPastSprintId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Task.closedInPastSprint");
+        }
     }
 
     public final void setClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {

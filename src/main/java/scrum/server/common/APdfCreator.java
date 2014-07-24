@@ -75,7 +75,7 @@ public abstract class APdfCreator {
 	}
 
 	public void createPdf(APdfBuilder pdf) {
-		pdf.setDefaultFontStyle(defaultFont);
+		pdf.setFontStyle(defaultFont);
 		build(pdf);
 	}
 

@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.auth.Auth;
 import ilarkesto.base.Cache;
 import ilarkesto.persistence.EntityEvent;
-import ilarkesto.fp.Predicate;
+import ilarkesto.core.fp.Predicate;
 
 public abstract class GCommentDao
             extends ilarkesto.persistence.ADao<Comment> {

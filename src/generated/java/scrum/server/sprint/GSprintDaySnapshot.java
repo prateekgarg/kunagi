@@ -67,7 +67,11 @@ public abstract class GSprintDaySnapshot
     }
 
     public final scrum.server.sprint.Sprint getSprint() {
-        return this.sprintId == null ? null : (scrum.server.sprint.Sprint)sprintDao.getById(this.sprintId);
+        try {
+            return this.sprintId == null ? null : (scrum.server.sprint.Sprint) AEntity.getById(this.sprintId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("SprintDaySnapshot.sprint");
+        }
     }
 
     public final void setSprint(scrum.server.sprint.Sprint sprint) {

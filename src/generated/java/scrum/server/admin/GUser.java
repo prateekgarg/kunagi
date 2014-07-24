@@ -79,8 +79,32 @@ public abstract class GUser
         return projectDao.getProjectsByParticipant((User)this);
     }
 
+    public final java.util.Set<scrum.server.project.Project> getProjectWithAdminss() {
+        return projectDao.getProjectsByAdmin((User)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getProjectWithProductOwnerss() {
+        return projectDao.getProjectsByProductOwner((User)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getProjectWithScrumMasterss() {
+        return projectDao.getProjectsByScrumMaster((User)this);
+    }
+
+    public final java.util.Set<scrum.server.project.Project> getProjectWithTeamMemberss() {
+        return projectDao.getProjectsByTeamMember((User)this);
+    }
+
     public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
         return sprintDao.getSprintsByProductOwner((User)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprintWithScrumMasterss() {
+        return sprintDao.getSprintsByScrumMaster((User)this);
+    }
+
+    public final java.util.Set<scrum.server.sprint.Sprint> getSprintWithTeamMemberss() {
+        return sprintDao.getSprintsByTeamMember((User)this);
     }
 
     public final java.util.Set<scrum.server.collaboration.Emoticon> getEmoticons() {
@@ -93,6 +117,10 @@ public abstract class GUser
 
     public final java.util.Set<scrum.server.issues.Issue> getIssues() {
         return issueDao.getIssuesByCreator((User)this);
+    }
+
+    public final java.util.Set<scrum.server.issues.Issue> getIssueWithOwners() {
+        return issueDao.getIssuesByOwner((User)this);
     }
 
     public final java.util.Set<scrum.server.sprint.Task> getTasks() {
@@ -117,6 +145,10 @@ public abstract class GUser
 
     public final java.util.Set<scrum.server.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
         return requirementEstimationVoteDao.getRequirementEstimationVotesByUser((User)this);
+    }
+
+    public final java.util.Set<scrum.server.collaboration.Emoticon> getEmoticonWithOwners() {
+        return emoticonDao.getEmoticonsByOwner((User)this);
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GUser.class);
@@ -360,7 +392,11 @@ public abstract class GUser
     }
 
     public final scrum.server.project.Project getCurrentProject() {
-        return this.currentProjectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.currentProjectId);
+        try {
+            return this.currentProjectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.currentProjectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("User.currentProject");
+        }
     }
 
     public final void setCurrentProject(scrum.server.project.Project currentProject) {

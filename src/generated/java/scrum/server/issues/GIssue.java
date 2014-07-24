@@ -101,7 +101,11 @@ public abstract class GIssue
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -151,7 +155,11 @@ public abstract class GIssue
     }
 
     public final scrum.server.project.Requirement getStory() {
-        return this.storyId == null ? null : (scrum.server.project.Requirement)requirementDao.getById(this.storyId);
+        try {
+            return this.storyId == null ? null : (scrum.server.project.Requirement) AEntity.getById(this.storyId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.story");
+        }
     }
 
     public final void setStory(scrum.server.project.Requirement story) {
@@ -304,7 +312,11 @@ public abstract class GIssue
     }
 
     public final scrum.server.admin.User getCreator() {
-        return this.creatorId == null ? null : (scrum.server.admin.User)userDao.getById(this.creatorId);
+        try {
+            return this.creatorId == null ? null : (scrum.server.admin.User) AEntity.getById(this.creatorId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.creator");
+        }
     }
 
     public final void setCreator(scrum.server.admin.User creator) {
@@ -631,7 +643,11 @@ public abstract class GIssue
     }
 
     public final scrum.server.admin.User getOwner() {
-        return this.ownerId == null ? null : (scrum.server.admin.User)userDao.getById(this.ownerId);
+        try {
+            return this.ownerId == null ? null : (scrum.server.admin.User) AEntity.getById(this.ownerId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.owner");
+        }
     }
 
     public final void setOwner(scrum.server.admin.User owner) {
@@ -785,7 +801,11 @@ public abstract class GIssue
     private java.util.Set<String> affectedReleasesIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.release.Release> getAffectedReleases() {
-        return (java.util.Set) releaseDao.getByIdsAsSet(this.affectedReleasesIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.affectedReleasesIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.affectedReleases");
+        }
     }
 
     public final void setAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
@@ -889,7 +909,11 @@ public abstract class GIssue
     private java.util.Set<String> fixReleasesIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.release.Release> getFixReleases() {
-        return (java.util.Set) releaseDao.getByIdsAsSet(this.fixReleasesIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.fixReleasesIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("Issue.fixReleases");
+        }
     }
 
     public final void setFixReleases(Collection<scrum.server.release.Release> fixReleases) {
@@ -1195,7 +1219,7 @@ public abstract class GIssue
         Set<String> affectedReleases = new HashSet<String>(this.affectedReleasesIds);
         for (String entityId : affectedReleases) {
             try {
-                releaseDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead affectedRelease reference");
                 repairDeadAffectedReleaseReference(entityId);
@@ -1205,7 +1229,7 @@ public abstract class GIssue
         Set<String> fixReleases = new HashSet<String>(this.fixReleasesIds);
         for (String entityId : fixReleases) {
             try {
-                releaseDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead fixRelease reference");
                 repairDeadFixReleaseReference(entityId);

@@ -896,6 +896,10 @@ public abstract class GRequirement
         return getDao().getSprintReportsByCompletedRequirement((Requirement)this);
     }
 
+    public final java.util.List<scrum.client.sprint.SprintReport> getSprintReportWithRejectedRequirementss() {
+        return getDao().getSprintReportsByRejectedRequirement((Requirement)this);
+    }
+
     public final java.util.List<scrum.client.sprint.Task> getTasks() {
         return getDao().getTasksByRequirement((Requirement)this);
     }

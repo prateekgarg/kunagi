@@ -14,8 +14,8 @@
  */
 package scrum.server.issues;
 
+import ilarkesto.core.fp.Predicate;
 import ilarkesto.core.time.DateAndTime;
-import ilarkesto.fp.Predicate;
 
 import java.util.Set;
 

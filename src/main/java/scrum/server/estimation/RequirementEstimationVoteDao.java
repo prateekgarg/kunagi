@@ -14,8 +14,8 @@
  */
 package scrum.server.estimation;
 
+import ilarkesto.core.fp.Predicate;
 import ilarkesto.core.logging.Log;
-import ilarkesto.fp.Predicate;
 
 import java.util.HashSet;
 import java.util.Set;

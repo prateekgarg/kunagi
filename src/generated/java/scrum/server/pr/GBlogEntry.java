@@ -82,7 +82,11 @@ public abstract class GBlogEntry
     }
 
     public final scrum.server.project.Project getProject() {
-        return this.projectId == null ? null : (scrum.server.project.Project)projectDao.getById(this.projectId);
+        try {
+            return this.projectId == null ? null : (scrum.server.project.Project) AEntity.getById(this.projectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("BlogEntry.project");
+        }
     }
 
     public final void setProject(scrum.server.project.Project project) {
@@ -158,7 +162,11 @@ public abstract class GBlogEntry
     private java.util.Set<String> authorsIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.admin.User> getAuthors() {
-        return (java.util.Set) userDao.getByIdsAsSet(this.authorsIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.authorsIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("BlogEntry.authors");
+        }
     }
 
     public final void setAuthors(Collection<scrum.server.admin.User> authors) {
@@ -371,7 +379,11 @@ public abstract class GBlogEntry
     private java.util.Set<String> releasesIds = new java.util.HashSet<String>();
 
     public final java.util.Set<scrum.server.release.Release> getReleases() {
-        return (java.util.Set) releaseDao.getByIdsAsSet(this.releasesIds);
+        try {
+            return (java.util.Set) AEntity.getByIdsAsSet(this.releasesIds);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("BlogEntry.releases");
+        }
     }
 
     public final void setReleases(Collection<scrum.server.release.Release> releases) {
@@ -540,7 +552,7 @@ public abstract class GBlogEntry
         Set<String> authors = new HashSet<String>(this.authorsIds);
         for (String entityId : authors) {
             try {
-                userDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead author reference");
                 repairDeadAuthorReference(entityId);
@@ -550,7 +562,7 @@ public abstract class GBlogEntry
         Set<String> releases = new HashSet<String>(this.releasesIds);
         for (String entityId : releases) {
             try {
-                releaseDao.getById(entityId);
+                AEntity.getById(entityId);
             } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
                 LOG.info("Repairing dead release reference");
                 repairDeadReleaseReference(entityId);

@@ -1,6 +1,6 @@
 package scrum.server.sprint;
 
-import ilarkesto.fp.Predicate;
+import ilarkesto.core.fp.Predicate;
 
 import java.util.Set;
 
