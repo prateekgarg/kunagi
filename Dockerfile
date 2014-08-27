@@ -1,21 +1,11 @@
-FROM consol/tomcat-8.0
+FROM consol/tomcat-7.0
 
 MAINTAINER Friedrich Große <friedrich.grosse@gmail.com>
+ENV KUNAGI_VERSION 0.26
+
+EXPOSE 8080
 ENV DEPLOY_DIR /kunagi
 
-RUN apt-get update
+RUN wget http://kunagi.org/releases/${KUNAGI_VERSION}/kunagi.war --directory-prefix=kunagi
 
-# Install build dependencies
-RUN apt-get install -y ant git unzip bzip2 && apt-get clean
-
-# Build ilarkesto
-WORKDIR /build/ilarkesto
-RUN git clone https://github.com/Kunagi/ilarkesto.git .
-RUN ./update-libs.bsh
-RUN ant package
-
-# Build kunagi
-WORKDIR /build/kunagi
-ADD . /build/kunagi 
-RUN ant webapp
-
+CMD /opt/tomcat/bin/deploy-and-run.sh
