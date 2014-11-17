@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSubscription
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Subscription> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Subscription.class);
@@ -46,7 +46,7 @@ public abstract class GSubscription
     }
 
     public int compareTo(Subscription other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSubscription.class);
@@ -78,6 +78,13 @@ public abstract class GSubscription
     }
 
     public final void setSubjectId(String id) {
+        if (Utl.equals(subjectId, id)) return;
+        this.subjectId = id;
+            updateLastModified();
+            fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+    }
+
+    private final void updateSubjectId(String id) {
         if (Utl.equals(subjectId, id)) return;
         this.subjectId = id;
             updateLastModified();
@@ -119,6 +126,14 @@ public abstract class GSubscription
 
     public final void setSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
         subscribersEmails = prepareSubscribersEmails(subscribersEmails);
+        if (subscribersEmails == null) subscribersEmails = Collections.emptyList();
+        if (this.subscribersEmails.equals(subscribersEmails)) return;
+        this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
+            updateLastModified();
+            fireModified("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
+    }
+
+    private final void updateSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
         if (subscribersEmails == null) subscribersEmails = Collections.emptyList();
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
@@ -209,12 +224,13 @@ public abstract class GSubscription
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("subjectId")) setSubjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("subscribersEmails")) setSubscribersEmails(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("subjectId")) updateSubjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("subscribersEmails")) updateSubscribersEmails(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
         }
     }
 

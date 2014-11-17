@@ -370,12 +370,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setSmtpTls(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Activate this, if your SMTP email server requires TLS. Gmail requires this."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -875,12 +879,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setUserEmailMandatory(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Activate this, if you want the email field on the registration page for new users to be mandatory."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -930,12 +938,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setRegistrationDisabled(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Acitviate this, if you want to disable the registration page for new users."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -985,12 +997,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setProjectCreationDisabled(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Activate this, to prevent users from creating projects."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -1098,12 +1114,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setOpenIdDisabled(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Activate this, if you want to disable logins with OpenID."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -1208,12 +1228,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setVersionCheckEnabled(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -1263,12 +1287,16 @@ public abstract class GSystemConfig
         public void setValue(java.lang.Boolean value) {
             setLdapEnabled(value);
         }
+
+        @Override
+        public boolean isMandatory() { return true; }
         @Override
         public String getTooltip() { return "Enable LDAP authentication. Kunagi will check username and password against a LDAP server."; }
 
         @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GWikipage
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Wikipage>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Wikipage.class);
@@ -47,7 +47,7 @@ public abstract class GWikipage
     }
 
     public int compareTo(Wikipage other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GWikipage.class);
@@ -97,6 +97,13 @@ public abstract class GWikipage
             fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
+    private final void updateProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
         return project;
     }
@@ -132,6 +139,14 @@ public abstract class GWikipage
 
     public final void setName(java.lang.String name) {
         name = prepareName(name);
+        if (isName(name)) return;
+        if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
+        this.name = name;
+            updateLastModified();
+            fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+    }
+
+    private final void updateName(java.lang.String name) {
         if (isName(name)) return;
         if (name == null) throw new IllegalArgumentException("Mandatory field can not be set to null: name");
         this.name = name;
@@ -175,6 +190,13 @@ public abstract class GWikipage
             fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
+    private final void updateText(java.lang.String text) {
+        if (isText(text)) return;
+        this.text = text;
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+    }
+
     protected java.lang.String prepareText(java.lang.String text) {
         // text = Str.removeUnreadableChars(text);
         return text;
@@ -194,13 +216,14 @@ public abstract class GWikipage
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("name")) setName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("name")) updateName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("text")) updateText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

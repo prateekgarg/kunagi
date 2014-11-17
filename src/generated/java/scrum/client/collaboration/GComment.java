@@ -141,8 +141,12 @@ public abstract class GComment
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -300,8 +304,12 @@ public abstract class GComment
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

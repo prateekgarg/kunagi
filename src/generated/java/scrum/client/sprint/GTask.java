@@ -125,8 +125,12 @@ public abstract class GTask
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -312,6 +316,9 @@ public abstract class GTask
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
         @Override
         public String getTooltip() { return "The remaining time needed to get this Task done. If the remaining time is high, it might be an indication (but is not necessarily the case) that splitting the Task is a good idea."; }
@@ -319,6 +326,7 @@ public abstract class GTask
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -380,6 +388,9 @@ public abstract class GTask
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         public boolean isEditable() { return GTask.this.isEditable(); }
         @Override
         public String getTooltip() { return "Time already invested working on this Task."; }
@@ -387,6 +398,7 @@ public abstract class GTask
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

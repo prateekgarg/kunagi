@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSprintDaySnapshot
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SprintDaySnapshot> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(SprintDaySnapshot.class);
@@ -49,7 +49,7 @@ public abstract class GSprintDaySnapshot
     }
 
     public int compareTo(SprintDaySnapshot other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprintDaySnapshot.class);
@@ -81,6 +81,13 @@ public abstract class GSprintDaySnapshot
     }
 
     public final void setSprintId(String id) {
+        if (Utl.equals(sprintId, id)) return;
+        this.sprintId = id;
+            updateLastModified();
+            fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+    }
+
+    private final void updateSprintId(String id) {
         if (Utl.equals(sprintId, id)) return;
         this.sprintId = id;
             updateLastModified();
@@ -128,6 +135,13 @@ public abstract class GSprintDaySnapshot
             fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
     }
 
+    private final void updateDate(ilarkesto.core.time.Date date) {
+        if (isDate(date)) return;
+        this.date = date;
+            updateLastModified();
+            fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+    }
+
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
         return date;
     }
@@ -164,6 +178,13 @@ public abstract class GSprintDaySnapshot
             fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
     }
 
+    private final void updateRemainingWork(int remainingWork) {
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+            updateLastModified();
+            fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+    }
+
     protected int prepareRemainingWork(int remainingWork) {
         return remainingWork;
     }
@@ -188,6 +209,13 @@ public abstract class GSprintDaySnapshot
 
     public final void setBurnedWork(int burnedWork) {
         burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+            updateLastModified();
+            fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+    }
+
+    private final void updateBurnedWork(int burnedWork) {
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
             updateLastModified();
@@ -224,6 +252,13 @@ public abstract class GSprintDaySnapshot
             fireModified("burnedWorkFromDeleted", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWorkFromDeleted));
     }
 
+    private final void updateBurnedWorkFromDeleted(int burnedWorkFromDeleted) {
+        if (isBurnedWorkFromDeleted(burnedWorkFromDeleted)) return;
+        this.burnedWorkFromDeleted = burnedWorkFromDeleted;
+            updateLastModified();
+            fireModified("burnedWorkFromDeleted", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWorkFromDeleted));
+    }
+
     protected int prepareBurnedWorkFromDeleted(int burnedWorkFromDeleted) {
         return burnedWorkFromDeleted;
     }
@@ -237,15 +272,16 @@ public abstract class GSprintDaySnapshot
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("sprintId")) setSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("date")) setDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("remainingWork")) setRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("burnedWorkFromDeleted")) setBurnedWorkFromDeleted(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("sprintId")) updateSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("date")) updateDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("remainingWork")) updateRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("burnedWork")) updateBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("burnedWorkFromDeleted")) updateBurnedWorkFromDeleted(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
         }
     }
 

@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSprintReport
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SprintReport> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(SprintReport.class);
@@ -51,7 +51,7 @@ public abstract class GSprintReport
     }
 
     public int compareTo(SprintReport other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprintReport.class);
@@ -83,6 +83,13 @@ public abstract class GSprintReport
     }
 
     public final void setSprintId(String id) {
+        if (Utl.equals(sprintId, id)) return;
+        this.sprintId = id;
+            updateLastModified();
+            fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+    }
+
+    private final void updateSprintId(String id) {
         if (Utl.equals(sprintId, id)) return;
         this.sprintId = id;
             updateLastModified();
@@ -134,6 +141,13 @@ public abstract class GSprintReport
     }
 
     public final void setCompletedRequirementsIds(java.util.Set<String> ids) {
+        if (Utl.equals(completedRequirementsIds, ids)) return;
+        completedRequirementsIds = ids;
+            updateLastModified();
+            fireModified("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
+    }
+
+    private final void updateCompletedRequirementsIds(java.util.Set<String> ids) {
         if (Utl.equals(completedRequirementsIds, ids)) return;
         completedRequirementsIds = ids;
             updateLastModified();
@@ -248,6 +262,13 @@ public abstract class GSprintReport
             fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
     }
 
+    private final void updateRejectedRequirementsIds(java.util.Set<String> ids) {
+        if (Utl.equals(rejectedRequirementsIds, ids)) return;
+        rejectedRequirementsIds = ids;
+            updateLastModified();
+            fireModified("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
+    }
+
     protected Collection<scrum.server.project.Requirement> prepareRejectedRequirements(Collection<scrum.server.project.Requirement> rejectedRequirements) {
         return rejectedRequirements;
     }
@@ -340,6 +361,14 @@ public abstract class GSprintReport
 
     public final void setRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         requirementsOrderIds = prepareRequirementsOrderIds(requirementsOrderIds);
+        if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+            updateLastModified();
+            fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+    }
+
+    private final void updateRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
@@ -457,6 +486,13 @@ public abstract class GSprintReport
             fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
     }
 
+    private final void updateClosedTasksIds(java.util.Set<String> ids) {
+        if (Utl.equals(closedTasksIds, ids)) return;
+        closedTasksIds = ids;
+            updateLastModified();
+            fireModified("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
+    }
+
     protected Collection<scrum.server.sprint.Task> prepareClosedTasks(Collection<scrum.server.sprint.Task> closedTasks) {
         return closedTasks;
     }
@@ -565,6 +601,13 @@ public abstract class GSprintReport
             fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
     }
 
+    private final void updateOpenTasksIds(java.util.Set<String> ids) {
+        if (Utl.equals(openTasksIds, ids)) return;
+        openTasksIds = ids;
+            updateLastModified();
+            fireModified("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
+    }
+
     protected Collection<scrum.server.sprint.Task> prepareOpenTasks(Collection<scrum.server.sprint.Task> openTasks) {
         return openTasks;
     }
@@ -663,6 +706,13 @@ public abstract class GSprintReport
             fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
     }
 
+    private final void updateBurnedWork(int burnedWork) {
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+            updateLastModified();
+            fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+    }
+
     protected int prepareBurnedWork(int burnedWork) {
         return burnedWork;
     }
@@ -676,17 +726,18 @@ public abstract class GSprintReport
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("sprintId")) setSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("completedRequirementsIds")) setCompletedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("rejectedRequirementsIds")) setRejectedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("requirementsOrderIds")) setRequirementsOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
-            if (property.equals("closedTasksIds")) setClosedTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("openTasksIds")) setOpenTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("sprintId")) updateSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("completedRequirementsIds")) updateCompletedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("rejectedRequirementsIds")) updateRejectedRequirementsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("closedTasksIds")) updateClosedTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("openTasksIds")) updateOpenTasksIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("burnedWork")) updateBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
         }
     }
 

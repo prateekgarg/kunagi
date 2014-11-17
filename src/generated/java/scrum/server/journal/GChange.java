@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GChange
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Change> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Change.class);
@@ -51,7 +51,7 @@ public abstract class GChange
     }
 
     public int compareTo(Change other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GChange.class);
@@ -83,6 +83,13 @@ public abstract class GChange
     }
 
     public final void setParentId(String id) {
+        if (Utl.equals(parentId, id)) return;
+        this.parentId = id;
+            updateLastModified();
+            fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+    }
+
+    private final void updateParentId(String id) {
         if (Utl.equals(parentId, id)) return;
         this.parentId = id;
             updateLastModified();
@@ -143,6 +150,13 @@ public abstract class GChange
             fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
+    private final void updateUserId(String id) {
+        if (Utl.equals(userId, id)) return;
+        this.userId = id;
+            updateLastModified();
+            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+    }
+
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
         return user;
     }
@@ -178,6 +192,14 @@ public abstract class GChange
 
     public final void setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         dateAndTime = prepareDateAndTime(dateAndTime);
+        if (isDateAndTime(dateAndTime)) return;
+        if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
+        this.dateAndTime = dateAndTime;
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+    }
+
+    private final void updateDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return;
         if (dateAndTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: dateAndTime");
         this.dateAndTime = dateAndTime;
@@ -221,6 +243,13 @@ public abstract class GChange
             fireModified("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
     }
 
+    private final void updateKey(java.lang.String key) {
+        if (isKey(key)) return;
+        this.key = key;
+            updateLastModified();
+            fireModified("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
+    }
+
     protected java.lang.String prepareKey(java.lang.String key) {
         // key = Str.removeUnreadableChars(key);
         return key;
@@ -251,6 +280,13 @@ public abstract class GChange
 
     public final void setOldValue(java.lang.String oldValue) {
         oldValue = prepareOldValue(oldValue);
+        if (isOldValue(oldValue)) return;
+        this.oldValue = oldValue;
+            updateLastModified();
+            fireModified("oldValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.oldValue));
+    }
+
+    private final void updateOldValue(java.lang.String oldValue) {
         if (isOldValue(oldValue)) return;
         this.oldValue = oldValue;
             updateLastModified();
@@ -293,6 +329,13 @@ public abstract class GChange
             fireModified("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
     }
 
+    private final void updateNewValue(java.lang.String newValue) {
+        if (isNewValue(newValue)) return;
+        this.newValue = newValue;
+            updateLastModified();
+            fireModified("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
+    }
+
     protected java.lang.String prepareNewValue(java.lang.String newValue) {
         // newValue = Str.removeUnreadableChars(newValue);
         return newValue;
@@ -329,6 +372,13 @@ public abstract class GChange
             fireModified("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
     }
 
+    private final void updateComment(java.lang.String comment) {
+        if (isComment(comment)) return;
+        this.comment = comment;
+            updateLastModified();
+            fireModified("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
+    }
+
     protected java.lang.String prepareComment(java.lang.String comment) {
         // comment = Str.removeUnreadableChars(comment);
         return comment;
@@ -348,17 +398,18 @@ public abstract class GChange
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("parentId")) setParentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("userId")) setUserId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("dateAndTime")) setDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
-            if (property.equals("key")) setKey(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("oldValue")) setOldValue(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("newValue")) setNewValue(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("comment")) setComment(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("parentId")) updateParentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("userId")) updateUserId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("dateAndTime")) updateDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("key")) updateKey(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("oldValue")) updateOldValue(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("newValue")) updateNewValue(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("comment")) updateComment(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

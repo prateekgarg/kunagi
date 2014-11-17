@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GFile
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<File>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(File.class);
@@ -50,7 +50,7 @@ public abstract class GFile
     }
 
     public int compareTo(File other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GFile.class);
@@ -101,6 +101,13 @@ public abstract class GFile
             fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
+    private final void updateProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
         return project;
     }
@@ -136,6 +143,14 @@ public abstract class GFile
 
     public final void setFilename(java.lang.String filename) {
         filename = prepareFilename(filename);
+        if (isFilename(filename)) return;
+        if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
+        this.filename = filename;
+            updateLastModified();
+            fireModified("filename", ilarkesto.core.persistance.Persistence.propertyAsString(this.filename));
+    }
+
+    private final void updateFilename(java.lang.String filename) {
         if (isFilename(filename)) return;
         if (filename == null) throw new IllegalArgumentException("Mandatory field can not be set to null: filename");
         this.filename = filename;
@@ -180,6 +195,14 @@ public abstract class GFile
             fireModified("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
     }
 
+    private final void updateUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
+        if (isUploadTime(uploadTime)) return;
+        if (uploadTime == null) throw new IllegalArgumentException("Mandatory field can not be set to null: uploadTime");
+        this.uploadTime = uploadTime;
+            updateLastModified();
+            fireModified("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
+    }
+
     protected ilarkesto.core.time.DateAndTime prepareUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
         return uploadTime;
     }
@@ -210,6 +233,14 @@ public abstract class GFile
 
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
+        if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
+    private final void updateLabel(java.lang.String label) {
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
@@ -253,6 +284,13 @@ public abstract class GFile
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -283,6 +321,13 @@ public abstract class GFile
             fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
     }
 
+    private final void updateNote(java.lang.String note) {
+        if (isNote(note)) return;
+        this.note = note;
+            updateLastModified();
+            fireModified("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
+    }
+
     protected java.lang.String prepareNote(java.lang.String note) {
         // note = Str.removeUnreadableChars(note);
         return note;
@@ -302,16 +347,17 @@ public abstract class GFile
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("filename")) setFilename(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("uploadTime")) setUploadTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("note")) setNote(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("filename")) updateFilename(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("uploadTime")) updateUploadTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("note")) updateNote(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

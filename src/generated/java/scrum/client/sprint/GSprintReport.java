@@ -275,8 +275,12 @@ public abstract class GSprintReport
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

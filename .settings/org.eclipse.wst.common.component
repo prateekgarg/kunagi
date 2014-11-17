@@ -28,12 +28,6 @@
         <dependent-module archiveName="velocity-1.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/velocity-1.6.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="iTextAsian.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/iTextAsian.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jfreechart-1.0.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/jfreechart-1.0.9.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="jdom-2.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/jdom-2.0.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -43,13 +37,25 @@
         <dependent-module archiveName="openid4java-0.9.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/openid4java-0.9.8.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="itext-2.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/itext-2.0.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="codemirror_V-0.4-gwt16.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/codemirror_V-0.4-gwt16.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jcommon-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/jcommon-1.0.0.jar">
+        <dependent-module archiveName="jfreechart-1.0.19.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/jfreechart-1.0.19.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itext-xtra-5.5.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/itext-xtra-5.5.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jcommon-1.0.23.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/jcommon-1.0.23.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itext-pdfa-5.5.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/itext-pdfa-5.5.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itextpdf-5.5.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/itextpdf-5.5.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itext-asian-5.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/itext-asian-5.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="kunagi"/>

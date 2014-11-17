@@ -125,8 +125,12 @@ public abstract class GRisk
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -414,6 +418,9 @@ public abstract class GRisk
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
         @Override
         public String getTooltip() { return "How probable is it (concidering the description and implemented minigation plans) that this Risk turns into a problem?"; }
@@ -421,6 +428,7 @@ public abstract class GRisk
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -479,6 +487,9 @@ public abstract class GRisk
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         public boolean isEditable() { return GRisk.this.isPriorityEditable(); }
         @Override
         public String getTooltip() { return "How high is the impact (concidering the decription and the implemented mitigation plans), should a problem arise?"; }
@@ -486,6 +497,7 @@ public abstract class GRisk
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

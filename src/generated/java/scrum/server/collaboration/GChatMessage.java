@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GChatMessage
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<ChatMessage> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(ChatMessage.class);
@@ -48,7 +48,7 @@ public abstract class GChatMessage
     }
 
     public int compareTo(ChatMessage other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GChatMessage.class);
@@ -80,6 +80,13 @@ public abstract class GChatMessage
     }
 
     public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
+    private final void updateProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
             updateLastModified();
@@ -140,6 +147,13 @@ public abstract class GChatMessage
             fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
     }
 
+    private final void updateAuthorId(String id) {
+        if (Utl.equals(authorId, id)) return;
+        this.authorId = id;
+            updateLastModified();
+            fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
+    }
+
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
         return author;
     }
@@ -175,6 +189,14 @@ public abstract class GChatMessage
 
     public final void setText(java.lang.String text) {
         text = prepareText(text);
+        if (isText(text)) return;
+        if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
+        this.text = text;
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+    }
+
+    private final void updateText(java.lang.String text) {
         if (isText(text)) return;
         if (text == null) throw new IllegalArgumentException("Mandatory field can not be set to null: text");
         this.text = text;
@@ -218,6 +240,13 @@ public abstract class GChatMessage
             fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
+    private final void updateDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
+        if (isDateAndTime(dateAndTime)) return;
+        this.dateAndTime = dateAndTime;
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+    }
+
     protected ilarkesto.core.time.DateAndTime prepareDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         return dateAndTime;
     }
@@ -237,14 +266,15 @@ public abstract class GChatMessage
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("authorId")) setAuthorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("dateAndTime")) setDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("authorId")) updateAuthorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("text")) updateText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("dateAndTime")) updateDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
         }
     }
 

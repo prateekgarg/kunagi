@@ -194,8 +194,12 @@ public abstract class GProjectUserConfig
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -257,11 +261,15 @@ public abstract class GProjectUserConfig
             }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         public boolean isEditable() { return GProjectUserConfig.this.isMisconductsEditable(); }
 
         @Override
         protected void onChangeValue(java.lang.Integer oldValue, java.lang.Integer newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 
@@ -439,8 +447,12 @@ public abstract class GProjectUserConfig
         }
 
         @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
         protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
             super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
             addUndo(this, oldValue);
         }
 

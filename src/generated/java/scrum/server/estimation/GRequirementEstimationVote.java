@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GRequirementEstimationVote
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<RequirementEstimationVote> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(RequirementEstimationVote.class);
@@ -47,7 +47,7 @@ public abstract class GRequirementEstimationVote
     }
 
     public int compareTo(RequirementEstimationVote other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRequirementEstimationVote.class);
@@ -79,6 +79,13 @@ public abstract class GRequirementEstimationVote
     }
 
     public final void setRequirementId(String id) {
+        if (Utl.equals(requirementId, id)) return;
+        this.requirementId = id;
+            updateLastModified();
+            fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+    }
+
+    private final void updateRequirementId(String id) {
         if (Utl.equals(requirementId, id)) return;
         this.requirementId = id;
             updateLastModified();
@@ -139,6 +146,13 @@ public abstract class GRequirementEstimationVote
             fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
     }
 
+    private final void updateUserId(String id) {
+        if (Utl.equals(userId, id)) return;
+        this.userId = id;
+            updateLastModified();
+            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+    }
+
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
         return user;
     }
@@ -180,6 +194,13 @@ public abstract class GRequirementEstimationVote
             fireModified("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
+    private final void updateEstimatedWork(java.lang.Float estimatedWork) {
+        if (isEstimatedWork(estimatedWork)) return;
+        this.estimatedWork = estimatedWork;
+            updateLastModified();
+            fireModified("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
+    }
+
     protected java.lang.Float prepareEstimatedWork(java.lang.Float estimatedWork) {
         return estimatedWork;
     }
@@ -198,13 +219,14 @@ public abstract class GRequirementEstimationVote
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("requirementId")) setRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("userId")) setUserId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("estimatedWork")) setEstimatedWork(ilarkesto.core.persistance.Persistence.parsePropertyFloat(value));
+            if (property.equals("requirementId")) updateRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("userId")) updateUserId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("estimatedWork")) updateEstimatedWork(ilarkesto.core.persistance.Persistence.parsePropertyFloat(value));
         }
     }
 

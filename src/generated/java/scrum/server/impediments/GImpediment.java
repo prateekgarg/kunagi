@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GImpediment
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Impediment>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Impediment.class);
@@ -51,7 +51,7 @@ public abstract class GImpediment
     }
 
     public int compareTo(Impediment other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     public final java.util.Set<scrum.server.sprint.Task> getTasks() {
@@ -106,6 +106,13 @@ public abstract class GImpediment
             fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
+    private final void updateProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
         return project;
     }
@@ -147,6 +154,13 @@ public abstract class GImpediment
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -171,6 +185,13 @@ public abstract class GImpediment
 
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
+    private final void updateLabel(java.lang.String label) {
         if (isLabel(label)) return;
         this.label = label;
             updateLastModified();
@@ -214,6 +235,14 @@ public abstract class GImpediment
             fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
     }
 
+    private final void updateDate(ilarkesto.core.time.Date date) {
+        if (isDate(date)) return;
+        if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
+        this.date = date;
+            updateLastModified();
+            fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+    }
+
     protected ilarkesto.core.time.Date prepareDate(ilarkesto.core.time.Date date) {
         return date;
     }
@@ -244,6 +273,13 @@ public abstract class GImpediment
 
     public final void setDescription(java.lang.String description) {
         description = prepareDescription(description);
+        if (isDescription(description)) return;
+        this.description = description;
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+    }
+
+    private final void updateDescription(java.lang.String description) {
         if (isDescription(description)) return;
         this.description = description;
             updateLastModified();
@@ -286,6 +322,13 @@ public abstract class GImpediment
             fireModified("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
     }
 
+    private final void updateSolution(java.lang.String solution) {
+        if (isSolution(solution)) return;
+        this.solution = solution;
+            updateLastModified();
+            fireModified("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
+    }
+
     protected java.lang.String prepareSolution(java.lang.String solution) {
         // solution = Str.removeUnreadableChars(solution);
         return solution;
@@ -322,6 +365,13 @@ public abstract class GImpediment
             fireModified("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
     }
 
+    private final void updateClosed(boolean closed) {
+        if (isClosed(closed)) return;
+        this.closed = closed;
+            updateLastModified();
+            fireModified("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
+    }
+
     protected boolean prepareClosed(boolean closed) {
         return closed;
     }
@@ -335,17 +385,18 @@ public abstract class GImpediment
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("date")) setDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("solution")) setSolution(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("closed")) setClosed(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("date")) updateDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("solution")) updateSolution(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("closed")) updateClosed(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
         }
     }
 

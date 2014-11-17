@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GQuality
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Quality>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Quality.class);
@@ -49,7 +49,7 @@ public abstract class GQuality
     }
 
     public int compareTo(Quality other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     public final java.util.Set<scrum.server.admin.ProjectUserConfig> getProjectUserConfigs() {
@@ -108,6 +108,13 @@ public abstract class GQuality
             fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
+    private final void updateProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
         return project;
     }
@@ -149,6 +156,13 @@ public abstract class GQuality
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -173,6 +187,13 @@ public abstract class GQuality
 
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
+        if (isLabel(label)) return;
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
+    private final void updateLabel(java.lang.String label) {
         if (isLabel(label)) return;
         this.label = label;
             updateLastModified();
@@ -215,6 +236,13 @@ public abstract class GQuality
             fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
+    private final void updateDescription(java.lang.String description) {
+        if (isDescription(description)) return;
+        this.description = description;
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+    }
+
     protected java.lang.String prepareDescription(java.lang.String description) {
         // description = Str.removeUnreadableChars(description);
         return description;
@@ -251,6 +279,13 @@ public abstract class GQuality
             fireModified("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
     }
 
+    private final void updateTestDescription(java.lang.String testDescription) {
+        if (isTestDescription(testDescription)) return;
+        this.testDescription = testDescription;
+            updateLastModified();
+            fireModified("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
+    }
+
     protected java.lang.String prepareTestDescription(java.lang.String testDescription) {
         // testDescription = Str.removeUnreadableChars(testDescription);
         return testDescription;
@@ -270,15 +305,16 @@ public abstract class GQuality
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("testDescription")) setTestDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("testDescription")) updateTestDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

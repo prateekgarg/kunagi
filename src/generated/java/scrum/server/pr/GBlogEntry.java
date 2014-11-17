@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GBlogEntry
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<BlogEntry>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(BlogEntry.class);
@@ -52,7 +52,7 @@ public abstract class GBlogEntry
     }
 
     public int compareTo(BlogEntry other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GBlogEntry.class);
@@ -102,6 +102,13 @@ public abstract class GBlogEntry
             fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
     }
 
+    private final void updateProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
         return project;
     }
@@ -143,6 +150,13 @@ public abstract class GBlogEntry
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -177,6 +191,13 @@ public abstract class GBlogEntry
     }
 
     public final void setAuthorsIds(java.util.Set<String> ids) {
+        if (Utl.equals(authorsIds, ids)) return;
+        authorsIds = ids;
+            updateLastModified();
+            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+    }
+
+    private final void updateAuthorsIds(java.util.Set<String> ids) {
         if (Utl.equals(authorsIds, ids)) return;
         authorsIds = ids;
             updateLastModified();
@@ -282,6 +303,14 @@ public abstract class GBlogEntry
             fireModified("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
     }
 
+    private final void updateTitle(java.lang.String title) {
+        if (isTitle(title)) return;
+        if (title == null) throw new IllegalArgumentException("Mandatory field can not be set to null: title");
+        this.title = title;
+            updateLastModified();
+            fireModified("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
+    }
+
     protected java.lang.String prepareTitle(java.lang.String title) {
         // title = Str.removeUnreadableChars(title);
         return title;
@@ -318,6 +347,13 @@ public abstract class GBlogEntry
             fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
     }
 
+    private final void updateText(java.lang.String text) {
+        if (isText(text)) return;
+        this.text = text;
+            updateLastModified();
+            fireModified("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
+    }
+
     protected java.lang.String prepareText(java.lang.String text) {
         // text = Str.removeUnreadableChars(text);
         return text;
@@ -348,6 +384,13 @@ public abstract class GBlogEntry
 
     public final void setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         dateAndTime = prepareDateAndTime(dateAndTime);
+        if (isDateAndTime(dateAndTime)) return;
+        this.dateAndTime = dateAndTime;
+            updateLastModified();
+            fireModified("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
+    }
+
+    private final void updateDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return;
         this.dateAndTime = dateAndTime;
             updateLastModified();
@@ -394,6 +437,13 @@ public abstract class GBlogEntry
     }
 
     public final void setReleasesIds(java.util.Set<String> ids) {
+        if (Utl.equals(releasesIds, ids)) return;
+        releasesIds = ids;
+            updateLastModified();
+            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+    }
+
+    private final void updateReleasesIds(java.util.Set<String> ids) {
         if (Utl.equals(releasesIds, ids)) return;
         releasesIds = ids;
             updateLastModified();
@@ -498,6 +548,13 @@ public abstract class GBlogEntry
             fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
+    private final void updatePublished(boolean published) {
+        if (isPublished(published)) return;
+        this.published = published;
+            updateLastModified();
+            fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+    }
+
     protected boolean preparePublished(boolean published) {
         return published;
     }
@@ -511,18 +568,19 @@ public abstract class GBlogEntry
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("authorsIds")) setAuthorsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("title")) setTitle(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("text")) setText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("dateAndTime")) setDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
-            if (property.equals("releasesIds")) setReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("published")) setPublished(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("authorsIds")) updateAuthorsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("title")) updateTitle(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("text")) updateText(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("dateAndTime")) updateDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("releasesIds")) updateReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("published")) updatePublished(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
         }
     }
 

@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GProject
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.DeleteProtected<scrum.server.admin.User>, java.lang.Comparable<Project>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Project.class);
@@ -87,7 +87,7 @@ public abstract class GProject
     }
 
     public int compareTo(Project other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
@@ -197,6 +197,18 @@ public abstract class GProject
             fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
     }
 
+    private final void updateLabel(java.lang.String label) {
+        if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
+        if (label != null) {
+            Object existing = getDao().getProjectByLabel(label);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("Project" ,"label", label);
+        }
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
     protected java.lang.String prepareLabel(java.lang.String label) {
         // label = Str.removeUnreadableChars(label);
         return label;
@@ -227,6 +239,13 @@ public abstract class GProject
 
     public final void setVision(java.lang.String vision) {
         vision = prepareVision(vision);
+        if (isVision(vision)) return;
+        this.vision = vision;
+            updateLastModified();
+            fireModified("vision", ilarkesto.core.persistance.Persistence.propertyAsString(this.vision));
+    }
+
+    private final void updateVision(java.lang.String vision) {
         if (isVision(vision)) return;
         this.vision = vision;
             updateLastModified();
@@ -269,6 +288,13 @@ public abstract class GProject
             fireModified("productLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.productLabel));
     }
 
+    private final void updateProductLabel(java.lang.String productLabel) {
+        if (isProductLabel(productLabel)) return;
+        this.productLabel = productLabel;
+            updateLastModified();
+            fireModified("productLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.productLabel));
+    }
+
     protected java.lang.String prepareProductLabel(java.lang.String productLabel) {
         // productLabel = Str.removeUnreadableChars(productLabel);
         return productLabel;
@@ -299,6 +325,13 @@ public abstract class GProject
 
     public final void setShortDescription(java.lang.String shortDescription) {
         shortDescription = prepareShortDescription(shortDescription);
+        if (isShortDescription(shortDescription)) return;
+        this.shortDescription = shortDescription;
+            updateLastModified();
+            fireModified("shortDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.shortDescription));
+    }
+
+    private final void updateShortDescription(java.lang.String shortDescription) {
         if (isShortDescription(shortDescription)) return;
         this.shortDescription = shortDescription;
             updateLastModified();
@@ -341,6 +374,13 @@ public abstract class GProject
             fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
+    private final void updateDescription(java.lang.String description) {
+        if (isDescription(description)) return;
+        this.description = description;
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+    }
+
     protected java.lang.String prepareDescription(java.lang.String description) {
         // description = Str.removeUnreadableChars(description);
         return description;
@@ -371,6 +411,13 @@ public abstract class GProject
 
     public final void setLongDescription(java.lang.String longDescription) {
         longDescription = prepareLongDescription(longDescription);
+        if (isLongDescription(longDescription)) return;
+        this.longDescription = longDescription;
+            updateLastModified();
+            fireModified("longDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.longDescription));
+    }
+
+    private final void updateLongDescription(java.lang.String longDescription) {
         if (isLongDescription(longDescription)) return;
         this.longDescription = longDescription;
             updateLastModified();
@@ -413,6 +460,13 @@ public abstract class GProject
             fireModified("begin", ilarkesto.core.persistance.Persistence.propertyAsString(this.begin));
     }
 
+    private final void updateBegin(ilarkesto.core.time.Date begin) {
+        if (isBegin(begin)) return;
+        this.begin = begin;
+            updateLastModified();
+            fireModified("begin", ilarkesto.core.persistance.Persistence.propertyAsString(this.begin));
+    }
+
     protected ilarkesto.core.time.Date prepareBegin(ilarkesto.core.time.Date begin) {
         return begin;
     }
@@ -443,6 +497,13 @@ public abstract class GProject
 
     public final void setEnd(ilarkesto.core.time.Date end) {
         end = prepareEnd(end);
+        if (isEnd(end)) return;
+        this.end = end;
+            updateLastModified();
+            fireModified("end", ilarkesto.core.persistance.Persistence.propertyAsString(this.end));
+    }
+
+    private final void updateEnd(ilarkesto.core.time.Date end) {
         if (isEnd(end)) return;
         this.end = end;
             updateLastModified();
@@ -489,6 +550,13 @@ public abstract class GProject
     }
 
     public final void setParticipantsIds(java.util.Set<String> ids) {
+        if (Utl.equals(participantsIds, ids)) return;
+        participantsIds = ids;
+            updateLastModified();
+            fireModified("participantsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.participantsIds));
+    }
+
+    private final void updateParticipantsIds(java.util.Set<String> ids) {
         if (Utl.equals(participantsIds, ids)) return;
         participantsIds = ids;
             updateLastModified();
@@ -603,6 +671,13 @@ public abstract class GProject
             fireModified("adminsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminsIds));
     }
 
+    private final void updateAdminsIds(java.util.Set<String> ids) {
+        if (Utl.equals(adminsIds, ids)) return;
+        adminsIds = ids;
+            updateLastModified();
+            fireModified("adminsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminsIds));
+    }
+
     protected Collection<scrum.server.admin.User> prepareAdmins(Collection<scrum.server.admin.User> admins) {
         return admins;
     }
@@ -705,6 +780,13 @@ public abstract class GProject
     }
 
     public final void setProductOwnersIds(java.util.Set<String> ids) {
+        if (Utl.equals(productOwnersIds, ids)) return;
+        productOwnersIds = ids;
+            updateLastModified();
+            fireModified("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
+    }
+
+    private final void updateProductOwnersIds(java.util.Set<String> ids) {
         if (Utl.equals(productOwnersIds, ids)) return;
         productOwnersIds = ids;
             updateLastModified();
@@ -819,6 +901,13 @@ public abstract class GProject
             fireModified("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
     }
 
+    private final void updateScrumMastersIds(java.util.Set<String> ids) {
+        if (Utl.equals(scrumMastersIds, ids)) return;
+        scrumMastersIds = ids;
+            updateLastModified();
+            fireModified("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
+    }
+
     protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
         return scrumMasters;
     }
@@ -921,6 +1010,13 @@ public abstract class GProject
     }
 
     public final void setTeamMembersIds(java.util.Set<String> ids) {
+        if (Utl.equals(teamMembersIds, ids)) return;
+        teamMembersIds = ids;
+            updateLastModified();
+            fireModified("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
+    }
+
+    private final void updateTeamMembersIds(java.util.Set<String> ids) {
         if (Utl.equals(teamMembersIds, ids)) return;
         teamMembersIds = ids;
             updateLastModified();
@@ -1038,6 +1134,13 @@ public abstract class GProject
             fireModified("currentSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentSprintId));
     }
 
+    private final void updateCurrentSprintId(String id) {
+        if (Utl.equals(currentSprintId, id)) return;
+        this.currentSprintId = id;
+            updateLastModified();
+            fireModified("currentSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentSprintId));
+    }
+
     protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
         return currentSprint;
     }
@@ -1092,6 +1195,13 @@ public abstract class GProject
             fireModified("nextSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.nextSprintId));
     }
 
+    private final void updateNextSprintId(String id) {
+        if (Utl.equals(nextSprintId, id)) return;
+        this.nextSprintId = id;
+            updateLastModified();
+            fireModified("nextSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.nextSprintId));
+    }
+
     protected scrum.server.sprint.Sprint prepareNextSprint(scrum.server.sprint.Sprint nextSprint) {
         return nextSprint;
     }
@@ -1133,6 +1243,13 @@ public abstract class GProject
             fireModified("velocity", ilarkesto.core.persistance.Persistence.propertyAsString(this.velocity));
     }
 
+    private final void updateVelocity(java.lang.Integer velocity) {
+        if (isVelocity(velocity)) return;
+        this.velocity = velocity;
+            updateLastModified();
+            fireModified("velocity", ilarkesto.core.persistance.Persistence.propertyAsString(this.velocity));
+    }
+
     protected java.lang.Integer prepareVelocity(java.lang.Integer velocity) {
         return velocity;
     }
@@ -1162,6 +1279,14 @@ public abstract class GProject
 
     public final void setRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         requirementsOrderIds = prepareRequirementsOrderIds(requirementsOrderIds);
+        if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
+        if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
+        this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
+            updateLastModified();
+            fireModified("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
+    }
+
+    private final void updateRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         if (requirementsOrderIds == null) requirementsOrderIds = Collections.emptyList();
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
@@ -1270,6 +1395,14 @@ public abstract class GProject
             fireModified("urgentIssuesOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgentIssuesOrderIds));
     }
 
+    private final void updateUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
+        if (urgentIssuesOrderIds == null) urgentIssuesOrderIds = Collections.emptyList();
+        if (this.urgentIssuesOrderIds.equals(urgentIssuesOrderIds)) return;
+        this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>(urgentIssuesOrderIds);
+            updateLastModified();
+            fireModified("urgentIssuesOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgentIssuesOrderIds));
+    }
+
     protected Collection<java.lang.String> prepareUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
         return urgentIssuesOrderIds;
     }
@@ -1370,6 +1503,13 @@ public abstract class GProject
             fireModified("lastSprintNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSprintNumber));
     }
 
+    private final void updateLastSprintNumber(int lastSprintNumber) {
+        if (isLastSprintNumber(lastSprintNumber)) return;
+        this.lastSprintNumber = lastSprintNumber;
+            updateLastModified();
+            fireModified("lastSprintNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSprintNumber));
+    }
+
     protected int prepareLastSprintNumber(int lastSprintNumber) {
         return lastSprintNumber;
     }
@@ -1394,6 +1534,13 @@ public abstract class GProject
 
     public final void setLastTaskNumber(int lastTaskNumber) {
         lastTaskNumber = prepareLastTaskNumber(lastTaskNumber);
+        if (isLastTaskNumber(lastTaskNumber)) return;
+        this.lastTaskNumber = lastTaskNumber;
+            updateLastModified();
+            fireModified("lastTaskNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastTaskNumber));
+    }
+
+    private final void updateLastTaskNumber(int lastTaskNumber) {
         if (isLastTaskNumber(lastTaskNumber)) return;
         this.lastTaskNumber = lastTaskNumber;
             updateLastModified();
@@ -1430,6 +1577,13 @@ public abstract class GProject
             fireModified("lastRequirementNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRequirementNumber));
     }
 
+    private final void updateLastRequirementNumber(int lastRequirementNumber) {
+        if (isLastRequirementNumber(lastRequirementNumber)) return;
+        this.lastRequirementNumber = lastRequirementNumber;
+            updateLastModified();
+            fireModified("lastRequirementNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRequirementNumber));
+    }
+
     protected int prepareLastRequirementNumber(int lastRequirementNumber) {
         return lastRequirementNumber;
     }
@@ -1454,6 +1608,13 @@ public abstract class GProject
 
     public final void setLastQualityNumber(int lastQualityNumber) {
         lastQualityNumber = prepareLastQualityNumber(lastQualityNumber);
+        if (isLastQualityNumber(lastQualityNumber)) return;
+        this.lastQualityNumber = lastQualityNumber;
+            updateLastModified();
+            fireModified("lastQualityNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastQualityNumber));
+    }
+
+    private final void updateLastQualityNumber(int lastQualityNumber) {
         if (isLastQualityNumber(lastQualityNumber)) return;
         this.lastQualityNumber = lastQualityNumber;
             updateLastModified();
@@ -1490,6 +1651,13 @@ public abstract class GProject
             fireModified("lastRiskNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRiskNumber));
     }
 
+    private final void updateLastRiskNumber(int lastRiskNumber) {
+        if (isLastRiskNumber(lastRiskNumber)) return;
+        this.lastRiskNumber = lastRiskNumber;
+            updateLastModified();
+            fireModified("lastRiskNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastRiskNumber));
+    }
+
     protected int prepareLastRiskNumber(int lastRiskNumber) {
         return lastRiskNumber;
     }
@@ -1514,6 +1682,13 @@ public abstract class GProject
 
     public final void setLastIssueNumber(int lastIssueNumber) {
         lastIssueNumber = prepareLastIssueNumber(lastIssueNumber);
+        if (isLastIssueNumber(lastIssueNumber)) return;
+        this.lastIssueNumber = lastIssueNumber;
+            updateLastModified();
+            fireModified("lastIssueNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastIssueNumber));
+    }
+
+    private final void updateLastIssueNumber(int lastIssueNumber) {
         if (isLastIssueNumber(lastIssueNumber)) return;
         this.lastIssueNumber = lastIssueNumber;
             updateLastModified();
@@ -1550,6 +1725,13 @@ public abstract class GProject
             fireModified("lastImpedimentNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastImpedimentNumber));
     }
 
+    private final void updateLastImpedimentNumber(int lastImpedimentNumber) {
+        if (isLastImpedimentNumber(lastImpedimentNumber)) return;
+        this.lastImpedimentNumber = lastImpedimentNumber;
+            updateLastModified();
+            fireModified("lastImpedimentNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastImpedimentNumber));
+    }
+
     protected int prepareLastImpedimentNumber(int lastImpedimentNumber) {
         return lastImpedimentNumber;
     }
@@ -1574,6 +1756,13 @@ public abstract class GProject
 
     public final void setLastFileNumber(int lastFileNumber) {
         lastFileNumber = prepareLastFileNumber(lastFileNumber);
+        if (isLastFileNumber(lastFileNumber)) return;
+        this.lastFileNumber = lastFileNumber;
+            updateLastModified();
+            fireModified("lastFileNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastFileNumber));
+    }
+
+    private final void updateLastFileNumber(int lastFileNumber) {
         if (isLastFileNumber(lastFileNumber)) return;
         this.lastFileNumber = lastFileNumber;
             updateLastModified();
@@ -1610,6 +1799,13 @@ public abstract class GProject
             fireModified("lastSubjectNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSubjectNumber));
     }
 
+    private final void updateLastSubjectNumber(int lastSubjectNumber) {
+        if (isLastSubjectNumber(lastSubjectNumber)) return;
+        this.lastSubjectNumber = lastSubjectNumber;
+            updateLastModified();
+            fireModified("lastSubjectNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastSubjectNumber));
+    }
+
     protected int prepareLastSubjectNumber(int lastSubjectNumber) {
         return lastSubjectNumber;
     }
@@ -1634,6 +1830,13 @@ public abstract class GProject
 
     public final void setLastEventNumber(int lastEventNumber) {
         lastEventNumber = prepareLastEventNumber(lastEventNumber);
+        if (isLastEventNumber(lastEventNumber)) return;
+        this.lastEventNumber = lastEventNumber;
+            updateLastModified();
+            fireModified("lastEventNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastEventNumber));
+    }
+
+    private final void updateLastEventNumber(int lastEventNumber) {
         if (isLastEventNumber(lastEventNumber)) return;
         this.lastEventNumber = lastEventNumber;
             updateLastModified();
@@ -1670,6 +1873,13 @@ public abstract class GProject
             fireModified("lastReleaseNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastReleaseNumber));
     }
 
+    private final void updateLastReleaseNumber(int lastReleaseNumber) {
+        if (isLastReleaseNumber(lastReleaseNumber)) return;
+        this.lastReleaseNumber = lastReleaseNumber;
+            updateLastModified();
+            fireModified("lastReleaseNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastReleaseNumber));
+    }
+
     protected int prepareLastReleaseNumber(int lastReleaseNumber) {
         return lastReleaseNumber;
     }
@@ -1700,6 +1910,13 @@ public abstract class GProject
             fireModified("lastBlogEntryNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastBlogEntryNumber));
     }
 
+    private final void updateLastBlogEntryNumber(int lastBlogEntryNumber) {
+        if (isLastBlogEntryNumber(lastBlogEntryNumber)) return;
+        this.lastBlogEntryNumber = lastBlogEntryNumber;
+            updateLastModified();
+            fireModified("lastBlogEntryNumber", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastBlogEntryNumber));
+    }
+
     protected int prepareLastBlogEntryNumber(int lastBlogEntryNumber) {
         return lastBlogEntryNumber;
     }
@@ -1724,6 +1941,13 @@ public abstract class GProject
 
     public final void setPunishmentUnit(java.lang.String punishmentUnit) {
         punishmentUnit = preparePunishmentUnit(punishmentUnit);
+        if (isPunishmentUnit(punishmentUnit)) return;
+        this.punishmentUnit = punishmentUnit;
+            updateLastModified();
+            fireModified("punishmentUnit", ilarkesto.core.persistance.Persistence.propertyAsString(this.punishmentUnit));
+    }
+
+    private final void updatePunishmentUnit(java.lang.String punishmentUnit) {
         if (isPunishmentUnit(punishmentUnit)) return;
         this.punishmentUnit = punishmentUnit;
             updateLastModified();
@@ -1766,6 +1990,13 @@ public abstract class GProject
             fireModified("punishmentFactor", ilarkesto.core.persistance.Persistence.propertyAsString(this.punishmentFactor));
     }
 
+    private final void updatePunishmentFactor(int punishmentFactor) {
+        if (isPunishmentFactor(punishmentFactor)) return;
+        this.punishmentFactor = punishmentFactor;
+            updateLastModified();
+            fireModified("punishmentFactor", ilarkesto.core.persistance.Persistence.propertyAsString(this.punishmentFactor));
+    }
+
     protected int preparePunishmentFactor(int punishmentFactor) {
         return punishmentFactor;
     }
@@ -1790,6 +2021,13 @@ public abstract class GProject
 
     public final void setHomepageDir(java.lang.String homepageDir) {
         homepageDir = prepareHomepageDir(homepageDir);
+        if (isHomepageDir(homepageDir)) return;
+        this.homepageDir = homepageDir;
+            updateLastModified();
+            fireModified("homepageDir", ilarkesto.core.persistance.Persistence.propertyAsString(this.homepageDir));
+    }
+
+    private final void updateHomepageDir(java.lang.String homepageDir) {
         if (isHomepageDir(homepageDir)) return;
         this.homepageDir = homepageDir;
             updateLastModified();
@@ -1832,6 +2070,13 @@ public abstract class GProject
             fireModified("homepageUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.homepageUrl));
     }
 
+    private final void updateHomepageUrl(java.lang.String homepageUrl) {
+        if (isHomepageUrl(homepageUrl)) return;
+        this.homepageUrl = homepageUrl;
+            updateLastModified();
+            fireModified("homepageUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.homepageUrl));
+    }
+
     protected java.lang.String prepareHomepageUrl(java.lang.String homepageUrl) {
         // homepageUrl = Str.removeUnreadableChars(homepageUrl);
         return homepageUrl;
@@ -1868,6 +2113,13 @@ public abstract class GProject
             fireModified("autoUpdateHomepage", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoUpdateHomepage));
     }
 
+    private final void updateAutoUpdateHomepage(boolean autoUpdateHomepage) {
+        if (isAutoUpdateHomepage(autoUpdateHomepage)) return;
+        this.autoUpdateHomepage = autoUpdateHomepage;
+            updateLastModified();
+            fireModified("autoUpdateHomepage", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoUpdateHomepage));
+    }
+
     protected boolean prepareAutoUpdateHomepage(boolean autoUpdateHomepage) {
         return autoUpdateHomepage;
     }
@@ -1892,6 +2144,13 @@ public abstract class GProject
 
     public final void setReleaseScriptPath(java.lang.String releaseScriptPath) {
         releaseScriptPath = prepareReleaseScriptPath(releaseScriptPath);
+        if (isReleaseScriptPath(releaseScriptPath)) return;
+        this.releaseScriptPath = releaseScriptPath;
+            updateLastModified();
+            fireModified("releaseScriptPath", ilarkesto.core.persistance.Persistence.propertyAsString(this.releaseScriptPath));
+    }
+
+    private final void updateReleaseScriptPath(java.lang.String releaseScriptPath) {
         if (isReleaseScriptPath(releaseScriptPath)) return;
         this.releaseScriptPath = releaseScriptPath;
             updateLastModified();
@@ -1934,6 +2193,13 @@ public abstract class GProject
             fireModified("supportEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.supportEmail));
     }
 
+    private final void updateSupportEmail(java.lang.String supportEmail) {
+        if (isSupportEmail(supportEmail)) return;
+        this.supportEmail = supportEmail;
+            updateLastModified();
+            fireModified("supportEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.supportEmail));
+    }
+
     protected java.lang.String prepareSupportEmail(java.lang.String supportEmail) {
         // supportEmail = Str.removeUnreadableChars(supportEmail);
         return supportEmail;
@@ -1964,6 +2230,13 @@ public abstract class GProject
 
     public final void setIssueReplyTemplate(java.lang.String issueReplyTemplate) {
         issueReplyTemplate = prepareIssueReplyTemplate(issueReplyTemplate);
+        if (isIssueReplyTemplate(issueReplyTemplate)) return;
+        this.issueReplyTemplate = issueReplyTemplate;
+            updateLastModified();
+            fireModified("issueReplyTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueReplyTemplate));
+    }
+
+    private final void updateIssueReplyTemplate(java.lang.String issueReplyTemplate) {
         if (isIssueReplyTemplate(issueReplyTemplate)) return;
         this.issueReplyTemplate = issueReplyTemplate;
             updateLastModified();
@@ -2006,6 +2279,13 @@ public abstract class GProject
             fireModified("subscriberNotificationTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriberNotificationTemplate));
     }
 
+    private final void updateSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
+        if (isSubscriberNotificationTemplate(subscriberNotificationTemplate)) return;
+        this.subscriberNotificationTemplate = subscriberNotificationTemplate;
+            updateLastModified();
+            fireModified("subscriberNotificationTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriberNotificationTemplate));
+    }
+
     protected java.lang.String prepareSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
         // subscriberNotificationTemplate = Str.removeUnreadableChars(subscriberNotificationTemplate);
         return subscriberNotificationTemplate;
@@ -2036,6 +2316,13 @@ public abstract class GProject
 
     public final void setLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {
         lastOpenedDateAndTime = prepareLastOpenedDateAndTime(lastOpenedDateAndTime);
+        if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return;
+        this.lastOpenedDateAndTime = lastOpenedDateAndTime;
+            updateLastModified();
+            fireModified("lastOpenedDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastOpenedDateAndTime));
+    }
+
+    private final void updateLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {
         if (isLastOpenedDateAndTime(lastOpenedDateAndTime)) return;
         this.lastOpenedDateAndTime = lastOpenedDateAndTime;
             updateLastModified();
@@ -2078,6 +2365,13 @@ public abstract class GProject
             fireModified("freeDays", ilarkesto.core.persistance.Persistence.propertyAsString(this.freeDays));
     }
 
+    private final void updateFreeDays(int freeDays) {
+        if (isFreeDays(freeDays)) return;
+        this.freeDays = freeDays;
+            updateLastModified();
+            fireModified("freeDays", ilarkesto.core.persistance.Persistence.propertyAsString(this.freeDays));
+    }
+
     protected int prepareFreeDays(int freeDays) {
         return freeDays;
     }
@@ -2102,6 +2396,13 @@ public abstract class GProject
 
     public final void setAutoCreateTasksFromQualities(boolean autoCreateTasksFromQualities) {
         autoCreateTasksFromQualities = prepareAutoCreateTasksFromQualities(autoCreateTasksFromQualities);
+        if (isAutoCreateTasksFromQualities(autoCreateTasksFromQualities)) return;
+        this.autoCreateTasksFromQualities = autoCreateTasksFromQualities;
+            updateLastModified();
+            fireModified("autoCreateTasksFromQualities", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoCreateTasksFromQualities));
+    }
+
+    private final void updateAutoCreateTasksFromQualities(boolean autoCreateTasksFromQualities) {
         if (isAutoCreateTasksFromQualities(autoCreateTasksFromQualities)) return;
         this.autoCreateTasksFromQualities = autoCreateTasksFromQualities;
             updateLastModified();
@@ -2138,6 +2439,13 @@ public abstract class GProject
             fireModified("releasingInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasingInfo));
     }
 
+    private final void updateReleasingInfo(java.lang.String releasingInfo) {
+        if (isReleasingInfo(releasingInfo)) return;
+        this.releasingInfo = releasingInfo;
+            updateLastModified();
+            fireModified("releasingInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasingInfo));
+    }
+
     protected java.lang.String prepareReleasingInfo(java.lang.String releasingInfo) {
         // releasingInfo = Str.removeUnreadableChars(releasingInfo);
         return releasingInfo;
@@ -2157,53 +2465,54 @@ public abstract class GProject
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("vision")) setVision(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("productLabel")) setProductLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("shortDescription")) setShortDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("longDescription")) setLongDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("begin")) setBegin(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("end")) setEnd(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("participantsIds")) setParticipantsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("adminsIds")) setAdminsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("productOwnersIds")) setProductOwnersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("scrumMastersIds")) setScrumMastersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("teamMembersIds")) setTeamMembersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("currentSprintId")) setCurrentSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("nextSprintId")) setNextSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("velocity")) setVelocity(ilarkesto.core.persistance.Persistence.parsePropertyInteger(value));
-            if (property.equals("requirementsOrderIds")) setRequirementsOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
-            if (property.equals("urgentIssuesOrderIds")) setUrgentIssuesOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
-            if (property.equals("lastSprintNumber")) setLastSprintNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastTaskNumber")) setLastTaskNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastRequirementNumber")) setLastRequirementNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastQualityNumber")) setLastQualityNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastRiskNumber")) setLastRiskNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastIssueNumber")) setLastIssueNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastImpedimentNumber")) setLastImpedimentNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastFileNumber")) setLastFileNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastSubjectNumber")) setLastSubjectNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastEventNumber")) setLastEventNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastReleaseNumber")) setLastReleaseNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("lastBlogEntryNumber")) setLastBlogEntryNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("punishmentUnit")) setPunishmentUnit(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("punishmentFactor")) setPunishmentFactor(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("homepageDir")) setHomepageDir(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("homepageUrl")) setHomepageUrl(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("autoUpdateHomepage")) setAutoUpdateHomepage(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
-            if (property.equals("releaseScriptPath")) setReleaseScriptPath(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("supportEmail")) setSupportEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("issueReplyTemplate")) setIssueReplyTemplate(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("subscriberNotificationTemplate")) setSubscriberNotificationTemplate(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("lastOpenedDateAndTime")) setLastOpenedDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
-            if (property.equals("freeDays")) setFreeDays(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("autoCreateTasksFromQualities")) setAutoCreateTasksFromQualities(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
-            if (property.equals("releasingInfo")) setReleasingInfo(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("vision")) updateVision(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("productLabel")) updateProductLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("shortDescription")) updateShortDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("longDescription")) updateLongDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("begin")) updateBegin(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("end")) updateEnd(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("participantsIds")) updateParticipantsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("adminsIds")) updateAdminsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("productOwnersIds")) updateProductOwnersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("scrumMastersIds")) updateScrumMastersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("teamMembersIds")) updateTeamMembersIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("currentSprintId")) updateCurrentSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("nextSprintId")) updateNextSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("velocity")) updateVelocity(ilarkesto.core.persistance.Persistence.parsePropertyInteger(value));
+            if (property.equals("requirementsOrderIds")) updateRequirementsOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("urgentIssuesOrderIds")) updateUrgentIssuesOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("lastSprintNumber")) updateLastSprintNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastTaskNumber")) updateLastTaskNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastRequirementNumber")) updateLastRequirementNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastQualityNumber")) updateLastQualityNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastRiskNumber")) updateLastRiskNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastIssueNumber")) updateLastIssueNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastImpedimentNumber")) updateLastImpedimentNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastFileNumber")) updateLastFileNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastSubjectNumber")) updateLastSubjectNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastEventNumber")) updateLastEventNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastReleaseNumber")) updateLastReleaseNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("lastBlogEntryNumber")) updateLastBlogEntryNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("punishmentUnit")) updatePunishmentUnit(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("punishmentFactor")) updatePunishmentFactor(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("homepageDir")) updateHomepageDir(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("homepageUrl")) updateHomepageUrl(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("autoUpdateHomepage")) updateAutoUpdateHomepage(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("releaseScriptPath")) updateReleaseScriptPath(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("supportEmail")) updateSupportEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("issueReplyTemplate")) updateIssueReplyTemplate(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("subscriberNotificationTemplate")) updateSubscriberNotificationTemplate(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("lastOpenedDateAndTime")) updateLastOpenedDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("freeDays")) updateFreeDays(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("autoCreateTasksFromQualities")) updateAutoCreateTasksFromQualities(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("releasingInfo")) updateReleasingInfo(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

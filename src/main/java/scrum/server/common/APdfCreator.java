@@ -15,6 +15,7 @@
 package scrum.server.common;
 
 import ilarkesto.base.Tm;
+import ilarkesto.core.base.Color;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.time.Date;
 import ilarkesto.pdf.ACell;
@@ -25,7 +26,6 @@ import ilarkesto.pdf.ARow;
 import ilarkesto.pdf.ATable;
 import ilarkesto.pdf.FontStyle;
 
-import java.awt.Color;
 import java.util.Collection;
 
 import scrum.server.impediments.Impediment;

@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GTask
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Task>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Task.class);
@@ -53,7 +53,7 @@ public abstract class GTask
     }
 
     public int compareTo(Task other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     public final java.util.Set<scrum.server.sprint.SprintReport> getSprintReports() {
@@ -111,6 +111,13 @@ public abstract class GTask
             fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
     }
 
+    private final void updateRequirementId(String id) {
+        if (Utl.equals(requirementId, id)) return;
+        this.requirementId = id;
+            updateLastModified();
+            fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+    }
+
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
         return requirement;
     }
@@ -152,6 +159,13 @@ public abstract class GTask
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -176,6 +190,14 @@ public abstract class GTask
 
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
+        if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
+    private final void updateLabel(java.lang.String label) {
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
@@ -219,6 +241,13 @@ public abstract class GTask
             fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
+    private final void updateDescription(java.lang.String description) {
+        if (isDescription(description)) return;
+        this.description = description;
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+    }
+
     protected java.lang.String prepareDescription(java.lang.String description) {
         // description = Str.removeUnreadableChars(description);
         return description;
@@ -255,6 +284,13 @@ public abstract class GTask
             fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
     }
 
+    private final void updateRemainingWork(int remainingWork) {
+        if (isRemainingWork(remainingWork)) return;
+        this.remainingWork = remainingWork;
+            updateLastModified();
+            fireModified("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
+    }
+
     protected int prepareRemainingWork(int remainingWork) {
         return remainingWork;
     }
@@ -279,6 +315,13 @@ public abstract class GTask
 
     public final void setBurnedWork(int burnedWork) {
         burnedWork = prepareBurnedWork(burnedWork);
+        if (isBurnedWork(burnedWork)) return;
+        this.burnedWork = burnedWork;
+            updateLastModified();
+            fireModified("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
+    }
+
+    private final void updateBurnedWork(int burnedWork) {
         if (isBurnedWork(burnedWork)) return;
         this.burnedWork = burnedWork;
             updateLastModified();
@@ -322,6 +365,13 @@ public abstract class GTask
     }
 
     public final void setOwnerId(String id) {
+        if (Utl.equals(ownerId, id)) return;
+        this.ownerId = id;
+            updateLastModified();
+            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+    }
+
+    private final void updateOwnerId(String id) {
         if (Utl.equals(ownerId, id)) return;
         this.ownerId = id;
             updateLastModified();
@@ -382,6 +432,13 @@ public abstract class GTask
             fireModified("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
     }
 
+    private final void updateImpedimentId(String id) {
+        if (Utl.equals(impedimentId, id)) return;
+        this.impedimentId = id;
+            updateLastModified();
+            fireModified("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+    }
+
     protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
         return impediment;
     }
@@ -436,6 +493,13 @@ public abstract class GTask
             fireModified("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 
+    private final void updateClosedInPastSprintId(String id) {
+        if (Utl.equals(closedInPastSprintId, id)) return;
+        this.closedInPastSprintId = id;
+            updateLastModified();
+            fireModified("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
+    }
+
     protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
         return closedInPastSprint;
     }
@@ -460,19 +524,20 @@ public abstract class GTask
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("requirementId")) setRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("remainingWork")) setRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("burnedWork")) setBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("ownerId")) setOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("impedimentId")) setImpedimentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("closedInPastSprintId")) setClosedInPastSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("requirementId")) updateRequirementId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("remainingWork")) updateRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("burnedWork")) updateBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("ownerId")) updateOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("impedimentId")) updateImpedimentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("closedInPastSprintId")) updateClosedInPastSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
         }
     }
 

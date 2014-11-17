@@ -24,7 +24,7 @@ import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GIssue
-            extends AEntity
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Issue>, ilarkesto.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Issue.class);
@@ -66,7 +66,7 @@ public abstract class GIssue
     }
 
     public int compareTo(Issue other) {
-        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
 
     public final java.util.Set<scrum.server.project.Requirement> getRequirements() {
@@ -115,6 +115,13 @@ public abstract class GIssue
     }
 
     public final void setProjectId(String id) {
+        if (Utl.equals(projectId, id)) return;
+        this.projectId = id;
+            updateLastModified();
+            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+    }
+
+    private final void updateProjectId(String id) {
         if (Utl.equals(projectId, id)) return;
         this.projectId = id;
             updateLastModified();
@@ -175,6 +182,13 @@ public abstract class GIssue
             fireModified("storyId", ilarkesto.core.persistance.Persistence.propertyAsString(this.storyId));
     }
 
+    private final void updateStoryId(String id) {
+        if (Utl.equals(storyId, id)) return;
+        this.storyId = id;
+            updateLastModified();
+            fireModified("storyId", ilarkesto.core.persistance.Persistence.propertyAsString(this.storyId));
+    }
+
     protected scrum.server.project.Requirement prepareStory(scrum.server.project.Requirement story) {
         return story;
     }
@@ -216,6 +230,13 @@ public abstract class GIssue
             fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
     }
 
+    private final void updateNumber(int number) {
+        if (isNumber(number)) return;
+        this.number = number;
+            updateLastModified();
+            fireModified("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
+    }
+
     protected int prepareNumber(int number) {
         return number;
     }
@@ -240,6 +261,13 @@ public abstract class GIssue
 
     public final void setType(java.lang.String type) {
         type = prepareType(type);
+        if (isType(type)) return;
+        this.type = type;
+            updateLastModified();
+            fireModified("type", ilarkesto.core.persistance.Persistence.propertyAsString(this.type));
+    }
+
+    private final void updateType(java.lang.String type) {
         if (isType(type)) return;
         this.type = type;
             updateLastModified();
@@ -276,6 +304,14 @@ public abstract class GIssue
 
     public final void setDate(ilarkesto.core.time.DateAndTime date) {
         date = prepareDate(date);
+        if (isDate(date)) return;
+        if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
+        this.date = date;
+            updateLastModified();
+            fireModified("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
+    }
+
+    private final void updateDate(ilarkesto.core.time.DateAndTime date) {
         if (isDate(date)) return;
         if (date == null) throw new IllegalArgumentException("Mandatory field can not be set to null: date");
         this.date = date;
@@ -332,6 +368,13 @@ public abstract class GIssue
             fireModified("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
     }
 
+    private final void updateCreatorId(String id) {
+        if (Utl.equals(creatorId, id)) return;
+        this.creatorId = id;
+            updateLastModified();
+            fireModified("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
+    }
+
     protected scrum.server.admin.User prepareCreator(scrum.server.admin.User creator) {
         return creator;
     }
@@ -367,6 +410,14 @@ public abstract class GIssue
 
     public final void setLabel(java.lang.String label) {
         label = prepareLabel(label);
+        if (isLabel(label)) return;
+        if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
+        this.label = label;
+            updateLastModified();
+            fireModified("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
+    }
+
+    private final void updateLabel(java.lang.String label) {
         if (isLabel(label)) return;
         if (label == null) throw new IllegalArgumentException("Mandatory field can not be set to null: label");
         this.label = label;
@@ -410,6 +461,13 @@ public abstract class GIssue
             fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
     }
 
+    private final void updateDescription(java.lang.String description) {
+        if (isDescription(description)) return;
+        this.description = description;
+            updateLastModified();
+            fireModified("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+    }
+
     protected java.lang.String prepareDescription(java.lang.String description) {
         // description = Str.removeUnreadableChars(description);
         return description;
@@ -440,6 +498,13 @@ public abstract class GIssue
 
     public final void setStatement(java.lang.String statement) {
         statement = prepareStatement(statement);
+        if (isStatement(statement)) return;
+        this.statement = statement;
+            updateLastModified();
+            fireModified("statement", ilarkesto.core.persistance.Persistence.propertyAsString(this.statement));
+    }
+
+    private final void updateStatement(java.lang.String statement) {
         if (isStatement(statement)) return;
         this.statement = statement;
             updateLastModified();
@@ -482,6 +547,13 @@ public abstract class GIssue
             fireModified("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
     }
 
+    private final void updateIssuerName(java.lang.String issuerName) {
+        if (isIssuerName(issuerName)) return;
+        this.issuerName = issuerName;
+            updateLastModified();
+            fireModified("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
+    }
+
     protected java.lang.String prepareIssuerName(java.lang.String issuerName) {
         // issuerName = Str.removeUnreadableChars(issuerName);
         return issuerName;
@@ -512,6 +584,13 @@ public abstract class GIssue
 
     public final void setIssuerEmail(java.lang.String issuerEmail) {
         issuerEmail = prepareIssuerEmail(issuerEmail);
+        if (isIssuerEmail(issuerEmail)) return;
+        this.issuerEmail = issuerEmail;
+            updateLastModified();
+            fireModified("issuerEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerEmail));
+    }
+
+    private final void updateIssuerEmail(java.lang.String issuerEmail) {
         if (isIssuerEmail(issuerEmail)) return;
         this.issuerEmail = issuerEmail;
             updateLastModified();
@@ -554,6 +633,13 @@ public abstract class GIssue
             fireModified("acceptDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.acceptDate));
     }
 
+    private final void updateAcceptDate(ilarkesto.core.time.Date acceptDate) {
+        if (isAcceptDate(acceptDate)) return;
+        this.acceptDate = acceptDate;
+            updateLastModified();
+            fireModified("acceptDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.acceptDate));
+    }
+
     protected ilarkesto.core.time.Date prepareAcceptDate(ilarkesto.core.time.Date acceptDate) {
         return acceptDate;
     }
@@ -590,6 +676,13 @@ public abstract class GIssue
             fireModified("urgent", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgent));
     }
 
+    private final void updateUrgent(boolean urgent) {
+        if (isUrgent(urgent)) return;
+        this.urgent = urgent;
+            updateLastModified();
+            fireModified("urgent", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgent));
+    }
+
     protected boolean prepareUrgent(boolean urgent) {
         return urgent;
     }
@@ -614,6 +707,13 @@ public abstract class GIssue
 
     public final void setSeverity(int severity) {
         severity = prepareSeverity(severity);
+        if (isSeverity(severity)) return;
+        this.severity = severity;
+            updateLastModified();
+            fireModified("severity", ilarkesto.core.persistance.Persistence.propertyAsString(this.severity));
+    }
+
+    private final void updateSeverity(int severity) {
         if (isSeverity(severity)) return;
         this.severity = severity;
             updateLastModified();
@@ -663,6 +763,13 @@ public abstract class GIssue
             fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
     }
 
+    private final void updateOwnerId(String id) {
+        if (Utl.equals(ownerId, id)) return;
+        this.ownerId = id;
+            updateLastModified();
+            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+    }
+
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
         return owner;
     }
@@ -698,6 +805,13 @@ public abstract class GIssue
 
     public final void setFixDate(ilarkesto.core.time.Date fixDate) {
         fixDate = prepareFixDate(fixDate);
+        if (isFixDate(fixDate)) return;
+        this.fixDate = fixDate;
+            updateLastModified();
+            fireModified("fixDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixDate));
+    }
+
+    private final void updateFixDate(ilarkesto.core.time.Date fixDate) {
         if (isFixDate(fixDate)) return;
         this.fixDate = fixDate;
             updateLastModified();
@@ -740,6 +854,13 @@ public abstract class GIssue
             fireModified("closeDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.closeDate));
     }
 
+    private final void updateCloseDate(ilarkesto.core.time.Date closeDate) {
+        if (isCloseDate(closeDate)) return;
+        this.closeDate = closeDate;
+            updateLastModified();
+            fireModified("closeDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.closeDate));
+    }
+
     protected ilarkesto.core.time.Date prepareCloseDate(ilarkesto.core.time.Date closeDate) {
         return closeDate;
     }
@@ -770,6 +891,13 @@ public abstract class GIssue
 
     public final void setSuspendedUntilDate(ilarkesto.core.time.Date suspendedUntilDate) {
         suspendedUntilDate = prepareSuspendedUntilDate(suspendedUntilDate);
+        if (isSuspendedUntilDate(suspendedUntilDate)) return;
+        this.suspendedUntilDate = suspendedUntilDate;
+            updateLastModified();
+            fireModified("suspendedUntilDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.suspendedUntilDate));
+    }
+
+    private final void updateSuspendedUntilDate(ilarkesto.core.time.Date suspendedUntilDate) {
         if (isSuspendedUntilDate(suspendedUntilDate)) return;
         this.suspendedUntilDate = suspendedUntilDate;
             updateLastModified();
@@ -816,6 +944,13 @@ public abstract class GIssue
     }
 
     public final void setAffectedReleasesIds(java.util.Set<String> ids) {
+        if (Utl.equals(affectedReleasesIds, ids)) return;
+        affectedReleasesIds = ids;
+            updateLastModified();
+            fireModified("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
+    }
+
+    private final void updateAffectedReleasesIds(java.util.Set<String> ids) {
         if (Utl.equals(affectedReleasesIds, ids)) return;
         affectedReleasesIds = ids;
             updateLastModified();
@@ -930,6 +1065,13 @@ public abstract class GIssue
             fireModified("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
     }
 
+    private final void updateFixReleasesIds(java.util.Set<String> ids) {
+        if (Utl.equals(fixReleasesIds, ids)) return;
+        fixReleasesIds = ids;
+            updateLastModified();
+            fireModified("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
+    }
+
     protected Collection<scrum.server.release.Release> prepareFixReleases(Collection<scrum.server.release.Release> fixReleases) {
         return fixReleases;
     }
@@ -1028,6 +1170,13 @@ public abstract class GIssue
             fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
+    private final void updatePublished(boolean published) {
+        if (isPublished(published)) return;
+        this.published = published;
+            updateLastModified();
+            fireModified("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
+    }
+
     protected boolean preparePublished(boolean published) {
         return published;
     }
@@ -1052,6 +1201,14 @@ public abstract class GIssue
 
     public final void setThemes(Collection<java.lang.String> themes) {
         themes = prepareThemes(themes);
+        if (themes == null) themes = Collections.emptyList();
+        if (this.themes.equals(themes)) return;
+        this.themes = new java.util.ArrayList<java.lang.String>(themes);
+            updateLastModified();
+            fireModified("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
+    }
+
+    private final void updateThemes(Collection<java.lang.String> themes) {
         if (themes == null) themes = Collections.emptyList();
         if (this.themes.equals(themes)) return;
         this.themes = new java.util.ArrayList<java.lang.String>(themes);
@@ -1142,32 +1299,33 @@ public abstract class GIssue
     }
 
     public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             String property = entry.getKey();
             if (property.equals("id")) continue;
             String value = entry.getValue();
-            if (property.equals("projectId")) setProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("storyId")) setStoryId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("number")) setNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("type")) setType(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("date")) setDate(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
-            if (property.equals("creatorId")) setCreatorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("label")) setLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("description")) setDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("statement")) setStatement(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("issuerName")) setIssuerName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("issuerEmail")) setIssuerEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
-            if (property.equals("acceptDate")) setAcceptDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("urgent")) setUrgent(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
-            if (property.equals("severity")) setSeverity(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
-            if (property.equals("ownerId")) setOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("fixDate")) setFixDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("closeDate")) setCloseDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("suspendedUntilDate")) setSuspendedUntilDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
-            if (property.equals("affectedReleasesIds")) setAffectedReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("fixReleasesIds")) setFixReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
-            if (property.equals("published")) setPublished(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
-            if (property.equals("themes")) setThemes(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
+            if (property.equals("projectId")) updateProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("storyId")) updateStoryId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("number")) updateNumber(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("type")) updateType(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("date")) updateDate(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("creatorId")) updateCreatorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("statement")) updateStatement(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("issuerName")) updateIssuerName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("issuerEmail")) updateIssuerEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("acceptDate")) updateAcceptDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("urgent")) updateUrgent(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("severity")) updateSeverity(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
+            if (property.equals("ownerId")) updateOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("fixDate")) updateFixDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("closeDate")) updateCloseDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("suspendedUntilDate")) updateSuspendedUntilDate(ilarkesto.core.persistance.Persistence.parsePropertyDate(value));
+            if (property.equals("affectedReleasesIds")) updateAffectedReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("fixReleasesIds")) updateFixReleasesIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
+            if (property.equals("published")) updatePublished(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("themes")) updateThemes(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
         }
     }
 

@@ -56,6 +56,11 @@
 
     <java classname="com.google.gwt.dev.Compiler" failonerror="true"
       fork="true">
+      <arg value="-strict" />
+      <arg value="-logLevel" />
+      <arg value="INFO" />
+      <arg value="-style" />
+      <arg value="DETAILED" />
       <arg value="-war" />
       <arg value="${build.dir}/webapp" />
       <arg value="scrum.ScrumGwtApplication" />

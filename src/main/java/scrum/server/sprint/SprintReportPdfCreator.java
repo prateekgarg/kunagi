@@ -1,20 +1,21 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.server.sprint;
 
 import ilarkesto.base.Tm;
+import ilarkesto.core.base.Color;
 import ilarkesto.pdf.ACell;
 import ilarkesto.pdf.AParagraph;
 import ilarkesto.pdf.APdfContainerElement;
@@ -23,7 +24,6 @@ import ilarkesto.pdf.ATable;
 import ilarkesto.pdf.FieldList;
 import ilarkesto.pdf.FontStyle;
 
-import java.awt.Color;
 import java.util.List;
 
 import scrum.client.sprint.SprintHistoryHelper;
@@ -60,37 +60,37 @@ public class SprintReportPdfCreator extends APdfCreator {
 		fields.field("Velocity").text(sprint.getVelocity() + " StoryPoints");
 		int burnedWork = report == null ? getBurnedWork(sprint.getIncompletedRequirementsData())
 				+ getBurnedWork(sprint.getCompletedRequirementsData()) : report.getBurnedWork();
-		fields.field("Burned work").text(burnedWork + " hours");
-		fields.field("Product Owner").text(sprint.getProductOwnersAsString());
-		fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
-		fields.field("Team").text(sprint.getTeamMembersAsString());
+				fields.field("Burned work").text(burnedWork + " hours");
+				fields.field("Product Owner").text(sprint.getProductOwnersAsString());
+				fields.field("Scrum Master").text(sprint.getScrumMastersAsString());
+				fields.field("Team").text(sprint.getTeamMembersAsString());
 
-		pdf.nl();
-		pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
+				pdf.nl();
+				pdf.image(BurndownChart.createBurndownChartAsByteArray(sprint, 1000, 500)).setScaleByWidth(150f);
 
-		ScrumPdfContext pdfContext = new ScrumPdfContext(sprint.getProject());
-		if (sprint.isGoalSet()) {
-			sectionHeader(pdf, "Goal");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getGoal(), pdfContext);
-		}
+				ScrumPdfContext pdfContext = new ScrumPdfContext(sprint.getProject());
+				if (sprint.isGoalSet()) {
+					sectionHeader(pdf, "Goal");
+					WikiToPdfConverter.buildPdf(pdf, sprint.getGoal(), pdfContext);
+				}
 
-		if (report == null) {
-			requirements(pdf, "Completed stories", sprint.getCompletedRequirementsData());
-			requirements(pdf, "Rejected stories", sprint.getIncompletedRequirementsData());
-		} else {
-			requirements(pdf, "Completed stories", report.getCompletedRequirementsAsList(), report);
-			requirements(pdf, "Rejected stories", report.getRejectedRequirementsAsList(), report);
-		}
+				if (report == null) {
+					requirements(pdf, "Completed stories", sprint.getCompletedRequirementsData());
+					requirements(pdf, "Rejected stories", sprint.getIncompletedRequirementsData());
+				} else {
+					requirements(pdf, "Completed stories", report.getCompletedRequirementsAsList(), report);
+					requirements(pdf, "Rejected stories", report.getRejectedRequirementsAsList(), report);
+				}
 
-		if (sprint.isReviewNoteSet()) {
-			sectionHeader(pdf, "Review notes");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote(), pdfContext);
-		}
+				if (sprint.isReviewNoteSet()) {
+					sectionHeader(pdf, "Review notes");
+					WikiToPdfConverter.buildPdf(pdf, sprint.getReviewNote(), pdfContext);
+				}
 
-		if (sprint.isRetrospectiveNoteSet()) {
-			sectionHeader(pdf, "Retrospecitve notes");
-			WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), pdfContext);
-		}
+				if (sprint.isRetrospectiveNoteSet()) {
+					sectionHeader(pdf, "Retrospecitve notes");
+					WikiToPdfConverter.buildPdf(pdf, sprint.getRetrospectiveNote(), pdfContext);
+				}
 
 	}
 
