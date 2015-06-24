@@ -158,6 +158,9 @@
   <target name="deployAsHead">
     <copy file="${build.dir}/kunagi.war" tofile="/home/kunagi-head/tomcat/webapps/kunagi.war"
       preservelastmodified="true" />
+    <exec executable="touch" failonerror="true">
+      <arg value="/home/kunagi-head/tomcat/restart-request/trigger" />
+    </exec>
   </target>
 
   <target name="deployToLocalTomcat" depends="package">
