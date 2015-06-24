@@ -505,15 +505,20 @@ public abstract class GRisk
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        number  = (Integer) props.get("number");
-        label  = (java.lang.String) props.get("label");
-        description  = (java.lang.String) props.get("description");
-        probabilityMitigation  = (java.lang.String) props.get("probabilityMitigation");
-        impactMitigation  = (java.lang.String) props.get("impactMitigation");
-        probability  = (Integer) props.get("probability");
-        impact  = (Integer) props.get("impact");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("probabilityMitigation")) probabilityMitigation = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("impactMitigation")) impactMitigation = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("probability")) probability = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("impact")) impact = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+        }
         updateLocalModificationTime();
     }
 

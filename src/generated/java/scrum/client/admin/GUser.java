@@ -1582,37 +1582,40 @@ public abstract class GUser
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        name  = (java.lang.String) props.get("name");
-        publicName  = (java.lang.String) props.get("publicName");
-        fullName  = (java.lang.String) props.get("fullName");
-        admin  = (Boolean) props.get("admin");
-        emailVerified  = (Boolean) props.get("emailVerified");
-        email  = (java.lang.String) props.get("email");
-        currentProjectId = (String) props.get("currentProjectId");
-        color  = (java.lang.String) props.get("color");
-        String lastLoginDateAndTimeAsString = (String) props.get("lastLoginDateAndTime");
-        lastLoginDateAndTime  =  lastLoginDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastLoginDateAndTimeAsString);
-        String registrationDateAndTimeAsString = (String) props.get("registrationDateAndTime");
-        registrationDateAndTime  =  registrationDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(registrationDateAndTimeAsString);
-        disabled  = (Boolean) props.get("disabled");
-        hideUserGuideBlog  = (Boolean) props.get("hideUserGuideBlog");
-        hideUserGuideCalendar  = (Boolean) props.get("hideUserGuideCalendar");
-        hideUserGuideFiles  = (Boolean) props.get("hideUserGuideFiles");
-        hideUserGuideForum  = (Boolean) props.get("hideUserGuideForum");
-        hideUserGuideImpediments  = (Boolean) props.get("hideUserGuideImpediments");
-        hideUserGuideIssues  = (Boolean) props.get("hideUserGuideIssues");
-        hideUserGuideJournal  = (Boolean) props.get("hideUserGuideJournal");
-        hideUserGuideNextSprint  = (Boolean) props.get("hideUserGuideNextSprint");
-        hideUserGuideProductBacklog  = (Boolean) props.get("hideUserGuideProductBacklog");
-        hideUserGuideCourtroom  = (Boolean) props.get("hideUserGuideCourtroom");
-        hideUserGuideQualityBacklog  = (Boolean) props.get("hideUserGuideQualityBacklog");
-        hideUserGuideReleases  = (Boolean) props.get("hideUserGuideReleases");
-        hideUserGuideRisks  = (Boolean) props.get("hideUserGuideRisks");
-        hideUserGuideSprintBacklog  = (Boolean) props.get("hideUserGuideSprintBacklog");
-        hideUserGuideWhiteboard  = (Boolean) props.get("hideUserGuideWhiteboard");
-        loginToken  = (java.lang.String) props.get("loginToken");
-        openId  = (java.lang.String) props.get("openId");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("name")) name = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("publicName")) publicName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("fullName")) fullName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("admin")) admin = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("emailVerified")) emailVerified = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("email")) email = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("currentProjectId")) currentProjectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("color")) color = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("lastLoginDateAndTime")) lastLoginDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("registrationDateAndTime")) registrationDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("disabled")) disabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideBlog")) hideUserGuideBlog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideCalendar")) hideUserGuideCalendar = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideFiles")) hideUserGuideFiles = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideForum")) hideUserGuideForum = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideImpediments")) hideUserGuideImpediments = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideIssues")) hideUserGuideIssues = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideJournal")) hideUserGuideJournal = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideNextSprint")) hideUserGuideNextSprint = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideProductBacklog")) hideUserGuideProductBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideCourtroom")) hideUserGuideCourtroom = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideQualityBacklog")) hideUserGuideQualityBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideReleases")) hideUserGuideReleases = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideRisks")) hideUserGuideRisks = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideSprintBacklog")) hideUserGuideSprintBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("hideUserGuideWhiteboard")) hideUserGuideWhiteboard = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("loginToken")) loginToken = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("openId")) openId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

@@ -122,10 +122,7 @@ public abstract class GIssue
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -133,6 +130,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -183,10 +181,7 @@ public abstract class GIssue
     }
 
     private final void updateStoryId(String id) {
-        if (Utl.equals(storyId, id)) return;
-        this.storyId = id;
-            updateLastModified();
-            fireModified("storyId", ilarkesto.core.persistance.Persistence.propertyAsString(this.storyId));
+        setStoryId(id);
     }
 
     protected scrum.server.project.Requirement prepareStory(scrum.server.project.Requirement story) {
@@ -194,6 +189,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadStoryReference(String entityId) {
+        if (isDeleted()) return;
         if (this.storyId == null || entityId.equals(this.storyId)) {
             setStory(null);
         }
@@ -369,10 +365,7 @@ public abstract class GIssue
     }
 
     private final void updateCreatorId(String id) {
-        if (Utl.equals(creatorId, id)) return;
-        this.creatorId = id;
-            updateLastModified();
-            fireModified("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
+        setCreatorId(id);
     }
 
     protected scrum.server.admin.User prepareCreator(scrum.server.admin.User creator) {
@@ -380,6 +373,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadCreatorReference(String entityId) {
+        if (isDeleted()) return;
         if (this.creatorId == null || entityId.equals(this.creatorId)) {
             setCreator(null);
         }
@@ -764,10 +758,7 @@ public abstract class GIssue
     }
 
     private final void updateOwnerId(String id) {
-        if (Utl.equals(ownerId, id)) return;
-        this.ownerId = id;
-            updateLastModified();
-            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        setOwnerId(id);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -775,6 +766,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadOwnerReference(String entityId) {
+        if (isDeleted()) return;
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
             setOwner(null);
         }
@@ -928,6 +920,10 @@ public abstract class GIssue
 
     private java.util.Set<String> affectedReleasesIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getAffectedReleasesIds() {
+        return java.util.Collections .unmodifiableCollection(this.affectedReleasesIds);
+    }
+
     public final java.util.Set<scrum.server.release.Release> getAffectedReleases() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.affectedReleasesIds);
@@ -951,10 +947,7 @@ public abstract class GIssue
     }
 
     private final void updateAffectedReleasesIds(java.util.Set<String> ids) {
-        if (Utl.equals(affectedReleasesIds, ids)) return;
-        affectedReleasesIds = ids;
-            updateLastModified();
-            fireModified("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
+        setAffectedReleasesIds(ids);
     }
 
     protected Collection<scrum.server.release.Release> prepareAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
@@ -962,6 +955,8 @@ public abstract class GIssue
     }
 
     protected void repairDeadAffectedReleaseReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.affectedReleasesIds == null ) return;
         if (this.affectedReleasesIds.remove(entityId)) {
             updateLastModified();
             fireModified("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
@@ -970,19 +965,23 @@ public abstract class GIssue
 
     public final boolean containsAffectedRelease(scrum.server.release.Release affectedRelease) {
         if (affectedRelease == null) return false;
+        if (this.affectedReleasesIds == null) return false;
         return this.affectedReleasesIds.contains(affectedRelease.getId());
     }
 
     public final int getAffectedReleasesCount() {
+        if (this.affectedReleasesIds == null) return 0;
         return this.affectedReleasesIds.size();
     }
 
     public final boolean isAffectedReleasesEmpty() {
+        if (this.affectedReleasesIds == null) return true;
         return this.affectedReleasesIds.isEmpty();
     }
 
     public final boolean addAffectedRelease(scrum.server.release.Release affectedRelease) {
         if (affectedRelease == null) throw new IllegalArgumentException("affectedRelease == null");
+        if (this.affectedReleasesIds == null) this.affectedReleasesIds = new java.util.HashSet<String>();
         boolean added = this.affectedReleasesIds.add(affectedRelease.getId());
         if (added) {
             updateLastModified();
@@ -993,6 +992,7 @@ public abstract class GIssue
 
     public final boolean addAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
         if (affectedReleases == null) throw new IllegalArgumentException("affectedReleases == null");
+        if (this.affectedReleasesIds == null) this.affectedReleasesIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.release.Release affectedRelease : affectedReleases) {
             added = added | this.affectedReleasesIds.add(affectedRelease.getId());
@@ -1018,6 +1018,7 @@ public abstract class GIssue
     public final boolean removeAffectedReleases(Collection<scrum.server.release.Release> affectedReleases) {
         if (affectedReleases == null) return false;
         if (affectedReleases.isEmpty()) return false;
+        if (this.affectedReleasesIds == null) return false;
         boolean removed = false;
         for (scrum.server.release.Release _element: affectedReleases) {
             removed = removed | this.affectedReleasesIds.remove(_element);
@@ -1030,6 +1031,7 @@ public abstract class GIssue
     }
 
     public final boolean clearAffectedReleases() {
+        if (this.affectedReleasesIds == null) return false;
         if (this.affectedReleasesIds.isEmpty()) return false;
         this.affectedReleasesIds.clear();
             updateLastModified();
@@ -1042,6 +1044,10 @@ public abstract class GIssue
     // -----------------------------------------------------------
 
     private java.util.Set<String> fixReleasesIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getFixReleasesIds() {
+        return java.util.Collections .unmodifiableCollection(this.fixReleasesIds);
+    }
 
     public final java.util.Set<scrum.server.release.Release> getFixReleases() {
         try {
@@ -1066,10 +1072,7 @@ public abstract class GIssue
     }
 
     private final void updateFixReleasesIds(java.util.Set<String> ids) {
-        if (Utl.equals(fixReleasesIds, ids)) return;
-        fixReleasesIds = ids;
-            updateLastModified();
-            fireModified("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
+        setFixReleasesIds(ids);
     }
 
     protected Collection<scrum.server.release.Release> prepareFixReleases(Collection<scrum.server.release.Release> fixReleases) {
@@ -1077,6 +1080,8 @@ public abstract class GIssue
     }
 
     protected void repairDeadFixReleaseReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.fixReleasesIds == null ) return;
         if (this.fixReleasesIds.remove(entityId)) {
             updateLastModified();
             fireModified("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
@@ -1085,19 +1090,23 @@ public abstract class GIssue
 
     public final boolean containsFixRelease(scrum.server.release.Release fixRelease) {
         if (fixRelease == null) return false;
+        if (this.fixReleasesIds == null) return false;
         return this.fixReleasesIds.contains(fixRelease.getId());
     }
 
     public final int getFixReleasesCount() {
+        if (this.fixReleasesIds == null) return 0;
         return this.fixReleasesIds.size();
     }
 
     public final boolean isFixReleasesEmpty() {
+        if (this.fixReleasesIds == null) return true;
         return this.fixReleasesIds.isEmpty();
     }
 
     public final boolean addFixRelease(scrum.server.release.Release fixRelease) {
         if (fixRelease == null) throw new IllegalArgumentException("fixRelease == null");
+        if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
         boolean added = this.fixReleasesIds.add(fixRelease.getId());
         if (added) {
             updateLastModified();
@@ -1108,6 +1117,7 @@ public abstract class GIssue
 
     public final boolean addFixReleases(Collection<scrum.server.release.Release> fixReleases) {
         if (fixReleases == null) throw new IllegalArgumentException("fixReleases == null");
+        if (this.fixReleasesIds == null) this.fixReleasesIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.release.Release fixRelease : fixReleases) {
             added = added | this.fixReleasesIds.add(fixRelease.getId());
@@ -1133,6 +1143,7 @@ public abstract class GIssue
     public final boolean removeFixReleases(Collection<scrum.server.release.Release> fixReleases) {
         if (fixReleases == null) return false;
         if (fixReleases.isEmpty()) return false;
+        if (this.fixReleasesIds == null) return false;
         boolean removed = false;
         for (scrum.server.release.Release _element: fixReleases) {
             removed = removed | this.fixReleasesIds.remove(_element);
@@ -1145,6 +1156,7 @@ public abstract class GIssue
     }
 
     public final boolean clearFixReleases() {
+        if (this.fixReleasesIds == null) return false;
         if (this.fixReleasesIds.isEmpty()) return false;
         this.fixReleasesIds.clear();
             updateLastModified();
@@ -1222,19 +1234,23 @@ public abstract class GIssue
 
     public final boolean containsTheme(java.lang.String theme) {
         if (theme == null) return false;
+        if (this.themes == null) return false;
         return this.themes.contains(theme);
     }
 
     public final int getThemesCount() {
+        if (this.themes == null) return 0;
         return this.themes.size();
     }
 
     public final boolean isThemesEmpty() {
+        if (this.themes == null) return true;
         return this.themes.isEmpty();
     }
 
     public final boolean addTheme(java.lang.String theme) {
         if (theme == null) throw new IllegalArgumentException("theme == null");
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         boolean added = this.themes.add(theme);
         if (added) {
             updateLastModified();
@@ -1245,6 +1261,7 @@ public abstract class GIssue
 
     public final boolean addThemes(Collection<java.lang.String> themes) {
         if (themes == null) throw new IllegalArgumentException("themes == null");
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String theme : themes) {
             added = added | this.themes.add(theme);
@@ -1270,6 +1287,7 @@ public abstract class GIssue
     public final boolean removeThemes(Collection<java.lang.String> themes) {
         if (themes == null) return false;
         if (themes.isEmpty()) return false;
+        if (this.themes == null) return false;
         boolean removed = false;
         for (java.lang.String _element: themes) {
             removed = removed | this.themes.remove(_element);
@@ -1282,6 +1300,7 @@ public abstract class GIssue
     }
 
     public final boolean clearThemes() {
+        if (this.themes == null) return false;
         if (this.themes.isEmpty()) return false;
         this.themes.clear();
             updateLastModified();
@@ -1290,6 +1309,7 @@ public abstract class GIssue
     }
 
     public final String getThemesAsCommaSeparatedString() {
+        if (this.themes == null) return null;
         if (this.themes.isEmpty()) return null;
         return Str.concat(this.themes,", ");
     }
@@ -1330,6 +1350,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadStoryReference(entityId);
@@ -1394,6 +1415,7 @@ public abstract class GIssue
             }
         }
         if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
+        Collection<scrum.server.project.Requirement> requirement = getRequirements();
     }
 
 

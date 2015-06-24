@@ -288,14 +288,19 @@ public abstract class GSprintReport
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        sprintId = (String) props.get("sprintId");
-        completedRequirementsIds = (Set<String>) props.get("completedRequirementsIds");
-        rejectedRequirementsIds = (Set<String>) props.get("rejectedRequirementsIds");
-        requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
-        closedTasksIds = (Set<String>) props.get("closedTasksIds");
-        openTasksIds = (Set<String>) props.get("openTasksIds");
-        burnedWork  = (Integer) props.get("burnedWork");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("sprintId")) sprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("completedRequirementsIds")) completedRequirementsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("rejectedRequirementsIds")) rejectedRequirementsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("requirementsOrderIds")) requirementsOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("closedTasksIds")) closedTasksIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("openTasksIds")) openTasksIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("burnedWork")) burnedWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+        }
         updateLocalModificationTime();
     }
 

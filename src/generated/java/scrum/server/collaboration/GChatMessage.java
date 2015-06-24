@@ -87,10 +87,7 @@ public abstract class GChatMessage
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -98,6 +95,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -148,10 +146,7 @@ public abstract class GChatMessage
     }
 
     private final void updateAuthorId(String id) {
-        if (Utl.equals(authorId, id)) return;
-        this.authorId = id;
-            updateLastModified();
-            fireModified("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
+        setAuthorId(id);
     }
 
     protected scrum.server.admin.User prepareAuthor(scrum.server.admin.User author) {
@@ -159,6 +154,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadAuthorReference(String entityId) {
+        if (isDeleted()) return;
         if (this.authorId == null || entityId.equals(this.authorId)) {
             setAuthor(null);
         }
@@ -279,6 +275,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadAuthorReference(entityId);

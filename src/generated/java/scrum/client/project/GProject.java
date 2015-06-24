@@ -2382,53 +2382,55 @@ public abstract class GProject
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        label  = (java.lang.String) props.get("label");
-        vision  = (java.lang.String) props.get("vision");
-        productLabel  = (java.lang.String) props.get("productLabel");
-        shortDescription  = (java.lang.String) props.get("shortDescription");
-        description  = (java.lang.String) props.get("description");
-        longDescription  = (java.lang.String) props.get("longDescription");
-        String beginAsString = (String) props.get("begin");
-        begin  =  beginAsString == null ? null : new ilarkesto.core.time.Date(beginAsString);
-        String endAsString = (String) props.get("end");
-        end  =  endAsString == null ? null : new ilarkesto.core.time.Date(endAsString);
-        participantsIds = (Set<String>) props.get("participantsIds");
-        adminsIds = (Set<String>) props.get("adminsIds");
-        productOwnersIds = (Set<String>) props.get("productOwnersIds");
-        scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
-        teamMembersIds = (Set<String>) props.get("teamMembersIds");
-        currentSprintId = (String) props.get("currentSprintId");
-        nextSprintId = (String) props.get("nextSprintId");
-        velocity  = (java.lang.Integer) props.get("velocity");
-        requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
-        urgentIssuesOrderIds  = (java.util.List<java.lang.String>) props.get("urgentIssuesOrderIds");
-        lastSprintNumber  = (Integer) props.get("lastSprintNumber");
-        lastTaskNumber  = (Integer) props.get("lastTaskNumber");
-        lastRequirementNumber  = (Integer) props.get("lastRequirementNumber");
-        lastQualityNumber  = (Integer) props.get("lastQualityNumber");
-        lastRiskNumber  = (Integer) props.get("lastRiskNumber");
-        lastIssueNumber  = (Integer) props.get("lastIssueNumber");
-        lastImpedimentNumber  = (Integer) props.get("lastImpedimentNumber");
-        lastFileNumber  = (Integer) props.get("lastFileNumber");
-        lastSubjectNumber  = (Integer) props.get("lastSubjectNumber");
-        lastEventNumber  = (Integer) props.get("lastEventNumber");
-        lastReleaseNumber  = (Integer) props.get("lastReleaseNumber");
-        lastBlogEntryNumber  = (Integer) props.get("lastBlogEntryNumber");
-        punishmentUnit  = (java.lang.String) props.get("punishmentUnit");
-        punishmentFactor  = (Integer) props.get("punishmentFactor");
-        homepageDir  = (java.lang.String) props.get("homepageDir");
-        homepageUrl  = (java.lang.String) props.get("homepageUrl");
-        autoUpdateHomepage  = (Boolean) props.get("autoUpdateHomepage");
-        releaseScriptPath  = (java.lang.String) props.get("releaseScriptPath");
-        supportEmail  = (java.lang.String) props.get("supportEmail");
-        issueReplyTemplate  = (java.lang.String) props.get("issueReplyTemplate");
-        subscriberNotificationTemplate  = (java.lang.String) props.get("subscriberNotificationTemplate");
-        String lastOpenedDateAndTimeAsString = (String) props.get("lastOpenedDateAndTime");
-        lastOpenedDateAndTime  =  lastOpenedDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastOpenedDateAndTimeAsString);
-        freeDays  = (Integer) props.get("freeDays");
-        autoCreateTasksFromQualities  = (Boolean) props.get("autoCreateTasksFromQualities");
-        releasingInfo  = (java.lang.String) props.get("releasingInfo");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("vision")) vision = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("productLabel")) productLabel = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("shortDescription")) shortDescription = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("longDescription")) longDescription = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("begin")) begin = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("end")) end = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("participantsIds")) participantsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("adminsIds")) adminsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("productOwnersIds")) productOwnersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("scrumMastersIds")) scrumMastersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("teamMembersIds")) teamMembersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("currentSprintId")) currentSprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("nextSprintId")) nextSprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("velocity")) velocity = ilarkesto.core.persistance.Persistence.parsePropertyInteger(value);
+            if (property.equals("requirementsOrderIds")) requirementsOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("urgentIssuesOrderIds")) urgentIssuesOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("lastSprintNumber")) lastSprintNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastTaskNumber")) lastTaskNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastRequirementNumber")) lastRequirementNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastQualityNumber")) lastQualityNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastRiskNumber")) lastRiskNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastIssueNumber")) lastIssueNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastImpedimentNumber")) lastImpedimentNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastFileNumber")) lastFileNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastSubjectNumber")) lastSubjectNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastEventNumber")) lastEventNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastReleaseNumber")) lastReleaseNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("lastBlogEntryNumber")) lastBlogEntryNumber = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("punishmentUnit")) punishmentUnit = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("punishmentFactor")) punishmentFactor = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("homepageDir")) homepageDir = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("homepageUrl")) homepageUrl = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("autoUpdateHomepage")) autoUpdateHomepage = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("releaseScriptPath")) releaseScriptPath = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("supportEmail")) supportEmail = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("issueReplyTemplate")) issueReplyTemplate = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("subscriberNotificationTemplate")) subscriberNotificationTemplate = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("lastOpenedDateAndTime")) lastOpenedDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("freeDays")) freeDays = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("autoCreateTasksFromQualities")) autoCreateTasksFromQualities = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("releasingInfo")) releasingInfo = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

@@ -98,10 +98,7 @@ public abstract class GProjectEvent
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -109,6 +106,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -204,10 +202,7 @@ public abstract class GProjectEvent
     }
 
     private final void updateSubjectId(String id) {
-        if (Utl.equals(subjectId, id)) return;
-        this.subjectId = id;
-            updateLastModified();
-            fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        setSubjectId(id);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -215,6 +210,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadSubjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.subjectId == null || entityId.equals(this.subjectId)) {
             setSubject(null);
         }
@@ -292,6 +288,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSubjectReference(entityId);

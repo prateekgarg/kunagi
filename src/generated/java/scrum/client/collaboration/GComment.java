@@ -434,16 +434,20 @@ public abstract class GComment
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        parentId = (String) props.get("parentId");
-        authorId = (String) props.get("authorId");
-        published  = (Boolean) props.get("published");
-        authorName  = (java.lang.String) props.get("authorName");
-        authorEmail  = (java.lang.String) props.get("authorEmail");
-        authorNameVisible  = (Boolean) props.get("authorNameVisible");
-        text  = (java.lang.String) props.get("text");
-        String dateAndTimeAsString = (String) props.get("dateAndTime");
-        dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(dateAndTimeAsString);
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("parentId")) parentId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("authorId")) authorId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("published")) published = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("authorName")) authorName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("authorEmail")) authorEmail = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("authorNameVisible")) authorNameVisible = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+        }
         updateLocalModificationTime();
     }
 

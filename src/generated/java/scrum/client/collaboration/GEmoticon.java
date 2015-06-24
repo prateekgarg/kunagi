@@ -148,10 +148,15 @@ public abstract class GEmoticon
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        parentId = (String) props.get("parentId");
-        ownerId = (String) props.get("ownerId");
-        emotion  = (java.lang.String) props.get("emotion");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("parentId")) parentId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("ownerId")) ownerId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("emotion")) emotion = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

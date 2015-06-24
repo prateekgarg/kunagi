@@ -1098,34 +1098,34 @@ public abstract class GIssue
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        storyId = (String) props.get("storyId");
-        number  = (Integer) props.get("number");
-        type  = (java.lang.String) props.get("type");
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new ilarkesto.core.time.DateAndTime(dateAsString);
-        creatorId = (String) props.get("creatorId");
-        label  = (java.lang.String) props.get("label");
-        description  = (java.lang.String) props.get("description");
-        statement  = (java.lang.String) props.get("statement");
-        issuerName  = (java.lang.String) props.get("issuerName");
-        issuerEmail  = (java.lang.String) props.get("issuerEmail");
-        String acceptDateAsString = (String) props.get("acceptDate");
-        acceptDate  =  acceptDateAsString == null ? null : new ilarkesto.core.time.Date(acceptDateAsString);
-        urgent  = (Boolean) props.get("urgent");
-        severity  = (Integer) props.get("severity");
-        ownerId = (String) props.get("ownerId");
-        String fixDateAsString = (String) props.get("fixDate");
-        fixDate  =  fixDateAsString == null ? null : new ilarkesto.core.time.Date(fixDateAsString);
-        String closeDateAsString = (String) props.get("closeDate");
-        closeDate  =  closeDateAsString == null ? null : new ilarkesto.core.time.Date(closeDateAsString);
-        String suspendedUntilDateAsString = (String) props.get("suspendedUntilDate");
-        suspendedUntilDate  =  suspendedUntilDateAsString == null ? null : new ilarkesto.core.time.Date(suspendedUntilDateAsString);
-        affectedReleasesIds = (Set<String>) props.get("affectedReleasesIds");
-        fixReleasesIds = (Set<String>) props.get("fixReleasesIds");
-        published  = (Boolean) props.get("published");
-        themes  = (java.util.List<java.lang.String>) props.get("themes");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("storyId")) storyId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("type")) type = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("date")) date = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("creatorId")) creatorId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("statement")) statement = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("issuerName")) issuerName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("issuerEmail")) issuerEmail = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("acceptDate")) acceptDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("urgent")) urgent = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("severity")) severity = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("ownerId")) ownerId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("fixDate")) fixDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("closeDate")) closeDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("suspendedUntilDate")) suspendedUntilDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("affectedReleasesIds")) affectedReleasesIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("fixReleasesIds")) fixReleasesIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("published")) published = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("themes")) themes = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+        }
         updateLocalModificationTime();
     }
 

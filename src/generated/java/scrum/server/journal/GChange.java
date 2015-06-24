@@ -90,10 +90,7 @@ public abstract class GChange
     }
 
     private final void updateParentId(String id) {
-        if (Utl.equals(parentId, id)) return;
-        this.parentId = id;
-            updateLastModified();
-            fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        setParentId(id);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -101,6 +98,7 @@ public abstract class GChange
     }
 
     protected void repairDeadParentReference(String entityId) {
+        if (isDeleted()) return;
         if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
@@ -151,10 +149,7 @@ public abstract class GChange
     }
 
     private final void updateUserId(String id) {
-        if (Utl.equals(userId, id)) return;
-        this.userId = id;
-            updateLastModified();
-            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        setUserId(id);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -162,6 +157,7 @@ public abstract class GChange
     }
 
     protected void repairDeadUserReference(String entityId) {
+        if (isDeleted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             setUser(null);
         }
@@ -414,6 +410,7 @@ public abstract class GChange
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadParentReference(entityId);
         repairDeadUserReference(entityId);

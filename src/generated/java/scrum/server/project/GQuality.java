@@ -109,10 +109,7 @@ public abstract class GQuality
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -120,6 +117,7 @@ public abstract class GQuality
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -319,6 +317,7 @@ public abstract class GQuality
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
     }
@@ -336,6 +335,8 @@ public abstract class GQuality
             LOG.info("Repairing dead project reference");
             repairDeadProjectReference(this.projectId);
         }
+        Collection<scrum.server.admin.ProjectUserConfig> projectUserConfig = getProjectUserConfigs();
+        Collection<scrum.server.project.Requirement> requirement = getRequirements();
     }
 
 

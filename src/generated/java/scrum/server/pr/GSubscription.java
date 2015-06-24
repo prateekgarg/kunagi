@@ -85,10 +85,7 @@ public abstract class GSubscription
     }
 
     private final void updateSubjectId(String id) {
-        if (Utl.equals(subjectId, id)) return;
-        this.subjectId = id;
-            updateLastModified();
-            fireModified("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
+        setSubjectId(id);
     }
 
     protected ilarkesto.persistence.AEntity prepareSubject(ilarkesto.persistence.AEntity subject) {
@@ -96,6 +93,7 @@ public abstract class GSubscription
     }
 
     protected void repairDeadSubjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.subjectId == null || entityId.equals(this.subjectId)) {
             repairMissingMaster();
         }
@@ -147,19 +145,23 @@ public abstract class GSubscription
 
     public final boolean containsSubscribersEmail(java.lang.String subscribersEmail) {
         if (subscribersEmail == null) return false;
+        if (this.subscribersEmails == null) return false;
         return this.subscribersEmails.contains(subscribersEmail);
     }
 
     public final int getSubscribersEmailsCount() {
+        if (this.subscribersEmails == null) return 0;
         return this.subscribersEmails.size();
     }
 
     public final boolean isSubscribersEmailsEmpty() {
+        if (this.subscribersEmails == null) return true;
         return this.subscribersEmails.isEmpty();
     }
 
     public final boolean addSubscribersEmail(java.lang.String subscribersEmail) {
         if (subscribersEmail == null) throw new IllegalArgumentException("subscribersEmail == null");
+        if (this.subscribersEmails == null) this.subscribersEmails = new java.util.HashSet<java.lang.String>();
         boolean added = this.subscribersEmails.add(subscribersEmail);
         if (added) {
             updateLastModified();
@@ -170,6 +172,7 @@ public abstract class GSubscription
 
     public final boolean addSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
         if (subscribersEmails == null) throw new IllegalArgumentException("subscribersEmails == null");
+        if (this.subscribersEmails == null) this.subscribersEmails = new java.util.HashSet<java.lang.String>();
         boolean added = false;
         for (java.lang.String subscribersEmail : subscribersEmails) {
             added = added | this.subscribersEmails.add(subscribersEmail);
@@ -195,6 +198,7 @@ public abstract class GSubscription
     public final boolean removeSubscribersEmails(Collection<java.lang.String> subscribersEmails) {
         if (subscribersEmails == null) return false;
         if (subscribersEmails.isEmpty()) return false;
+        if (this.subscribersEmails == null) return false;
         boolean removed = false;
         for (java.lang.String _element: subscribersEmails) {
             removed = removed | this.subscribersEmails.remove(_element);
@@ -207,6 +211,7 @@ public abstract class GSubscription
     }
 
     public final boolean clearSubscribersEmails() {
+        if (this.subscribersEmails == null) return false;
         if (this.subscribersEmails.isEmpty()) return false;
         this.subscribersEmails.clear();
             updateLastModified();
@@ -215,6 +220,7 @@ public abstract class GSubscription
     }
 
     public final String getSubscribersEmailsAsCommaSeparatedString() {
+        if (this.subscribersEmails == null) return null;
         if (this.subscribersEmails.isEmpty()) return null;
         return Str.concat(this.subscribersEmails,", ");
     }
@@ -235,6 +241,7 @@ public abstract class GSubscription
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadSubjectReference(entityId);
         if (this.subscribersEmails == null) this.subscribersEmails = new java.util.HashSet<java.lang.String>();

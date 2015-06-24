@@ -126,10 +126,7 @@ public abstract class GRelease
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -137,6 +134,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -187,10 +185,7 @@ public abstract class GRelease
     }
 
     private final void updateParentReleaseId(String id) {
-        if (Utl.equals(parentReleaseId, id)) return;
-        this.parentReleaseId = id;
-            updateLastModified();
-            fireModified("parentReleaseId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentReleaseId));
+        setParentReleaseId(id);
     }
 
     protected scrum.server.release.Release prepareParentRelease(scrum.server.release.Release parentRelease) {
@@ -198,6 +193,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadParentReleaseReference(String entityId) {
+        if (isDeleted()) return;
         if (this.parentReleaseId == null || entityId.equals(this.parentReleaseId)) {
             setParentRelease(null);
         }
@@ -222,6 +218,10 @@ public abstract class GRelease
 
     private java.util.Set<String> sprintsIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getSprintsIds() {
+        return java.util.Collections .unmodifiableCollection(this.sprintsIds);
+    }
+
     public final java.util.Set<scrum.server.sprint.Sprint> getSprints() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.sprintsIds);
@@ -245,10 +245,7 @@ public abstract class GRelease
     }
 
     private final void updateSprintsIds(java.util.Set<String> ids) {
-        if (Utl.equals(sprintsIds, ids)) return;
-        sprintsIds = ids;
-            updateLastModified();
-            fireModified("sprintsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintsIds));
+        setSprintsIds(ids);
     }
 
     protected Collection<scrum.server.sprint.Sprint> prepareSprints(Collection<scrum.server.sprint.Sprint> sprints) {
@@ -256,6 +253,8 @@ public abstract class GRelease
     }
 
     protected void repairDeadSprintReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.sprintsIds == null ) return;
         if (this.sprintsIds.remove(entityId)) {
             updateLastModified();
             fireModified("sprintsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintsIds));
@@ -264,19 +263,23 @@ public abstract class GRelease
 
     public final boolean containsSprint(scrum.server.sprint.Sprint sprint) {
         if (sprint == null) return false;
+        if (this.sprintsIds == null) return false;
         return this.sprintsIds.contains(sprint.getId());
     }
 
     public final int getSprintsCount() {
+        if (this.sprintsIds == null) return 0;
         return this.sprintsIds.size();
     }
 
     public final boolean isSprintsEmpty() {
+        if (this.sprintsIds == null) return true;
         return this.sprintsIds.isEmpty();
     }
 
     public final boolean addSprint(scrum.server.sprint.Sprint sprint) {
         if (sprint == null) throw new IllegalArgumentException("sprint == null");
+        if (this.sprintsIds == null) this.sprintsIds = new java.util.HashSet<String>();
         boolean added = this.sprintsIds.add(sprint.getId());
         if (added) {
             updateLastModified();
@@ -287,6 +290,7 @@ public abstract class GRelease
 
     public final boolean addSprints(Collection<scrum.server.sprint.Sprint> sprints) {
         if (sprints == null) throw new IllegalArgumentException("sprints == null");
+        if (this.sprintsIds == null) this.sprintsIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.sprint.Sprint sprint : sprints) {
             added = added | this.sprintsIds.add(sprint.getId());
@@ -312,6 +316,7 @@ public abstract class GRelease
     public final boolean removeSprints(Collection<scrum.server.sprint.Sprint> sprints) {
         if (sprints == null) return false;
         if (sprints.isEmpty()) return false;
+        if (this.sprintsIds == null) return false;
         boolean removed = false;
         for (scrum.server.sprint.Sprint _element: sprints) {
             removed = removed | this.sprintsIds.remove(_element);
@@ -324,6 +329,7 @@ public abstract class GRelease
     }
 
     public final boolean clearSprints() {
+        if (this.sprintsIds == null) return false;
         if (this.sprintsIds.isEmpty()) return false;
         this.sprintsIds.clear();
             updateLastModified();
@@ -768,6 +774,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadParentReleaseReference(entityId);
@@ -804,6 +811,10 @@ public abstract class GRelease
                 repairDeadSprintReference(entityId);
             }
         }
+        Collection<scrum.server.release.Release> release = getReleases();
+        Collection<scrum.server.issues.Issue> affectedIssue = getAffectedIssues();
+        Collection<scrum.server.issues.Issue> fixIssue = getFixIssues();
+        Collection<scrum.server.pr.BlogEntry> blogEntry = getBlogEntrys();
     }
 
 

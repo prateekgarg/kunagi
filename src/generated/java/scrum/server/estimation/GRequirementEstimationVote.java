@@ -86,10 +86,7 @@ public abstract class GRequirementEstimationVote
     }
 
     private final void updateRequirementId(String id) {
-        if (Utl.equals(requirementId, id)) return;
-        this.requirementId = id;
-            updateLastModified();
-            fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        setRequirementId(id);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -97,6 +94,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadRequirementReference(String entityId) {
+        if (isDeleted()) return;
         if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
@@ -147,10 +145,7 @@ public abstract class GRequirementEstimationVote
     }
 
     private final void updateUserId(String id) {
-        if (Utl.equals(userId, id)) return;
-        this.userId = id;
-            updateLastModified();
-            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        setUserId(id);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -158,6 +153,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadUserReference(String entityId) {
+        if (isDeleted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             repairMissingMaster();
         }
@@ -231,6 +227,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadUserReference(entityId);

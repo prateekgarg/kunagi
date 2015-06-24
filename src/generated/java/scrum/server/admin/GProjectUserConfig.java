@@ -100,10 +100,7 @@ public abstract class GProjectUserConfig
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -111,6 +108,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -161,10 +159,7 @@ public abstract class GProjectUserConfig
     }
 
     private final void updateUserId(String id) {
-        if (Utl.equals(userId, id)) return;
-        this.userId = id;
-            updateLastModified();
-            fireModified("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
+        setUserId(id);
     }
 
     protected scrum.server.admin.User prepareUser(scrum.server.admin.User user) {
@@ -172,6 +167,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadUserReference(String entityId) {
+        if (isDeleted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             repairMissingMaster();
         }
@@ -424,25 +420,30 @@ public abstract class GProjectUserConfig
 
     public final boolean containsSelectedEntitysId(java.lang.String selectedEntitysId) {
         if (selectedEntitysId == null) return false;
+        if (this.selectedEntitysIds == null) return false;
         return this.selectedEntitysIds.contains(selectedEntitysId);
     }
 
     public final int getSelectedEntitysIdsCount() {
+        if (this.selectedEntitysIds == null) return 0;
         return this.selectedEntitysIds.size();
     }
 
     public final boolean isSelectedEntitysIdsEmpty() {
+        if (this.selectedEntitysIds == null) return true;
         return this.selectedEntitysIds.isEmpty();
     }
 
     public final boolean addSelectedEntitysId(java.lang.String selectedEntitysId) {
         if (selectedEntitysId == null) throw new IllegalArgumentException("selectedEntitysId == null");
+        if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
         boolean added = this.selectedEntitysIds.add(selectedEntitysId);
         return added;
     }
 
     public final boolean addSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
         if (selectedEntitysIds == null) throw new IllegalArgumentException("selectedEntitysIds == null");
+        if (this.selectedEntitysIds == null) this.selectedEntitysIds = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String selectedEntitysId : selectedEntitysIds) {
             added = added | this.selectedEntitysIds.add(selectedEntitysId);
@@ -460,6 +461,7 @@ public abstract class GProjectUserConfig
     public final boolean removeSelectedEntitysIds(Collection<java.lang.String> selectedEntitysIds) {
         if (selectedEntitysIds == null) return false;
         if (selectedEntitysIds.isEmpty()) return false;
+        if (this.selectedEntitysIds == null) return false;
         boolean removed = false;
         for (java.lang.String _element: selectedEntitysIds) {
             removed = removed | this.selectedEntitysIds.remove(_element);
@@ -468,6 +470,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean clearSelectedEntitysIds() {
+        if (this.selectedEntitysIds == null) return false;
         if (this.selectedEntitysIds.isEmpty()) return false;
         this.selectedEntitysIds.clear();
             updateLastModified();
@@ -475,6 +478,7 @@ public abstract class GProjectUserConfig
     }
 
     public final String getSelectedEntitysIdsAsCommaSeparatedString() {
+        if (this.selectedEntitysIds == null) return null;
         if (this.selectedEntitysIds.isEmpty()) return null;
         return Str.concat(this.selectedEntitysIds,", ");
     }
@@ -592,19 +596,23 @@ public abstract class GProjectUserConfig
 
     public final boolean containsPblFilterTheme(java.lang.String pblFilterTheme) {
         if (pblFilterTheme == null) return false;
+        if (this.pblFilterThemes == null) return false;
         return this.pblFilterThemes.contains(pblFilterTheme);
     }
 
     public final int getPblFilterThemesCount() {
+        if (this.pblFilterThemes == null) return 0;
         return this.pblFilterThemes.size();
     }
 
     public final boolean isPblFilterThemesEmpty() {
+        if (this.pblFilterThemes == null) return true;
         return this.pblFilterThemes.isEmpty();
     }
 
     public final boolean addPblFilterTheme(java.lang.String pblFilterTheme) {
         if (pblFilterTheme == null) throw new IllegalArgumentException("pblFilterTheme == null");
+        if (this.pblFilterThemes == null) this.pblFilterThemes = new java.util.ArrayList<java.lang.String>();
         boolean added = this.pblFilterThemes.add(pblFilterTheme);
         if (added) {
             updateLastModified();
@@ -615,6 +623,7 @@ public abstract class GProjectUserConfig
 
     public final boolean addPblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
         if (pblFilterThemes == null) throw new IllegalArgumentException("pblFilterThemes == null");
+        if (this.pblFilterThemes == null) this.pblFilterThemes = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String pblFilterTheme : pblFilterThemes) {
             added = added | this.pblFilterThemes.add(pblFilterTheme);
@@ -640,6 +649,7 @@ public abstract class GProjectUserConfig
     public final boolean removePblFilterThemes(Collection<java.lang.String> pblFilterThemes) {
         if (pblFilterThemes == null) return false;
         if (pblFilterThemes.isEmpty()) return false;
+        if (this.pblFilterThemes == null) return false;
         boolean removed = false;
         for (java.lang.String _element: pblFilterThemes) {
             removed = removed | this.pblFilterThemes.remove(_element);
@@ -652,6 +662,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean clearPblFilterThemes() {
+        if (this.pblFilterThemes == null) return false;
         if (this.pblFilterThemes.isEmpty()) return false;
         this.pblFilterThemes.clear();
             updateLastModified();
@@ -660,6 +671,7 @@ public abstract class GProjectUserConfig
     }
 
     public final String getPblFilterThemesAsCommaSeparatedString() {
+        if (this.pblFilterThemes == null) return null;
         if (this.pblFilterThemes.isEmpty()) return null;
         return Str.concat(this.pblFilterThemes,", ");
     }
@@ -673,6 +685,10 @@ public abstract class GProjectUserConfig
     // -----------------------------------------------------------
 
     private java.util.Set<String> pblFilterQualitysIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getPblFilterQualitysIds() {
+        return java.util.Collections .unmodifiableCollection(this.pblFilterQualitysIds);
+    }
 
     public final java.util.Set<scrum.server.project.Quality> getPblFilterQualitys() {
         try {
@@ -697,10 +713,7 @@ public abstract class GProjectUserConfig
     }
 
     private final void updatePblFilterQualitysIds(java.util.Set<String> ids) {
-        if (Utl.equals(pblFilterQualitysIds, ids)) return;
-        pblFilterQualitysIds = ids;
-            updateLastModified();
-            fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
+        setPblFilterQualitysIds(ids);
     }
 
     protected Collection<scrum.server.project.Quality> preparePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
@@ -708,6 +721,8 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadPblFilterQualityReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.pblFilterQualitysIds == null ) return;
         if (this.pblFilterQualitysIds.remove(entityId)) {
             updateLastModified();
             fireModified("pblFilterQualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterQualitysIds));
@@ -716,19 +731,23 @@ public abstract class GProjectUserConfig
 
     public final boolean containsPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
         if (pblFilterQuality == null) return false;
+        if (this.pblFilterQualitysIds == null) return false;
         return this.pblFilterQualitysIds.contains(pblFilterQuality.getId());
     }
 
     public final int getPblFilterQualitysCount() {
+        if (this.pblFilterQualitysIds == null) return 0;
         return this.pblFilterQualitysIds.size();
     }
 
     public final boolean isPblFilterQualitysEmpty() {
+        if (this.pblFilterQualitysIds == null) return true;
         return this.pblFilterQualitysIds.isEmpty();
     }
 
     public final boolean addPblFilterQuality(scrum.server.project.Quality pblFilterQuality) {
         if (pblFilterQuality == null) throw new IllegalArgumentException("pblFilterQuality == null");
+        if (this.pblFilterQualitysIds == null) this.pblFilterQualitysIds = new java.util.HashSet<String>();
         boolean added = this.pblFilterQualitysIds.add(pblFilterQuality.getId());
         if (added) {
             updateLastModified();
@@ -739,6 +758,7 @@ public abstract class GProjectUserConfig
 
     public final boolean addPblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
         if (pblFilterQualitys == null) throw new IllegalArgumentException("pblFilterQualitys == null");
+        if (this.pblFilterQualitysIds == null) this.pblFilterQualitysIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.project.Quality pblFilterQuality : pblFilterQualitys) {
             added = added | this.pblFilterQualitysIds.add(pblFilterQuality.getId());
@@ -764,6 +784,7 @@ public abstract class GProjectUserConfig
     public final boolean removePblFilterQualitys(Collection<scrum.server.project.Quality> pblFilterQualitys) {
         if (pblFilterQualitys == null) return false;
         if (pblFilterQualitys.isEmpty()) return false;
+        if (this.pblFilterQualitysIds == null) return false;
         boolean removed = false;
         for (scrum.server.project.Quality _element: pblFilterQualitys) {
             removed = removed | this.pblFilterQualitysIds.remove(_element);
@@ -776,6 +797,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean clearPblFilterQualitys() {
+        if (this.pblFilterQualitysIds == null) return false;
         if (this.pblFilterQualitysIds.isEmpty()) return false;
         this.pblFilterQualitysIds.clear();
             updateLastModified();
@@ -1023,6 +1045,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadUserReference(entityId);

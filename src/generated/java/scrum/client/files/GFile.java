@@ -376,14 +376,18 @@ public abstract class GFile
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        filename  = (java.lang.String) props.get("filename");
-        String uploadTimeAsString = (String) props.get("uploadTime");
-        uploadTime  =  uploadTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(uploadTimeAsString);
-        label  = (java.lang.String) props.get("label");
-        number  = (Integer) props.get("number");
-        note  = (java.lang.String) props.get("note");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("filename")) filename = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("uploadTime")) uploadTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("note")) note = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

@@ -138,10 +138,7 @@ public abstract class GRequirement
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -149,6 +146,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -199,10 +197,7 @@ public abstract class GRequirement
     }
 
     private final void updateSprintId(String id) {
-        if (Utl.equals(sprintId, id)) return;
-        this.sprintId = id;
-            updateLastModified();
-            fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        setSprintId(id);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -210,6 +205,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadSprintReference(String entityId) {
+        if (isDeleted()) return;
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
             setSprint(null);
         }
@@ -260,10 +256,7 @@ public abstract class GRequirement
     }
 
     private final void updateIssueId(String id) {
-        if (Utl.equals(issueId, id)) return;
-        this.issueId = id;
-            updateLastModified();
-            fireModified("issueId", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueId));
+        setIssueId(id);
     }
 
     protected scrum.server.issues.Issue prepareIssue(scrum.server.issues.Issue issue) {
@@ -271,6 +264,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadIssueReference(String entityId) {
+        if (isDeleted()) return;
         if (this.issueId == null || entityId.equals(this.issueId)) {
             setIssue(null);
         }
@@ -332,6 +326,10 @@ public abstract class GRequirement
 
     private java.util.Set<String> qualitysIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getQualitysIds() {
+        return java.util.Collections .unmodifiableCollection(this.qualitysIds);
+    }
+
     public final java.util.Set<scrum.server.project.Quality> getQualitys() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.qualitysIds);
@@ -355,10 +353,7 @@ public abstract class GRequirement
     }
 
     private final void updateQualitysIds(java.util.Set<String> ids) {
-        if (Utl.equals(qualitysIds, ids)) return;
-        qualitysIds = ids;
-            updateLastModified();
-            fireModified("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
+        setQualitysIds(ids);
     }
 
     protected Collection<scrum.server.project.Quality> prepareQualitys(Collection<scrum.server.project.Quality> qualitys) {
@@ -366,6 +361,8 @@ public abstract class GRequirement
     }
 
     protected void repairDeadQualityReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.qualitysIds == null ) return;
         if (this.qualitysIds.remove(entityId)) {
             updateLastModified();
             fireModified("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
@@ -374,19 +371,23 @@ public abstract class GRequirement
 
     public final boolean containsQuality(scrum.server.project.Quality quality) {
         if (quality == null) return false;
+        if (this.qualitysIds == null) return false;
         return this.qualitysIds.contains(quality.getId());
     }
 
     public final int getQualitysCount() {
+        if (this.qualitysIds == null) return 0;
         return this.qualitysIds.size();
     }
 
     public final boolean isQualitysEmpty() {
+        if (this.qualitysIds == null) return true;
         return this.qualitysIds.isEmpty();
     }
 
     public final boolean addQuality(scrum.server.project.Quality quality) {
         if (quality == null) throw new IllegalArgumentException("quality == null");
+        if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         boolean added = this.qualitysIds.add(quality.getId());
         if (added) {
             updateLastModified();
@@ -397,6 +398,7 @@ public abstract class GRequirement
 
     public final boolean addQualitys(Collection<scrum.server.project.Quality> qualitys) {
         if (qualitys == null) throw new IllegalArgumentException("qualitys == null");
+        if (this.qualitysIds == null) this.qualitysIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.project.Quality quality : qualitys) {
             added = added | this.qualitysIds.add(quality.getId());
@@ -422,6 +424,7 @@ public abstract class GRequirement
     public final boolean removeQualitys(Collection<scrum.server.project.Quality> qualitys) {
         if (qualitys == null) return false;
         if (qualitys.isEmpty()) return false;
+        if (this.qualitysIds == null) return false;
         boolean removed = false;
         for (scrum.server.project.Quality _element: qualitys) {
             removed = removed | this.qualitysIds.remove(_element);
@@ -434,6 +437,7 @@ public abstract class GRequirement
     }
 
     public final boolean clearQualitys() {
+        if (this.qualitysIds == null) return false;
         if (this.qualitysIds.isEmpty()) return false;
         this.qualitysIds.clear();
             updateLastModified();
@@ -873,19 +877,23 @@ public abstract class GRequirement
 
     public final boolean containsTasksOrderId(java.lang.String tasksOrderId) {
         if (tasksOrderId == null) return false;
+        if (this.tasksOrderIds == null) return false;
         return this.tasksOrderIds.contains(tasksOrderId);
     }
 
     public final int getTasksOrderIdsCount() {
+        if (this.tasksOrderIds == null) return 0;
         return this.tasksOrderIds.size();
     }
 
     public final boolean isTasksOrderIdsEmpty() {
+        if (this.tasksOrderIds == null) return true;
         return this.tasksOrderIds.isEmpty();
     }
 
     public final boolean addTasksOrderId(java.lang.String tasksOrderId) {
         if (tasksOrderId == null) throw new IllegalArgumentException("tasksOrderId == null");
+        if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = this.tasksOrderIds.add(tasksOrderId);
         if (added) {
             updateLastModified();
@@ -896,6 +904,7 @@ public abstract class GRequirement
 
     public final boolean addTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
         if (tasksOrderIds == null) throw new IllegalArgumentException("tasksOrderIds == null");
+        if (this.tasksOrderIds == null) this.tasksOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String tasksOrderId : tasksOrderIds) {
             added = added | this.tasksOrderIds.add(tasksOrderId);
@@ -921,6 +930,7 @@ public abstract class GRequirement
     public final boolean removeTasksOrderIds(Collection<java.lang.String> tasksOrderIds) {
         if (tasksOrderIds == null) return false;
         if (tasksOrderIds.isEmpty()) return false;
+        if (this.tasksOrderIds == null) return false;
         boolean removed = false;
         for (java.lang.String _element: tasksOrderIds) {
             removed = removed | this.tasksOrderIds.remove(_element);
@@ -933,6 +943,7 @@ public abstract class GRequirement
     }
 
     public final boolean clearTasksOrderIds() {
+        if (this.tasksOrderIds == null) return false;
         if (this.tasksOrderIds.isEmpty()) return false;
         this.tasksOrderIds.clear();
             updateLastModified();
@@ -941,6 +952,7 @@ public abstract class GRequirement
     }
 
     public final String getTasksOrderIdsAsCommaSeparatedString() {
+        if (this.tasksOrderIds == null) return null;
         if (this.tasksOrderIds.isEmpty()) return null;
         return Str.concat(this.tasksOrderIds,", ");
     }
@@ -982,19 +994,23 @@ public abstract class GRequirement
 
     public final boolean containsTheme(java.lang.String theme) {
         if (theme == null) return false;
+        if (this.themes == null) return false;
         return this.themes.contains(theme);
     }
 
     public final int getThemesCount() {
+        if (this.themes == null) return 0;
         return this.themes.size();
     }
 
     public final boolean isThemesEmpty() {
+        if (this.themes == null) return true;
         return this.themes.isEmpty();
     }
 
     public final boolean addTheme(java.lang.String theme) {
         if (theme == null) throw new IllegalArgumentException("theme == null");
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         boolean added = this.themes.add(theme);
         if (added) {
             updateLastModified();
@@ -1005,6 +1021,7 @@ public abstract class GRequirement
 
     public final boolean addThemes(Collection<java.lang.String> themes) {
         if (themes == null) throw new IllegalArgumentException("themes == null");
+        if (this.themes == null) this.themes = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String theme : themes) {
             added = added | this.themes.add(theme);
@@ -1030,6 +1047,7 @@ public abstract class GRequirement
     public final boolean removeThemes(Collection<java.lang.String> themes) {
         if (themes == null) return false;
         if (themes.isEmpty()) return false;
+        if (this.themes == null) return false;
         boolean removed = false;
         for (java.lang.String _element: themes) {
             removed = removed | this.themes.remove(_element);
@@ -1042,6 +1060,7 @@ public abstract class GRequirement
     }
 
     public final boolean clearThemes() {
+        if (this.themes == null) return false;
         if (this.themes.isEmpty()) return false;
         this.themes.clear();
             updateLastModified();
@@ -1050,6 +1069,7 @@ public abstract class GRequirement
     }
 
     public final String getThemesAsCommaSeparatedString() {
+        if (this.themes == null) return null;
         if (this.themes.isEmpty()) return null;
         return Str.concat(this.themes,", ");
     }
@@ -1090,10 +1110,7 @@ public abstract class GRequirement
     }
 
     private final void updateEpicId(String id) {
-        if (Utl.equals(epicId, id)) return;
-        this.epicId = id;
-            updateLastModified();
-            fireModified("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
+        setEpicId(id);
     }
 
     protected scrum.server.project.Requirement prepareEpic(scrum.server.project.Requirement epic) {
@@ -1101,6 +1118,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadEpicReference(String entityId) {
+        if (isDeleted()) return;
         if (this.epicId == null || entityId.equals(this.epicId)) {
             setEpic(null);
         }
@@ -1147,6 +1165,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);
@@ -1201,6 +1220,12 @@ public abstract class GRequirement
             LOG.info("Repairing dead epic reference");
             repairDeadEpicReference(this.epicId);
         }
+        Collection<scrum.server.issues.Issue> issue = getIssues();
+        Collection<scrum.server.project.Requirement> requirement = getRequirements();
+        Collection<scrum.server.sprint.SprintReport> sprintReport = getSprintReports();
+        Collection<scrum.server.sprint.SprintReport> sprintReportWithRejectedRequirements = getSprintReportWithRejectedRequirementss();
+        Collection<scrum.server.sprint.Task> task = getTasks();
+        Collection<scrum.server.estimation.RequirementEstimationVote> requirementEstimationVote = getRequirementEstimationVotes();
     }
 
 

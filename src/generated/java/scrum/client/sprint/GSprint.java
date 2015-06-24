@@ -915,27 +915,29 @@ public abstract class GSprint
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        number  = (Integer) props.get("number");
-        projectId = (String) props.get("projectId");
-        label  = (java.lang.String) props.get("label");
-        goal  = (java.lang.String) props.get("goal");
-        String beginAsString = (String) props.get("begin");
-        begin  =  beginAsString == null ? null : new ilarkesto.core.time.Date(beginAsString);
-        String endAsString = (String) props.get("end");
-        end  =  endAsString == null ? null : new ilarkesto.core.time.Date(endAsString);
-        String originallyEndAsString = (String) props.get("originallyEnd");
-        originallyEnd  =  originallyEndAsString == null ? null : new ilarkesto.core.time.Date(originallyEndAsString);
-        velocity  = (java.lang.Float) props.get("velocity");
-        completedRequirementsData  = (java.lang.String) props.get("completedRequirementsData");
-        incompletedRequirementsData  = (java.lang.String) props.get("incompletedRequirementsData");
-        planningNote  = (java.lang.String) props.get("planningNote");
-        reviewNote  = (java.lang.String) props.get("reviewNote");
-        retrospectiveNote  = (java.lang.String) props.get("retrospectiveNote");
-        requirementsOrderIds  = (java.util.List<java.lang.String>) props.get("requirementsOrderIds");
-        productOwnersIds = (Set<String>) props.get("productOwnersIds");
-        scrumMastersIds = (Set<String>) props.get("scrumMastersIds");
-        teamMembersIds = (Set<String>) props.get("teamMembersIds");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("goal")) goal = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("begin")) begin = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("end")) end = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("originallyEnd")) originallyEnd = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("velocity")) velocity = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
+            if (property.equals("completedRequirementsData")) completedRequirementsData = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("incompletedRequirementsData")) incompletedRequirementsData = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("planningNote")) planningNote = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("reviewNote")) reviewNote = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("retrospectiveNote")) retrospectiveNote = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("requirementsOrderIds")) requirementsOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("productOwnersIds")) productOwnersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("scrumMastersIds")) scrumMastersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("teamMembersIds")) teamMembersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+        }
         updateLocalModificationTime();
     }
 

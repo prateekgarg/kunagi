@@ -368,15 +368,19 @@ public abstract class GChange
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        parentId = (String) props.get("parentId");
-        userId = (String) props.get("userId");
-        String dateAndTimeAsString = (String) props.get("dateAndTime");
-        dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(dateAndTimeAsString);
-        key  = (java.lang.String) props.get("key");
-        oldValue  = (java.lang.String) props.get("oldValue");
-        newValue  = (java.lang.String) props.get("newValue");
-        comment  = (java.lang.String) props.get("comment");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("parentId")) parentId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("userId")) userId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("key")) key = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("oldValue")) oldValue = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("newValue")) newValue = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("comment")) comment = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

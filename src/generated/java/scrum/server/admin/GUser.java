@@ -463,10 +463,7 @@ public abstract class GUser
     }
 
     private final void updateCurrentProjectId(String id) {
-        if (Utl.equals(currentProjectId, id)) return;
-        this.currentProjectId = id;
-            updateLastModified();
-            fireModified("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
+        setCurrentProjectId(id);
     }
 
     protected scrum.server.project.Project prepareCurrentProject(scrum.server.project.Project currentProject) {
@@ -474,6 +471,7 @@ public abstract class GUser
     }
 
     protected void repairDeadCurrentProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.currentProjectId == null || entityId.equals(this.currentProjectId)) {
             setCurrentProject(null);
         }
@@ -1353,6 +1351,7 @@ public abstract class GUser
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadCurrentProjectReference(entityId);
     }
@@ -1367,6 +1366,25 @@ public abstract class GUser
             LOG.info("Repairing dead currentProject reference");
             repairDeadCurrentProjectReference(this.currentProjectId);
         }
+        Collection<scrum.server.project.Project> project = getProjects();
+        Collection<scrum.server.project.Project> projectWithAdmins = getProjectWithAdminss();
+        Collection<scrum.server.project.Project> projectWithProductOwners = getProjectWithProductOwnerss();
+        Collection<scrum.server.project.Project> projectWithScrumMasters = getProjectWithScrumMasterss();
+        Collection<scrum.server.project.Project> projectWithTeamMembers = getProjectWithTeamMemberss();
+        Collection<scrum.server.sprint.Sprint> sprint = getSprints();
+        Collection<scrum.server.sprint.Sprint> sprintWithScrumMasters = getSprintWithScrumMasterss();
+        Collection<scrum.server.sprint.Sprint> sprintWithTeamMembers = getSprintWithTeamMemberss();
+        Collection<scrum.server.collaboration.Emoticon> emoticon = getEmoticons();
+        Collection<scrum.server.admin.ProjectUserConfig> projectUserConfig = getProjectUserConfigs();
+        Collection<scrum.server.issues.Issue> issue = getIssues();
+        Collection<scrum.server.issues.Issue> issueWithOwner = getIssueWithOwners();
+        Collection<scrum.server.sprint.Task> task = getTasks();
+        Collection<scrum.server.journal.Change> change = getChanges();
+        Collection<scrum.server.collaboration.Comment> comment = getComments();
+        Collection<scrum.server.collaboration.ChatMessage> chatMessage = getChatMessages();
+        Collection<scrum.server.pr.BlogEntry> blogEntry = getBlogEntrys();
+        Collection<scrum.server.estimation.RequirementEstimationVote> requirementEstimationVote = getRequirementEstimationVotes();
+        Collection<scrum.server.collaboration.Emoticon> emoticonWithOwner = getEmoticonWithOwners();
     }
 
 

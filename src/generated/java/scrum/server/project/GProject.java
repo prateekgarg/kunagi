@@ -534,6 +534,10 @@ public abstract class GProject
 
     private java.util.Set<String> participantsIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getParticipantsIds() {
+        return java.util.Collections .unmodifiableCollection(this.participantsIds);
+    }
+
     public final java.util.Set<scrum.server.admin.User> getParticipants() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.participantsIds);
@@ -557,10 +561,7 @@ public abstract class GProject
     }
 
     private final void updateParticipantsIds(java.util.Set<String> ids) {
-        if (Utl.equals(participantsIds, ids)) return;
-        participantsIds = ids;
-            updateLastModified();
-            fireModified("participantsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.participantsIds));
+        setParticipantsIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareParticipants(Collection<scrum.server.admin.User> participants) {
@@ -568,6 +569,8 @@ public abstract class GProject
     }
 
     protected void repairDeadParticipantReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.participantsIds == null ) return;
         if (this.participantsIds.remove(entityId)) {
             updateLastModified();
             fireModified("participantsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.participantsIds));
@@ -576,19 +579,23 @@ public abstract class GProject
 
     public final boolean containsParticipant(scrum.server.admin.User participant) {
         if (participant == null) return false;
+        if (this.participantsIds == null) return false;
         return this.participantsIds.contains(participant.getId());
     }
 
     public final int getParticipantsCount() {
+        if (this.participantsIds == null) return 0;
         return this.participantsIds.size();
     }
 
     public final boolean isParticipantsEmpty() {
+        if (this.participantsIds == null) return true;
         return this.participantsIds.isEmpty();
     }
 
     public final boolean addParticipant(scrum.server.admin.User participant) {
         if (participant == null) throw new IllegalArgumentException("participant == null");
+        if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
         boolean added = this.participantsIds.add(participant.getId());
         if (added) {
             updateLastModified();
@@ -599,6 +606,7 @@ public abstract class GProject
 
     public final boolean addParticipants(Collection<scrum.server.admin.User> participants) {
         if (participants == null) throw new IllegalArgumentException("participants == null");
+        if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User participant : participants) {
             added = added | this.participantsIds.add(participant.getId());
@@ -624,6 +632,7 @@ public abstract class GProject
     public final boolean removeParticipants(Collection<scrum.server.admin.User> participants) {
         if (participants == null) return false;
         if (participants.isEmpty()) return false;
+        if (this.participantsIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: participants) {
             removed = removed | this.participantsIds.remove(_element);
@@ -636,6 +645,7 @@ public abstract class GProject
     }
 
     public final boolean clearParticipants() {
+        if (this.participantsIds == null) return false;
         if (this.participantsIds.isEmpty()) return false;
         this.participantsIds.clear();
             updateLastModified();
@@ -648,6 +658,10 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private java.util.Set<String> adminsIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getAdminsIds() {
+        return java.util.Collections .unmodifiableCollection(this.adminsIds);
+    }
 
     public final java.util.Set<scrum.server.admin.User> getAdmins() {
         try {
@@ -672,10 +686,7 @@ public abstract class GProject
     }
 
     private final void updateAdminsIds(java.util.Set<String> ids) {
-        if (Utl.equals(adminsIds, ids)) return;
-        adminsIds = ids;
-            updateLastModified();
-            fireModified("adminsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminsIds));
+        setAdminsIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareAdmins(Collection<scrum.server.admin.User> admins) {
@@ -683,6 +694,8 @@ public abstract class GProject
     }
 
     protected void repairDeadAdminReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.adminsIds == null ) return;
         if (this.adminsIds.remove(entityId)) {
             updateLastModified();
             fireModified("adminsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminsIds));
@@ -691,19 +704,23 @@ public abstract class GProject
 
     public final boolean containsAdmin(scrum.server.admin.User admin) {
         if (admin == null) return false;
+        if (this.adminsIds == null) return false;
         return this.adminsIds.contains(admin.getId());
     }
 
     public final int getAdminsCount() {
+        if (this.adminsIds == null) return 0;
         return this.adminsIds.size();
     }
 
     public final boolean isAdminsEmpty() {
+        if (this.adminsIds == null) return true;
         return this.adminsIds.isEmpty();
     }
 
     public final boolean addAdmin(scrum.server.admin.User admin) {
         if (admin == null) throw new IllegalArgumentException("admin == null");
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
         boolean added = this.adminsIds.add(admin.getId());
         if (added) {
             updateLastModified();
@@ -714,6 +731,7 @@ public abstract class GProject
 
     public final boolean addAdmins(Collection<scrum.server.admin.User> admins) {
         if (admins == null) throw new IllegalArgumentException("admins == null");
+        if (this.adminsIds == null) this.adminsIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User admin : admins) {
             added = added | this.adminsIds.add(admin.getId());
@@ -739,6 +757,7 @@ public abstract class GProject
     public final boolean removeAdmins(Collection<scrum.server.admin.User> admins) {
         if (admins == null) return false;
         if (admins.isEmpty()) return false;
+        if (this.adminsIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: admins) {
             removed = removed | this.adminsIds.remove(_element);
@@ -751,6 +770,7 @@ public abstract class GProject
     }
 
     public final boolean clearAdmins() {
+        if (this.adminsIds == null) return false;
         if (this.adminsIds.isEmpty()) return false;
         this.adminsIds.clear();
             updateLastModified();
@@ -763,6 +783,10 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private java.util.Set<String> productOwnersIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getProductOwnersIds() {
+        return java.util.Collections .unmodifiableCollection(this.productOwnersIds);
+    }
 
     public final java.util.Set<scrum.server.admin.User> getProductOwners() {
         try {
@@ -787,10 +811,7 @@ public abstract class GProject
     }
 
     private final void updateProductOwnersIds(java.util.Set<String> ids) {
-        if (Utl.equals(productOwnersIds, ids)) return;
-        productOwnersIds = ids;
-            updateLastModified();
-            fireModified("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
+        setProductOwnersIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareProductOwners(Collection<scrum.server.admin.User> productOwners) {
@@ -798,6 +819,8 @@ public abstract class GProject
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.productOwnersIds == null ) return;
         if (this.productOwnersIds.remove(entityId)) {
             updateLastModified();
             fireModified("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
@@ -806,19 +829,23 @@ public abstract class GProject
 
     public final boolean containsProductOwner(scrum.server.admin.User productOwner) {
         if (productOwner == null) return false;
+        if (this.productOwnersIds == null) return false;
         return this.productOwnersIds.contains(productOwner.getId());
     }
 
     public final int getProductOwnersCount() {
+        if (this.productOwnersIds == null) return 0;
         return this.productOwnersIds.size();
     }
 
     public final boolean isProductOwnersEmpty() {
+        if (this.productOwnersIds == null) return true;
         return this.productOwnersIds.isEmpty();
     }
 
     public final boolean addProductOwner(scrum.server.admin.User productOwner) {
         if (productOwner == null) throw new IllegalArgumentException("productOwner == null");
+        if (this.productOwnersIds == null) this.productOwnersIds = new java.util.HashSet<String>();
         boolean added = this.productOwnersIds.add(productOwner.getId());
         if (added) {
             updateLastModified();
@@ -829,6 +856,7 @@ public abstract class GProject
 
     public final boolean addProductOwners(Collection<scrum.server.admin.User> productOwners) {
         if (productOwners == null) throw new IllegalArgumentException("productOwners == null");
+        if (this.productOwnersIds == null) this.productOwnersIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User productOwner : productOwners) {
             added = added | this.productOwnersIds.add(productOwner.getId());
@@ -854,6 +882,7 @@ public abstract class GProject
     public final boolean removeProductOwners(Collection<scrum.server.admin.User> productOwners) {
         if (productOwners == null) return false;
         if (productOwners.isEmpty()) return false;
+        if (this.productOwnersIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: productOwners) {
             removed = removed | this.productOwnersIds.remove(_element);
@@ -866,6 +895,7 @@ public abstract class GProject
     }
 
     public final boolean clearProductOwners() {
+        if (this.productOwnersIds == null) return false;
         if (this.productOwnersIds.isEmpty()) return false;
         this.productOwnersIds.clear();
             updateLastModified();
@@ -878,6 +908,10 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private java.util.Set<String> scrumMastersIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getScrumMastersIds() {
+        return java.util.Collections .unmodifiableCollection(this.scrumMastersIds);
+    }
 
     public final java.util.Set<scrum.server.admin.User> getScrumMasters() {
         try {
@@ -902,10 +936,7 @@ public abstract class GProject
     }
 
     private final void updateScrumMastersIds(java.util.Set<String> ids) {
-        if (Utl.equals(scrumMastersIds, ids)) return;
-        scrumMastersIds = ids;
-            updateLastModified();
-            fireModified("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
+        setScrumMastersIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
@@ -913,6 +944,8 @@ public abstract class GProject
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.scrumMastersIds == null ) return;
         if (this.scrumMastersIds.remove(entityId)) {
             updateLastModified();
             fireModified("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
@@ -921,19 +954,23 @@ public abstract class GProject
 
     public final boolean containsScrumMaster(scrum.server.admin.User scrumMaster) {
         if (scrumMaster == null) return false;
+        if (this.scrumMastersIds == null) return false;
         return this.scrumMastersIds.contains(scrumMaster.getId());
     }
 
     public final int getScrumMastersCount() {
+        if (this.scrumMastersIds == null) return 0;
         return this.scrumMastersIds.size();
     }
 
     public final boolean isScrumMastersEmpty() {
+        if (this.scrumMastersIds == null) return true;
         return this.scrumMastersIds.isEmpty();
     }
 
     public final boolean addScrumMaster(scrum.server.admin.User scrumMaster) {
         if (scrumMaster == null) throw new IllegalArgumentException("scrumMaster == null");
+        if (this.scrumMastersIds == null) this.scrumMastersIds = new java.util.HashSet<String>();
         boolean added = this.scrumMastersIds.add(scrumMaster.getId());
         if (added) {
             updateLastModified();
@@ -944,6 +981,7 @@ public abstract class GProject
 
     public final boolean addScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
         if (scrumMasters == null) throw new IllegalArgumentException("scrumMasters == null");
+        if (this.scrumMastersIds == null) this.scrumMastersIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User scrumMaster : scrumMasters) {
             added = added | this.scrumMastersIds.add(scrumMaster.getId());
@@ -969,6 +1007,7 @@ public abstract class GProject
     public final boolean removeScrumMasters(Collection<scrum.server.admin.User> scrumMasters) {
         if (scrumMasters == null) return false;
         if (scrumMasters.isEmpty()) return false;
+        if (this.scrumMastersIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: scrumMasters) {
             removed = removed | this.scrumMastersIds.remove(_element);
@@ -981,6 +1020,7 @@ public abstract class GProject
     }
 
     public final boolean clearScrumMasters() {
+        if (this.scrumMastersIds == null) return false;
         if (this.scrumMastersIds.isEmpty()) return false;
         this.scrumMastersIds.clear();
             updateLastModified();
@@ -993,6 +1033,10 @@ public abstract class GProject
     // -----------------------------------------------------------
 
     private java.util.Set<String> teamMembersIds = new java.util.HashSet<String>();
+
+    public final Collection<String> getTeamMembersIds() {
+        return java.util.Collections .unmodifiableCollection(this.teamMembersIds);
+    }
 
     public final java.util.Set<scrum.server.admin.User> getTeamMembers() {
         try {
@@ -1017,10 +1061,7 @@ public abstract class GProject
     }
 
     private final void updateTeamMembersIds(java.util.Set<String> ids) {
-        if (Utl.equals(teamMembersIds, ids)) return;
-        teamMembersIds = ids;
-            updateLastModified();
-            fireModified("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
+        setTeamMembersIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
@@ -1028,6 +1069,8 @@ public abstract class GProject
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.teamMembersIds == null ) return;
         if (this.teamMembersIds.remove(entityId)) {
             updateLastModified();
             fireModified("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
@@ -1036,19 +1079,23 @@ public abstract class GProject
 
     public final boolean containsTeamMember(scrum.server.admin.User teamMember) {
         if (teamMember == null) return false;
+        if (this.teamMembersIds == null) return false;
         return this.teamMembersIds.contains(teamMember.getId());
     }
 
     public final int getTeamMembersCount() {
+        if (this.teamMembersIds == null) return 0;
         return this.teamMembersIds.size();
     }
 
     public final boolean isTeamMembersEmpty() {
+        if (this.teamMembersIds == null) return true;
         return this.teamMembersIds.isEmpty();
     }
 
     public final boolean addTeamMember(scrum.server.admin.User teamMember) {
         if (teamMember == null) throw new IllegalArgumentException("teamMember == null");
+        if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         boolean added = this.teamMembersIds.add(teamMember.getId());
         if (added) {
             updateLastModified();
@@ -1059,6 +1106,7 @@ public abstract class GProject
 
     public final boolean addTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
         if (teamMembers == null) throw new IllegalArgumentException("teamMembers == null");
+        if (this.teamMembersIds == null) this.teamMembersIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User teamMember : teamMembers) {
             added = added | this.teamMembersIds.add(teamMember.getId());
@@ -1084,6 +1132,7 @@ public abstract class GProject
     public final boolean removeTeamMembers(Collection<scrum.server.admin.User> teamMembers) {
         if (teamMembers == null) return false;
         if (teamMembers.isEmpty()) return false;
+        if (this.teamMembersIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: teamMembers) {
             removed = removed | this.teamMembersIds.remove(_element);
@@ -1096,6 +1145,7 @@ public abstract class GProject
     }
 
     public final boolean clearTeamMembers() {
+        if (this.teamMembersIds == null) return false;
         if (this.teamMembersIds.isEmpty()) return false;
         this.teamMembersIds.clear();
             updateLastModified();
@@ -1135,10 +1185,7 @@ public abstract class GProject
     }
 
     private final void updateCurrentSprintId(String id) {
-        if (Utl.equals(currentSprintId, id)) return;
-        this.currentSprintId = id;
-            updateLastModified();
-            fireModified("currentSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentSprintId));
+        setCurrentSprintId(id);
     }
 
     protected scrum.server.sprint.Sprint prepareCurrentSprint(scrum.server.sprint.Sprint currentSprint) {
@@ -1146,6 +1193,7 @@ public abstract class GProject
     }
 
     protected void repairDeadCurrentSprintReference(String entityId) {
+        if (isDeleted()) return;
         if (this.currentSprintId == null || entityId.equals(this.currentSprintId)) {
             setCurrentSprint(null);
         }
@@ -1196,10 +1244,7 @@ public abstract class GProject
     }
 
     private final void updateNextSprintId(String id) {
-        if (Utl.equals(nextSprintId, id)) return;
-        this.nextSprintId = id;
-            updateLastModified();
-            fireModified("nextSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.nextSprintId));
+        setNextSprintId(id);
     }
 
     protected scrum.server.sprint.Sprint prepareNextSprint(scrum.server.sprint.Sprint nextSprint) {
@@ -1207,6 +1252,7 @@ public abstract class GProject
     }
 
     protected void repairDeadNextSprintReference(String entityId) {
+        if (isDeleted()) return;
         if (this.nextSprintId == null || entityId.equals(this.nextSprintId)) {
             setNextSprint(null);
         }
@@ -1300,19 +1346,23 @@ public abstract class GProject
 
     public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
         if (requirementsOrderId == null) return false;
+        if (this.requirementsOrderIds == null) return false;
         return this.requirementsOrderIds.contains(requirementsOrderId);
     }
 
     public final int getRequirementsOrderIdsCount() {
+        if (this.requirementsOrderIds == null) return 0;
         return this.requirementsOrderIds.size();
     }
 
     public final boolean isRequirementsOrderIdsEmpty() {
+        if (this.requirementsOrderIds == null) return true;
         return this.requirementsOrderIds.isEmpty();
     }
 
     public final boolean addRequirementsOrderId(java.lang.String requirementsOrderId) {
         if (requirementsOrderId == null) throw new IllegalArgumentException("requirementsOrderId == null");
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = this.requirementsOrderIds.add(requirementsOrderId);
         if (added) {
             updateLastModified();
@@ -1323,6 +1373,7 @@ public abstract class GProject
 
     public final boolean addRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         if (requirementsOrderIds == null) throw new IllegalArgumentException("requirementsOrderIds == null");
+        if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String requirementsOrderId : requirementsOrderIds) {
             added = added | this.requirementsOrderIds.add(requirementsOrderId);
@@ -1348,6 +1399,7 @@ public abstract class GProject
     public final boolean removeRequirementsOrderIds(Collection<java.lang.String> requirementsOrderIds) {
         if (requirementsOrderIds == null) return false;
         if (requirementsOrderIds.isEmpty()) return false;
+        if (this.requirementsOrderIds == null) return false;
         boolean removed = false;
         for (java.lang.String _element: requirementsOrderIds) {
             removed = removed | this.requirementsOrderIds.remove(_element);
@@ -1360,6 +1412,7 @@ public abstract class GProject
     }
 
     public final boolean clearRequirementsOrderIds() {
+        if (this.requirementsOrderIds == null) return false;
         if (this.requirementsOrderIds.isEmpty()) return false;
         this.requirementsOrderIds.clear();
             updateLastModified();
@@ -1368,6 +1421,7 @@ public abstract class GProject
     }
 
     public final String getRequirementsOrderIdsAsCommaSeparatedString() {
+        if (this.requirementsOrderIds == null) return null;
         if (this.requirementsOrderIds.isEmpty()) return null;
         return Str.concat(this.requirementsOrderIds,", ");
     }
@@ -1409,19 +1463,23 @@ public abstract class GProject
 
     public final boolean containsUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
         if (urgentIssuesOrderId == null) return false;
+        if (this.urgentIssuesOrderIds == null) return false;
         return this.urgentIssuesOrderIds.contains(urgentIssuesOrderId);
     }
 
     public final int getUrgentIssuesOrderIdsCount() {
+        if (this.urgentIssuesOrderIds == null) return 0;
         return this.urgentIssuesOrderIds.size();
     }
 
     public final boolean isUrgentIssuesOrderIdsEmpty() {
+        if (this.urgentIssuesOrderIds == null) return true;
         return this.urgentIssuesOrderIds.isEmpty();
     }
 
     public final boolean addUrgentIssuesOrderId(java.lang.String urgentIssuesOrderId) {
         if (urgentIssuesOrderId == null) throw new IllegalArgumentException("urgentIssuesOrderId == null");
+        if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = this.urgentIssuesOrderIds.add(urgentIssuesOrderId);
         if (added) {
             updateLastModified();
@@ -1432,6 +1490,7 @@ public abstract class GProject
 
     public final boolean addUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
         if (urgentIssuesOrderIds == null) throw new IllegalArgumentException("urgentIssuesOrderIds == null");
+        if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
         boolean added = false;
         for (java.lang.String urgentIssuesOrderId : urgentIssuesOrderIds) {
             added = added | this.urgentIssuesOrderIds.add(urgentIssuesOrderId);
@@ -1457,6 +1516,7 @@ public abstract class GProject
     public final boolean removeUrgentIssuesOrderIds(Collection<java.lang.String> urgentIssuesOrderIds) {
         if (urgentIssuesOrderIds == null) return false;
         if (urgentIssuesOrderIds.isEmpty()) return false;
+        if (this.urgentIssuesOrderIds == null) return false;
         boolean removed = false;
         for (java.lang.String _element: urgentIssuesOrderIds) {
             removed = removed | this.urgentIssuesOrderIds.remove(_element);
@@ -1469,6 +1529,7 @@ public abstract class GProject
     }
 
     public final boolean clearUrgentIssuesOrderIds() {
+        if (this.urgentIssuesOrderIds == null) return false;
         if (this.urgentIssuesOrderIds.isEmpty()) return false;
         this.urgentIssuesOrderIds.clear();
             updateLastModified();
@@ -1477,6 +1538,7 @@ public abstract class GProject
     }
 
     public final String getUrgentIssuesOrderIdsAsCommaSeparatedString() {
+        if (this.urgentIssuesOrderIds == null) return null;
         if (this.urgentIssuesOrderIds.isEmpty()) return null;
         return Str.concat(this.urgentIssuesOrderIds,", ");
     }
@@ -2517,6 +2579,7 @@ public abstract class GProject
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
         repairDeadParticipantReference(entityId);
@@ -2602,6 +2665,22 @@ public abstract class GProject
         }
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();
         if (this.urgentIssuesOrderIds == null) this.urgentIssuesOrderIds = new java.util.ArrayList<java.lang.String>();
+        Collection<scrum.server.sprint.Sprint> sprint = getSprints();
+        Collection<scrum.server.admin.ProjectUserConfig> projectUserConfig = getProjectUserConfigs();
+        Collection<scrum.server.project.Quality> quality = getQualitys();
+        Collection<scrum.server.impediments.Impediment> impediment = getImpediments();
+        Collection<scrum.server.project.Requirement> requirement = getRequirements();
+        Collection<scrum.server.issues.Issue> issue = getIssues();
+        Collection<scrum.server.release.Release> release = getReleases();
+        Collection<scrum.server.journal.ProjectEvent> projectEvent = getProjectEvents();
+        Collection<scrum.server.calendar.SimpleEvent> simpleEvent = getSimpleEvents();
+        Collection<scrum.server.collaboration.Subject> subject = getSubjects();
+        Collection<scrum.server.collaboration.ChatMessage> chatMessage = getChatMessages();
+        Collection<scrum.server.pr.BlogEntry> blogEntry = getBlogEntrys();
+        Collection<scrum.server.risks.Risk> risk = getRisks();
+        Collection<scrum.server.collaboration.Wikipage> wikipage = getWikipages();
+        Collection<scrum.server.files.File> file = getFiles();
+        Collection<scrum.server.admin.User> currentProjectUser = getCurrentProjectUsers();
     }
 
 

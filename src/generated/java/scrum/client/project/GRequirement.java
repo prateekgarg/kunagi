@@ -862,26 +862,30 @@ public abstract class GRequirement
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        sprintId = (String) props.get("sprintId");
-        issueId = (String) props.get("issueId");
-        number  = (Integer) props.get("number");
-        qualitysIds = (Set<String>) props.get("qualitysIds");
-        label  = (java.lang.String) props.get("label");
-        description  = (java.lang.String) props.get("description");
-        testDescription  = (java.lang.String) props.get("testDescription");
-        estimatedWork  = (java.lang.Float) props.get("estimatedWork");
-        String rejectDateAsString = (String) props.get("rejectDate");
-        rejectDate  =  rejectDateAsString == null ? null : new ilarkesto.core.time.Date(rejectDateAsString);
-        closed  = (Boolean) props.get("closed");
-        deleted  = (Boolean) props.get("deleted");
-        dirty  = (Boolean) props.get("dirty");
-        workEstimationVotingActive  = (Boolean) props.get("workEstimationVotingActive");
-        workEstimationVotingShowoff  = (Boolean) props.get("workEstimationVotingShowoff");
-        tasksOrderIds  = (java.util.List<java.lang.String>) props.get("tasksOrderIds");
-        themes  = (java.util.List<java.lang.String>) props.get("themes");
-        epicId = (String) props.get("epicId");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("sprintId")) sprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("issueId")) issueId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("qualitysIds")) qualitysIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("testDescription")) testDescription = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("estimatedWork")) estimatedWork = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
+            if (property.equals("rejectDate")) rejectDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("closed")) closed = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("deleted")) deleted = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("dirty")) dirty = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("workEstimationVotingActive")) workEstimationVotingActive = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("workEstimationVotingShowoff")) workEstimationVotingShowoff = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("tasksOrderIds")) tasksOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("themes")) themes = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("epicId")) epicId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+        }
         updateLocalModificationTime();
     }
 

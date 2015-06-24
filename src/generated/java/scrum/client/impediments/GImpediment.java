@@ -424,15 +424,19 @@ public abstract class GImpediment
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        number  = (Integer) props.get("number");
-        label  = (java.lang.String) props.get("label");
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new ilarkesto.core.time.Date(dateAsString);
-        description  = (java.lang.String) props.get("description");
-        solution  = (java.lang.String) props.get("solution");
-        closed  = (Boolean) props.get("closed");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("date")) date = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("solution")) solution = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("closed")) closed = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+        }
         updateLocalModificationTime();
     }
 

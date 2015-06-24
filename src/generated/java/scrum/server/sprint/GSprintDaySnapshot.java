@@ -88,10 +88,7 @@ public abstract class GSprintDaySnapshot
     }
 
     private final void updateSprintId(String id) {
-        if (Utl.equals(sprintId, id)) return;
-        this.sprintId = id;
-            updateLastModified();
-            fireModified("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
+        setSprintId(id);
     }
 
     protected scrum.server.sprint.Sprint prepareSprint(scrum.server.sprint.Sprint sprint) {
@@ -99,6 +96,7 @@ public abstract class GSprintDaySnapshot
     }
 
     protected void repairDeadSprintReference(String entityId) {
+        if (isDeleted()) return;
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
             repairMissingMaster();
         }
@@ -286,6 +284,7 @@ public abstract class GSprintDaySnapshot
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadSprintReference(entityId);
     }

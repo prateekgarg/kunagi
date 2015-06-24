@@ -112,10 +112,7 @@ public abstract class GTask
     }
 
     private final void updateRequirementId(String id) {
-        if (Utl.equals(requirementId, id)) return;
-        this.requirementId = id;
-            updateLastModified();
-            fireModified("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
+        setRequirementId(id);
     }
 
     protected scrum.server.project.Requirement prepareRequirement(scrum.server.project.Requirement requirement) {
@@ -123,6 +120,7 @@ public abstract class GTask
     }
 
     protected void repairDeadRequirementReference(String entityId) {
+        if (isDeleted()) return;
         if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
@@ -372,10 +370,7 @@ public abstract class GTask
     }
 
     private final void updateOwnerId(String id) {
-        if (Utl.equals(ownerId, id)) return;
-        this.ownerId = id;
-            updateLastModified();
-            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        setOwnerId(id);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -383,6 +378,7 @@ public abstract class GTask
     }
 
     protected void repairDeadOwnerReference(String entityId) {
+        if (isDeleted()) return;
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
             setOwner(null);
         }
@@ -433,10 +429,7 @@ public abstract class GTask
     }
 
     private final void updateImpedimentId(String id) {
-        if (Utl.equals(impedimentId, id)) return;
-        this.impedimentId = id;
-            updateLastModified();
-            fireModified("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+        setImpedimentId(id);
     }
 
     protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
@@ -444,6 +437,7 @@ public abstract class GTask
     }
 
     protected void repairDeadImpedimentReference(String entityId) {
+        if (isDeleted()) return;
         if (this.impedimentId == null || entityId.equals(this.impedimentId)) {
             setImpediment(null);
         }
@@ -494,10 +488,7 @@ public abstract class GTask
     }
 
     private final void updateClosedInPastSprintId(String id) {
-        if (Utl.equals(closedInPastSprintId, id)) return;
-        this.closedInPastSprintId = id;
-            updateLastModified();
-            fireModified("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
+        setClosedInPastSprintId(id);
     }
 
     protected scrum.server.sprint.Sprint prepareClosedInPastSprint(scrum.server.sprint.Sprint closedInPastSprint) {
@@ -505,6 +496,7 @@ public abstract class GTask
     }
 
     protected void repairDeadClosedInPastSprintReference(String entityId) {
+        if (isDeleted()) return;
         if (this.closedInPastSprintId == null || entityId.equals(this.closedInPastSprintId)) {
             setClosedInPastSprint(null);
         }
@@ -542,6 +534,7 @@ public abstract class GTask
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);
@@ -580,6 +573,8 @@ public abstract class GTask
             LOG.info("Repairing dead closedInPastSprint reference");
             repairDeadClosedInPastSprintReference(this.closedInPastSprintId);
         }
+        Collection<scrum.server.sprint.SprintReport> sprintReport = getSprintReports();
+        Collection<scrum.server.sprint.SprintReport> sprintReportWithOpenTasks = getSprintReportWithOpenTaskss();
     }
 
 

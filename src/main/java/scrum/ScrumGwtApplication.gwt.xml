@@ -26,4 +26,7 @@
     value="true" />
   <set-property name="compiler.useSourceMaps" value="true" />
 
+  <extend-property name="locale" values="en" />
+  <set-property-fallback name="locale" value="en" />
+
 </module>

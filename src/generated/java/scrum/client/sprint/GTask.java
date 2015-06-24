@@ -484,16 +484,21 @@ public abstract class GTask
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        requirementId = (String) props.get("requirementId");
-        number  = (Integer) props.get("number");
-        label  = (java.lang.String) props.get("label");
-        description  = (java.lang.String) props.get("description");
-        remainingWork  = (Integer) props.get("remainingWork");
-        burnedWork  = (Integer) props.get("burnedWork");
-        ownerId = (String) props.get("ownerId");
-        impedimentId = (String) props.get("impedimentId");
-        closedInPastSprintId = (String) props.get("closedInPastSprintId");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("requirementId")) requirementId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("remainingWork")) remainingWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("burnedWork")) burnedWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("ownerId")) ownerId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("impedimentId")) impedimentId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("closedInPastSprintId")) closedInPastSprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+        }
         updateLocalModificationTime();
     }
 

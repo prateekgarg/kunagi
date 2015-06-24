@@ -89,9 +89,14 @@ public abstract class GSubscription
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        subjectId = (String) props.get("subjectId");
-        subscribersEmails  = (java.util.Set<java.lang.String>) props.get("subscribersEmails");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("subjectId")) subjectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("subscribersEmails")) subscribersEmails = ilarkesto.core.persistance.Persistence.parsePropertyStringSet(value);
+        }
         updateLocalModificationTime();
     }
 

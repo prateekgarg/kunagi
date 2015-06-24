@@ -15,6 +15,7 @@
 package scrum.server.journal;
 
 import ilarkesto.auth.Auth;
+import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.AEntity;
 
@@ -64,7 +65,7 @@ public class Change extends GChange implements Comparable<Change> {
 
 	@Override
 	public int compareTo(Change other) {
-		return getDateAndTime().compareTo(other.getDateAndTime());
+		return Utl.compare(getDateAndTime(), other.getDateAndTime());
 	}
 
 	@Override

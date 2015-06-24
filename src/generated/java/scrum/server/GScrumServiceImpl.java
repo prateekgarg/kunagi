@@ -109,7 +109,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onChangePassword(conversation, newPassword, oldPassword);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "ChangePassword", ex);
+                handleServiceMethodException(conversationNumber, "ChangePassword", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -136,7 +136,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onLogout(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Logout", ex);
+                handleServiceMethodException(conversationNumber, "Logout", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -163,7 +163,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onResetPassword(conversation, userId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "ResetPassword", ex);
+                handleServiceMethodException(conversationNumber, "ResetPassword", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -190,7 +190,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSendTestEmail(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "SendTestEmail", ex);
+                handleServiceMethodException(conversationNumber, "SendTestEmail", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -217,7 +217,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onTestLdap(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "TestLdap", ex);
+                handleServiceMethodException(conversationNumber, "TestLdap", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -244,7 +244,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onUpdateSystemMessage(conversation, systemMessage);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "UpdateSystemMessage", ex);
+                handleServiceMethodException(conversationNumber, "UpdateSystemMessage", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -271,7 +271,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestComments(conversation, parentId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestComments", ex);
+                handleServiceMethodException(conversationNumber, "RequestComments", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -298,7 +298,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestForum(conversation, all);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestForum", ex);
+                handleServiceMethodException(conversationNumber, "RequestForum", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -324,7 +324,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onPing(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Ping", ex);
+                handleServiceMethodException(conversationNumber, "Ping", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -351,7 +351,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onTouchLastActivity(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "TouchLastActivity", ex);
+                handleServiceMethodException(conversationNumber, "TouchLastActivity", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -378,7 +378,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onChangeProperties(conversation, entityId, properties);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "ChangeProperties", ex);
+                handleServiceMethodException(conversationNumber, "ChangeProperties", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -405,7 +405,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onCreateEntity(conversation, type, properties);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "CreateEntity", ex);
+                handleServiceMethodException(conversationNumber, "CreateEntity", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -432,7 +432,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onDeleteEntity(conversation, entityId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "DeleteEntity", ex);
+                handleServiceMethodException(conversationNumber, "DeleteEntity", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -459,7 +459,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestEntity(conversation, entityId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestEntity", ex);
+                handleServiceMethodException(conversationNumber, "RequestEntity", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -486,7 +486,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestEntityByReference(conversation, reference);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestEntityByReference", ex);
+                handleServiceMethodException(conversationNumber, "RequestEntityByReference", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -513,7 +513,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSleep(conversation, millis);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Sleep", ex);
+                handleServiceMethodException(conversationNumber, "Sleep", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -540,7 +540,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onActivateRequirementEstimationVoting(conversation, requirementId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "ActivateRequirementEstimationVoting", ex);
+                handleServiceMethodException(conversationNumber, "ActivateRequirementEstimationVoting", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -567,7 +567,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestRequirementEstimationVotes(conversation, requirementId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestRequirementEstimationVotes", ex);
+                handleServiceMethodException(conversationNumber, "RequestRequirementEstimationVotes", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -594,7 +594,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestImpediments(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestImpediments", ex);
+                handleServiceMethodException(conversationNumber, "RequestImpediments", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -621,7 +621,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onConvertIssueToStory(conversation, issueId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "ConvertIssueToStory", ex);
+                handleServiceMethodException(conversationNumber, "ConvertIssueToStory", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -648,7 +648,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestAcceptedIssues(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestAcceptedIssues", ex);
+                handleServiceMethodException(conversationNumber, "RequestAcceptedIssues", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -675,7 +675,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestClosedIssues(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestClosedIssues", ex);
+                handleServiceMethodException(conversationNumber, "RequestClosedIssues", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -702,7 +702,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestReleaseIssues(conversation, releaseId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestReleaseIssues", ex);
+                handleServiceMethodException(conversationNumber, "RequestReleaseIssues", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -729,7 +729,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSendIssueReplyEmail(conversation, issueId, from, to, subject, text);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "SendIssueReplyEmail", ex);
+                handleServiceMethodException(conversationNumber, "SendIssueReplyEmail", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -756,7 +756,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestChanges(conversation, parentId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestChanges", ex);
+                handleServiceMethodException(conversationNumber, "RequestChanges", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -783,7 +783,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestProjectEvents(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestProjectEvents", ex);
+                handleServiceMethodException(conversationNumber, "RequestProjectEvents", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -810,7 +810,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onCloseProject(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "CloseProject", ex);
+                handleServiceMethodException(conversationNumber, "CloseProject", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -837,7 +837,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onCreateExampleProject(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "CreateExampleProject", ex);
+                handleServiceMethodException(conversationNumber, "CreateExampleProject", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -864,7 +864,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onDeleteStory(conversation, storyId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "DeleteStory", ex);
+                handleServiceMethodException(conversationNumber, "DeleteStory", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -891,7 +891,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onMoveRequirementToProject(conversation, destinationProjectId, requirementId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "MoveRequirementToProject", ex);
+                handleServiceMethodException(conversationNumber, "MoveRequirementToProject", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -918,7 +918,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSelectProject(conversation, projectId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "SelectProject", ex);
+                handleServiceMethodException(conversationNumber, "SelectProject", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -945,7 +945,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onUpdateProjectHomepage(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "UpdateProjectHomepage", ex);
+                handleServiceMethodException(conversationNumber, "UpdateProjectHomepage", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -972,7 +972,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onPublishRelease(conversation, releaseId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "PublishRelease", ex);
+                handleServiceMethodException(conversationNumber, "PublishRelease", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -999,7 +999,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestRisks(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestRisks", ex);
+                handleServiceMethodException(conversationNumber, "RequestRisks", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1026,7 +1026,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSearch(conversation, text);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "Search", ex);
+                handleServiceMethodException(conversationNumber, "Search", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1053,7 +1053,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onCreateIssueFromTask(conversation, taskId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "CreateIssueFromTask", ex);
+                handleServiceMethodException(conversationNumber, "CreateIssueFromTask", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1080,7 +1080,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onKickStoryFromSprint(conversation, storyId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "KickStoryFromSprint", ex);
+                handleServiceMethodException(conversationNumber, "KickStoryFromSprint", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1107,7 +1107,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onPullStoryToSprint(conversation, storyId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "PullStoryToSprint", ex);
+                handleServiceMethodException(conversationNumber, "PullStoryToSprint", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1134,7 +1134,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestHistory(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestHistory", ex);
+                handleServiceMethodException(conversationNumber, "RequestHistory", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1161,7 +1161,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onRequestHistorySprint(conversation, sprintId);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "RequestHistorySprint", ex);
+                handleServiceMethodException(conversationNumber, "RequestHistorySprint", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }
@@ -1188,7 +1188,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
                 onSwitchToNextSprint(conversation);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
-                handleServiceMethodException(conversationNumber, "SwitchToNextSprint", ex);
+                handleServiceMethodException(conversationNumber, "SwitchToNextSprint", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

@@ -148,10 +148,15 @@ public abstract class GRequirementEstimationVote
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        requirementId = (String) props.get("requirementId");
-        userId = (String) props.get("userId");
-        estimatedWork  = (java.lang.Float) props.get("estimatedWork");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("requirementId")) requirementId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("userId")) userId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("estimatedWork")) estimatedWork = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
+        }
         updateLocalModificationTime();
     }
 

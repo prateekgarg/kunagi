@@ -701,22 +701,25 @@ public abstract class GRelease
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        parentReleaseId = (String) props.get("parentReleaseId");
-        sprintsIds = (Set<String>) props.get("sprintsIds");
-        number  = (Integer) props.get("number");
-        label  = (java.lang.String) props.get("label");
-        note  = (java.lang.String) props.get("note");
-        String releaseDateAsString = (String) props.get("releaseDate");
-        releaseDate  =  releaseDateAsString == null ? null : new ilarkesto.core.time.Date(releaseDateAsString);
-        String releaseTimeAsString = (String) props.get("releaseTime");
-        releaseTime  =  releaseTimeAsString == null ? null : new ilarkesto.core.time.Time(releaseTimeAsString);
-        released  = (Boolean) props.get("released");
-        releaseNotes  = (java.lang.String) props.get("releaseNotes");
-        scmTag  = (java.lang.String) props.get("scmTag");
-        scriptRunning  = (Boolean) props.get("scriptRunning");
-        scriptOutput  = (java.lang.String) props.get("scriptOutput");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("parentReleaseId")) parentReleaseId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("sprintsIds")) sprintsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("note")) note = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("releaseDate")) releaseDate = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("releaseTime")) releaseTime = ilarkesto.core.persistance.Persistence.parsePropertyTime(value);
+            if (property.equals("released")) released = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("releaseNotes")) releaseNotes = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("scmTag")) scmTag = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("scriptRunning")) scriptRunning = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("scriptOutput")) scriptOutput = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

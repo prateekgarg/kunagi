@@ -161,6 +161,11 @@
       preservelastmodified="true" />
   </target>
 
+  <target name="deployToLocalTomcat" depends="package">
+    <copy file="${build.dir}/kunagi.war" tofile="/var/lib/tomcat7/webapps/kunagi.war"
+      preservelastmodified="true" />
+  </target>
+
   <target name="installScripts">
     <copy file="etc/kunagi-release.py" tofile="/home/kunagi/bin/kunagi-release"
       preservelastmodified="true" failonerror="true" />

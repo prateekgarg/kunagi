@@ -528,18 +528,21 @@ public abstract class GSimpleEvent
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        label  = (java.lang.String) props.get("label");
-        number  = (Integer) props.get("number");
-        String dateAsString = (String) props.get("date");
-        date  =  dateAsString == null ? null : new ilarkesto.core.time.Date(dateAsString);
-        String timeAsString = (String) props.get("time");
-        time  =  timeAsString == null ? null : new ilarkesto.core.time.Time(timeAsString);
-        location  = (java.lang.String) props.get("location");
-        duration  = (java.lang.Integer) props.get("duration");
-        agenda  = (java.lang.String) props.get("agenda");
-        note  = (java.lang.String) props.get("note");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("date")) date = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("time")) time = ilarkesto.core.persistance.Persistence.parsePropertyTime(value);
+            if (property.equals("location")) location = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("duration")) duration = ilarkesto.core.persistance.Persistence.parsePropertyInteger(value);
+            if (property.equals("agenda")) agenda = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("note")) note = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

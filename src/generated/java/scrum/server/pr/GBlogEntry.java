@@ -103,10 +103,7 @@ public abstract class GBlogEntry
     }
 
     private final void updateProjectId(String id) {
-        if (Utl.equals(projectId, id)) return;
-        this.projectId = id;
-            updateLastModified();
-            fireModified("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
+        setProjectId(id);
     }
 
     protected scrum.server.project.Project prepareProject(scrum.server.project.Project project) {
@@ -114,6 +111,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadProjectReference(String entityId) {
+        if (isDeleted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -175,6 +173,10 @@ public abstract class GBlogEntry
 
     private java.util.Set<String> authorsIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getAuthorsIds() {
+        return java.util.Collections .unmodifiableCollection(this.authorsIds);
+    }
+
     public final java.util.Set<scrum.server.admin.User> getAuthors() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.authorsIds);
@@ -198,10 +200,7 @@ public abstract class GBlogEntry
     }
 
     private final void updateAuthorsIds(java.util.Set<String> ids) {
-        if (Utl.equals(authorsIds, ids)) return;
-        authorsIds = ids;
-            updateLastModified();
-            fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
+        setAuthorsIds(ids);
     }
 
     protected Collection<scrum.server.admin.User> prepareAuthors(Collection<scrum.server.admin.User> authors) {
@@ -209,6 +208,8 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadAuthorReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.authorsIds == null ) return;
         if (this.authorsIds.remove(entityId)) {
             updateLastModified();
             fireModified("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
@@ -217,19 +218,23 @@ public abstract class GBlogEntry
 
     public final boolean containsAuthor(scrum.server.admin.User author) {
         if (author == null) return false;
+        if (this.authorsIds == null) return false;
         return this.authorsIds.contains(author.getId());
     }
 
     public final int getAuthorsCount() {
+        if (this.authorsIds == null) return 0;
         return this.authorsIds.size();
     }
 
     public final boolean isAuthorsEmpty() {
+        if (this.authorsIds == null) return true;
         return this.authorsIds.isEmpty();
     }
 
     public final boolean addAuthor(scrum.server.admin.User author) {
         if (author == null) throw new IllegalArgumentException("author == null");
+        if (this.authorsIds == null) this.authorsIds = new java.util.HashSet<String>();
         boolean added = this.authorsIds.add(author.getId());
         if (added) {
             updateLastModified();
@@ -240,6 +245,7 @@ public abstract class GBlogEntry
 
     public final boolean addAuthors(Collection<scrum.server.admin.User> authors) {
         if (authors == null) throw new IllegalArgumentException("authors == null");
+        if (this.authorsIds == null) this.authorsIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.admin.User author : authors) {
             added = added | this.authorsIds.add(author.getId());
@@ -265,6 +271,7 @@ public abstract class GBlogEntry
     public final boolean removeAuthors(Collection<scrum.server.admin.User> authors) {
         if (authors == null) return false;
         if (authors.isEmpty()) return false;
+        if (this.authorsIds == null) return false;
         boolean removed = false;
         for (scrum.server.admin.User _element: authors) {
             removed = removed | this.authorsIds.remove(_element);
@@ -277,6 +284,7 @@ public abstract class GBlogEntry
     }
 
     public final boolean clearAuthors() {
+        if (this.authorsIds == null) return false;
         if (this.authorsIds.isEmpty()) return false;
         this.authorsIds.clear();
             updateLastModified();
@@ -421,6 +429,10 @@ public abstract class GBlogEntry
 
     private java.util.Set<String> releasesIds = new java.util.HashSet<String>();
 
+    public final Collection<String> getReleasesIds() {
+        return java.util.Collections .unmodifiableCollection(this.releasesIds);
+    }
+
     public final java.util.Set<scrum.server.release.Release> getReleases() {
         try {
             return (java.util.Set) AEntity.getByIdsAsSet(this.releasesIds);
@@ -444,10 +456,7 @@ public abstract class GBlogEntry
     }
 
     private final void updateReleasesIds(java.util.Set<String> ids) {
-        if (Utl.equals(releasesIds, ids)) return;
-        releasesIds = ids;
-            updateLastModified();
-            fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
+        setReleasesIds(ids);
     }
 
     protected Collection<scrum.server.release.Release> prepareReleases(Collection<scrum.server.release.Release> releases) {
@@ -455,6 +464,8 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReleaseReference(String entityId) {
+        if (isDeleted()) return;
+        if (this.releasesIds == null ) return;
         if (this.releasesIds.remove(entityId)) {
             updateLastModified();
             fireModified("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
@@ -463,19 +474,23 @@ public abstract class GBlogEntry
 
     public final boolean containsRelease(scrum.server.release.Release release) {
         if (release == null) return false;
+        if (this.releasesIds == null) return false;
         return this.releasesIds.contains(release.getId());
     }
 
     public final int getReleasesCount() {
+        if (this.releasesIds == null) return 0;
         return this.releasesIds.size();
     }
 
     public final boolean isReleasesEmpty() {
+        if (this.releasesIds == null) return true;
         return this.releasesIds.isEmpty();
     }
 
     public final boolean addRelease(scrum.server.release.Release release) {
         if (release == null) throw new IllegalArgumentException("release == null");
+        if (this.releasesIds == null) this.releasesIds = new java.util.HashSet<String>();
         boolean added = this.releasesIds.add(release.getId());
         if (added) {
             updateLastModified();
@@ -486,6 +501,7 @@ public abstract class GBlogEntry
 
     public final boolean addReleases(Collection<scrum.server.release.Release> releases) {
         if (releases == null) throw new IllegalArgumentException("releases == null");
+        if (this.releasesIds == null) this.releasesIds = new java.util.HashSet<String>();
         boolean added = false;
         for (scrum.server.release.Release release : releases) {
             added = added | this.releasesIds.add(release.getId());
@@ -511,6 +527,7 @@ public abstract class GBlogEntry
     public final boolean removeReleases(Collection<scrum.server.release.Release> releases) {
         if (releases == null) return false;
         if (releases.isEmpty()) return false;
+        if (this.releasesIds == null) return false;
         boolean removed = false;
         for (scrum.server.release.Release _element: releases) {
             removed = removed | this.releasesIds.remove(_element);
@@ -523,6 +540,7 @@ public abstract class GBlogEntry
     }
 
     public final boolean clearReleases() {
+        if (this.releasesIds == null) return false;
         if (this.releasesIds.isEmpty()) return false;
         this.releasesIds.clear();
             updateLastModified();
@@ -585,6 +603,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         if (this.authorsIds == null) this.authorsIds = new java.util.HashSet<String>();

@@ -86,10 +86,7 @@ public abstract class GEmoticon
     }
 
     private final void updateParentId(String id) {
-        if (Utl.equals(parentId, id)) return;
-        this.parentId = id;
-            updateLastModified();
-            fireModified("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
+        setParentId(id);
     }
 
     protected ilarkesto.persistence.AEntity prepareParent(ilarkesto.persistence.AEntity parent) {
@@ -97,6 +94,7 @@ public abstract class GEmoticon
     }
 
     protected void repairDeadParentReference(String entityId) {
+        if (isDeleted()) return;
         if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
@@ -147,10 +145,7 @@ public abstract class GEmoticon
     }
 
     private final void updateOwnerId(String id) {
-        if (Utl.equals(ownerId, id)) return;
-        this.ownerId = id;
-            updateLastModified();
-            fireModified("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
+        setOwnerId(id);
     }
 
     protected scrum.server.admin.User prepareOwner(scrum.server.admin.User owner) {
@@ -158,6 +153,7 @@ public abstract class GEmoticon
     }
 
     protected void repairDeadOwnerReference(String entityId) {
+        if (isDeleted()) return;
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
             repairMissingMaster();
         }
@@ -232,6 +228,7 @@ public abstract class GEmoticon
     }
 
     protected void repairDeadReferences(String entityId) {
+        if (isDeleted()) return;
         super.repairDeadReferences(entityId);
         repairDeadParentReference(entityId);
         repairDeadOwnerReference(entityId);

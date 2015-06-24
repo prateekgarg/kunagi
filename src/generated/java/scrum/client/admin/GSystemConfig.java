@@ -1700,36 +1700,41 @@ public abstract class GSystemConfig
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        url  = (java.lang.String) props.get("url");
-        adminEmail  = (java.lang.String) props.get("adminEmail");
-        googleAnalyticsId  = (java.lang.String) props.get("googleAnalyticsId");
-        smtpServer  = (java.lang.String) props.get("smtpServer");
-        smtpPort  = (java.lang.Integer) props.get("smtpPort");
-        smtpTls  = (Boolean) props.get("smtpTls");
-        smtpUser  = (java.lang.String) props.get("smtpUser");
-        smtpPassword  = (java.lang.String) props.get("smtpPassword");
-        smtpFrom  = (java.lang.String) props.get("smtpFrom");
-        instanceName  = (java.lang.String) props.get("instanceName");
-        loginPageLogoUrl  = (java.lang.String) props.get("loginPageLogoUrl");
-        loginPageMessage  = (java.lang.String) props.get("loginPageMessage");
-        registerPageMessage  = (java.lang.String) props.get("registerPageMessage");
-        aboutPageMessage  = (java.lang.String) props.get("aboutPageMessage");
-        userEmailMandatory  = (Boolean) props.get("userEmailMandatory");
-        registrationDisabled  = (Boolean) props.get("registrationDisabled");
-        projectCreationDisabled  = (Boolean) props.get("projectCreationDisabled");
-        defaultUserPassword  = (java.lang.String) props.get("defaultUserPassword");
-        openIdDisabled  = (Boolean) props.get("openIdDisabled");
-        openIdDomains  = (java.lang.String) props.get("openIdDomains");
-        versionCheckEnabled  = (Boolean) props.get("versionCheckEnabled");
-        ldapEnabled  = (Boolean) props.get("ldapEnabled");
-        ldapUrl  = (java.lang.String) props.get("ldapUrl");
-        ldapUser  = (java.lang.String) props.get("ldapUser");
-        ldapPassword  = (java.lang.String) props.get("ldapPassword");
-        ldapBaseDn  = (java.lang.String) props.get("ldapBaseDn");
-        ldapUserFilterRegex  = (java.lang.String) props.get("ldapUserFilterRegex");
-        maxFileSize  = (java.lang.Integer) props.get("maxFileSize");
-        subscriptionKeySeed  = (java.lang.String) props.get("subscriptionKeySeed");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("url")) url = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("adminEmail")) adminEmail = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("googleAnalyticsId")) googleAnalyticsId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("smtpServer")) smtpServer = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("smtpPort")) smtpPort = ilarkesto.core.persistance.Persistence.parsePropertyInteger(value);
+            if (property.equals("smtpTls")) smtpTls = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("smtpUser")) smtpUser = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("smtpPassword")) smtpPassword = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("smtpFrom")) smtpFrom = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("instanceName")) instanceName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("loginPageLogoUrl")) loginPageLogoUrl = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("loginPageMessage")) loginPageMessage = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("registerPageMessage")) registerPageMessage = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("aboutPageMessage")) aboutPageMessage = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("userEmailMandatory")) userEmailMandatory = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("registrationDisabled")) registrationDisabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("projectCreationDisabled")) projectCreationDisabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("defaultUserPassword")) defaultUserPassword = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("openIdDisabled")) openIdDisabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("openIdDomains")) openIdDomains = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("versionCheckEnabled")) versionCheckEnabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("ldapEnabled")) ldapEnabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("ldapUrl")) ldapUrl = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("ldapUser")) ldapUser = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("ldapPassword")) ldapPassword = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("ldapBaseDn")) ldapBaseDn = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("ldapUserFilterRegex")) ldapUserFilterRegex = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("maxFileSize")) maxFileSize = ilarkesto.core.persistance.Persistence.parsePropertyInteger(value);
+            if (property.equals("subscriptionKeySeed")) subscriptionKeySeed = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 

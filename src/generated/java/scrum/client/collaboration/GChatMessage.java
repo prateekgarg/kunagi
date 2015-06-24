@@ -209,12 +209,16 @@ public abstract class GChatMessage
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        authorId = (String) props.get("authorId");
-        text  = (java.lang.String) props.get("text");
-        String dateAndTimeAsString = (String) props.get("dateAndTime");
-        dateAndTime  =  dateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(dateAndTimeAsString);
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("authorId")) authorId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+        }
         updateLocalModificationTime();
     }
 

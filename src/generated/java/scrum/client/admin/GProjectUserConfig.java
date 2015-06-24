@@ -831,27 +831,29 @@ public abstract class GProjectUserConfig
 
     // --- update properties by map ---
 
-    public void updateProperties(Map props) {
-        projectId = (String) props.get("projectId");
-        userId = (String) props.get("userId");
-        color  = (java.lang.String) props.get("color");
-        receiveEmailsOnProjectEvents  = (Boolean) props.get("receiveEmailsOnProjectEvents");
-        misconducts  = (Integer) props.get("misconducts");
-        richtextAutosaveText  = (java.lang.String) props.get("richtextAutosaveText");
-        richtextAutosaveField  = (java.lang.String) props.get("richtextAutosaveField");
-        selectedEntitysIds  = (java.util.List<java.lang.String>) props.get("selectedEntitysIds");
-        online  = (Boolean) props.get("online");
-        String lastActivityDateAndTimeAsString = (String) props.get("lastActivityDateAndTime");
-        lastActivityDateAndTime  =  lastActivityDateAndTimeAsString == null ? null : new ilarkesto.core.time.DateAndTime(lastActivityDateAndTimeAsString);
-        pblFilterThemes  = (java.util.List<java.lang.String>) props.get("pblFilterThemes");
-        pblFilterQualitysIds = (Set<String>) props.get("pblFilterQualitysIds");
-        String pblFilterDateFromAsString = (String) props.get("pblFilterDateFrom");
-        pblFilterDateFrom  =  pblFilterDateFromAsString == null ? null : new ilarkesto.core.time.Date(pblFilterDateFromAsString);
-        String pblFilterDateToAsString = (String) props.get("pblFilterDateTo");
-        pblFilterDateTo  =  pblFilterDateToAsString == null ? null : new ilarkesto.core.time.Date(pblFilterDateToAsString);
-        pblFilterEstimationFrom  = (java.lang.Float) props.get("pblFilterEstimationFrom");
-        pblFilterEstimationTo  = (java.lang.Float) props.get("pblFilterEstimationTo");
-        pblFilterText  = (java.lang.String) props.get("pblFilterText");
+    public void updateProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("projectId")) projectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("userId")) userId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("color")) color = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("receiveEmailsOnProjectEvents")) receiveEmailsOnProjectEvents = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("misconducts")) misconducts = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
+            if (property.equals("richtextAutosaveText")) richtextAutosaveText = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("richtextAutosaveField")) richtextAutosaveField = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("selectedEntitysIds")) selectedEntitysIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("online")) online = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
+            if (property.equals("lastActivityDateAndTime")) lastActivityDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
+            if (property.equals("pblFilterThemes")) pblFilterThemes = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
+            if (property.equals("pblFilterQualitysIds")) pblFilterQualitysIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
+            if (property.equals("pblFilterDateFrom")) pblFilterDateFrom = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("pblFilterDateTo")) pblFilterDateTo = ilarkesto.core.persistance.Persistence.parsePropertyDate(value);
+            if (property.equals("pblFilterEstimationFrom")) pblFilterEstimationFrom = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
+            if (property.equals("pblFilterEstimationTo")) pblFilterEstimationTo = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
+            if (property.equals("pblFilterText")) pblFilterText = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+        }
         updateLocalModificationTime();
     }
 
