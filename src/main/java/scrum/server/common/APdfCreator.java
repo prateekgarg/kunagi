@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -85,7 +85,7 @@ public abstract class APdfCreator {
 		pdf.paragraph().setDefaultFontStyle(headerFonts[0]).text(projectLabel);
 		pdf.nl(spacerFont);
 		pdf.paragraph().setDefaultFontStyle(miniLabelFont).text(title + ", ")
-				.text(Tm.FORMAT_LONGMONTH_DAY_YEAR.format(Date.today()));
+		.text(Tm.FORMAT_LONGMONTH_DAY_YEAR.format(Date.today()));
 	}
 
 	protected void sectionHeader(APdfContainerElement pdf, String label) {
@@ -165,6 +165,7 @@ public abstract class APdfCreator {
 		ARow rowHeader = table.row().setDefaultBackgroundColor(Color.LIGHT_GRAY);
 		rowHeader.cell().setFontStyle(referenceFont).text(quality.getReference());
 		rowHeader.cell().setFontStyle(new FontStyle(defaultFont).setBold(true)).text(quality.getLabel());
+		rowHeader.cell();
 
 		richtextRow(table, "Quality description", quality.getDescription());
 		richtextRow(table, "Acceptance tests", quality.getTestDescription());
