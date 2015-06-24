@@ -64,7 +64,7 @@ public class Change extends GChange implements Comparable<Change> {
 
 	@Override
 	public int compareTo(Change other) {
-		return getDateAndTime().compareTo(other.getDateAndTime());
+		return ilarkesto.core.base.Utl.compare(getDateAndTime(),other.getDateAndTime());
 	}
 
 	@Override
