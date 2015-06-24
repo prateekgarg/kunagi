@@ -109,42 +109,31 @@ public class User extends GUser {
 	}
 
 	public void triggerNewPasswordRequest() {
+		sendPasswordMail("You requested a new password");
+	}
+
+	public void triggerPasswordReset() {
+		sendPasswordMail("An admin created a new password");
+	}
+
+	private void sendPasswordMail(String reason) {
 		if (!isEmailSet()) {
 			log.info("User has no email. Skipping new password request:", this);
 			return;
 		}
 
 		String newPassword = Str.generatePassword(8);
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("You requested a new password for your Kunagi account on ").append(webApplication.createUrl(null))
-				.append("\n");
-		sb.append("\n");
-		sb.append("Email: ").append(getEmail()).append("\n");
-		sb.append("Password: ").append(newPassword).append("\n");
-		sb.append("\n");
-		sb.append("You sould change this password, since somebody else could read this email.");
-
-		emailSender.sendEmail((String) null, getEmail(), "Kunagi password", sb.toString());
-
-		setPassword(newPassword);
-		log.info("Password changed for", this);
-	}
-
-	public void triggerPasswordReset() {
-		String urlBase = webApplication.createUrl(null);
-
-		String newPassword = Str.generatePassword(8);
 		setPassword(newPassword);
 		log.info("Password changed for", this);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("An admin created a new password for your Kunagi account on ").append(urlBase).append("\n");
+		sb.append(reason + " for your Kunagi account on ").append(webApplication.createUrl(null)).append("\n");
 		sb.append("\n");
 		sb.append("Email: ").append(getEmail()).append("\n");
 		sb.append("Password: ").append(newPassword).append("\n");
 		sb.append("\n");
-		sb.append("You sould change this password, since somebody else could read this email.");
+		sb.append("You should change this password, since somebody else could read this email.");
+
 		emailSender.sendEmail((String) null, getEmail(), "Kunagi password", sb.toString());
 	}
 
