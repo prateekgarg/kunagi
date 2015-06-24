@@ -155,9 +155,8 @@
     </copy>
   </target>
 
-  <target name="deployToLatest">
-    <copy file="${build.dir}/kunagi.war"
-      tofile="/home/kunagi-latest/tomcat/webapps/kunagi-latest.war"
+  <target name="deployAsHead">
+    <copy file="${build.dir}/kunagi.war" tofile="/home/kunagi-head/tomcat/webapps/kunagi.war"
       preservelastmodified="true" />
   </target>
 
@@ -172,7 +171,7 @@
   </target>
 
   <target name="continousIntegrationBuild"
-    depends="clean,test,package,publishPackages,releaseHomepage,installScripts,deployToLatest" />
+    depends="clean,test,package,publishPackages,releaseHomepage,installScripts,deployAsHead" />
 
 </project>
 
