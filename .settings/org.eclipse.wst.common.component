@@ -49,6 +49,15 @@
         <dependent-module archiveName="gwt-servlet.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/gwt-servlet.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="commons-lang-2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/commons-lang-2.5.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-logging-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/commons-logging-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-collections-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/ilarkesto/lib/commons-collections-3.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="kunagi"/>
         <property name="java-output-path" value="/kunagi/build/webapp/WEB-INF/classes"/>
     </wb-module>

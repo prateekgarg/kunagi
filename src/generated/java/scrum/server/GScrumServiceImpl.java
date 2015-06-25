@@ -26,7 +26,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
 
     public abstract void onTouchLastActivity(GwtConversation conversation);
 
-    public abstract void onChangeProperties(GwtConversation conversation, String entityId, java.util.Map properties);
+    public abstract void onChangeProperties(GwtConversation conversation, String entityId, java.util.Map<String, String> properties);
 
     public abstract void onCreateEntity(GwtConversation conversation, String type, java.util.Map properties);
 
@@ -358,7 +358,7 @@ public abstract class GScrumServiceImpl extends ilarkesto.gwt.server.AGwtService
     }
 
     @Override
-    public scrum.client.DataTransferObject changeProperties(int conversationNumber, String entityId, java.util.Map properties) {
+    public scrum.client.DataTransferObject changeProperties(int conversationNumber, String entityId, java.util.Map<String, String> properties) {
         log.debug("Handling service call: ChangeProperties");
         WebSession session = (WebSession) getSession();
         synchronized (session) {

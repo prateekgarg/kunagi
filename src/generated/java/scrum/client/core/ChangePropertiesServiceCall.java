@@ -6,9 +6,9 @@ public class ChangePropertiesServiceCall extends scrum.client.core.AServiceCall 
 
     private String entityId;
 
-    private java.util.Map properties;
+    private java.util.Map<String, String> properties;
 
-    public  ChangePropertiesServiceCall(String entityId, java.util.Map properties) {
+    public  ChangePropertiesServiceCall(String entityId, java.util.Map<String, String> properties) {
         this.entityId = entityId;
         this.properties = properties;
     }
