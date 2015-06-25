@@ -204,7 +204,6 @@
 "209e8430-ea5e-4191-b15a-1ed641bd1a2a","773dbc6a-f6c8-4859-8d4e-81574d69b750","Dispensable","true"
 "467e3715-9187-42cb-b4f1-4d58f2fca0c0","276033e5-b72a-4218-8e8e-2b0575e0191e","Package","core"
 "c72d623d-0a64-4a65-b842-6f19f30fddcf","467e3715-9187-42cb-b4f1-4d58f2fca0c0","Component","RichtextAutosaver"
-"43052d5b-ccd7-48d7-acce-f975d01005c1","467e3715-9187-42cb-b4f1-4d58f2fca0c0","Event","ApplicationStarted"
 "6d9999f5-c4fe-43e8-bfc3-a3969452f7be","467e3715-9187-42cb-b4f1-4d58f2fca0c0","ServiceCall","ChangeProperties"
 "aaa2e7fc-f7c9-4dd1-86d4-509ff1ef24d2","6d9999f5-c4fe-43e8-bfc3-a3969452f7be","Dispensable","ilarkesto.core.scope.Scope.get().getComponent(scrum.client.Dao.class).getEntity(entityId) instanceof scrum.client.admin.ProjectUserConfig && (properties.containsKey(""selectedEntitysIds"") || properties.containsKey(""richtextAutosaveText"") || properties.containsKey(""richtextAutosaveField"") || properties.containsKey(""online""))"
 "f1357a99-c717-408b-9cee-95ffe7af6cf5","6d9999f5-c4fe-43e8-bfc3-a3969452f7be","Parameter","entityId"

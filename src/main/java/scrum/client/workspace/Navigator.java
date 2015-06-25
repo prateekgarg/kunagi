@@ -22,8 +22,6 @@ import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.communication.TouchLastActivityServiceCall;
-import scrum.client.core.ApplicationStartedEvent;
-import scrum.client.core.ApplicationStartedHandler;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectDataReceivedEvent;
 import scrum.client.project.SelectProjectServiceCall;
@@ -34,8 +32,7 @@ import scrum.client.workspace.history.HistoryTokenObserver;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class Navigator extends GNavigator implements BlockExpandedHandler, ApplicationStartedHandler,
-HistoryTokenObserver {
+public class Navigator extends GNavigator implements BlockExpandedHandler, HistoryTokenObserver {
 
 	private static final char SEPARATOR = HistoryToken.SEPARATOR;
 
@@ -72,8 +69,7 @@ HistoryTokenObserver {
 		showPageAndEntity();
 	}
 
-	@Override
-	public void onApplicationStarted(ApplicationStartedEvent event) {
+	public void start() {
 		historyToken.evalHistoryToken();
 		if (!historyToken.isProjectIdSet()) {
 			gotoUsersStart();

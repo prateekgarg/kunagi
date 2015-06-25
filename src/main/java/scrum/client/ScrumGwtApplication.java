@@ -32,7 +32,7 @@ import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.StartConversationServiceCall;
-import scrum.client.core.ApplicationStartedEvent;
+import scrum.client.core.RichtextAutosaver;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -43,6 +43,7 @@ import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
+import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
 
@@ -86,7 +87,9 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 
 			@Override
 			public void run() {
-				new ApplicationStartedEvent().fireInCurrentScope();
+				Scope.get().getComponent(Pinger.class).start();
+				Scope.get().getComponent(RichtextAutosaver.class).start();
+				Scope.get().getComponent(Navigator.class).start();
 			}
 		});
 
