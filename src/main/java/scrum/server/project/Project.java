@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -20,9 +20,10 @@ import ilarkesto.core.money.Money;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;
+import ilarkesto.feeds.Feed;
+import ilarkesto.feeds.FeedItem;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
-import ilarkesto.rss.Rss20Builder;
 import ilarkesto.search.Searchable;
 
 import java.io.OutputStream;
@@ -261,21 +262,25 @@ public class Project extends GProject {
 	}
 
 	public void writeJournalAsRss(OutputStream out, String encoding) {
-		Rss20Builder rss = new Rss20Builder();
-		rss.setTitle(getLabel() + " Event Journal");
-		rss.setLanguage("en");
-		rss.setLink(webApplication.createUrl(this, null));
+		Feed feed = new Feed(getLabel() + " Event Journal", webApplication.createUrl(this, null), null);
+		feed.setLanguage("en");
+		// Rss20Builder rss = new Rss20Builder();
+		// rss.setTitle(getLabel() + " Event Journal");
+		// rss.setLanguage("en");
+		// rss.setLink(webApplication.createUrl(this, null));
 		for (ProjectEvent event : getLatestProjectEvents(30)) {
-			Rss20Builder.Item item = rss.addItem();
-			item.setTitle(event.getLabel());
-			item.setDescription(event.getLabel());
+			FeedItem item = new FeedItem(event.getLabel(), event.getLabel());
+			feed.addItem(item);
+			// Rss20Builder.Item item = rss.addItem();
+			// item.setTitle(event.getLabel());
+			// item.setDescription(event.getLabel());
 			String link = webApplication.createUrl(this, event.getSubject()) + "|fromEvent=" + event.getId();
 			item.setLink(link);
 			item.setGuid(link);
 			item.setPubDate(event.getDateAndTime());
 		}
-		rss.sortItems();
-		rss.write(out, encoding);
+		feed.sortItems();
+		feed.writeRss(out, encoding);
 	}
 
 	public String getFileRepositoryPath() {
