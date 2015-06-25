@@ -34,7 +34,7 @@ public class HistoryToken {
 	public static final String START_PAGE = "Dashboard";
 	public static final char SEPARATOR = '/';
 
-	private HistoryTokenObserver observer;
+	private HistoryTokenObserver observer; // Navigator
 
 	private String projectId;
 	private String page;

@@ -1,24 +1,44 @@
-// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.legacy.generator.GwtServiceCallGenerator
+
+
+
+
+
+
+
+
+
 
 package scrum.client.collaboration;
 
-public class RequestForumServiceCall extends scrum.client.core.AServiceCall {
+import java.util.*;
 
-    private boolean all;
+@com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
+public class RequestForumServiceCall
+            extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
 
-    public  RequestForumServiceCall(boolean all) {
+    private static scrum.client.ScrumServiceAsync service;
+
+    boolean all;
+
+    public RequestForumServiceCall(boolean all) {
         this.all = all;
     }
 
     @Override
-    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
-        getService().requestForum(conversationNumber, all, callback);
+    protected synchronized void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        if (service==null) {
+            service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
+            initializeService(service, "scrum");
+        }
+        service.requestForum(conversationNumber, all, callback);
     }
 
     @Override
     public String toString() {
-        return "RequestForum";
+        return "requestForum";
     }
 
 }
-

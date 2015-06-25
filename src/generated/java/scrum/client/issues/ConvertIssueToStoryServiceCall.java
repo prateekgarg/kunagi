@@ -1,24 +1,44 @@
-// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.legacy.generator.GwtServiceCallGenerator
+
+
+
+
+
+
+
+
+
 
 package scrum.client.issues;
 
-public class ConvertIssueToStoryServiceCall extends scrum.client.core.AServiceCall {
+import java.util.*;
 
-    private String issueId;
+@com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
+public class ConvertIssueToStoryServiceCall
+            extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
 
-    public  ConvertIssueToStoryServiceCall(String issueId) {
+    private static scrum.client.ScrumServiceAsync service;
+
+    java.lang.String issueId;
+
+    public ConvertIssueToStoryServiceCall(java.lang.String issueId) {
         this.issueId = issueId;
     }
 
     @Override
-    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
-        getService().convertIssueToStory(conversationNumber, issueId, callback);
+    protected synchronized void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        if (service==null) {
+            service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
+            initializeService(service, "scrum");
+        }
+        service.convertIssueToStory(conversationNumber, issueId, callback);
     }
 
     @Override
     public String toString() {
-        return "ConvertIssueToStory";
+        return "convertIssueToStory";
     }
 
 }
-

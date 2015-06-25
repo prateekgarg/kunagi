@@ -1,21 +1,42 @@
-// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.legacy.generator.GwtServiceCallGenerator
+
+
+
+
+
+
+
+
+
 
 package scrum.client.impediments;
 
-public class RequestImpedimentsServiceCall extends scrum.client.core.AServiceCall {
+import java.util.*;
 
-    public  RequestImpedimentsServiceCall() {
+@com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
+public class RequestImpedimentsServiceCall
+            extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
+
+    private static scrum.client.ScrumServiceAsync service;
+
+
+    public RequestImpedimentsServiceCall() {
     }
 
     @Override
-    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
-        getService().requestImpediments(conversationNumber, callback);
+    protected synchronized void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        if (service==null) {
+            service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
+            initializeService(service, "scrum");
+        }
+        service.requestImpediments(conversationNumber, callback);
     }
 
     @Override
     public String toString() {
-        return "RequestImpediments";
+        return "requestImpediments";
     }
 
 }
-

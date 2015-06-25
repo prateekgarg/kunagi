@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -28,9 +28,11 @@ import java.util.Map;
 
 import scrum.client.admin.Auth;
 import scrum.client.admin.LogoutServiceCall;
+import scrum.client.admin.SystemMessageManager;
 import scrum.client.calendar.SimpleEvent;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.Pinger;
+import scrum.client.communication.ServerErrorManager;
 import scrum.client.communication.StartConversationServiceCall;
 import scrum.client.core.RichtextAutosaver;
 import scrum.client.files.File;
@@ -56,9 +58,9 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	public static final String LOGIN_TOKEN_COOKIE = "kunagiLoginToken";
 
 	public static final String[] REFERENCE_PREFIXES = new String[] { Requirement.REFERENCE_PREFIX,
-			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
-			Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX, SimpleEvent.REFERENCE_PREFIX,
-			Release.REFERENCE_PREFIX, BlogEntry.REFERENCE_PREFIX, Sprint.REFERENCE_PREFIX };
+		Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
+		Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX, SimpleEvent.REFERENCE_PREFIX,
+		Release.REFERENCE_PREFIX, BlogEntry.REFERENCE_PREFIX, Sprint.REFERENCE_PREFIX };
 
 	private final Log log = Log.get(getClass());
 
@@ -93,6 +95,30 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 			}
 		});
 
+	}
+
+	@Override
+	protected void onServerDataReceived(DataTransferObject data) {
+		super.onServerDataReceived(data);
+
+		if (data.applicationInfo != null) {
+			applicationInfo = data.applicationInfo;
+			log.debug("applicationInfo:", data.applicationInfo);
+			// Scope.get().putComponent(data.applicationInfo);
+		} else {
+			assert applicationInfo != null;
+		}
+
+		Scope.get().getComponent(Dao.class).handleDataFromServer(data);
+
+		String userId = data.getUserId();
+		if (userId != null) {
+			log.info("User id received:", userId);
+			Scope.get().getComponent(Auth.class).setUser(userId);
+		}
+		Scope.get().getComponent(Pinger.class).dataReceived();
+		Scope.get().getComponent(ServerErrorManager.class).handleErrors(data.getErrors());
+		Scope.get().getComponent(SystemMessageManager.class).updateMessage(data.systemMessage);
 	}
 
 	public ApplicationInfo getApplicationInfo() {

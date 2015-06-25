@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,6 @@ import ilarkesto.gwt.client.AServiceCall;
 
 import java.util.LinkedList;
 
-import scrum.client.DataTransferObject;
 import scrum.client.project.Requirement;
 import scrum.client.workspace.BlockCollapsedEvent;
 import scrum.client.workspace.BlockCollapsedHandler;
@@ -29,7 +28,7 @@ import scrum.client.workspace.BlockExpandedHandler;
 
 import com.google.gwt.user.client.Timer;
 
-public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockExpandedHandler, BlockCollapsedHandler {
+public class Pinger extends GPinger implements BlockExpandedHandler, BlockCollapsedHandler {
 
 	private static Log log = Log.get(Pinger.class);
 
@@ -81,13 +80,9 @@ public class Pinger extends GPinger implements ServerDataReceivedHandler, BlockE
 		timer = null;
 	}
 
-	@Override
-	public void onServerDataReceived(ServerDataReceivedEvent event) {
-		DataTransferObject data = event.getData();
-		if (data.containsEntities()) {
-			lastDataReceiveTime = Tm.getCurrentTimeMillis();
-			reschedule();
-		}
+	public void dataReceived() {
+		lastDataReceiveTime = Tm.getCurrentTimeMillis();
+		reschedule();
 	}
 
 	@Override

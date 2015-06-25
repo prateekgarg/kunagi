@@ -1,32 +1,46 @@
-// // ----------> GENERATED FILE - DON'T TOUCH! <----------
+// ----------> GENERATED FILE - DON'T TOUCH! <----------
+
+// generator: ilarkesto.mda.legacy.generator.GwtServiceCallGenerator
+
+
+
+
+
+
+
+
+
 
 package scrum.client.core;
 
-public class ChangePropertiesServiceCall extends scrum.client.core.AServiceCall {
+import java.util.*;
 
-    private String entityId;
+@com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
+public class ChangePropertiesServiceCall
+            extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
 
-    private java.util.Map<String, String> properties;
+    private static scrum.client.ScrumServiceAsync service;
 
-    public  ChangePropertiesServiceCall(String entityId, java.util.Map<String, String> properties) {
+    java.lang.String entityId;
+    java.util.Map<String, String> properties;
+
+    public ChangePropertiesServiceCall(java.lang.String entityId, java.util.Map<String, String> properties) {
         this.entityId = entityId;
         this.properties = properties;
     }
 
     @Override
-    public void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
-        getService().changeProperties(conversationNumber, entityId, properties, callback);
-    }
-
-    @Override
-    public boolean isDispensable() {
-        return ilarkesto.core.scope.Scope.get().getComponent(scrum.client.Dao.class).getEntity(entityId) instanceof scrum.client.admin.ProjectUserConfig && (properties.containsKey("selectedEntitysIds") || properties.containsKey("richtextAutosaveText") || properties.containsKey("richtextAutosaveField") || properties.containsKey("online"));
+    protected synchronized void onExecute(int conversationNumber, com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback) {
+        if (service==null) {
+            service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
+            initializeService(service, "scrum");
+        }
+        service.changeProperties(conversationNumber, entityId, properties, callback);
     }
 
     @Override
     public String toString() {
-        return "ChangeProperties";
+        return "changeProperties";
     }
 
 }
-

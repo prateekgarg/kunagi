@@ -137,6 +137,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: sendTestEmail");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall sendTestEmail waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -161,6 +164,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"sendTestEmail");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onTestLdap(GwtConversation conversation);
@@ -170,6 +174,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: testLdap");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall testLdap waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -194,6 +201,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"testLdap");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
@@ -240,6 +248,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestComments");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestComments waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -264,6 +275,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestComments", parentId);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onRequestForum(GwtConversation conversation, boolean all);
@@ -273,6 +285,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestForum");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestForum waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -297,6 +312,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestForum", all);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onPing(GwtConversation conversation);
@@ -304,6 +320,7 @@ public abstract class GScrumServiceImpl
     @Override
     public scrum.client.DataTransferObject ping(int conversationNumber) {
         WebSession session = (WebSession) getSession();
+        synchronized (getSyncObject()) {
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -323,6 +340,7 @@ public abstract class GScrumServiceImpl
                 handleServiceMethodException(conversationNumber, "ping", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onStartConversation(GwtConversation conversation);
@@ -436,10 +454,10 @@ public abstract class GScrumServiceImpl
         }
     }
 
-    protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map properties);
+    protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map<String, String> properties);
 
     @Override
-    public scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map properties) {
+    public scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: createEntity");
         WebSession session = (WebSession) getSession();
@@ -591,6 +609,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: sleep");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall sleep waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -615,6 +636,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"sleep", millis);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, java.lang.String requirementId);
@@ -698,6 +720,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestImpediments");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestImpediments waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -722,6 +747,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestImpediments");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onConvertIssueToStory(GwtConversation conversation, java.lang.String issueId);
@@ -768,6 +794,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestAcceptedIssues");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestAcceptedIssues waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -792,6 +821,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestAcceptedIssues");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onRequestClosedIssues(GwtConversation conversation);
@@ -801,6 +831,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestClosedIssues");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestClosedIssues waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -825,6 +858,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestClosedIssues");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onRequestReleaseIssues(GwtConversation conversation, java.lang.String releaseId);
@@ -834,6 +868,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestReleaseIssues");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestReleaseIssues waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -858,6 +895,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestReleaseIssues", releaseId);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onSendIssueReplyEmail(GwtConversation conversation, java.lang.String issueId, java.lang.String from, java.lang.String to, java.lang.String subject, java.lang.String text);
@@ -904,6 +942,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestChanges");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestChanges waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -928,6 +969,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestChanges", parentId);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onRequestProjectEvents(GwtConversation conversation);
@@ -937,6 +979,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestProjectEvents");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestProjectEvents waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -961,6 +1006,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestProjectEvents");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onCloseProject(GwtConversation conversation);
@@ -970,6 +1016,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: closeProject");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall closeProject waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -994,6 +1043,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"closeProject");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onCreateExampleProject(GwtConversation conversation);
@@ -1151,6 +1201,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: updateProjectHomepage");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall updateProjectHomepage waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -1175,6 +1228,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"updateProjectHomepage");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onPublishRelease(GwtConversation conversation, java.lang.String releaseId);
@@ -1221,6 +1275,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestRisks");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestRisks waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -1245,6 +1302,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestRisks");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
@@ -1254,6 +1312,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: search");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall search waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -1278,6 +1339,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"search", text);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onCreateIssueFromTask(GwtConversation conversation, java.lang.String taskId);
@@ -1398,6 +1460,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestHistory");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestHistory waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -1422,6 +1487,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestHistory");
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onRequestHistorySprint(GwtConversation conversation, java.lang.String sprintId);
@@ -1431,6 +1497,9 @@ public abstract class GScrumServiceImpl
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestHistorySprint");
         WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall requestHistorySprint waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             GwtConversation conversation = null;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
@@ -1455,6 +1524,7 @@ public abstract class GScrumServiceImpl
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"requestHistorySprint", sprintId);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
     }
 
     protected abstract void onSwitchToNextSprint(GwtConversation conversation);
