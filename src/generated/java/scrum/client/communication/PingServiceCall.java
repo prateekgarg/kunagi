@@ -35,6 +35,11 @@ public class PingServiceCall
     }
 
     @Override
+    public boolean isDispensable() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "ping";
     }

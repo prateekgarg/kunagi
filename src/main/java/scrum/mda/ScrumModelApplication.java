@@ -78,13 +78,15 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setPackageName("admin");
 			gwtServiceModel.addMethod("logout").setPackageName("admin");
 			gwtServiceModel.addMethod("resetPassword").addParameter("userId").setPackageName("admin");
-			gwtServiceModel.addMethod("sendTestEmail").setPackageName("admin");
-			gwtServiceModel.addMethod("testLdap").setPackageName("admin");
+			gwtServiceModel.addMethod("sendTestEmail").setPackageName("admin").setSync(false);
+			gwtServiceModel.addMethod("testLdap").setPackageName("admin").setSync(false);
 			gwtServiceModel.addMethod("updateSystemMessage")
 					.addParameter("systemMessage", "scrum.client.admin.SystemMessage").setPackageName("admin");
-			gwtServiceModel.addMethod("requestComments").addParameter("parentId").setPackageName("collaboration");
-			gwtServiceModel.addMethod("requestForum").addParameter("all", "boolean").setPackageName("collaboration");
-			gwtServiceModel.addMethod("ping").setPackageName("communication");
+			gwtServiceModel.addMethod("requestComments").addParameter("parentId").setPackageName("collaboration")
+					.setSync(false);
+			gwtServiceModel.addMethod("requestForum").addParameter("all", "boolean").setPackageName("collaboration")
+					.setSync(false);
+			gwtServiceModel.addMethod("ping").setDispensable(true).setPackageName("communication").setSync(false);
 			gwtServiceModel.addMethod("startConversation").setPackageName("communication");
 			gwtServiceModel.addMethod("touchLastActivity").setPackageName("communication");
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId")
@@ -92,37 +94,41 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("createEntity").addParameter("type")
 					.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
 			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId").setPackageName("core");
-			gwtServiceModel.addMethod("requestEntity").addParameter("entityId").setPackageName("core");
-			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference").setPackageName("core");
-			gwtServiceModel.addMethod("sleep").addParameter("millis", "long").setPackageName("core");
+			gwtServiceModel.addMethod("requestEntity").addParameter("entityId").setPackageName("core").setSync(false);
+			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference").setPackageName("core")
+					.setSync(false);
+			gwtServiceModel.addMethod("sleep").addParameter("millis", "long").setPackageName("core").setSync(false);
 			gwtServiceModel.addMethod("activateRequirementEstimationVoting").addParameter("requirementId")
 					.setPackageName("estimation");
 			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId")
-					.setPackageName("estimation");
-			gwtServiceModel.addMethod("requestImpediments").setPackageName("impediments");
+					.setPackageName("estimation").setSync(false);
+			gwtServiceModel.addMethod("requestImpediments").setPackageName("impediments").setSync(false);
 			gwtServiceModel.addMethod("convertIssueToStory").addParameter("issueId").setPackageName("issues");
-			gwtServiceModel.addMethod("requestAcceptedIssues").setPackageName("issues");
-			gwtServiceModel.addMethod("requestClosedIssues").setPackageName("issues");
-			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId").setPackageName("issues");
+			gwtServiceModel.addMethod("requestAcceptedIssues").setPackageName("issues").setSync(false);
+			gwtServiceModel.addMethod("requestClosedIssues").setPackageName("issues").setSync(false);
+			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId").setPackageName("issues")
+					.setSync(false);
 			gwtServiceModel.addMethod("sendIssueReplyEmail").addParameter("issueId").addParameter("from")
 					.addParameter("to").addParameter("subject").addParameter("text").setPackageName("issues");
-			gwtServiceModel.addMethod("requestChanges").addParameter("parentId").setPackageName("journal");
-			gwtServiceModel.addMethod("requestProjectEvents").setPackageName("journal");
+			gwtServiceModel.addMethod("requestChanges").addParameter("parentId").setPackageName("journal")
+					.setSync(false);
+			gwtServiceModel.addMethod("requestProjectEvents").setPackageName("journal").setSync(false);
 			gwtServiceModel.addMethod("closeProject").setPackageName("project");
 			gwtServiceModel.addMethod("createExampleProject").setPackageName("project");
 			gwtServiceModel.addMethod("deleteStory").addParameter("storyId").setPackageName("project");
 			gwtServiceModel.addMethod("moveRequirementToProject").addParameter("destinationProjectId")
 					.addParameter("requirementId").setPackageName("project");
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId").setPackageName("project");
-			gwtServiceModel.addMethod("updateProjectHomepage").setPackageName("project");
+			gwtServiceModel.addMethod("updateProjectHomepage").setPackageName("project").setSync(false);
 			gwtServiceModel.addMethod("publishRelease").addParameter("releaseId").setPackageName("release");
-			gwtServiceModel.addMethod("requestRisks").setPackageName("risks");
-			gwtServiceModel.addMethod("search").addParameter("text").setPackageName("search");
+			gwtServiceModel.addMethod("requestRisks").setPackageName("risks").setSync(false);
+			gwtServiceModel.addMethod("search").addParameter("text").setPackageName("search").setSync(false);
 			gwtServiceModel.addMethod("createIssueFromTask").addParameter("taskId").setPackageName("sprint");
 			gwtServiceModel.addMethod("kickStoryFromSprint").addParameter("storyId").setPackageName("sprint");
 			gwtServiceModel.addMethod("pullStoryToSprint").addParameter("storyId").setPackageName("sprint");
-			gwtServiceModel.addMethod("requestHistory").setPackageName("sprint");
-			gwtServiceModel.addMethod("requestHistorySprint").addParameter("sprintId").setPackageName("sprint");
+			gwtServiceModel.addMethod("requestHistory").setPackageName("sprint").setSync(false);
+			gwtServiceModel.addMethod("requestHistorySprint").addParameter("sprintId").setPackageName("sprint")
+					.setSync(false);
 			gwtServiceModel.addMethod("switchToNextSprint").setPackageName("sprint");
 		}
 		return gwtServiceModel;
