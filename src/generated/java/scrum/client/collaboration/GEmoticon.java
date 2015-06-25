@@ -58,7 +58,7 @@ public abstract class GEmoticon
         String id = parent == null ? null : parent.getId();
         if (equals(this.parentId, id)) return (Emoticon) this;
         this.parentId = id;
-        propertyChanged("parentId", this.parentId);
+        propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Emoticon)this;
     }
 
@@ -84,7 +84,7 @@ public abstract class GEmoticon
         String id = owner == null ? null : owner.getId();
         if (equals(this.ownerId, id)) return (Emoticon) this;
         this.ownerId = id;
-        propertyChanged("ownerId", this.ownerId);
+        propertyChanged("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
         return (Emoticon)this;
     }
 
@@ -104,7 +104,7 @@ public abstract class GEmoticon
     public final Emoticon setEmotion(java.lang.String emotion) {
         if (isEmotion(emotion)) return (Emoticon)this;
         this.emotion = emotion ;
-        propertyChanged("emotion", this.emotion);
+        propertyChanged("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
         return (Emoticon)this;
     }
 

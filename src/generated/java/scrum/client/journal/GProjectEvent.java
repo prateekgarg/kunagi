@@ -60,7 +60,7 @@ public abstract class GProjectEvent
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (ProjectEvent) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (ProjectEvent)this;
     }
 
@@ -81,7 +81,7 @@ public abstract class GProjectEvent
         if (isLabel(label)) return (ProjectEvent)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (ProjectEvent)this;
     }
 
@@ -147,7 +147,7 @@ public abstract class GProjectEvent
         String id = subject == null ? null : subject.getId();
         if (equals(this.subjectId, id)) return (ProjectEvent) this;
         this.subjectId = id;
-        propertyChanged("subjectId", this.subjectId);
+        propertyChanged("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
         return (ProjectEvent)this;
     }
 
@@ -168,7 +168,7 @@ public abstract class GProjectEvent
         if (isDateAndTime(dateAndTime)) return (ProjectEvent)this;
         if (dateAndTime == null) throw new RuntimeException("Field is mandatory.");
         this.dateAndTime = dateAndTime ;
-        propertyChanged("dateAndTime", this.dateAndTime);
+        propertyChanged("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
         return (ProjectEvent)this;
     }
 

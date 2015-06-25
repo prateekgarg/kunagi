@@ -60,7 +60,7 @@ public abstract class GRisk
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Risk) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Risk)this;
     }
 
@@ -80,7 +80,7 @@ public abstract class GRisk
     public final Risk setNumber(int number) {
         if (isNumber(number)) return (Risk)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Risk)this;
     }
 
@@ -147,7 +147,7 @@ public abstract class GRisk
     public final Risk setLabel(java.lang.String label) {
         if (isLabel(label)) return (Risk)this;
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Risk)this;
     }
 
@@ -202,7 +202,7 @@ public abstract class GRisk
     public final Risk setDescription(java.lang.String description) {
         if (isDescription(description)) return (Risk)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Risk)this;
     }
 
@@ -260,7 +260,7 @@ public abstract class GRisk
     public final Risk setProbabilityMitigation(java.lang.String probabilityMitigation) {
         if (isProbabilityMitigation(probabilityMitigation)) return (Risk)this;
         this.probabilityMitigation = probabilityMitigation ;
-        propertyChanged("probabilityMitigation", this.probabilityMitigation);
+        propertyChanged("probabilityMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.probabilityMitigation));
         return (Risk)this;
     }
 
@@ -318,7 +318,7 @@ public abstract class GRisk
     public final Risk setImpactMitigation(java.lang.String impactMitigation) {
         if (isImpactMitigation(impactMitigation)) return (Risk)this;
         this.impactMitigation = impactMitigation ;
-        propertyChanged("impactMitigation", this.impactMitigation);
+        propertyChanged("impactMitigation", ilarkesto.core.persistance.Persistence.propertyAsString(this.impactMitigation));
         return (Risk)this;
     }
 
@@ -376,7 +376,7 @@ public abstract class GRisk
     public final Risk setProbability(int probability) {
         if (isProbability(probability)) return (Risk)this;
         this.probability = probability ;
-        propertyChanged("probability", this.probability);
+        propertyChanged("probability", ilarkesto.core.persistance.Persistence.propertyAsString(this.probability));
         return (Risk)this;
     }
 
@@ -445,7 +445,7 @@ public abstract class GRisk
     public final Risk setImpact(int impact) {
         if (isImpact(impact)) return (Risk)this;
         this.impact = impact ;
-        propertyChanged("impact", this.impact);
+        propertyChanged("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
         return (Risk)this;
     }
 

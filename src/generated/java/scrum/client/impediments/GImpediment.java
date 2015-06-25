@@ -58,7 +58,7 @@ public abstract class GImpediment
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Impediment) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Impediment)this;
     }
 
@@ -78,7 +78,7 @@ public abstract class GImpediment
     public final Impediment setNumber(int number) {
         if (isNumber(number)) return (Impediment)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Impediment)this;
     }
 
@@ -145,7 +145,7 @@ public abstract class GImpediment
     public final Impediment setLabel(java.lang.String label) {
         if (isLabel(label)) return (Impediment)this;
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Impediment)this;
     }
 
@@ -201,7 +201,7 @@ public abstract class GImpediment
         if (isDate(date)) return (Impediment)this;
         if (date == null) throw new RuntimeException("Field is mandatory.");
         this.date = date ;
-        propertyChanged("date", this.date);
+        propertyChanged("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
         return (Impediment)this;
     }
 
@@ -260,7 +260,7 @@ public abstract class GImpediment
     public final Impediment setDescription(java.lang.String description) {
         if (isDescription(description)) return (Impediment)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Impediment)this;
     }
 
@@ -318,7 +318,7 @@ public abstract class GImpediment
     public final Impediment setSolution(java.lang.String solution) {
         if (isSolution(solution)) return (Impediment)this;
         this.solution = solution ;
-        propertyChanged("solution", this.solution);
+        propertyChanged("solution", ilarkesto.core.persistance.Persistence.propertyAsString(this.solution));
         return (Impediment)this;
     }
 
@@ -376,7 +376,7 @@ public abstract class GImpediment
     public final Impediment setClosed(boolean closed) {
         if (isClosed(closed)) return (Impediment)this;
         this.closed = closed ;
-        propertyChanged("closed", this.closed);
+        propertyChanged("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
         return (Impediment)this;
     }
 

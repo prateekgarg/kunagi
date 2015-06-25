@@ -60,7 +60,7 @@ public abstract class GTask
         String id = requirement == null ? null : requirement.getId();
         if (equals(this.requirementId, id)) return (Task) this;
         this.requirementId = id;
-        propertyChanged("requirementId", this.requirementId);
+        propertyChanged("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
         return (Task)this;
     }
 
@@ -80,7 +80,7 @@ public abstract class GTask
     public final Task setNumber(int number) {
         if (isNumber(number)) return (Task)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Task)this;
     }
 
@@ -148,7 +148,7 @@ public abstract class GTask
         if (isLabel(label)) return (Task)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Task)this;
     }
 
@@ -210,7 +210,7 @@ public abstract class GTask
     public final Task setDescription(java.lang.String description) {
         if (isDescription(description)) return (Task)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Task)this;
     }
 
@@ -271,7 +271,7 @@ public abstract class GTask
     public final Task setRemainingWork(int remainingWork) {
         if (isRemainingWork(remainingWork)) return (Task)this;
         this.remainingWork = remainingWork ;
-        propertyChanged("remainingWork", this.remainingWork);
+        propertyChanged("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
         return (Task)this;
     }
 
@@ -343,7 +343,7 @@ public abstract class GTask
     public final Task setBurnedWork(int burnedWork) {
         if (isBurnedWork(burnedWork)) return (Task)this;
         this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
+        propertyChanged("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
         return (Task)this;
     }
 
@@ -421,7 +421,7 @@ public abstract class GTask
         String id = owner == null ? null : owner.getId();
         if (equals(this.ownerId, id)) return (Task) this;
         this.ownerId = id;
-        propertyChanged("ownerId", this.ownerId);
+        propertyChanged("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
         return (Task)this;
     }
 
@@ -447,7 +447,7 @@ public abstract class GTask
         String id = impediment == null ? null : impediment.getId();
         if (equals(this.impedimentId, id)) return (Task) this;
         this.impedimentId = id;
-        propertyChanged("impedimentId", this.impedimentId);
+        propertyChanged("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
         return (Task)this;
     }
 
@@ -473,7 +473,7 @@ public abstract class GTask
         String id = closedInPastSprint == null ? null : closedInPastSprint.getId();
         if (equals(this.closedInPastSprintId, id)) return (Task) this;
         this.closedInPastSprintId = id;
-        propertyChanged("closedInPastSprintId", this.closedInPastSprintId);
+        propertyChanged("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
         return (Task)this;
     }
 

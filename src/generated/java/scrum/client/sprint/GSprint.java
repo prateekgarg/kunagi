@@ -62,7 +62,7 @@ public abstract class GSprint
     public final Sprint setNumber(int number) {
         if (isNumber(number)) return (Sprint)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Sprint)this;
     }
 
@@ -135,7 +135,7 @@ public abstract class GSprint
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Sprint) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Sprint)this;
     }
 
@@ -155,7 +155,7 @@ public abstract class GSprint
     public final Sprint setLabel(java.lang.String label) {
         if (isLabel(label)) return (Sprint)this;
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Sprint)this;
     }
 
@@ -213,7 +213,7 @@ public abstract class GSprint
     public final Sprint setGoal(java.lang.String goal) {
         if (isGoal(goal)) return (Sprint)this;
         this.goal = goal ;
-        propertyChanged("goal", this.goal);
+        propertyChanged("goal", ilarkesto.core.persistance.Persistence.propertyAsString(this.goal));
         return (Sprint)this;
     }
 
@@ -279,7 +279,7 @@ public abstract class GSprint
     public final Sprint setBegin(ilarkesto.core.time.Date begin) {
         if (isBegin(begin)) return (Sprint)this;
         this.begin = begin ;
-        propertyChanged("begin", this.begin);
+        propertyChanged("begin", ilarkesto.core.persistance.Persistence.propertyAsString(this.begin));
         return (Sprint)this;
     }
 
@@ -337,7 +337,7 @@ public abstract class GSprint
     public final Sprint setEnd(ilarkesto.core.time.Date end) {
         if (isEnd(end)) return (Sprint)this;
         this.end = end ;
-        propertyChanged("end", this.end);
+        propertyChanged("end", ilarkesto.core.persistance.Persistence.propertyAsString(this.end));
         return (Sprint)this;
     }
 
@@ -395,7 +395,7 @@ public abstract class GSprint
     public final Sprint setOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
         if (isOriginallyEnd(originallyEnd)) return (Sprint)this;
         this.originallyEnd = originallyEnd ;
-        propertyChanged("originallyEnd", this.originallyEnd);
+        propertyChanged("originallyEnd", ilarkesto.core.persistance.Persistence.propertyAsString(this.originallyEnd));
         return (Sprint)this;
     }
 
@@ -448,7 +448,7 @@ public abstract class GSprint
     public final Sprint setVelocity(java.lang.Float velocity) {
         if (isVelocity(velocity)) return (Sprint)this;
         this.velocity = velocity ;
-        propertyChanged("velocity", this.velocity);
+        propertyChanged("velocity", ilarkesto.core.persistance.Persistence.propertyAsString(this.velocity));
         return (Sprint)this;
     }
 
@@ -501,7 +501,7 @@ public abstract class GSprint
     public final Sprint setCompletedRequirementsData(java.lang.String completedRequirementsData) {
         if (isCompletedRequirementsData(completedRequirementsData)) return (Sprint)this;
         this.completedRequirementsData = completedRequirementsData ;
-        propertyChanged("completedRequirementsData", this.completedRequirementsData);
+        propertyChanged("completedRequirementsData", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsData));
         return (Sprint)this;
     }
 
@@ -554,7 +554,7 @@ public abstract class GSprint
     public final Sprint setIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
         if (isIncompletedRequirementsData(incompletedRequirementsData)) return (Sprint)this;
         this.incompletedRequirementsData = incompletedRequirementsData ;
-        propertyChanged("incompletedRequirementsData", this.incompletedRequirementsData);
+        propertyChanged("incompletedRequirementsData", ilarkesto.core.persistance.Persistence.propertyAsString(this.incompletedRequirementsData));
         return (Sprint)this;
     }
 
@@ -607,7 +607,7 @@ public abstract class GSprint
     public final Sprint setPlanningNote(java.lang.String planningNote) {
         if (isPlanningNote(planningNote)) return (Sprint)this;
         this.planningNote = planningNote ;
-        propertyChanged("planningNote", this.planningNote);
+        propertyChanged("planningNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.planningNote));
         return (Sprint)this;
     }
 
@@ -673,7 +673,7 @@ public abstract class GSprint
     public final Sprint setReviewNote(java.lang.String reviewNote) {
         if (isReviewNote(reviewNote)) return (Sprint)this;
         this.reviewNote = reviewNote ;
-        propertyChanged("reviewNote", this.reviewNote);
+        propertyChanged("reviewNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.reviewNote));
         return (Sprint)this;
     }
 
@@ -739,7 +739,7 @@ public abstract class GSprint
     public final Sprint setRetrospectiveNote(java.lang.String retrospectiveNote) {
         if (isRetrospectiveNote(retrospectiveNote)) return (Sprint)this;
         this.retrospectiveNote = retrospectiveNote ;
-        propertyChanged("retrospectiveNote", this.retrospectiveNote);
+        propertyChanged("retrospectiveNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.retrospectiveNote));
         return (Sprint)this;
     }
 
@@ -806,7 +806,7 @@ public abstract class GSprint
         if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
-        propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
+        propertyChanged("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
     }
 
     public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
@@ -825,21 +825,21 @@ public abstract class GSprint
 
     public final void setProductOwners(Collection<scrum.client.admin.User> values) {
         productOwnersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("productOwnersIds", this.productOwnersIds);
+        propertyChanged("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
     }
 
     public final void addProductOwner(scrum.client.admin.User productOwner) {
         String id = productOwner.getId();
         if (productOwnersIds.contains(id)) return;
         productOwnersIds.add(id);
-        propertyChanged("productOwnersIds", this.productOwnersIds);
+        propertyChanged("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
     }
 
     public final void removeProductOwner(scrum.client.admin.User productOwner) {
         String id = productOwner.getId();
         if (!productOwnersIds.contains(id)) return;
         productOwnersIds.remove(id);
-        propertyChanged("productOwnersIds", this.productOwnersIds);
+        propertyChanged("productOwnersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.productOwnersIds));
     }
 
     public final boolean containsProductOwner(scrum.client.admin.User productOwner) {
@@ -858,21 +858,21 @@ public abstract class GSprint
 
     public final void setScrumMasters(Collection<scrum.client.admin.User> values) {
         scrumMastersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
     }
 
     public final void addScrumMaster(scrum.client.admin.User scrumMaster) {
         String id = scrumMaster.getId();
         if (scrumMastersIds.contains(id)) return;
         scrumMastersIds.add(id);
-        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
     }
 
     public final void removeScrumMaster(scrum.client.admin.User scrumMaster) {
         String id = scrumMaster.getId();
         if (!scrumMastersIds.contains(id)) return;
         scrumMastersIds.remove(id);
-        propertyChanged("scrumMastersIds", this.scrumMastersIds);
+        propertyChanged("scrumMastersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.scrumMastersIds));
     }
 
     public final boolean containsScrumMaster(scrum.client.admin.User scrumMaster) {
@@ -891,21 +891,21 @@ public abstract class GSprint
 
     public final void setTeamMembers(Collection<scrum.client.admin.User> values) {
         teamMembersIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("teamMembersIds", this.teamMembersIds);
+        propertyChanged("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
     }
 
     public final void addTeamMember(scrum.client.admin.User teamMember) {
         String id = teamMember.getId();
         if (teamMembersIds.contains(id)) return;
         teamMembersIds.add(id);
-        propertyChanged("teamMembersIds", this.teamMembersIds);
+        propertyChanged("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
     }
 
     public final void removeTeamMember(scrum.client.admin.User teamMember) {
         String id = teamMember.getId();
         if (!teamMembersIds.contains(id)) return;
         teamMembersIds.remove(id);
-        propertyChanged("teamMembersIds", this.teamMembersIds);
+        propertyChanged("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
     }
 
     public final boolean containsTeamMember(scrum.client.admin.User teamMember) {

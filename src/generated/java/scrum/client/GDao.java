@@ -47,8 +47,8 @@ public abstract class GDao
         entityCreated(blogEntry, null);
     }
 
-    protected scrum.client.pr.BlogEntry updateBlogEntry(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.pr.BlogEntry updateBlogEntry(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.pr.BlogEntry entity = blogEntrys.get(id);
         if (entity == null) {
             entity = new scrum.client.pr.BlogEntry(data);
@@ -170,8 +170,8 @@ public abstract class GDao
         entityCreated(change, null);
     }
 
-    protected scrum.client.journal.Change updateChange(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.journal.Change updateChange(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.journal.Change entity = changes.get(id);
         if (entity == null) {
             entity = new scrum.client.journal.Change(data);
@@ -285,8 +285,8 @@ public abstract class GDao
         entityCreated(chatMessage, null);
     }
 
-    protected scrum.client.collaboration.ChatMessage updateChatMessage(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.collaboration.ChatMessage updateChatMessage(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.collaboration.ChatMessage entity = chatMessages.get(id);
         if (entity == null) {
             entity = new scrum.client.collaboration.ChatMessage(data);
@@ -376,8 +376,8 @@ public abstract class GDao
         entityCreated(comment, null);
     }
 
-    protected scrum.client.collaboration.Comment updateComment(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.collaboration.Comment updateComment(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.collaboration.Comment entity = comments.get(id);
         if (entity == null) {
             entity = new scrum.client.collaboration.Comment(data);
@@ -499,8 +499,8 @@ public abstract class GDao
         entityCreated(emoticon, null);
     }
 
-    protected scrum.client.collaboration.Emoticon updateEmoticon(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.collaboration.Emoticon updateEmoticon(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.collaboration.Emoticon entity = emoticons.get(id);
         if (entity == null) {
             entity = new scrum.client.collaboration.Emoticon(data);
@@ -582,8 +582,8 @@ public abstract class GDao
         entityCreated(file, null);
     }
 
-    protected scrum.client.files.File updateFile(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.files.File updateFile(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.files.File entity = files.get(id);
         if (entity == null) {
             entity = new scrum.client.files.File(data);
@@ -689,8 +689,8 @@ public abstract class GDao
         entityCreated(impediment, null);
     }
 
-    protected scrum.client.impediments.Impediment updateImpediment(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.impediments.Impediment updateImpediment(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.impediments.Impediment entity = impediments.get(id);
         if (entity == null) {
             entity = new scrum.client.impediments.Impediment(data);
@@ -804,8 +804,8 @@ public abstract class GDao
         entityCreated(issue, null);
     }
 
-    protected scrum.client.issues.Issue updateIssue(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.issues.Issue updateIssue(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.issues.Issue entity = issues.get(id);
         if (entity == null) {
             entity = new scrum.client.issues.Issue(data);
@@ -1039,8 +1039,8 @@ public abstract class GDao
         entityCreated(project, null);
     }
 
-    protected scrum.client.project.Project updateProject(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.project.Project updateProject(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.project.Project entity = projects.get(id);
         if (entity == null) {
             entity = new scrum.client.project.Project(data);
@@ -1441,8 +1441,8 @@ public abstract class GDao
         entityCreated(projectEvent, null);
     }
 
-    protected scrum.client.journal.ProjectEvent updateProjectEvent(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.journal.ProjectEvent updateProjectEvent(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.journal.ProjectEvent entity = projectEvents.get(id);
         if (entity == null) {
             entity = new scrum.client.journal.ProjectEvent(data);
@@ -1532,8 +1532,8 @@ public abstract class GDao
         entityCreated(projectUserConfig, null);
     }
 
-    protected scrum.client.admin.ProjectUserConfig updateProjectUserConfig(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.admin.ProjectUserConfig updateProjectUserConfig(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.admin.ProjectUserConfig entity = projectUserConfigs.get(id);
         if (entity == null) {
             entity = new scrum.client.admin.ProjectUserConfig(data);
@@ -1727,8 +1727,8 @@ public abstract class GDao
         entityCreated(quality, null);
     }
 
-    protected scrum.client.project.Quality updateQuality(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.project.Quality updateQuality(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.project.Quality entity = qualitys.get(id);
         if (entity == null) {
             entity = new scrum.client.project.Quality(data);
@@ -1826,8 +1826,8 @@ public abstract class GDao
         entityCreated(release, null);
     }
 
-    protected scrum.client.release.Release updateRelease(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.release.Release updateRelease(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.release.Release entity = releases.get(id);
         if (entity == null) {
             entity = new scrum.client.release.Release(data);
@@ -1989,8 +1989,8 @@ public abstract class GDao
         entityCreated(requirement, null);
     }
 
-    protected scrum.client.project.Requirement updateRequirement(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.project.Requirement updateRequirement(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.project.Requirement entity = requirements.get(id);
         if (entity == null) {
             entity = new scrum.client.project.Requirement(data);
@@ -2192,8 +2192,8 @@ public abstract class GDao
         entityCreated(requirementEstimationVote, null);
     }
 
-    protected scrum.client.estimation.RequirementEstimationVote updateRequirementEstimationVote(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.estimation.RequirementEstimationVote updateRequirementEstimationVote(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.estimation.RequirementEstimationVote entity = requirementEstimationVotes.get(id);
         if (entity == null) {
             entity = new scrum.client.estimation.RequirementEstimationVote(data);
@@ -2275,8 +2275,8 @@ public abstract class GDao
         entityCreated(risk, null);
     }
 
-    protected scrum.client.risks.Risk updateRisk(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.risks.Risk updateRisk(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.risks.Risk entity = risks.get(id);
         if (entity == null) {
             entity = new scrum.client.risks.Risk(data);
@@ -2398,8 +2398,8 @@ public abstract class GDao
         entityCreated(simpleEvent, null);
     }
 
-    protected scrum.client.calendar.SimpleEvent updateSimpleEvent(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.calendar.SimpleEvent updateSimpleEvent(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.calendar.SimpleEvent entity = simpleEvents.get(id);
         if (entity == null) {
             entity = new scrum.client.calendar.SimpleEvent(data);
@@ -2529,8 +2529,8 @@ public abstract class GDao
         entityCreated(sprint, null);
     }
 
-    protected scrum.client.sprint.Sprint updateSprint(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.sprint.Sprint updateSprint(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.sprint.Sprint entity = sprints.get(id);
         if (entity == null) {
             entity = new scrum.client.sprint.Sprint(data);
@@ -2724,8 +2724,8 @@ public abstract class GDao
         entityCreated(sprintReport, null);
     }
 
-    protected scrum.client.sprint.SprintReport updateSprintReport(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.sprint.SprintReport updateSprintReport(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.sprint.SprintReport entity = sprintReports.get(id);
         if (entity == null) {
             entity = new scrum.client.sprint.SprintReport(data);
@@ -2838,8 +2838,8 @@ public abstract class GDao
         entityCreated(subject, null);
     }
 
-    protected scrum.client.collaboration.Subject updateSubject(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.collaboration.Subject updateSubject(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.collaboration.Subject entity = subjects.get(id);
         if (entity == null) {
             entity = new scrum.client.collaboration.Subject(data);
@@ -2929,8 +2929,8 @@ public abstract class GDao
         entityCreated(subscription, null);
     }
 
-    protected scrum.client.pr.Subscription updateSubscription(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.pr.Subscription updateSubscription(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.pr.Subscription entity = subscriptions.get(id);
         if (entity == null) {
             entity = new scrum.client.pr.Subscription(data);
@@ -3003,8 +3003,8 @@ public abstract class GDao
         entityCreated(systemConfig, null);
     }
 
-    protected scrum.client.admin.SystemConfig updateSystemConfig(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.admin.SystemConfig updateSystemConfig(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.admin.SystemConfig entity = systemConfigs.get(id);
         if (entity == null) {
             entity = new scrum.client.admin.SystemConfig(data);
@@ -3294,8 +3294,8 @@ public abstract class GDao
         entityCreated(task, null);
     }
 
-    protected scrum.client.sprint.Task updateTask(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.sprint.Task updateTask(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.sprint.Task entity = tasks.get(id);
         if (entity == null) {
             entity = new scrum.client.sprint.Task(data);
@@ -3425,8 +3425,8 @@ public abstract class GDao
         entityCreated(user, null);
     }
 
-    protected scrum.client.admin.User updateUser(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.admin.User updateUser(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.admin.User entity = users.get(id);
         if (entity == null) {
             entity = new scrum.client.admin.User(data);
@@ -3704,8 +3704,8 @@ public abstract class GDao
         entityCreated(wikipage, null);
     }
 
-    protected scrum.client.collaboration.Wikipage updateWikipage(Map data) {
-        String id = (String) data.get("id");
+    protected scrum.client.collaboration.Wikipage updateWikipage(Map<String, String> data) {
+        String id = data.get("id");
         scrum.client.collaboration.Wikipage entity = wikipages.get(id);
         if (entity == null) {
             entity = new scrum.client.collaboration.Wikipage(data);
@@ -3824,7 +3824,7 @@ public abstract class GDao
     }
 
     @Override
-    protected final ilarkesto.gwt.client.AGwtEntity updateLocalEntity(String type, Map data) {
+    protected final ilarkesto.gwt.client.AGwtEntity updateLocalEntity(String type, Map<String, String> data) {
         if (type.equals(scrum.client.pr.BlogEntry.ENTITY_TYPE)) {
             return updateBlogEntry(data);
         }

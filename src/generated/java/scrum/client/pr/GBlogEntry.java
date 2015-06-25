@@ -58,7 +58,7 @@ public abstract class GBlogEntry
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (BlogEntry) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (BlogEntry)this;
     }
 
@@ -78,7 +78,7 @@ public abstract class GBlogEntry
     public final BlogEntry setNumber(int number) {
         if (isNumber(number)) return (BlogEntry)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (BlogEntry)this;
     }
 
@@ -145,21 +145,21 @@ public abstract class GBlogEntry
 
     public final void setAuthors(Collection<scrum.client.admin.User> values) {
         authorsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("authorsIds", this.authorsIds);
+        propertyChanged("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
     }
 
     public final void addAuthor(scrum.client.admin.User author) {
         String id = author.getId();
         if (authorsIds.contains(id)) return;
         authorsIds.add(id);
-        propertyChanged("authorsIds", this.authorsIds);
+        propertyChanged("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
     }
 
     public final void removeAuthor(scrum.client.admin.User author) {
         String id = author.getId();
         if (!authorsIds.contains(id)) return;
         authorsIds.remove(id);
-        propertyChanged("authorsIds", this.authorsIds);
+        propertyChanged("authorsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorsIds));
     }
 
     public final boolean containsAuthor(scrum.client.admin.User author) {
@@ -179,7 +179,7 @@ public abstract class GBlogEntry
         if (isTitle(title)) return (BlogEntry)this;
         if (ilarkesto.core.base.Str.isBlank(title)) throw new RuntimeException("Field is mandatory.");
         this.title = title ;
-        propertyChanged("title", this.title);
+        propertyChanged("title", ilarkesto.core.persistance.Persistence.propertyAsString(this.title));
         return (BlogEntry)this;
     }
 
@@ -238,7 +238,7 @@ public abstract class GBlogEntry
     public final BlogEntry setText(java.lang.String text) {
         if (isText(text)) return (BlogEntry)this;
         this.text = text ;
-        propertyChanged("text", this.text);
+        propertyChanged("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
         return (BlogEntry)this;
     }
 
@@ -296,7 +296,7 @@ public abstract class GBlogEntry
     public final BlogEntry setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return (BlogEntry)this;
         this.dateAndTime = dateAndTime ;
-        propertyChanged("dateAndTime", this.dateAndTime);
+        propertyChanged("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
         return (BlogEntry)this;
     }
 
@@ -351,21 +351,21 @@ public abstract class GBlogEntry
 
     public final void setReleases(Collection<scrum.client.release.Release> values) {
         releasesIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("releasesIds", this.releasesIds);
+        propertyChanged("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
     }
 
     public final void addRelease(scrum.client.release.Release release) {
         String id = release.getId();
         if (releasesIds.contains(id)) return;
         releasesIds.add(id);
-        propertyChanged("releasesIds", this.releasesIds);
+        propertyChanged("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
     }
 
     public final void removeRelease(scrum.client.release.Release release) {
         String id = release.getId();
         if (!releasesIds.contains(id)) return;
         releasesIds.remove(id);
-        propertyChanged("releasesIds", this.releasesIds);
+        propertyChanged("releasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasesIds));
     }
 
     public final boolean containsRelease(scrum.client.release.Release release) {
@@ -384,7 +384,7 @@ public abstract class GBlogEntry
     public final BlogEntry setPublished(boolean published) {
         if (isPublished(published)) return (BlogEntry)this;
         this.published = published ;
-        propertyChanged("published", this.published);
+        propertyChanged("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
         return (BlogEntry)this;
     }
 

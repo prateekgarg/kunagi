@@ -58,7 +58,7 @@ public abstract class GChatMessage
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (ChatMessage) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (ChatMessage)this;
     }
 
@@ -84,7 +84,7 @@ public abstract class GChatMessage
         String id = author == null ? null : author.getId();
         if (equals(this.authorId, id)) return (ChatMessage) this;
         this.authorId = id;
-        propertyChanged("authorId", this.authorId);
+        propertyChanged("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
         return (ChatMessage)this;
     }
 
@@ -105,7 +105,7 @@ public abstract class GChatMessage
         if (isText(text)) return (ChatMessage)this;
         if (ilarkesto.core.base.Str.isBlank(text)) throw new RuntimeException("Field is mandatory.");
         this.text = text ;
-        propertyChanged("text", this.text);
+        propertyChanged("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
         return (ChatMessage)this;
     }
 
@@ -165,7 +165,7 @@ public abstract class GChatMessage
     public final ChatMessage setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return (ChatMessage)this;
         this.dateAndTime = dateAndTime ;
-        propertyChanged("dateAndTime", this.dateAndTime);
+        propertyChanged("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
         return (ChatMessage)this;
     }
 

@@ -58,7 +58,7 @@ public abstract class GFile
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (File) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (File)this;
     }
 
@@ -79,7 +79,7 @@ public abstract class GFile
         if (isFilename(filename)) return (File)this;
         if (ilarkesto.core.base.Str.isBlank(filename)) throw new RuntimeException("Field is mandatory.");
         this.filename = filename ;
-        propertyChanged("filename", this.filename);
+        propertyChanged("filename", ilarkesto.core.persistance.Persistence.propertyAsString(this.filename));
         return (File)this;
     }
 
@@ -140,7 +140,7 @@ public abstract class GFile
         if (isUploadTime(uploadTime)) return (File)this;
         if (uploadTime == null) throw new RuntimeException("Field is mandatory.");
         this.uploadTime = uploadTime ;
-        propertyChanged("uploadTime", this.uploadTime);
+        propertyChanged("uploadTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.uploadTime));
         return (File)this;
     }
 
@@ -201,7 +201,7 @@ public abstract class GFile
         if (isLabel(label)) return (File)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (File)this;
     }
 
@@ -260,7 +260,7 @@ public abstract class GFile
     public final File setNumber(int number) {
         if (isNumber(number)) return (File)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (File)this;
     }
 
@@ -327,7 +327,7 @@ public abstract class GFile
     public final File setNote(java.lang.String note) {
         if (isNote(note)) return (File)this;
         this.note = note ;
-        propertyChanged("note", this.note);
+        propertyChanged("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
         return (File)this;
     }
 

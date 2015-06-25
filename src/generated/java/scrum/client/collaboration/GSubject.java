@@ -58,7 +58,7 @@ public abstract class GSubject
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Subject) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Subject)this;
     }
 
@@ -79,7 +79,7 @@ public abstract class GSubject
         if (isLabel(label)) return (Subject)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Subject)this;
     }
 
@@ -138,7 +138,7 @@ public abstract class GSubject
     public final Subject setText(java.lang.String text) {
         if (isText(text)) return (Subject)this;
         this.text = text ;
-        propertyChanged("text", this.text);
+        propertyChanged("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
         return (Subject)this;
     }
 
@@ -196,7 +196,7 @@ public abstract class GSubject
     public final Subject setNumber(int number) {
         if (isNumber(number)) return (Subject)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Subject)this;
     }
 

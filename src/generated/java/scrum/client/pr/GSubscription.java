@@ -58,7 +58,7 @@ public abstract class GSubscription
         String id = subject == null ? null : subject.getId();
         if (equals(this.subjectId, id)) return (Subscription) this;
         this.subjectId = id;
-        propertyChanged("subjectId", this.subjectId);
+        propertyChanged("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
         return (Subscription)this;
     }
 
@@ -79,7 +79,7 @@ public abstract class GSubscription
         if (subscribersEmails == null) throw new IllegalArgumentException("null is not allowed");
         if (this.subscribersEmails.equals(subscribersEmails)) return;
         this.subscribersEmails = new java.util.HashSet<java.lang.String>(subscribersEmails);
-        propertyChanged("subscribersEmails", this.subscribersEmails);
+        propertyChanged("subscribersEmails", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscribersEmails));
     }
 
     public final boolean containsSubscribersEmail(java.lang.String subscribersEmail) {

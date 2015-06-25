@@ -60,7 +60,7 @@ public abstract class GRequirement
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Requirement) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Requirement)this;
     }
 
@@ -86,7 +86,7 @@ public abstract class GRequirement
         String id = sprint == null ? null : sprint.getId();
         if (equals(this.sprintId, id)) return (Requirement) this;
         this.sprintId = id;
-        propertyChanged("sprintId", this.sprintId);
+        propertyChanged("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
         return (Requirement)this;
     }
 
@@ -112,7 +112,7 @@ public abstract class GRequirement
         String id = issue == null ? null : issue.getId();
         if (equals(this.issueId, id)) return (Requirement) this;
         this.issueId = id;
-        propertyChanged("issueId", this.issueId);
+        propertyChanged("issueId", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueId));
         return (Requirement)this;
     }
 
@@ -132,7 +132,7 @@ public abstract class GRequirement
     public final Requirement setNumber(int number) {
         if (isNumber(number)) return (Requirement)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Requirement)this;
     }
 
@@ -199,21 +199,21 @@ public abstract class GRequirement
 
     public final void setQualitys(Collection<scrum.client.project.Quality> values) {
         qualitysIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("qualitysIds", this.qualitysIds);
+        propertyChanged("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
     }
 
     public final void addQuality(scrum.client.project.Quality quality) {
         String id = quality.getId();
         if (qualitysIds.contains(id)) return;
         qualitysIds.add(id);
-        propertyChanged("qualitysIds", this.qualitysIds);
+        propertyChanged("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
     }
 
     public final void removeQuality(scrum.client.project.Quality quality) {
         String id = quality.getId();
         if (!qualitysIds.contains(id)) return;
         qualitysIds.remove(id);
-        propertyChanged("qualitysIds", this.qualitysIds);
+        propertyChanged("qualitysIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.qualitysIds));
     }
 
     public final boolean containsQuality(scrum.client.project.Quality quality) {
@@ -232,7 +232,7 @@ public abstract class GRequirement
     public final Requirement setLabel(java.lang.String label) {
         if (isLabel(label)) return (Requirement)this;
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Requirement)this;
     }
 
@@ -290,7 +290,7 @@ public abstract class GRequirement
     public final Requirement setDescription(java.lang.String description) {
         if (isDescription(description)) return (Requirement)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Requirement)this;
     }
 
@@ -351,7 +351,7 @@ public abstract class GRequirement
     public final Requirement setTestDescription(java.lang.String testDescription) {
         if (isTestDescription(testDescription)) return (Requirement)this;
         this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
+        propertyChanged("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
         return (Requirement)this;
     }
 
@@ -412,7 +412,7 @@ public abstract class GRequirement
     public final Requirement setEstimatedWork(java.lang.Float estimatedWork) {
         if (isEstimatedWork(estimatedWork)) return (Requirement)this;
         this.estimatedWork = estimatedWork ;
-        propertyChanged("estimatedWork", this.estimatedWork);
+        propertyChanged("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
         return (Requirement)this;
     }
 
@@ -467,7 +467,7 @@ public abstract class GRequirement
     public final Requirement setRejectDate(ilarkesto.core.time.Date rejectDate) {
         if (isRejectDate(rejectDate)) return (Requirement)this;
         this.rejectDate = rejectDate ;
-        propertyChanged("rejectDate", this.rejectDate);
+        propertyChanged("rejectDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectDate));
         return (Requirement)this;
     }
 
@@ -520,7 +520,7 @@ public abstract class GRequirement
     public final Requirement setClosed(boolean closed) {
         if (isClosed(closed)) return (Requirement)this;
         this.closed = closed ;
-        propertyChanged("closed", this.closed);
+        propertyChanged("closed", ilarkesto.core.persistance.Persistence.propertyAsString(this.closed));
         return (Requirement)this;
     }
 
@@ -577,7 +577,7 @@ public abstract class GRequirement
     public final Requirement setDeleted(boolean deleted) {
         if (isDeleted(deleted)) return (Requirement)this;
         this.deleted = deleted ;
-        propertyChanged("deleted", this.deleted);
+        propertyChanged("deleted", ilarkesto.core.persistance.Persistence.propertyAsString(this.deleted));
         return (Requirement)this;
     }
 
@@ -634,7 +634,7 @@ public abstract class GRequirement
     public final Requirement setDirty(boolean dirty) {
         if (isDirty(dirty)) return (Requirement)this;
         this.dirty = dirty ;
-        propertyChanged("dirty", this.dirty);
+        propertyChanged("dirty", ilarkesto.core.persistance.Persistence.propertyAsString(this.dirty));
         return (Requirement)this;
     }
 
@@ -691,7 +691,7 @@ public abstract class GRequirement
     public final Requirement setWorkEstimationVotingActive(boolean workEstimationVotingActive) {
         if (isWorkEstimationVotingActive(workEstimationVotingActive)) return (Requirement)this;
         this.workEstimationVotingActive = workEstimationVotingActive ;
-        propertyChanged("workEstimationVotingActive", this.workEstimationVotingActive);
+        propertyChanged("workEstimationVotingActive", ilarkesto.core.persistance.Persistence.propertyAsString(this.workEstimationVotingActive));
         return (Requirement)this;
     }
 
@@ -748,7 +748,7 @@ public abstract class GRequirement
     public final Requirement setWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
         if (isWorkEstimationVotingShowoff(workEstimationVotingShowoff)) return (Requirement)this;
         this.workEstimationVotingShowoff = workEstimationVotingShowoff ;
-        propertyChanged("workEstimationVotingShowoff", this.workEstimationVotingShowoff);
+        propertyChanged("workEstimationVotingShowoff", ilarkesto.core.persistance.Persistence.propertyAsString(this.workEstimationVotingShowoff));
         return (Requirement)this;
     }
 
@@ -806,7 +806,7 @@ public abstract class GRequirement
         if (tasksOrderIds == null) throw new IllegalArgumentException("null is not allowed");
         if (this.tasksOrderIds.equals(tasksOrderIds)) return;
         this.tasksOrderIds = new java.util.ArrayList<java.lang.String>(tasksOrderIds);
-        propertyChanged("tasksOrderIds", this.tasksOrderIds);
+        propertyChanged("tasksOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.tasksOrderIds));
     }
 
     public final boolean containsTasksOrderId(java.lang.String tasksOrderId) {
@@ -826,7 +826,7 @@ public abstract class GRequirement
         if (themes == null) throw new IllegalArgumentException("null is not allowed");
         if (this.themes.equals(themes)) return;
         this.themes = new java.util.ArrayList<java.lang.String>(themes);
-        propertyChanged("themes", this.themes);
+        propertyChanged("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
     }
 
     public final boolean containsTheme(java.lang.String theme) {
@@ -851,7 +851,7 @@ public abstract class GRequirement
         String id = epic == null ? null : epic.getId();
         if (equals(this.epicId, id)) return (Requirement) this;
         this.epicId = id;
-        propertyChanged("epicId", this.epicId);
+        propertyChanged("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
         return (Requirement)this;
     }
 

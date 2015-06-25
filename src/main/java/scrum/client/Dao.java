@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -195,7 +195,7 @@ public class Dao extends GDao {
 	}
 
 	@Override
-	protected ProjectUserConfig updateProjectUserConfig(Map data) {
+	protected ProjectUserConfig updateProjectUserConfig(Map<String, String> data) {
 		List<String> previouslySelectedIds = new ArrayList<String>();
 		ProjectUserConfig config = projectUserConfigs.get(data.get("id"));
 		if (config != null) {
@@ -236,7 +236,7 @@ public class Dao extends GDao {
 	}
 
 	@Override
-	protected void onEntityPropertyChangedLocaly(AGwtEntity entity, String property, Object value) {
+	protected void onEntityPropertyChangedLocaly(AGwtEntity entity, String property, String value) {
 		cache.put(entity.getId(), property, value);
 	}
 
@@ -248,12 +248,12 @@ public class Dao extends GDao {
 
 	private class EntityChangeCache extends Timer {
 
-		private Map<String, Map> entityProperties = new HashMap<String, Map>(3);
+		private Map<String, Map<String, String>> entityProperties = new HashMap<String, Map<String, String>>(3);
 
-		public void put(String entityId, String property, Object value) {
-			Map entity = entityProperties.get(entityId);
+		public void put(String entityId, String property, String value) {
+			Map<String, String> entity = entityProperties.get(entityId);
 			if (entity == null) {
-				entity = new HashMap();
+				entity = new HashMap<String, String>();
 				entityProperties.put(entityId, entity);
 			}
 			entity.put(property, value);
@@ -271,11 +271,11 @@ public class Dao extends GDao {
 				}
 			}
 
-			for (Map.Entry<String, Map> entry : entityProperties.entrySet()) {
+			for (Map.Entry<String, Map<String, String>> entry : entityProperties.entrySet()) {
 				new ChangePropertiesServiceCall(entry.getKey(), entry.getValue()).execute();
 			}
 
-			entityProperties = new HashMap<String, Map>(3);
+			entityProperties = new HashMap<String, Map<String, String>>(3);
 		}
 
 		@Override

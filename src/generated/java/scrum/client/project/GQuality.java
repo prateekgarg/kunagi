@@ -60,7 +60,7 @@ public abstract class GQuality
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Quality) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Quality)this;
     }
 
@@ -80,7 +80,7 @@ public abstract class GQuality
     public final Quality setNumber(int number) {
         if (isNumber(number)) return (Quality)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Quality)this;
     }
 
@@ -147,7 +147,7 @@ public abstract class GQuality
     public final Quality setLabel(java.lang.String label) {
         if (isLabel(label)) return (Quality)this;
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Quality)this;
     }
 
@@ -205,7 +205,7 @@ public abstract class GQuality
     public final Quality setDescription(java.lang.String description) {
         if (isDescription(description)) return (Quality)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Quality)this;
     }
 
@@ -266,7 +266,7 @@ public abstract class GQuality
     public final Quality setTestDescription(java.lang.String testDescription) {
         if (isTestDescription(testDescription)) return (Quality)this;
         this.testDescription = testDescription ;
-        propertyChanged("testDescription", this.testDescription);
+        propertyChanged("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
         return (Quality)this;
     }
 

@@ -58,7 +58,7 @@ public abstract class GSprintReport
         String id = sprint == null ? null : sprint.getId();
         if (equals(this.sprintId, id)) return (SprintReport) this;
         this.sprintId = id;
-        propertyChanged("sprintId", this.sprintId);
+        propertyChanged("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
         return (SprintReport)this;
     }
 
@@ -78,21 +78,21 @@ public abstract class GSprintReport
 
     public final void setCompletedRequirements(Collection<scrum.client.project.Requirement> values) {
         completedRequirementsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("completedRequirementsIds", this.completedRequirementsIds);
+        propertyChanged("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
     }
 
     public final void addCompletedRequirement(scrum.client.project.Requirement completedRequirement) {
         String id = completedRequirement.getId();
         if (completedRequirementsIds.contains(id)) return;
         completedRequirementsIds.add(id);
-        propertyChanged("completedRequirementsIds", this.completedRequirementsIds);
+        propertyChanged("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
     }
 
     public final void removeCompletedRequirement(scrum.client.project.Requirement completedRequirement) {
         String id = completedRequirement.getId();
         if (!completedRequirementsIds.contains(id)) return;
         completedRequirementsIds.remove(id);
-        propertyChanged("completedRequirementsIds", this.completedRequirementsIds);
+        propertyChanged("completedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.completedRequirementsIds));
     }
 
     public final boolean containsCompletedRequirement(scrum.client.project.Requirement completedRequirement) {
@@ -111,21 +111,21 @@ public abstract class GSprintReport
 
     public final void setRejectedRequirements(Collection<scrum.client.project.Requirement> values) {
         rejectedRequirementsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        propertyChanged("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
     }
 
     public final void addRejectedRequirement(scrum.client.project.Requirement rejectedRequirement) {
         String id = rejectedRequirement.getId();
         if (rejectedRequirementsIds.contains(id)) return;
         rejectedRequirementsIds.add(id);
-        propertyChanged("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        propertyChanged("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
     }
 
     public final void removeRejectedRequirement(scrum.client.project.Requirement rejectedRequirement) {
         String id = rejectedRequirement.getId();
         if (!rejectedRequirementsIds.contains(id)) return;
         rejectedRequirementsIds.remove(id);
-        propertyChanged("rejectedRequirementsIds", this.rejectedRequirementsIds);
+        propertyChanged("rejectedRequirementsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.rejectedRequirementsIds));
     }
 
     public final boolean containsRejectedRequirement(scrum.client.project.Requirement rejectedRequirement) {
@@ -145,7 +145,7 @@ public abstract class GSprintReport
         if (requirementsOrderIds == null) throw new IllegalArgumentException("null is not allowed");
         if (this.requirementsOrderIds.equals(requirementsOrderIds)) return;
         this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>(requirementsOrderIds);
-        propertyChanged("requirementsOrderIds", this.requirementsOrderIds);
+        propertyChanged("requirementsOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementsOrderIds));
     }
 
     public final boolean containsRequirementsOrderId(java.lang.String requirementsOrderId) {
@@ -164,21 +164,21 @@ public abstract class GSprintReport
 
     public final void setClosedTasks(Collection<scrum.client.sprint.Task> values) {
         closedTasksIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("closedTasksIds", this.closedTasksIds);
+        propertyChanged("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
     }
 
     public final void addClosedTask(scrum.client.sprint.Task closedTask) {
         String id = closedTask.getId();
         if (closedTasksIds.contains(id)) return;
         closedTasksIds.add(id);
-        propertyChanged("closedTasksIds", this.closedTasksIds);
+        propertyChanged("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
     }
 
     public final void removeClosedTask(scrum.client.sprint.Task closedTask) {
         String id = closedTask.getId();
         if (!closedTasksIds.contains(id)) return;
         closedTasksIds.remove(id);
-        propertyChanged("closedTasksIds", this.closedTasksIds);
+        propertyChanged("closedTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedTasksIds));
     }
 
     public final boolean containsClosedTask(scrum.client.sprint.Task closedTask) {
@@ -197,21 +197,21 @@ public abstract class GSprintReport
 
     public final void setOpenTasks(Collection<scrum.client.sprint.Task> values) {
         openTasksIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("openTasksIds", this.openTasksIds);
+        propertyChanged("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
     }
 
     public final void addOpenTask(scrum.client.sprint.Task openTask) {
         String id = openTask.getId();
         if (openTasksIds.contains(id)) return;
         openTasksIds.add(id);
-        propertyChanged("openTasksIds", this.openTasksIds);
+        propertyChanged("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
     }
 
     public final void removeOpenTask(scrum.client.sprint.Task openTask) {
         String id = openTask.getId();
         if (!openTasksIds.contains(id)) return;
         openTasksIds.remove(id);
-        propertyChanged("openTasksIds", this.openTasksIds);
+        propertyChanged("openTasksIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.openTasksIds));
     }
 
     public final boolean containsOpenTask(scrum.client.sprint.Task openTask) {
@@ -230,7 +230,7 @@ public abstract class GSprintReport
     public final SprintReport setBurnedWork(int burnedWork) {
         if (isBurnedWork(burnedWork)) return (SprintReport)this;
         this.burnedWork = burnedWork ;
-        propertyChanged("burnedWork", this.burnedWork);
+        propertyChanged("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
         return (SprintReport)this;
     }
 

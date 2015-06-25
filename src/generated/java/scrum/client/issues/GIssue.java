@@ -58,7 +58,7 @@ public abstract class GIssue
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Issue) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Issue)this;
     }
 
@@ -84,7 +84,7 @@ public abstract class GIssue
         String id = story == null ? null : story.getId();
         if (equals(this.storyId, id)) return (Issue) this;
         this.storyId = id;
-        propertyChanged("storyId", this.storyId);
+        propertyChanged("storyId", ilarkesto.core.persistance.Persistence.propertyAsString(this.storyId));
         return (Issue)this;
     }
 
@@ -104,7 +104,7 @@ public abstract class GIssue
     public final Issue setNumber(int number) {
         if (isNumber(number)) return (Issue)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (Issue)this;
     }
 
@@ -171,7 +171,7 @@ public abstract class GIssue
     public final Issue setType(java.lang.String type) {
         if (isType(type)) return (Issue)this;
         this.type = type ;
-        propertyChanged("type", this.type);
+        propertyChanged("type", ilarkesto.core.persistance.Persistence.propertyAsString(this.type));
         return (Issue)this;
     }
 
@@ -232,7 +232,7 @@ public abstract class GIssue
         if (isDate(date)) return (Issue)this;
         if (date == null) throw new RuntimeException("Field is mandatory.");
         this.date = date ;
-        propertyChanged("date", this.date);
+        propertyChanged("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
         return (Issue)this;
     }
 
@@ -295,7 +295,7 @@ public abstract class GIssue
         String id = creator == null ? null : creator.getId();
         if (equals(this.creatorId, id)) return (Issue) this;
         this.creatorId = id;
-        propertyChanged("creatorId", this.creatorId);
+        propertyChanged("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
         return (Issue)this;
     }
 
@@ -316,7 +316,7 @@ public abstract class GIssue
         if (isLabel(label)) return (Issue)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (Issue)this;
     }
 
@@ -375,7 +375,7 @@ public abstract class GIssue
     public final Issue setDescription(java.lang.String description) {
         if (isDescription(description)) return (Issue)this;
         this.description = description ;
-        propertyChanged("description", this.description);
+        propertyChanged("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         return (Issue)this;
     }
 
@@ -433,7 +433,7 @@ public abstract class GIssue
     public final Issue setStatement(java.lang.String statement) {
         if (isStatement(statement)) return (Issue)this;
         this.statement = statement ;
-        propertyChanged("statement", this.statement);
+        propertyChanged("statement", ilarkesto.core.persistance.Persistence.propertyAsString(this.statement));
         return (Issue)this;
     }
 
@@ -491,7 +491,7 @@ public abstract class GIssue
     public final Issue setIssuerName(java.lang.String issuerName) {
         if (isIssuerName(issuerName)) return (Issue)this;
         this.issuerName = issuerName ;
-        propertyChanged("issuerName", this.issuerName);
+        propertyChanged("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
         return (Issue)this;
     }
 
@@ -546,7 +546,7 @@ public abstract class GIssue
     public final Issue setIssuerEmail(java.lang.String issuerEmail) {
         if (isIssuerEmail(issuerEmail)) return (Issue)this;
         this.issuerEmail = issuerEmail ;
-        propertyChanged("issuerEmail", this.issuerEmail);
+        propertyChanged("issuerEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerEmail));
         return (Issue)this;
     }
 
@@ -601,7 +601,7 @@ public abstract class GIssue
     public final Issue setAcceptDate(ilarkesto.core.time.Date acceptDate) {
         if (isAcceptDate(acceptDate)) return (Issue)this;
         this.acceptDate = acceptDate ;
-        propertyChanged("acceptDate", this.acceptDate);
+        propertyChanged("acceptDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.acceptDate));
         return (Issue)this;
     }
 
@@ -654,7 +654,7 @@ public abstract class GIssue
     public final Issue setUrgent(boolean urgent) {
         if (isUrgent(urgent)) return (Issue)this;
         this.urgent = urgent ;
-        propertyChanged("urgent", this.urgent);
+        propertyChanged("urgent", ilarkesto.core.persistance.Persistence.propertyAsString(this.urgent));
         return (Issue)this;
     }
 
@@ -711,7 +711,7 @@ public abstract class GIssue
     public final Issue setSeverity(int severity) {
         if (isSeverity(severity)) return (Issue)this;
         this.severity = severity ;
-        propertyChanged("severity", this.severity);
+        propertyChanged("severity", ilarkesto.core.persistance.Persistence.propertyAsString(this.severity));
         return (Issue)this;
     }
 
@@ -783,7 +783,7 @@ public abstract class GIssue
         String id = owner == null ? null : owner.getId();
         if (equals(this.ownerId, id)) return (Issue) this;
         this.ownerId = id;
-        propertyChanged("ownerId", this.ownerId);
+        propertyChanged("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
         return (Issue)this;
     }
 
@@ -803,7 +803,7 @@ public abstract class GIssue
     public final Issue setFixDate(ilarkesto.core.time.Date fixDate) {
         if (isFixDate(fixDate)) return (Issue)this;
         this.fixDate = fixDate ;
-        propertyChanged("fixDate", this.fixDate);
+        propertyChanged("fixDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixDate));
         return (Issue)this;
     }
 
@@ -856,7 +856,7 @@ public abstract class GIssue
     public final Issue setCloseDate(ilarkesto.core.time.Date closeDate) {
         if (isCloseDate(closeDate)) return (Issue)this;
         this.closeDate = closeDate ;
-        propertyChanged("closeDate", this.closeDate);
+        propertyChanged("closeDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.closeDate));
         return (Issue)this;
     }
 
@@ -909,7 +909,7 @@ public abstract class GIssue
     public final Issue setSuspendedUntilDate(ilarkesto.core.time.Date suspendedUntilDate) {
         if (isSuspendedUntilDate(suspendedUntilDate)) return (Issue)this;
         this.suspendedUntilDate = suspendedUntilDate ;
-        propertyChanged("suspendedUntilDate", this.suspendedUntilDate);
+        propertyChanged("suspendedUntilDate", ilarkesto.core.persistance.Persistence.propertyAsString(this.suspendedUntilDate));
         return (Issue)this;
     }
 
@@ -962,21 +962,21 @@ public abstract class GIssue
 
     public final void setAffectedReleases(Collection<scrum.client.release.Release> values) {
         affectedReleasesIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+        propertyChanged("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
     }
 
     public final void addAffectedRelease(scrum.client.release.Release affectedRelease) {
         String id = affectedRelease.getId();
         if (affectedReleasesIds.contains(id)) return;
         affectedReleasesIds.add(id);
-        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+        propertyChanged("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
     }
 
     public final void removeAffectedRelease(scrum.client.release.Release affectedRelease) {
         String id = affectedRelease.getId();
         if (!affectedReleasesIds.contains(id)) return;
         affectedReleasesIds.remove(id);
-        propertyChanged("affectedReleasesIds", this.affectedReleasesIds);
+        propertyChanged("affectedReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.affectedReleasesIds));
     }
 
     public final boolean containsAffectedRelease(scrum.client.release.Release affectedRelease) {
@@ -995,21 +995,21 @@ public abstract class GIssue
 
     public final void setFixReleases(Collection<scrum.client.release.Release> values) {
         fixReleasesIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
-        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+        propertyChanged("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
     }
 
     public final void addFixRelease(scrum.client.release.Release fixRelease) {
         String id = fixRelease.getId();
         if (fixReleasesIds.contains(id)) return;
         fixReleasesIds.add(id);
-        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+        propertyChanged("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
     }
 
     public final void removeFixRelease(scrum.client.release.Release fixRelease) {
         String id = fixRelease.getId();
         if (!fixReleasesIds.contains(id)) return;
         fixReleasesIds.remove(id);
-        propertyChanged("fixReleasesIds", this.fixReleasesIds);
+        propertyChanged("fixReleasesIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.fixReleasesIds));
     }
 
     public final boolean containsFixRelease(scrum.client.release.Release fixRelease) {
@@ -1028,7 +1028,7 @@ public abstract class GIssue
     public final Issue setPublished(boolean published) {
         if (isPublished(published)) return (Issue)this;
         this.published = published ;
-        propertyChanged("published", this.published);
+        propertyChanged("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
         return (Issue)this;
     }
 
@@ -1088,7 +1088,7 @@ public abstract class GIssue
         if (themes == null) throw new IllegalArgumentException("null is not allowed");
         if (this.themes.equals(themes)) return;
         this.themes = new java.util.ArrayList<java.lang.String>(themes);
-        propertyChanged("themes", this.themes);
+        propertyChanged("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
     }
 
     public final boolean containsTheme(java.lang.String theme) {

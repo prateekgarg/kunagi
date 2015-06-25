@@ -58,7 +58,7 @@ public abstract class GWikipage
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (Wikipage) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Wikipage)this;
     }
 
@@ -79,7 +79,7 @@ public abstract class GWikipage
         if (isName(name)) return (Wikipage)this;
         if (ilarkesto.core.base.Str.isBlank(name)) throw new RuntimeException("Field is mandatory.");
         this.name = name ;
-        propertyChanged("name", this.name);
+        propertyChanged("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
         return (Wikipage)this;
     }
 
@@ -136,7 +136,7 @@ public abstract class GWikipage
     public final Wikipage setText(java.lang.String text) {
         if (isText(text)) return (Wikipage)this;
         this.text = text ;
-        propertyChanged("text", this.text);
+        propertyChanged("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
         return (Wikipage)this;
     }
 

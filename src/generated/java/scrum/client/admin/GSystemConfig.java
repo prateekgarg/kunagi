@@ -52,7 +52,7 @@ public abstract class GSystemConfig
     public final SystemConfig setUrl(java.lang.String url) {
         if (isUrl(url)) return (SystemConfig)this;
         this.url = url ;
-        propertyChanged("url", this.url);
+        propertyChanged("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
         return (SystemConfig)this;
     }
 
@@ -107,7 +107,7 @@ public abstract class GSystemConfig
     public final SystemConfig setAdminEmail(java.lang.String adminEmail) {
         if (isAdminEmail(adminEmail)) return (SystemConfig)this;
         this.adminEmail = adminEmail ;
-        propertyChanged("adminEmail", this.adminEmail);
+        propertyChanged("adminEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.adminEmail));
         return (SystemConfig)this;
     }
 
@@ -162,7 +162,7 @@ public abstract class GSystemConfig
     public final SystemConfig setGoogleAnalyticsId(java.lang.String googleAnalyticsId) {
         if (isGoogleAnalyticsId(googleAnalyticsId)) return (SystemConfig)this;
         this.googleAnalyticsId = googleAnalyticsId ;
-        propertyChanged("googleAnalyticsId", this.googleAnalyticsId);
+        propertyChanged("googleAnalyticsId", ilarkesto.core.persistance.Persistence.propertyAsString(this.googleAnalyticsId));
         return (SystemConfig)this;
     }
 
@@ -217,7 +217,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpServer(java.lang.String smtpServer) {
         if (isSmtpServer(smtpServer)) return (SystemConfig)this;
         this.smtpServer = smtpServer ;
-        propertyChanged("smtpServer", this.smtpServer);
+        propertyChanged("smtpServer", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpServer));
         return (SystemConfig)this;
     }
 
@@ -272,7 +272,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpPort(java.lang.Integer smtpPort) {
         if (isSmtpPort(smtpPort)) return (SystemConfig)this;
         this.smtpPort = smtpPort ;
-        propertyChanged("smtpPort", this.smtpPort);
+        propertyChanged("smtpPort", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPort));
         return (SystemConfig)this;
     }
 
@@ -337,7 +337,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpTls(boolean smtpTls) {
         if (isSmtpTls(smtpTls)) return (SystemConfig)this;
         this.smtpTls = smtpTls ;
-        propertyChanged("smtpTls", this.smtpTls);
+        propertyChanged("smtpTls", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpTls));
         return (SystemConfig)this;
     }
 
@@ -396,7 +396,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpUser(java.lang.String smtpUser) {
         if (isSmtpUser(smtpUser)) return (SystemConfig)this;
         this.smtpUser = smtpUser ;
-        propertyChanged("smtpUser", this.smtpUser);
+        propertyChanged("smtpUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpUser));
         return (SystemConfig)this;
     }
 
@@ -451,7 +451,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpPassword(java.lang.String smtpPassword) {
         if (isSmtpPassword(smtpPassword)) return (SystemConfig)this;
         this.smtpPassword = smtpPassword ;
-        propertyChanged("smtpPassword", this.smtpPassword);
+        propertyChanged("smtpPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpPassword));
         return (SystemConfig)this;
     }
 
@@ -509,7 +509,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSmtpFrom(java.lang.String smtpFrom) {
         if (isSmtpFrom(smtpFrom)) return (SystemConfig)this;
         this.smtpFrom = smtpFrom ;
-        propertyChanged("smtpFrom", this.smtpFrom);
+        propertyChanged("smtpFrom", ilarkesto.core.persistance.Persistence.propertyAsString(this.smtpFrom));
         return (SystemConfig)this;
     }
 
@@ -564,7 +564,7 @@ public abstract class GSystemConfig
     public final SystemConfig setInstanceName(java.lang.String instanceName) {
         if (isInstanceName(instanceName)) return (SystemConfig)this;
         this.instanceName = instanceName ;
-        propertyChanged("instanceName", this.instanceName);
+        propertyChanged("instanceName", ilarkesto.core.persistance.Persistence.propertyAsString(this.instanceName));
         return (SystemConfig)this;
     }
 
@@ -619,7 +619,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLoginPageLogoUrl(java.lang.String loginPageLogoUrl) {
         if (isLoginPageLogoUrl(loginPageLogoUrl)) return (SystemConfig)this;
         this.loginPageLogoUrl = loginPageLogoUrl ;
-        propertyChanged("loginPageLogoUrl", this.loginPageLogoUrl);
+        propertyChanged("loginPageLogoUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageLogoUrl));
         return (SystemConfig)this;
     }
 
@@ -674,7 +674,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLoginPageMessage(java.lang.String loginPageMessage) {
         if (isLoginPageMessage(loginPageMessage)) return (SystemConfig)this;
         this.loginPageMessage = loginPageMessage ;
-        propertyChanged("loginPageMessage", this.loginPageMessage);
+        propertyChanged("loginPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginPageMessage));
         return (SystemConfig)this;
     }
 
@@ -732,7 +732,7 @@ public abstract class GSystemConfig
     public final SystemConfig setRegisterPageMessage(java.lang.String registerPageMessage) {
         if (isRegisterPageMessage(registerPageMessage)) return (SystemConfig)this;
         this.registerPageMessage = registerPageMessage ;
-        propertyChanged("registerPageMessage", this.registerPageMessage);
+        propertyChanged("registerPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.registerPageMessage));
         return (SystemConfig)this;
     }
 
@@ -790,7 +790,7 @@ public abstract class GSystemConfig
     public final SystemConfig setAboutPageMessage(java.lang.String aboutPageMessage) {
         if (isAboutPageMessage(aboutPageMessage)) return (SystemConfig)this;
         this.aboutPageMessage = aboutPageMessage ;
-        propertyChanged("aboutPageMessage", this.aboutPageMessage);
+        propertyChanged("aboutPageMessage", ilarkesto.core.persistance.Persistence.propertyAsString(this.aboutPageMessage));
         return (SystemConfig)this;
     }
 
@@ -846,7 +846,7 @@ public abstract class GSystemConfig
     public final SystemConfig setUserEmailMandatory(boolean userEmailMandatory) {
         if (isUserEmailMandatory(userEmailMandatory)) return (SystemConfig)this;
         this.userEmailMandatory = userEmailMandatory ;
-        propertyChanged("userEmailMandatory", this.userEmailMandatory);
+        propertyChanged("userEmailMandatory", ilarkesto.core.persistance.Persistence.propertyAsString(this.userEmailMandatory));
         return (SystemConfig)this;
     }
 
@@ -905,7 +905,7 @@ public abstract class GSystemConfig
     public final SystemConfig setRegistrationDisabled(boolean registrationDisabled) {
         if (isRegistrationDisabled(registrationDisabled)) return (SystemConfig)this;
         this.registrationDisabled = registrationDisabled ;
-        propertyChanged("registrationDisabled", this.registrationDisabled);
+        propertyChanged("registrationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDisabled));
         return (SystemConfig)this;
     }
 
@@ -964,7 +964,7 @@ public abstract class GSystemConfig
     public final SystemConfig setProjectCreationDisabled(boolean projectCreationDisabled) {
         if (isProjectCreationDisabled(projectCreationDisabled)) return (SystemConfig)this;
         this.projectCreationDisabled = projectCreationDisabled ;
-        propertyChanged("projectCreationDisabled", this.projectCreationDisabled);
+        propertyChanged("projectCreationDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectCreationDisabled));
         return (SystemConfig)this;
     }
 
@@ -1023,7 +1023,7 @@ public abstract class GSystemConfig
     public final SystemConfig setDefaultUserPassword(java.lang.String defaultUserPassword) {
         if (isDefaultUserPassword(defaultUserPassword)) return (SystemConfig)this;
         this.defaultUserPassword = defaultUserPassword ;
-        propertyChanged("defaultUserPassword", this.defaultUserPassword);
+        propertyChanged("defaultUserPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.defaultUserPassword));
         return (SystemConfig)this;
     }
 
@@ -1081,7 +1081,7 @@ public abstract class GSystemConfig
     public final SystemConfig setOpenIdDisabled(boolean openIdDisabled) {
         if (isOpenIdDisabled(openIdDisabled)) return (SystemConfig)this;
         this.openIdDisabled = openIdDisabled ;
-        propertyChanged("openIdDisabled", this.openIdDisabled);
+        propertyChanged("openIdDisabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDisabled));
         return (SystemConfig)this;
     }
 
@@ -1140,7 +1140,7 @@ public abstract class GSystemConfig
     public final SystemConfig setOpenIdDomains(java.lang.String openIdDomains) {
         if (isOpenIdDomains(openIdDomains)) return (SystemConfig)this;
         this.openIdDomains = openIdDomains ;
-        propertyChanged("openIdDomains", this.openIdDomains);
+        propertyChanged("openIdDomains", ilarkesto.core.persistance.Persistence.propertyAsString(this.openIdDomains));
         return (SystemConfig)this;
     }
 
@@ -1195,7 +1195,7 @@ public abstract class GSystemConfig
     public final SystemConfig setVersionCheckEnabled(boolean versionCheckEnabled) {
         if (isVersionCheckEnabled(versionCheckEnabled)) return (SystemConfig)this;
         this.versionCheckEnabled = versionCheckEnabled ;
-        propertyChanged("versionCheckEnabled", this.versionCheckEnabled);
+        propertyChanged("versionCheckEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.versionCheckEnabled));
         return (SystemConfig)this;
     }
 
@@ -1254,7 +1254,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapEnabled(boolean ldapEnabled) {
         if (isLdapEnabled(ldapEnabled)) return (SystemConfig)this;
         this.ldapEnabled = ldapEnabled ;
-        propertyChanged("ldapEnabled", this.ldapEnabled);
+        propertyChanged("ldapEnabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapEnabled));
         return (SystemConfig)this;
     }
 
@@ -1313,7 +1313,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapUrl(java.lang.String ldapUrl) {
         if (isLdapUrl(ldapUrl)) return (SystemConfig)this;
         this.ldapUrl = ldapUrl ;
-        propertyChanged("ldapUrl", this.ldapUrl);
+        propertyChanged("ldapUrl", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUrl));
         return (SystemConfig)this;
     }
 
@@ -1368,7 +1368,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapUser(java.lang.String ldapUser) {
         if (isLdapUser(ldapUser)) return (SystemConfig)this;
         this.ldapUser = ldapUser ;
-        propertyChanged("ldapUser", this.ldapUser);
+        propertyChanged("ldapUser", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUser));
         return (SystemConfig)this;
     }
 
@@ -1423,7 +1423,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapPassword(java.lang.String ldapPassword) {
         if (isLdapPassword(ldapPassword)) return (SystemConfig)this;
         this.ldapPassword = ldapPassword ;
-        propertyChanged("ldapPassword", this.ldapPassword);
+        propertyChanged("ldapPassword", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapPassword));
         return (SystemConfig)this;
     }
 
@@ -1481,7 +1481,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapBaseDn(java.lang.String ldapBaseDn) {
         if (isLdapBaseDn(ldapBaseDn)) return (SystemConfig)this;
         this.ldapBaseDn = ldapBaseDn ;
-        propertyChanged("ldapBaseDn", this.ldapBaseDn);
+        propertyChanged("ldapBaseDn", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapBaseDn));
         return (SystemConfig)this;
     }
 
@@ -1536,7 +1536,7 @@ public abstract class GSystemConfig
     public final SystemConfig setLdapUserFilterRegex(java.lang.String ldapUserFilterRegex) {
         if (isLdapUserFilterRegex(ldapUserFilterRegex)) return (SystemConfig)this;
         this.ldapUserFilterRegex = ldapUserFilterRegex ;
-        propertyChanged("ldapUserFilterRegex", this.ldapUserFilterRegex);
+        propertyChanged("ldapUserFilterRegex", ilarkesto.core.persistance.Persistence.propertyAsString(this.ldapUserFilterRegex));
         return (SystemConfig)this;
     }
 
@@ -1591,7 +1591,7 @@ public abstract class GSystemConfig
     public final SystemConfig setMaxFileSize(java.lang.Integer maxFileSize) {
         if (isMaxFileSize(maxFileSize)) return (SystemConfig)this;
         this.maxFileSize = maxFileSize ;
-        propertyChanged("maxFileSize", this.maxFileSize);
+        propertyChanged("maxFileSize", ilarkesto.core.persistance.Persistence.propertyAsString(this.maxFileSize));
         return (SystemConfig)this;
     }
 
@@ -1656,7 +1656,7 @@ public abstract class GSystemConfig
     public final SystemConfig setSubscriptionKeySeed(java.lang.String subscriptionKeySeed) {
         if (isSubscriptionKeySeed(subscriptionKeySeed)) return (SystemConfig)this;
         this.subscriptionKeySeed = subscriptionKeySeed ;
-        propertyChanged("subscriptionKeySeed", this.subscriptionKeySeed);
+        propertyChanged("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
         return (SystemConfig)this;
     }
 

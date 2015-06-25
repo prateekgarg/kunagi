@@ -58,7 +58,7 @@ public abstract class GSimpleEvent
         String id = project == null ? null : project.getId();
         if (equals(this.projectId, id)) return (SimpleEvent) this;
         this.projectId = id;
-        propertyChanged("projectId", this.projectId);
+        propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (SimpleEvent)this;
     }
 
@@ -79,7 +79,7 @@ public abstract class GSimpleEvent
         if (isLabel(label)) return (SimpleEvent)this;
         if (ilarkesto.core.base.Str.isBlank(label)) throw new RuntimeException("Field is mandatory.");
         this.label = label ;
-        propertyChanged("label", this.label);
+        propertyChanged("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         return (SimpleEvent)this;
     }
 
@@ -136,7 +136,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setNumber(int number) {
         if (isNumber(number)) return (SimpleEvent)this;
         this.number = number ;
-        propertyChanged("number", this.number);
+        propertyChanged("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
         return (SimpleEvent)this;
     }
 
@@ -203,7 +203,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setDate(ilarkesto.core.time.Date date) {
         if (isDate(date)) return (SimpleEvent)this;
         this.date = date ;
-        propertyChanged("date", this.date);
+        propertyChanged("date", ilarkesto.core.persistance.Persistence.propertyAsString(this.date));
         return (SimpleEvent)this;
     }
 
@@ -256,7 +256,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setTime(ilarkesto.core.time.Time time) {
         if (isTime(time)) return (SimpleEvent)this;
         this.time = time ;
-        propertyChanged("time", this.time);
+        propertyChanged("time", ilarkesto.core.persistance.Persistence.propertyAsString(this.time));
         return (SimpleEvent)this;
     }
 
@@ -309,7 +309,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setLocation(java.lang.String location) {
         if (isLocation(location)) return (SimpleEvent)this;
         this.location = location ;
-        propertyChanged("location", this.location);
+        propertyChanged("location", ilarkesto.core.persistance.Persistence.propertyAsString(this.location));
         return (SimpleEvent)this;
     }
 
@@ -362,7 +362,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setDuration(java.lang.Integer duration) {
         if (isDuration(duration)) return (SimpleEvent)this;
         this.duration = duration ;
-        propertyChanged("duration", this.duration);
+        propertyChanged("duration", ilarkesto.core.persistance.Persistence.propertyAsString(this.duration));
         return (SimpleEvent)this;
     }
 
@@ -425,7 +425,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setAgenda(java.lang.String agenda) {
         if (isAgenda(agenda)) return (SimpleEvent)this;
         this.agenda = agenda ;
-        propertyChanged("agenda", this.agenda);
+        propertyChanged("agenda", ilarkesto.core.persistance.Persistence.propertyAsString(this.agenda));
         return (SimpleEvent)this;
     }
 
@@ -481,7 +481,7 @@ public abstract class GSimpleEvent
     public final SimpleEvent setNote(java.lang.String note) {
         if (isNote(note)) return (SimpleEvent)this;
         this.note = note ;
-        propertyChanged("note", this.note);
+        propertyChanged("note", ilarkesto.core.persistance.Persistence.propertyAsString(this.note));
         return (SimpleEvent)this;
     }
 

@@ -58,7 +58,7 @@ public abstract class GChange
         String id = parent == null ? null : parent.getId();
         if (equals(this.parentId, id)) return (Change) this;
         this.parentId = id;
-        propertyChanged("parentId", this.parentId);
+        propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Change)this;
     }
 
@@ -84,7 +84,7 @@ public abstract class GChange
         String id = user == null ? null : user.getId();
         if (equals(this.userId, id)) return (Change) this;
         this.userId = id;
-        propertyChanged("userId", this.userId);
+        propertyChanged("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
         return (Change)this;
     }
 
@@ -105,7 +105,7 @@ public abstract class GChange
         if (isDateAndTime(dateAndTime)) return (Change)this;
         if (dateAndTime == null) throw new RuntimeException("Field is mandatory.");
         this.dateAndTime = dateAndTime ;
-        propertyChanged("dateAndTime", this.dateAndTime);
+        propertyChanged("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
         return (Change)this;
     }
 
@@ -162,7 +162,7 @@ public abstract class GChange
     public final Change setKey(java.lang.String key) {
         if (isKey(key)) return (Change)this;
         this.key = key ;
-        propertyChanged("key", this.key);
+        propertyChanged("key", ilarkesto.core.persistance.Persistence.propertyAsString(this.key));
         return (Change)this;
     }
 
@@ -215,7 +215,7 @@ public abstract class GChange
     public final Change setOldValue(java.lang.String oldValue) {
         if (isOldValue(oldValue)) return (Change)this;
         this.oldValue = oldValue ;
-        propertyChanged("oldValue", this.oldValue);
+        propertyChanged("oldValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.oldValue));
         return (Change)this;
     }
 
@@ -268,7 +268,7 @@ public abstract class GChange
     public final Change setNewValue(java.lang.String newValue) {
         if (isNewValue(newValue)) return (Change)this;
         this.newValue = newValue ;
-        propertyChanged("newValue", this.newValue);
+        propertyChanged("newValue", ilarkesto.core.persistance.Persistence.propertyAsString(this.newValue));
         return (Change)this;
     }
 
@@ -321,7 +321,7 @@ public abstract class GChange
     public final Change setComment(java.lang.String comment) {
         if (isComment(comment)) return (Change)this;
         this.comment = comment ;
-        propertyChanged("comment", this.comment);
+        propertyChanged("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
         return (Change)this;
     }
 

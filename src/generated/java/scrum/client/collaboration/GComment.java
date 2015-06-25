@@ -60,7 +60,7 @@ public abstract class GComment
         String id = parent == null ? null : parent.getId();
         if (equals(this.parentId, id)) return (Comment) this;
         this.parentId = id;
-        propertyChanged("parentId", this.parentId);
+        propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Comment)this;
     }
 
@@ -86,7 +86,7 @@ public abstract class GComment
         String id = author == null ? null : author.getId();
         if (equals(this.authorId, id)) return (Comment) this;
         this.authorId = id;
-        propertyChanged("authorId", this.authorId);
+        propertyChanged("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
         return (Comment)this;
     }
 
@@ -106,7 +106,7 @@ public abstract class GComment
     public final Comment setPublished(boolean published) {
         if (isPublished(published)) return (Comment)this;
         this.published = published ;
-        propertyChanged("published", this.published);
+        propertyChanged("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
         return (Comment)this;
     }
 
@@ -163,7 +163,7 @@ public abstract class GComment
     public final Comment setAuthorName(java.lang.String authorName) {
         if (isAuthorName(authorName)) return (Comment)this;
         this.authorName = authorName ;
-        propertyChanged("authorName", this.authorName);
+        propertyChanged("authorName", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorName));
         return (Comment)this;
     }
 
@@ -216,7 +216,7 @@ public abstract class GComment
     public final Comment setAuthorEmail(java.lang.String authorEmail) {
         if (isAuthorEmail(authorEmail)) return (Comment)this;
         this.authorEmail = authorEmail ;
-        propertyChanged("authorEmail", this.authorEmail);
+        propertyChanged("authorEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorEmail));
         return (Comment)this;
     }
 
@@ -269,7 +269,7 @@ public abstract class GComment
     public final Comment setAuthorNameVisible(boolean authorNameVisible) {
         if (isAuthorNameVisible(authorNameVisible)) return (Comment)this;
         this.authorNameVisible = authorNameVisible ;
-        propertyChanged("authorNameVisible", this.authorNameVisible);
+        propertyChanged("authorNameVisible", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorNameVisible));
         return (Comment)this;
     }
 
@@ -327,7 +327,7 @@ public abstract class GComment
         if (isText(text)) return (Comment)this;
         if (ilarkesto.core.base.Str.isBlank(text)) throw new RuntimeException("Field is mandatory.");
         this.text = text ;
-        propertyChanged("text", this.text);
+        propertyChanged("text", ilarkesto.core.persistance.Persistence.propertyAsString(this.text));
         return (Comment)this;
     }
 
@@ -390,7 +390,7 @@ public abstract class GComment
     public final Comment setDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
         if (isDateAndTime(dateAndTime)) return (Comment)this;
         this.dateAndTime = dateAndTime ;
-        propertyChanged("dateAndTime", this.dateAndTime);
+        propertyChanged("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
         return (Comment)this;
     }
 

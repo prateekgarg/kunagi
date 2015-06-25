@@ -58,7 +58,7 @@ public abstract class GRequirementEstimationVote
         String id = requirement == null ? null : requirement.getId();
         if (equals(this.requirementId, id)) return (RequirementEstimationVote) this;
         this.requirementId = id;
-        propertyChanged("requirementId", this.requirementId);
+        propertyChanged("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
         return (RequirementEstimationVote)this;
     }
 
@@ -84,7 +84,7 @@ public abstract class GRequirementEstimationVote
         String id = user == null ? null : user.getId();
         if (equals(this.userId, id)) return (RequirementEstimationVote) this;
         this.userId = id;
-        propertyChanged("userId", this.userId);
+        propertyChanged("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
         return (RequirementEstimationVote)this;
     }
 
@@ -104,7 +104,7 @@ public abstract class GRequirementEstimationVote
     public final RequirementEstimationVote setEstimatedWork(java.lang.Float estimatedWork) {
         if (isEstimatedWork(estimatedWork)) return (RequirementEstimationVote)this;
         this.estimatedWork = estimatedWork ;
-        propertyChanged("estimatedWork", this.estimatedWork);
+        propertyChanged("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
         return (RequirementEstimationVote)this;
     }
 
