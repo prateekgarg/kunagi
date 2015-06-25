@@ -1,16 +1,16 @@
 /*
  * Copyright 2008, 2009, 2010 Witoslaw Koczewski, Artjom Kochtchi, Fabian Hager, Kacper Grubalski.
- * 
+ *
  * This file is part of Kunagi.
- * 
+ *
  * Kunagi is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
- * 
+ *
  * Kunagi is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import scrum.client.ApplicationInfo;
 import scrum.client.admin.SystemMessage;
+import scrum.client.workspace.history.HistoryToken;
 import scrum.server.admin.DeleteDisabledUsersTask;
 import scrum.server.admin.DisableInactiveUsersTask;
 import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
@@ -116,7 +117,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public ApplicationInfo getApplicationInfo() {
 		boolean defaultAdminPassword = isAdminPasswordDefault();
 		return new ApplicationInfo(getApplicationLabel(), getBuildProperties().getReleaseLabel(), getBuildProperties()
-				.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
+			.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
 	}
 
 	@Override
@@ -199,7 +200,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (!nocachefile.exists()) {
 			IO.copyFile(new File("etc/" + nocachefile.getName()), nocachefile);
 			throw new IllegalStateException("GWT file " + nocachefile.getPath()
-					+ " was missing. It is created now. Just restart your web application server.");
+				+ " was missing. It is created now. Just restart your web application server.");
 		}
 
 		GwtSuperDevMode sdm = getGwtSuperDevMode();
@@ -210,7 +211,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		File workDir = new File("current").getAbsoluteFile().getParentFile().getParentFile();
 		sdm.startCodeServerInSeparateProcess(workDir, Arrays.asList("ilarkesto/lib/gwt-codeserver.jar",
 			"ilarkesto/lib/gwt-dev.jar", "ilarkesto/lib/gwt-user.jar", "ilarkesto/lib/gwt-dnd-3.3.0.jar",
-				"ilarkesto/lib/gwtupload-1.0.0.jar"));
+			"ilarkesto/lib/gwtupload-1.0.0.jar"));
 	}
 
 	public String createUrl(String relativePath) {
@@ -231,7 +232,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 
 	public String createUrl(Project project, AEntity entity) {
 		String hashtag = "project=" + project.getId();
-		if (entity != null) hashtag += "|entity=" + entity.getId();
+		if (entity != null) hashtag += HistoryToken.SEPARATOR + "entity=" + entity.getId();
 		return createUrl("#" + Str.encodeUrlParameter(hashtag));
 	}
 

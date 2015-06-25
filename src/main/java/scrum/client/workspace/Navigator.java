@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -16,6 +16,7 @@ package scrum.client.workspace;
 
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
+
 import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
 import scrum.client.admin.User;
@@ -34,7 +35,9 @@ import scrum.client.workspace.history.HistoryTokenObserver;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Navigator extends GNavigator implements BlockExpandedHandler, ApplicationStartedHandler,
-		HistoryTokenObserver {
+HistoryTokenObserver {
+
+	private static final char SEPARATOR = HistoryToken.SEPARATOR;
 
 	public static enum Mode {
 		USER, PROJECT
@@ -190,7 +193,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 	public static String getPageHistoryToken(String page) {
 		StringBuilder sb = new StringBuilder();
 		Project project = Scope.get().getComponent(Project.class);
-		if (project != null) sb.append("project=").append(project.getId()).append("|");
+		if (project != null) sb.append("project=").append(project.getId()).append(SEPARATOR);
 		sb.append("page=").append(page);
 		return sb.toString();
 	}
@@ -223,7 +226,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 		StringBuilder sb = new StringBuilder();
 
 		Project project = Scope.get().getComponent(Project.class);
-		if (project != null) sb.append("project=").append(project.getId()).append("|");
+		if (project != null) sb.append("project=").append(project.getId()).append(SEPARATOR);
 
 		Navigator navigator = Scope.get().getComponent(Navigator.class);
 		if (page == null) {
@@ -231,7 +234,7 @@ public class Navigator extends GNavigator implements BlockExpandedHandler, Appli
 			if (workspace != null) page = workspace.getPageForEntity(entityId);
 			if (page == null && navigator != null) page = navigator.historyToken.getPage();
 		}
-		if (page != null) sb.append("page=").append(page).append("|");
+		if (page != null) sb.append("page=").append(page).append(SEPARATOR);
 
 		sb.append("entity=").append(entityId);
 		return sb.toString();

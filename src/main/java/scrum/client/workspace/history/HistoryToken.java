@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -32,6 +32,7 @@ public class HistoryToken {
 	private static Log log = Log.get(HistoryToken.class);
 
 	public static final String START_PAGE = "Dashboard";
+	public static final char SEPARATOR = '/';
 
 	private HistoryTokenObserver observer;
 
@@ -77,13 +78,12 @@ public class HistoryToken {
 	public static Map<String, String> parseHistoryToken(String token) {
 		if (token == null || token.length() == 0) return Collections.emptyMap();
 		Map<String, String> map = new HashMap<String, String>();
-		char separator = '|';
-		int idx = token.indexOf(separator);
+		int idx = token.indexOf(SEPARATOR);
 		while (idx > 0) {
 			String subtoken = token.substring(0, idx);
 			parseHistorySubToken(subtoken, map);
 			token = token.substring(idx + 1);
-			idx = token.indexOf(separator);
+			idx = token.indexOf(SEPARATOR);
 		}
 		parseHistorySubToken(token, map);
 		return map;
@@ -101,21 +101,22 @@ public class HistoryToken {
 	}
 
 	public void update(String projectId) {
-		History.newItem(projectId == null ? "projectSelector" : "project=" + projectId + "|page=" + START_PAGE, true);
+		History.newItem(projectId == null ? "projectSelector" : "project=" + projectId + SEPARATOR + "page="
+				+ START_PAGE, true);
 	}
 
 	public void updatePage(String page) {
-		History.newItem("project=" + projectId + "|page=" + page, true);
+		History.newItem("project=" + projectId + SEPARATOR + "page=" + page, true);
 	}
 
 	public void updatePageAndEntity(String page, AGwtEntity entity, boolean event) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("project=").append(getProjectId());
 
-		if (!Str.isBlank(page)) sb.append("|page=").append(page);
+		if (!Str.isBlank(page)) sb.append(SEPARATOR).append("page=").append(page);
 		this.page = page;
 
-		if (entity != null) sb.append("|entity=").append(entity.getId());
+		if (entity != null) sb.append(SEPARATOR).append("entity=").append(entity.getId());
 		this.entityId = entity == null ? null : entity.getId();
 
 		String token = sb.toString();
