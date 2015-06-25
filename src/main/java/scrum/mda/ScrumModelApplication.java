@@ -24,11 +24,15 @@ import ilarkesto.mda.legacy.generator.GwtDaoGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityGenerator;
 import ilarkesto.mda.legacy.generator.GwtEntityTemplateGenerator;
 import ilarkesto.mda.legacy.generator.GwtImageBundleGenerator;
+import ilarkesto.mda.legacy.generator.GwtServiceAsyncInterfaceGenerator;
+import ilarkesto.mda.legacy.generator.GwtServiceImplGenerator;
+import ilarkesto.mda.legacy.generator.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.legacy.model.ActionModel;
 import ilarkesto.mda.legacy.model.ApplicationModel;
 import ilarkesto.mda.legacy.model.BeanModel;
 import ilarkesto.mda.legacy.model.DatobModel;
 import ilarkesto.mda.legacy.model.EntityModel;
+import ilarkesto.mda.legacy.model.GwtServiceModel;
 
 import java.util.List;
 
@@ -61,6 +65,61 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			applicationModel.addAction("HideSuspendedIssues", getBasePackageName() + ".issues");
 		}
 		return applicationModel;
+	}
+
+	private GwtServiceModel gwtServiceModel;
+
+	public GwtServiceModel getGwtServiceModel() {
+		if (gwtServiceModel == null) {
+			gwtServiceModel = new GwtServiceModel("Scrum", "scrum.server");
+			gwtServiceModel.addMethod("changePassword").addParameter("newPassword").addParameter("oldPassword");
+			gwtServiceModel.addMethod("logout");
+			gwtServiceModel.addMethod("resetPassword").addParameter("userId");
+			gwtServiceModel.addMethod("sendTestEmail").setSync(false);
+			gwtServiceModel.addMethod("testLdap").setSync(false);
+			gwtServiceModel.addMethod("updateSystemMessage").addParameter("systemMessage",
+				"scrum.client.admin.SystemMessage");
+			gwtServiceModel.addMethod("requestComments").addParameter("parentId").setSync(false);
+			gwtServiceModel.addMethod("requestForum").addParameter("all", "boolean").setSync(false);
+			gwtServiceModel.addMethod("ping").setSync(false);
+			gwtServiceModel.addMethod("startConversation");
+			gwtServiceModel.addMethod("touchLastActivity");
+			gwtServiceModel.addMethod("changeProperties").addParameter("entityId")
+					.addParameter("properties", "java.util.Map<String, String>");
+			gwtServiceModel.addMethod("createEntity").addParameter("type").addParameter("properties", "java.util.Map");
+			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId");
+			gwtServiceModel.addMethod("requestEntity").addParameter("entityId");
+			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference");
+			gwtServiceModel.addMethod("sleep").addParameter("millis", "long").setSync(false);
+			gwtServiceModel.addMethod("activateRequirementEstimationVoting").addParameter("requirementId");
+			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId");
+			gwtServiceModel.addMethod("requestImpediments").setSync(false);
+			gwtServiceModel.addMethod("convertIssueToStory").addParameter("issueId");
+			gwtServiceModel.addMethod("requestAcceptedIssues").setSync(false);
+			gwtServiceModel.addMethod("requestClosedIssues").setSync(false);
+			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId").setSync(false);
+			gwtServiceModel.addMethod("sendIssueReplyEmail").addParameter("issueId").addParameter("from")
+					.addParameter("to").addParameter("subject").addParameter("text");
+			gwtServiceModel.addMethod("requestChanges").addParameter("parentId").setSync(false);
+			gwtServiceModel.addMethod("requestProjectEvents").setSync(false);
+			gwtServiceModel.addMethod("closeProject").setSync(false);
+			gwtServiceModel.addMethod("createExampleProject");
+			gwtServiceModel.addMethod("deleteStory").addParameter("storyId");
+			gwtServiceModel.addMethod("moveRequirementToProject").addParameter("destinationProjectId")
+					.addParameter("requirementId");
+			gwtServiceModel.addMethod("selectProject").addParameter("projectId");
+			gwtServiceModel.addMethod("updateProjectHomepage").setSync(false);
+			gwtServiceModel.addMethod("publishRelease").addParameter("releaseId");
+			gwtServiceModel.addMethod("requestRisks").setSync(false);
+			gwtServiceModel.addMethod("search").addParameter("text").setSync(false);
+			gwtServiceModel.addMethod("createIssueFromTask").addParameter("taskId");
+			gwtServiceModel.addMethod("kickStoryFromSprint").addParameter("storyId");
+			gwtServiceModel.addMethod("pullStoryToSprint").addParameter("storyId");
+			gwtServiceModel.addMethod("requestHistory").setSync(false);
+			gwtServiceModel.addMethod("requestHistorySprint").addParameter("sprintId").setSync(false);
+			gwtServiceModel.addMethod("switchToNextSprint");
+		}
+		return gwtServiceModel;
 	}
 
 	// ----------------
@@ -1061,6 +1120,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		generateActions(getApplicationModel().getActions());
 		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
 		new GwtImageBundleGenerator("scrum.client.img").generate();
+		new GwtServiceInterfaceGenerator(getGwtServiceModel()).generate();
+		new GwtServiceImplGenerator(getGwtServiceModel()).generate();
+		new GwtServiceAsyncInterfaceGenerator(getGwtServiceModel()).generate();
 	}
 
 	private void generateActions(List<ActionModel> actions) {

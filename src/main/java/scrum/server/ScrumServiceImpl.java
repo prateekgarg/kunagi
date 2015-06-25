@@ -136,7 +136,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 	// --- ---
 
-	private void onStartConversation(GwtConversation conversation) {
+	@Override
+	protected void onStartConversation(GwtConversation conversation) {
 		User user = conversation.getSession().getUser();
 		if (user == null) throw new PermissionDeniedException("Login required.");
 		conversation.clearRemoteEntities();
