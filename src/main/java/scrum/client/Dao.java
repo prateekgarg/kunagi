@@ -36,9 +36,9 @@ import scrum.client.common.AScrumGwtEntity;
 import scrum.client.core.ChangePropertiesServiceCall;
 import scrum.client.core.CreateEntityServiceCall;
 import scrum.client.core.DeleteEntityServiceCall;
+import scrum.client.core.EventBus;
 import scrum.client.core.RequestEntityByReferenceServiceCall;
 import scrum.client.files.File;
-import scrum.client.files.FileUploadedEvent;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
 import scrum.client.journal.Change;
@@ -50,7 +50,6 @@ import scrum.client.release.Release;
 import scrum.client.risks.Risk;
 import scrum.client.sprint.Sprint;
 import scrum.client.sprint.Task;
-import scrum.client.workspace.VisibleDataChangedEvent;
 
 import com.google.gwt.user.client.Timer;
 
@@ -172,7 +171,7 @@ public class Dao extends GDao {
 	public void handleDataFromServer(ADataTransferObject data) {
 		super.handleDataFromServer(data);
 		if (data.containsEntities() || data.containsDeletedEntities()) {
-			new VisibleDataChangedEvent().fireInCurrentScope();
+			EventBus.get().visibleDataChanged();
 		}
 	}
 
@@ -184,7 +183,7 @@ public class Dao extends GDao {
 			Scope.get().getComponent(Chat.class).addChatMessage((ChatMessage) entity);
 		}
 		if (entity instanceof File) {
-			new FileUploadedEvent((File) entity).fireInCurrentScope();
+			EventBus.get().fileReceived((File) entity);
 		}
 		if (entity instanceof Comment) {
 			((Comment) entity).getParent().updateLocalModificationTime();

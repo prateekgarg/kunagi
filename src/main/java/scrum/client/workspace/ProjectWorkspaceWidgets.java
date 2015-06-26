@@ -19,6 +19,7 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.AWidget;
 import ilarkesto.gwt.client.SwitcherWidget;
+
 import scrum.client.admin.ProjectUserConfigWidget;
 import scrum.client.admin.PunishmentsWidget;
 import scrum.client.admin.SystemConfigWidget;
@@ -50,8 +51,6 @@ import scrum.client.pr.BlogWidget;
 import scrum.client.project.ProductBacklogWidget;
 import scrum.client.project.Project;
 import scrum.client.project.ProjectAdminWidget;
-import scrum.client.project.ProjectDataReceivedEvent;
-import scrum.client.project.ProjectDataReceivedHandler;
 import scrum.client.project.ProjectOverviewWidget;
 import scrum.client.project.Quality;
 import scrum.client.project.QualityBacklogWidget;
@@ -71,7 +70,7 @@ import scrum.client.tasks.WhiteboardWidget;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements ProjectDataReceivedHandler {
+public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets {
 
 	private ProjectSidebarWidget sidebar = new ProjectSidebarWidget();
 	private DashboardWidget dashboard;
@@ -186,8 +185,7 @@ public class ProjectWorkspaceWidgets extends GProjectWorkspaceWidgets implements
 		}
 	}
 
-	@Override
-	public void onProjectDataReceived(ProjectDataReceivedEvent event) {
+	public void projectDataReceived() {
 		Scope.get().getComponent(Ui.class).show(sidebar, dashboard);
 	}
 

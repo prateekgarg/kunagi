@@ -22,7 +22,7 @@ import java.util.List;
 
 import scrum.client.common.AScrumGwtEntity;
 
-public class Search extends GSearch implements SearchResultsChangedHandler {
+public class Search extends GSearch {
 
 	private SearchResults results = new SearchResults();
 	private SearchResultsWidget resultsWidget;
@@ -40,7 +40,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 			@Override
 			public void run() {
 				searchClient(searchText);
-				getResultsWidget().update();
+				updateResultsWidget();
 			}
 		});
 
@@ -102,8 +102,7 @@ public class Search extends GSearch implements SearchResultsChangedHandler {
 		return results;
 	}
 
-	@Override
-	public void onSearchResultsChanged(SearchResultsChangedEvent event) {
+	public void updateResultsWidget() {
 		getResultsWidget().update();
 	}
 

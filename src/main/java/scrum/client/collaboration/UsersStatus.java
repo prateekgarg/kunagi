@@ -23,24 +23,16 @@ import java.util.List;
 import scrum.client.admin.User;
 import scrum.client.common.AScrumGwtEntity;
 import scrum.client.core.RequestEntityServiceCall;
-import scrum.client.workspace.BlockCollapsedEvent;
-import scrum.client.workspace.BlockCollapsedHandler;
-import scrum.client.workspace.BlockExpandedEvent;
-import scrum.client.workspace.BlockExpandedHandler;
 
-public class UsersStatus extends GUsersStatus implements BlockCollapsedHandler, BlockExpandedHandler {
+public class UsersStatus extends GUsersStatus {
 
-	@Override
-	public void onBlockExpanded(BlockExpandedEvent event) {
-		Object object = event.getObject();
+	public void onBlockExpanded(Object object) {
 		if (object instanceof AGwtEntity) {
 			addSelectedEntity((AGwtEntity) object);
 		}
 	}
 
-	@Override
-	public void onBlockCollapsed(BlockCollapsedEvent event) {
-		Object object = event.getObject();
+	public void onBlockCollapsed(Object object) {
 		if (object instanceof AGwtEntity) {
 			removeSelectedEntity((AGwtEntity) object);
 		}
