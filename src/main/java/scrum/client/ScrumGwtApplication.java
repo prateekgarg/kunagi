@@ -168,10 +168,12 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 		abort(sb.toString());
 	}
 
-	private void abort(String message) {
-		Scope.get().getComponent(Ui.class).getWorkspace().abort(message);
+	@Override
+	protected void onAborted(String message) {
+		super.onAborted(message);
 		Scope.get().getComponent(Pinger.class).shutdown();
 		Scope.get().getComponent(Dao.class).clearAllEntities();
+		Scope.get().getComponent(Ui.class).getWorkspace().abort(message);
 	}
 
 	@Override

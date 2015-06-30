@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -51,6 +51,8 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 
 	private transient Comparator<Task> tasksOrderComparator;
 	private transient RequirementsOrderComparator requirementsOrderComparator;
+
+	public transient boolean historyLoaded;
 
 	public Sprint(Project project, String label) {
 		setProject(project);
@@ -431,7 +433,7 @@ public class Sprint extends GSprint implements ForumSupport, ReferenceSupport, L
 				for (StoryInfo story : stories) {
 					sb.append("\n* ").append(story.getReference()).append(" ").append(story.getLabel());
 					sb.append(" ''").append(story.getEstimatedWorkAsString()).append(", ")
-							.append(story.getBurnedWorkAsString()).append("''");
+					.append(story.getBurnedWorkAsString()).append("''");
 					for (TaskInfo task : story.getTasks()) {
 						sb.append("\n  * ").append(task.getReference()).append(" ").append(task.getLabel());
 						sb.append(" ''").append(task.getBurnedWork()).append(" hrs.''");
