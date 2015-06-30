@@ -14,8 +14,10 @@
  */
 package scrum.client.workspace;
 
+import ilarkesto.core.base.Str;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
+import ilarkesto.gwt.client.Gwt;
 
 import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
@@ -27,13 +29,13 @@ import scrum.client.project.SelectProjectServiceCall;
 import scrum.client.search.SearchInputWidget;
 import scrum.client.search.SearchResultsWidget;
 import scrum.client.workspace.history.HistoryToken;
-import scrum.client.workspace.history.HistoryTokenObserver;
 
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Navigator extends GNavigator implements HistoryTokenObserver {
+public class Navigator extends GNavigator {
 
-	private static final char SEPARATOR = HistoryToken.SEPARATOR;
+	private static final char SEPARATOR = Gwt.HISTORY_TOKEN_SEPARATOR;
 
 	public static enum Mode {
 		USER, PROJECT
@@ -48,9 +50,23 @@ public class Navigator extends GNavigator implements HistoryTokenObserver {
 		historyToken = new HistoryToken(this);
 	}
 
-	@Override
-	public void onProjectChanged() {
-		String projectId = historyToken.getProjectId();
+	public void evalHistoryToken(String token) {
+		historyToken.evalHistoryToken(token);
+	}
+
+	public static String createToken(String projectId, String page, String entityId) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("project=").append(projectId);
+
+		if (!Str.isBlank(page)) sb.append(SEPARATOR).append("page=").append(page);
+
+		if (!Str.isBlank(entityId)) sb.append(SEPARATOR).append("entity=").append(entityId);
+
+		String token = sb.toString();
+		return token;
+	}
+
+	public void onProjectChanged(String projectId) {
 		if (projectId == null) {
 			showUserMode(historyToken.getPage());
 		} else {
@@ -63,13 +79,12 @@ public class Navigator extends GNavigator implements HistoryTokenObserver {
 		}
 	}
 
-	@Override
 	public void onPageOrEntityChanged() {
 		showPageAndEntity();
 	}
 
 	public void start() {
-		historyToken.evalHistoryToken();
+		evalHistoryToken(History.getToken());
 		if (!historyToken.isProjectIdSet()) {
 			User user = auth.getUser();
 			Project project = user.getCurrentProject();
@@ -82,15 +97,15 @@ public class Navigator extends GNavigator implements HistoryTokenObserver {
 	}
 
 	public void gotoProjectSelector() {
-		historyToken.update(null);
+		History.newItem("projectSelector", true);
 	}
 
 	public void gotoProject(String projectId) {
-		historyToken.update(projectId);
+		History.newItem(createToken(projectId, HistoryToken.START_PAGE, null), true);
 	}
 
 	public void gotoCurrentProjectSearch() {
-		historyToken.updatePage(Page.getPageName(SearchResultsWidget.class));
+		showPageAndEntity(Page.getPageName(SearchResultsWidget.class), null);
 	}
 
 	private void showProject(String projectId, String page, String entityId) {
@@ -227,7 +242,7 @@ public class Navigator extends GNavigator implements HistoryTokenObserver {
 		return historyToken.isToggle();
 	}
 
-	public void updateHistory(String page, AGwtEntity entity) {
+	public void updateHistoryTokenWithoutChangingUi(String page, AGwtEntity entity) {
 		historyToken.updatePageAndEntity(page, entity, false);
 	}
 

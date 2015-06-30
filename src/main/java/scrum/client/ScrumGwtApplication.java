@@ -98,6 +98,11 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	}
 
 	@Override
+	protected void onHistoryTokenChanged(String token) {
+		Scope.get().getComponent(Navigator.class).evalHistoryToken(token);
+	}
+
+	@Override
 	protected void onServerDataReceived(DataTransferObject data) {
 		super.onServerDataReceived(data);
 
