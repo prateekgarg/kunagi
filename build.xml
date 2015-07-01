@@ -100,9 +100,10 @@
       <fileset dir="${ilarkesto.dir}/lib">
         <exclude name="**/src/**" />
         <exclude name="**/javadoc/**" />
-        <exclude name="**/gwt-dev.jar" />
-        <exclude name="**/gwt-user.jar" />
-        <exclude name="**/servlet-api-*.jar" />
+        <exclude name="**/asm-*.jar" />
+        <exclude name="**/gwt-dev-*.jar" />
+        <exclude name="**/gwt-user-*.jar" />
+        <exclude name="**/javax.servlet-api-*.jar" />
         <exclude name="**/google-collect-*.jar" />
         <exclude name="**/junit-*.jar" />
         <exclude name="**/testng-*.jar" />
@@ -112,7 +113,7 @@
         <exclude name="**/bsh-*.jar" />
         <exclude name="**/gdata-*.jar" />
         <exclude name="**/jaudiotagger-*.jar" />
-        <exclude name="**/jcip-annotations.jar" />
+        <exclude name="**/jcip-annotations-*.jar" />
         <exclude name="**/mysql-*.jar" />
         <exclude name="**/android*.jar" />
       </fileset>
