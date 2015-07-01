@@ -56,7 +56,7 @@
 
     <java classname="com.google.gwt.dev.Compiler" failonerror="true"
       fork="true">
-      <arg value="-strict" />
+      <!-- <arg value="-strict" /> -->
       <arg value="-logLevel" />
       <arg value="INFO" />
       <arg value="-style" />
@@ -68,7 +68,8 @@
       <classpath location="src/generated/java" />
       <classpath location="${ilarkesto.dir}/src/main/java" />
       <classpath>
-        <fileset dir="${ilarkesto.dir}/lib" includes="gwt*.jar,validation-api-*.jar" />
+        <fileset dir="${ilarkesto.dir}/lib"
+          includes="gwt-dev-*.jar,gwt*.jar,asm-*.jar,validation-*.jar" />
       </classpath>
     </java>
 
