@@ -39,7 +39,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -56,6 +55,8 @@ public class UploadWidget extends AScrumWidget {
 	public UploadWidget() {
 		statusLabel = new Label();
 		uploader = new SingleUploader(FileInputType.BROWSER_INPUT, new UploadStatus(), button, formPanel);
+		uploader.setServletPath(uploader.getServletPath() + "?projectId="
+				+ Scope.get().getComponent(Project.class).getId());
 		uploader.setMultipleSelection(false);
 		uploader.setAutoSubmit(true);
 		Uploader.setStatusInterval(1000);
@@ -196,10 +197,6 @@ public class UploadWidget extends AScrumWidget {
 			setEncoding(FormPanel.ENCODING_MULTIPART);
 			getElement().setAttribute("accept-charset", "UTF-8");
 			super.add(formElements);
-			Project project = Scope.get().getComponent(Project.class);
-			Hidden projectIdField = new Hidden("projectId", project.getId());
-			projectIdField.setID("uploadProjectId");
-			add(projectIdField);
 		}
 
 		@Override
