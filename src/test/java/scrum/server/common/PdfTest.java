@@ -92,7 +92,7 @@ public class PdfTest extends ATest {
 		createPdf(new ImpedimentListPdfCreator(project));
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void sprintBacklog() {
 		Project project = TestUtil.createProject();
 
@@ -183,7 +183,7 @@ public class PdfTest extends ATest {
 		createPdf(new ReleaseHistoryPdfCreator(project));
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void sprintReport() {
 		Project project = TestUtil.createProject();
 		project.addProductOwners(Arrays.asList(TestUtil.createUser("Cartman")));
