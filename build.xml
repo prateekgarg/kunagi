@@ -76,7 +76,8 @@
 
   <target name="test" depends="compile-java">
     <delete dir="${test.output.dir}" />
-    <taskdef name="testng" classpath="${ilarkesto.dir}/lib/testng-6.9.4.jar"
+    <taskdef name="testng"
+      classpath="${ilarkesto.dir}/lib/testng-6.9.4.jar;${ilarkesto.dir}/lib/jcommander-1.48.jar"
       classname="org.testng.TestNGAntTask" />
     <testng outputDir="${test.output.dir}" haltonfailure="true">
       <classfileset dir="${build.dir}/test-classes"
