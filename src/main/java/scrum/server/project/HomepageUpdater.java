@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -314,7 +314,7 @@ public class HomepageUpdater {
 		}
 		context.put("date", Tm.FORMAT_WEEKDAY_LONGMONTH_DAY_YEAR_HOUR_MINUTE.format(comment.getDateAndTime()));
 		context.put("dateDe", new SimpleDateFormat("EEE, d. MMMMM yyyy, HH:mm", Locale.GERMANY).format(comment
-			.getDateAndTime().toJavaDate()));
+				.getDateAndTime().toJavaDate()));
 	}
 
 	private void fillRelease(ContextBuilder context, Release release) {
@@ -448,8 +448,23 @@ public class HomepageUpdater {
 		context.put("description", wikiToHtml(project.getDescription()));
 		context.put("longDescription", wikiToHtml(project.getLongDescription()));
 		context.put("homepageUrl", project.getHomepageUrl());
+		for (User user : project.getProductOwners()) {
+			fillProjectParticipant(context.addSubContext("productOwners"), user);
+		}
+		for (User user : project.getScrumMasters()) {
+			fillProjectParticipant(context.addSubContext("scrumMasters"), user);
+		}
+		for (User user : project.getTeamMembers()) {
+			fillProjectParticipant(context.addSubContext("teamMembers"), user);
+		}
 		Release currentRelease = project.getCurrentRelease();
 		context.put("currentRelease", currentRelease == null ? "?" : toHtml(currentRelease.getLabel()));
+	}
+
+	private void fillProjectParticipant(ContextBuilder context, User user) {
+		context.put("name", toHtml(user.getName()));
+		context.put("fullName", toHtml(user.getFullName()));
+		context.put("publicName", toHtml(user.getPublicName()));
 	}
 
 	public String wikiToHtml(String wikitext) {
