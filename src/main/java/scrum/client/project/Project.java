@@ -733,4 +733,10 @@ public class Project extends GProject implements ForumSupport {
 		return freeDaysWeekdaySelectorModel;
 	}
 
+	public String getExternalTrackerLabelOrDefault() {
+		String label = getExternalTrackerLabel();
+		if (Str.isBlank(label)) return "External Tracker";
+		return label;
+	}
+
 }

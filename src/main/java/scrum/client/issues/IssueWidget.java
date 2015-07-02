@@ -33,6 +33,7 @@ import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.ThemesWidget;
 import scrum.client.journal.ChangeHistoryWidget;
+import scrum.client.project.Project;
 import scrum.client.release.Release;
 
 import com.google.gwt.user.client.ui.HTML;
@@ -55,6 +56,12 @@ public class IssueWidget extends AScrumWidget {
 
 		TableBuilder left = ScrumGwt.createFieldTable();
 		left.addFieldRow("Label", issue.getLabelModel());
+
+		Project project = issue.getProject();
+		if (!Str.isBlank(project.getExternalTrackerUrlTemplate())) {
+			left.addFieldRow(project.getExternalTrackerLabelOrDefault() + " ID", issue.getExternalTrackerIdModel(), 1);
+		}
+
 		if (issue.isBug()) {
 			left.addFieldRow("Severity", new DropdownEditorWidget<Integer>(issue.getSeverityModel(),
 					Issue.SEVERITY_LABELS));
