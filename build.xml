@@ -3,7 +3,7 @@
 <project name="kunagi" default="package" basedir=".">
 
   <property name="build.dir" value="build" />
-  <property name="homepage.output.dir" value="/var/www/kunagi.org" />
+  <property name="homepage.output.dir" value="/var/www/kunagi.org/website/" />
 
   <property name="test.output.dir" value="test-output" />
   <property name="ilarkesto.dir" value="../ilarkesto" />
