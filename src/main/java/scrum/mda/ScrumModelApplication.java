@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -75,49 +75,49 @@ public class ScrumModelApplication extends AGeneratorApplication {
 		if (gwtServiceModel == null) {
 			gwtServiceModel = new GwtServiceModel("Scrum", "scrum.server");
 			gwtServiceModel.addMethod("changePassword").addParameter("newPassword").addParameter("oldPassword")
-			.setPackageName("admin");
+					.setPackageName("admin");
 			gwtServiceModel.addMethod("logout").setPackageName("admin");
 			gwtServiceModel.addMethod("resetPassword").addParameter("userId").setPackageName("admin");
 			gwtServiceModel.addMethod("sendTestEmail").setPackageName("admin").setSync(false);
 			gwtServiceModel.addMethod("testLdap").setPackageName("admin").setSync(false);
 			gwtServiceModel.addMethod("updateSystemMessage")
-			.addParameter("systemMessage", "scrum.client.admin.SystemMessage").setPackageName("admin");
+					.addParameter("systemMessage", "scrum.client.admin.SystemMessage").setPackageName("admin");
 			gwtServiceModel.addMethod("requestComments").addParameter("parentId").setPackageName("collaboration")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("requestForum").addParameter("all", "boolean").setPackageName("collaboration")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("ping").setDispensable(true).setPackageName("communication").setSync(false);
 			gwtServiceModel.addMethod("startConversation").setPackageName("communication");
 			gwtServiceModel.addMethod("touchLastActivity").setPackageName("communication");
 			gwtServiceModel.addMethod("changeProperties").addParameter("entityId")
-			.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
+					.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
 			gwtServiceModel.addMethod("createEntity").addParameter("type")
-			.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
+					.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
 			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId").setPackageName("core");
 			gwtServiceModel.addMethod("requestEntity").addParameter("entityId").setPackageName("core").setSync(false);
 			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference").setPackageName("core")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("sleep").addParameter("millis", "long").setPackageName("core").setSync(false);
 			gwtServiceModel.addMethod("activateRequirementEstimationVoting").addParameter("requirementId")
-			.setPackageName("estimation");
+					.setPackageName("estimation");
 			gwtServiceModel.addMethod("requestRequirementEstimationVotes").addParameter("requirementId")
-			.setPackageName("estimation").setSync(false);
+					.setPackageName("estimation").setSync(false);
 			gwtServiceModel.addMethod("requestImpediments").setPackageName("impediments").setSync(false);
 			gwtServiceModel.addMethod("convertIssueToStory").addParameter("issueId").setPackageName("issues");
 			gwtServiceModel.addMethod("requestAcceptedIssues").setPackageName("issues").setSync(false);
 			gwtServiceModel.addMethod("requestClosedIssues").setPackageName("issues").setSync(false);
 			gwtServiceModel.addMethod("requestReleaseIssues").addParameter("releaseId").setPackageName("issues")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("sendIssueReplyEmail").addParameter("issueId").addParameter("from")
-			.addParameter("to").addParameter("subject").addParameter("text").setPackageName("issues");
+					.addParameter("to").addParameter("subject").addParameter("text").setPackageName("issues");
 			gwtServiceModel.addMethod("requestChanges").addParameter("parentId").setPackageName("journal")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("requestProjectEvents").setPackageName("journal").setSync(false);
 			gwtServiceModel.addMethod("closeProject").setPackageName("project");
 			gwtServiceModel.addMethod("createExampleProject").setPackageName("project");
 			gwtServiceModel.addMethod("deleteStory").addParameter("storyId").setPackageName("project");
 			gwtServiceModel.addMethod("moveRequirementToProject").addParameter("destinationProjectId")
-			.addParameter("requirementId").setPackageName("project");
+					.addParameter("requirementId").setPackageName("project");
 			gwtServiceModel.addMethod("selectProject").addParameter("projectId").setPackageName("project");
 			gwtServiceModel.addMethod("updateProjectHomepage").setPackageName("project").setSync(false);
 			gwtServiceModel.addMethod("publishRelease").addParameter("releaseId").setPackageName("release");
@@ -128,7 +128,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("pullStoryToSprint").addParameter("storyId").setPackageName("sprint");
 			gwtServiceModel.addMethod("requestHistory").setPackageName("sprint").setSync(false);
 			gwtServiceModel.addMethod("requestHistorySprint").addParameter("sprintId").setPackageName("sprint")
-			.setSync(false);
+					.setSync(false);
 			gwtServiceModel.addMethod("switchToNextSprint").setPackageName("sprint");
 		}
 		return gwtServiceModel;
@@ -146,61 +146,61 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setEditProtected(true);
 			systemConfigModel.addStringProperty("url").setTooltip(
-					"URL, on which this Kunagi instance is installed. It will be used in emails.");
+				"URL, on which this Kunagi instance is installed. It will be used in emails.");
 			systemConfigModel.addStringProperty("adminEmail").setTooltip(
-					"Email of the administrator of this Kunagi instance.");
+				"Email of the administrator of this Kunagi instance.");
 			systemConfigModel.addStringProperty("googleAnalyticsId").setTooltip(
-					"Google Web Property ID, so you can log to Google Analytics.");
+				"Google Web Property ID, so you can log to Google Analytics.");
 			systemConfigModel.addStringProperty("smtpServer").setTooltip("Hostname of your SMTP email server.");
 			systemConfigModel.addProperty("smtpPort", Integer.class).setTooltip("Port of your SMTP email server.");
 			systemConfigModel.addProperty("smtpTls", boolean.class).setTooltip(
-					"Activate this, if your SMTP email server requires TLS. Gmail requires this.");
+				"Activate this, if your SMTP email server requires TLS. Gmail requires this.");
 			systemConfigModel.addStringProperty("smtpUser").setTooltip(
-					"Username, if your SMTP email server requires authentication.");
+				"Username, if your SMTP email server requires authentication.");
 			systemConfigModel.addStringProperty("smtpPassword").setMasked(true)
-			.setTooltip("Password, if your SMTP email server requires authentication.");
+					.setTooltip("Password, if your SMTP email server requires authentication.");
 			systemConfigModel.addStringProperty("smtpFrom").setTooltip(
-					"Email address, which is used as sender, when Kunagi sends Emails.");
+				"Email address, which is used as sender, when Kunagi sends Emails.");
 			systemConfigModel.addStringProperty("instanceName").setTooltip(
-					"Name of this Kunagi installation instance. For identification in the title.");
+				"Name of this Kunagi installation instance. For identification in the title.");
 			systemConfigModel.addStringProperty("loginPageLogoUrl").setTooltip(
-					"If you wand your custom logo on the login page, type the URL to the image here.");
+				"If you wand your custom logo on the login page, type the URL to the image here.");
 			systemConfigModel.addStringProperty("loginPageMessage").setRichtext(true)
-			.setTooltip("Message in HTML, which is displayed on the login page.");
+					.setTooltip("Message in HTML, which is displayed on the login page.");
 			systemConfigModel.addStringProperty("registerPageMessage").setRichtext(true)
-			.setTooltip("Message in HTML, which is displayed on the registration page for new users.");
+					.setTooltip("Message in HTML, which is displayed on the registration page for new users.");
 			systemConfigModel.addStringProperty("aboutPageMessage").setRichtext(true);
 			systemConfigModel.addProperty("userEmailMandatory", boolean.class).setTooltip(
-					"Activate this, if you want the email field on the registration page for new users to be mandatory.");
+				"Activate this, if you want the email field on the registration page for new users to be mandatory.");
 			systemConfigModel.addProperty("registrationDisabled", boolean.class).setTooltip(
-					"Acitviate this, if you want to disable the registration page for new users.");
+				"Acitviate this, if you want to disable the registration page for new users.");
 			systemConfigModel.addProperty("projectCreationDisabled", boolean.class).setTooltip(
-					"Activate this, to prevent users from creating projects.");
+				"Activate this, to prevent users from creating projects.");
 			systemConfigModel.addStringProperty("defaultUserPassword").setMasked(true)
-			.setTooltip("Default password, which is assigned to new users, which are created by the admin.");
+					.setTooltip("Default password, which is assigned to new users, which are created by the admin.");
 			systemConfigModel.addProperty("openIdDisabled", boolean.class).setTooltip(
-					"Activate this, if you want to disable logins with OpenID.");
+				"Activate this, if you want to disable logins with OpenID.");
 			systemConfigModel
-			.addStringProperty("openIdDomains")
-			.setTooltip(
-					"Limits accepted OpenID domains for new users. Multiple domains separated by commas allowed. Leave empty to allow all domains.");
+					.addStringProperty("openIdDomains")
+					.setTooltip(
+						"Limits accepted OpenID domains for new users. Multiple domains separated by commas allowed. Leave empty to allow all domains.");
 			systemConfigModel
-			.addProperty("versionCheckEnabled", boolean.class)
-			.setTooltip(
-					"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
+					.addProperty("versionCheckEnabled", boolean.class)
+					.setTooltip(
+						"Acitvate this, if you want Kunagi to check for new versions and display a small Icon, when available.");
 			systemConfigModel.addProperty("ldapEnabled", boolean.class).setTooltip(
-					"Enable LDAP authentication. Kunagi will check username and password against a LDAP server.");
+				"Enable LDAP authentication. Kunagi will check username and password against a LDAP server.");
 			systemConfigModel.addStringProperty("ldapUrl").setTooltip(
-					"URL for the LDAP server. Example: ldap://127.0.0.1:389/");
+				"URL for the LDAP server. Example: ldap://127.0.0.1:389/");
 			systemConfigModel.addStringProperty("ldapUser").setTooltip(
-					"Username which is required to connect to the LDAP server.");
+				"Username which is required to connect to the LDAP server.");
 			systemConfigModel.addStringProperty("ldapPassword").setMasked(true)
-			.setTooltip("Password which is required to connect to the LDAP server.");
+					.setTooltip("Password which is required to connect to the LDAP server.");
 			systemConfigModel.addStringProperty("ldapBaseDn").setTooltip("Example: dc=mydomain,dc=com");
 			systemConfigModel.addStringProperty("ldapUserFilterRegex").setTooltip(
-					"Example: (&(objectClass=user)(sAMAccountName=%u))");
+				"Example: (&(objectClass=user)(sAMAccountName=%u))");
 			systemConfigModel.addIntegerProperty("maxFileSize").setTooltip(
-					"Maximum size in megabytes for uploaded files.");
+				"Maximum size in megabytes for uploaded files.");
 			systemConfigModel.addStringProperty("subscriptionKeySeed");
 			autowire(systemConfigModel);
 		}
@@ -238,38 +238,38 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.setGwtSupport(true);
 			projectModel.addPredicate("editable");
 			projectModel
-			.addStringProperty("label")
-			.setEditablePredicate("editable")
-			.setMandatory(true)
-			.setSearchable(true)
-			.setUnique(true)
-			.setTooltip(
-				"This is the project name that should be chosen for humans to clearly identify the project.");
+					.addStringProperty("label")
+					.setEditablePredicate("editable")
+					.setMandatory(true)
+					.setSearchable(true)
+					.setUnique(true)
+					.setTooltip(
+						"This is the project name that should be chosen for humans to clearly identify the project.");
 			projectModel
-			.addStringProperty("vision")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"This is a vision that should state the purpose and aim of the project. "
-						+ "It should focus be used to focus the participant's work on a common goal "
-						+ "that is simple, measurable, achievable, relevant, and time-bound.");
+					.addStringProperty("vision")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"This is a vision that should state the purpose and aim of the project. "
+								+ "It should focus be used to focus the participant's work on a common goal "
+								+ "that is simple, measurable, achievable, relevant, and time-bound.");
 			projectModel.addStringProperty("productLabel").setSearchable(true)
-			.setTooltip("This is the name of the product, which is created within this project.");
+					.setTooltip("This is the name of the product, which is created within this project.");
 			projectModel
-			.addStringProperty("shortDescription")
-			.setSearchable(true)
-			.setTooltip(
-				"This is a project description in a sentence. It can, for example, be used in "
-						+ "the homepage metatag or inserted descriptions, where space is limited to one line.");
+					.addStringProperty("shortDescription")
+					.setSearchable(true)
+					.setTooltip(
+						"This is a project description in a sentence. It can, for example, be used in "
+								+ "the homepage metatag or inserted descriptions, where space is limited to one line.");
 			projectModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"This is a product description in a paragraph. It is can be used to give a short introduction "
-						+ "about the product, summing up all essential features.");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"This is a product description in a paragraph. It is can be used to give a short introduction "
+								+ "about the product, summing up all essential features.");
 			projectModel.addStringProperty("longDescription").setRichtext(true).setSearchable(true)
-			.setTooltip("This is a full lenth description that takes as much space as it needs.");
+					.setTooltip("This is a full lenth description that takes as much space as it needs.");
 			projectModel.addProperty("begin", Date.class);
 			projectModel.addProperty("end", Date.class);
 			projectModel.addSetReference("participants", getUserModel()).setTooltip(
@@ -287,7 +287,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 				"The Scrum Master ensures cooperation between all Scrum roles, "
 						+ "shields the Team agains adverse influences and removies impediments.");
 			projectModel.addSetReference("teamMembers", getUserModel()).setTooltip(
-					"The Team ideally consists of around 7 members and is self-organized and cross-functional.");
+				"The Team ideally consists of around 7 members and is self-organized and cross-functional.");
 			projectModel.addReference("currentSprint", getSprintModel()).setBackReferenceName("currentSprintProject");
 			projectModel.addReference("nextSprint", getSprintModel()).setBackReferenceName("nextSprintProject");
 			projectModel.addIntegerProperty("velocity").setTooltip("Estimated velocity for the current sprint.");
@@ -308,38 +308,38 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectModel.addStringProperty("punishmentUnit");
 			projectModel.addProperty("punishmentFactor", int.class);
 			projectModel.addStringProperty("homepageDir").setTooltip(
-					"Directory, which contains homepage files and velocity templates.");
+				"Directory, which contains homepage files and velocity templates.");
 			projectModel.addStringProperty("homepageUrl")
-			.setTooltip("URL on which the project homepage is accessible.");
+					.setTooltip("URL on which the project homepage is accessible.");
 			projectModel.addProperty("autoUpdateHomepage", boolean.class).setTooltip(
-					"Automatically update the homepage."); // TODO remove
+				"Automatically update the homepage."); // TODO remove
 			projectModel.addStringProperty("releaseScriptPath").setTooltip(
 				"Full path to the script, which needs to be executed when publishing a release. "
 						+ "The Script recives the release label as the first argument.");
 			projectModel.addStringProperty("supportEmail").setEditablePredicate("editable")
-			.setTooltip("Email address of the support for this project.");
+					.setTooltip("Email address of the support for this project.");
 			projectModel
-			.addStringProperty("issueReplyTemplate")
-			.setRichtext(true)
-			.setTooltip(
-				"Text template, which to use when replying to issue authors by email.<br><br>"
-						+ "The following variables can be used: "
-						+ "${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}");
+					.addStringProperty("issueReplyTemplate")
+					.setRichtext(true)
+					.setTooltip(
+						"Text template, which to use when replying to issue authors by email.<br><br>"
+								+ "The following variables can be used: "
+								+ "${issue.reference} ${issuer.name} ${issuer.email} ${homepage.url} ${user.name} ${user.email}");
 			projectModel
-			.addStringProperty("subscriberNotificationTemplate")
-			.setRichtext(true)
-			.setTooltip(
-				"Text template, which to use when sending change notifications to subscribers.<br><br>"
-						+ "The following variables can be used: "
-						+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${product.label} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
+					.addStringProperty("subscriberNotificationTemplate")
+					.setRichtext(true)
+					.setTooltip(
+						"Text template, which to use when sending change notifications to subscribers.<br><br>"
+								+ "The following variables can be used: "
+								+ "${entity.reference} ${entity.label} ${change.message} ${unsubscribe.url} ${unsubscribeall.url} ${homepage.url} ${product.label} ${project.label} ${project.id} ${kunagi.instance} ${kunagi.url}");
 			projectModel.addProperty("lastOpenedDateAndTime", DateAndTime.class);
 			projectModel.addProperty("freeDays", int.class).setTooltip("Weekdays, on which no work is done.");
 			projectModel
-			.addProperty("autoCreateTasksFromQualities", boolean.class)
-			.setTooltip(
-					"When pulling stories into the sprint, automatically create a task for each quality assigned to the story.");
+					.addProperty("autoCreateTasksFromQualities", boolean.class)
+					.setTooltip(
+						"When pulling stories into the sprint, automatically create a task for each quality assigned to the story.");
 			projectModel.addStringProperty("releasingInfo").setRichtext(true)
-			.setTooltip("Custom info text for the releases page. Could be used for a release checklist.");
+					.setTooltip("Custom info text for the releases page. Could be used for a release checklist.");
 			projectModel.addStringProperty("externalTrackerUrlTemplate");
 			projectModel.addStringProperty("externalTrackerLabel");
 			getApplicationModel().addCreateAction(projectModel);
@@ -358,22 +358,22 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			fileModel.setGwtSupport(true);
 			fileModel.addReference("project", getProjectModel()).setMaster(true);
 			fileModel.addStringProperty("filename").setEditablePredicate("false").setMandatory(true)
-			.setSearchable(true);
+					.setSearchable(true);
 			fileModel.addProperty("uploadTime", DateAndTime.class).setEditablePredicate("false").setMandatory(true);
 			fileModel
-			.addStringProperty("label")
-			.setMandatory(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The label is used to provide a human readable name for the uploaded file. "
-						+ "It may (and probably should) differ from the filename.");
+					.addStringProperty("label")
+					.setMandatory(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The label is used to provide a human readable name for the uploaded file. "
+								+ "It may (and probably should) differ from the filename.");
 			fileModel.addProperty("number", int.class).setMandatory(true);
 			fileModel
-			.addStringProperty("note")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"Use this to give additional information on this uploaded file useful for other project members.");
+					.addStringProperty("note")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"Use this to give additional information on this uploaded file useful for other project members.");
 			fileModel.addAction("DeleteFile");
 		}
 		return fileModel;
@@ -393,32 +393,32 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						+ "This is the list of Sprints that were undertaken to build this release.");
 			releaseModel.addProperty("number", int.class).setMandatory(true);
 			releaseModel
-			.addStringProperty("label")
-			.setMandatory(true)
-			.setSearchable(true)
-			.setTooltip(
-				"This is the codename of the release, used to refer to it by project members and users.");
+					.addStringProperty("label")
+					.setMandatory(true)
+					.setSearchable(true)
+					.setTooltip(
+						"This is the codename of the release, used to refer to it by project members and users.");
 			releaseModel
-			.addStringProperty("note")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The development notes contain information useful for "
-						+ "project participants and stakeholders while working on the release.");
+					.addStringProperty("note")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The development notes contain information useful for "
+								+ "project participants and stakeholders while working on the release.");
 			releaseModel.addProperty("releaseDate", Date.class).setTooltip(
-					"The intended or actual release date for planned and finished releases, respectively.");
+				"The intended or actual release date for planned and finished releases, respectively.");
 			releaseModel.addProperty("releaseTime", Time.class);
 			releaseModel.addProperty("released", boolean.class);
 			releaseModel
-			.addStringProperty("releaseNotes")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The release notes contain a description used to articulate the changes "
-						+ "that this release contains to the public. "
-						+ "It should be done in human readable format and an informative manner.");
+					.addStringProperty("releaseNotes")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The release notes contain a description used to articulate the changes "
+								+ "that this release contains to the public. "
+								+ "It should be done in human readable format and an informative manner.");
 			releaseModel.addStringProperty("scmTag").setSearchable(true)
-			.setTooltip("The tag used in content management systems for this release.");
+					.setTooltip("The tag used in content management systems for this release.");
 			releaseModel.addProperty("scriptRunning", boolean.class);
 			releaseModel.addStringProperty("scriptOutput");
 			getApplicationModel().addCreateAction(releaseModel);
@@ -459,25 +459,25 @@ public class ScrumModelApplication extends AGeneratorApplication {
 						+ "Qualities linked to Stories indicate that not only the Story's requirements, "
 						+ "but also the Quality's requirements need to be met in order to complete a Story.");
 			requirementModel.addStringProperty("label").setEditablePredicate("editable").setSearchable(true)
-			.setTooltip(createLabelTooltipText("Story"));
+					.setTooltip(createLabelTooltipText("Story"));
 			requirementModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setEditablePredicate("editable")
-			.setSearchable(true)
-			.setTooltip(
-				"The description of a Story should make what the label cannot: "
-						+ "It should provide information on what is and what is not part of it. "
-						+ "Ideally, it is given in terms of a user story: "
-						+ "'As a [user] I want [function] so that [value].'");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setEditablePredicate("editable")
+					.setSearchable(true)
+					.setTooltip(
+						"The description of a Story should make what the label cannot: "
+								+ "It should provide information on what is and what is not part of it. "
+								+ "Ideally, it is given in terms of a user story: "
+								+ "'As a [user] I want [function] so that [value].'");
 			requirementModel
-			.addStringProperty("testDescription")
-			.setRichtext(true)
-			.setEditablePredicate("editable")
-			.setSearchable(true)
-			.setTooltip(
-				"The Test contains requirements that have to be met by the Team "
-						+ "in order for the Story to be considered done.");
+					.addStringProperty("testDescription")
+					.setRichtext(true)
+					.setEditablePredicate("editable")
+					.setSearchable(true)
+					.setTooltip(
+						"The Test contains requirements that have to be met by the Team "
+								+ "in order for the Story to be considered done.");
 			requirementModel.addProperty("estimatedWork", Float.class).setTooltip(
 				"The estimated work gives a relative estimation of effort that needs to be put into the Story to complete it. "
 						+ "The bigger the Story the less important the accuracy of the estimation. "
@@ -491,8 +491,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addListProperty("tasksOrderIds", String.class);
 			requirementModel.addListProperty("themes", String.class);
 			requirementModel.addReference("epic", getRequirementModel());
-			requirementModel.addStringProperty("externalTrackerId").setLabel("External ID")
-			.setTooltip("External system ID. From other bug tracker or else.");
+			requirementModel.addStringProperty("externalTrackerId").setEditablePredicate("editable")
+					.setLabel("External ID").setTooltip("External system ID. From other bug tracker or else.");
 			getApplicationModel().addCreateAction(requirementModel);
 			requirementModel.addAction("DeleteRequirement");
 			requirementModel.addAction("AddRequirementToCurrentSprint");
@@ -540,23 +540,23 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			qualityModel.addReference("project", getProjectModel()).setMaster(true);
 			qualityModel.addProperty("number", int.class);
 			qualityModel.addStringProperty("label").setSearchable(true).setEditablePredicate("editable")
-			.setTooltip(createLabelTooltipText("Quality"));
+					.setTooltip(createLabelTooltipText("Quality"));
 			qualityModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setEditablePredicate("editable")
-			.setTooltip(
-				"The desctiption of a Quality should give detailled information on "
-						+ "what the Quality is about and how it affects Storys that reference it.");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setEditablePredicate("editable")
+					.setTooltip(
+						"The desctiption of a Quality should give detailled information on "
+								+ "what the Quality is about and how it affects Storys that reference it.");
 			qualityModel
-			.addStringProperty("testDescription")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setEditablePredicate("editable")
-			.setTooltip(
-				"The Test contains requirements that have to be met by the Team "
-						+ "in order for a Story that references this Quality to be considered done.");
+					.addStringProperty("testDescription")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setEditablePredicate("editable")
+					.setTooltip(
+						"The Test contains requirements that have to be met by the Team "
+								+ "in order for a Story that references this Quality to be considered done.");
 			getApplicationModel().addCreateAction(qualityModel);
 			qualityModel.addAction("DeleteQuality");
 		}
@@ -577,55 +577,55 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			sprintModel.addProperty("number", int.class);
 			sprintModel.addReference("project", getProjectModel()).setMaster(true);
 			sprintModel.addStringProperty("label").setSearchable(true).setEditablePredicate("editable")
-			.setTooltip(createLabelTooltipText("Sprint"));
+					.setTooltip(createLabelTooltipText("Sprint"));
 			sprintModel
-			.addStringProperty("goal")
-			.setRichtext(true)
-			.setTemplateAvailable(true)
-			.setEditablePredicate("editable")
-			.setSearchable(true)
-			.setTooltip(
-				"The goal is used to summarize the purpose of this Sprint. "
-						+ "Naturally, it should be a description on why it is important that the Stories "
-						+ "currently high in the Product Backlog should be realized next.");
+					.addStringProperty("goal")
+					.setRichtext(true)
+					.setTemplateAvailable(true)
+					.setEditablePredicate("editable")
+					.setSearchable(true)
+					.setTooltip(
+						"The goal is used to summarize the purpose of this Sprint. "
+								+ "Naturally, it should be a description on why it is important that the Stories "
+								+ "currently high in the Product Backlog should be realized next.");
 			sprintModel.addProperty("begin", Date.class).setEditablePredicate("datesEditable")
-			.setTooltip("The date the Team starts working on the Sprint.");
+					.setTooltip("The date the Team starts working on the Sprint.");
 			sprintModel
-			.addProperty("end", Date.class)
-			.setEditablePredicate("datesEditable")
-			.setTooltip(
-				"The date by which the Team will finish working on this Sprint. "
-						+ "A Sprint Review meeting should be scheduled to present results.");
+					.addProperty("end", Date.class)
+					.setEditablePredicate("datesEditable")
+					.setTooltip(
+						"The date by which the Team will finish working on this Sprint. "
+								+ "A Sprint Review meeting should be scheduled to present results.");
 			sprintModel.addProperty("originallyEnd", Date.class);
 			sprintModel.addProperty("velocity", Float.class);
 			sprintModel.addStringProperty("completedRequirementsData");
 			sprintModel.addStringProperty("incompletedRequirementsData");
 			sprintModel
-			.addStringProperty("planningNote")
-			.setRichtext(true)
-			.setTemplateAvailable(true)
-			.setEditablePredicate("planningEditable")
-			.setSearchable(true)
-			.setTooltip(
-				"Things that come up during Sprint Planning that might affect the Sprint or be of interest for stakeholders "
-						+ "(illness, vacation and other influences; discussion results, agreements, etc.");
+					.addStringProperty("planningNote")
+					.setRichtext(true)
+					.setTemplateAvailable(true)
+					.setEditablePredicate("planningEditable")
+					.setSearchable(true)
+					.setTooltip(
+						"Things that come up during Sprint Planning that might affect the Sprint or be of interest for stakeholders "
+								+ "(illness, vacation and other influences; discussion results, agreements, etc.");
 			sprintModel
-			.addStringProperty("reviewNote")
-			.setRichtext(true)
-			.setTemplateAvailable(true)
-			.setEditablePredicate("reviewEditable")
-			.setSearchable(true)
-			.setTooltip(
-				"Things that come up during the Sprint Review that might be of interest for stakeholders.");
+					.addStringProperty("reviewNote")
+					.setRichtext(true)
+					.setTemplateAvailable(true)
+					.setEditablePredicate("reviewEditable")
+					.setSearchable(true)
+					.setTooltip(
+						"Things that come up during the Sprint Review that might be of interest for stakeholders.");
 			sprintModel
-			.addStringProperty("retrospectiveNote")
-			.setRichtext(true)
-			.setTemplateAvailable(true)
-			.setEditablePredicate("retrospectiveEditable")
-			.setSearchable(true)
-			.setTooltip(
-				"Things that come up during Sprint Retrospectives that are important in the future "
-						+ "or might be of interest for stakeholders.");
+					.addStringProperty("retrospectiveNote")
+					.setRichtext(true)
+					.setTemplateAvailable(true)
+					.setEditablePredicate("retrospectiveEditable")
+					.setSearchable(true)
+					.setTooltip(
+						"Things that come up during Sprint Retrospectives that are important in the future "
+								+ "or might be of interest for stakeholders.");
 			sprintModel.addListProperty("requirementsOrderIds", String.class);
 			sprintModel.addSetReference("productOwners", getUserModel());
 			sprintModel.addSetReference("scrumMasters", getUserModel());
@@ -676,29 +676,29 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
 			taskModel.addStringProperty("label").setEditablePredicate("editable").setMandatory(true)
-					.setSearchable(true).setTooltip(createLabelTooltipText("Task"));
+			.setSearchable(true).setTooltip(createLabelTooltipText("Task"));
 			taskModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setEditablePredicate("editable")
-			.setSearchable(true)
-			.setTooltip(
-				"The description of a Task may be used to give information that is important, "
-						+ "but cannot be inferred from the Label. "
-						+ "As Tasks are small units of work, the Label might be sufficient.");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setEditablePredicate("editable")
+					.setSearchable(true)
+					.setTooltip(
+						"The description of a Task may be used to give information that is important, "
+								+ "but cannot be inferred from the Label. "
+								+ "As Tasks are small units of work, the Label might be sufficient.");
 			taskModel
-			.addProperty("remainingWork", int.class)
-			.setEditablePredicate("editable")
-			.setTooltip(
-				"The remaining time needed to get this Task done. If the remaining time is high, "
-						+ "it might be an indication (but is not necessarily the case) that "
-						+ "splitting the Task is a good idea.");
+					.addProperty("remainingWork", int.class)
+					.setEditablePredicate("editable")
+					.setTooltip(
+						"The remaining time needed to get this Task done. If the remaining time is high, "
+								+ "it might be an indication (but is not necessarily the case) that "
+								+ "splitting the Task is a good idea.");
 			taskModel.addProperty("burnedWork", int.class).setEditablePredicate("editable")
-			.setTooltip("Time already invested working on this Task.");
+					.setTooltip("Time already invested working on this Task.");
 			taskModel.addReference("owner", getUserModel()).setEditablePredicate("editable")
-			.setTooltip("The Team member working on the Task.");
+					.setTooltip("The Team member working on the Task.");
 			taskModel.addReference("impediment", getImpedimentModel()).setEditablePredicate("editable")
-			.setTooltip("Blocked by Impediment.");
+					.setTooltip("Blocked by Impediment.");
 			taskModel.addReference("closedInPastSprint", getSprintModel()).setBackReferenceName("closedTasksInPast");
 			getApplicationModel().addCreateAction(taskModel);
 			taskModel.addAction("DeleteTask");
@@ -721,23 +721,23 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			impedimentModel.addReference("project", getProjectModel()).setMaster(true);
 			impedimentModel.addProperty("number", int.class);
 			impedimentModel.addStringProperty("label").setSearchable(true)
-			.setTooltip(createLabelTooltipText("Impediment"));
+					.setTooltip(createLabelTooltipText("Impediment"));
 			impedimentModel.addProperty("date", Date.class).setMandatory(true)
-			.setTooltip("The date the Impediment came up.");
+					.setTooltip("The date the Impediment came up.");
 			impedimentModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The detailed description of the Impediment that explains problems, "
-						+ "states who is affected and how, gives background information and solution hints.");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The detailed description of the Impediment that explains problems, "
+								+ "states who is affected and how, gives background information and solution hints.");
 			impedimentModel
-			.addStringProperty("solution")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"As soon as a solution is found, it can be documented here, so that people affected by "
-						+ "or holding stake in the Impediment can read it up.");
+					.addStringProperty("solution")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"As soon as a solution is found, it can be documented here, so that people affected by "
+								+ "or holding stake in the Impediment can read it up.");
 			impedimentModel.addProperty("closed", boolean.class);
 			getApplicationModel().addCreateAction(impedimentModel);
 			impedimentModel.addAction("DeleteImpediment");
@@ -757,41 +757,41 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			riskModel.addProperty("number", int.class);
 			riskModel.addStringProperty("label").setSearchable(true).setTooltip(createLabelTooltipText("Risk"));
 			riskModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The description of a Risk should give additional information like "
-						+ "why or when it might occur, what would be affected and how; "
-						+ "reasons, preconditions and damage that might result.");
+					.addStringProperty("description")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The description of a Risk should give additional information like "
+								+ "why or when it might occur, what would be affected and how; "
+								+ "reasons, preconditions and damage that might result.");
 			riskModel
-			.addStringProperty("probabilityMitigation")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The mitigation plans that should be put into practice in order to "
-						+ "mitigate the probability of a problem arising.");
+					.addStringProperty("probabilityMitigation")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The mitigation plans that should be put into practice in order to "
+								+ "mitigate the probability of a problem arising.");
 			riskModel
-			.addStringProperty("impactMitigation")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The mitigation plans that should be put into practice in order to "
-						+ "mitigate the impact, should a problem arise.");
+					.addStringProperty("impactMitigation")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"The mitigation plans that should be put into practice in order to "
+								+ "mitigate the impact, should a problem arise.");
 			riskModel
-			.addProperty("probability", int.class)
-			.setOptionRestricted(true)
-			.setEditablePredicate("priorityEditable")
-			.setTooltip(
-				"How probable is it (concidering the description and implemented minigation plans) "
-						+ "that this Risk turns into a problem?");
+					.addProperty("probability", int.class)
+					.setOptionRestricted(true)
+					.setEditablePredicate("priorityEditable")
+					.setTooltip(
+						"How probable is it (concidering the description and implemented minigation plans) "
+								+ "that this Risk turns into a problem?");
 			riskModel
-			.addProperty("impact", int.class)
-			.setOptionRestricted(true)
-			.setEditablePredicate("priorityEditable")
-			.setTooltip(
-				"How high is the impact (concidering the decription and the implemented mitigation plans), "
-						+ "should a problem arise?");
+					.addProperty("impact", int.class)
+					.setOptionRestricted(true)
+					.setEditablePredicate("priorityEditable")
+					.setTooltip(
+						"How high is the impact (concidering the decription and the implemented mitigation plans), "
+								+ "should a problem arise?");
 			getApplicationModel().addCreateAction(riskModel);
 			riskModel.addAction("DeleteRisk");
 		}
@@ -809,7 +809,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			userModel.setEditProtected(true);
 			userModel.addStringProperty("name").setSearchable(true).setUnique(true).setTooltip("Login name.");
 			userModel.addStringProperty("publicName").setSearchable(true)
-			.setTooltip("Name, which is displayed to the public on blog entries or emails.");
+					.setTooltip("Name, which is displayed to the public on blog entries or emails.");
 			userModel.addStringProperty("fullName").setSearchable(true).setTooltip("Full name of the person.");
 			userModel.addProperty("admin", boolean.class);
 			userModel.addProperty("emailVerified", boolean.class);
@@ -888,45 +888,45 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("date", DateAndTime.class).setMandatory(true);
 			issueModel.addReference("creator", getUserModel()).setTooltip("User, who created this issue.");
 			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-			.setTooltip(createLabelTooltipText("Issue"));
+					.setTooltip(createLabelTooltipText("Issue"));
 			issueModel
-			.addStringProperty("description")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"The description of an issue should give enough information for other people to understand "
-						+ "what the issue is about. That contains information on how to reproduce an issue and "
-						+ "what symptoms are, as well as suggestions on how to fix it.");
-			issueModel
-					.addStringProperty("additionalInfo")
+					.addStringProperty("description")
 					.setRichtext(true)
 					.setSearchable(true)
 					.setTooltip(
-						"Additional info, only visible to project participants. Can be used for error details like stack traces or other information about the issues environment.");
+						"The description of an issue should give enough information for other people to understand "
+								+ "what the issue is about. That contains information on how to reproduce an issue and "
+								+ "what symptoms are, as well as suggestions on how to fix it.");
 			issueModel
-			.addStringProperty("statement")
+			.addStringProperty("additionalInfo")
 			.setRichtext(true)
 			.setSearchable(true)
 			.setTooltip(
-				"Official statement from the Scrum Team to the public about this issue. This could be a "
-						+ " workaround description, the reason or some other information about status of the "
-						+ " issue.");
+				"Additional info, only visible to project participants. Can be used for error details like stack traces or other information about the issues environment.");
+			issueModel
+					.addStringProperty("statement")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"Official statement from the Scrum Team to the public about this issue. This could be a "
+								+ " workaround description, the reason or some other information about status of the "
+								+ " issue.");
 			issueModel.addStringProperty("issuerName").setTooltip("Name of the person that created this issue.")
-			.setTooltip("The person who filed this issue.");
+					.setTooltip("The person who filed this issue.");
 			issueModel.addStringProperty("issuerEmail").setTooltip(
-					"E-Mail address of the person, who filed this issue.");
+				"E-Mail address of the person, who filed this issue.");
 			issueModel.addProperty("acceptDate", Date.class);
 			issueModel.addProperty("urgent", boolean.class);
 			issueModel
-			.addProperty("severity", int.class)
-			.setOptionRestricted(true)
-			.setTooltip(
-				"The level of this bug's impact. A minor bug might be a cosmetic failure, "
-						+ "a normal bug encumbers the user's work, "
-						+ "a severe bug might lead to loss of data or property, "
-						+ "a critical bug makes product usage impossible.");
+					.addProperty("severity", int.class)
+					.setOptionRestricted(true)
+					.setTooltip(
+						"The level of this bug's impact. A minor bug might be a cosmetic failure, "
+								+ "a normal bug encumbers the user's work, "
+								+ "a severe bug might lead to loss of data or property, "
+								+ "a critical bug makes product usage impossible.");
 			issueModel.addReference("owner", getUserModel()).setTooltip(
-					"The Team member that is currently working on this issue.");
+				"The Team member that is currently working on this issue.");
 			issueModel.addProperty("fixDate", Date.class);
 			issueModel.addProperty("closeDate", Date.class);
 			issueModel.addProperty("suspendedUntilDate", Date.class);
@@ -935,7 +935,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			issueModel.addListProperty("themes", String.class);
 			issueModel.addStringProperty("externalTrackerId").setLabel("External ID")
-					.setTooltip("External system ID. From other bug tracker or else.");
+			.setTooltip("External system ID. From other bug tracker or else.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");
@@ -978,9 +978,9 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			subjectModel.setGwtSupport(true);
 			subjectModel.addReference("project", getProjectModel()).setMaster(true);
 			subjectModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-			.setTooltip("The subject this discussion will be listed under in the project's forum.");
+					.setTooltip("The subject this discussion will be listed under in the project's forum.");
 			subjectModel.addStringProperty("text").setRichtext(true).setSearchable(true)
-			.setTooltip("Notes that give background information and summarize discussion results.");
+					.setTooltip("Notes that give background information and summarize discussion results.");
 			subjectModel.addProperty("number", int.class).setMandatory(true);
 			getApplicationModel().addCreateAction(subjectModel);
 			subjectModel.addAction("DeleteSubject");
@@ -1031,7 +1031,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			commentModel.addStringProperty("authorEmail");
 			commentModel.addProperty("authorNameVisible", boolean.class);
 			commentModel.addStringProperty("text").setRichtext(true).setMandatory(true).setSearchable(true)
-			.setEditablePredicate("editable");
+					.setEditablePredicate("editable");
 			commentModel.addProperty("dateAndTime", DateAndTime.class);
 			commentModel.addPredicate("editable");
 			commentModel.addAction("PublishComment");
@@ -1063,10 +1063,10 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			projectEventModel.addPredicate("editable");
 			projectEventModel.addReference("project", getProjectModel()).setMaster(true);
 			projectEventModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-			.setEditablePredicate("editable").setSearchable(true);
+					.setEditablePredicate("editable").setSearchable(true);
 			projectEventModel.addReference("subject", getEntityModel());
 			projectEventModel.addProperty("dateAndTime", DateAndTime.class).setMandatory(true)
-			.setEditablePredicate("editable");
+					.setEditablePredicate("editable");
 		}
 		return projectEventModel;
 	}
@@ -1080,13 +1080,13 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			blogEntryModel.addReference("project", getProjectModel()).setMaster(true);
 			blogEntryModel.addProperty("number", int.class).setMandatory(true);
 			blogEntryModel.addSetReference("authors", getUserModel()).setTooltip(
-					"All people that have cantributed to create this blog entry.");
+				"All people that have cantributed to create this blog entry.");
 			blogEntryModel.addStringProperty("title").setMandatory(true).setSearchable(true)
-			.setTooltip("The title that will appear in the blog.");
+					.setTooltip("The title that will appear in the blog.");
 			blogEntryModel.addStringProperty("text").setRichtext(true).setSearchable(true)
-			.setTooltip("The text that will appear in the blog.");
+					.setTooltip("The text that will appear in the blog.");
 			blogEntryModel.addProperty("dateAndTime", DateAndTime.class).setTooltip(
-					"The time that indicates when the blog entry was released.");
+				"The time that indicates when the blog entry was released.");
 			blogEntryModel.addSetReference("releases", getReleaseModel());
 			blogEntryModel.addProperty("published", boolean.class);
 			getApplicationModel().addCreateAction(blogEntryModel);

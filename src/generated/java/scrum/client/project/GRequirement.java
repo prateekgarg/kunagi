@@ -904,6 +904,9 @@ public abstract class GRequirement
         public void setValue(java.lang.String value) {
             setExternalTrackerId(value);
         }
+
+        @Override
+        public boolean isEditable() { return GRequirement.this.isEditable(); }
         @Override
         public String getTooltip() { return "External system ID. From other bug tracker or else."; }
 

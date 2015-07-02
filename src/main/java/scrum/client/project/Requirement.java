@@ -72,6 +72,14 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		super(data);
 	}
 
+	public String getExternalTrackerUrl() {
+		String id = getExternalTrackerId();
+		if (Str.isBlank(id)) return null;
+		String template = getProject().getExternalTrackerUrlTemplate();
+		if (Str.isBlank(template)) return null;
+		return template.replace("${id}", id);
+	}
+
 	public String getHistoryLabel(final Sprint sprint) {
 		List<Change> changes = getDao().getChangesByParent(Requirement.this);
 		for (Change change : changes) {
@@ -493,6 +501,20 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			public String getValue() {
 				return getHistoryLabel(sprint);
 			}
+		};
+	}
+
+	@Override
+	protected ExternalTrackerIdModel createExternalTrackerIdModel() {
+		return new ExternalTrackerIdModel() {
+
+			@Override
+			public String getDisplayValue() {
+				String url = getExternalTrackerUrl();
+				if (Str.isBlank(url)) return super.getDisplayValue();
+				return "[" + url + " " + getExternalTrackerId() + "]";
+			}
+
 		};
 	}
 

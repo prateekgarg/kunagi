@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -55,6 +55,7 @@ public class IssueServlet extends AKunagiServlet {
 		String subject = req.get("subject");
 		String text = req.get("text");
 		String additionalInfo = req.get("additionalInfo");
+		String externalTrackerId = req.get("externalTrackerId");
 		String name = Str.cutRight(req.get("name"), 33);
 		if (Str.isBlank(name)) name = null;
 		String email = Str.cutRight(req.get("email"), 66);
@@ -71,14 +72,15 @@ public class IssueServlet extends AKunagiServlet {
 		log.info("    subject: " + subject);
 		log.info("    text: " + text);
 		log.info("    additionalInfo: " + additionalInfo);
+		log.info("    externalTrackerId: " + externalTrackerId);
 		log.info("  Request-Data:");
 		log.info(Servlet.toString(req.getHttpRequest(), "        "));
 
 		String message;
 		try {
 			SpamChecker.check(text, name, email, req);
-			message = submitIssue(projectId, subject, text, additionalInfo, name, email, wiki, publish,
-				req.getRemoteHost());
+			message = submitIssue(projectId, subject, text, additionalInfo, externalTrackerId, name, email, wiki,
+				publish, req.getRemoteHost());
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Utl.getRootCauseMessage(ex)
@@ -97,8 +99,8 @@ public class IssueServlet extends AKunagiServlet {
 		out.print(message);
 	}
 
-	private String submitIssue(String projectId, String label, String text, String additionalInfo, String name,
-			String email, boolean wiki, boolean publish, String remoteHost) {
+	private String submitIssue(String projectId, String label, String text, String additionalInfo,
+			String externalTrackerId, String name, String email, boolean wiki, boolean publish, String remoteHost) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		if (Str.isBlank(label))
 			throw new RuntimeException("Subject is empty, but required. Please write a short title for your issue.");
@@ -106,7 +108,8 @@ public class IssueServlet extends AKunagiServlet {
 			throw new RuntimeException("Text is empty, but required. Please wirte a short description of your issue.");
 		Project project = projectDao.getById(projectId);
 		String textAsWiki = wiki ? text : "<nowiki>" + text + "</nowiki>";
-		Issue issue = issueDao.postIssue(project, label, textAsWiki, additionalInfo, name, email, publish);
+		Issue issue = issueDao.postIssue(project, label, textAsWiki, additionalInfo, externalTrackerId, name, email,
+			publish);
 		if (publish) {
 			project.updateHomepage(issue);
 		}
@@ -123,7 +126,7 @@ public class IssueServlet extends AKunagiServlet {
 		String issueLink = publish ? KunagiUtl.createExternalRelativeHtmlAnchor(issue) : "<code>"
 				+ issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
-				+ issueLink + " and will be reviewed by our Product Owner.</p>";
+		+ issueLink + " and will be reviewed by our Product Owner.</p>";
 	}
 
 	@Override
