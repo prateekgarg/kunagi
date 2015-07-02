@@ -49,6 +49,7 @@ public abstract class GIssue
         properties.put("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
         properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("additionalInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.additionalInfo));
         properties.put("statement", ilarkesto.core.persistance.Persistence.propertyAsString(this.statement));
         properties.put("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
         properties.put("issuerEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerEmail));
@@ -86,6 +87,7 @@ public abstract class GIssue
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getAdditionalInfo(), key)) return true;
         if (matchesKey(getStatement(), key)) return true;
         return false;
     }
@@ -478,6 +480,49 @@ public abstract class GIssue
 
     protected final void updateDescription(Object value) {
         setDescription((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - additionalInfo
+    // -----------------------------------------------------------
+
+    private java.lang.String additionalInfo;
+
+    public final java.lang.String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public final void setAdditionalInfo(java.lang.String additionalInfo) {
+        additionalInfo = prepareAdditionalInfo(additionalInfo);
+        if (isAdditionalInfo(additionalInfo)) return;
+        this.additionalInfo = additionalInfo;
+            updateLastModified();
+            fireModified("additionalInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.additionalInfo));
+    }
+
+    private final void updateAdditionalInfo(java.lang.String additionalInfo) {
+        if (isAdditionalInfo(additionalInfo)) return;
+        this.additionalInfo = additionalInfo;
+            updateLastModified();
+            fireModified("additionalInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.additionalInfo));
+    }
+
+    protected java.lang.String prepareAdditionalInfo(java.lang.String additionalInfo) {
+        // additionalInfo = Str.removeUnreadableChars(additionalInfo);
+        return additionalInfo;
+    }
+
+    public final boolean isAdditionalInfoSet() {
+        return this.additionalInfo != null;
+    }
+
+    public final boolean isAdditionalInfo(java.lang.String additionalInfo) {
+        if (this.additionalInfo == null && additionalInfo == null) return true;
+        return this.additionalInfo != null && this.additionalInfo.equals(additionalInfo);
+    }
+
+    protected final void updateAdditionalInfo(Object value) {
+        setAdditionalInfo((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1332,6 +1377,7 @@ public abstract class GIssue
             if (property.equals("creatorId")) updateCreatorId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
             if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("additionalInfo")) updateAdditionalInfo(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("statement")) updateStatement(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("issuerName")) updateIssuerName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("issuerEmail")) updateIssuerEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));

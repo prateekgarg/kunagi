@@ -422,6 +422,64 @@ public abstract class GIssue
 
     }
 
+    // --- additionalInfo ---
+
+    private java.lang.String additionalInfo ;
+
+    public final java.lang.String getAdditionalInfo() {
+        return this.additionalInfo ;
+    }
+
+    public final Issue setAdditionalInfo(java.lang.String additionalInfo) {
+        if (isAdditionalInfo(additionalInfo)) return (Issue)this;
+        this.additionalInfo = additionalInfo ;
+        propertyChanged("additionalInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.additionalInfo));
+        return (Issue)this;
+    }
+
+    public final boolean isAdditionalInfo(java.lang.String additionalInfo) {
+        return equals(this.additionalInfo, additionalInfo);
+    }
+
+    private transient AdditionalInfoModel additionalInfoModel;
+
+    public AdditionalInfoModel getAdditionalInfoModel() {
+        if (additionalInfoModel == null) additionalInfoModel = createAdditionalInfoModel();
+        return additionalInfoModel;
+    }
+
+    protected AdditionalInfoModel createAdditionalInfoModel() { return new AdditionalInfoModel(); }
+
+    protected class AdditionalInfoModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Issue_additionalInfo";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getAdditionalInfo();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setAdditionalInfo(value);
+        }
+
+        @Override
+        public boolean isRichtext() { return true; }
+        @Override
+        public String getTooltip() { return "Additional info, only visible to project participants. Can be used for error details like stack traces or other information about the issues environment."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- statement ---
 
     private java.lang.String statement ;
@@ -1111,6 +1169,7 @@ public abstract class GIssue
             if (property.equals("creatorId")) creatorId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("additionalInfo")) additionalInfo = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("statement")) statement = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("issuerName")) issuerName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("issuerEmail")) issuerEmail = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
@@ -1140,6 +1199,7 @@ public abstract class GIssue
         properties.put("creatorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.creatorId));
         properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
+        properties.put("additionalInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.additionalInfo));
         properties.put("statement", ilarkesto.core.persistance.Persistence.propertyAsString(this.statement));
         properties.put("issuerName", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerName));
         properties.put("issuerEmail", ilarkesto.core.persistance.Persistence.propertyAsString(this.issuerEmail));
@@ -1165,6 +1225,7 @@ public abstract class GIssue
         if (super.matchesKey(key)) return true;
         if (matchesKey(getLabel(), key)) return true;
         if (matchesKey(getDescription(), key)) return true;
+        if (matchesKey(getAdditionalInfo(), key)) return true;
         if (matchesKey(getStatement(), key)) return true;
         return false;
     }

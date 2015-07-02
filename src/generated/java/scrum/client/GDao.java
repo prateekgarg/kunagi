@@ -900,6 +900,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByAdditionalInfo(java.lang.String additionalInfo) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isAdditionalInfo(additionalInfo)) ret.add(entity);
+        }
+        return ret;
+    }
+
     public final List<scrum.client.issues.Issue> getIssuesByStatement(java.lang.String statement) {
         List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
         for (scrum.client.issues.Issue entity : issues.values()) {

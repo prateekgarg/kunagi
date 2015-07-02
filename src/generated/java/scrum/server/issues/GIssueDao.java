@@ -58,6 +58,8 @@ public abstract class GIssueDao
         labelsCache = null;
         issuesByDescriptionCache.clear();
         descriptionsCache = null;
+        issuesByAdditionalInfoCache.clear();
+        additionalInfosCache = null;
         issuesByStatementCache.clear();
         statementsCache = null;
         issuesByIssuerNameCache.clear();
@@ -418,6 +420,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.isDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - additionalInfo
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByAdditionalInfoCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String additionalInfo) {
+                    return getEntities(new IsAdditionalInfo(additionalInfo));
+                }
+            });
+
+    public final Set<Issue> getIssuesByAdditionalInfo(java.lang.String additionalInfo) {
+        return new HashSet<Issue>(issuesByAdditionalInfoCache.get(additionalInfo));
+    }
+    private Set<java.lang.String> additionalInfosCache;
+
+    public final Set<java.lang.String> getAdditionalInfos() {
+        if (additionalInfosCache == null) {
+            additionalInfosCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                if (e.isAdditionalInfoSet()) additionalInfosCache.add(e.getAdditionalInfo());
+            }
+        }
+        return additionalInfosCache;
+    }
+
+    private static class IsAdditionalInfo implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public IsAdditionalInfo(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isAdditionalInfo(value);
         }
 
     }

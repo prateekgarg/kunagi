@@ -54,6 +54,7 @@ public class IssueServlet extends AKunagiServlet {
 		String projectId = req.get("projectId");
 		String subject = req.get("subject");
 		String text = req.get("text");
+		String additionalInfo = req.get("additionalInfo");
 		String name = Str.cutRight(req.get("name"), 33);
 		if (Str.isBlank(name)) name = null;
 		String email = Str.cutRight(req.get("email"), 66);
@@ -69,13 +70,15 @@ public class IssueServlet extends AKunagiServlet {
 		log.info("    wiki: " + wiki);
 		log.info("    subject: " + subject);
 		log.info("    text: " + text);
+		log.info("    additionalInfo: " + additionalInfo);
 		log.info("  Request-Data:");
 		log.info(Servlet.toString(req.getHttpRequest(), "        "));
 
 		String message;
 		try {
 			SpamChecker.check(text, name, email, req);
-			message = submitIssue(projectId, subject, text, name, email, wiki, publish, req.getRemoteHost());
+			message = submitIssue(projectId, subject, text, additionalInfo, name, email, wiki, publish,
+				req.getRemoteHost());
 		} catch (Throwable ex) {
 			log.error("Submitting issue failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			message = "<h2>Failure</h2><p>Submitting your feedback failed: <strong>" + Utl.getRootCauseMessage(ex)
@@ -94,8 +97,8 @@ public class IssueServlet extends AKunagiServlet {
 		out.print(message);
 	}
 
-	private String submitIssue(String projectId, String label, String text, String name, String email, boolean wiki,
-			boolean publish, String remoteHost) {
+	private String submitIssue(String projectId, String label, String text, String additionalInfo, String name,
+			String email, boolean wiki, boolean publish, String remoteHost) {
 		if (projectId == null) throw new RuntimeException("projectId == null");
 		if (Str.isBlank(label))
 			throw new RuntimeException("Subject is empty, but required. Please write a short title for your issue.");
@@ -103,7 +106,7 @@ public class IssueServlet extends AKunagiServlet {
 			throw new RuntimeException("Text is empty, but required. Please wirte a short description of your issue.");
 		Project project = projectDao.getById(projectId);
 		String textAsWiki = wiki ? text : "<nowiki>" + text + "</nowiki>";
-		Issue issue = issueDao.postIssue(project, label, textAsWiki, name, email, publish);
+		Issue issue = issueDao.postIssue(project, label, textAsWiki, additionalInfo, name, email, publish);
 		if (publish) {
 			project.updateHomepage(issue);
 		}

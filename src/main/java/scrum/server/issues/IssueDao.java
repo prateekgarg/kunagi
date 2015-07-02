@@ -104,12 +104,13 @@ public class IssueDao extends GIssueDao {
 		});
 	}
 
-	public Issue postIssue(Project project, String label, String text, String issuerName, String issuerEmail,
-			boolean publish) {
+	public Issue postIssue(Project project, String label, String text, String additionalInfo, String issuerName,
+			String issuerEmail, boolean publish) {
 		Issue issue = newEntityInstance();
 		issue.setProject(project);
 		issue.setLabel(label);
 		issue.setDescription(text);
+		issue.setAdditionalInfo(additionalInfo);
 		issue.setDate(DateAndTime.now());
 		issue.setIssuerName(issuerName);
 		issue.setIssuerEmail(issuerEmail);
