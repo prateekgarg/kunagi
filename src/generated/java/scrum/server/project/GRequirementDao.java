@@ -73,6 +73,8 @@ public abstract class GRequirementDao
         themesCache = null;
         requirementsByEpicCache.clear();
         epicsCache = null;
+        requirementsByExternalTrackerIdCache.clear();
+        externalTrackerIdsCache = null;
     }
 
     @Override
@@ -752,6 +754,46 @@ public abstract class GRequirementDao
 
         public boolean test(Requirement e) {
             return e.isEpic(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - externalTrackerId
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Requirement>> requirementsByExternalTrackerIdCache = new Cache<java.lang.String,Set<Requirement>>(
+            new Cache.Factory<java.lang.String,Set<Requirement>>() {
+                public Set<Requirement> create(java.lang.String externalTrackerId) {
+                    return getEntities(new IsExternalTrackerId(externalTrackerId));
+                }
+            });
+
+    public final Set<Requirement> getRequirementsByExternalTrackerId(java.lang.String externalTrackerId) {
+        return new HashSet<Requirement>(requirementsByExternalTrackerIdCache.get(externalTrackerId));
+    }
+    private Set<java.lang.String> externalTrackerIdsCache;
+
+    public final Set<java.lang.String> getExternalTrackerIds() {
+        if (externalTrackerIdsCache == null) {
+            externalTrackerIdsCache = new HashSet<java.lang.String>();
+            for (Requirement e : getEntities()) {
+                if (e.isExternalTrackerIdSet()) externalTrackerIdsCache.add(e.getExternalTrackerId());
+            }
+        }
+        return externalTrackerIdsCache;
+    }
+
+    private static class IsExternalTrackerId implements Predicate<Requirement> {
+
+        private java.lang.String value;
+
+        public IsExternalTrackerId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Requirement e) {
+            return e.isExternalTrackerId(value);
         }
 
     }

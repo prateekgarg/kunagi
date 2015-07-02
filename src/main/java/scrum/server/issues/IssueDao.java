@@ -139,6 +139,7 @@ public class IssueDao extends GIssueDao {
 		if (requirement.isTestDescriptionSet()) sb.append("\n\n").append(requirement.getTestDescription());
 		issue.setDescription(sb.toString());
 		issue.addThemes(requirement.getThemes());
+		issue.setExternalTrackerId(requirement.getExternalTrackerId());
 		saveEntity(issue);
 		issue.updateNumber();
 		return issue;

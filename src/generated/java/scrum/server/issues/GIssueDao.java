@@ -86,6 +86,8 @@ public abstract class GIssueDao
         issuesByPublishedCache.clear();
         issuesByThemeCache.clear();
         themesCache = null;
+        issuesByExternalTrackerIdCache.clear();
+        externalTrackerIdsCache = null;
     }
 
     @Override
@@ -998,6 +1000,46 @@ public abstract class GIssueDao
 
         public boolean test(Issue e) {
             return e.containsTheme(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - externalTrackerId
+    // -----------------------------------------------------------
+
+    private final Cache<java.lang.String,Set<Issue>> issuesByExternalTrackerIdCache = new Cache<java.lang.String,Set<Issue>>(
+            new Cache.Factory<java.lang.String,Set<Issue>>() {
+                public Set<Issue> create(java.lang.String externalTrackerId) {
+                    return getEntities(new IsExternalTrackerId(externalTrackerId));
+                }
+            });
+
+    public final Set<Issue> getIssuesByExternalTrackerId(java.lang.String externalTrackerId) {
+        return new HashSet<Issue>(issuesByExternalTrackerIdCache.get(externalTrackerId));
+    }
+    private Set<java.lang.String> externalTrackerIdsCache;
+
+    public final Set<java.lang.String> getExternalTrackerIds() {
+        if (externalTrackerIdsCache == null) {
+            externalTrackerIdsCache = new HashSet<java.lang.String>();
+            for (Issue e : getEntities()) {
+                if (e.isExternalTrackerIdSet()) externalTrackerIdsCache.add(e.getExternalTrackerId());
+            }
+        }
+        return externalTrackerIdsCache;
+    }
+
+    private static class IsExternalTrackerId implements Predicate<Issue> {
+
+        private java.lang.String value;
+
+        public IsExternalTrackerId(java.lang.String value) {
+            this.value = value;
+        }
+
+        public boolean test(Issue e) {
+            return e.isExternalTrackerId(value);
         }
 
     }

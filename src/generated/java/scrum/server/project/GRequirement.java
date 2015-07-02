@@ -59,6 +59,7 @@ public abstract class GRequirement
         properties.put("tasksOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.tasksOrderIds));
         properties.put("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
         properties.put("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
+        properties.put("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
     }
 
     public int compareTo(Requirement other) {
@@ -1137,6 +1138,49 @@ public abstract class GRequirement
         setEpic(value == null ? null : (scrum.server.project.Requirement)requirementDao.getById((String)value));
     }
 
+    // -----------------------------------------------------------
+    // - externalTrackerId
+    // -----------------------------------------------------------
+
+    private java.lang.String externalTrackerId;
+
+    public final java.lang.String getExternalTrackerId() {
+        return externalTrackerId;
+    }
+
+    public final void setExternalTrackerId(java.lang.String externalTrackerId) {
+        externalTrackerId = prepareExternalTrackerId(externalTrackerId);
+        if (isExternalTrackerId(externalTrackerId)) return;
+        this.externalTrackerId = externalTrackerId;
+            updateLastModified();
+            fireModified("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
+    }
+
+    private final void updateExternalTrackerId(java.lang.String externalTrackerId) {
+        if (isExternalTrackerId(externalTrackerId)) return;
+        this.externalTrackerId = externalTrackerId;
+            updateLastModified();
+            fireModified("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
+    }
+
+    protected java.lang.String prepareExternalTrackerId(java.lang.String externalTrackerId) {
+        // externalTrackerId = Str.removeUnreadableChars(externalTrackerId);
+        return externalTrackerId;
+    }
+
+    public final boolean isExternalTrackerIdSet() {
+        return this.externalTrackerId != null;
+    }
+
+    public final boolean isExternalTrackerId(java.lang.String externalTrackerId) {
+        if (this.externalTrackerId == null && externalTrackerId == null) return true;
+        return this.externalTrackerId != null && this.externalTrackerId.equals(externalTrackerId);
+    }
+
+    protected final void updateExternalTrackerId(Object value) {
+        setExternalTrackerId((java.lang.String)value);
+    }
+
     public void updateProperties(Map<String, String> properties) {
         super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -1161,6 +1205,7 @@ public abstract class GRequirement
             if (property.equals("tasksOrderIds")) updateTasksOrderIds(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
             if (property.equals("themes")) updateThemes(ilarkesto.core.persistance.Persistence.parsePropertyStringCollection(value));
             if (property.equals("epicId")) updateEpicId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("externalTrackerId")) updateExternalTrackerId(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

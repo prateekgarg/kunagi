@@ -84,6 +84,8 @@ public abstract class GProject
         properties.put("freeDays", ilarkesto.core.persistance.Persistence.propertyAsString(this.freeDays));
         properties.put("autoCreateTasksFromQualities", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoCreateTasksFromQualities));
         properties.put("releasingInfo", ilarkesto.core.persistance.Persistence.propertyAsString(this.releasingInfo));
+        properties.put("externalTrackerUrlTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerUrlTemplate));
+        properties.put("externalTrackerLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerLabel));
     }
 
     public int compareTo(Project other) {
@@ -2526,6 +2528,92 @@ public abstract class GProject
         setReleasingInfo((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - externalTrackerUrlTemplate
+    // -----------------------------------------------------------
+
+    private java.lang.String externalTrackerUrlTemplate;
+
+    public final java.lang.String getExternalTrackerUrlTemplate() {
+        return externalTrackerUrlTemplate;
+    }
+
+    public final void setExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
+        externalTrackerUrlTemplate = prepareExternalTrackerUrlTemplate(externalTrackerUrlTemplate);
+        if (isExternalTrackerUrlTemplate(externalTrackerUrlTemplate)) return;
+        this.externalTrackerUrlTemplate = externalTrackerUrlTemplate;
+            updateLastModified();
+            fireModified("externalTrackerUrlTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerUrlTemplate));
+    }
+
+    private final void updateExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
+        if (isExternalTrackerUrlTemplate(externalTrackerUrlTemplate)) return;
+        this.externalTrackerUrlTemplate = externalTrackerUrlTemplate;
+            updateLastModified();
+            fireModified("externalTrackerUrlTemplate", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerUrlTemplate));
+    }
+
+    protected java.lang.String prepareExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
+        // externalTrackerUrlTemplate = Str.removeUnreadableChars(externalTrackerUrlTemplate);
+        return externalTrackerUrlTemplate;
+    }
+
+    public final boolean isExternalTrackerUrlTemplateSet() {
+        return this.externalTrackerUrlTemplate != null;
+    }
+
+    public final boolean isExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
+        if (this.externalTrackerUrlTemplate == null && externalTrackerUrlTemplate == null) return true;
+        return this.externalTrackerUrlTemplate != null && this.externalTrackerUrlTemplate.equals(externalTrackerUrlTemplate);
+    }
+
+    protected final void updateExternalTrackerUrlTemplate(Object value) {
+        setExternalTrackerUrlTemplate((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - externalTrackerLabel
+    // -----------------------------------------------------------
+
+    private java.lang.String externalTrackerLabel;
+
+    public final java.lang.String getExternalTrackerLabel() {
+        return externalTrackerLabel;
+    }
+
+    public final void setExternalTrackerLabel(java.lang.String externalTrackerLabel) {
+        externalTrackerLabel = prepareExternalTrackerLabel(externalTrackerLabel);
+        if (isExternalTrackerLabel(externalTrackerLabel)) return;
+        this.externalTrackerLabel = externalTrackerLabel;
+            updateLastModified();
+            fireModified("externalTrackerLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerLabel));
+    }
+
+    private final void updateExternalTrackerLabel(java.lang.String externalTrackerLabel) {
+        if (isExternalTrackerLabel(externalTrackerLabel)) return;
+        this.externalTrackerLabel = externalTrackerLabel;
+            updateLastModified();
+            fireModified("externalTrackerLabel", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerLabel));
+    }
+
+    protected java.lang.String prepareExternalTrackerLabel(java.lang.String externalTrackerLabel) {
+        // externalTrackerLabel = Str.removeUnreadableChars(externalTrackerLabel);
+        return externalTrackerLabel;
+    }
+
+    public final boolean isExternalTrackerLabelSet() {
+        return this.externalTrackerLabel != null;
+    }
+
+    public final boolean isExternalTrackerLabel(java.lang.String externalTrackerLabel) {
+        if (this.externalTrackerLabel == null && externalTrackerLabel == null) return true;
+        return this.externalTrackerLabel != null && this.externalTrackerLabel.equals(externalTrackerLabel);
+    }
+
+    protected final void updateExternalTrackerLabel(Object value) {
+        setExternalTrackerLabel((java.lang.String)value);
+    }
+
     public void updateProperties(Map<String, String> properties) {
         super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -2575,6 +2663,8 @@ public abstract class GProject
             if (property.equals("freeDays")) updateFreeDays(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
             if (property.equals("autoCreateTasksFromQualities")) updateAutoCreateTasksFromQualities(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
             if (property.equals("releasingInfo")) updateReleasingInfo(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("externalTrackerUrlTemplate")) updateExternalTrackerUrlTemplate(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("externalTrackerLabel")) updateExternalTrackerLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
         }
     }
 

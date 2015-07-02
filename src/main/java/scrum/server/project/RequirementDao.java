@@ -15,6 +15,7 @@
 package scrum.server.project;
 
 import ilarkesto.core.fp.Predicate;
+
 import scrum.server.issues.Issue;
 
 public class RequirementDao extends GRequirementDao {
@@ -58,6 +59,7 @@ public class RequirementDao extends GRequirementDao {
 		requirement.setDescription(issue.getDescription());
 		requirement.setIssue(issue);
 		requirement.setThemes(issue.getThemes());
+		requirement.setExternalTrackerId(issue.getExternalTrackerId());
 		issue.setStory(requirement);
 
 		saveEntity(requirement);
@@ -73,6 +75,7 @@ public class RequirementDao extends GRequirementDao {
 		requirement.setDescription(template.getDescription());
 		requirement.setTestDescription(template.getTestDescription());
 		requirement.setThemes(template.getThemes());
+		requirement.setExternalTrackerId(template.getExternalTrackerId());
 		for (Quality templateQuality : template.getQualitys()) {
 			Quality quality = destinationProject.getQualityByLabel(templateQuality.getLabel());
 			if (quality == null) continue;

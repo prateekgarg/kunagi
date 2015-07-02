@@ -338,9 +338,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			.addProperty("autoCreateTasksFromQualities", boolean.class)
 			.setTooltip(
 					"When pulling stories into the sprint, automatically create a task for each quality assigned to the story.");
-			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addStringProperty("releasingInfo").setRichtext(true)
 			.setTooltip("Custom info text for the releases page. Could be used for a release checklist.");
+			projectModel.addStringProperty("externalTrackerUrlTemplate");
+			projectModel.addStringProperty("externalTrackerLabel");
+			getApplicationModel().addCreateAction(projectModel);
 			projectModel.addAction("DeleteProject");
 			projectModel.addAction("OpenProject");
 			projectModel.addAction("UpdateProjectHomepage");
@@ -489,6 +491,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			requirementModel.addListProperty("tasksOrderIds", String.class);
 			requirementModel.addListProperty("themes", String.class);
 			requirementModel.addReference("epic", getRequirementModel());
+			requirementModel.addStringProperty("externalTrackerId").setLabel("External ID")
+			.setTooltip("External system ID. From other bug tracker or else.");
 			getApplicationModel().addCreateAction(requirementModel);
 			requirementModel.addAction("DeleteRequirement");
 			requirementModel.addAction("AddRequirementToCurrentSprint");
@@ -930,6 +934,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addSetReference("fixReleases", getReleaseModel()).setBackReferenceName("fixIssue");
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			issueModel.addListProperty("themes", String.class);
+			issueModel.addStringProperty("externalTrackerId").setLabel("External ID")
+					.setTooltip("External system ID. From other bug tracker or else.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");

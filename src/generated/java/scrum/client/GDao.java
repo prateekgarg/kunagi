@@ -1020,6 +1020,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.issues.Issue> getIssuesByExternalTrackerId(java.lang.String externalTrackerId) {
+        List<scrum.client.issues.Issue> ret = new ArrayList<scrum.client.issues.Issue>();
+        for (scrum.client.issues.Issue entity : issues.values()) {
+            if (entity.isExternalTrackerId(externalTrackerId)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Project ---
 
     protected Map<String, scrum.client.project.Project> projects = new HashMap<String, scrum.client.project.Project>();
@@ -1418,6 +1426,22 @@ public abstract class GDao
         List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
         for (scrum.client.project.Project entity : projects.values()) {
             if (entity.isReleasingInfo(releasingInfo)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isExternalTrackerUrlTemplate(externalTrackerUrlTemplate)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Project> getProjectsByExternalTrackerLabel(java.lang.String externalTrackerLabel) {
+        List<scrum.client.project.Project> ret = new ArrayList<scrum.client.project.Project>();
+        for (scrum.client.project.Project entity : projects.values()) {
+            if (entity.isExternalTrackerLabel(externalTrackerLabel)) ret.add(entity);
         }
         return ret;
     }
@@ -2169,6 +2193,14 @@ public abstract class GDao
         List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
         for (scrum.client.project.Requirement entity : requirements.values()) {
             if (entity.isEpic(epic)) ret.add(entity);
+        }
+        return ret;
+    }
+
+    public final List<scrum.client.project.Requirement> getRequirementsByExternalTrackerId(java.lang.String externalTrackerId) {
+        List<scrum.client.project.Requirement> ret = new ArrayList<scrum.client.project.Requirement>();
+        for (scrum.client.project.Requirement entity : requirements.values()) {
+            if (entity.isExternalTrackerId(externalTrackerId)) ret.add(entity);
         }
         return ret;
     }

@@ -860,6 +860,61 @@ public abstract class GRequirement
         return equals(this.epicId, id);
     }
 
+    // --- externalTrackerId ---
+
+    private java.lang.String externalTrackerId ;
+
+    public final java.lang.String getExternalTrackerId() {
+        return this.externalTrackerId ;
+    }
+
+    public final Requirement setExternalTrackerId(java.lang.String externalTrackerId) {
+        if (isExternalTrackerId(externalTrackerId)) return (Requirement)this;
+        this.externalTrackerId = externalTrackerId ;
+        propertyChanged("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
+        return (Requirement)this;
+    }
+
+    public final boolean isExternalTrackerId(java.lang.String externalTrackerId) {
+        return equals(this.externalTrackerId, externalTrackerId);
+    }
+
+    private transient ExternalTrackerIdModel externalTrackerIdModel;
+
+    public ExternalTrackerIdModel getExternalTrackerIdModel() {
+        if (externalTrackerIdModel == null) externalTrackerIdModel = createExternalTrackerIdModel();
+        return externalTrackerIdModel;
+    }
+
+    protected ExternalTrackerIdModel createExternalTrackerIdModel() { return new ExternalTrackerIdModel(); }
+
+    protected class ExternalTrackerIdModel extends ilarkesto.gwt.client.editor.ATextEditorModel {
+
+        @Override
+        public String getId() {
+            return "Requirement_externalTrackerId";
+        }
+
+        @Override
+        public java.lang.String getValue() {
+            return getExternalTrackerId();
+        }
+
+        @Override
+        public void setValue(java.lang.String value) {
+            setExternalTrackerId(value);
+        }
+        @Override
+        public String getTooltip() { return "External system ID. From other bug tracker or else."; }
+
+        @Override
+        protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
+            super.onChangeValue(oldValue, newValue);
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map<String, String> properties) {
@@ -885,6 +940,7 @@ public abstract class GRequirement
             if (property.equals("tasksOrderIds")) tasksOrderIds = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
             if (property.equals("themes")) themes = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
             if (property.equals("epicId")) epicId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("externalTrackerId")) externalTrackerId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
         updateLocalModificationTime();
     }
@@ -910,6 +966,7 @@ public abstract class GRequirement
         properties.put("tasksOrderIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.tasksOrderIds));
         properties.put("themes", ilarkesto.core.persistance.Persistence.propertyAsString(this.themes));
         properties.put("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
+        properties.put("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
     }
 
     public final java.util.List<scrum.client.issues.Issue> getIssues() {
