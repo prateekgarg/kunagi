@@ -36,6 +36,7 @@ public class Quality extends GQuality implements ReferenceSupport, LabelSupport,
 	public static final String REFERENCE_PREFIX = "qlt";
 
 	public Quality(Project project) {
+		setLabel("");
 		setProject(project);
 	}
 
@@ -87,5 +88,17 @@ public class Quality extends GQuality implements ReferenceSupport, LabelSupport,
 			return Utl.compare(a.getLabel(), b.getLabel());
 		}
 	};
+
+	@Override
+	protected LabelModel createLabelModel() {
+		return new LabelModel() {
+
+			@Override
+			public boolean isSwitchToEditModeIfNull() {
+				return true;
+			}
+		};
+
+	}
 
 }

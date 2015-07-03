@@ -52,6 +52,7 @@ public abstract class GQualityDao
         descriptionsCache = null;
         qualitysByTestDescriptionCache.clear();
         testDescriptionsCache = null;
+        qualitysByAutoAddCache.clear();
     }
 
     @Override
@@ -266,6 +267,35 @@ public abstract class GQualityDao
 
         public boolean test(Quality e) {
             return e.isTestDescription(value);
+        }
+
+    }
+
+    // -----------------------------------------------------------
+    // - autoAdd
+    // -----------------------------------------------------------
+
+    private final Cache<Boolean,Set<Quality>> qualitysByAutoAddCache = new Cache<Boolean,Set<Quality>>(
+            new Cache.Factory<Boolean,Set<Quality>>() {
+                public Set<Quality> create(Boolean autoAdd) {
+                    return getEntities(new IsAutoAdd(autoAdd));
+                }
+            });
+
+    public final Set<Quality> getQualitysByAutoAdd(boolean autoAdd) {
+        return new HashSet<Quality>(qualitysByAutoAddCache.get(autoAdd));
+    }
+
+    private static class IsAutoAdd implements Predicate<Quality> {
+
+        private boolean value;
+
+        public IsAutoAdd(boolean value) {
+            this.value = value;
+        }
+
+        public boolean test(Quality e) {
+            return value == e.isAutoAdd();
         }
 
     }

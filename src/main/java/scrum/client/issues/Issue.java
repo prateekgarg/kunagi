@@ -57,6 +57,7 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 	public static final Integer[] SEVERITY_OPTIONS = { CRITICAL, SEVERE, NORMAL, MINOR };
 
 	public Issue(Project project) {
+		setLabel("");
 		setType(Types.ISSUE);
 		setProject(project);
 		setDate(DateAndTime.now());
@@ -380,6 +381,18 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 			}
 		};
 		return themesAsStringModel;
+	}
+
+	@Override
+	protected LabelModel createLabelModel() {
+		return new LabelModel() {
+
+			@Override
+			public boolean isSwitchToEditModeIfNull() {
+				return true;
+			}
+		};
+
 	}
 
 	@Override

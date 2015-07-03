@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -37,14 +37,20 @@ public class RequirementDao extends GRequirementDao {
 		});
 	}
 
-	// --- test data ---
-
-	public Requirement postRequirement(Project project, String label, Float estimation) {
+	public Requirement postRequirement(Project destinationProject, Requirement template) {
 		Requirement requirement = newEntityInstance();
 
-		requirement.setProject(project);
-		requirement.setLabel(label);
-		requirement.setEstimatedWork(estimation);
+		requirement.setProject(destinationProject);
+		requirement.setLabel(template.getLabel());
+		requirement.setDescription(template.getDescription());
+		requirement.setTestDescription(template.getTestDescription());
+		requirement.setThemes(template.getThemes());
+		requirement.setExternalTrackerId(template.getExternalTrackerId());
+		for (Quality templateQuality : template.getQualitys()) {
+			Quality quality = destinationProject.getQualityByLabel(templateQuality.getLabel());
+			if (quality == null) continue;
+			requirement.addQuality(quality);
+		}
 
 		saveEntity(requirement);
 		requirement.updateNumber();
@@ -62,25 +68,23 @@ public class RequirementDao extends GRequirementDao {
 		requirement.setExternalTrackerId(issue.getExternalTrackerId());
 		issue.setStory(requirement);
 
+		for (Quality quality : requirement.getProject().getQualitys()) {
+			if (quality.isAutoAdd()) requirement.addQuality(quality);
+		}
+
 		saveEntity(requirement);
 		requirement.updateNumber();
 		return requirement;
 	}
 
-	public Requirement postRequirement(Project destinationProject, Requirement template) {
+	// --- test data ---
+
+	public Requirement postRequirement(Project project, String label, Float estimation) {
 		Requirement requirement = newEntityInstance();
 
-		requirement.setProject(destinationProject);
-		requirement.setLabel(template.getLabel());
-		requirement.setDescription(template.getDescription());
-		requirement.setTestDescription(template.getTestDescription());
-		requirement.setThemes(template.getThemes());
-		requirement.setExternalTrackerId(template.getExternalTrackerId());
-		for (Quality templateQuality : template.getQualitys()) {
-			Quality quality = destinationProject.getQualityByLabel(templateQuality.getLabel());
-			if (quality == null) continue;
-			requirement.addQuality(quality);
-		}
+		requirement.setProject(project);
+		requirement.setLabel(label);
+		requirement.setEstimatedWork(estimation);
 
 		saveEntity(requirement);
 		requirement.updateNumber();

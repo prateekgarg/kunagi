@@ -557,6 +557,8 @@ public class ScrumModelApplication extends AGeneratorApplication {
 					.setTooltip(
 						"The Test contains requirements that have to be met by the Team "
 								+ "in order for a Story that references this Quality to be considered done.");
+			qualityModel.addProperty("autoAdd", boolean.class).setEditablePredicate("editable")
+					.setTooltip("If enabled this quality will be added to all new Stories.");
 			getApplicationModel().addCreateAction(qualityModel);
 			qualityModel.addAction("DeleteQuality");
 		}
@@ -676,7 +678,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			taskModel.addReference("requirement", getRequirementModel()).setMaster(true);
 			taskModel.addProperty("number", int.class);
 			taskModel.addStringProperty("label").setEditablePredicate("editable").setMandatory(true)
-			.setSearchable(true).setTooltip(createLabelTooltipText("Task"));
+					.setSearchable(true).setTooltip(createLabelTooltipText("Task"));
 			taskModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -887,8 +889,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addStringProperty("type").setOptionRestricted(true);
 			issueModel.addProperty("date", DateAndTime.class).setMandatory(true);
 			issueModel.addReference("creator", getUserModel()).setTooltip("User, who created this issue.");
-			issueModel.addStringProperty("label").setMandatory(true).setSearchable(true)
-					.setTooltip(createLabelTooltipText("Issue"));
+			issueModel.addStringProperty("label").setSearchable(true).setTooltip(createLabelTooltipText("Issue"));
 			issueModel
 					.addStringProperty("description")
 					.setRichtext(true)
@@ -898,11 +899,11 @@ public class ScrumModelApplication extends AGeneratorApplication {
 								+ "what the issue is about. That contains information on how to reproduce an issue and "
 								+ "what symptoms are, as well as suggestions on how to fix it.");
 			issueModel
-			.addStringProperty("additionalInfo")
-			.setRichtext(true)
-			.setSearchable(true)
-			.setTooltip(
-				"Additional info, only visible to project participants. Can be used for error details like stack traces or other information about the issues environment.");
+					.addStringProperty("additionalInfo")
+					.setRichtext(true)
+					.setSearchable(true)
+					.setTooltip(
+						"Additional info, only visible to project participants. Can be used for error details like stack traces or other information about the issues environment.");
 			issueModel
 					.addStringProperty("statement")
 					.setRichtext(true)
@@ -935,7 +936,7 @@ public class ScrumModelApplication extends AGeneratorApplication {
 			issueModel.addProperty("published", boolean.class).setTooltip("Issue is visible on the public homepage.");
 			issueModel.addListProperty("themes", String.class);
 			issueModel.addStringProperty("externalTrackerId").setLabel("External ID")
-			.setTooltip("External system ID. From other bug tracker or else.");
+					.setTooltip("External system ID. From other bug tracker or else.");
 			getApplicationModel().addCreateAction(issueModel);
 			issueModel.addAction("ClaimIssue");
 			issueModel.addAction("UnclaimIssue");

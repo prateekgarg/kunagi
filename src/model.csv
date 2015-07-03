@@ -386,6 +386,7 @@
 "248102f9-a720-4a7e-8cbe-48f0593a3ca8","8606e237-4fa7-41d1-83d5-a70ecc54357f","TextProperty","description"
 "9673e31b-5d36-4457-b06d-6799bff0dfd0","8606e237-4fa7-41d1-83d5-a70ecc54357f","TextProperty","label"
 "0b3a6b28-db2f-401f-8f3f-a54f865f0c53","8606e237-4fa7-41d1-83d5-a70ecc54357f","TextProperty","testDescription"
+"178846e4-c62b-4746-80a1-3f6d44ca009c","8606e237-4fa7-41d1-83d5-a70ecc54357f","BooleanProperty","autoAdd"
 "547376fe-089d-4817-983f-34a234650906","c829a32f-5300-49a9-983a-75bc0e214ae4","Entity","Requirement"
 "37ffc839-46c7-4f1a-a985-c934be765dea","547376fe-089d-4817-983f-34a234650906","BooleanProperty","closed"
 "b7de92db-a596-448a-b93d-4eca0df91868","547376fe-089d-4817-983f-34a234650906","BooleanProperty","dirty"

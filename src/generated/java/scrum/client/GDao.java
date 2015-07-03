@@ -1831,6 +1831,14 @@ public abstract class GDao
         return ret;
     }
 
+    public final List<scrum.client.project.Quality> getQualitysByAutoAdd(boolean autoAdd) {
+        List<scrum.client.project.Quality> ret = new ArrayList<scrum.client.project.Quality>();
+        for (scrum.client.project.Quality entity : qualitys.values()) {
+            if (entity.isAutoAdd(autoAdd)) ret.add(entity);
+        }
+        return ret;
+    }
+
     // --- Release ---
 
     protected Map<String, scrum.client.release.Release> releases = new HashMap<String, scrum.client.release.Release>();

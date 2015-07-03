@@ -46,6 +46,7 @@ public abstract class GQuality
         properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         properties.put("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
+        properties.put("autoAdd", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoAdd));
     }
 
     public int compareTo(Quality other) {
@@ -302,6 +303,43 @@ public abstract class GQuality
         setTestDescription((java.lang.String)value);
     }
 
+    // -----------------------------------------------------------
+    // - autoAdd
+    // -----------------------------------------------------------
+
+    private boolean autoAdd;
+
+    public final boolean isAutoAdd() {
+        return autoAdd;
+    }
+
+    public final void setAutoAdd(boolean autoAdd) {
+        autoAdd = prepareAutoAdd(autoAdd);
+        if (isAutoAdd(autoAdd)) return;
+        this.autoAdd = autoAdd;
+            updateLastModified();
+            fireModified("autoAdd", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoAdd));
+    }
+
+    private final void updateAutoAdd(boolean autoAdd) {
+        if (isAutoAdd(autoAdd)) return;
+        this.autoAdd = autoAdd;
+            updateLastModified();
+            fireModified("autoAdd", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoAdd));
+    }
+
+    protected boolean prepareAutoAdd(boolean autoAdd) {
+        return autoAdd;
+    }
+
+    public final boolean isAutoAdd(boolean autoAdd) {
+        return this.autoAdd == autoAdd;
+    }
+
+    protected final void updateAutoAdd(Object value) {
+        setAutoAdd((Boolean)value);
+    }
+
     public void updateProperties(Map<String, String> properties) {
         super.updateProperties(properties);
         for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -313,6 +351,7 @@ public abstract class GQuality
             if (property.equals("label")) updateLabel(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("description")) updateDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("testDescription")) updateTestDescription(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("autoAdd")) updateAutoAdd(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
         }
     }
 

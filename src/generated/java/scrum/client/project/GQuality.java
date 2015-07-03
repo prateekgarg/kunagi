@@ -316,6 +316,68 @@ public abstract class GQuality
 
     }
 
+    // --- autoAdd ---
+
+    private boolean autoAdd ;
+
+    public final boolean isAutoAdd() {
+        return this.autoAdd ;
+    }
+
+    public final Quality setAutoAdd(boolean autoAdd) {
+        if (isAutoAdd(autoAdd)) return (Quality)this;
+        this.autoAdd = autoAdd ;
+        propertyChanged("autoAdd", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoAdd));
+        return (Quality)this;
+    }
+
+    public final boolean isAutoAdd(boolean autoAdd) {
+        return equals(this.autoAdd, autoAdd);
+    }
+
+    private transient AutoAddModel autoAddModel;
+
+    public AutoAddModel getAutoAddModel() {
+        if (autoAddModel == null) autoAddModel = createAutoAddModel();
+        return autoAddModel;
+    }
+
+    protected AutoAddModel createAutoAddModel() { return new AutoAddModel(); }
+
+    protected class AutoAddModel extends ilarkesto.gwt.client.editor.ABooleanEditorModel {
+
+        @Override
+        public String getId() {
+            return "Quality_autoAdd";
+        }
+
+        @Override
+        public java.lang.Boolean getValue() {
+            return isAutoAdd();
+        }
+
+        @Override
+        public void setValue(java.lang.Boolean value) {
+            setAutoAdd(value);
+        }
+
+        @Override
+        public boolean isMandatory() { return true; }
+
+        @Override
+        public boolean isEditable() { return GQuality.this.isEditable(); }
+        @Override
+        public String getTooltip() { return "If enabled this quality will be added to all new Stories."; }
+
+        @Override
+        protected void onChangeValue(java.lang.Boolean oldValue, java.lang.Boolean newValue) {
+            super.onChangeValue(oldValue, newValue);
+            if (oldValue == null) return;
+            addUndo(this, oldValue);
+        }
+
+    }
+
     // --- update properties by map ---
 
     public void updateProperties(Map<String, String> properties) {
@@ -328,6 +390,7 @@ public abstract class GQuality
             if (property.equals("label")) label = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("description")) description = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("testDescription")) testDescription = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
+            if (property.equals("autoAdd")) autoAdd = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
         }
         updateLocalModificationTime();
     }
@@ -340,6 +403,7 @@ public abstract class GQuality
         properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
         properties.put("description", ilarkesto.core.persistance.Persistence.propertyAsString(this.description));
         properties.put("testDescription", ilarkesto.core.persistance.Persistence.propertyAsString(this.testDescription));
+        properties.put("autoAdd", ilarkesto.core.persistance.Persistence.propertyAsString(this.autoAdd));
     }
 
     public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
