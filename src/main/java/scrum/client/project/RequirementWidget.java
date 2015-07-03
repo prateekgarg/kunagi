@@ -32,6 +32,7 @@ import scrum.client.collaboration.EmoticonSelectorWidget;
 import scrum.client.common.AScrumWidget;
 import scrum.client.common.ThemesWidget;
 import scrum.client.estimation.PlanningPokerWidget;
+import scrum.client.issues.Issue;
 import scrum.client.journal.ChangeHistoryWidget;
 
 import com.google.gwt.user.client.ui.Label;
@@ -160,6 +161,11 @@ public class RequirementWidget extends AScrumWidget {
 		right.addFieldRow("My emoticon", new EmoticonSelectorWidget(requirement));
 		if (showComments) {
 			right.addRow(new CommentsWidget(requirement), 2);
+			Issue issue = requirement.getIssue();
+			if (issue != null) {
+				right.addRow(new Label("Comments from " + issue.getReferenceAndLabel()), 2);
+				right.addRow(new CommentsWidget(issue), 2);
+			}
 		}
 
 		return showComments || planningPoker || acceptReject ? TableBuilder.row(20, left.createTable(),
