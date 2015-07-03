@@ -2424,6 +2424,8 @@ public abstract class GProject
         public void setValue(java.lang.String value) {
             setExternalTrackerUrlTemplate(value);
         }
+        @Override
+        public String getTooltip() { return "URL templat to open an issue or story in the external tracker, using the associated ID. Example: http://localhost/mytracker?issueId=${id}"; }
 
         @Override
         protected void onChangeValue(java.lang.String oldValue, java.lang.String newValue) {
