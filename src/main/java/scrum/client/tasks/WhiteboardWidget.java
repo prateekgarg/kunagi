@@ -129,11 +129,11 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 
 		for (Requirement requirement : requirements) {
 			openTasks.put(requirement, new TaskListWidget(requirement, this, new UnclaimTaskDropAction(requirement),
-					true));
+					true, "#f99"));
 			ownedTasks.put(requirement, new TaskListWidget(requirement, this, new ClaimTaskDropAction(requirement),
-					false));
+					false, "#ff9"));
 			closedTasks.put(requirement, new TaskListWidget(requirement, this, new CloseTaskDropAction(requirement),
-					false));
+				false, "#9e9"));
 		}
 
 		setWidget(0, 0, openLabel, "33%", "WhiteboardWidget-header");
@@ -154,9 +154,9 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 			updateTaskLists(requirement);
 
 			// grid.setWidget(row, 0, new Label(requirement.getLabel()));
-			setWidget(row, 0, openTasks.get(requirement), null, "WhiteboardWidget-open");
-			setWidget(row, 1, ownedTasks.get(requirement), null, "WhiteboardWidget-owned");
-			setWidget(row, 2, closedTasks.get(requirement), null, "WhiteboardWidget-done");
+			setWidget(row, 0, openTasks.get(requirement), "33%", "WhiteboardWidget-open");
+			setWidget(row, 1, ownedTasks.get(requirement), "33%", "WhiteboardWidget-owned");
+			setWidget(row, 2, closedTasks.get(requirement), "33%", "WhiteboardWidget-done");
 
 			row++;
 		}
