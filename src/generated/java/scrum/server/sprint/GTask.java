@@ -48,7 +48,7 @@ public abstract class GTask
         properties.put("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
         properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
         properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
-        properties.put("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+        properties.put("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
         properties.put("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 
@@ -398,62 +398,128 @@ public abstract class GTask
     }
 
     // -----------------------------------------------------------
-    // - impediment
+    // - impediments
     // -----------------------------------------------------------
 
-    private String impedimentId;
+    private java.util.Set<String> impedimentsIds = new java.util.HashSet<String>();
 
-    public final String getImpedimentId() {
-        return this.impedimentId;
+    public final Collection<String> getImpedimentsIds() {
+        return java.util.Collections .unmodifiableCollection(this.impedimentsIds);
     }
 
-    public final scrum.server.impediments.Impediment getImpediment() {
+    public final java.util.Set<scrum.server.impediments.Impediment> getImpediments() {
         try {
-            return this.impedimentId == null ? null : (scrum.server.impediments.Impediment) AEntity.getById(this.impedimentId);
+            return (java.util.Set) AEntity.getByIdsAsSet(this.impedimentsIds);
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
-            throw ex.setCallerInfo("Task.impediment");
+            throw ex.setCallerInfo("Task.impediments");
         }
     }
 
-    public final void setImpediment(scrum.server.impediments.Impediment impediment) {
-        impediment = prepareImpediment(impediment);
-        if (isImpediment(impediment)) return;
-        setImpedimentId(impediment == null ? null : impediment.getId());
+    public final void setImpediments(Collection<scrum.server.impediments.Impediment> impediments) {
+        impediments = prepareImpediments(impediments);
+        if (impediments == null) impediments = Collections.emptyList();
+        java.util.Set<String> ids = getIdsAsSet(impediments);
+        setImpedimentsIds(ids);
     }
 
-    public final void setImpedimentId(String id) {
-        if (Utl.equals(impedimentId, id)) return;
-        this.impedimentId = id;
+    public final void setImpedimentsIds(java.util.Set<String> ids) {
+        if (Utl.equals(impedimentsIds, ids)) return;
+        impedimentsIds = ids;
             updateLastModified();
-            fireModified("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
     }
 
-    private final void updateImpedimentId(String id) {
-        setImpedimentId(id);
+    private final void updateImpedimentsIds(java.util.Set<String> ids) {
+        setImpedimentsIds(ids);
     }
 
-    protected scrum.server.impediments.Impediment prepareImpediment(scrum.server.impediments.Impediment impediment) {
-        return impediment;
+    protected Collection<scrum.server.impediments.Impediment> prepareImpediments(Collection<scrum.server.impediments.Impediment> impediments) {
+        return impediments;
     }
 
     protected void repairDeadImpedimentReference(String entityId) {
         if (isDeleted()) return;
-        if (this.impedimentId == null || entityId.equals(this.impedimentId)) {
-            setImpediment(null);
+        if (this.impedimentsIds == null ) return;
+        if (this.impedimentsIds.remove(entityId)) {
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
         }
     }
 
-    public final boolean isImpedimentSet() {
-        return this.impedimentId != null;
+    public final boolean containsImpediment(scrum.server.impediments.Impediment impediment) {
+        if (impediment == null) return false;
+        if (this.impedimentsIds == null) return false;
+        return this.impedimentsIds.contains(impediment.getId());
     }
 
-    public final boolean isImpediment(scrum.server.impediments.Impediment impediment) {
-        if (this.impedimentId == null && impediment == null) return true;
-        return impediment != null && impediment.getId().equals(this.impedimentId);
+    public final int getImpedimentsCount() {
+        if (this.impedimentsIds == null) return 0;
+        return this.impedimentsIds.size();
     }
 
-    protected final void updateImpediment(Object value) {
-        setImpediment(value == null ? null : (scrum.server.impediments.Impediment)impedimentDao.getById((String)value));
+    public final boolean isImpedimentsEmpty() {
+        if (this.impedimentsIds == null) return true;
+        return this.impedimentsIds.isEmpty();
+    }
+
+    public final boolean addImpediment(scrum.server.impediments.Impediment impediment) {
+        if (impediment == null) throw new IllegalArgumentException("impediment == null");
+        if (this.impedimentsIds == null) this.impedimentsIds = new java.util.HashSet<String>();
+        boolean added = this.impedimentsIds.add(impediment.getId());
+        if (added) {
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
+        }
+        return added;
+    }
+
+    public final boolean addImpediments(Collection<scrum.server.impediments.Impediment> impediments) {
+        if (impediments == null) throw new IllegalArgumentException("impediments == null");
+        if (this.impedimentsIds == null) this.impedimentsIds = new java.util.HashSet<String>();
+        boolean added = false;
+        for (scrum.server.impediments.Impediment impediment : impediments) {
+            added = added | this.impedimentsIds.add(impediment.getId());
+        }
+        if (added) {
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
+        }
+        return added;
+    }
+
+    public final boolean removeImpediment(scrum.server.impediments.Impediment impediment) {
+        if (impediment == null) return false;
+        if (this.impedimentsIds == null) return false;
+        boolean removed = this.impedimentsIds.remove(impediment.getId());
+        if (removed) {
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
+        }
+        return removed;
+    }
+
+    public final boolean removeImpediments(Collection<scrum.server.impediments.Impediment> impediments) {
+        if (impediments == null) return false;
+        if (impediments.isEmpty()) return false;
+        if (this.impedimentsIds == null) return false;
+        boolean removed = false;
+        for (scrum.server.impediments.Impediment _element: impediments) {
+            removed = removed | this.impedimentsIds.remove(_element);
+        }
+        if (removed) {
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
+        }
+        return removed;
+    }
+
+    public final boolean clearImpediments() {
+        if (this.impedimentsIds == null) return false;
+        if (this.impedimentsIds.isEmpty()) return false;
+        this.impedimentsIds.clear();
+            updateLastModified();
+            fireModified("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
+        return true;
     }
 
     // -----------------------------------------------------------
@@ -528,7 +594,7 @@ public abstract class GTask
             if (property.equals("remainingWork")) updateRemainingWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
             if (property.equals("burnedWork")) updateBurnedWork(ilarkesto.core.persistance.Persistence.parsePropertyint(value));
             if (property.equals("ownerId")) updateOwnerId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
-            if (property.equals("impedimentId")) updateImpedimentId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("impedimentsIds")) updateImpedimentsIds(ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value));
             if (property.equals("closedInPastSprintId")) updateClosedInPastSprintId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
         }
     }
@@ -538,6 +604,7 @@ public abstract class GTask
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);
+        if (this.impedimentsIds == null) this.impedimentsIds = new java.util.HashSet<String>();
         repairDeadImpedimentReference(entityId);
         repairDeadClosedInPastSprintReference(entityId);
     }
@@ -561,11 +628,15 @@ public abstract class GTask
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
-        try {
-            getImpediment();
-        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
-            LOG.info("Repairing dead impediment reference");
-            repairDeadImpedimentReference(this.impedimentId);
+        if (this.impedimentsIds == null) this.impedimentsIds = new java.util.HashSet<String>();
+        Set<String> impediments = new HashSet<String>(this.impedimentsIds);
+        for (String entityId : impediments) {
+            try {
+                AEntity.getById(entityId);
+            } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+                LOG.info("Repairing dead impediment reference");
+                repairDeadImpedimentReference(entityId);
+            }
         }
         try {
             getClosedInPastSprint();

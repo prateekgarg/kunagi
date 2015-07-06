@@ -28,7 +28,6 @@ import ilarkesto.pdf.FontStyle;
 
 import java.util.Collection;
 
-import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
 import scrum.server.project.Project;
 import scrum.server.project.Quality;
@@ -144,12 +143,11 @@ public abstract class APdfCreator {
 
 			if (task.isDescriptionSet()) richtextRow(table, "Description", task.getDescription());
 
-			Impediment impediment = task.getImpediment();
-			if (impediment != null && !impediment.isClosed()) {
+			String impedimentLabelsAsText = task.getImpedimentLabelsAsText();
+			if (!Str.isBlank(impedimentLabelsAsText)) {
 				AParagraph p = richtextRow(table, null, null).paragraph();
 				p.text("Blocked by ", fieldLabelFont);
-				p.text(impediment.getReference(), referenceFont);
-				p.text(" " + impediment.getLabel(), defaultFont);
+				p.text(impedimentLabelsAsText, defaultFont);
 			}
 
 			table.createCellBorders(Color.LIGHT_GRAY, 0.2f);

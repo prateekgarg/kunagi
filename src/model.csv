@@ -500,6 +500,7 @@
 "c56d57dc-0929-4561-a885-ee5a313449f3","e9943ab9-bcf0-4da6-b376-833387fe03ce","ReferenceProperty","requirement"
 "4be2673f-f1ec-427b-a988-caeb0ee5af41","e9943ab9-bcf0-4da6-b376-833387fe03ce","TextProperty","description"
 "788bcd80-d657-4d4a-9c7b-7347c59b9140","e9943ab9-bcf0-4da6-b376-833387fe03ce","TextProperty","label"
+"e16d4f3e-2964-43df-a44d-2803c0c78bd4","e9943ab9-bcf0-4da6-b376-833387fe03ce","ReferenceProperty","impediments"
 "daa004d3-f671-47f5-8332-644c106d7ede","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","CreateIssueFromTask"
 "39dce772-f8b8-4001-93b1-3d8912c84973","daa004d3-f671-47f5-8332-644c106d7ede","Parameter","taskId"
 "b2767677-68f3-4ee6-9ac8-1f67926b1a6a","330c5af9-5809-4084-8f7a-79e09a84fe47","ServiceCall","KickStoryFromSprint"

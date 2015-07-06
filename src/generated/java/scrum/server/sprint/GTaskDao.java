@@ -359,13 +359,13 @@ public abstract class GTaskDao
     }
 
     // -----------------------------------------------------------
-    // - impediment
+    // - impediments
     // -----------------------------------------------------------
 
     private final Cache<scrum.server.impediments.Impediment,Set<Task>> tasksByImpedimentCache = new Cache<scrum.server.impediments.Impediment,Set<Task>>(
             new Cache.Factory<scrum.server.impediments.Impediment,Set<Task>>() {
                 public Set<Task> create(scrum.server.impediments.Impediment impediment) {
-                    return getEntities(new IsImpediment(impediment));
+                    return getEntities(new ContainsImpediment(impediment));
                 }
             });
 
@@ -378,22 +378,22 @@ public abstract class GTaskDao
         if (impedimentsCache == null) {
             impedimentsCache = new HashSet<scrum.server.impediments.Impediment>();
             for (Task e : getEntities()) {
-                if (e.isImpedimentSet()) impedimentsCache.add(e.getImpediment());
+                impedimentsCache.addAll(e.getImpediments());
             }
         }
         return impedimentsCache;
     }
 
-    private static class IsImpediment implements Predicate<Task> {
+    private static class ContainsImpediment implements Predicate<Task> {
 
         private scrum.server.impediments.Impediment value;
 
-        public IsImpediment(scrum.server.impediments.Impediment value) {
+        public ContainsImpediment(scrum.server.impediments.Impediment value) {
             this.value = value;
         }
 
         public boolean test(Task e) {
-            return e.isImpediment(value);
+            return e.containsImpediment(value);
         }
 
     }

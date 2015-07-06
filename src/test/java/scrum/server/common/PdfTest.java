@@ -84,8 +84,8 @@ public class PdfTest extends ATest {
 
 		Impediment imp4 = TestUtil.createImpediment(project, 4);
 		Requirement req1 = TestUtil.createRequirement(project, 1);
-		TestUtil.createTask(req1, 1, 3, 0).setImpediment(imp4);
-		TestUtil.createTask(req1, 2, 1, 0).setImpediment(imp4);
+		TestUtil.createTask(req1, 1, 3, 0).addImpediment(imp4);
+		TestUtil.createTask(req1, 2, 1, 0).addImpediment(imp4);
 
 		TestUtil.createImpediment(project, 5);
 
@@ -109,7 +109,7 @@ public class PdfTest extends ATest {
 		req2.setEstimatedWork(0.5f);
 		req2.setDirty(false);
 		TestUtil.createTasks(req1, Utl.randomInt(0, 2));
-		TestUtil.createTask(req2, 666, 1, 0).setImpediment(TestUtil.createImpediment(project, 666));
+		TestUtil.createTask(req2, 666, 1, 0).addImpediment(TestUtil.createImpediment(project, 666));
 		req2.setSprint(sprint);
 
 		createPdf(new SprintBacklogPdfCreator(project));

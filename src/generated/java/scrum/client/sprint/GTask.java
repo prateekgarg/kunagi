@@ -430,31 +430,38 @@ public abstract class GTask
         return equals(this.ownerId, id);
     }
 
-    // --- impediment ---
+    // --- impediments ---
 
-    private String impedimentId;
+    private Set<String> impedimentsIds = new HashSet<String>();
 
-    public final scrum.client.impediments.Impediment getImpediment() {
-        if (impedimentId == null) return null;
-        return getDao().getImpediment(this.impedimentId);
+    public final java.util.Set<scrum.client.impediments.Impediment> getImpediments() {
+        if ( impedimentsIds.isEmpty()) return Collections.emptySet();
+        return getDao().getImpediments(this.impedimentsIds);
     }
 
-    public final boolean isImpedimentSet() {
-        return impedimentId != null;
+    public final void setImpediments(Collection<scrum.client.impediments.Impediment> values) {
+        impedimentsIds = ilarkesto.gwt.client.Gwt.getIdsAsSet(values);
+        propertyChanged("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
     }
 
-    public final Task setImpediment(scrum.client.impediments.Impediment impediment) {
-        String id = impediment == null ? null : impediment.getId();
-        if (equals(this.impedimentId, id)) return (Task) this;
-        this.impedimentId = id;
-        propertyChanged("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
-        return (Task)this;
+    public final void addImpediment(scrum.client.impediments.Impediment impediment) {
+        String id = impediment.getId();
+        if (impedimentsIds.contains(id)) return;
+        impedimentsIds.add(id);
+        propertyChanged("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
     }
 
-    public final boolean isImpediment(scrum.client.impediments.Impediment impediment) {
-        String id = impediment==null ? null : impediment.getId();
-        return equals(this.impedimentId, id);
+    public final void removeImpediment(scrum.client.impediments.Impediment impediment) {
+        String id = impediment.getId();
+        if (!impedimentsIds.contains(id)) return;
+        impedimentsIds.remove(id);
+        propertyChanged("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
     }
+
+    public final boolean containsImpediment(scrum.client.impediments.Impediment impediment) {
+        return impedimentsIds.contains(impediment.getId());
+    }
+
 
     // --- closedInPastSprint ---
 
@@ -496,7 +503,7 @@ public abstract class GTask
             if (property.equals("remainingWork")) remainingWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
             if (property.equals("burnedWork")) burnedWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
             if (property.equals("ownerId")) ownerId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
-            if (property.equals("impedimentId")) impedimentId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
+            if (property.equals("impedimentsIds")) impedimentsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
             if (property.equals("closedInPastSprintId")) closedInPastSprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
         }
         updateLocalModificationTime();
@@ -512,7 +519,7 @@ public abstract class GTask
         properties.put("remainingWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.remainingWork));
         properties.put("burnedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.burnedWork));
         properties.put("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
-        properties.put("impedimentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentId));
+        properties.put("impedimentsIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.impedimentsIds));
         properties.put("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
     }
 

@@ -3433,7 +3433,7 @@ public abstract class GDao
     public final List<scrum.client.sprint.Task> getTasksByImpediment(scrum.client.impediments.Impediment impediment) {
         List<scrum.client.sprint.Task> ret = new ArrayList<scrum.client.sprint.Task>();
         for (scrum.client.sprint.Task entity : tasks.values()) {
-            if (entity.isImpediment(impediment)) ret.add(entity);
+            if (entity.containsImpediment(impediment)) ret.add(entity);
         }
         return ret;
     }

@@ -19,7 +19,9 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.Auth;
@@ -28,6 +30,7 @@ import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.LabelSupport;
 import scrum.client.common.ReferenceSupport;
 import scrum.client.common.ShowEntityAction;
+import scrum.client.impediments.Impediment;
 import scrum.client.project.Project;
 import scrum.client.project.Requirement;
 import scrum.client.tasks.WhiteboardWidget;
@@ -38,6 +41,15 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";
+
+	public String getBlockingImpedimentLabelsAsText() {
+		StringBuilder sb = new StringBuilder();
+		for (Impediment impediment : getBlockingImpediments()) {
+			if (sb.length() > 0) sb.append(", ");
+			sb.append(impediment.getReference() + " " + impediment.getLabel());
+		}
+		return sb.toString();
+	}
 
 	public Sprint getSprint() {
 		return getRequirement().getSprint();
@@ -69,8 +81,7 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	}
 
 	public boolean isBlocked() {
-		if (!isImpedimentSet()) return false;
-		return getImpediment().isOpen();
+		return !getBlockingImpediments().isEmpty();
 	}
 
 	public void claim() {
@@ -253,6 +264,14 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 			}
 		};
 
+	}
+
+	public Set<Impediment> getBlockingImpediments() {
+		HashSet<Impediment> ret = new HashSet<Impediment>();
+		for (Impediment impediment : getImpediments()) {
+			if (!impediment.isClosed()) ret.add(impediment);
+		}
+		return ret;
 	}
 
 }

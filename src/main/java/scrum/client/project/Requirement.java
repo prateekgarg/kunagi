@@ -72,6 +72,15 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		super(data);
 	}
 
+	public String getBlockingImpedimentLabelsAsText() {
+		StringBuilder sb = new StringBuilder();
+		for (Impediment impediment : getBlockingImpediments()) {
+			if (sb.length() > 0) sb.append(", ");
+			sb.append(impediment.getReference() + " " + impediment.getLabel());
+		}
+		return sb.toString();
+	}
+
 	public String getExternalTrackerUrl() {
 		String id = getExternalTrackerId();
 		if (Str.isBlank(id)) return null;
@@ -92,20 +101,21 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public boolean isBlocked() {
-		return getImpediment() != null;
+		return !getBlockingImpediments().isEmpty();
 	}
 
-	public Impediment getImpediment() {
+	public Set<Impediment> getBlockingImpediments() {
+		HashSet<Impediment> ret = new HashSet<Impediment>();
 		for (Task task : getTasksInSprint()) {
-			if (task.isBlocked()) return task.getImpediment();
+			ret.addAll(task.getBlockingImpediments());
 		}
-		return null;
+		return ret;
 	}
 
 	public Set<Impediment> getImpediments() {
 		Set<Impediment> impediments = new HashSet<Impediment>();
 		for (Task task : getTasksInSprint()) {
-			if (task.isBlocked()) impediments.add(task.getImpediment());
+			impediments.addAll(task.getBlockingImpediments());
 		}
 		return impediments;
 	}
@@ -395,7 +405,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	public List<Task> getTasksBlockedBy(Impediment impediment) {
 		List<Task> ret = new ArrayList<Task>();
 		for (Task task : getTasksInSprint()) {
-			if (task.isImpediment(impediment)) ret.add(task);
+			if (task.containsImpediment(impediment)) ret.add(task);
 		}
 		return ret;
 	}
