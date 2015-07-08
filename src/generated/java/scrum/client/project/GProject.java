@@ -2658,16 +2658,4 @@ public abstract class GProject
         return getDao().getUsersByCurrentProject((Project)this);
     }
 
-    @Override
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getVision(), key)) return true;
-        if (matchesKey(getProductLabel(), key)) return true;
-        if (matchesKey(getShortDescription(), key)) return true;
-        if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getLongDescription(), key)) return true;
-        return false;
-    }
-
 }

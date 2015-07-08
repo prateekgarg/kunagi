@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GBlogEntry
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<BlogEntry>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<BlogEntry>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(BlogEntry.class);
 
@@ -64,11 +64,9 @@ public abstract class GBlogEntry
     // - Searchable
     // -----------------------------------------------------------
 
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getTitle(), key)) return true;
-        if (matchesKey(getText(), key)) return true;
-        return false;
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getTitle(), getText());
     }
 
     // -----------------------------------------------------------

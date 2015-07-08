@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GRisk
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Risk>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Risk>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Risk.class);
 
@@ -64,13 +64,9 @@ public abstract class GRisk
     // - Searchable
     // -----------------------------------------------------------
 
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getProbabilityMitigation(), key)) return true;
-        if (matchesKey(getImpactMitigation(), key)) return true;
-        return false;
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getLabel(), getDescription(), getProbabilityMitigation(), getImpactMitigation());
     }
 
     // -----------------------------------------------------------

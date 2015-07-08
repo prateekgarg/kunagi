@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSimpleEvent
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SimpleEvent>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<SimpleEvent>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(SimpleEvent.class);
 
@@ -65,13 +65,9 @@ public abstract class GSimpleEvent
     // - Searchable
     // -----------------------------------------------------------
 
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getLocation(), key)) return true;
-        if (matchesKey(getAgenda(), key)) return true;
-        if (matchesKey(getNote(), key)) return true;
-        return false;
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getLabel(), getLocation(), getAgenda(), getNote());
     }
 
     // -----------------------------------------------------------

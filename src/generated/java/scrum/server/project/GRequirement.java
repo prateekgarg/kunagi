@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GRequirement
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Requirement>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Requirement>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Requirement.class);
 
@@ -99,12 +99,9 @@ public abstract class GRequirement
     // - Searchable
     // -----------------------------------------------------------
 
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getTestDescription(), key)) return true;
-        return false;
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getLabel(), getDescription(), getTestDescription());
     }
 
     // -----------------------------------------------------------

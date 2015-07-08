@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -17,6 +17,8 @@ package scrum.server.project;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
 import ilarkesto.core.money.Money;
+import ilarkesto.core.search.SearchText;
+import ilarkesto.core.search.Searchable;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;
@@ -24,7 +26,6 @@ import ilarkesto.feeds.Feed;
 import ilarkesto.feeds.FeedItem;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Persist;
-import ilarkesto.search.Searchable;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -230,36 +231,27 @@ public class Project extends GProject {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public ArrayList<AEntity> search(String text) {
-		String[] keys = Str.tokenizeToArray(text, " ");
-		ArrayList ret = new ArrayList();
-		ret.addAll(getMatching(getRequirements(), keys));
-		ret.addAll(getMatching(getQualitys(), keys));
-		ret.addAll(getMatching(getTasks(), keys));
-		ret.addAll(getMatching(getWikipages(), keys));
-		ret.addAll(getMatching(getIssues(), keys));
-		ret.addAll(getMatching(getImpediments(), keys));
-		ret.addAll(getMatching(getRisks(), keys));
-		ret.addAll(getMatching(getFiles(), keys));
-		ret.addAll(getMatching(getReleases(), keys));
-		ret.addAll(getMatching(getBlogEntrys(), keys));
+		SearchText search = new SearchText(text);
+		ArrayList<AEntity> ret = new ArrayList<AEntity>();
+		addMatching(getRequirements(), search, ret);
+		addMatching(getQualitys(), search, ret);
+		addMatching(getTasks(), search, ret);
+		addMatching(getWikipages(), search, ret);
+		addMatching(getIssues(), search, ret);
+		addMatching(getImpediments(), search, ret);
+		addMatching(getRisks(), search, ret);
+		addMatching(getFiles(), search, ret);
+		addMatching(getReleases(), search, ret);
+		addMatching(getBlogEntrys(), search, ret);
 		return ret;
 	}
 
-	private <T extends Searchable> List<T> getMatching(Collection<T> entities, String[] keys) {
-		List<T> ret = new ArrayList<T>();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <T extends Searchable> void addMatching(Collection<T> entities, SearchText search, Collection ret) {
 		for (T entity : entities) {
-			if (matchesKeys(entity, keys)) ret.add(entity);
+			if (entity.matches(search)) ret.add(entity);
 		}
-		return ret;
-	}
-
-	private boolean matchesKeys(Searchable entity, String[] keys) {
-		for (String key : keys) {
-			if (!entity.matchesKey(key)) return false;
-		}
-		return true;
 	}
 
 	public void writeJournalAsRss(OutputStream out, String encoding) {

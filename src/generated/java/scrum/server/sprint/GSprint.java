@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GSprint
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Sprint>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Sprint>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Sprint.class);
 
@@ -105,14 +105,9 @@ public abstract class GSprint
     // - Searchable
     // -----------------------------------------------------------
 
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getGoal(), key)) return true;
-        if (matchesKey(getPlanningNote(), key)) return true;
-        if (matchesKey(getReviewNote(), key)) return true;
-        if (matchesKey(getRetrospectiveNote(), key)) return true;
-        return false;
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getLabel(), getGoal(), getPlanningNote(), getReviewNote(), getRetrospectiveNote());
     }
 
     // -----------------------------------------------------------

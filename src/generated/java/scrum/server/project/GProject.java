@@ -25,7 +25,7 @@ import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GProject
             extends ilarkesto.persistence.AEntity
-            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.DeleteProtected<scrum.server.admin.User>, java.lang.Comparable<Project>, ilarkesto.search.Searchable {
+            implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.DeleteProtected<scrum.server.admin.User>, java.lang.Comparable<Project> {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Project.class);
 
@@ -159,22 +159,6 @@ public abstract class GProject
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProject.class);
 
     public static final String TYPE = "project";
-
-
-    // -----------------------------------------------------------
-    // - Searchable
-    // -----------------------------------------------------------
-
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getLabel(), key)) return true;
-        if (matchesKey(getVision(), key)) return true;
-        if (matchesKey(getProductLabel(), key)) return true;
-        if (matchesKey(getShortDescription(), key)) return true;
-        if (matchesKey(getDescription(), key)) return true;
-        if (matchesKey(getLongDescription(), key)) return true;
-        return false;
-    }
 
     // -----------------------------------------------------------
     // - label
