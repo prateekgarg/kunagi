@@ -26,6 +26,11 @@ public abstract class GRisk
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createRisk((Risk)this);
+    }
+
     public abstract boolean isPriorityEditable();
 
     public GRisk() {
@@ -519,7 +524,7 @@ public abstract class GRisk
             if (property.equals("probability")) probability = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
             if (property.equals("impact")) impact = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

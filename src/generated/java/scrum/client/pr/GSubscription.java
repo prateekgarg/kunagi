@@ -26,6 +26,11 @@ public abstract class GSubscription
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSubscription((Subscription)this);
+    }
+
     public GSubscription() {
     }
 
@@ -97,7 +102,7 @@ public abstract class GSubscription
             if (property.equals("subjectId")) subjectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("subscribersEmails")) subscribersEmails = ilarkesto.core.persistance.Persistence.parsePropertyStringSet(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

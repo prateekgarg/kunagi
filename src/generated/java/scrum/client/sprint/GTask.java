@@ -26,6 +26,11 @@ public abstract class GTask
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createTask((Task)this);
+    }
+
     public abstract boolean isEditable();
 
     public GTask() {
@@ -506,7 +511,7 @@ public abstract class GTask
             if (property.equals("impedimentsIds")) impedimentsIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
             if (property.equals("closedInPastSprintId")) closedInPastSprintId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

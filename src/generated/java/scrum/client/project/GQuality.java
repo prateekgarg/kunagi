@@ -26,6 +26,11 @@ public abstract class GQuality
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createQuality((Quality)this);
+    }
+
     public abstract boolean isEditable();
 
     public GQuality() {
@@ -392,7 +397,7 @@ public abstract class GQuality
             if (property.equals("testDescription")) testDescription = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("autoAdd")) autoAdd = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

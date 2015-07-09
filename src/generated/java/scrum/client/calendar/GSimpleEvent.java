@@ -26,6 +26,11 @@ public abstract class GSimpleEvent
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSimpleEvent((SimpleEvent)this);
+    }
+
     public GSimpleEvent() {
     }
 
@@ -543,7 +548,7 @@ public abstract class GSimpleEvent
             if (property.equals("agenda")) agenda = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("note")) note = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

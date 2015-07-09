@@ -26,6 +26,11 @@ public abstract class GSubject
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSubject((Subject)this);
+    }
+
     public GSubject() {
     }
 
@@ -264,7 +269,7 @@ public abstract class GSubject
             if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

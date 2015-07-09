@@ -26,6 +26,11 @@ public abstract class GSprintReport
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSprintReport((SprintReport)this);
+    }
+
     public GSprintReport() {
     }
 
@@ -301,7 +306,7 @@ public abstract class GSprintReport
             if (property.equals("openTasksIds")) openTasksIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
             if (property.equals("burnedWork")) burnedWork = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

@@ -26,6 +26,11 @@ public abstract class GUser
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createUser((User)this);
+    }
+
     public GUser() {
     }
 
@@ -1616,7 +1621,7 @@ public abstract class GUser
             if (property.equals("loginToken")) loginToken = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("openId")) openId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

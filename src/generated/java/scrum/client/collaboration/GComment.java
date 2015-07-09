@@ -26,6 +26,11 @@ public abstract class GComment
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createComment((Comment)this);
+    }
+
     public abstract boolean isEditable();
 
     public GComment() {
@@ -448,7 +453,7 @@ public abstract class GComment
             if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

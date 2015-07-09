@@ -26,6 +26,11 @@ public abstract class GProject
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createProject((Project)this);
+    }
+
     public abstract boolean isEditable();
 
     public GProject() {
@@ -2541,7 +2546,7 @@ public abstract class GProject
             if (property.equals("externalTrackerUrlTemplate")) externalTrackerUrlTemplate = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("externalTrackerLabel")) externalTrackerLabel = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

@@ -26,6 +26,11 @@ public abstract class GSprint
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSprint((Sprint)this);
+    }
+
     public abstract boolean isEditable();
 
     public abstract boolean isPlanningEditable();
@@ -938,7 +943,7 @@ public abstract class GSprint
             if (property.equals("scrumMastersIds")) scrumMastersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
             if (property.equals("teamMembersIds")) teamMembersIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

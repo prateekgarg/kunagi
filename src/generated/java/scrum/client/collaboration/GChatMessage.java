@@ -26,6 +26,11 @@ public abstract class GChatMessage
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createChatMessage((ChatMessage)this);
+    }
+
     public GChatMessage() {
     }
 
@@ -219,7 +224,7 @@ public abstract class GChatMessage
             if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

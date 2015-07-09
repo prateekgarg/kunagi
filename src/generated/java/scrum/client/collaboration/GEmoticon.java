@@ -26,6 +26,11 @@ public abstract class GEmoticon
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createEmoticon((Emoticon)this);
+    }
+
     public GEmoticon() {
     }
 
@@ -157,7 +162,7 @@ public abstract class GEmoticon
             if (property.equals("ownerId")) ownerId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("emotion")) emotion = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

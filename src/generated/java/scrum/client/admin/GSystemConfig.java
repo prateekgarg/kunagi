@@ -26,6 +26,11 @@ public abstract class GSystemConfig
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createSystemConfig((SystemConfig)this);
+    }
+
     public GSystemConfig() {
     }
 
@@ -1735,7 +1740,7 @@ public abstract class GSystemConfig
             if (property.equals("maxFileSize")) maxFileSize = ilarkesto.core.persistance.Persistence.parsePropertyInteger(value);
             if (property.equals("subscriptionKeySeed")) subscriptionKeySeed = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

@@ -26,6 +26,11 @@ public abstract class GRelease
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createRelease((Release)this);
+    }
+
     public GRelease() {
     }
 
@@ -720,7 +725,7 @@ public abstract class GRelease
             if (property.equals("scriptRunning")) scriptRunning = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
             if (property.equals("scriptOutput")) scriptOutput = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

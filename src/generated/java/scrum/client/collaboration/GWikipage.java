@@ -26,6 +26,11 @@ public abstract class GWikipage
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createWikipage((Wikipage)this);
+    }
+
     public GWikipage() {
     }
 
@@ -192,7 +197,7 @@ public abstract class GWikipage
             if (property.equals("name")) name = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("text")) text = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

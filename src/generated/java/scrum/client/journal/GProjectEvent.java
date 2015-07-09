@@ -26,6 +26,11 @@ public abstract class GProjectEvent
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createProjectEvent((ProjectEvent)this);
+    }
+
     public abstract boolean isEditable();
 
     public GProjectEvent() {
@@ -229,7 +234,7 @@ public abstract class GProjectEvent
             if (property.equals("subjectId")) subjectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("dateAndTime")) dateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

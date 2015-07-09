@@ -26,6 +26,11 @@ public abstract class GRequirementEstimationVote
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createRequirementEstimationVote((RequirementEstimationVote)this);
+    }
+
     public GRequirementEstimationVote() {
     }
 
@@ -157,7 +162,7 @@ public abstract class GRequirementEstimationVote
             if (property.equals("userId")) userId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("estimatedWork")) estimatedWork = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

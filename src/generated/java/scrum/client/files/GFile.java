@@ -26,6 +26,11 @@ public abstract class GFile
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createFile((File)this);
+    }
+
     public GFile() {
     }
 
@@ -388,7 +393,7 @@ public abstract class GFile
             if (property.equals("number")) number = ilarkesto.core.persistance.Persistence.parsePropertyint(value);
             if (property.equals("note")) note = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

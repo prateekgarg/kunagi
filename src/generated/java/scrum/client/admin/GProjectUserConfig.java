@@ -26,6 +26,11 @@ public abstract class GProjectUserConfig
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createProjectUserConfig((ProjectUserConfig)this);
+    }
+
     public abstract boolean isMisconductsEditable();
 
     public GProjectUserConfig() {
@@ -854,7 +859,7 @@ public abstract class GProjectUserConfig
             if (property.equals("pblFilterEstimationTo")) pblFilterEstimationTo = ilarkesto.core.persistance.Persistence.parsePropertyFloat(value);
             if (property.equals("pblFilterText")) pblFilterText = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

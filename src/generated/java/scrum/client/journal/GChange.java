@@ -26,6 +26,11 @@ public abstract class GChange
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createChange((Change)this);
+    }
+
     public GChange() {
     }
 
@@ -381,7 +386,7 @@ public abstract class GChange
             if (property.equals("newValue")) newValue = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("comment")) comment = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

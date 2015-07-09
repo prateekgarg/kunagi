@@ -186,10 +186,10 @@ public class Dao extends GDao {
 			EventBus.get().fileReceived((File) entity);
 		}
 		if (entity instanceof Comment) {
-			((Comment) entity).getParent().updateLocalModificationTime();
+			((Comment) entity).getParent().updateLastModified();
 		}
 		if (entity instanceof Change) {
-			((Change) entity).getParent().updateLocalModificationTime();
+			((Change) entity).getParent().updateLastModified();
 		}
 	}
 
@@ -208,12 +208,12 @@ public class Dao extends GDao {
 		selectedIds.removeAll(previouslySelectedIds);
 		for (String id : previouslySelectedIds) {
 			try {
-				getEntity(id).updateLocalModificationTime();
+				getEntity(id).updateLastModified();
 			} catch (EntityDoesNotExistException ex) {}
 		}
 		for (String id : selectedIds) {
 			try {
-				getEntity(id).updateLocalModificationTime();
+				getEntity(id).updateLastModified();
 			} catch (EntityDoesNotExistException ex) {}
 		}
 		return config;

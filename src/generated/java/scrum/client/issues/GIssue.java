@@ -26,6 +26,11 @@ public abstract class GIssue
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createIssue((Issue)this);
+    }
+
     public GIssue() {
     }
 
@@ -1236,7 +1241,7 @@ public abstract class GIssue
             if (property.equals("themes")) themes = ilarkesto.core.persistance.Persistence.parsePropertyStringList(value);
             if (property.equals("externalTrackerId")) externalTrackerId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

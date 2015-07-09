@@ -26,6 +26,11 @@ public abstract class GBlogEntry
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createBlogEntry((BlogEntry)this);
+    }
+
     public GBlogEntry() {
     }
 
@@ -446,7 +451,7 @@ public abstract class GBlogEntry
             if (property.equals("releasesIds")) releasesIds = ilarkesto.core.persistance.Persistence.parsePropertyReferenceSet(value);
             if (property.equals("published")) published = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

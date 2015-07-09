@@ -26,6 +26,11 @@ public abstract class GImpediment
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createImpediment((Impediment)this);
+    }
+
     public GImpediment() {
     }
 
@@ -437,7 +442,7 @@ public abstract class GImpediment
             if (property.equals("solution")) solution = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
             if (property.equals("closed")) closed = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override

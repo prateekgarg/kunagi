@@ -26,6 +26,11 @@ public abstract class GRequirement
         return scrum.client.Dao.get();
     }
 
+    @Override
+    protected void doPersist() {
+        getDao().createRequirement((Requirement)this);
+    }
+
     public abstract boolean isEditable();
 
     public GRequirement() {
@@ -945,7 +950,7 @@ public abstract class GRequirement
             if (property.equals("epicId")) epicId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
             if (property.equals("externalTrackerId")) externalTrackerId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
         }
-        updateLocalModificationTime();
+        updateLastModified();
     }
 
     @Override
