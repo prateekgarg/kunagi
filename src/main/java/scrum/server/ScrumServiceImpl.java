@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -251,7 +251,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sprint.pullStory(story, currentUser);
 
 		postProjectEvent(conversation, currentUser.getName() + " pulled " + story.getReferenceAndLabel()
-			+ " to current sprint", story);
+				+ " to current sprint", story);
 
 		sendToClients(conversation, sprint);
 		sendToClients(conversation, story);
@@ -268,7 +268,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sprint.kickRequirement(story, currentUser);
 
 		postProjectEvent(conversation, currentUser.getName() + " kicked " + story.getReferenceAndLabel()
-			+ " from current sprint", story);
+				+ " from current sprint", story);
 
 		sendToClients(conversation, story.getTasksInSprint());
 		sendToClients(conversation, story);
@@ -501,7 +501,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
-	public void onChangeProperties(GwtConversation conversation, String entityId, Map<String, String> properties) {
+	public void onChangeProperties(GwtConversation conversation, Map<String, String> properties) {
+		String entityId = properties.get("id");
 		AEntity entity = getDaoService().getEntityById(entityId);
 		User currentUser = conversation.getSession().getUser();
 		if (!Auth.isEditable(entity, currentUser)) throw new PermissionDeniedException();
@@ -738,7 +739,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				} else {
 					postProjectEvent(conversation,
 						currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
-						+ " from current sprint", requirement);
+								+ " from current sprint", requirement);
 					subscriptionService.notifySubscribers(requirement, "Story kicked from current Sprint",
 						conversation.getProject(), null);
 				}

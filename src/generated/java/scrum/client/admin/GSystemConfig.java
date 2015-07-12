@@ -39,7 +39,7 @@ public abstract class GSystemConfig
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "systemConfig";
+    public static final String ENTITY_TYPE = "SystemConfig";
 
     @Override
     public final String getEntityType() {

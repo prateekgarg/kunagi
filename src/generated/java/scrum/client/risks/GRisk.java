@@ -41,7 +41,7 @@ public abstract class GRisk
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "risk";
+    public static final String ENTITY_TYPE = "Risk";
 
     @Override
     public final String getEntityType() {

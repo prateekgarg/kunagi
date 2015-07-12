@@ -39,7 +39,7 @@ public abstract class GRelease
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "release";
+    public static final String ENTITY_TYPE = "Release";
 
     @Override
     public final String getEntityType() {

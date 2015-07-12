@@ -41,7 +41,7 @@ public abstract class GProject
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "project";
+    public static final String ENTITY_TYPE = "Project";
 
     @Override
     public final String getEntityType() {

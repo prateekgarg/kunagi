@@ -41,7 +41,7 @@ public abstract class GComment
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "comment";
+    public static final String ENTITY_TYPE = "Comment";
 
     @Override
     public final String getEntityType() {

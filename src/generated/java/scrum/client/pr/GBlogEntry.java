@@ -39,7 +39,7 @@ public abstract class GBlogEntry
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "blogEntry";
+    public static final String ENTITY_TYPE = "BlogEntry";
 
     @Override
     public final String getEntityType() {

@@ -39,7 +39,7 @@ public abstract class GWikipage
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "wikipage";
+    public static final String ENTITY_TYPE = "Wikipage";
 
     @Override
     public final String getEntityType() {

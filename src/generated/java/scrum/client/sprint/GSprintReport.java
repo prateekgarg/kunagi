@@ -39,7 +39,7 @@ public abstract class GSprintReport
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "sprintReport";
+    public static final String ENTITY_TYPE = "SprintReport";
 
     @Override
     public final String getEntityType() {

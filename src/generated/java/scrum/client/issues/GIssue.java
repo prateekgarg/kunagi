@@ -39,7 +39,7 @@ public abstract class GIssue
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "issue";
+    public static final String ENTITY_TYPE = "Issue";
 
     @Override
     public final String getEntityType() {

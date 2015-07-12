@@ -39,7 +39,7 @@ public abstract class GImpediment
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "impediment";
+    public static final String ENTITY_TYPE = "Impediment";
 
     @Override
     public final String getEntityType() {

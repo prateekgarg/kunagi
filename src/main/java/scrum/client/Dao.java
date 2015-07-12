@@ -253,6 +253,7 @@ public class Dao extends GDao {
 			Map<String, String> entity = entityProperties.get(entityId);
 			if (entity == null) {
 				entity = new HashMap<String, String>();
+				entity.put("id", entityId);
 				entityProperties.put(entityId, entity);
 			}
 			entity.put(property, value);
@@ -270,8 +271,8 @@ public class Dao extends GDao {
 				}
 			}
 
-			for (Map.Entry<String, Map<String, String>> entry : entityProperties.entrySet()) {
-				new ChangePropertiesServiceCall(entry.getKey(), entry.getValue()).execute();
+			for (Map<String, String> properties : entityProperties.values()) {
+				new ChangePropertiesServiceCall(properties).execute();
 			}
 
 			entityProperties = new HashMap<String, Map<String, String>>(3);

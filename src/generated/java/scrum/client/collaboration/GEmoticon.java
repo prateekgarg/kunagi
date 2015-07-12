@@ -39,7 +39,7 @@ public abstract class GEmoticon
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "emoticon";
+    public static final String ENTITY_TYPE = "Emoticon";
 
     @Override
     public final String getEntityType() {

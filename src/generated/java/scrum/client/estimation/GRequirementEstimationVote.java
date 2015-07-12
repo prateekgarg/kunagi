@@ -39,7 +39,7 @@ public abstract class GRequirementEstimationVote
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "requirementEstimationVote";
+    public static final String ENTITY_TYPE = "RequirementEstimationVote";
 
     @Override
     public final String getEntityType() {

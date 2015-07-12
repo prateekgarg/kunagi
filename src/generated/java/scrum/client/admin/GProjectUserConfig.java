@@ -41,7 +41,7 @@ public abstract class GProjectUserConfig
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "projectUserConfig";
+    public static final String ENTITY_TYPE = "ProjectUserConfig";
 
     @Override
     public final String getEntityType() {

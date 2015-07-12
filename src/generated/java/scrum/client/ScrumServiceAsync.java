@@ -40,7 +40,7 @@ public interface ScrumServiceAsync {
 
     void touchLastActivity(int conversationNumber,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
-    void changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map<String, String> properties,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+    void changeProperties(int conversationNumber, java.util.Map<String, String> properties,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 

@@ -399,10 +399,10 @@ public abstract class GScrumServiceImpl
         }
     }
 
-    protected abstract void onChangeProperties(GwtConversation conversation, java.lang.String entityId, java.util.Map<String, String> properties);
+    protected abstract void onChangeProperties(GwtConversation conversation, java.util.Map<String, String> properties);
 
     @Override
-    public scrum.client.DataTransferObject changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map<String, String> properties) {
+    public scrum.client.DataTransferObject changeProperties(int conversationNumber, java.util.Map<String, String> properties) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: changeProperties");
         WebSession session = (WebSession) getSession();
@@ -422,15 +422,15 @@ public abstract class GScrumServiceImpl
             context.setName("gwt-srv:changeProperties");
             context.bindCurrentThread();
             try {
-                onChangeProperties(conversation, entityId, properties);
+                onChangeProperties(conversation, properties);
                 onServiceMethodExecuted(context);
             } catch (Throwable ex) {
                 handleServiceMethodException(conversationNumber, "changeProperties", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("changeProperties")) {
-                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", entityId, properties, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
+                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", properties, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             } else {
-                log.info("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", entityId, properties);
+                log.info("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", properties);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

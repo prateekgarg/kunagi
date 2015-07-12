@@ -39,7 +39,7 @@ public abstract class GFile
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "file";
+    public static final String ENTITY_TYPE = "File";
 
     @Override
     public final String getEntityType() {

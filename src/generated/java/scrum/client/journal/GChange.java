@@ -39,7 +39,7 @@ public abstract class GChange
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "change";
+    public static final String ENTITY_TYPE = "Change";
 
     @Override
     public final String getEntityType() {

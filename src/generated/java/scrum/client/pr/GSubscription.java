@@ -39,7 +39,7 @@ public abstract class GSubscription
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "subscription";
+    public static final String ENTITY_TYPE = "Subscription";
 
     @Override
     public final String getEntityType() {

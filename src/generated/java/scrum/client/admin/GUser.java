@@ -39,7 +39,7 @@ public abstract class GUser
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "user";
+    public static final String ENTITY_TYPE = "User";
 
     @Override
     public final String getEntityType() {

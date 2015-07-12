@@ -39,7 +39,7 @@ public abstract class GSubject
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "subject";
+    public static final String ENTITY_TYPE = "Subject";
 
     @Override
     public final String getEntityType() {

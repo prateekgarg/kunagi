@@ -41,7 +41,7 @@ public interface ScrumService
 
     scrum.client.DataTransferObject touchLastActivity(int conversationNumber);
 
-    scrum.client.DataTransferObject changeProperties(int conversationNumber, java.lang.String entityId, java.util.Map<String, String> properties);
+    scrum.client.DataTransferObject changeProperties(int conversationNumber, java.util.Map<String, String> properties);
 
     scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties);
 

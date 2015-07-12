@@ -21,11 +21,9 @@ public class ChangePropertiesServiceCall
 
     private static scrum.client.ScrumServiceAsync service;
 
-    java.lang.String entityId;
     java.util.Map<String, String> properties;
 
-    public ChangePropertiesServiceCall(java.lang.String entityId, java.util.Map<String, String> properties) {
-        this.entityId = entityId;
+    public ChangePropertiesServiceCall(java.util.Map<String, String> properties) {
         this.properties = properties;
     }
 
@@ -35,7 +33,7 @@ public class ChangePropertiesServiceCall
             service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
             initializeService(service, "scrum");
         }
-        service.changeProperties(conversationNumber, entityId, properties, callback);
+        service.changeProperties(conversationNumber, properties, callback);
     }
 
     @Override

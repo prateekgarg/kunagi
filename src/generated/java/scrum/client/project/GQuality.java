@@ -41,7 +41,7 @@ public abstract class GQuality
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "quality";
+    public static final String ENTITY_TYPE = "Quality";
 
     @Override
     public final String getEntityType() {

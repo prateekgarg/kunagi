@@ -39,7 +39,7 @@ public abstract class GChatMessage
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "chatMessage";
+    public static final String ENTITY_TYPE = "ChatMessage";
 
     @Override
     public final String getEntityType() {

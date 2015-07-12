@@ -39,7 +39,7 @@ public abstract class GSimpleEvent
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "simpleEvent";
+    public static final String ENTITY_TYPE = "SimpleEvent";
 
     @Override
     public final String getEntityType() {

@@ -41,7 +41,7 @@ public abstract class GRequirement
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "requirement";
+    public static final String ENTITY_TYPE = "Requirement";
 
     @Override
     public final String getEntityType() {

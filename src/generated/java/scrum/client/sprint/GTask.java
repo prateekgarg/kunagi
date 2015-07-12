@@ -41,7 +41,7 @@ public abstract class GTask
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "task";
+    public static final String ENTITY_TYPE = "Task";
 
     @Override
     public final String getEntityType() {

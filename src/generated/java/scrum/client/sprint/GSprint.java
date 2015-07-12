@@ -49,7 +49,7 @@ public abstract class GSprint
         updateProperties(data);
     }
 
-    public static final String ENTITY_TYPE = "sprint";
+    public static final String ENTITY_TYPE = "Sprint";
 
     @Override
     public final String getEntityType() {
