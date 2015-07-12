@@ -31,6 +31,11 @@ public abstract class GFile
         getDao().createFile((File)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteFile((File)this);
+    }
+
     public GFile() {
     }
 

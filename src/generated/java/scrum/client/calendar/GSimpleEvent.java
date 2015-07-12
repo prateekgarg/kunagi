@@ -31,6 +31,11 @@ public abstract class GSimpleEvent
         getDao().createSimpleEvent((SimpleEvent)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSimpleEvent((SimpleEvent)this);
+    }
+
     public GSimpleEvent() {
     }
 

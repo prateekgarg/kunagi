@@ -31,6 +31,11 @@ public abstract class GUser
         getDao().createUser((User)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteUser((User)this);
+    }
+
     public GUser() {
     }
 

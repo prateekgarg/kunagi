@@ -31,6 +31,11 @@ public abstract class GProject
         getDao().createProject((Project)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteProject((Project)this);
+    }
+
     public abstract boolean isEditable();
 
     public GProject() {

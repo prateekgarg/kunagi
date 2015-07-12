@@ -31,6 +31,11 @@ public abstract class GRisk
         getDao().createRisk((Risk)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteRisk((Risk)this);
+    }
+
     public abstract boolean isPriorityEditable();
 
     public GRisk() {

@@ -31,6 +31,11 @@ public abstract class GComment
         getDao().createComment((Comment)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteComment((Comment)this);
+    }
+
     public abstract boolean isEditable();
 
     public GComment() {

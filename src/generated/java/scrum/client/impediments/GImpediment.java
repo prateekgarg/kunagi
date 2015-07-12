@@ -31,6 +31,11 @@ public abstract class GImpediment
         getDao().createImpediment((Impediment)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteImpediment((Impediment)this);
+    }
+
     public GImpediment() {
     }
 

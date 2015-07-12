@@ -31,6 +31,11 @@ public abstract class GIssue
         getDao().createIssue((Issue)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteIssue((Issue)this);
+    }
+
     public GIssue() {
     }
 

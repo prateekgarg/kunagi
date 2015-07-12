@@ -31,6 +31,11 @@ public abstract class GQuality
         getDao().createQuality((Quality)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteQuality((Quality)this);
+    }
+
     public abstract boolean isEditable();
 
     public GQuality() {

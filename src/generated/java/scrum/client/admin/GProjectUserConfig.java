@@ -31,6 +31,11 @@ public abstract class GProjectUserConfig
         getDao().createProjectUserConfig((ProjectUserConfig)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteProjectUserConfig((ProjectUserConfig)this);
+    }
+
     public abstract boolean isMisconductsEditable();
 
     public GProjectUserConfig() {

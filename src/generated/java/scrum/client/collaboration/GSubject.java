@@ -31,6 +31,11 @@ public abstract class GSubject
         getDao().createSubject((Subject)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSubject((Subject)this);
+    }
+
     public GSubject() {
     }
 

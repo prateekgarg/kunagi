@@ -31,6 +31,11 @@ public abstract class GRequirement
         getDao().createRequirement((Requirement)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteRequirement((Requirement)this);
+    }
+
     public abstract boolean isEditable();
 
     public GRequirement() {

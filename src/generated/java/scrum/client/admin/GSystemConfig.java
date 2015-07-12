@@ -31,6 +31,11 @@ public abstract class GSystemConfig
         getDao().createSystemConfig((SystemConfig)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSystemConfig((SystemConfig)this);
+    }
+
     public GSystemConfig() {
     }
 

@@ -31,6 +31,11 @@ public abstract class GSprintReport
         getDao().createSprintReport((SprintReport)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSprintReport((SprintReport)this);
+    }
+
     public GSprintReport() {
     }
 

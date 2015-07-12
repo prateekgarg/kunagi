@@ -31,6 +31,11 @@ public abstract class GSprint
         getDao().createSprint((Sprint)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSprint((Sprint)this);
+    }
+
     public abstract boolean isEditable();
 
     public abstract boolean isPlanningEditable();

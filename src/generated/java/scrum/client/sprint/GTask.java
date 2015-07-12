@@ -31,6 +31,11 @@ public abstract class GTask
         getDao().createTask((Task)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteTask((Task)this);
+    }
+
     public abstract boolean isEditable();
 
     public GTask() {

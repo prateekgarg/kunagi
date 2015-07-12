@@ -31,6 +31,11 @@ public abstract class GRequirementEstimationVote
         getDao().createRequirementEstimationVote((RequirementEstimationVote)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteRequirementEstimationVote((RequirementEstimationVote)this);
+    }
+
     public GRequirementEstimationVote() {
     }
 

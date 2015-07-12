@@ -31,6 +31,11 @@ public abstract class GChatMessage
         getDao().createChatMessage((ChatMessage)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteChatMessage((ChatMessage)this);
+    }
+
     public GChatMessage() {
     }
 

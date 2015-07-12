@@ -31,6 +31,11 @@ public abstract class GSubscription
         getDao().createSubscription((Subscription)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteSubscription((Subscription)this);
+    }
+
     public GSubscription() {
     }
 

@@ -31,6 +31,11 @@ public abstract class GRelease
         getDao().createRelease((Release)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteRelease((Release)this);
+    }
+
     public GRelease() {
     }
 

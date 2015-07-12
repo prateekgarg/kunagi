@@ -31,6 +31,11 @@ public abstract class GEmoticon
         getDao().createEmoticon((Emoticon)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteEmoticon((Emoticon)this);
+    }
+
     public GEmoticon() {
     }
 

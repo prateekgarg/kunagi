@@ -31,6 +31,11 @@ public abstract class GBlogEntry
         getDao().createBlogEntry((BlogEntry)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteBlogEntry((BlogEntry)this);
+    }
+
     public GBlogEntry() {
     }
 

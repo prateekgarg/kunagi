@@ -31,6 +31,11 @@ public abstract class GWikipage
         getDao().createWikipage((Wikipage)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteWikipage((Wikipage)this);
+    }
+
     public GWikipage() {
     }
 

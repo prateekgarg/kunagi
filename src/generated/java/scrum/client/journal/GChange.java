@@ -31,6 +31,11 @@ public abstract class GChange
         getDao().createChange((Change)this);
     }
 
+    @Override
+    public void delete() {
+        getDao().deleteChange((Change)this);
+    }
+
     public GChange() {
     }
 
