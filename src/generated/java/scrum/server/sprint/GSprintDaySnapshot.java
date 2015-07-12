@@ -54,7 +54,7 @@ public abstract class GSprintDaySnapshot
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprintDaySnapshot.class);
 
-    public static final String TYPE = "sprintDaySnapshot";
+    public static final String TYPE = "SprintDaySnapshot";
 
     // -----------------------------------------------------------
     // - sprint

@@ -53,7 +53,7 @@ public abstract class GSubject
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSubject.class);
 
-    public static final String TYPE = "subject";
+    public static final String TYPE = "Subject";
 
 
     // -----------------------------------------------------------

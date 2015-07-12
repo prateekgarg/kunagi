@@ -55,7 +55,7 @@ public abstract class GFile
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GFile.class);
 
-    public static final String TYPE = "file";
+    public static final String TYPE = "File";
 
 
     // -----------------------------------------------------------

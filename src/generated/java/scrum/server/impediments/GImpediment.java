@@ -60,7 +60,7 @@ public abstract class GImpediment
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GImpediment.class);
 
-    public static final String TYPE = "impediment";
+    public static final String TYPE = "Impediment";
 
 
     // -----------------------------------------------------------

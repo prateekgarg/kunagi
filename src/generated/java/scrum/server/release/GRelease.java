@@ -78,7 +78,7 @@ public abstract class GRelease
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRelease.class);
 
-    public static final String TYPE = "release";
+    public static final String TYPE = "Release";
 
 
     // -----------------------------------------------------------

@@ -58,7 +58,7 @@ public abstract class GSimpleEvent
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSimpleEvent.class);
 
-    public static final String TYPE = "simpleEvent";
+    public static final String TYPE = "SimpleEvent";
 
 
     // -----------------------------------------------------------

@@ -52,7 +52,7 @@ public abstract class GRequirementEstimationVote
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRequirementEstimationVote.class);
 
-    public static final String TYPE = "requirementEstimationVote";
+    public static final String TYPE = "RequirementEstimationVote";
 
     // -----------------------------------------------------------
     // - requirement

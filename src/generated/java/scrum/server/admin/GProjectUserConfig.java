@@ -66,7 +66,7 @@ public abstract class GProjectUserConfig
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProjectUserConfig.class);
 
-    public static final String TYPE = "projectUserConfig";
+    public static final String TYPE = "ProjectUserConfig";
 
     // -----------------------------------------------------------
     // - project

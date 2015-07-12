@@ -63,7 +63,7 @@ public abstract class GQuality
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GQuality.class);
 
-    public static final String TYPE = "quality";
+    public static final String TYPE = "Quality";
 
 
     // -----------------------------------------------------------

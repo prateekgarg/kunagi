@@ -158,7 +158,7 @@ public abstract class GProject
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProject.class);
 
-    public static final String TYPE = "project";
+    public static final String TYPE = "Project";
 
     // -----------------------------------------------------------
     // - label

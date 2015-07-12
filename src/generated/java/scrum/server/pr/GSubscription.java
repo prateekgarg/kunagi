@@ -51,7 +51,7 @@ public abstract class GSubscription
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSubscription.class);
 
-    public static final String TYPE = "subscription";
+    public static final String TYPE = "Subscription";
 
     // -----------------------------------------------------------
     // - subject

@@ -52,7 +52,7 @@ public abstract class GProjectSprintSnapshot
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProjectSprintSnapshot.class);
 
-    public static final String TYPE = "projectSprintSnapshot";
+    public static final String TYPE = "ProjectSprintSnapshot";
 
     // -----------------------------------------------------------
     // - sprint

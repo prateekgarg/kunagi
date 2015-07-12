@@ -52,7 +52,7 @@ public abstract class GEmoticon
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GEmoticon.class);
 
-    public static final String TYPE = "emoticon";
+    public static final String TYPE = "Emoticon";
 
     // -----------------------------------------------------------
     // - parent

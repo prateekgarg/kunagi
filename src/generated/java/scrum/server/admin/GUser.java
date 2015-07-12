@@ -153,7 +153,7 @@ public abstract class GUser
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GUser.class);
 
-    public static final String TYPE = "user";
+    public static final String TYPE = "User";
 
 
     // -----------------------------------------------------------

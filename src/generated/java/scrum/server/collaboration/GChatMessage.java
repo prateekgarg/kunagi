@@ -53,7 +53,7 @@ public abstract class GChatMessage
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GChatMessage.class);
 
-    public static final String TYPE = "chatMessage";
+    public static final String TYPE = "ChatMessage";
 
     // -----------------------------------------------------------
     // - project

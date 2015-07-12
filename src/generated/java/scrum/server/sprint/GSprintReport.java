@@ -56,7 +56,7 @@ public abstract class GSprintReport
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprintReport.class);
 
-    public static final String TYPE = "sprintReport";
+    public static final String TYPE = "SprintReport";
 
     // -----------------------------------------------------------
     // - sprint

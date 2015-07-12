@@ -57,7 +57,7 @@ public abstract class GComment
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GComment.class);
 
-    public static final String TYPE = "comment";
+    public static final String TYPE = "Comment";
 
 
     // -----------------------------------------------------------

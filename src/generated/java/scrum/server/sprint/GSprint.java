@@ -98,7 +98,7 @@ public abstract class GSprint
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSprint.class);
 
-    public static final String TYPE = "sprint";
+    public static final String TYPE = "Sprint";
 
 
     // -----------------------------------------------------------

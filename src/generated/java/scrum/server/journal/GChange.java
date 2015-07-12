@@ -56,7 +56,7 @@ public abstract class GChange
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GChange.class);
 
-    public static final String TYPE = "change";
+    public static final String TYPE = "Change";
 
     // -----------------------------------------------------------
     // - parent

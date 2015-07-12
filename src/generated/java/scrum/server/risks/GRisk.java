@@ -57,7 +57,7 @@ public abstract class GRisk
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GRisk.class);
 
-    public static final String TYPE = "risk";
+    public static final String TYPE = "Risk";
 
 
     // -----------------------------------------------------------

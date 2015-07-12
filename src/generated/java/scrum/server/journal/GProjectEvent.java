@@ -53,7 +53,7 @@ public abstract class GProjectEvent
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GProjectEvent.class);
 
-    public static final String TYPE = "projectEvent";
+    public static final String TYPE = "ProjectEvent";
 
 
     // -----------------------------------------------------------

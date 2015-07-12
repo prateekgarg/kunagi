@@ -5,7 +5,6 @@ import ilarkesto.concurrent.ATask;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.Transaction;
-import ilarkesto.persistence.TransactionService;
 
 import java.io.File;
 
@@ -22,7 +21,6 @@ public class ReleaseTask extends ATask {
 
 	private ChatMessageDao chatMessageDao;
 	private ScrumWebApplication webApplication;
-	private TransactionService transactionService;
 
 	private User user;
 	private Release release;
@@ -30,10 +28,6 @@ public class ReleaseTask extends ATask {
 	public ReleaseTask(User user, Release release) {
 		this.user = user;
 		this.release = release;
-	}
-
-	public void setTransactionService(TransactionService transactionService) {
-		this.transactionService = transactionService;
 	}
 
 	public void setWebApplication(ScrumWebApplication webApplication) {

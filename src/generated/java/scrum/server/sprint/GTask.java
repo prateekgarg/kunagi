@@ -66,7 +66,7 @@ public abstract class GTask
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GTask.class);
 
-    public static final String TYPE = "task";
+    public static final String TYPE = "Task";
 
 
     // -----------------------------------------------------------

@@ -78,7 +78,7 @@ public abstract class GSystemConfig
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GSystemConfig.class);
 
-    public static final String TYPE = "systemConfig";
+    public static final String TYPE = "SystemConfig";
 
     // -----------------------------------------------------------
     // - url

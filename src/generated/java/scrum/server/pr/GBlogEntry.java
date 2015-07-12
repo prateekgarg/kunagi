@@ -57,7 +57,7 @@ public abstract class GBlogEntry
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GBlogEntry.class);
 
-    public static final String TYPE = "blogEntry";
+    public static final String TYPE = "BlogEntry";
 
 
     // -----------------------------------------------------------

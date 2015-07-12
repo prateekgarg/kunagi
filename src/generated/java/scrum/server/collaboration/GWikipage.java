@@ -52,7 +52,7 @@ public abstract class GWikipage
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GWikipage.class);
 
-    public static final String TYPE = "wikipage";
+    public static final String TYPE = "Wikipage";
 
 
     // -----------------------------------------------------------

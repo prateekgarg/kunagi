@@ -77,7 +77,7 @@ public abstract class GIssue
 
     private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GIssue.class);
 
-    public static final String TYPE = "issue";
+    public static final String TYPE = "Issue";
 
 
     // -----------------------------------------------------------
