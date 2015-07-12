@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -19,6 +19,7 @@ import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
+import ilarkesto.persistence.Transaction;
 import ilarkesto.persistence.TransactionService;
 import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
@@ -104,14 +105,14 @@ public class CommentServlet extends AKunagiServlet {
 		String reference = ((ReferenceSupport) entity).getReference();
 		String label = ((LabelSupport) entity).getLabel();
 		ProjectEvent event = projectEventDao.postEvent(project, comment.getAuthorName() + " commented on " + reference
-				+ " " + label, entity);
+			+ " " + label, entity);
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, entity);
-		transactionService.commit();
+		Transaction.get().commit();
 
 		webApplication.sendToConversationsByProject(project, event);
 
 		return "<h2>Comment posted</h2><p>Thank you for your comment! It will be visible in a few minutes.</p><p>Back to <strong>"
-				+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + "</strong>.</p>";
+		+ KunagiUtl.createExternalRelativeHtmlAnchor(entity) + "</strong>.</p>";
 	}
 
 	@Override

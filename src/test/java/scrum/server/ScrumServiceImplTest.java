@@ -20,6 +20,7 @@ import ilarkesto.base.Str;
 import ilarkesto.core.time.Date;
 import ilarkesto.gwt.client.ErrorWrapper;
 import ilarkesto.persistence.AEntity;
+import ilarkesto.persistence.Transaction;
 import ilarkesto.testng.ATest;
 
 import java.util.Collection;
@@ -80,7 +81,7 @@ public class ScrumServiceImplTest extends ATest {
 		project = TestUtil.createProject(duke);
 		project.addAdmin(admin);
 
-		app.getTransactionService().commit();
+		Transaction.get().commit();
 	}
 
 	@BeforeMethod
@@ -96,7 +97,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@AfterMethod
 	public void commit() {
-		app.getTransactionService().commit();
+		Transaction.get().commit();
 	}
 
 	@Test

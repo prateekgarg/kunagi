@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -19,6 +19,7 @@ import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.DaoService;
+import ilarkesto.persistence.Transaction;
 import ilarkesto.persistence.TransactionService;
 import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
@@ -65,7 +66,7 @@ public class UnsubscribeServlet extends AKunagiServlet {
 			AEntity subject = unsubscribe(email, subjectId, key);
 			message = subject == null ? "Succesfully unsubscribed from all entities"
 					: "Succesfully unsubscribed from <strong>" + KunagiUtl.createExternalRelativeHtmlAnchor(subject)
-							+ "</strong>";
+					+ "</strong>";
 		} catch (Throwable ex) {
 			log.error("Unsubscription failed.", "\n" + Servlet.toString(req.getHttpRequest(), "  "), ex);
 			sendFailureResponse(req, Utl.getRootCauseMessage(ex));
@@ -77,7 +78,7 @@ public class UnsubscribeServlet extends AKunagiServlet {
 
 	private void sendFailureResponse(RequestWrapper<WebSession> req, String message) throws IOException {
 		sendResponse(req, "<h2>Failure</h2><p>Unsubscription failed: <strong>" + message
-				+ "</strong></p><p>We are sorry, please try again later.</p>");
+			+ "</strong></p><p>We are sorry, please try again later.</p>");
 	}
 
 	private void sendResponse(RequestWrapper<WebSession> req, String message) throws IOException {
@@ -91,7 +92,7 @@ public class UnsubscribeServlet extends AKunagiServlet {
 	private AEntity unsubscribe(String email, String subjectId, String key) throws InvalidKeyException {
 		AEntity subject = subjectId == null ? null : daoService.getById(subjectId);
 		subscriptionService.unsubscribe(email, subject, key);
-		transactionService.commit();
+		Transaction.get().commit();
 		return subject;
 	}
 

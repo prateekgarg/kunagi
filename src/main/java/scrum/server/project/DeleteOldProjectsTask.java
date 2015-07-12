@@ -18,7 +18,7 @@ import ilarkesto.concurrent.ACollectionTask;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
-import ilarkesto.persistence.TransactionService;
+import ilarkesto.persistence.Transaction;
 
 import java.util.Collection;
 
@@ -28,15 +28,10 @@ public class DeleteOldProjectsTask extends ACollectionTask<Project> {
 
 	// --- dependencies ---
 
-	private TransactionService transactionService;
 	private ProjectDao projectDao;
 
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
-	}
-
-	public void setTransactionService(TransactionService transactionService) {
-		this.transactionService = transactionService;
 	}
 
 	// --- ---
@@ -58,7 +53,7 @@ public class DeleteOldProjectsTask extends ACollectionTask<Project> {
 
 	@Override
 	protected void cleanup() throws InterruptedException {
-		transactionService.commit();
+		Transaction.get().commit();
 		super.cleanup();
 	}
 

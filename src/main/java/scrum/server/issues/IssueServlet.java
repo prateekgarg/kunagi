@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -17,7 +17,7 @@ package scrum.server.issues;
 import ilarkesto.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
-import ilarkesto.persistence.TransactionService;
+import ilarkesto.persistence.Transaction;
 import ilarkesto.webapp.RequestWrapper;
 import ilarkesto.webapp.Servlet;
 
@@ -45,7 +45,6 @@ public class IssueServlet extends AKunagiServlet {
 	private transient IssueDao issueDao;
 	private transient ProjectDao projectDao;
 	private transient ProjectEventDao projectEventDao;
-	private transient TransactionService transactionService;
 	private transient SubscriptionService subscriptionService;
 
 	@Override
@@ -118,7 +117,7 @@ public class IssueServlet extends AKunagiServlet {
 		ProjectEvent event = projectEventDao.postEvent(project, issuer + " submitted " + issue.getReferenceAndLabel(),
 			issue);
 		if (Str.isEmail(email)) subscriptionService.subscribe(email, issue);
-		transactionService.commit();
+		Transaction.get().commit();
 
 		webApplication.sendToConversationsByProject(project, issue);
 		webApplication.sendToConversationsByProject(project, event);
@@ -126,7 +125,7 @@ public class IssueServlet extends AKunagiServlet {
 		String issueLink = publish ? KunagiUtl.createExternalRelativeHtmlAnchor(issue) : "<code>"
 				+ issue.getReference() + "</code>";
 		return "<h2>Feedback submitted</h2><p>Thank you for your feedback!</p><p>Your issue is now known as "
-		+ issueLink + " and will be reviewed by our Product Owner.</p>";
+				+ issueLink + " and will be reviewed by our Product Owner.</p>";
 	}
 
 	@Override
@@ -134,7 +133,6 @@ public class IssueServlet extends AKunagiServlet {
 		super.onInit(config);
 		issueDao = webApplication.getIssueDao();
 		projectDao = webApplication.getProjectDao();
-		transactionService = webApplication.getTransactionService();
 		projectEventDao = webApplication.getProjectEventDao();
 		subscriptionService = webApplication.getSubscriptionService();
 	}
