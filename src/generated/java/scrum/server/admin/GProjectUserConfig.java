@@ -108,7 +108,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -167,7 +167,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadUserReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             repairMissingMaster();
         }
@@ -721,7 +721,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadPblFilterQualityReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.pblFilterQualitysIds == null ) return;
         if (this.pblFilterQualitysIds.remove(entityId)) {
             updateLastModified();
@@ -1045,7 +1045,7 @@ public abstract class GProjectUserConfig
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadUserReference(entityId);

@@ -144,7 +144,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -203,7 +203,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
             setSprint(null);
         }
@@ -262,7 +262,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadIssueReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.issueId == null || entityId.equals(this.issueId)) {
             setIssue(null);
         }
@@ -359,7 +359,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadQualityReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.qualitysIds == null ) return;
         if (this.qualitysIds.remove(entityId)) {
             updateLastModified();
@@ -1116,7 +1116,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadEpicReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.epicId == null || entityId.equals(this.epicId)) {
             setEpic(null);
         }
@@ -1207,7 +1207,7 @@ public abstract class GRequirement
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSprintReference(entityId);

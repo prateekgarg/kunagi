@@ -187,7 +187,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -836,7 +836,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.productOwnersIds == null ) return;
         if (this.productOwnersIds.remove(entityId)) {
             updateLastModified();
@@ -961,7 +961,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.scrumMastersIds == null ) return;
         if (this.scrumMastersIds.remove(entityId)) {
             updateLastModified();
@@ -1086,7 +1086,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.teamMembersIds == null ) return;
         if (this.teamMembersIds.remove(entityId)) {
             updateLastModified();
@@ -1197,7 +1197,7 @@ public abstract class GSprint
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         if (this.requirementsOrderIds == null) this.requirementsOrderIds = new java.util.ArrayList<java.lang.String>();

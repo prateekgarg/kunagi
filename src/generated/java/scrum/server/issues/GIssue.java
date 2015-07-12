@@ -129,7 +129,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -188,7 +188,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadStoryReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.storyId == null || entityId.equals(this.storyId)) {
             setStory(null);
         }
@@ -372,7 +372,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadCreatorReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.creatorId == null || entityId.equals(this.creatorId)) {
             setCreator(null);
         }
@@ -806,7 +806,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadOwnerReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
             setOwner(null);
         }
@@ -995,7 +995,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadAffectedReleaseReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.affectedReleasesIds == null ) return;
         if (this.affectedReleasesIds.remove(entityId)) {
             updateLastModified();
@@ -1120,7 +1120,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadFixReleaseReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.fixReleasesIds == null ) return;
         if (this.fixReleasesIds.remove(entityId)) {
             updateLastModified();
@@ -1435,7 +1435,7 @@ public abstract class GIssue
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadStoryReference(entityId);

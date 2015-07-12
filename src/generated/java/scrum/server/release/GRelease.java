@@ -130,7 +130,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -189,7 +189,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadParentReleaseReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.parentReleaseId == null || entityId.equals(this.parentReleaseId)) {
             setParentRelease(null);
         }
@@ -249,7 +249,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.sprintsIds == null ) return;
         if (this.sprintsIds.remove(entityId)) {
             updateLastModified();
@@ -770,7 +770,7 @@ public abstract class GRelease
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadParentReleaseReference(entityId);

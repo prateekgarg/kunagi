@@ -1322,7 +1322,7 @@ public abstract class GSystemConfig
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
     }
 

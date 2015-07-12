@@ -109,7 +109,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -206,7 +206,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.authorsIds == null ) return;
         if (this.authorsIds.remove(entityId)) {
             updateLastModified();
@@ -462,7 +462,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReleaseReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.releasesIds == null ) return;
         if (this.releasesIds.remove(entityId)) {
             updateLastModified();
@@ -601,7 +601,7 @@ public abstract class GBlogEntry
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         if (this.authorsIds == null) this.authorsIds = new java.util.HashSet<String>();

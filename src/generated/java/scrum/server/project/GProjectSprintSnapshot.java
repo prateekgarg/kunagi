@@ -94,7 +94,7 @@ public abstract class GProjectSprintSnapshot
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
             repairMissingMaster();
         }
@@ -200,7 +200,7 @@ public abstract class GProjectSprintSnapshot
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadSprintReference(entityId);
     }

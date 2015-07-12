@@ -94,7 +94,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadRequirementReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
@@ -153,7 +153,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadUserReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             repairMissingMaster();
         }
@@ -227,7 +227,7 @@ public abstract class GRequirementEstimationVote
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadUserReference(entityId);

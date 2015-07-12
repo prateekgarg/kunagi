@@ -98,7 +98,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.sprintId == null || entityId.equals(this.sprintId)) {
             repairMissingMaster();
         }
@@ -158,7 +158,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadCompletedRequirementReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.completedRequirementsIds == null ) return;
         if (this.completedRequirementsIds.remove(entityId)) {
             updateLastModified();
@@ -283,7 +283,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadRejectedRequirementReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.rejectedRequirementsIds == null ) return;
         if (this.rejectedRequirementsIds.remove(entityId)) {
             updateLastModified();
@@ -525,7 +525,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadClosedTaskReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.closedTasksIds == null ) return;
         if (this.closedTasksIds.remove(entityId)) {
             updateLastModified();
@@ -650,7 +650,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadOpenTaskReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.openTasksIds == null ) return;
         if (this.openTasksIds.remove(entityId)) {
             updateLastModified();
@@ -788,7 +788,7 @@ public abstract class GSprintReport
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadSprintReference(entityId);
         if (this.completedRequirementsIds == null) this.completedRequirementsIds = new java.util.HashSet<String>();

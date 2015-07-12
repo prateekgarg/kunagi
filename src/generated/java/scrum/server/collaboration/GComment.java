@@ -109,7 +109,7 @@ public abstract class GComment
     }
 
     protected void repairDeadParentReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
@@ -168,7 +168,7 @@ public abstract class GComment
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.authorId == null || entityId.equals(this.authorId)) {
             setAuthor(null);
         }
@@ -453,7 +453,7 @@ public abstract class GComment
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadParentReference(entityId);
         repairDeadAuthorReference(entityId);

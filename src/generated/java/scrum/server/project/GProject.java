@@ -555,7 +555,7 @@ public abstract class GProject
     }
 
     protected void repairDeadParticipantReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.participantsIds == null ) return;
         if (this.participantsIds.remove(entityId)) {
             updateLastModified();
@@ -680,7 +680,7 @@ public abstract class GProject
     }
 
     protected void repairDeadAdminReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.adminsIds == null ) return;
         if (this.adminsIds.remove(entityId)) {
             updateLastModified();
@@ -805,7 +805,7 @@ public abstract class GProject
     }
 
     protected void repairDeadProductOwnerReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.productOwnersIds == null ) return;
         if (this.productOwnersIds.remove(entityId)) {
             updateLastModified();
@@ -930,7 +930,7 @@ public abstract class GProject
     }
 
     protected void repairDeadScrumMasterReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.scrumMastersIds == null ) return;
         if (this.scrumMastersIds.remove(entityId)) {
             updateLastModified();
@@ -1055,7 +1055,7 @@ public abstract class GProject
     }
 
     protected void repairDeadTeamMemberReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.teamMembersIds == null ) return;
         if (this.teamMembersIds.remove(entityId)) {
             updateLastModified();
@@ -1179,7 +1179,7 @@ public abstract class GProject
     }
 
     protected void repairDeadCurrentSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.currentSprintId == null || entityId.equals(this.currentSprintId)) {
             setCurrentSprint(null);
         }
@@ -1238,7 +1238,7 @@ public abstract class GProject
     }
 
     protected void repairDeadNextSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.nextSprintId == null || entityId.equals(this.nextSprintId)) {
             setNextSprint(null);
         }
@@ -2653,7 +2653,7 @@ public abstract class GProject
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
         repairDeadParticipantReference(entityId);

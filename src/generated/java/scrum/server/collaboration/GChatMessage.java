@@ -95,7 +95,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -154,7 +154,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadAuthorReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.authorId == null || entityId.equals(this.authorId)) {
             setAuthor(null);
         }
@@ -275,7 +275,7 @@ public abstract class GChatMessage
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadAuthorReference(entityId);

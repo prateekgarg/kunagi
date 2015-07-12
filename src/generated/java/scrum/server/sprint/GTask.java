@@ -118,7 +118,7 @@ public abstract class GTask
     }
 
     protected void repairDeadRequirementReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.requirementId == null || entityId.equals(this.requirementId)) {
             repairMissingMaster();
         }
@@ -376,7 +376,7 @@ public abstract class GTask
     }
 
     protected void repairDeadOwnerReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.ownerId == null || entityId.equals(this.ownerId)) {
             setOwner(null);
         }
@@ -436,7 +436,7 @@ public abstract class GTask
     }
 
     protected void repairDeadImpedimentReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.impedimentsIds == null ) return;
         if (this.impedimentsIds.remove(entityId)) {
             updateLastModified();
@@ -560,7 +560,7 @@ public abstract class GTask
     }
 
     protected void repairDeadClosedInPastSprintReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.closedInPastSprintId == null || entityId.equals(this.closedInPastSprintId)) {
             setClosedInPastSprint(null);
         }
@@ -598,7 +598,7 @@ public abstract class GTask
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadRequirementReference(entityId);
         repairDeadOwnerReference(entityId);

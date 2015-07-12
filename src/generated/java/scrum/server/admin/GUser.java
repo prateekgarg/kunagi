@@ -467,7 +467,7 @@ public abstract class GUser
     }
 
     protected void repairDeadCurrentProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.currentProjectId == null || entityId.equals(this.currentProjectId)) {
             setCurrentProject(null);
         }
@@ -1347,7 +1347,7 @@ public abstract class GUser
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadCurrentProjectReference(entityId);
     }

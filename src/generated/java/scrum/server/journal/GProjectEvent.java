@@ -105,7 +105,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadProjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.projectId == null || entityId.equals(this.projectId)) {
             repairMissingMaster();
         }
@@ -209,7 +209,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadSubjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.subjectId == null || entityId.equals(this.subjectId)) {
             setSubject(null);
         }
@@ -287,7 +287,7 @@ public abstract class GProjectEvent
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadProjectReference(entityId);
         repairDeadSubjectReference(entityId);

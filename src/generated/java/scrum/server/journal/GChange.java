@@ -98,7 +98,7 @@ public abstract class GChange
     }
 
     protected void repairDeadParentReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.parentId == null || entityId.equals(this.parentId)) {
             repairMissingMaster();
         }
@@ -157,7 +157,7 @@ public abstract class GChange
     }
 
     protected void repairDeadUserReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.userId == null || entityId.equals(this.userId)) {
             setUser(null);
         }
@@ -410,7 +410,7 @@ public abstract class GChange
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadParentReference(entityId);
         repairDeadUserReference(entityId);

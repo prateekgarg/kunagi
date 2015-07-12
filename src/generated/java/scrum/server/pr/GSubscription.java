@@ -93,7 +93,7 @@ public abstract class GSubscription
     }
 
     protected void repairDeadSubjectReference(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         if (this.subjectId == null || entityId.equals(this.subjectId)) {
             repairMissingMaster();
         }
@@ -241,7 +241,7 @@ public abstract class GSubscription
     }
 
     protected void repairDeadReferences(String entityId) {
-        if (isDeleted()) return;
+        if (!isPersisted()) return;
         super.repairDeadReferences(entityId);
         repairDeadSubjectReference(entityId);
         if (this.subscribersEmails == null) this.subscribersEmails = new java.util.HashSet<java.lang.String>();
