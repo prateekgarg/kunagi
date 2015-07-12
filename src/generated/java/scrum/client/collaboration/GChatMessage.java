@@ -61,7 +61,7 @@ public abstract class GChatMessage
 
     public final ChatMessage setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (ChatMessage) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (ChatMessage) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (ChatMessage)this;
@@ -69,7 +69,7 @@ public abstract class GChatMessage
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- author ---
@@ -87,7 +87,7 @@ public abstract class GChatMessage
 
     public final ChatMessage setAuthor(scrum.client.admin.User author) {
         String id = author == null ? null : author.getId();
-        if (equals(this.authorId, id)) return (ChatMessage) this;
+        if (ilarkesto.core.base.Utl.equals(this.authorId, id)) return (ChatMessage) this;
         this.authorId = id;
         propertyChanged("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
         return (ChatMessage)this;
@@ -95,7 +95,7 @@ public abstract class GChatMessage
 
     public final boolean isAuthor(scrum.client.admin.User author) {
         String id = author==null ? null : author.getId();
-        return equals(this.authorId, id);
+        return ilarkesto.core.base.Utl.equals(this.authorId, id);
     }
 
     // --- text ---
@@ -115,7 +115,7 @@ public abstract class GChatMessage
     }
 
     public final boolean isText(java.lang.String text) {
-        return equals(this.text, text);
+        return ilarkesto.core.base.Utl.equals(this.text, text);
     }
 
     private transient TextModel textModel;
@@ -175,7 +175,7 @@ public abstract class GChatMessage
     }
 
     public final boolean isDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
-        return equals(this.dateAndTime, dateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.dateAndTime, dateAndTime);
     }
 
     private transient DateAndTimeModel dateAndTimeModel;

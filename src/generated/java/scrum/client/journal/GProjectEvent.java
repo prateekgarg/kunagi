@@ -63,7 +63,7 @@ public abstract class GProjectEvent
 
     public final ProjectEvent setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (ProjectEvent) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (ProjectEvent) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (ProjectEvent)this;
@@ -71,7 +71,7 @@ public abstract class GProjectEvent
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- label ---
@@ -91,7 +91,7 @@ public abstract class GProjectEvent
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -150,7 +150,7 @@ public abstract class GProjectEvent
 
     public final ProjectEvent setSubject(ilarkesto.gwt.client.AGwtEntity subject) {
         String id = subject == null ? null : subject.getId();
-        if (equals(this.subjectId, id)) return (ProjectEvent) this;
+        if (ilarkesto.core.base.Utl.equals(this.subjectId, id)) return (ProjectEvent) this;
         this.subjectId = id;
         propertyChanged("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
         return (ProjectEvent)this;
@@ -158,7 +158,7 @@ public abstract class GProjectEvent
 
     public final boolean isSubject(ilarkesto.gwt.client.AGwtEntity subject) {
         String id = subject==null ? null : subject.getId();
-        return equals(this.subjectId, id);
+        return ilarkesto.core.base.Utl.equals(this.subjectId, id);
     }
 
     // --- dateAndTime ---
@@ -178,7 +178,7 @@ public abstract class GProjectEvent
     }
 
     public final boolean isDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
-        return equals(this.dateAndTime, dateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.dateAndTime, dateAndTime);
     }
 
     private transient DateAndTimeModel dateAndTimeModel;

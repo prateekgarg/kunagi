@@ -61,7 +61,7 @@ public abstract class GSprintReport
 
     public final SprintReport setSprint(scrum.client.sprint.Sprint sprint) {
         String id = sprint == null ? null : sprint.getId();
-        if (equals(this.sprintId, id)) return (SprintReport) this;
+        if (ilarkesto.core.base.Utl.equals(this.sprintId, id)) return (SprintReport) this;
         this.sprintId = id;
         propertyChanged("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
         return (SprintReport)this;
@@ -69,7 +69,7 @@ public abstract class GSprintReport
 
     public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
         String id = sprint==null ? null : sprint.getId();
-        return equals(this.sprintId, id);
+        return ilarkesto.core.base.Utl.equals(this.sprintId, id);
     }
 
     // --- completedRequirements ---
@@ -240,7 +240,7 @@ public abstract class GSprintReport
     }
 
     public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
+        return ilarkesto.core.base.Utl.equals(this.burnedWork, burnedWork);
     }
 
     private transient BurnedWorkModel burnedWorkModel;

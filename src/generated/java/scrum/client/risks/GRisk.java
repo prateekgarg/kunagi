@@ -63,7 +63,7 @@ public abstract class GRisk
 
     public final Risk setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Risk) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Risk) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Risk)this;
@@ -71,7 +71,7 @@ public abstract class GRisk
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- number ---
@@ -90,7 +90,7 @@ public abstract class GRisk
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -157,7 +157,7 @@ public abstract class GRisk
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -212,7 +212,7 @@ public abstract class GRisk
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -270,7 +270,7 @@ public abstract class GRisk
     }
 
     public final boolean isProbabilityMitigation(java.lang.String probabilityMitigation) {
-        return equals(this.probabilityMitigation, probabilityMitigation);
+        return ilarkesto.core.base.Utl.equals(this.probabilityMitigation, probabilityMitigation);
     }
 
     private transient ProbabilityMitigationModel probabilityMitigationModel;
@@ -328,7 +328,7 @@ public abstract class GRisk
     }
 
     public final boolean isImpactMitigation(java.lang.String impactMitigation) {
-        return equals(this.impactMitigation, impactMitigation);
+        return ilarkesto.core.base.Utl.equals(this.impactMitigation, impactMitigation);
     }
 
     private transient ImpactMitigationModel impactMitigationModel;
@@ -386,7 +386,7 @@ public abstract class GRisk
     }
 
     public final boolean isProbability(int probability) {
-        return equals(this.probability, probability);
+        return ilarkesto.core.base.Utl.equals(this.probability, probability);
     }
 
     public abstract List<java.lang.Integer> getProbabilityOptions();
@@ -455,7 +455,7 @@ public abstract class GRisk
     }
 
     public final boolean isImpact(int impact) {
-        return equals(this.impact, impact);
+        return ilarkesto.core.base.Utl.equals(this.impact, impact);
     }
 
     public abstract List<java.lang.Integer> getImpactOptions();

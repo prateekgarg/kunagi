@@ -63,7 +63,7 @@ public abstract class GQuality
 
     public final Quality setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Quality) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Quality) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Quality)this;
@@ -71,7 +71,7 @@ public abstract class GQuality
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- number ---
@@ -90,7 +90,7 @@ public abstract class GQuality
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -157,7 +157,7 @@ public abstract class GQuality
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -215,7 +215,7 @@ public abstract class GQuality
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -276,7 +276,7 @@ public abstract class GQuality
     }
 
     public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
+        return ilarkesto.core.base.Utl.equals(this.testDescription, testDescription);
     }
 
     private transient TestDescriptionModel testDescriptionModel;
@@ -337,7 +337,7 @@ public abstract class GQuality
     }
 
     public final boolean isAutoAdd(boolean autoAdd) {
-        return equals(this.autoAdd, autoAdd);
+        return ilarkesto.core.base.Utl.equals(this.autoAdd, autoAdd);
     }
 
     private transient AutoAddModel autoAddModel;

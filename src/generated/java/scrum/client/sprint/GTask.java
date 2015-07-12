@@ -63,7 +63,7 @@ public abstract class GTask
 
     public final Task setRequirement(scrum.client.project.Requirement requirement) {
         String id = requirement == null ? null : requirement.getId();
-        if (equals(this.requirementId, id)) return (Task) this;
+        if (ilarkesto.core.base.Utl.equals(this.requirementId, id)) return (Task) this;
         this.requirementId = id;
         propertyChanged("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
         return (Task)this;
@@ -71,7 +71,7 @@ public abstract class GTask
 
     public final boolean isRequirement(scrum.client.project.Requirement requirement) {
         String id = requirement==null ? null : requirement.getId();
-        return equals(this.requirementId, id);
+        return ilarkesto.core.base.Utl.equals(this.requirementId, id);
     }
 
     // --- number ---
@@ -90,7 +90,7 @@ public abstract class GTask
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -158,7 +158,7 @@ public abstract class GTask
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -220,7 +220,7 @@ public abstract class GTask
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -281,7 +281,7 @@ public abstract class GTask
     }
 
     public final boolean isRemainingWork(int remainingWork) {
-        return equals(this.remainingWork, remainingWork);
+        return ilarkesto.core.base.Utl.equals(this.remainingWork, remainingWork);
     }
 
     private transient RemainingWorkModel remainingWorkModel;
@@ -353,7 +353,7 @@ public abstract class GTask
     }
 
     public final boolean isBurnedWork(int burnedWork) {
-        return equals(this.burnedWork, burnedWork);
+        return ilarkesto.core.base.Utl.equals(this.burnedWork, burnedWork);
     }
 
     private transient BurnedWorkModel burnedWorkModel;
@@ -424,7 +424,7 @@ public abstract class GTask
 
     public final Task setOwner(scrum.client.admin.User owner) {
         String id = owner == null ? null : owner.getId();
-        if (equals(this.ownerId, id)) return (Task) this;
+        if (ilarkesto.core.base.Utl.equals(this.ownerId, id)) return (Task) this;
         this.ownerId = id;
         propertyChanged("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
         return (Task)this;
@@ -432,7 +432,7 @@ public abstract class GTask
 
     public final boolean isOwner(scrum.client.admin.User owner) {
         String id = owner==null ? null : owner.getId();
-        return equals(this.ownerId, id);
+        return ilarkesto.core.base.Utl.equals(this.ownerId, id);
     }
 
     // --- impediments ---
@@ -483,7 +483,7 @@ public abstract class GTask
 
     public final Task setClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
         String id = closedInPastSprint == null ? null : closedInPastSprint.getId();
-        if (equals(this.closedInPastSprintId, id)) return (Task) this;
+        if (ilarkesto.core.base.Utl.equals(this.closedInPastSprintId, id)) return (Task) this;
         this.closedInPastSprintId = id;
         propertyChanged("closedInPastSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.closedInPastSprintId));
         return (Task)this;
@@ -491,7 +491,7 @@ public abstract class GTask
 
     public final boolean isClosedInPastSprint(scrum.client.sprint.Sprint closedInPastSprint) {
         String id = closedInPastSprint==null ? null : closedInPastSprint.getId();
-        return equals(this.closedInPastSprintId, id);
+        return ilarkesto.core.base.Utl.equals(this.closedInPastSprintId, id);
     }
 
     // --- update properties by map ---

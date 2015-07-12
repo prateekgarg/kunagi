@@ -72,7 +72,7 @@ public abstract class GSprint
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -138,7 +138,7 @@ public abstract class GSprint
 
     public final Sprint setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Sprint) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Sprint) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Sprint)this;
@@ -146,7 +146,7 @@ public abstract class GSprint
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- label ---
@@ -165,7 +165,7 @@ public abstract class GSprint
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -223,7 +223,7 @@ public abstract class GSprint
     }
 
     public final boolean isGoal(java.lang.String goal) {
-        return equals(this.goal, goal);
+        return ilarkesto.core.base.Utl.equals(this.goal, goal);
     }
 
     public abstract String getGoalTemplate();
@@ -289,7 +289,7 @@ public abstract class GSprint
     }
 
     public final boolean isBegin(ilarkesto.core.time.Date begin) {
-        return equals(this.begin, begin);
+        return ilarkesto.core.base.Utl.equals(this.begin, begin);
     }
 
     private transient BeginModel beginModel;
@@ -347,7 +347,7 @@ public abstract class GSprint
     }
 
     public final boolean isEnd(ilarkesto.core.time.Date end) {
-        return equals(this.end, end);
+        return ilarkesto.core.base.Utl.equals(this.end, end);
     }
 
     private transient EndModel endModel;
@@ -405,7 +405,7 @@ public abstract class GSprint
     }
 
     public final boolean isOriginallyEnd(ilarkesto.core.time.Date originallyEnd) {
-        return equals(this.originallyEnd, originallyEnd);
+        return ilarkesto.core.base.Utl.equals(this.originallyEnd, originallyEnd);
     }
 
     private transient OriginallyEndModel originallyEndModel;
@@ -458,7 +458,7 @@ public abstract class GSprint
     }
 
     public final boolean isVelocity(java.lang.Float velocity) {
-        return equals(this.velocity, velocity);
+        return ilarkesto.core.base.Utl.equals(this.velocity, velocity);
     }
 
     private transient VelocityModel velocityModel;
@@ -511,7 +511,7 @@ public abstract class GSprint
     }
 
     public final boolean isCompletedRequirementsData(java.lang.String completedRequirementsData) {
-        return equals(this.completedRequirementsData, completedRequirementsData);
+        return ilarkesto.core.base.Utl.equals(this.completedRequirementsData, completedRequirementsData);
     }
 
     private transient CompletedRequirementsDataModel completedRequirementsDataModel;
@@ -564,7 +564,7 @@ public abstract class GSprint
     }
 
     public final boolean isIncompletedRequirementsData(java.lang.String incompletedRequirementsData) {
-        return equals(this.incompletedRequirementsData, incompletedRequirementsData);
+        return ilarkesto.core.base.Utl.equals(this.incompletedRequirementsData, incompletedRequirementsData);
     }
 
     private transient IncompletedRequirementsDataModel incompletedRequirementsDataModel;
@@ -617,7 +617,7 @@ public abstract class GSprint
     }
 
     public final boolean isPlanningNote(java.lang.String planningNote) {
-        return equals(this.planningNote, planningNote);
+        return ilarkesto.core.base.Utl.equals(this.planningNote, planningNote);
     }
 
     public abstract String getPlanningNoteTemplate();
@@ -683,7 +683,7 @@ public abstract class GSprint
     }
 
     public final boolean isReviewNote(java.lang.String reviewNote) {
-        return equals(this.reviewNote, reviewNote);
+        return ilarkesto.core.base.Utl.equals(this.reviewNote, reviewNote);
     }
 
     public abstract String getReviewNoteTemplate();
@@ -749,7 +749,7 @@ public abstract class GSprint
     }
 
     public final boolean isRetrospectiveNote(java.lang.String retrospectiveNote) {
-        return equals(this.retrospectiveNote, retrospectiveNote);
+        return ilarkesto.core.base.Utl.equals(this.retrospectiveNote, retrospectiveNote);
     }
 
     public abstract String getRetrospectiveNoteTemplate();

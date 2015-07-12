@@ -63,7 +63,7 @@ public abstract class GProjectUserConfig
 
     public final ProjectUserConfig setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (ProjectUserConfig) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (ProjectUserConfig) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (ProjectUserConfig)this;
@@ -71,7 +71,7 @@ public abstract class GProjectUserConfig
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- user ---
@@ -89,7 +89,7 @@ public abstract class GProjectUserConfig
 
     public final ProjectUserConfig setUser(scrum.client.admin.User user) {
         String id = user == null ? null : user.getId();
-        if (equals(this.userId, id)) return (ProjectUserConfig) this;
+        if (ilarkesto.core.base.Utl.equals(this.userId, id)) return (ProjectUserConfig) this;
         this.userId = id;
         propertyChanged("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
         return (ProjectUserConfig)this;
@@ -97,7 +97,7 @@ public abstract class GProjectUserConfig
 
     public final boolean isUser(scrum.client.admin.User user) {
         String id = user==null ? null : user.getId();
-        return equals(this.userId, id);
+        return ilarkesto.core.base.Utl.equals(this.userId, id);
     }
 
     // --- color ---
@@ -116,7 +116,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isColor(java.lang.String color) {
-        return equals(this.color, color);
+        return ilarkesto.core.base.Utl.equals(this.color, color);
     }
 
     private transient ColorModel colorModel;
@@ -169,7 +169,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isReceiveEmailsOnProjectEvents(boolean receiveEmailsOnProjectEvents) {
-        return equals(this.receiveEmailsOnProjectEvents, receiveEmailsOnProjectEvents);
+        return ilarkesto.core.base.Utl.equals(this.receiveEmailsOnProjectEvents, receiveEmailsOnProjectEvents);
     }
 
     private transient ReceiveEmailsOnProjectEventsModel receiveEmailsOnProjectEventsModel;
@@ -226,7 +226,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isMisconducts(int misconducts) {
-        return equals(this.misconducts, misconducts);
+        return ilarkesto.core.base.Utl.equals(this.misconducts, misconducts);
     }
 
     private transient MisconductsModel misconductsModel;
@@ -296,7 +296,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isRichtextAutosaveText(java.lang.String richtextAutosaveText) {
-        return equals(this.richtextAutosaveText, richtextAutosaveText);
+        return ilarkesto.core.base.Utl.equals(this.richtextAutosaveText, richtextAutosaveText);
     }
 
     private transient RichtextAutosaveTextModel richtextAutosaveTextModel;
@@ -349,7 +349,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isRichtextAutosaveField(java.lang.String richtextAutosaveField) {
-        return equals(this.richtextAutosaveField, richtextAutosaveField);
+        return ilarkesto.core.base.Utl.equals(this.richtextAutosaveField, richtextAutosaveField);
     }
 
     private transient RichtextAutosaveFieldModel richtextAutosaveFieldModel;
@@ -422,7 +422,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isOnline(boolean online) {
-        return equals(this.online, online);
+        return ilarkesto.core.base.Utl.equals(this.online, online);
     }
 
     private transient OnlineModel onlineModel;
@@ -479,7 +479,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isLastActivityDateAndTime(ilarkesto.core.time.DateAndTime lastActivityDateAndTime) {
-        return equals(this.lastActivityDateAndTime, lastActivityDateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.lastActivityDateAndTime, lastActivityDateAndTime);
     }
 
     private transient LastActivityDateAndTimeModel lastActivityDateAndTimeModel;
@@ -585,7 +585,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isPblFilterDateFrom(ilarkesto.core.time.Date pblFilterDateFrom) {
-        return equals(this.pblFilterDateFrom, pblFilterDateFrom);
+        return ilarkesto.core.base.Utl.equals(this.pblFilterDateFrom, pblFilterDateFrom);
     }
 
     private transient PblFilterDateFromModel pblFilterDateFromModel;
@@ -638,7 +638,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isPblFilterDateTo(ilarkesto.core.time.Date pblFilterDateTo) {
-        return equals(this.pblFilterDateTo, pblFilterDateTo);
+        return ilarkesto.core.base.Utl.equals(this.pblFilterDateTo, pblFilterDateTo);
     }
 
     private transient PblFilterDateToModel pblFilterDateToModel;
@@ -691,7 +691,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isPblFilterEstimationFrom(java.lang.Float pblFilterEstimationFrom) {
-        return equals(this.pblFilterEstimationFrom, pblFilterEstimationFrom);
+        return ilarkesto.core.base.Utl.equals(this.pblFilterEstimationFrom, pblFilterEstimationFrom);
     }
 
     private transient PblFilterEstimationFromModel pblFilterEstimationFromModel;
@@ -744,7 +744,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isPblFilterEstimationTo(java.lang.Float pblFilterEstimationTo) {
-        return equals(this.pblFilterEstimationTo, pblFilterEstimationTo);
+        return ilarkesto.core.base.Utl.equals(this.pblFilterEstimationTo, pblFilterEstimationTo);
     }
 
     private transient PblFilterEstimationToModel pblFilterEstimationToModel;
@@ -797,7 +797,7 @@ public abstract class GProjectUserConfig
     }
 
     public final boolean isPblFilterText(java.lang.String pblFilterText) {
-        return equals(this.pblFilterText, pblFilterText);
+        return ilarkesto.core.base.Utl.equals(this.pblFilterText, pblFilterText);
     }
 
     private transient PblFilterTextModel pblFilterTextModel;

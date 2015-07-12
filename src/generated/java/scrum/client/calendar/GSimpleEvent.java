@@ -61,7 +61,7 @@ public abstract class GSimpleEvent
 
     public final SimpleEvent setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (SimpleEvent) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (SimpleEvent) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (SimpleEvent)this;
@@ -69,7 +69,7 @@ public abstract class GSimpleEvent
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- label ---
@@ -89,7 +89,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -146,7 +146,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -213,7 +213,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isDate(ilarkesto.core.time.Date date) {
-        return equals(this.date, date);
+        return ilarkesto.core.base.Utl.equals(this.date, date);
     }
 
     private transient DateModel dateModel;
@@ -266,7 +266,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isTime(ilarkesto.core.time.Time time) {
-        return equals(this.time, time);
+        return ilarkesto.core.base.Utl.equals(this.time, time);
     }
 
     private transient TimeModel timeModel;
@@ -319,7 +319,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isLocation(java.lang.String location) {
-        return equals(this.location, location);
+        return ilarkesto.core.base.Utl.equals(this.location, location);
     }
 
     private transient LocationModel locationModel;
@@ -372,7 +372,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isDuration(java.lang.Integer duration) {
-        return equals(this.duration, duration);
+        return ilarkesto.core.base.Utl.equals(this.duration, duration);
     }
 
     private transient DurationModel durationModel;
@@ -435,7 +435,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isAgenda(java.lang.String agenda) {
-        return equals(this.agenda, agenda);
+        return ilarkesto.core.base.Utl.equals(this.agenda, agenda);
     }
 
     private transient AgendaModel agendaModel;
@@ -491,7 +491,7 @@ public abstract class GSimpleEvent
     }
 
     public final boolean isNote(java.lang.String note) {
-        return equals(this.note, note);
+        return ilarkesto.core.base.Utl.equals(this.note, note);
     }
 
     private transient NoteModel noteModel;

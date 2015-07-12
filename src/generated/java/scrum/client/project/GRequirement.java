@@ -63,7 +63,7 @@ public abstract class GRequirement
 
     public final Requirement setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Requirement) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Requirement) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Requirement)this;
@@ -71,7 +71,7 @@ public abstract class GRequirement
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- sprint ---
@@ -89,7 +89,7 @@ public abstract class GRequirement
 
     public final Requirement setSprint(scrum.client.sprint.Sprint sprint) {
         String id = sprint == null ? null : sprint.getId();
-        if (equals(this.sprintId, id)) return (Requirement) this;
+        if (ilarkesto.core.base.Utl.equals(this.sprintId, id)) return (Requirement) this;
         this.sprintId = id;
         propertyChanged("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
         return (Requirement)this;
@@ -97,7 +97,7 @@ public abstract class GRequirement
 
     public final boolean isSprint(scrum.client.sprint.Sprint sprint) {
         String id = sprint==null ? null : sprint.getId();
-        return equals(this.sprintId, id);
+        return ilarkesto.core.base.Utl.equals(this.sprintId, id);
     }
 
     // --- issue ---
@@ -115,7 +115,7 @@ public abstract class GRequirement
 
     public final Requirement setIssue(scrum.client.issues.Issue issue) {
         String id = issue == null ? null : issue.getId();
-        if (equals(this.issueId, id)) return (Requirement) this;
+        if (ilarkesto.core.base.Utl.equals(this.issueId, id)) return (Requirement) this;
         this.issueId = id;
         propertyChanged("issueId", ilarkesto.core.persistance.Persistence.propertyAsString(this.issueId));
         return (Requirement)this;
@@ -123,7 +123,7 @@ public abstract class GRequirement
 
     public final boolean isIssue(scrum.client.issues.Issue issue) {
         String id = issue==null ? null : issue.getId();
-        return equals(this.issueId, id);
+        return ilarkesto.core.base.Utl.equals(this.issueId, id);
     }
 
     // --- number ---
@@ -142,7 +142,7 @@ public abstract class GRequirement
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -242,7 +242,7 @@ public abstract class GRequirement
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -300,7 +300,7 @@ public abstract class GRequirement
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -361,7 +361,7 @@ public abstract class GRequirement
     }
 
     public final boolean isTestDescription(java.lang.String testDescription) {
-        return equals(this.testDescription, testDescription);
+        return ilarkesto.core.base.Utl.equals(this.testDescription, testDescription);
     }
 
     private transient TestDescriptionModel testDescriptionModel;
@@ -422,7 +422,7 @@ public abstract class GRequirement
     }
 
     public final boolean isEstimatedWork(java.lang.Float estimatedWork) {
-        return equals(this.estimatedWork, estimatedWork);
+        return ilarkesto.core.base.Utl.equals(this.estimatedWork, estimatedWork);
     }
 
     private transient EstimatedWorkModel estimatedWorkModel;
@@ -477,7 +477,7 @@ public abstract class GRequirement
     }
 
     public final boolean isRejectDate(ilarkesto.core.time.Date rejectDate) {
-        return equals(this.rejectDate, rejectDate);
+        return ilarkesto.core.base.Utl.equals(this.rejectDate, rejectDate);
     }
 
     private transient RejectDateModel rejectDateModel;
@@ -530,7 +530,7 @@ public abstract class GRequirement
     }
 
     public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
+        return ilarkesto.core.base.Utl.equals(this.closed, closed);
     }
 
     private transient ClosedModel closedModel;
@@ -587,7 +587,7 @@ public abstract class GRequirement
     }
 
     public final boolean isDeleted(boolean deleted) {
-        return equals(this.deleted, deleted);
+        return ilarkesto.core.base.Utl.equals(this.deleted, deleted);
     }
 
     private transient DeletedModel deletedModel;
@@ -644,7 +644,7 @@ public abstract class GRequirement
     }
 
     public final boolean isDirty(boolean dirty) {
-        return equals(this.dirty, dirty);
+        return ilarkesto.core.base.Utl.equals(this.dirty, dirty);
     }
 
     private transient DirtyModel dirtyModel;
@@ -701,7 +701,7 @@ public abstract class GRequirement
     }
 
     public final boolean isWorkEstimationVotingActive(boolean workEstimationVotingActive) {
-        return equals(this.workEstimationVotingActive, workEstimationVotingActive);
+        return ilarkesto.core.base.Utl.equals(this.workEstimationVotingActive, workEstimationVotingActive);
     }
 
     private transient WorkEstimationVotingActiveModel workEstimationVotingActiveModel;
@@ -758,7 +758,7 @@ public abstract class GRequirement
     }
 
     public final boolean isWorkEstimationVotingShowoff(boolean workEstimationVotingShowoff) {
-        return equals(this.workEstimationVotingShowoff, workEstimationVotingShowoff);
+        return ilarkesto.core.base.Utl.equals(this.workEstimationVotingShowoff, workEstimationVotingShowoff);
     }
 
     private transient WorkEstimationVotingShowoffModel workEstimationVotingShowoffModel;
@@ -854,7 +854,7 @@ public abstract class GRequirement
 
     public final Requirement setEpic(scrum.client.project.Requirement epic) {
         String id = epic == null ? null : epic.getId();
-        if (equals(this.epicId, id)) return (Requirement) this;
+        if (ilarkesto.core.base.Utl.equals(this.epicId, id)) return (Requirement) this;
         this.epicId = id;
         propertyChanged("epicId", ilarkesto.core.persistance.Persistence.propertyAsString(this.epicId));
         return (Requirement)this;
@@ -862,7 +862,7 @@ public abstract class GRequirement
 
     public final boolean isEpic(scrum.client.project.Requirement epic) {
         String id = epic==null ? null : epic.getId();
-        return equals(this.epicId, id);
+        return ilarkesto.core.base.Utl.equals(this.epicId, id);
     }
 
     // --- externalTrackerId ---
@@ -881,7 +881,7 @@ public abstract class GRequirement
     }
 
     public final boolean isExternalTrackerId(java.lang.String externalTrackerId) {
-        return equals(this.externalTrackerId, externalTrackerId);
+        return ilarkesto.core.base.Utl.equals(this.externalTrackerId, externalTrackerId);
     }
 
     private transient ExternalTrackerIdModel externalTrackerIdModel;

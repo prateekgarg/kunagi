@@ -66,7 +66,7 @@ public abstract class GProject
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -128,7 +128,7 @@ public abstract class GProject
     }
 
     public final boolean isVision(java.lang.String vision) {
-        return equals(this.vision, vision);
+        return ilarkesto.core.base.Utl.equals(this.vision, vision);
     }
 
     private transient VisionModel visionModel;
@@ -186,7 +186,7 @@ public abstract class GProject
     }
 
     public final boolean isProductLabel(java.lang.String productLabel) {
-        return equals(this.productLabel, productLabel);
+        return ilarkesto.core.base.Utl.equals(this.productLabel, productLabel);
     }
 
     private transient ProductLabelModel productLabelModel;
@@ -241,7 +241,7 @@ public abstract class GProject
     }
 
     public final boolean isShortDescription(java.lang.String shortDescription) {
-        return equals(this.shortDescription, shortDescription);
+        return ilarkesto.core.base.Utl.equals(this.shortDescription, shortDescription);
     }
 
     private transient ShortDescriptionModel shortDescriptionModel;
@@ -296,7 +296,7 @@ public abstract class GProject
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -354,7 +354,7 @@ public abstract class GProject
     }
 
     public final boolean isLongDescription(java.lang.String longDescription) {
-        return equals(this.longDescription, longDescription);
+        return ilarkesto.core.base.Utl.equals(this.longDescription, longDescription);
     }
 
     private transient LongDescriptionModel longDescriptionModel;
@@ -412,7 +412,7 @@ public abstract class GProject
     }
 
     public final boolean isBegin(ilarkesto.core.time.Date begin) {
-        return equals(this.begin, begin);
+        return ilarkesto.core.base.Utl.equals(this.begin, begin);
     }
 
     private transient BeginModel beginModel;
@@ -465,7 +465,7 @@ public abstract class GProject
     }
 
     public final boolean isEnd(ilarkesto.core.time.Date end) {
-        return equals(this.end, end);
+        return ilarkesto.core.base.Utl.equals(this.end, end);
     }
 
     private transient EndModel endModel;
@@ -682,7 +682,7 @@ public abstract class GProject
 
     public final Project setCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
         String id = currentSprint == null ? null : currentSprint.getId();
-        if (equals(this.currentSprintId, id)) return (Project) this;
+        if (ilarkesto.core.base.Utl.equals(this.currentSprintId, id)) return (Project) this;
         this.currentSprintId = id;
         propertyChanged("currentSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentSprintId));
         return (Project)this;
@@ -690,7 +690,7 @@ public abstract class GProject
 
     public final boolean isCurrentSprint(scrum.client.sprint.Sprint currentSprint) {
         String id = currentSprint==null ? null : currentSprint.getId();
-        return equals(this.currentSprintId, id);
+        return ilarkesto.core.base.Utl.equals(this.currentSprintId, id);
     }
 
     // --- nextSprint ---
@@ -708,7 +708,7 @@ public abstract class GProject
 
     public final Project setNextSprint(scrum.client.sprint.Sprint nextSprint) {
         String id = nextSprint == null ? null : nextSprint.getId();
-        if (equals(this.nextSprintId, id)) return (Project) this;
+        if (ilarkesto.core.base.Utl.equals(this.nextSprintId, id)) return (Project) this;
         this.nextSprintId = id;
         propertyChanged("nextSprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.nextSprintId));
         return (Project)this;
@@ -716,7 +716,7 @@ public abstract class GProject
 
     public final boolean isNextSprint(scrum.client.sprint.Sprint nextSprint) {
         String id = nextSprint==null ? null : nextSprint.getId();
-        return equals(this.nextSprintId, id);
+        return ilarkesto.core.base.Utl.equals(this.nextSprintId, id);
     }
 
     // --- velocity ---
@@ -735,7 +735,7 @@ public abstract class GProject
     }
 
     public final boolean isVelocity(java.lang.Integer velocity) {
-        return equals(this.velocity, velocity);
+        return ilarkesto.core.base.Utl.equals(this.velocity, velocity);
     }
 
     private transient VelocityModel velocityModel;
@@ -840,7 +840,7 @@ public abstract class GProject
     }
 
     public final boolean isLastSprintNumber(int lastSprintNumber) {
-        return equals(this.lastSprintNumber, lastSprintNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastSprintNumber, lastSprintNumber);
     }
 
     private transient LastSprintNumberModel lastSprintNumberModel;
@@ -907,7 +907,7 @@ public abstract class GProject
     }
 
     public final boolean isLastTaskNumber(int lastTaskNumber) {
-        return equals(this.lastTaskNumber, lastTaskNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastTaskNumber, lastTaskNumber);
     }
 
     private transient LastTaskNumberModel lastTaskNumberModel;
@@ -974,7 +974,7 @@ public abstract class GProject
     }
 
     public final boolean isLastRequirementNumber(int lastRequirementNumber) {
-        return equals(this.lastRequirementNumber, lastRequirementNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastRequirementNumber, lastRequirementNumber);
     }
 
     private transient LastRequirementNumberModel lastRequirementNumberModel;
@@ -1041,7 +1041,7 @@ public abstract class GProject
     }
 
     public final boolean isLastQualityNumber(int lastQualityNumber) {
-        return equals(this.lastQualityNumber, lastQualityNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastQualityNumber, lastQualityNumber);
     }
 
     private transient LastQualityNumberModel lastQualityNumberModel;
@@ -1108,7 +1108,7 @@ public abstract class GProject
     }
 
     public final boolean isLastRiskNumber(int lastRiskNumber) {
-        return equals(this.lastRiskNumber, lastRiskNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastRiskNumber, lastRiskNumber);
     }
 
     private transient LastRiskNumberModel lastRiskNumberModel;
@@ -1175,7 +1175,7 @@ public abstract class GProject
     }
 
     public final boolean isLastIssueNumber(int lastIssueNumber) {
-        return equals(this.lastIssueNumber, lastIssueNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastIssueNumber, lastIssueNumber);
     }
 
     private transient LastIssueNumberModel lastIssueNumberModel;
@@ -1242,7 +1242,7 @@ public abstract class GProject
     }
 
     public final boolean isLastImpedimentNumber(int lastImpedimentNumber) {
-        return equals(this.lastImpedimentNumber, lastImpedimentNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastImpedimentNumber, lastImpedimentNumber);
     }
 
     private transient LastImpedimentNumberModel lastImpedimentNumberModel;
@@ -1309,7 +1309,7 @@ public abstract class GProject
     }
 
     public final boolean isLastFileNumber(int lastFileNumber) {
-        return equals(this.lastFileNumber, lastFileNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastFileNumber, lastFileNumber);
     }
 
     private transient LastFileNumberModel lastFileNumberModel;
@@ -1376,7 +1376,7 @@ public abstract class GProject
     }
 
     public final boolean isLastSubjectNumber(int lastSubjectNumber) {
-        return equals(this.lastSubjectNumber, lastSubjectNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastSubjectNumber, lastSubjectNumber);
     }
 
     private transient LastSubjectNumberModel lastSubjectNumberModel;
@@ -1443,7 +1443,7 @@ public abstract class GProject
     }
 
     public final boolean isLastEventNumber(int lastEventNumber) {
-        return equals(this.lastEventNumber, lastEventNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastEventNumber, lastEventNumber);
     }
 
     private transient LastEventNumberModel lastEventNumberModel;
@@ -1510,7 +1510,7 @@ public abstract class GProject
     }
 
     public final boolean isLastReleaseNumber(int lastReleaseNumber) {
-        return equals(this.lastReleaseNumber, lastReleaseNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastReleaseNumber, lastReleaseNumber);
     }
 
     private transient LastReleaseNumberModel lastReleaseNumberModel;
@@ -1577,7 +1577,7 @@ public abstract class GProject
     }
 
     public final boolean isLastBlogEntryNumber(int lastBlogEntryNumber) {
-        return equals(this.lastBlogEntryNumber, lastBlogEntryNumber);
+        return ilarkesto.core.base.Utl.equals(this.lastBlogEntryNumber, lastBlogEntryNumber);
     }
 
     private transient LastBlogEntryNumberModel lastBlogEntryNumberModel;
@@ -1644,7 +1644,7 @@ public abstract class GProject
     }
 
     public final boolean isPunishmentUnit(java.lang.String punishmentUnit) {
-        return equals(this.punishmentUnit, punishmentUnit);
+        return ilarkesto.core.base.Utl.equals(this.punishmentUnit, punishmentUnit);
     }
 
     private transient PunishmentUnitModel punishmentUnitModel;
@@ -1697,7 +1697,7 @@ public abstract class GProject
     }
 
     public final boolean isPunishmentFactor(int punishmentFactor) {
-        return equals(this.punishmentFactor, punishmentFactor);
+        return ilarkesto.core.base.Utl.equals(this.punishmentFactor, punishmentFactor);
     }
 
     private transient PunishmentFactorModel punishmentFactorModel;
@@ -1764,7 +1764,7 @@ public abstract class GProject
     }
 
     public final boolean isHomepageDir(java.lang.String homepageDir) {
-        return equals(this.homepageDir, homepageDir);
+        return ilarkesto.core.base.Utl.equals(this.homepageDir, homepageDir);
     }
 
     private transient HomepageDirModel homepageDirModel;
@@ -1819,7 +1819,7 @@ public abstract class GProject
     }
 
     public final boolean isHomepageUrl(java.lang.String homepageUrl) {
-        return equals(this.homepageUrl, homepageUrl);
+        return ilarkesto.core.base.Utl.equals(this.homepageUrl, homepageUrl);
     }
 
     private transient HomepageUrlModel homepageUrlModel;
@@ -1874,7 +1874,7 @@ public abstract class GProject
     }
 
     public final boolean isAutoUpdateHomepage(boolean autoUpdateHomepage) {
-        return equals(this.autoUpdateHomepage, autoUpdateHomepage);
+        return ilarkesto.core.base.Utl.equals(this.autoUpdateHomepage, autoUpdateHomepage);
     }
 
     private transient AutoUpdateHomepageModel autoUpdateHomepageModel;
@@ -1933,7 +1933,7 @@ public abstract class GProject
     }
 
     public final boolean isReleaseScriptPath(java.lang.String releaseScriptPath) {
-        return equals(this.releaseScriptPath, releaseScriptPath);
+        return ilarkesto.core.base.Utl.equals(this.releaseScriptPath, releaseScriptPath);
     }
 
     private transient ReleaseScriptPathModel releaseScriptPathModel;
@@ -1988,7 +1988,7 @@ public abstract class GProject
     }
 
     public final boolean isSupportEmail(java.lang.String supportEmail) {
-        return equals(this.supportEmail, supportEmail);
+        return ilarkesto.core.base.Utl.equals(this.supportEmail, supportEmail);
     }
 
     private transient SupportEmailModel supportEmailModel;
@@ -2046,7 +2046,7 @@ public abstract class GProject
     }
 
     public final boolean isIssueReplyTemplate(java.lang.String issueReplyTemplate) {
-        return equals(this.issueReplyTemplate, issueReplyTemplate);
+        return ilarkesto.core.base.Utl.equals(this.issueReplyTemplate, issueReplyTemplate);
     }
 
     private transient IssueReplyTemplateModel issueReplyTemplateModel;
@@ -2104,7 +2104,7 @@ public abstract class GProject
     }
 
     public final boolean isSubscriberNotificationTemplate(java.lang.String subscriberNotificationTemplate) {
-        return equals(this.subscriberNotificationTemplate, subscriberNotificationTemplate);
+        return ilarkesto.core.base.Utl.equals(this.subscriberNotificationTemplate, subscriberNotificationTemplate);
     }
 
     private transient SubscriberNotificationTemplateModel subscriberNotificationTemplateModel;
@@ -2162,7 +2162,7 @@ public abstract class GProject
     }
 
     public final boolean isLastOpenedDateAndTime(ilarkesto.core.time.DateAndTime lastOpenedDateAndTime) {
-        return equals(this.lastOpenedDateAndTime, lastOpenedDateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.lastOpenedDateAndTime, lastOpenedDateAndTime);
     }
 
     private transient LastOpenedDateAndTimeModel lastOpenedDateAndTimeModel;
@@ -2215,7 +2215,7 @@ public abstract class GProject
     }
 
     public final boolean isFreeDays(int freeDays) {
-        return equals(this.freeDays, freeDays);
+        return ilarkesto.core.base.Utl.equals(this.freeDays, freeDays);
     }
 
     private transient FreeDaysModel freeDaysModel;
@@ -2284,7 +2284,7 @@ public abstract class GProject
     }
 
     public final boolean isAutoCreateTasksFromQualities(boolean autoCreateTasksFromQualities) {
-        return equals(this.autoCreateTasksFromQualities, autoCreateTasksFromQualities);
+        return ilarkesto.core.base.Utl.equals(this.autoCreateTasksFromQualities, autoCreateTasksFromQualities);
     }
 
     private transient AutoCreateTasksFromQualitiesModel autoCreateTasksFromQualitiesModel;
@@ -2343,7 +2343,7 @@ public abstract class GProject
     }
 
     public final boolean isReleasingInfo(java.lang.String releasingInfo) {
-        return equals(this.releasingInfo, releasingInfo);
+        return ilarkesto.core.base.Utl.equals(this.releasingInfo, releasingInfo);
     }
 
     private transient ReleasingInfoModel releasingInfoModel;
@@ -2401,7 +2401,7 @@ public abstract class GProject
     }
 
     public final boolean isExternalTrackerUrlTemplate(java.lang.String externalTrackerUrlTemplate) {
-        return equals(this.externalTrackerUrlTemplate, externalTrackerUrlTemplate);
+        return ilarkesto.core.base.Utl.equals(this.externalTrackerUrlTemplate, externalTrackerUrlTemplate);
     }
 
     private transient ExternalTrackerUrlTemplateModel externalTrackerUrlTemplateModel;
@@ -2456,7 +2456,7 @@ public abstract class GProject
     }
 
     public final boolean isExternalTrackerLabel(java.lang.String externalTrackerLabel) {
-        return equals(this.externalTrackerLabel, externalTrackerLabel);
+        return ilarkesto.core.base.Utl.equals(this.externalTrackerLabel, externalTrackerLabel);
     }
 
     private transient ExternalTrackerLabelModel externalTrackerLabelModel;

@@ -61,7 +61,7 @@ public abstract class GEmoticon
 
     public final Emoticon setParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent == null ? null : parent.getId();
-        if (equals(this.parentId, id)) return (Emoticon) this;
+        if (ilarkesto.core.base.Utl.equals(this.parentId, id)) return (Emoticon) this;
         this.parentId = id;
         propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Emoticon)this;
@@ -69,7 +69,7 @@ public abstract class GEmoticon
 
     public final boolean isParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent==null ? null : parent.getId();
-        return equals(this.parentId, id);
+        return ilarkesto.core.base.Utl.equals(this.parentId, id);
     }
 
     // --- owner ---
@@ -87,7 +87,7 @@ public abstract class GEmoticon
 
     public final Emoticon setOwner(scrum.client.admin.User owner) {
         String id = owner == null ? null : owner.getId();
-        if (equals(this.ownerId, id)) return (Emoticon) this;
+        if (ilarkesto.core.base.Utl.equals(this.ownerId, id)) return (Emoticon) this;
         this.ownerId = id;
         propertyChanged("ownerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.ownerId));
         return (Emoticon)this;
@@ -95,7 +95,7 @@ public abstract class GEmoticon
 
     public final boolean isOwner(scrum.client.admin.User owner) {
         String id = owner==null ? null : owner.getId();
-        return equals(this.ownerId, id);
+        return ilarkesto.core.base.Utl.equals(this.ownerId, id);
     }
 
     // --- emotion ---
@@ -114,7 +114,7 @@ public abstract class GEmoticon
     }
 
     public final boolean isEmotion(java.lang.String emotion) {
-        return equals(this.emotion, emotion);
+        return ilarkesto.core.base.Utl.equals(this.emotion, emotion);
     }
 
     private transient EmotionModel emotionModel;

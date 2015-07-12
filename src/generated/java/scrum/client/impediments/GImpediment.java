@@ -61,7 +61,7 @@ public abstract class GImpediment
 
     public final Impediment setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Impediment) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Impediment) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Impediment)this;
@@ -69,7 +69,7 @@ public abstract class GImpediment
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- number ---
@@ -88,7 +88,7 @@ public abstract class GImpediment
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -155,7 +155,7 @@ public abstract class GImpediment
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -211,7 +211,7 @@ public abstract class GImpediment
     }
 
     public final boolean isDate(ilarkesto.core.time.Date date) {
-        return equals(this.date, date);
+        return ilarkesto.core.base.Utl.equals(this.date, date);
     }
 
     private transient DateModel dateModel;
@@ -270,7 +270,7 @@ public abstract class GImpediment
     }
 
     public final boolean isDescription(java.lang.String description) {
-        return equals(this.description, description);
+        return ilarkesto.core.base.Utl.equals(this.description, description);
     }
 
     private transient DescriptionModel descriptionModel;
@@ -328,7 +328,7 @@ public abstract class GImpediment
     }
 
     public final boolean isSolution(java.lang.String solution) {
-        return equals(this.solution, solution);
+        return ilarkesto.core.base.Utl.equals(this.solution, solution);
     }
 
     private transient SolutionModel solutionModel;
@@ -386,7 +386,7 @@ public abstract class GImpediment
     }
 
     public final boolean isClosed(boolean closed) {
-        return equals(this.closed, closed);
+        return ilarkesto.core.base.Utl.equals(this.closed, closed);
     }
 
     private transient ClosedModel closedModel;

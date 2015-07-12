@@ -61,7 +61,7 @@ public abstract class GSubscription
 
     public final Subscription setSubject(ilarkesto.gwt.client.AGwtEntity subject) {
         String id = subject == null ? null : subject.getId();
-        if (equals(this.subjectId, id)) return (Subscription) this;
+        if (ilarkesto.core.base.Utl.equals(this.subjectId, id)) return (Subscription) this;
         this.subjectId = id;
         propertyChanged("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
         return (Subscription)this;
@@ -69,7 +69,7 @@ public abstract class GSubscription
 
     public final boolean isSubject(ilarkesto.gwt.client.AGwtEntity subject) {
         String id = subject==null ? null : subject.getId();
-        return equals(this.subjectId, id);
+        return ilarkesto.core.base.Utl.equals(this.subjectId, id);
     }
 
     // --- subscribersEmails ---

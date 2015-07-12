@@ -61,7 +61,7 @@ public abstract class GRequirementEstimationVote
 
     public final RequirementEstimationVote setRequirement(scrum.client.project.Requirement requirement) {
         String id = requirement == null ? null : requirement.getId();
-        if (equals(this.requirementId, id)) return (RequirementEstimationVote) this;
+        if (ilarkesto.core.base.Utl.equals(this.requirementId, id)) return (RequirementEstimationVote) this;
         this.requirementId = id;
         propertyChanged("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
         return (RequirementEstimationVote)this;
@@ -69,7 +69,7 @@ public abstract class GRequirementEstimationVote
 
     public final boolean isRequirement(scrum.client.project.Requirement requirement) {
         String id = requirement==null ? null : requirement.getId();
-        return equals(this.requirementId, id);
+        return ilarkesto.core.base.Utl.equals(this.requirementId, id);
     }
 
     // --- user ---
@@ -87,7 +87,7 @@ public abstract class GRequirementEstimationVote
 
     public final RequirementEstimationVote setUser(scrum.client.admin.User user) {
         String id = user == null ? null : user.getId();
-        if (equals(this.userId, id)) return (RequirementEstimationVote) this;
+        if (ilarkesto.core.base.Utl.equals(this.userId, id)) return (RequirementEstimationVote) this;
         this.userId = id;
         propertyChanged("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
         return (RequirementEstimationVote)this;
@@ -95,7 +95,7 @@ public abstract class GRequirementEstimationVote
 
     public final boolean isUser(scrum.client.admin.User user) {
         String id = user==null ? null : user.getId();
-        return equals(this.userId, id);
+        return ilarkesto.core.base.Utl.equals(this.userId, id);
     }
 
     // --- estimatedWork ---
@@ -114,7 +114,7 @@ public abstract class GRequirementEstimationVote
     }
 
     public final boolean isEstimatedWork(java.lang.Float estimatedWork) {
-        return equals(this.estimatedWork, estimatedWork);
+        return ilarkesto.core.base.Utl.equals(this.estimatedWork, estimatedWork);
     }
 
     private transient EstimatedWorkModel estimatedWorkModel;

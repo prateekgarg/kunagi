@@ -61,7 +61,7 @@ public abstract class GWikipage
 
     public final Wikipage setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Wikipage) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Wikipage) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Wikipage)this;
@@ -69,7 +69,7 @@ public abstract class GWikipage
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- name ---
@@ -89,7 +89,7 @@ public abstract class GWikipage
     }
 
     public final boolean isName(java.lang.String name) {
-        return equals(this.name, name);
+        return ilarkesto.core.base.Utl.equals(this.name, name);
     }
 
     private transient NameModel nameModel;
@@ -146,7 +146,7 @@ public abstract class GWikipage
     }
 
     public final boolean isText(java.lang.String text) {
-        return equals(this.text, text);
+        return ilarkesto.core.base.Utl.equals(this.text, text);
     }
 
     private transient TextModel textModel;

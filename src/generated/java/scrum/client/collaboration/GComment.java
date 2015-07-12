@@ -63,7 +63,7 @@ public abstract class GComment
 
     public final Comment setParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent == null ? null : parent.getId();
-        if (equals(this.parentId, id)) return (Comment) this;
+        if (ilarkesto.core.base.Utl.equals(this.parentId, id)) return (Comment) this;
         this.parentId = id;
         propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Comment)this;
@@ -71,7 +71,7 @@ public abstract class GComment
 
     public final boolean isParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent==null ? null : parent.getId();
-        return equals(this.parentId, id);
+        return ilarkesto.core.base.Utl.equals(this.parentId, id);
     }
 
     // --- author ---
@@ -89,7 +89,7 @@ public abstract class GComment
 
     public final Comment setAuthor(scrum.client.admin.User author) {
         String id = author == null ? null : author.getId();
-        if (equals(this.authorId, id)) return (Comment) this;
+        if (ilarkesto.core.base.Utl.equals(this.authorId, id)) return (Comment) this;
         this.authorId = id;
         propertyChanged("authorId", ilarkesto.core.persistance.Persistence.propertyAsString(this.authorId));
         return (Comment)this;
@@ -97,7 +97,7 @@ public abstract class GComment
 
     public final boolean isAuthor(scrum.client.admin.User author) {
         String id = author==null ? null : author.getId();
-        return equals(this.authorId, id);
+        return ilarkesto.core.base.Utl.equals(this.authorId, id);
     }
 
     // --- published ---
@@ -116,7 +116,7 @@ public abstract class GComment
     }
 
     public final boolean isPublished(boolean published) {
-        return equals(this.published, published);
+        return ilarkesto.core.base.Utl.equals(this.published, published);
     }
 
     private transient PublishedModel publishedModel;
@@ -173,7 +173,7 @@ public abstract class GComment
     }
 
     public final boolean isAuthorName(java.lang.String authorName) {
-        return equals(this.authorName, authorName);
+        return ilarkesto.core.base.Utl.equals(this.authorName, authorName);
     }
 
     private transient AuthorNameModel authorNameModel;
@@ -226,7 +226,7 @@ public abstract class GComment
     }
 
     public final boolean isAuthorEmail(java.lang.String authorEmail) {
-        return equals(this.authorEmail, authorEmail);
+        return ilarkesto.core.base.Utl.equals(this.authorEmail, authorEmail);
     }
 
     private transient AuthorEmailModel authorEmailModel;
@@ -279,7 +279,7 @@ public abstract class GComment
     }
 
     public final boolean isAuthorNameVisible(boolean authorNameVisible) {
-        return equals(this.authorNameVisible, authorNameVisible);
+        return ilarkesto.core.base.Utl.equals(this.authorNameVisible, authorNameVisible);
     }
 
     private transient AuthorNameVisibleModel authorNameVisibleModel;
@@ -337,7 +337,7 @@ public abstract class GComment
     }
 
     public final boolean isText(java.lang.String text) {
-        return equals(this.text, text);
+        return ilarkesto.core.base.Utl.equals(this.text, text);
     }
 
     private transient TextModel textModel;
@@ -400,7 +400,7 @@ public abstract class GComment
     }
 
     public final boolean isDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
-        return equals(this.dateAndTime, dateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.dateAndTime, dateAndTime);
     }
 
     private transient DateAndTimeModel dateAndTimeModel;

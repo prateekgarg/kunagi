@@ -61,7 +61,7 @@ public abstract class GFile
 
     public final File setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (File) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (File) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (File)this;
@@ -69,7 +69,7 @@ public abstract class GFile
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- filename ---
@@ -89,7 +89,7 @@ public abstract class GFile
     }
 
     public final boolean isFilename(java.lang.String filename) {
-        return equals(this.filename, filename);
+        return ilarkesto.core.base.Utl.equals(this.filename, filename);
     }
 
     private transient FilenameModel filenameModel;
@@ -150,7 +150,7 @@ public abstract class GFile
     }
 
     public final boolean isUploadTime(ilarkesto.core.time.DateAndTime uploadTime) {
-        return equals(this.uploadTime, uploadTime);
+        return ilarkesto.core.base.Utl.equals(this.uploadTime, uploadTime);
     }
 
     private transient UploadTimeModel uploadTimeModel;
@@ -211,7 +211,7 @@ public abstract class GFile
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -270,7 +270,7 @@ public abstract class GFile
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -337,7 +337,7 @@ public abstract class GFile
     }
 
     public final boolean isNote(java.lang.String note) {
-        return equals(this.note, note);
+        return ilarkesto.core.base.Utl.equals(this.note, note);
     }
 
     private transient NoteModel noteModel;

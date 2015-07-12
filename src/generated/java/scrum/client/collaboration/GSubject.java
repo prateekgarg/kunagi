@@ -61,7 +61,7 @@ public abstract class GSubject
 
     public final Subject setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Subject) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Subject) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Subject)this;
@@ -69,7 +69,7 @@ public abstract class GSubject
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- label ---
@@ -89,7 +89,7 @@ public abstract class GSubject
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -148,7 +148,7 @@ public abstract class GSubject
     }
 
     public final boolean isText(java.lang.String text) {
-        return equals(this.text, text);
+        return ilarkesto.core.base.Utl.equals(this.text, text);
     }
 
     private transient TextModel textModel;
@@ -206,7 +206,7 @@ public abstract class GSubject
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;

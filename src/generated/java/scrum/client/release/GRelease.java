@@ -61,7 +61,7 @@ public abstract class GRelease
 
     public final Release setProject(scrum.client.project.Project project) {
         String id = project == null ? null : project.getId();
-        if (equals(this.projectId, id)) return (Release) this;
+        if (ilarkesto.core.base.Utl.equals(this.projectId, id)) return (Release) this;
         this.projectId = id;
         propertyChanged("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
         return (Release)this;
@@ -69,7 +69,7 @@ public abstract class GRelease
 
     public final boolean isProject(scrum.client.project.Project project) {
         String id = project==null ? null : project.getId();
-        return equals(this.projectId, id);
+        return ilarkesto.core.base.Utl.equals(this.projectId, id);
     }
 
     // --- parentRelease ---
@@ -87,7 +87,7 @@ public abstract class GRelease
 
     public final Release setParentRelease(scrum.client.release.Release parentRelease) {
         String id = parentRelease == null ? null : parentRelease.getId();
-        if (equals(this.parentReleaseId, id)) return (Release) this;
+        if (ilarkesto.core.base.Utl.equals(this.parentReleaseId, id)) return (Release) this;
         this.parentReleaseId = id;
         propertyChanged("parentReleaseId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentReleaseId));
         return (Release)this;
@@ -95,7 +95,7 @@ public abstract class GRelease
 
     public final boolean isParentRelease(scrum.client.release.Release parentRelease) {
         String id = parentRelease==null ? null : parentRelease.getId();
-        return equals(this.parentReleaseId, id);
+        return ilarkesto.core.base.Utl.equals(this.parentReleaseId, id);
     }
 
     // --- sprints ---
@@ -147,7 +147,7 @@ public abstract class GRelease
     }
 
     public final boolean isNumber(int number) {
-        return equals(this.number, number);
+        return ilarkesto.core.base.Utl.equals(this.number, number);
     }
 
     private transient NumberModel numberModel;
@@ -215,7 +215,7 @@ public abstract class GRelease
     }
 
     public final boolean isLabel(java.lang.String label) {
-        return equals(this.label, label);
+        return ilarkesto.core.base.Utl.equals(this.label, label);
     }
 
     private transient LabelModel labelModel;
@@ -274,7 +274,7 @@ public abstract class GRelease
     }
 
     public final boolean isNote(java.lang.String note) {
-        return equals(this.note, note);
+        return ilarkesto.core.base.Utl.equals(this.note, note);
     }
 
     private transient NoteModel noteModel;
@@ -332,7 +332,7 @@ public abstract class GRelease
     }
 
     public final boolean isReleaseDate(ilarkesto.core.time.Date releaseDate) {
-        return equals(this.releaseDate, releaseDate);
+        return ilarkesto.core.base.Utl.equals(this.releaseDate, releaseDate);
     }
 
     private transient ReleaseDateModel releaseDateModel;
@@ -387,7 +387,7 @@ public abstract class GRelease
     }
 
     public final boolean isReleaseTime(ilarkesto.core.time.Time releaseTime) {
-        return equals(this.releaseTime, releaseTime);
+        return ilarkesto.core.base.Utl.equals(this.releaseTime, releaseTime);
     }
 
     private transient ReleaseTimeModel releaseTimeModel;
@@ -440,7 +440,7 @@ public abstract class GRelease
     }
 
     public final boolean isReleased(boolean released) {
-        return equals(this.released, released);
+        return ilarkesto.core.base.Utl.equals(this.released, released);
     }
 
     private transient ReleasedModel releasedModel;
@@ -497,7 +497,7 @@ public abstract class GRelease
     }
 
     public final boolean isReleaseNotes(java.lang.String releaseNotes) {
-        return equals(this.releaseNotes, releaseNotes);
+        return ilarkesto.core.base.Utl.equals(this.releaseNotes, releaseNotes);
     }
 
     private transient ReleaseNotesModel releaseNotesModel;
@@ -555,7 +555,7 @@ public abstract class GRelease
     }
 
     public final boolean isScmTag(java.lang.String scmTag) {
-        return equals(this.scmTag, scmTag);
+        return ilarkesto.core.base.Utl.equals(this.scmTag, scmTag);
     }
 
     private transient ScmTagModel scmTagModel;
@@ -610,7 +610,7 @@ public abstract class GRelease
     }
 
     public final boolean isScriptRunning(boolean scriptRunning) {
-        return equals(this.scriptRunning, scriptRunning);
+        return ilarkesto.core.base.Utl.equals(this.scriptRunning, scriptRunning);
     }
 
     private transient ScriptRunningModel scriptRunningModel;
@@ -667,7 +667,7 @@ public abstract class GRelease
     }
 
     public final boolean isScriptOutput(java.lang.String scriptOutput) {
-        return equals(this.scriptOutput, scriptOutput);
+        return ilarkesto.core.base.Utl.equals(this.scriptOutput, scriptOutput);
     }
 
     private transient ScriptOutputModel scriptOutputModel;

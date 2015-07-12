@@ -61,7 +61,7 @@ public abstract class GChange
 
     public final Change setParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent == null ? null : parent.getId();
-        if (equals(this.parentId, id)) return (Change) this;
+        if (ilarkesto.core.base.Utl.equals(this.parentId, id)) return (Change) this;
         this.parentId = id;
         propertyChanged("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
         return (Change)this;
@@ -69,7 +69,7 @@ public abstract class GChange
 
     public final boolean isParent(ilarkesto.gwt.client.AGwtEntity parent) {
         String id = parent==null ? null : parent.getId();
-        return equals(this.parentId, id);
+        return ilarkesto.core.base.Utl.equals(this.parentId, id);
     }
 
     // --- user ---
@@ -87,7 +87,7 @@ public abstract class GChange
 
     public final Change setUser(scrum.client.admin.User user) {
         String id = user == null ? null : user.getId();
-        if (equals(this.userId, id)) return (Change) this;
+        if (ilarkesto.core.base.Utl.equals(this.userId, id)) return (Change) this;
         this.userId = id;
         propertyChanged("userId", ilarkesto.core.persistance.Persistence.propertyAsString(this.userId));
         return (Change)this;
@@ -95,7 +95,7 @@ public abstract class GChange
 
     public final boolean isUser(scrum.client.admin.User user) {
         String id = user==null ? null : user.getId();
-        return equals(this.userId, id);
+        return ilarkesto.core.base.Utl.equals(this.userId, id);
     }
 
     // --- dateAndTime ---
@@ -115,7 +115,7 @@ public abstract class GChange
     }
 
     public final boolean isDateAndTime(ilarkesto.core.time.DateAndTime dateAndTime) {
-        return equals(this.dateAndTime, dateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.dateAndTime, dateAndTime);
     }
 
     private transient DateAndTimeModel dateAndTimeModel;
@@ -172,7 +172,7 @@ public abstract class GChange
     }
 
     public final boolean isKey(java.lang.String key) {
-        return equals(this.key, key);
+        return ilarkesto.core.base.Utl.equals(this.key, key);
     }
 
     private transient KeyModel keyModel;
@@ -225,7 +225,7 @@ public abstract class GChange
     }
 
     public final boolean isOldValue(java.lang.String oldValue) {
-        return equals(this.oldValue, oldValue);
+        return ilarkesto.core.base.Utl.equals(this.oldValue, oldValue);
     }
 
     private transient OldValueModel oldValueModel;
@@ -278,7 +278,7 @@ public abstract class GChange
     }
 
     public final boolean isNewValue(java.lang.String newValue) {
-        return equals(this.newValue, newValue);
+        return ilarkesto.core.base.Utl.equals(this.newValue, newValue);
     }
 
     private transient NewValueModel newValueModel;
@@ -331,7 +331,7 @@ public abstract class GChange
     }
 
     public final boolean isComment(java.lang.String comment) {
-        return equals(this.comment, comment);
+        return ilarkesto.core.base.Utl.equals(this.comment, comment);
     }
 
     private transient CommentModel commentModel;

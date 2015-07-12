@@ -63,7 +63,7 @@ public abstract class GUser
     }
 
     public final boolean isName(java.lang.String name) {
-        return equals(this.name, name);
+        return ilarkesto.core.base.Utl.equals(this.name, name);
     }
 
     private transient NameModel nameModel;
@@ -118,7 +118,7 @@ public abstract class GUser
     }
 
     public final boolean isPublicName(java.lang.String publicName) {
-        return equals(this.publicName, publicName);
+        return ilarkesto.core.base.Utl.equals(this.publicName, publicName);
     }
 
     private transient PublicNameModel publicNameModel;
@@ -173,7 +173,7 @@ public abstract class GUser
     }
 
     public final boolean isFullName(java.lang.String fullName) {
-        return equals(this.fullName, fullName);
+        return ilarkesto.core.base.Utl.equals(this.fullName, fullName);
     }
 
     private transient FullNameModel fullNameModel;
@@ -228,7 +228,7 @@ public abstract class GUser
     }
 
     public final boolean isAdmin(boolean admin) {
-        return equals(this.admin, admin);
+        return ilarkesto.core.base.Utl.equals(this.admin, admin);
     }
 
     private transient AdminModel adminModel;
@@ -285,7 +285,7 @@ public abstract class GUser
     }
 
     public final boolean isEmailVerified(boolean emailVerified) {
-        return equals(this.emailVerified, emailVerified);
+        return ilarkesto.core.base.Utl.equals(this.emailVerified, emailVerified);
     }
 
     private transient EmailVerifiedModel emailVerifiedModel;
@@ -343,7 +343,7 @@ public abstract class GUser
     }
 
     public final boolean isEmail(java.lang.String email) {
-        return equals(this.email, email);
+        return ilarkesto.core.base.Utl.equals(this.email, email);
     }
 
     private transient EmailModel emailModel;
@@ -395,7 +395,7 @@ public abstract class GUser
 
     public final User setCurrentProject(scrum.client.project.Project currentProject) {
         String id = currentProject == null ? null : currentProject.getId();
-        if (equals(this.currentProjectId, id)) return (User) this;
+        if (ilarkesto.core.base.Utl.equals(this.currentProjectId, id)) return (User) this;
         this.currentProjectId = id;
         propertyChanged("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
         return (User)this;
@@ -403,7 +403,7 @@ public abstract class GUser
 
     public final boolean isCurrentProject(scrum.client.project.Project currentProject) {
         String id = currentProject==null ? null : currentProject.getId();
-        return equals(this.currentProjectId, id);
+        return ilarkesto.core.base.Utl.equals(this.currentProjectId, id);
     }
 
     // --- color ---
@@ -422,7 +422,7 @@ public abstract class GUser
     }
 
     public final boolean isColor(java.lang.String color) {
-        return equals(this.color, color);
+        return ilarkesto.core.base.Utl.equals(this.color, color);
     }
 
     private transient ColorModel colorModel;
@@ -475,7 +475,7 @@ public abstract class GUser
     }
 
     public final boolean isLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
-        return equals(this.lastLoginDateAndTime, lastLoginDateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.lastLoginDateAndTime, lastLoginDateAndTime);
     }
 
     private transient LastLoginDateAndTimeModel lastLoginDateAndTimeModel;
@@ -528,7 +528,7 @@ public abstract class GUser
     }
 
     public final boolean isRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
-        return equals(this.registrationDateAndTime, registrationDateAndTime);
+        return ilarkesto.core.base.Utl.equals(this.registrationDateAndTime, registrationDateAndTime);
     }
 
     private transient RegistrationDateAndTimeModel registrationDateAndTimeModel;
@@ -581,7 +581,7 @@ public abstract class GUser
     }
 
     public final boolean isDisabled(boolean disabled) {
-        return equals(this.disabled, disabled);
+        return ilarkesto.core.base.Utl.equals(this.disabled, disabled);
     }
 
     private transient DisabledModel disabledModel;
@@ -638,7 +638,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideBlog(boolean hideUserGuideBlog) {
-        return equals(this.hideUserGuideBlog, hideUserGuideBlog);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideBlog, hideUserGuideBlog);
     }
 
     private transient HideUserGuideBlogModel hideUserGuideBlogModel;
@@ -695,7 +695,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideCalendar(boolean hideUserGuideCalendar) {
-        return equals(this.hideUserGuideCalendar, hideUserGuideCalendar);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideCalendar, hideUserGuideCalendar);
     }
 
     private transient HideUserGuideCalendarModel hideUserGuideCalendarModel;
@@ -752,7 +752,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideFiles(boolean hideUserGuideFiles) {
-        return equals(this.hideUserGuideFiles, hideUserGuideFiles);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideFiles, hideUserGuideFiles);
     }
 
     private transient HideUserGuideFilesModel hideUserGuideFilesModel;
@@ -809,7 +809,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideForum(boolean hideUserGuideForum) {
-        return equals(this.hideUserGuideForum, hideUserGuideForum);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideForum, hideUserGuideForum);
     }
 
     private transient HideUserGuideForumModel hideUserGuideForumModel;
@@ -866,7 +866,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideImpediments(boolean hideUserGuideImpediments) {
-        return equals(this.hideUserGuideImpediments, hideUserGuideImpediments);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideImpediments, hideUserGuideImpediments);
     }
 
     private transient HideUserGuideImpedimentsModel hideUserGuideImpedimentsModel;
@@ -923,7 +923,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideIssues(boolean hideUserGuideIssues) {
-        return equals(this.hideUserGuideIssues, hideUserGuideIssues);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideIssues, hideUserGuideIssues);
     }
 
     private transient HideUserGuideIssuesModel hideUserGuideIssuesModel;
@@ -980,7 +980,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideJournal(boolean hideUserGuideJournal) {
-        return equals(this.hideUserGuideJournal, hideUserGuideJournal);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideJournal, hideUserGuideJournal);
     }
 
     private transient HideUserGuideJournalModel hideUserGuideJournalModel;
@@ -1037,7 +1037,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
-        return equals(this.hideUserGuideNextSprint, hideUserGuideNextSprint);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideNextSprint, hideUserGuideNextSprint);
     }
 
     private transient HideUserGuideNextSprintModel hideUserGuideNextSprintModel;
@@ -1094,7 +1094,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
-        return equals(this.hideUserGuideProductBacklog, hideUserGuideProductBacklog);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideProductBacklog, hideUserGuideProductBacklog);
     }
 
     private transient HideUserGuideProductBacklogModel hideUserGuideProductBacklogModel;
@@ -1151,7 +1151,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
-        return equals(this.hideUserGuideCourtroom, hideUserGuideCourtroom);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideCourtroom, hideUserGuideCourtroom);
     }
 
     private transient HideUserGuideCourtroomModel hideUserGuideCourtroomModel;
@@ -1208,7 +1208,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
-        return equals(this.hideUserGuideQualityBacklog, hideUserGuideQualityBacklog);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideQualityBacklog, hideUserGuideQualityBacklog);
     }
 
     private transient HideUserGuideQualityBacklogModel hideUserGuideQualityBacklogModel;
@@ -1265,7 +1265,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideReleases(boolean hideUserGuideReleases) {
-        return equals(this.hideUserGuideReleases, hideUserGuideReleases);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideReleases, hideUserGuideReleases);
     }
 
     private transient HideUserGuideReleasesModel hideUserGuideReleasesModel;
@@ -1322,7 +1322,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideRisks(boolean hideUserGuideRisks) {
-        return equals(this.hideUserGuideRisks, hideUserGuideRisks);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideRisks, hideUserGuideRisks);
     }
 
     private transient HideUserGuideRisksModel hideUserGuideRisksModel;
@@ -1379,7 +1379,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
-        return equals(this.hideUserGuideSprintBacklog, hideUserGuideSprintBacklog);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideSprintBacklog, hideUserGuideSprintBacklog);
     }
 
     private transient HideUserGuideSprintBacklogModel hideUserGuideSprintBacklogModel;
@@ -1436,7 +1436,7 @@ public abstract class GUser
     }
 
     public final boolean isHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
-        return equals(this.hideUserGuideWhiteboard, hideUserGuideWhiteboard);
+        return ilarkesto.core.base.Utl.equals(this.hideUserGuideWhiteboard, hideUserGuideWhiteboard);
     }
 
     private transient HideUserGuideWhiteboardModel hideUserGuideWhiteboardModel;
@@ -1494,7 +1494,7 @@ public abstract class GUser
     }
 
     public final boolean isLoginToken(java.lang.String loginToken) {
-        return equals(this.loginToken, loginToken);
+        return ilarkesto.core.base.Utl.equals(this.loginToken, loginToken);
     }
 
     private transient LoginTokenModel loginTokenModel;
@@ -1548,7 +1548,7 @@ public abstract class GUser
     }
 
     public final boolean isOpenId(java.lang.String openId) {
-        return equals(this.openId, openId);
+        return ilarkesto.core.base.Utl.equals(this.openId, openId);
     }
 
     private transient OpenIdModel openIdModel;
