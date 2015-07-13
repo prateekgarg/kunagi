@@ -46,7 +46,7 @@ public class ProjectDao extends GProjectDao {
 		Project project = newEntityInstance();
 		project.setLabel(createProjectLabel("Project"));
 		project.addAdmin(admin);
-		saveEntity(project);
+		persist(project);
 		return project;
 	}
 

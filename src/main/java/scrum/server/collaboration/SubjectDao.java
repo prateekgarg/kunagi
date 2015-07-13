@@ -33,7 +33,7 @@ public class SubjectDao extends GSubjectDao {
 		Subject subject = newEntityInstance();
 		subject.setProject(project);
 		subject.setLabel(label);
-		saveEntity(subject);
+		persist(subject);
 		return subject;
 	}
 

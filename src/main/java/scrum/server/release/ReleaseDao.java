@@ -68,7 +68,7 @@ public class ReleaseDao extends GReleaseDao {
 		release.setProject(project);
 		release.setReleaseDate(releaseDate);
 		release.setLabel(label);
-		saveEntity(release);
+		persist(release);
 		return release;
 	}
 }

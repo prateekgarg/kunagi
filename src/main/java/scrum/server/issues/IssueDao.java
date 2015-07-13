@@ -117,7 +117,7 @@ public class IssueDao extends GIssueDao {
 		issue.setIssuerEmail(issuerEmail);
 		issue.setPublished(publish);
 		issue.updateNumber();
-		saveEntity(issue);
+		persist(issue);
 		issue.updateNumber();
 		return issue;
 	}
@@ -126,7 +126,7 @@ public class IssueDao extends GIssueDao {
 		Issue issue = newEntityInstance();
 		issue.setProject(project);
 		issue.setLabel(label);
-		saveEntity(issue);
+		persist(issue);
 		issue.updateNumber();
 		return issue;
 	}
@@ -141,7 +141,7 @@ public class IssueDao extends GIssueDao {
 		issue.setDescription(sb.toString());
 		issue.addThemes(requirement.getThemes());
 		issue.setExternalTrackerId(requirement.getExternalTrackerId());
-		saveEntity(issue);
+		persist(issue);
 		issue.updateNumber();
 		return issue;
 	}
@@ -152,7 +152,7 @@ public class IssueDao extends GIssueDao {
 		issue.setLabel(task.getLabel());
 		issue.setDescription(task.getDescription());
 		issue.setDate(DateAndTime.now());
-		saveEntity(issue);
+		persist(issue);
 		issue.updateNumber();
 		return issue;
 	}

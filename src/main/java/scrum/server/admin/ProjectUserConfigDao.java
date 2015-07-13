@@ -32,7 +32,7 @@ public class ProjectUserConfigDao extends GProjectUserConfigDao {
 			projectUserConfig.setProject(project);
 			projectUserConfig.setUser(user);
 			projectUserConfig.setColor(user.getColor());
-			saveEntity(projectUserConfig);
+			persist(projectUserConfig);
 		}
 
 		return projectUserConfig;

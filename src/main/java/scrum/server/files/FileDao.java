@@ -45,7 +45,7 @@ public class FileDao extends GFileDao {
 		file.setLabel(createLabel(f));
 		file.setUploadTime(DateAndTime.now());
 		file.updateNumber();
-		saveEntity(file);
+		persist(file);
 		return file;
 	}
 

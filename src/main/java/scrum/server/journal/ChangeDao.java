@@ -44,7 +44,7 @@ public class ChangeDao extends GChangeDao {
 		change.setKey(key);
 		change.setOldValue(oldValue == null ? null : oldValue.toString());
 		change.setNewValue(newValue == null ? null : newValue.toString());
-		saveEntity(change);
+		persist(change);
 
 		Change.merge(getChangesByParent(parent));
 

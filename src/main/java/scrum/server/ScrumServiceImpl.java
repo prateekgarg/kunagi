@@ -415,7 +415,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			change.setUser(currentUser);
 		}
 
-		if (!(entity instanceof Transient)) dao.saveEntity(entity);
+		if (!(entity instanceof Transient)) dao.persist(entity);
 
 		sendToClients(conversation, entity);
 

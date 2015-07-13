@@ -28,7 +28,7 @@ public class ChatMessageDao extends GChatMessageDao {
 		msg.setProject(project);
 		msg.setDateAndTime(dateAndTime);
 		msg.setText(text);
-		saveEntity(msg);
+		persist(msg);
 		return msg;
 	}
 

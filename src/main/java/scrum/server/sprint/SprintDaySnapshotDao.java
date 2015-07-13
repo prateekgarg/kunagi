@@ -35,7 +35,7 @@ public class SprintDaySnapshotDao extends GSprintDaySnapshotDao {
 			snapshot = newEntityInstance();
 			snapshot.setSprint(sprint);
 			snapshot.setDate(date);
-			saveEntity(snapshot);
+			persist(snapshot);
 		}
 
 		return snapshot;

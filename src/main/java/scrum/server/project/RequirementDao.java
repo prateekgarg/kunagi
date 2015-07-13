@@ -52,7 +52,7 @@ public class RequirementDao extends GRequirementDao {
 			requirement.addQuality(quality);
 		}
 
-		saveEntity(requirement);
+		persist(requirement);
 		requirement.updateNumber();
 		return requirement;
 	}
@@ -72,7 +72,7 @@ public class RequirementDao extends GRequirementDao {
 			if (quality.isAutoAdd()) requirement.addQuality(quality);
 		}
 
-		saveEntity(requirement);
+		persist(requirement);
 		requirement.updateNumber();
 		return requirement;
 	}
@@ -86,7 +86,7 @@ public class RequirementDao extends GRequirementDao {
 		requirement.setLabel(label);
 		requirement.setEstimatedWork(estimation);
 
-		saveEntity(requirement);
+		persist(requirement);
 		requirement.updateNumber();
 		return requirement;
 	}

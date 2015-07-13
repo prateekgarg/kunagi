@@ -12,7 +12,7 @@ public class SprintReportDao extends GSprintReportDao {
 		SprintReport report = newEntityInstance();
 		report.setSprint(sprint);
 
-		saveEntity(report);
+		persist(report);
 		return report;
 	}
 

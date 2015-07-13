@@ -40,7 +40,7 @@ public class QualityDao extends GQualityDao {
 		Quality quality = newEntityInstance();
 		quality.setProject(project);
 		quality.setLabel(label);
-		saveEntity(quality);
+		persist(quality);
 		return quality;
 	}
 }

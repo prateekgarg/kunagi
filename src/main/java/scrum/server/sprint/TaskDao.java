@@ -67,7 +67,7 @@ public class TaskDao extends GTaskDao {
 		task.setRequirement(requirement);
 		task.setLabel(label);
 		task.setRemainingWork(work);
-		saveEntity(task);
+		persist(task);
 		task.updateNumber();
 		return task;
 	}

@@ -63,7 +63,7 @@ public class SprintDao extends GSprintDao {
 		sprint.setBegin(begin);
 		sprint.setEnd(end);
 		if (end.isPast()) sprint.setVelocity(20f);
-		saveEntity(sprint);
+		persist(sprint);
 
 		project.setCurrentSprint(sprint);
 
@@ -94,6 +94,6 @@ public class SprintDao extends GSprintDao {
 
 		sprint.close();
 
-		saveEntity(sprint);
+		persist(sprint);
 	}
 }

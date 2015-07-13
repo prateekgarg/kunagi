@@ -50,7 +50,7 @@ public class RequirementEstimationVoteDao extends GRequirementEstimationVoteDao 
 		RequirementEstimationVote vote = newEntityInstance();
 		vote.setRequirement(requirement);
 		vote.setUser(user);
-		saveEntity(vote);
+		persist(vote);
 		return vote;
 	}
 

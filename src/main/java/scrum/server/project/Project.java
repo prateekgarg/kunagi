@@ -544,7 +544,7 @@ public class Project extends GProject {
 		ProjectSprintSnapshot snapshot = projectSprintSnapshotDao.newEntityInstance();
 		snapshot.setSprint(getCurrentSprint());
 		snapshot.update();
-		projectSprintSnapshotDao.saveEntity(snapshot);
+		projectSprintSnapshotDao.persist(snapshot);
 		return snapshot;
 	}
 
@@ -557,7 +557,7 @@ public class Project extends GProject {
 			Integer length = getCurrentSprint().getLengthInDays();
 			if (length != null) sprint.setEnd(sprint.getBegin().addDays(length));
 		}
-		sprintDao.saveEntity(sprint);
+		sprintDao.persist(sprint);
 		setNextSprint(sprint);
 		return sprint;
 	}
@@ -686,7 +686,7 @@ public class Project extends GProject {
 		if (!isCurrentSprintSet()) {
 			Sprint sprint = sprintDao.newEntityInstance();
 			sprint.setProject(this);
-			sprintDao.saveEntity(sprint);
+			sprintDao.persist(sprint);
 			setCurrentSprint(sprint);
 		}
 		if (!isNextSprintSet()) {

@@ -37,7 +37,7 @@ public class UserDao extends GUserDao {
 		user.setName(name);
 		user.setPassword(password);
 		user.tryUpdateByGravatar();
-		saveEntity(user);
+		persist(user);
 		log.info("User created:", user);
 		return user;
 	}
@@ -85,7 +85,7 @@ public class UserDao extends GUserDao {
 		}
 		user.setPassword(Str.generatePassword());
 		user.tryUpdateByGravatar();
-		saveEntity(user);
+		persist(user);
 		log.info("User created:", user);
 		return user;
 	}

@@ -71,7 +71,7 @@ public class CommentDao extends GCommentDao {
 		comment.setDateAndTime(DateAndTime.now());
 		comment.setPublished(publish);
 
-		saveEntity(comment);
+		persist(comment);
 		return comment;
 	}
 

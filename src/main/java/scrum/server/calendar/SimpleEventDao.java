@@ -45,7 +45,7 @@ public class SimpleEventDao extends GSimpleEventDao {
 		event.setDate(date);
 		event.setTime(time);
 		event.setDuration(duration);
-		saveEntity(event);
+		persist(event);
 		return event;
 	}
 

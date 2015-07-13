@@ -45,7 +45,7 @@ public class ImpedimentDao extends GImpedimentDao {
 		im.setDate(dateCreated);
 		im.setLabel(label);
 		im.setClosed(closed);
-		saveEntity(im);
+		persist(im);
 		return im;
 	}
 }

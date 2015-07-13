@@ -40,7 +40,7 @@ public class SystemConfigDao extends GSystemConfigDao {
 		if (getEntities().isEmpty()) {
 			log.warn("SystemConfig entity does not exist. Creating new one.");
 			SystemConfig config = newEntityInstance();
-			saveEntity(config);
+			persist(config);
 		}
 		getSystemConfig();
 	}
