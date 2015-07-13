@@ -186,6 +186,7 @@ public class TestUtil {
 		wikipage.setProject(project);
 		wikipage.setName(name);
 		wikipage.setText(text);
+		wikipage.persist();
 		return wikipage;
 	}
 
@@ -201,6 +202,7 @@ public class TestUtil {
 		event.setLabel(label);
 		event.setLocation(location);
 		event.setNote(note);
+		event.persist();
 		return event;
 	}
 
@@ -216,6 +218,7 @@ public class TestUtil {
 		risk.setDescription(description);
 		risk.setImpact(number);
 		risk.setProbability(number);
+		risk.persist();
 		return risk;
 	}
 
@@ -231,6 +234,7 @@ public class TestUtil {
 		impediment.setNumber(number);
 		impediment.setLabel(label);
 		impediment.setDescription(description);
+		impediment.persist();
 		return impediment;
 	}
 
@@ -247,6 +251,7 @@ public class TestUtil {
 		entry.setTitle(title);
 		entry.setText(text);
 		entry.setDateAndTime(dateAndTime);
+		entry.persist();
 		return entry;
 	}
 
@@ -270,6 +275,7 @@ public class TestUtil {
 		requirement.setLabel(label);
 		requirement.setDescription(description);
 		requirement.setTestDescription(testDescription);
+		requirement.persist();
 		return requirement;
 	}
 
@@ -280,13 +286,14 @@ public class TestUtil {
 
 	public static Quality createQuality(Project project, int number, String label, String description,
 			String testDescription) {
-		Quality requirement = app.getQualityDao().newEntityInstance();
-		requirement.setProject(project);
-		requirement.setNumber(number);
-		requirement.setLabel(label);
-		requirement.setDescription(description);
-		requirement.setTestDescription(testDescription);
-		return requirement;
+		Quality quality = app.getQualityDao().newEntityInstance();
+		quality.setProject(project);
+		quality.setNumber(number);
+		quality.setLabel(label);
+		quality.setDescription(description);
+		quality.setTestDescription(testDescription);
+		quality.persist();
+		return quality;
 	}
 
 	public static Sprint createSprint(Project project, Date end) {
@@ -300,6 +307,7 @@ public class TestUtil {
 		sprint.setEnd(end);
 		sprint.setLabel("Sprint from " + begin + " to " + end);
 		sprint.setGoal("Sprint from " + begin + " to " + end);
+		sprint.persist();
 		return sprint;
 	}
 
