@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -54,9 +54,9 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0", "0.5", "1", "2", "3", "5", "8", "13", "20",
-		"40", "100" };
+			"40", "100" };
 	public static Float[] WORK_ESTIMATION_FLOAT_VALUES = new Float[] { 0.5f, 0f, 1f, 2f, 3f, 5f, 8f, 13f, 20f, 40f,
-		100f };
+			100f };
 
 	private transient EstimationBar estimationBar;
 	private transient AFieldModel<String> taskStatusLabelModel;
@@ -443,7 +443,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	@Override
-	public String toString() {
+	public String asString() {
 		return getReferenceAndLabel();
 	}
 

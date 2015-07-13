@@ -58,7 +58,7 @@ public class Subject extends GSubject {
 	}
 
 	@Override
-	public String toString() {
+	public String asString() {
 		return getReferenceAndLabel();
 	}
 

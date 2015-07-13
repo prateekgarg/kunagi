@@ -101,7 +101,7 @@ public class Risk extends GRisk implements Comparable<Risk>, ReferenceSupport, L
 	}
 
 	@Override
-	public String toString() {
+	public String asString() {
 		return getReference() + " " + getLabel();
 	}
 
