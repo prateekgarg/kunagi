@@ -39,6 +39,34 @@ public abstract class GUser
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getCurrentProject()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getProjects());
+        ret.addAll(getProjectWithAdminss());
+        ret.addAll(getProjectWithProductOwnerss());
+        ret.addAll(getProjectWithScrumMasterss());
+        ret.addAll(getProjectWithTeamMemberss());
+        ret.addAll(getSprints());
+        ret.addAll(getSprintWithScrumMasterss());
+        ret.addAll(getSprintWithTeamMemberss());
+        ret.addAll(getEmoticons());
+        ret.addAll(getProjectUserConfigs());
+        ret.addAll(getIssues());
+        ret.addAll(getIssueWithOwners());
+        ret.addAll(getTasks());
+        ret.addAll(getChanges());
+        ret.addAll(getComments());
+        ret.addAll(getChatMessages());
+        ret.addAll(getBlogEntrys());
+        ret.addAll(getRequirementEstimationVotes());
+        ret.addAll(getEmoticonWithOwners());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
@@ -1354,8 +1382,8 @@ public abstract class GUser
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         try {
             getCurrentProject();
         } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {

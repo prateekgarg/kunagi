@@ -39,6 +39,14 @@ public abstract class GSprintDaySnapshot
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getSprint()); } catch(EntityDoesNotExistException ex) {}
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("sprintId", ilarkesto.core.persistance.Persistence.propertyAsString(this.sprintId));
@@ -291,8 +299,8 @@ public abstract class GSprintDaySnapshot
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isSprintSet()) {
             repairMissingMaster();
         }

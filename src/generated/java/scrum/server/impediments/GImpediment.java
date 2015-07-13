@@ -39,6 +39,16 @@ public abstract class GImpediment
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getTasks());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
@@ -403,8 +413,8 @@ public abstract class GImpediment
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
         }

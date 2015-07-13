@@ -39,6 +39,13 @@ public abstract class GSystemConfig
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("url", ilarkesto.core.persistance.Persistence.propertyAsString(this.url));
@@ -1328,8 +1335,8 @@ public abstract class GSystemConfig
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
     }
 
     static scrum.server.admin.SystemConfigDao systemConfigDao;

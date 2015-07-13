@@ -39,6 +39,32 @@ public abstract class GSprint
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
+        for (String id : productOwnersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : scrumMastersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : teamMembersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+    // --- back references ---
+        ret.addAll(getCurrentSprintProjects());
+        ret.addAll(getNextSprintProjects());
+        ret.addAll(getSprintDaySnapshots());
+        Utl.addIfNotNull(ret, getSprintReport());
+        ret.addAll(getRequirements());
+        ret.addAll(getReleases());
+        ret.addAll(getClosedTasksInPasts());
+        Utl.addIfNotNull(ret, getProjectSprintSnapshot());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("number", ilarkesto.core.persistance.Persistence.propertyAsString(this.number));
@@ -1211,8 +1237,8 @@ public abstract class GSprint
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
         }

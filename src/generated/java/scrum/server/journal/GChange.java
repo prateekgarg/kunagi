@@ -39,6 +39,15 @@ public abstract class GChange
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getParent()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getUser()); } catch(EntityDoesNotExistException ex) {}
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("parentId", ilarkesto.core.persistance.Persistence.propertyAsString(this.parentId));
@@ -418,8 +427,8 @@ public abstract class GChange
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isParentSet()) {
             repairMissingMaster();
         }

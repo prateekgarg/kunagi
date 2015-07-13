@@ -39,6 +39,14 @@ public abstract class GSubscription
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getSubject()); } catch(EntityDoesNotExistException ex) {}
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("subjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.subjectId));
@@ -249,8 +257,8 @@ public abstract class GSubscription
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isSubjectSet()) {
             repairMissingMaster();
         }

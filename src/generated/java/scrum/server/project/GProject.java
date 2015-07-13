@@ -39,6 +39,47 @@ public abstract class GProject
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        for (String id : participantsIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : adminsIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : productOwnersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : scrumMastersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        for (String id : teamMembersIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        try { Utl.addIfNotNull(ret, getCurrentSprint()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getNextSprint()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getSprints());
+        ret.addAll(getProjectUserConfigs());
+        ret.addAll(getQualitys());
+        ret.addAll(getImpediments());
+        ret.addAll(getRequirements());
+        ret.addAll(getIssues());
+        ret.addAll(getReleases());
+        ret.addAll(getProjectEvents());
+        ret.addAll(getSimpleEvents());
+        ret.addAll(getSubjects());
+        ret.addAll(getChatMessages());
+        ret.addAll(getBlogEntrys());
+        ret.addAll(getRisks());
+        ret.addAll(getWikipages());
+        ret.addAll(getFiles());
+        ret.addAll(getCurrentProjectUsers());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("label", ilarkesto.core.persistance.Persistence.propertyAsString(this.label));
@@ -2673,8 +2714,8 @@ public abstract class GProject
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (this.participantsIds == null) this.participantsIds = new java.util.HashSet<String>();
         Set<String> participants = new HashSet<String>(this.participantsIds);
         for (String entityId : participants) {

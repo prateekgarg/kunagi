@@ -39,6 +39,27 @@ public abstract class GRequirement
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getSprint()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getIssue()); } catch(EntityDoesNotExistException ex) {}
+        for (String id : qualitysIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        try { Utl.addIfNotNull(ret, getEpic()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getIssues());
+        ret.addAll(getRequirements());
+        ret.addAll(getSprintReports());
+        ret.addAll(getSprintReportWithRejectedRequirementss());
+        ret.addAll(getTasks());
+        ret.addAll(getRequirementEstimationVotes());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
@@ -1221,8 +1242,8 @@ public abstract class GRequirement
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
         }

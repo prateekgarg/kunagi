@@ -49,7 +49,6 @@ import scrum.server.collaboration.CommentDao;
 import scrum.server.collaboration.Subject;
 import scrum.server.collaboration.Wikipage;
 import scrum.server.common.Numbered;
-import scrum.server.common.Transient;
 import scrum.server.files.File;
 import scrum.server.impediments.Impediment;
 import scrum.server.issues.Issue;
@@ -356,6 +355,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		ADao dao = getDaoService().getDaoByName(type);
 		AEntity entity = dao.newEntityInstance(id);
 		entity.updateProperties(properties);
+		entity.persist();
 		User currentUser = conversation.getSession().getUser();
 		Project currentProject = conversation.getProject();
 
@@ -414,8 +414,6 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			change.setDateAndTime(DateAndTime.now());
 			change.setUser(currentUser);
 		}
-
-		if (!(entity instanceof Transient)) dao.persist(entity);
 
 		sendToClients(conversation, entity);
 

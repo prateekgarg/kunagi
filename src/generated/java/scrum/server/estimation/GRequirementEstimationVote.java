@@ -39,6 +39,15 @@ public abstract class GRequirementEstimationVote
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getRequirement()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getUser()); } catch(EntityDoesNotExistException ex) {}
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
@@ -235,8 +244,8 @@ public abstract class GRequirementEstimationVote
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isRequirementSet()) {
             repairMissingMaster();
         }

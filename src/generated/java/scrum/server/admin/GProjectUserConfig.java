@@ -39,6 +39,18 @@ public abstract class GProjectUserConfig
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getUser()); } catch(EntityDoesNotExistException ex) {}
+        for (String id : pblFilterQualitysIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("projectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.projectId));
@@ -1057,8 +1069,8 @@ public abstract class GProjectUserConfig
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isProjectSet()) {
             repairMissingMaster();
         }

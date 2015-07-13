@@ -39,6 +39,22 @@ public abstract class GTask
     }
 
     @Override
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getRequirement()); } catch(EntityDoesNotExistException ex) {}
+        try { Utl.addIfNotNull(ret, getOwner()); } catch(EntityDoesNotExistException ex) {}
+        for (String id : impedimentsIds) {
+            try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
+        }
+        try { Utl.addIfNotNull(ret, getClosedInPastSprint()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getSprintReports());
+        ret.addAll(getSprintReportWithOpenTaskss());
+        return ret;
+    }
+
+    @Override
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("requirementId", ilarkesto.core.persistance.Persistence.propertyAsString(this.requirementId));
@@ -609,8 +625,8 @@ public abstract class GTask
 
     // --- ensure integrity ---
     @Override
-    public void ensureIntegrity() {
-        super.ensureIntegrity();
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
         if (!isRequirementSet()) {
             repairMissingMaster();
         }
