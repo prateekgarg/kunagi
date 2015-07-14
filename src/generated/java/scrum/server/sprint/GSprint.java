@@ -38,18 +38,33 @@ public abstract class GSprint
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASprintQuery extends ilarkesto.core.persistance.AEntityQuery<Sprint> {
+    @Override
+        public Class<Sprint> getType() {
+            return Sprint.class;
+        }
+    }
+
+    public static Set<Sprint> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Sprint.class).list();
+    }
+
+    public static Sprint getById(String id) {
+        return (Sprint) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : productOwnersIds) {
+        if (productOwnersIds!=null) for (String id : productOwnersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : scrumMastersIds) {
+        if (scrumMastersIds!=null) for (String id : scrumMastersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : teamMembersIds) {
+        if (teamMembersIds!=null) for (String id : teamMembersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
     // --- back references ---

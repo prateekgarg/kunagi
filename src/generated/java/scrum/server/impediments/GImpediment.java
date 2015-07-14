@@ -38,6 +38,21 @@ public abstract class GImpediment
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AImpedimentQuery extends ilarkesto.core.persistance.AEntityQuery<Impediment> {
+    @Override
+        public Class<Impediment> getType() {
+            return Impediment.class;
+        }
+    }
+
+    public static Set<Impediment> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Impediment.class).list();
+    }
+
+    public static Impediment getById(String id) {
+        return (Impediment) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

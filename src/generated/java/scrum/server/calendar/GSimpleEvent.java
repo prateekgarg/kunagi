@@ -38,6 +38,21 @@ public abstract class GSimpleEvent
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASimpleEventQuery extends ilarkesto.core.persistance.AEntityQuery<SimpleEvent> {
+    @Override
+        public Class<SimpleEvent> getType() {
+            return SimpleEvent.class;
+        }
+    }
+
+    public static Set<SimpleEvent> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(SimpleEvent.class).list();
+    }
+
+    public static SimpleEvent getById(String id) {
+        return (SimpleEvent) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

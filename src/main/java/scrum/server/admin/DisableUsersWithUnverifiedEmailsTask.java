@@ -16,7 +16,6 @@ package scrum.server.admin;
 
 import ilarkesto.concurrent.ACollectionTask;
 import ilarkesto.core.logging.Log;
-import ilarkesto.persistence.Transaction;
 
 import java.util.Collection;
 
@@ -49,9 +48,4 @@ public class DisableUsersWithUnverifiedEmailsTask extends ACollectionTask<User> 
 		}
 	}
 
-	@Override
-	protected void cleanup() throws InterruptedException {
-		Transaction.get().commit();
-		super.cleanup();
-	}
 }

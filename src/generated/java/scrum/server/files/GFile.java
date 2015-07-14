@@ -38,6 +38,21 @@ public abstract class GFile
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AFileQuery extends ilarkesto.core.persistance.AEntityQuery<File> {
+    @Override
+        public Class<File> getType() {
+            return File.class;
+        }
+    }
+
+    public static Set<File> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(File.class).list();
+    }
+
+    public static File getById(String id) {
+        return (File) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

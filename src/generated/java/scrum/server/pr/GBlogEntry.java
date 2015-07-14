@@ -38,15 +38,30 @@ public abstract class GBlogEntry
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ABlogEntryQuery extends ilarkesto.core.persistance.AEntityQuery<BlogEntry> {
+    @Override
+        public Class<BlogEntry> getType() {
+            return BlogEntry.class;
+        }
+    }
+
+    public static Set<BlogEntry> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(BlogEntry.class).list();
+    }
+
+    public static BlogEntry getById(String id) {
+        return (BlogEntry) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : authorsIds) {
+        if (authorsIds!=null) for (String id : authorsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : releasesIds) {
+        if (releasesIds!=null) for (String id : releasesIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         return ret;

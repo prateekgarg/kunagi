@@ -38,6 +38,21 @@ public abstract class GSubscription
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASubscriptionQuery extends ilarkesto.core.persistance.AEntityQuery<Subscription> {
+    @Override
+        public Class<Subscription> getType() {
+            return Subscription.class;
+        }
+    }
+
+    public static Set<Subscription> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Subscription.class).list();
+    }
+
+    public static Subscription getById(String id) {
+        return (Subscription) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

@@ -38,6 +38,21 @@ public abstract class GSystemConfig
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASystemConfigQuery extends ilarkesto.core.persistance.AEntityQuery<SystemConfig> {
+    @Override
+        public Class<SystemConfig> getType() {
+            return SystemConfig.class;
+        }
+    }
+
+    public static Set<SystemConfig> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(SystemConfig.class).list();
+    }
+
+    public static SystemConfig getById(String id) {
+        return (SystemConfig) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

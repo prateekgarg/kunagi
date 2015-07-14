@@ -38,6 +38,21 @@ public abstract class GQuality
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AQualityQuery extends ilarkesto.core.persistance.AEntityQuery<Quality> {
+    @Override
+        public Class<Quality> getType() {
+            return Quality.class;
+        }
+    }
+
+    public static Set<Quality> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Quality.class).list();
+    }
+
+    public static Quality getById(String id) {
+        return (Quality) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

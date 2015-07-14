@@ -38,6 +38,21 @@ public abstract class GEmoticon
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AEmoticonQuery extends ilarkesto.core.persistance.AEntityQuery<Emoticon> {
+    @Override
+        public Class<Emoticon> getType() {
+            return Emoticon.class;
+        }
+    }
+
+    public static Set<Emoticon> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Emoticon.class).list();
+    }
+
+    public static Emoticon getById(String id) {
+        return (Emoticon) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

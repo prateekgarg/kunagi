@@ -38,6 +38,21 @@ public abstract class GRequirementEstimationVote
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ARequirementEstimationVoteQuery extends ilarkesto.core.persistance.AEntityQuery<RequirementEstimationVote> {
+    @Override
+        public Class<RequirementEstimationVote> getType() {
+            return RequirementEstimationVote.class;
+        }
+    }
+
+    public static Set<RequirementEstimationVote> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(RequirementEstimationVote.class).list();
+    }
+
+    public static RequirementEstimationVote getById(String id) {
+        return (RequirementEstimationVote) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

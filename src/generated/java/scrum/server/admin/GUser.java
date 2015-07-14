@@ -38,6 +38,21 @@ public abstract class GUser
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AUserQuery extends ilarkesto.core.persistance.AEntityQuery<User> {
+    @Override
+        public Class<User> getType() {
+            return User.class;
+        }
+    }
+
+    public static Set<User> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(User.class).list();
+    }
+
+    public static User getById(String id) {
+        return (User) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

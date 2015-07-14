@@ -38,23 +38,38 @@ public abstract class GProject
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AProjectQuery extends ilarkesto.core.persistance.AEntityQuery<Project> {
+    @Override
+        public Class<Project> getType() {
+            return Project.class;
+        }
+    }
+
+    public static Set<Project> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Project.class).list();
+    }
+
+    public static Project getById(String id) {
+        return (Project) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
-        for (String id : participantsIds) {
+        if (participantsIds!=null) for (String id : participantsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : adminsIds) {
+        if (adminsIds!=null) for (String id : adminsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : productOwnersIds) {
+        if (productOwnersIds!=null) for (String id : productOwnersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : scrumMastersIds) {
+        if (scrumMastersIds!=null) for (String id : scrumMastersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : teamMembersIds) {
+        if (teamMembersIds!=null) for (String id : teamMembersIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         try { Utl.addIfNotNull(ret, getCurrentSprint()); } catch(EntityDoesNotExistException ex) {}

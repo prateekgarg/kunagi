@@ -38,13 +38,28 @@ public abstract class GTask
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ATaskQuery extends ilarkesto.core.persistance.AEntityQuery<Task> {
+    @Override
+        public Class<Task> getType() {
+            return Task.class;
+        }
+    }
+
+    public static Set<Task> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Task.class).list();
+    }
+
+    public static Task getById(String id) {
+        return (Task) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getRequirement()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getOwner()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : impedimentsIds) {
+        if (impedimentsIds!=null) for (String id : impedimentsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         try { Utl.addIfNotNull(ret, getClosedInPastSprint()); } catch(EntityDoesNotExistException ex) {}

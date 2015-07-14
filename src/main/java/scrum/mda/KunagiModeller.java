@@ -35,14 +35,14 @@ import ilarkesto.mda.swingeditor.Workspace;
 import java.io.File;
 import java.util.List;
 
-public class ScrumModeller extends Starter {
+public class KunagiModeller extends Starter {
 
-	private static Log log = Log.get(ScrumModeller.class);
+	private static Log log = Log.get(KunagiModeller.class);
 
-	private static ScrumModelApplication scrumModelApplication;
+	private static KunagiModelApplication scrumModelApplication;
 
 	public static void main(String[] args) {
-		scrumModelApplication = ApplicationStarter.startApplication(ScrumModelApplication.class);
+		scrumModelApplication = ApplicationStarter.startApplication(KunagiModelApplication.class);
 
 		Scope scope = createModellerScope();
 

@@ -38,6 +38,21 @@ public abstract class GRequirement
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ARequirementQuery extends ilarkesto.core.persistance.AEntityQuery<Requirement> {
+    @Override
+        public Class<Requirement> getType() {
+            return Requirement.class;
+        }
+    }
+
+    public static Set<Requirement> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Requirement.class).list();
+    }
+
+    public static Requirement getById(String id) {
+        return (Requirement) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
@@ -45,7 +60,7 @@ public abstract class GRequirement
         try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getSprint()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getIssue()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : qualitysIds) {
+        if (qualitysIds!=null) for (String id : qualitysIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         try { Utl.addIfNotNull(ret, getEpic()); } catch(EntityDoesNotExistException ex) {}

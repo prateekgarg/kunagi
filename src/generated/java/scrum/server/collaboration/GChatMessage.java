@@ -38,6 +38,21 @@ public abstract class GChatMessage
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AChatMessageQuery extends ilarkesto.core.persistance.AEntityQuery<ChatMessage> {
+    @Override
+        public Class<ChatMessage> getType() {
+            return ChatMessage.class;
+        }
+    }
+
+    public static Set<ChatMessage> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(ChatMessage.class).list();
+    }
+
+    public static ChatMessage getById(String id) {
+        return (ChatMessage) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

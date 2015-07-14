@@ -38,6 +38,21 @@ public abstract class GChange
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AChangeQuery extends ilarkesto.core.persistance.AEntityQuery<Change> {
+    @Override
+        public Class<Change> getType() {
+            return Change.class;
+        }
+    }
+
+    public static Set<Change> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Change.class).list();
+    }
+
+    public static Change getById(String id) {
+        return (Change) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

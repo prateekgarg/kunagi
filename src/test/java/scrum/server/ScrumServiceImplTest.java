@@ -17,10 +17,10 @@ package scrum.server;
 import ilarkesto.auth.WrongPasswordException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
+import ilarkesto.core.persistance.Persistence;
 import ilarkesto.core.time.Date;
 import ilarkesto.gwt.client.ErrorWrapper;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.persistence.Transaction;
 import ilarkesto.testng.ATest;
 
 import java.util.Collection;
@@ -62,26 +62,31 @@ public class ScrumServiceImplTest extends ATest {
 
 	@BeforeTest
 	public void init() {
-		TestUtil.initialize();
-		app = TestUtil.getApp();
+		Persistence.runInTransaction(getClass().getSimpleName() + ".init()", new Runnable() {
 
-		admin = TestUtil.getAdmin();
-		duke = TestUtil.getDuke();
+			@Override
+			public void run() {
+				TestUtil.initialize();
+				app = TestUtil.getApp();
 
-		service = new ScrumServiceImpl();
-		service.setWebApplication(app);
-		app.autowire(service);
+				admin = TestUtil.getAdmin();
+				duke = TestUtil.getDuke();
 
-		session = (WebSession) app.createWebSession(null);
-		session.setUser(duke);
+				service = new ScrumServiceImpl();
+				service.setWebApplication(app);
+				app.autowire(service);
 
-		sessionForAdmin = (WebSession) app.createWebSession(null);
-		sessionForAdmin.setUser(admin);
+				session = (WebSession) app.createWebSession(null);
+				session.setUser(duke);
 
-		project = TestUtil.createProject(duke);
-		project.addAdmin(admin);
+				sessionForAdmin = (WebSession) app.createWebSession(null);
+				sessionForAdmin.setUser(admin);
 
-		Transaction.get().commit();
+				project = TestUtil.createProject(duke);
+				project.addAdmin(admin);
+			}
+		});
+
 	}
 
 	@BeforeMethod
@@ -97,7 +102,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@AfterMethod
 	public void commit() {
-		Transaction.get().commit();
+		// Transaction.get().commit();
 	}
 
 	@Test

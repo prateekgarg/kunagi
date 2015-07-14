@@ -22,7 +22,6 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.io.IO;
-import ilarkesto.persistence.Transaction;
 import ilarkesto.ui.web.HtmlBuilder;
 import ilarkesto.webapp.RequestWrapper;
 
@@ -181,7 +180,6 @@ public class LoginServlet extends AKunagiServlet {
 		User user = userDao.postUser(email, username, password);
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
-		Transaction.get().commit();
 		webApplication.triggerRegisterNotification(user, req.getRemoteHost());
 		webApplication.sendToClients(user);
 
@@ -254,7 +252,6 @@ public class LoginServlet extends AKunagiServlet {
 			}
 
 			user = userDao.postUserWithOpenId(openId, nickname, fullName, email);
-			Transaction.get().commit();
 			webApplication.triggerRegisterNotification(user, req.getRemoteHost());
 		}
 

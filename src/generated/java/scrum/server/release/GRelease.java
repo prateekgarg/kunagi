@@ -38,13 +38,28 @@ public abstract class GRelease
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AReleaseQuery extends ilarkesto.core.persistance.AEntityQuery<Release> {
+    @Override
+        public Class<Release> getType() {
+            return Release.class;
+        }
+    }
+
+    public static Set<Release> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Release.class).list();
+    }
+
+    public static Release getById(String id) {
+        return (Release) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getParentRelease()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : sprintsIds) {
+        if (sprintsIds!=null) for (String id : sprintsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
     // --- back references ---

@@ -38,6 +38,21 @@ public abstract class GComment
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ACommentQuery extends ilarkesto.core.persistance.AEntityQuery<Comment> {
+    @Override
+        public Class<Comment> getType() {
+            return Comment.class;
+        }
+    }
+
+    public static Set<Comment> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Comment.class).list();
+    }
+
+    public static Comment getById(String id) {
+        return (Comment) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

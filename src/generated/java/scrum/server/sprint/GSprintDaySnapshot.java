@@ -38,6 +38,21 @@ public abstract class GSprintDaySnapshot
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASprintDaySnapshotQuery extends ilarkesto.core.persistance.AEntityQuery<SprintDaySnapshot> {
+    @Override
+        public Class<SprintDaySnapshot> getType() {
+            return SprintDaySnapshot.class;
+        }
+    }
+
+    public static Set<SprintDaySnapshot> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(SprintDaySnapshot.class).list();
+    }
+
+    public static SprintDaySnapshot getById(String id) {
+        return (SprintDaySnapshot) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

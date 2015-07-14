@@ -1,16 +1,16 @@
 /*
  * Copyright 2008, 2009, 2010 Witoslaw Koczewski, Artjom Kochtchi, Fabian Hager, Kacper Grubalski.
- *
+ * 
  * This file is part of Kunagi.
- *
+ * 
  * Kunagi is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
- *
+ * 
  * Kunagi is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,7 @@ import ilarkesto.base.Utl;
 import ilarkesto.concurrent.TaskManager;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
+import ilarkesto.core.persistance.EntitiesBackend;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.TimePeriod;
 import ilarkesto.di.app.BackupApplicationDataDirTask;
@@ -31,7 +32,6 @@ import ilarkesto.di.app.WebApplicationStarter;
 import ilarkesto.gwt.server.AGwtConversation;
 import ilarkesto.io.IO;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.persistence.Transaction;
 import ilarkesto.webapp.AWebApplication;
 import ilarkesto.webapp.AWebSession;
 import ilarkesto.webapp.DestroyTimeoutedSessionsTask;
@@ -87,6 +87,11 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return DATA_VERSION;
 	}
 
+	@Override
+	protected EntitiesBackend createEntitiesBackend() {
+		return getEntityStore();
+	}
+
 	// --- composites ---
 
 	public BurndownChart getBurndownChart() {
@@ -117,7 +122,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public ApplicationInfo getApplicationInfo() {
 		boolean defaultAdminPassword = isAdminPasswordDefault();
 		return new ApplicationInfo(getApplicationLabel(), getBuildProperties().getReleaseLabel(), getBuildProperties()
-			.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
+				.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
 	}
 
 	@Override
@@ -146,15 +151,12 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	// --- ---
 
 	@Override
-	public void ensureIntegrity() {
-		startGwtSuperDevModeCodeServer();
-
+	protected void onPreStart() {
+		super.onPreStart();
 		if (getConfig().isStartupDelete()) {
 			log.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
 			IO.delete(getApplicationDataDir() + "/entities");
 		}
-
-		super.ensureIntegrity();
 	}
 
 	@Override
@@ -170,12 +172,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 			User admin = getUserDao().postUserWithDefaultPassword("admin");
 			admin.setPassword(password);
 			admin.setAdmin(true);
-			Transaction.get().commit();
 		}
 
 		getReleaseDao().resetScripts();
 		getProjectDao().scanFiles();
-		Transaction.get().commit();
 
 		String httpProxy = getConfig().getHttpProxyHost();
 		if (!Str.isBlank(httpProxy)) {
@@ -193,23 +193,22 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		}
 	}
 
-	private void startGwtSuperDevModeCodeServer() {
-		if (!Sys.isDevelopmentMode()) return;
-
+	@Override
+	protected GwtSuperDevMode createGwtSuperDevMode() {
 		File nocachefile = new File("src/main/webapp/scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js");
 		if (!nocachefile.exists()) {
 			IO.copyFile(new File("etc/" + nocachefile.getName()), nocachefile);
 			throw new IllegalStateException("GWT file " + nocachefile.getPath()
-				+ " was missing. It is created now. Just restart your web application server.");
+					+ " was missing. It is created now. Just restart your web application server.");
 		}
 
-		GwtSuperDevMode sdm = getGwtSuperDevMode();
+		GwtSuperDevMode sdm = new GwtSuperDevMode();
 		sdm.setPrecompile(true);
 		sdm.setIncremental(false);
 		sdm.addSources("src/main/java", "src/generated/java", "../ilarkesto/src/main/java");
 		sdm.addModules("scrum.ScrumGwtApplication");
-		File workDir = new File("current").getAbsoluteFile().getParentFile().getParentFile();
-		sdm.startCodeServerInSeparateProcessWithJarsFromIlarkesto(workDir);
+		sdm.setWorkDir(new File("current").getAbsoluteFile().getParentFile().getParentFile());
+		return sdm;
 	}
 
 	public String createUrl(String relativePath) {
@@ -243,7 +242,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getProjectDao().postExampleProject(getUserDao().getUserByName("admin"), getUserDao().getUserByName("cartman"),
 			getUserDao().getUserByName("admin"));
 
-		Transaction.get().commit();
 	}
 
 	@Override
@@ -271,7 +269,6 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void onShutdownWebApplication() {
 		getSubscriptionService().flush();
-		Transaction.get().commit();
 	}
 
 	public void shutdown(final long delayInMillis) {

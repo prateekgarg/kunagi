@@ -38,6 +38,21 @@ public abstract class GIssue
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AIssueQuery extends ilarkesto.core.persistance.AEntityQuery<Issue> {
+    @Override
+        public Class<Issue> getType() {
+            return Issue.class;
+        }
+    }
+
+    public static Set<Issue> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Issue.class).list();
+    }
+
+    public static Issue getById(String id) {
+        return (Issue) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
@@ -46,10 +61,10 @@ public abstract class GIssue
         try { Utl.addIfNotNull(ret, getStory()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getCreator()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getOwner()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : affectedReleasesIds) {
+        if (affectedReleasesIds!=null) for (String id : affectedReleasesIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : fixReleasesIds) {
+        if (fixReleasesIds!=null) for (String id : fixReleasesIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
     // --- back references ---

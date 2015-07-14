@@ -38,13 +38,28 @@ public abstract class GProjectUserConfig
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AProjectUserConfigQuery extends ilarkesto.core.persistance.AEntityQuery<ProjectUserConfig> {
+    @Override
+        public Class<ProjectUserConfig> getType() {
+            return ProjectUserConfig.class;
+        }
+    }
+
+    public static Set<ProjectUserConfig> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(ProjectUserConfig.class).list();
+    }
+
+    public static ProjectUserConfig getById(String id) {
+        return (ProjectUserConfig) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getProject()); } catch(EntityDoesNotExistException ex) {}
         try { Utl.addIfNotNull(ret, getUser()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : pblFilterQualitysIds) {
+        if (pblFilterQualitysIds!=null) for (String id : pblFilterQualitysIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         return ret;

@@ -38,6 +38,21 @@ public abstract class GWikipage
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class AWikipageQuery extends ilarkesto.core.persistance.AEntityQuery<Wikipage> {
+    @Override
+        public Class<Wikipage> getType() {
+            return Wikipage.class;
+        }
+    }
+
+    public static Set<Wikipage> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(Wikipage.class).list();
+    }
+
+    public static Wikipage getById(String id) {
+        return (Wikipage) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();

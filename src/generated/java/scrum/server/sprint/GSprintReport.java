@@ -38,21 +38,36 @@ public abstract class GSprintReport
     protected void repairDeadDatob(ADatob datob) {
     }
 
+    public abstract static class ASprintReportQuery extends ilarkesto.core.persistance.AEntityQuery<SprintReport> {
+    @Override
+        public Class<SprintReport> getType() {
+            return SprintReport.class;
+        }
+    }
+
+    public static Set<SprintReport> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(SprintReport.class).list();
+    }
+
+    public static SprintReport getById(String id) {
+        return (SprintReport) AEntity.getById(id);
+    }
+
     @Override
     public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
         Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
     // --- references ---
         try { Utl.addIfNotNull(ret, getSprint()); } catch(EntityDoesNotExistException ex) {}
-        for (String id : completedRequirementsIds) {
+        if (completedRequirementsIds!=null) for (String id : completedRequirementsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : rejectedRequirementsIds) {
+        if (rejectedRequirementsIds!=null) for (String id : rejectedRequirementsIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : closedTasksIds) {
+        if (closedTasksIds!=null) for (String id : closedTasksIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
-        for (String id : openTasksIds) {
+        if (openTasksIds!=null) for (String id : openTasksIds) {
             try { ret.add(AEntity.getById(id)); } catch(EntityDoesNotExistException ex) {}
         }
         return ret;

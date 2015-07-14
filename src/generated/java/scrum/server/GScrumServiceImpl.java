@@ -22,14 +22,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onChangePassword(GwtConversation conversation, java.lang.String newPassword, java.lang.String oldPassword);
 
     @Override
-    public scrum.client.DataTransferObject changePassword(int conversationNumber, java.lang.String newPassword, java.lang.String oldPassword) {
+    public scrum.client.DataTransferObject changePassword(final int conversationNumber, final java.lang.String newPassword, final java.lang.String oldPassword) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: changePassword");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall changePassword waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -38,13 +38,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:changePassword");
             context.bindCurrentThread();
             try {
-                onChangePassword(conversation, newPassword, oldPassword);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.changePassword()", new Runnable() { public void run() {
+
+                    onChangePassword(conversation, newPassword, oldPassword);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "changePassword", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("changePassword")) {
@@ -59,14 +63,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onLogout(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject logout(int conversationNumber) {
+    public scrum.client.DataTransferObject logout(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: logout");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall logout waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -75,13 +79,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:logout");
             context.bindCurrentThread();
             try {
-                onLogout(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.logout()", new Runnable() { public void run() {
+
+                    onLogout(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "logout", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("logout")) {
@@ -96,14 +104,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onResetPassword(GwtConversation conversation, java.lang.String userId);
 
     @Override
-    public scrum.client.DataTransferObject resetPassword(int conversationNumber, java.lang.String userId) {
+    public scrum.client.DataTransferObject resetPassword(final int conversationNumber, final java.lang.String userId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: resetPassword");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall resetPassword waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -112,13 +120,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:resetPassword");
             context.bindCurrentThread();
             try {
-                onResetPassword(conversation, userId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.resetPassword()", new Runnable() { public void run() {
+
+                    onResetPassword(conversation, userId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "resetPassword", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("resetPassword")) {
@@ -133,11 +145,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onSendTestEmail(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject sendTestEmail(int conversationNumber) {
+    public scrum.client.DataTransferObject sendTestEmail(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: sendTestEmail");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -146,13 +158,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:sendTestEmail");
             context.bindCurrentThread();
             try {
-                onSendTestEmail(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.sendTestEmail()", new Runnable() { public void run() {
+
+                    onSendTestEmail(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "sendTestEmail", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("sendTestEmail")) {
@@ -166,11 +182,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onTestLdap(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject testLdap(int conversationNumber) {
+    public scrum.client.DataTransferObject testLdap(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: testLdap");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -179,13 +195,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:testLdap");
             context.bindCurrentThread();
             try {
-                onTestLdap(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.testLdap()", new Runnable() { public void run() {
+
+                    onTestLdap(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "testLdap", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("testLdap")) {
@@ -199,14 +219,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onUpdateSystemMessage(GwtConversation conversation, scrum.client.admin.SystemMessage systemMessage);
 
     @Override
-    public scrum.client.DataTransferObject updateSystemMessage(int conversationNumber, scrum.client.admin.SystemMessage systemMessage) {
+    public scrum.client.DataTransferObject updateSystemMessage(final int conversationNumber, final scrum.client.admin.SystemMessage systemMessage) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: updateSystemMessage");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall updateSystemMessage waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -215,13 +235,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:updateSystemMessage");
             context.bindCurrentThread();
             try {
-                onUpdateSystemMessage(conversation, systemMessage);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.updateSystemMessage()", new Runnable() { public void run() {
+
+                    onUpdateSystemMessage(conversation, systemMessage);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "updateSystemMessage", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("updateSystemMessage")) {
@@ -236,11 +260,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestComments(GwtConversation conversation, java.lang.String parentId);
 
     @Override
-    public scrum.client.DataTransferObject requestComments(int conversationNumber, java.lang.String parentId) {
+    public scrum.client.DataTransferObject requestComments(final int conversationNumber, final java.lang.String parentId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestComments");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -249,13 +273,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestComments");
             context.bindCurrentThread();
             try {
-                onRequestComments(conversation, parentId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestComments()", new Runnable() { public void run() {
+
+                    onRequestComments(conversation, parentId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestComments", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestComments")) {
@@ -269,11 +297,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestForum(GwtConversation conversation, boolean all);
 
     @Override
-    public scrum.client.DataTransferObject requestForum(int conversationNumber, boolean all) {
+    public scrum.client.DataTransferObject requestForum(final int conversationNumber, final boolean all) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestForum");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -282,13 +310,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestForum");
             context.bindCurrentThread();
             try {
-                onRequestForum(conversation, all);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestForum()", new Runnable() { public void run() {
+
+                    onRequestForum(conversation, all);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestForum", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestForum")) {
@@ -302,9 +334,9 @@ public abstract class GScrumServiceImpl
     protected abstract void onPing(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject ping(int conversationNumber) {
+    public scrum.client.DataTransferObject ping(final int conversationNumber) {
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -313,13 +345,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:ping");
             context.bindCurrentThread();
             try {
-                onPing(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.ping()", new Runnable() { public void run() {
+
+                    onPing(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "ping", ex, context);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
@@ -328,14 +364,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onStartConversation(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject startConversation(int conversationNumber) {
+    public scrum.client.DataTransferObject startConversation(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: startConversation");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall startConversation waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -344,13 +380,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:startConversation");
             context.bindCurrentThread();
             try {
-                onStartConversation(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.startConversation()", new Runnable() { public void run() {
+
+                    onStartConversation(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "startConversation", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("startConversation")) {
@@ -365,14 +405,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onTouchLastActivity(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject touchLastActivity(int conversationNumber) {
+    public scrum.client.DataTransferObject touchLastActivity(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: touchLastActivity");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall touchLastActivity waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -381,13 +421,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:touchLastActivity");
             context.bindCurrentThread();
             try {
-                onTouchLastActivity(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.touchLastActivity()", new Runnable() { public void run() {
+
+                    onTouchLastActivity(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "touchLastActivity", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("touchLastActivity")) {
@@ -402,14 +446,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onChangeProperties(GwtConversation conversation, java.util.Map<String, String> properties);
 
     @Override
-    public scrum.client.DataTransferObject changeProperties(int conversationNumber, java.util.Map<String, String> properties) {
+    public scrum.client.DataTransferObject changeProperties(final int conversationNumber, final java.util.Map<String, String> properties) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: changeProperties");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall changeProperties waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -418,13 +462,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:changeProperties");
             context.bindCurrentThread();
             try {
-                onChangeProperties(conversation, properties);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.changeProperties()", new Runnable() { public void run() {
+
+                    onChangeProperties(conversation, properties);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "changeProperties", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("changeProperties")) {
@@ -439,14 +487,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map<String, String> properties);
 
     @Override
-    public scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties) {
+    public scrum.client.DataTransferObject createEntity(final int conversationNumber, final java.lang.String type, final java.util.Map<String, String> properties) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: createEntity");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall createEntity waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -455,13 +503,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:createEntity");
             context.bindCurrentThread();
             try {
-                onCreateEntity(conversation, type, properties);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.createEntity()", new Runnable() { public void run() {
+
+                    onCreateEntity(conversation, type, properties);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "createEntity", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("createEntity")) {
@@ -476,14 +528,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onDeleteEntity(GwtConversation conversation, java.lang.String entityId);
 
     @Override
-    public scrum.client.DataTransferObject deleteEntity(int conversationNumber, java.lang.String entityId) {
+    public scrum.client.DataTransferObject deleteEntity(final int conversationNumber, final java.lang.String entityId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: deleteEntity");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall deleteEntity waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -492,13 +544,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:deleteEntity");
             context.bindCurrentThread();
             try {
-                onDeleteEntity(conversation, entityId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.deleteEntity()", new Runnable() { public void run() {
+
+                    onDeleteEntity(conversation, entityId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "deleteEntity", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("deleteEntity")) {
@@ -513,11 +569,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestEntity(GwtConversation conversation, java.lang.String entityId);
 
     @Override
-    public scrum.client.DataTransferObject requestEntity(int conversationNumber, java.lang.String entityId) {
+    public scrum.client.DataTransferObject requestEntity(final int conversationNumber, final java.lang.String entityId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestEntity");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -526,13 +582,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestEntity");
             context.bindCurrentThread();
             try {
-                onRequestEntity(conversation, entityId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestEntity()", new Runnable() { public void run() {
+
+                    onRequestEntity(conversation, entityId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestEntity", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestEntity")) {
@@ -546,11 +606,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestEntityByReference(GwtConversation conversation, java.lang.String reference);
 
     @Override
-    public scrum.client.DataTransferObject requestEntityByReference(int conversationNumber, java.lang.String reference) {
+    public scrum.client.DataTransferObject requestEntityByReference(final int conversationNumber, final java.lang.String reference) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestEntityByReference");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -559,13 +619,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestEntityByReference");
             context.bindCurrentThread();
             try {
-                onRequestEntityByReference(conversation, reference);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestEntityByReference()", new Runnable() { public void run() {
+
+                    onRequestEntityByReference(conversation, reference);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestEntityByReference", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestEntityByReference")) {
@@ -579,11 +643,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onSleep(GwtConversation conversation, long millis);
 
     @Override
-    public scrum.client.DataTransferObject sleep(int conversationNumber, long millis) {
+    public scrum.client.DataTransferObject sleep(final int conversationNumber, final long millis) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: sleep");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -592,13 +656,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:sleep");
             context.bindCurrentThread();
             try {
-                onSleep(conversation, millis);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.sleep()", new Runnable() { public void run() {
+
+                    onSleep(conversation, millis);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "sleep", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("sleep")) {
@@ -612,14 +680,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onActivateRequirementEstimationVoting(GwtConversation conversation, java.lang.String requirementId);
 
     @Override
-    public scrum.client.DataTransferObject activateRequirementEstimationVoting(int conversationNumber, java.lang.String requirementId) {
+    public scrum.client.DataTransferObject activateRequirementEstimationVoting(final int conversationNumber, final java.lang.String requirementId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: activateRequirementEstimationVoting");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall activateRequirementEstimationVoting waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -628,13 +696,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:activateRequirementEstimationVoting");
             context.bindCurrentThread();
             try {
-                onActivateRequirementEstimationVoting(conversation, requirementId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.activateRequirementEstimationVoting()", new Runnable() { public void run() {
+
+                    onActivateRequirementEstimationVoting(conversation, requirementId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "activateRequirementEstimationVoting", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("activateRequirementEstimationVoting")) {
@@ -649,11 +721,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestRequirementEstimationVotes(GwtConversation conversation, java.lang.String requirementId);
 
     @Override
-    public scrum.client.DataTransferObject requestRequirementEstimationVotes(int conversationNumber, java.lang.String requirementId) {
+    public scrum.client.DataTransferObject requestRequirementEstimationVotes(final int conversationNumber, final java.lang.String requirementId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestRequirementEstimationVotes");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -662,13 +734,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestRequirementEstimationVotes");
             context.bindCurrentThread();
             try {
-                onRequestRequirementEstimationVotes(conversation, requirementId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestRequirementEstimationVotes()", new Runnable() { public void run() {
+
+                    onRequestRequirementEstimationVotes(conversation, requirementId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestRequirementEstimationVotes", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestRequirementEstimationVotes")) {
@@ -682,11 +758,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestImpediments(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestImpediments(int conversationNumber) {
+    public scrum.client.DataTransferObject requestImpediments(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestImpediments");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -695,13 +771,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestImpediments");
             context.bindCurrentThread();
             try {
-                onRequestImpediments(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestImpediments()", new Runnable() { public void run() {
+
+                    onRequestImpediments(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestImpediments", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestImpediments")) {
@@ -715,14 +795,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onConvertIssueToStory(GwtConversation conversation, java.lang.String issueId);
 
     @Override
-    public scrum.client.DataTransferObject convertIssueToStory(int conversationNumber, java.lang.String issueId) {
+    public scrum.client.DataTransferObject convertIssueToStory(final int conversationNumber, final java.lang.String issueId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: convertIssueToStory");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall convertIssueToStory waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -731,13 +811,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:convertIssueToStory");
             context.bindCurrentThread();
             try {
-                onConvertIssueToStory(conversation, issueId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.convertIssueToStory()", new Runnable() { public void run() {
+
+                    onConvertIssueToStory(conversation, issueId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "convertIssueToStory", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("convertIssueToStory")) {
@@ -752,11 +836,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestAcceptedIssues(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestAcceptedIssues(int conversationNumber) {
+    public scrum.client.DataTransferObject requestAcceptedIssues(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestAcceptedIssues");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -765,13 +849,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestAcceptedIssues");
             context.bindCurrentThread();
             try {
-                onRequestAcceptedIssues(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestAcceptedIssues()", new Runnable() { public void run() {
+
+                    onRequestAcceptedIssues(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestAcceptedIssues", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestAcceptedIssues")) {
@@ -785,11 +873,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestClosedIssues(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestClosedIssues(int conversationNumber) {
+    public scrum.client.DataTransferObject requestClosedIssues(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestClosedIssues");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -798,13 +886,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestClosedIssues");
             context.bindCurrentThread();
             try {
-                onRequestClosedIssues(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestClosedIssues()", new Runnable() { public void run() {
+
+                    onRequestClosedIssues(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestClosedIssues", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestClosedIssues")) {
@@ -818,11 +910,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestReleaseIssues(GwtConversation conversation, java.lang.String releaseId);
 
     @Override
-    public scrum.client.DataTransferObject requestReleaseIssues(int conversationNumber, java.lang.String releaseId) {
+    public scrum.client.DataTransferObject requestReleaseIssues(final int conversationNumber, final java.lang.String releaseId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestReleaseIssues");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -831,13 +923,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestReleaseIssues");
             context.bindCurrentThread();
             try {
-                onRequestReleaseIssues(conversation, releaseId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestReleaseIssues()", new Runnable() { public void run() {
+
+                    onRequestReleaseIssues(conversation, releaseId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestReleaseIssues", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestReleaseIssues")) {
@@ -851,14 +947,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onSendIssueReplyEmail(GwtConversation conversation, java.lang.String issueId, java.lang.String from, java.lang.String to, java.lang.String subject, java.lang.String text);
 
     @Override
-    public scrum.client.DataTransferObject sendIssueReplyEmail(int conversationNumber, java.lang.String issueId, java.lang.String from, java.lang.String to, java.lang.String subject, java.lang.String text) {
+    public scrum.client.DataTransferObject sendIssueReplyEmail(final int conversationNumber, final java.lang.String issueId, final java.lang.String from, final java.lang.String to, final java.lang.String subject, final java.lang.String text) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: sendIssueReplyEmail");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall sendIssueReplyEmail waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -867,13 +963,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:sendIssueReplyEmail");
             context.bindCurrentThread();
             try {
-                onSendIssueReplyEmail(conversation, issueId, from, to, subject, text);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.sendIssueReplyEmail()", new Runnable() { public void run() {
+
+                    onSendIssueReplyEmail(conversation, issueId, from, to, subject, text);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "sendIssueReplyEmail", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("sendIssueReplyEmail")) {
@@ -888,11 +988,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestChanges(GwtConversation conversation, java.lang.String parentId);
 
     @Override
-    public scrum.client.DataTransferObject requestChanges(int conversationNumber, java.lang.String parentId) {
+    public scrum.client.DataTransferObject requestChanges(final int conversationNumber, final java.lang.String parentId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestChanges");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -901,13 +1001,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestChanges");
             context.bindCurrentThread();
             try {
-                onRequestChanges(conversation, parentId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestChanges()", new Runnable() { public void run() {
+
+                    onRequestChanges(conversation, parentId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestChanges", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestChanges")) {
@@ -921,11 +1025,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestProjectEvents(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestProjectEvents(int conversationNumber) {
+    public scrum.client.DataTransferObject requestProjectEvents(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestProjectEvents");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -934,13 +1038,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestProjectEvents");
             context.bindCurrentThread();
             try {
-                onRequestProjectEvents(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestProjectEvents()", new Runnable() { public void run() {
+
+                    onRequestProjectEvents(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestProjectEvents", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestProjectEvents")) {
@@ -954,14 +1062,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onCloseProject(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject closeProject(int conversationNumber) {
+    public scrum.client.DataTransferObject closeProject(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: closeProject");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall closeProject waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -970,13 +1078,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:closeProject");
             context.bindCurrentThread();
             try {
-                onCloseProject(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.closeProject()", new Runnable() { public void run() {
+
+                    onCloseProject(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "closeProject", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("closeProject")) {
@@ -991,14 +1103,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onCreateExampleProject(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject createExampleProject(int conversationNumber) {
+    public scrum.client.DataTransferObject createExampleProject(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: createExampleProject");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall createExampleProject waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1007,13 +1119,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:createExampleProject");
             context.bindCurrentThread();
             try {
-                onCreateExampleProject(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.createExampleProject()", new Runnable() { public void run() {
+
+                    onCreateExampleProject(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "createExampleProject", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("createExampleProject")) {
@@ -1028,14 +1144,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onDeleteStory(GwtConversation conversation, java.lang.String storyId);
 
     @Override
-    public scrum.client.DataTransferObject deleteStory(int conversationNumber, java.lang.String storyId) {
+    public scrum.client.DataTransferObject deleteStory(final int conversationNumber, final java.lang.String storyId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: deleteStory");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall deleteStory waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1044,13 +1160,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:deleteStory");
             context.bindCurrentThread();
             try {
-                onDeleteStory(conversation, storyId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.deleteStory()", new Runnable() { public void run() {
+
+                    onDeleteStory(conversation, storyId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "deleteStory", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("deleteStory")) {
@@ -1065,14 +1185,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onMoveRequirementToProject(GwtConversation conversation, java.lang.String destinationProjectId, java.lang.String requirementId);
 
     @Override
-    public scrum.client.DataTransferObject moveRequirementToProject(int conversationNumber, java.lang.String destinationProjectId, java.lang.String requirementId) {
+    public scrum.client.DataTransferObject moveRequirementToProject(final int conversationNumber, final java.lang.String destinationProjectId, final java.lang.String requirementId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: moveRequirementToProject");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall moveRequirementToProject waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1081,13 +1201,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:moveRequirementToProject");
             context.bindCurrentThread();
             try {
-                onMoveRequirementToProject(conversation, destinationProjectId, requirementId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.moveRequirementToProject()", new Runnable() { public void run() {
+
+                    onMoveRequirementToProject(conversation, destinationProjectId, requirementId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "moveRequirementToProject", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("moveRequirementToProject")) {
@@ -1102,14 +1226,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onSelectProject(GwtConversation conversation, java.lang.String projectId);
 
     @Override
-    public scrum.client.DataTransferObject selectProject(int conversationNumber, java.lang.String projectId) {
+    public scrum.client.DataTransferObject selectProject(final int conversationNumber, final java.lang.String projectId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: selectProject");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall selectProject waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1118,13 +1242,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:selectProject");
             context.bindCurrentThread();
             try {
-                onSelectProject(conversation, projectId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.selectProject()", new Runnable() { public void run() {
+
+                    onSelectProject(conversation, projectId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "selectProject", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("selectProject")) {
@@ -1139,11 +1267,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onUpdateProjectHomepage(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject updateProjectHomepage(int conversationNumber) {
+    public scrum.client.DataTransferObject updateProjectHomepage(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: updateProjectHomepage");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1152,13 +1280,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:updateProjectHomepage");
             context.bindCurrentThread();
             try {
-                onUpdateProjectHomepage(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.updateProjectHomepage()", new Runnable() { public void run() {
+
+                    onUpdateProjectHomepage(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "updateProjectHomepage", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("updateProjectHomepage")) {
@@ -1172,14 +1304,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onPublishRelease(GwtConversation conversation, java.lang.String releaseId);
 
     @Override
-    public scrum.client.DataTransferObject publishRelease(int conversationNumber, java.lang.String releaseId) {
+    public scrum.client.DataTransferObject publishRelease(final int conversationNumber, final java.lang.String releaseId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: publishRelease");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall publishRelease waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1188,13 +1320,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:publishRelease");
             context.bindCurrentThread();
             try {
-                onPublishRelease(conversation, releaseId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.publishRelease()", new Runnable() { public void run() {
+
+                    onPublishRelease(conversation, releaseId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "publishRelease", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("publishRelease")) {
@@ -1209,11 +1345,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestRisks(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestRisks(int conversationNumber) {
+    public scrum.client.DataTransferObject requestRisks(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestRisks");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1222,13 +1358,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestRisks");
             context.bindCurrentThread();
             try {
-                onRequestRisks(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestRisks()", new Runnable() { public void run() {
+
+                    onRequestRisks(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestRisks", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestRisks")) {
@@ -1242,11 +1382,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onSearch(GwtConversation conversation, java.lang.String text);
 
     @Override
-    public scrum.client.DataTransferObject search(int conversationNumber, java.lang.String text) {
+    public scrum.client.DataTransferObject search(final int conversationNumber, final java.lang.String text) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: search");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1255,13 +1395,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:search");
             context.bindCurrentThread();
             try {
-                onSearch(conversation, text);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.search()", new Runnable() { public void run() {
+
+                    onSearch(conversation, text);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "search", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("search")) {
@@ -1275,14 +1419,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onCreateIssueFromTask(GwtConversation conversation, java.lang.String taskId);
 
     @Override
-    public scrum.client.DataTransferObject createIssueFromTask(int conversationNumber, java.lang.String taskId) {
+    public scrum.client.DataTransferObject createIssueFromTask(final int conversationNumber, final java.lang.String taskId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: createIssueFromTask");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall createIssueFromTask waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1291,13 +1435,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:createIssueFromTask");
             context.bindCurrentThread();
             try {
-                onCreateIssueFromTask(conversation, taskId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.createIssueFromTask()", new Runnable() { public void run() {
+
+                    onCreateIssueFromTask(conversation, taskId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "createIssueFromTask", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("createIssueFromTask")) {
@@ -1312,14 +1460,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onKickStoryFromSprint(GwtConversation conversation, java.lang.String storyId);
 
     @Override
-    public scrum.client.DataTransferObject kickStoryFromSprint(int conversationNumber, java.lang.String storyId) {
+    public scrum.client.DataTransferObject kickStoryFromSprint(final int conversationNumber, final java.lang.String storyId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: kickStoryFromSprint");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall kickStoryFromSprint waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1328,13 +1476,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:kickStoryFromSprint");
             context.bindCurrentThread();
             try {
-                onKickStoryFromSprint(conversation, storyId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.kickStoryFromSprint()", new Runnable() { public void run() {
+
+                    onKickStoryFromSprint(conversation, storyId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "kickStoryFromSprint", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("kickStoryFromSprint")) {
@@ -1349,14 +1501,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onPullStoryToSprint(GwtConversation conversation, java.lang.String storyId);
 
     @Override
-    public scrum.client.DataTransferObject pullStoryToSprint(int conversationNumber, java.lang.String storyId) {
+    public scrum.client.DataTransferObject pullStoryToSprint(final int conversationNumber, final java.lang.String storyId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: pullStoryToSprint");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall pullStoryToSprint waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1365,13 +1517,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:pullStoryToSprint");
             context.bindCurrentThread();
             try {
-                onPullStoryToSprint(conversation, storyId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.pullStoryToSprint()", new Runnable() { public void run() {
+
+                    onPullStoryToSprint(conversation, storyId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "pullStoryToSprint", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("pullStoryToSprint")) {
@@ -1386,11 +1542,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestHistory(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject requestHistory(int conversationNumber) {
+    public scrum.client.DataTransferObject requestHistory(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestHistory");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1399,13 +1555,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestHistory");
             context.bindCurrentThread();
             try {
-                onRequestHistory(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestHistory()", new Runnable() { public void run() {
+
+                    onRequestHistory(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestHistory", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestHistory")) {
@@ -1419,11 +1579,11 @@ public abstract class GScrumServiceImpl
     protected abstract void onRequestHistorySprint(GwtConversation conversation, java.lang.String sprintId);
 
     @Override
-    public scrum.client.DataTransferObject requestHistorySprint(int conversationNumber, java.lang.String sprintId) {
+    public scrum.client.DataTransferObject requestHistorySprint(final int conversationNumber, final java.lang.String sprintId) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: requestHistorySprint");
         WebSession session = (WebSession) getSession();
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1432,13 +1592,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:requestHistorySprint");
             context.bindCurrentThread();
             try {
-                onRequestHistorySprint(conversation, sprintId);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.requestHistorySprint()", new Runnable() { public void run() {
+
+                    onRequestHistorySprint(conversation, sprintId);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "requestHistorySprint", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("requestHistorySprint")) {
@@ -1452,14 +1616,14 @@ public abstract class GScrumServiceImpl
     protected abstract void onSwitchToNextSprint(GwtConversation conversation);
 
     @Override
-    public scrum.client.DataTransferObject switchToNextSprint(int conversationNumber) {
+    public scrum.client.DataTransferObject switchToNextSprint(final int conversationNumber) {
         ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
         log.debug("Handling service call: switchToNextSprint");
         WebSession session = (WebSession) getSession();
         String threads = ilarkesto.base.Threads.getAllThreadsInfo();
         synchronized (getSyncObject()) {
             if (rt.getRuntime() > 1000) log.warn("ServiceCall switchToNextSprint waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            GwtConversation conversation = null;
+            final GwtConversation conversation;
             try {
                 conversation = session.getGwtConversation(conversationNumber);
             } catch (Throwable ex) {
@@ -1468,13 +1632,17 @@ public abstract class GScrumServiceImpl
                 dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
                 return dto;
             }
-            ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
             context.setName("gwt-srv:switchToNextSprint");
             context.bindCurrentThread();
             try {
-                onSwitchToNextSprint(conversation);
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.switchToNextSprint()", new Runnable() { public void run() {
+
+                    onSwitchToNextSprint(conversation);
+
+                }});
                 onServiceMethodExecuted(context);
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 handleServiceMethodException(conversationNumber, "switchToNextSprint", ex, context);
             }
             if (rt.getRuntime() > getMaxServiceCallExecutionTime("switchToNextSprint")) {
