@@ -98,6 +98,7 @@ public class TestUtil {
 		release.setReleaseDate(releaseDate);
 		release.setReleaseNotes(releaseNotes);
 		release.setNote(note);
+		release.persist();
 		return release;
 	}
 
@@ -120,6 +121,7 @@ public class TestUtil {
 		comment.setAuthorName(author);
 		comment.setText(text);
 		comment.setPublished(published);
+		comment.persist();
 		return comment;
 	}
 
@@ -140,12 +142,14 @@ public class TestUtil {
 		task.setLabel(label);
 		task.setRemainingWork(remainingWork);
 		task.setBurnedWork(burnedWork);
+		task.persist();
 		return task;
 	}
 
 	public static User createUser(String name) {
 		User user = app.getUserDao().newEntityInstance();
 		user.setName(name);
+		user.persist();
 		return user;
 	}
 
@@ -170,6 +174,7 @@ public class TestUtil {
 		issue.setDescription(description);
 		issue.setStatement(statement);
 		issue.setPublished(published);
+		issue.persist();
 		return issue;
 	}
 
