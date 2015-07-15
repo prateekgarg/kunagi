@@ -249,4 +249,10 @@ public abstract class GChatMessageDao
         this.projectDao = projectDao;
     }
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 }

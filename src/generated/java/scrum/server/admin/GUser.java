@@ -19,12 +19,12 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GUser
-            extends ilarkesto.auth.AUser
+            extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, ilarkesto.auth.EditProtected<scrum.server.admin.User>, java.lang.Comparable<User>, ilarkesto.core.search.Searchable {
 
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(User.class);
@@ -114,6 +114,7 @@ public abstract class GUser
         properties.put("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
     }
 
+    @Override
     public int compareTo(User other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }

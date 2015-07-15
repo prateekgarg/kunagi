@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -88,6 +88,7 @@ public abstract class GRelease
         properties.put("scriptOutput", ilarkesto.core.persistance.Persistence.propertyAsString(this.scriptOutput));
     }
 
+    @Override
     public int compareTo(Release other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }

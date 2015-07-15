@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -71,6 +71,7 @@ public abstract class GChatMessage
         properties.put("dateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.dateAndTime));
     }
 
+    @Override
     public int compareTo(ChatMessage other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -335,6 +336,12 @@ public abstract class GChatMessage
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GChatMessage.projectDao = projectDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GChatMessage.userDao = userDao;
     }
 
     static scrum.server.collaboration.ChatMessageDao chatMessageDao;

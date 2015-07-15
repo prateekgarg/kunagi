@@ -207,4 +207,10 @@ public abstract class GRequirementEstimationVoteDao
         this.requirementDao = requirementDao;
     }
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 }

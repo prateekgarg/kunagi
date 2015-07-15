@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -87,6 +87,7 @@ public abstract class GProjectUserConfig
         properties.put("pblFilterText", ilarkesto.core.persistance.Persistence.propertyAsString(this.pblFilterText));
     }
 
+    @Override
     public int compareTo(ProjectUserConfig other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -1127,6 +1128,12 @@ public abstract class GProjectUserConfig
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GProjectUserConfig.projectDao = projectDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GProjectUserConfig.userDao = userDao;
     }
 
     static scrum.server.project.QualityDao qualityDao;

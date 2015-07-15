@@ -18,7 +18,7 @@ public class Subscription extends GSubscription {
 	public void onEnsureIntegrity() {
 		super.onEnsureIntegrity();
 		if (isSubscribersEmailsEmpty() && getLastModified().getPeriodToNow().isGreaterThen(TTL)) {
-			getDao().deleteEntity(this);
+			delete();
 		}
 	}
 

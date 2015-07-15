@@ -771,6 +771,12 @@ public abstract class GProjectUserConfigDao
         this.projectDao = projectDao;
     }
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     scrum.server.project.QualityDao qualityDao;
 
     public void setQualityDao(scrum.server.project.QualityDao qualityDao) {

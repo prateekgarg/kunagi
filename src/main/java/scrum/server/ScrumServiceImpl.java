@@ -154,6 +154,11 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 	}
 
 	@Override
+	protected void onException(GwtConversation conversation) {
+		throw new RuntimeException("Test-Exception");
+	}
+
+	@Override
 	public void onCreateIssueFromTask(GwtConversation conversation, String taskId) {
 		assertProjectSelected(conversation);
 		Task task = taskDao.getById(taskId);
@@ -167,7 +172,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		task.appendToDescription(issue.getReferenceAndLabel() + " created.");
 		if (task.getBurnedWork() == 0) {
-			taskDao.deleteEntity(task);
+			task.delete();
 			for (GwtConversation c : webApplication.getConversationsByProject(conversation.getProject(), null)) {
 				c.getNextData().addDeletedEntity(task.getId());
 			}
@@ -201,7 +206,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			requirement.setDeleted(true);
 			sendToClients(conversation, requirement);
 		} else {
-			requirementDao.deleteEntity(requirement);
+			requirement.delete();
 			for (GwtConversation c : webApplication.getConversationsByProject(project, null)) {
 				c.getNextData().addDeletedEntity(requirement.getId());
 			}
@@ -347,13 +352,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		log.info("password changed by", user);
 	}
 
-	@Override
-	public void onCreateEntity(GwtConversation conversation, String type, Map properties) {
-		String id = (String) properties.get("id");
-		if (id == null) throw new NullPointerException("id == null");
-
-		ADao dao = getDaoService().getDaoByName(type);
-		AEntity entity = dao.newEntityInstance(id);
+	private void onEntityCreatedOnClient(GwtConversation conversation, AEntity entity, Map<String, String> properties) {
 		entity.updateProperties(properties);
 		entity.persist();
 		User currentUser = conversation.getSession().getUser();
@@ -443,11 +442,10 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	@Override
-	public void onDeleteEntity(GwtConversation conversation, String entityId) {
-		AEntity entity = getDaoService().getEntityById(entityId);
+	private void onEntityDeletedOnClient(GwtConversation conversation, AEntity entity) {
+		String entityId = entity.getId();
+
 		User user = conversation.getSession().getUser();
-		if (!Auth.isDeletable(entity, user)) throw new PermissionDeniedException();
 
 		if (entity instanceof File) {
 			File file = (File) entity;
@@ -467,8 +465,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			}
 		}
 
-		ADao dao = getDaoService().getDao(entity);
-		dao.deleteEntity(entity);
+		entity.delete();
 
 		if (entity instanceof Task) onTaskDeleted(conversation, (Task) entity);
 
@@ -498,12 +495,8 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		}
 	}
 
-	@Override
-	public void onChangeProperties(GwtConversation conversation, Map<String, String> properties) {
-		String entityId = properties.get("id");
-		AEntity entity = getDaoService().getEntityById(entityId);
+	private void onEntityModifiedOnClient(GwtConversation conversation, AEntity entity, Map<String, String> properties) {
 		User currentUser = conversation.getSession().getUser();
-		if (!Auth.isEditable(entity, currentUser)) throw new PermissionDeniedException();
 
 		Sprint previousRequirementSprint = entity instanceof Requirement ? ((Requirement) entity).getSprint() : null;
 
@@ -548,7 +541,15 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 			postChangeIfChanged(conversation, entity, properties, currentUser, "text");
 		}
 
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!! Übernahme der Änderungen in die Entity !!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 		entity.updateProperties(properties);
+
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!! Nach der Übernahme der Änderungen in die Entity !!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		if (entity instanceof Task) onTaskChanged(conversation, (Task) entity, properties);
 		if (entity instanceof Requirement)
@@ -571,6 +572,94 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 
 		conversation.clearRemoteEntitiesByType(Change.class);
 		sendToClients(conversation, entity);
+	}
+
+	@Override
+	protected void onUpdateEntities(GwtConversation conversation, Collection<Map<String, String>> modified,
+			Collection<String> deleted) {
+		log.info("onUpdateEntities()", modified, deleted);
+		// run security checks first
+		User user = conversation.getSession().getUser();
+		if (modified != null) {
+			for (Map<String, String> properties : modified) {
+				String id = properties.get("id");
+				if (id == null)
+					throw new IllegalArgumentException("Missing id property in entity properties map:"
+							+ Str.format(properties));
+				if (AEntity.exists(id)) {
+					AEntity entity = AEntity.getById(id);
+					if (!Auth.isEntityEditable(user, entity, properties)) {
+						log.warn("Permission denied: EDIT", user.getName(), entity.getId(), entity);
+						throw new PermissionDeniedException("Entity " + id + " is not editable by " + user);
+					}
+				} else {
+					String typeName = properties.get("@type");
+					if (typeName == null)
+						throw new IllegalStateException("Missing @type property for new entity: "
+								+ Str.format(properties));
+				}
+			}
+		}
+		if (deleted != null) {
+			for (String id : deleted) {
+				try {
+					AEntity entity = AEntity.getById(id);
+					if (!Auth.isEntityDeletable(user, entity)) {
+						log.warn("Permission denied: DELETE", user.getName(), entity.getId(), entity);
+						throw new PermissionDeniedException("Entity " + id + " is not deletable by " + user);
+					}
+				} catch (EntityDoesNotExistException ex) {
+					// already deleted
+				}
+			}
+		}
+
+		// check if deleting possible
+		// if (deleted != null) {
+		// for (String id : deleted) {
+		// try {
+		// AEntity entity = AEntity.getById(id);
+		// String veto = entity.getDeleteVeto();
+		// if (veto != null) {
+		// conversation.getNextData().addUserInputError("Löschung nicht möglich: " + veto);
+		// return;
+		// }
+		// } catch (EntityDoesNotExistException ex) {
+		// // already deleted
+		// }
+		// }
+		// }
+
+		// make changes
+		if (modified != null) {
+			for (Map<String, String> properties : modified) {
+				String id = properties.get("id");
+				if (AEntity.exists(id)) {
+					AEntity entity = AEntity.getById(id);
+					log.debug("    Entity modified on client:", properties);
+					onEntityModifiedOnClient(conversation, entity, properties);
+				} else {
+					ADao<AEntity> dao = getDaoService().getDaoByName(properties.get("@type"));
+					AEntity entity = dao.newEntityInstance(id);
+					log.debug("    Entity created on client:", properties);
+					onEntityCreatedOnClient(conversation, entity, properties);
+				}
+			}
+		}
+		if (deleted != null) {
+			for (String entityId : deleted) {
+				AEntity entity;
+				try {
+					entity = AEntity.getById(entityId);
+				} catch (EntityDoesNotExistException ex) {
+					// already deleted
+					entity = null;
+				}
+				if (entity != null) {
+					onEntityDeletedOnClient(conversation, entity);
+				}
+			}
+		}
 	}
 
 	private void onProjectChanged(GwtConversation conversation, Project project, Map properties) {

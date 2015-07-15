@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -74,6 +74,7 @@ public abstract class GChange
         properties.put("comment", ilarkesto.core.persistance.Persistence.propertyAsString(this.comment));
     }
 
+    @Override
     public int compareTo(Change other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -459,6 +460,17 @@ public abstract class GChange
             LOG.info("Repairing dead user reference");
             repairDeadUserReference(this.userId);
         }
+    }
+
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GChange.userDao = userDao;
     }
 
     static scrum.server.journal.ChangeDao changeDao;

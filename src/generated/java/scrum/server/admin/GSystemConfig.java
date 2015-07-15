@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -43,6 +43,12 @@ public abstract class GSystemConfig
         public Class<SystemConfig> getType() {
             return SystemConfig.class;
         }
+    }
+
+    public static SystemConfig get() {
+        Set<SystemConfig> ret = new ilarkesto.core.persistance.AllByTypeQuery(SystemConfig.class).list();
+        if (ret.isEmpty()) return null;
+        return ret.iterator().next();
     }
 
     public static Set<SystemConfig> listAll() {
@@ -94,6 +100,7 @@ public abstract class GSystemConfig
         properties.put("subscriptionKeySeed", ilarkesto.core.persistance.Persistence.propertyAsString(this.subscriptionKeySeed));
     }
 
+    @Override
     public int compareTo(SystemConfig other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -1352,6 +1359,7 @@ public abstract class GSystemConfig
     @Override
     public void onEnsureIntegrity() {
         super.onEnsureIntegrity();
+        if (listAll().size() > 1) throw new IllegalStateException("Multiple singleton instances: SystemConfig");
     }
 
     static scrum.server.admin.SystemConfigDao systemConfigDao;

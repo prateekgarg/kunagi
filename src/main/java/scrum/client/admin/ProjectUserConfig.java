@@ -23,7 +23,6 @@ import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import scrum.client.common.ThemesContainer;
 
@@ -31,12 +30,6 @@ public class ProjectUserConfig extends GProjectUserConfig {
 
 	private transient AFieldModel<String> themesAsStringModel;
 	private transient PblFilter pblFilter = new PblFilter();
-
-	public ProjectUserConfig() {}
-
-	public ProjectUserConfig(Map data) {
-		super(data);
-	}
 
 	public boolean isIdle() {
 		if (!isOnline()) return false;
@@ -115,7 +108,7 @@ public class ProjectUserConfig extends GProjectUserConfig {
 		}
 
 		@Override
-		public void setThemes(java.util.List<String> editorSelectedItems) {
+		public void setThemes(java.util.Collection<String> editorSelectedItems) {
 			setPblFilterThemes(editorSelectedItems);
 		}
 

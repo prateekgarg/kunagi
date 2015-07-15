@@ -19,6 +19,88 @@ public abstract class GScrumServiceImpl
             extends ilarkesto.gwt.server.AGwtServiceImpl
             implements scrum.client.ScrumService {
 
+    protected abstract void onUpdateEntities(GwtConversation conversation, java.util.Collection<java.util.Map<String, String>> modified, java.util.Collection<String> deleted);
+
+    @Override
+    public scrum.client.DataTransferObject updateEntities(final int conversationNumber, final java.util.Collection<java.util.Map<String, String>> modified, final java.util.Collection<String> deleted) {
+        ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
+        log.debug("Handling service call: updateEntities");
+        WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall updateEntities waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
+            final GwtConversation conversation;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:updateEntities");
+            context.bindCurrentThread();
+            try {
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.updateEntities()", new Runnable() { public void run() {
+
+                    onUpdateEntities(conversation, modified, deleted);
+
+                }});
+                onServiceMethodExecuted(context);
+            } catch (Exception ex) {
+                handleServiceMethodException(conversationNumber, "updateEntities", ex, context);
+            }
+            if (rt.getRuntime() > getMaxServiceCallExecutionTime("updateEntities")) {
+                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"updateEntities", modified, deleted, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
+            } else {
+                log.info("ServiceCall served in", rt.getRuntimeFormated(),"updateEntities", modified, deleted);
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
+    protected abstract void onException(GwtConversation conversation);
+
+    @Override
+    public scrum.client.DataTransferObject exception(final int conversationNumber) {
+        ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
+        log.debug("Handling service call: exception");
+        WebSession session = (WebSession) getSession();
+        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
+        synchronized (getSyncObject()) {
+            if (rt.getRuntime() > 1000) log.warn("ServiceCall exception waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
+            final GwtConversation conversation;
+            try {
+                conversation = session.getGwtConversation(conversationNumber);
+            } catch (Throwable ex) {
+                log.info("Getting conversation failed:", conversationNumber);
+                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
+                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
+                return dto;
+            }
+            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
+            context.setName("gwt-srv:exception");
+            context.bindCurrentThread();
+            try {
+                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.exception()", new Runnable() { public void run() {
+
+                    onException(conversation);
+
+                }});
+                onServiceMethodExecuted(context);
+            } catch (Exception ex) {
+                handleServiceMethodException(conversationNumber, "exception", ex, context);
+            }
+            if (rt.getRuntime() > getMaxServiceCallExecutionTime("exception")) {
+                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"exception", "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
+            } else {
+                log.info("ServiceCall served in", rt.getRuntimeFormated(),"exception");
+            }
+            return (scrum.client.DataTransferObject) conversation.popNextData();
+        }
+    }
+
     protected abstract void onChangePassword(GwtConversation conversation, java.lang.String newPassword, java.lang.String oldPassword);
 
     @Override
@@ -438,129 +520,6 @@ public abstract class GScrumServiceImpl
                 log.warn("ServiceCall served in", rt.getRuntimeFormated(),"touchLastActivity", "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
             } else {
                 log.info("ServiceCall served in", rt.getRuntimeFormated(),"touchLastActivity");
-            }
-            return (scrum.client.DataTransferObject) conversation.popNextData();
-        }
-    }
-
-    protected abstract void onChangeProperties(GwtConversation conversation, java.util.Map<String, String> properties);
-
-    @Override
-    public scrum.client.DataTransferObject changeProperties(final int conversationNumber, final java.util.Map<String, String> properties) {
-        ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
-        log.debug("Handling service call: changeProperties");
-        WebSession session = (WebSession) getSession();
-        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
-        synchronized (getSyncObject()) {
-            if (rt.getRuntime() > 1000) log.warn("ServiceCall changeProperties waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            final GwtConversation conversation;
-            try {
-                conversation = session.getGwtConversation(conversationNumber);
-            } catch (Throwable ex) {
-                log.info("Getting conversation failed:", conversationNumber);
-                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
-                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
-                return dto;
-            }
-            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:changeProperties");
-            context.bindCurrentThread();
-            try {
-                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.changeProperties()", new Runnable() { public void run() {
-
-                    onChangeProperties(conversation, properties);
-
-                }});
-                onServiceMethodExecuted(context);
-            } catch (Exception ex) {
-                handleServiceMethodException(conversationNumber, "changeProperties", ex, context);
-            }
-            if (rt.getRuntime() > getMaxServiceCallExecutionTime("changeProperties")) {
-                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", properties, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            } else {
-                log.info("ServiceCall served in", rt.getRuntimeFormated(),"changeProperties", properties);
-            }
-            return (scrum.client.DataTransferObject) conversation.popNextData();
-        }
-    }
-
-    protected abstract void onCreateEntity(GwtConversation conversation, java.lang.String type, java.util.Map<String, String> properties);
-
-    @Override
-    public scrum.client.DataTransferObject createEntity(final int conversationNumber, final java.lang.String type, final java.util.Map<String, String> properties) {
-        ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
-        log.debug("Handling service call: createEntity");
-        WebSession session = (WebSession) getSession();
-        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
-        synchronized (getSyncObject()) {
-            if (rt.getRuntime() > 1000) log.warn("ServiceCall createEntity waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            final GwtConversation conversation;
-            try {
-                conversation = session.getGwtConversation(conversationNumber);
-            } catch (Throwable ex) {
-                log.info("Getting conversation failed:", conversationNumber);
-                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
-                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
-                return dto;
-            }
-            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:createEntity");
-            context.bindCurrentThread();
-            try {
-                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.createEntity()", new Runnable() { public void run() {
-
-                    onCreateEntity(conversation, type, properties);
-
-                }});
-                onServiceMethodExecuted(context);
-            } catch (Exception ex) {
-                handleServiceMethodException(conversationNumber, "createEntity", ex, context);
-            }
-            if (rt.getRuntime() > getMaxServiceCallExecutionTime("createEntity")) {
-                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"createEntity", type, properties, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            } else {
-                log.info("ServiceCall served in", rt.getRuntimeFormated(),"createEntity", type, properties);
-            }
-            return (scrum.client.DataTransferObject) conversation.popNextData();
-        }
-    }
-
-    protected abstract void onDeleteEntity(GwtConversation conversation, java.lang.String entityId);
-
-    @Override
-    public scrum.client.DataTransferObject deleteEntity(final int conversationNumber, final java.lang.String entityId) {
-        ilarkesto.core.base.RuntimeTracker rt = new ilarkesto.core.base.RuntimeTracker();
-        log.debug("Handling service call: deleteEntity");
-        WebSession session = (WebSession) getSession();
-        String threads = ilarkesto.base.Threads.getAllThreadsInfo();
-        synchronized (getSyncObject()) {
-            if (rt.getRuntime() > 1000) log.warn("ServiceCall deleteEntity waited for sync", rt.getRuntimeFormated(), ">>> Threads before:\n", threads, "Threads after:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            final GwtConversation conversation;
-            try {
-                conversation = session.getGwtConversation(conversationNumber);
-            } catch (Throwable ex) {
-                log.info("Getting conversation failed:", conversationNumber);
-                scrum.client.DataTransferObject dto = new scrum.client.DataTransferObject();
-                dto.addError(new ilarkesto.gwt.client.ErrorWrapper(ex));
-                return dto;
-            }
-            final ilarkesto.di.Context context = ilarkesto.di.Context.get();
-            context.setName("gwt-srv:deleteEntity");
-            context.bindCurrentThread();
-            try {
-                ilarkesto.core.persistance.Persistence.runInTransaction("GwtService.deleteEntity()", new Runnable() { public void run() {
-
-                    onDeleteEntity(conversation, entityId);
-
-                }});
-                onServiceMethodExecuted(context);
-            } catch (Exception ex) {
-                handleServiceMethodException(conversationNumber, "deleteEntity", ex, context);
-            }
-            if (rt.getRuntime() > getMaxServiceCallExecutionTime("deleteEntity")) {
-                log.warn("ServiceCall served in", rt.getRuntimeFormated(),"deleteEntity", entityId, "Threads:\n", ilarkesto.base.Threads.getAllThreadsInfo());
-            } else {
-                log.info("ServiceCall served in", rt.getRuntimeFormated(),"deleteEntity", entityId);
             }
             return (scrum.client.DataTransferObject) conversation.popNextData();
         }

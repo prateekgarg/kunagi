@@ -1,19 +1,20 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client.issues;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.Date;
@@ -28,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
@@ -56,15 +56,17 @@ public class Issue extends GIssue implements ReferenceSupport, LabelSupport, For
 
 	public static final Integer[] SEVERITY_OPTIONS = { CRITICAL, SEVERE, NORMAL, MINOR };
 
-	public Issue(Project project) {
-		setLabel("");
-		setType(Types.ISSUE);
-		setProject(project);
-		setDate(DateAndTime.now());
-	}
+	public static Issue post(Project project) {
+		Args.assertNotNull(project, "project");
 
-	public Issue(Map data) {
-		super(data);
+		Issue issue = new Issue();
+		issue.setLabel("");
+		issue.setType(Types.ISSUE);
+		issue.setProject(project);
+		issue.setDate(DateAndTime.now());
+
+		issue.persist();
+		return issue;
 	}
 
 	public String getExternalTrackerUrl() {

@@ -1,6 +1,6 @@
 // ----------> GENERATED FILE - DON'T TOUCH! <----------
 
-// generator: ilarkesto.mda.legacy.generator.GwtEntityGenerator
+// generator: scrum.mda.KunagiModelApplication$1
 
 
 
@@ -16,60 +16,1781 @@ package scrum.client.admin;
 import java.util.*;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.logging.Log;
-import scrum.client.common.*;
-import ilarkesto.gwt.client.*;
+import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.AEntity;
+import ilarkesto.core.persistance.EntityDoesNotExistException;
 
 public abstract class GUser
-            extends scrum.client.common.AScrumGwtEntity {
+            extends scrum.client.common.AScrumGwtEntity
+            implements java.lang.Comparable<User> {
 
-    protected scrum.client.Dao getDao() {
-        return scrum.client.Dao.get();
+    protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(User.class);
+
+    public static User getByName(final java.lang.String name) {
+        return (User) ilarkesto.core.persistance.Transaction.get().findFirst(new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isName(name);
+            }
+            @Override
+            public String toString() {
+                return "User:byName";
+            }
+        });
+    }
+
+    public static Set< User> listByPublicName(final java.lang.String publicName) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isPublicName(publicName);
+            }
+            @Override
+            public String toString() {
+                return "User:byPublicName";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByFullName(final java.lang.String fullName) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isFullName(fullName);
+            }
+            @Override
+            public String toString() {
+                return "User:byFullName";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByAdmin(final boolean admin) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isAdmin(admin);
+            }
+            @Override
+            public String toString() {
+                return "User:byAdmin";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByEmailVerified(final boolean emailVerified) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isEmailVerified(emailVerified);
+            }
+            @Override
+            public String toString() {
+                return "User:byEmailVerified";
+            }
+        }.list();
+    }
+
+    public static User getByEmail(final java.lang.String email) {
+        return (User) ilarkesto.core.persistance.Transaction.get().findFirst(new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isEmail(email);
+            }
+            @Override
+            public String toString() {
+                return "User:byEmail";
+            }
+        });
+    }
+
+    private static transient ilarkesto.core.persistance.AEntitySetBackReferenceHelper<User> currentProjectBackReferencesCache = new ilarkesto.core.persistance.AEntitySetBackReferenceHelper<User>() {
+    @Override
+        protected Set<User> loadById(final String id) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return id.equals(entity.getCurrentProjectId());
+            }
+            @Override
+            public String toString() {
+                return "User:byCurrentProject";
+            }
+        }.list();
+        }
+    };
+
+    public static Set< User> listByCurrentProject(final scrum.client.project.Project currentProject) {
+        if (currentProject == null) return new HashSet<User>();
+        return currentProjectBackReferencesCache.getById(currentProject.getId());
+    }
+
+    public static Set< User> listByColor(final java.lang.String color) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isColor(color);
+            }
+            @Override
+            public String toString() {
+                return "User:byColor";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByLastLoginDateAndTime(final ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isLastLoginDateAndTime(lastLoginDateAndTime);
+            }
+            @Override
+            public String toString() {
+                return "User:byLastLoginDateAndTime";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByRegistrationDateAndTime(final ilarkesto.core.time.DateAndTime registrationDateAndTime) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isRegistrationDateAndTime(registrationDateAndTime);
+            }
+            @Override
+            public String toString() {
+                return "User:byRegistrationDateAndTime";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByDisabled(final boolean disabled) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isDisabled(disabled);
+            }
+            @Override
+            public String toString() {
+                return "User:byDisabled";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideBlog(final boolean hideUserGuideBlog) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideBlog(hideUserGuideBlog);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideBlog";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideCalendar(final boolean hideUserGuideCalendar) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideCalendar(hideUserGuideCalendar);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideCalendar";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideFiles(final boolean hideUserGuideFiles) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideFiles(hideUserGuideFiles);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideFiles";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideForum(final boolean hideUserGuideForum) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideForum(hideUserGuideForum);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideForum";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideImpediments(final boolean hideUserGuideImpediments) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideImpediments(hideUserGuideImpediments);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideImpediments";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideIssues(final boolean hideUserGuideIssues) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideIssues(hideUserGuideIssues);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideIssues";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideJournal(final boolean hideUserGuideJournal) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideJournal(hideUserGuideJournal);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideJournal";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideNextSprint(final boolean hideUserGuideNextSprint) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideNextSprint(hideUserGuideNextSprint);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideNextSprint";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideProductBacklog(final boolean hideUserGuideProductBacklog) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideProductBacklog(hideUserGuideProductBacklog);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideProductBacklog";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideCourtroom(final boolean hideUserGuideCourtroom) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideCourtroom(hideUserGuideCourtroom);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideCourtroom";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideQualityBacklog(final boolean hideUserGuideQualityBacklog) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideQualityBacklog";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideReleases(final boolean hideUserGuideReleases) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideReleases(hideUserGuideReleases);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideReleases";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideRisks(final boolean hideUserGuideRisks) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideRisks(hideUserGuideRisks);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideRisks";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideSprintBacklog(final boolean hideUserGuideSprintBacklog) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideSprintBacklog";
+            }
+        }.list();
+    }
+
+    public static Set< User> listByHideUserGuideWhiteboard(final boolean hideUserGuideWhiteboard) {
+        return new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isHideUserGuideWhiteboard(hideUserGuideWhiteboard);
+            }
+            @Override
+            public String toString() {
+                return "User:byHideUserGuideWhiteboard";
+            }
+        }.list();
+    }
+
+    public static User getByLoginToken(final java.lang.String loginToken) {
+        return (User) ilarkesto.core.persistance.Transaction.get().findFirst(new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isLoginToken(loginToken);
+            }
+            @Override
+            public String toString() {
+                return "User:byLoginToken";
+            }
+        });
+    }
+
+    public static User getByOpenId(final java.lang.String openId) {
+        return (User) ilarkesto.core.persistance.Transaction.get().findFirst(new AUserQuery() {
+            @Override
+            public boolean test(User entity) {
+                return entity.isOpenId(openId);
+            }
+            @Override
+            public String toString() {
+                return "User:byOpenId";
+            }
+        });
     }
 
     @Override
-    protected void doPersist() {
-        getDao().createUser((User)this);
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        currentProjectBackReferencesCache.clear(getCurrentProjectId());
+    }
+
+    public abstract static class AUserQuery extends ilarkesto.core.persistance.AEntityQuery<User> {
+    @Override
+        public Class<User> getType() {
+            return User.class;
+        }
+    }
+
+    public static Set<User> listAll() {
+        return new ilarkesto.core.persistance.AllByTypeQuery(User.class).list();
+    }
+
+    public static User getById(String id) {
+        return (User) AEntity.getById(id);
     }
 
     @Override
-    public void delete() {
-        getDao().deleteUser((User)this);
+    public Set<ilarkesto.core.persistance.Entity> getReferencedEntities() {
+        Set<ilarkesto.core.persistance.Entity> ret = super.getReferencedEntities();
+    // --- references ---
+        try { Utl.addIfNotNull(ret, getCurrentProject()); } catch(EntityDoesNotExistException ex) {}
+    // --- back references ---
+        ret.addAll(getProjects());
+        ret.addAll(getProjectWithAdminss());
+        ret.addAll(getProjectWithProductOwnerss());
+        ret.addAll(getProjectWithScrumMasterss());
+        ret.addAll(getProjectWithTeamMemberss());
+        ret.addAll(getSprints());
+        ret.addAll(getSprintWithScrumMasterss());
+        ret.addAll(getSprintWithTeamMemberss());
+        ret.addAll(getEmoticons());
+        ret.addAll(getProjectUserConfigs());
+        ret.addAll(getIssues());
+        ret.addAll(getIssueWithOwners());
+        ret.addAll(getTasks());
+        ret.addAll(getChanges());
+        ret.addAll(getComments());
+        ret.addAll(getChatMessages());
+        ret.addAll(getBlogEntrys());
+        ret.addAll(getRequirementEstimationVotes());
+        ret.addAll(getEmoticonWithOwners());
+        return ret;
     }
-
-    public GUser() {
-    }
-
-    public GUser(Map data) {
-        super(data);
-        updateProperties(data);
-    }
-
-    public static final String ENTITY_TYPE = "User";
 
     @Override
-    public final String getEntityType() {
-        return ENTITY_TYPE;
+    public void storeProperties(Map<String, String> properties) {
+        super.storeProperties(properties);
+        properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+        properties.put("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
+        properties.put("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
+        properties.put("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
+        properties.put("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
+        properties.put("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
+        properties.put("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
+        properties.put("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+        properties.put("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
+        properties.put("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
+        properties.put("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
+        properties.put("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
+        properties.put("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
+        properties.put("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
+        properties.put("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
+        properties.put("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
+        properties.put("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
+        properties.put("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
+        properties.put("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
+        properties.put("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
+        properties.put("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
+        properties.put("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
+        properties.put("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
+        properties.put("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
+        properties.put("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
+        properties.put("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
+        properties.put("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
+        properties.put("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
     }
 
-    // --- name ---
+    @Override
+    public int compareTo(User other) {
+        return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
+    }
 
-    private java.lang.String name ;
+    public final Set<scrum.client.project.Project> getProjects() {
+        return scrum.client.project.Project.listByParticipant((User)this);
+    }
+
+    public final Set<scrum.client.project.Project> getProjectWithAdminss() {
+        return scrum.client.project.Project.listByAdmin((User)this);
+    }
+
+    public final Set<scrum.client.project.Project> getProjectWithProductOwnerss() {
+        return scrum.client.project.Project.listByProductOwner((User)this);
+    }
+
+    public final Set<scrum.client.project.Project> getProjectWithScrumMasterss() {
+        return scrum.client.project.Project.listByScrumMaster((User)this);
+    }
+
+    public final Set<scrum.client.project.Project> getProjectWithTeamMemberss() {
+        return scrum.client.project.Project.listByTeamMember((User)this);
+    }
+
+    public final Set<scrum.client.sprint.Sprint> getSprints() {
+        return scrum.client.sprint.Sprint.listByProductOwner((User)this);
+    }
+
+    public final Set<scrum.client.sprint.Sprint> getSprintWithScrumMasterss() {
+        return scrum.client.sprint.Sprint.listByScrumMaster((User)this);
+    }
+
+    public final Set<scrum.client.sprint.Sprint> getSprintWithTeamMemberss() {
+        return scrum.client.sprint.Sprint.listByTeamMember((User)this);
+    }
+
+    public final Set<scrum.client.collaboration.Emoticon> getEmoticons() {
+        return scrum.client.collaboration.Emoticon.listByOwner((User)this);
+    }
+
+    public final Set<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
+        return scrum.client.admin.ProjectUserConfig.listByUser((User)this);
+    }
+
+    public final Set<scrum.client.issues.Issue> getIssues() {
+        return scrum.client.issues.Issue.listByCreator((User)this);
+    }
+
+    public final Set<scrum.client.issues.Issue> getIssueWithOwners() {
+        return scrum.client.issues.Issue.listByOwner((User)this);
+    }
+
+    public final Set<scrum.client.sprint.Task> getTasks() {
+        return scrum.client.sprint.Task.listByOwner((User)this);
+    }
+
+    public final Set<scrum.client.journal.Change> getChanges() {
+        return scrum.client.journal.Change.listByUser((User)this);
+    }
+
+    public final Set<scrum.client.collaboration.Comment> getComments() {
+        return scrum.client.collaboration.Comment.listByAuthor((User)this);
+    }
+
+    public final Set<scrum.client.collaboration.ChatMessage> getChatMessages() {
+        return scrum.client.collaboration.ChatMessage.listByAuthor((User)this);
+    }
+
+    public final Set<scrum.client.pr.BlogEntry> getBlogEntrys() {
+        return scrum.client.pr.BlogEntry.listByAuthor((User)this);
+    }
+
+    public final Set<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
+        return scrum.client.estimation.RequirementEstimationVote.listByUser((User)this);
+    }
+
+    public final Set<scrum.client.collaboration.Emoticon> getEmoticonWithOwners() {
+        return scrum.client.collaboration.Emoticon.listByOwner((User)this);
+    }
+
+    private static final ilarkesto.core.logging.Log LOG = ilarkesto.core.logging.Log.get(GUser.class);
+
+    public static final String TYPE = "User";
+
+
+    // -----------------------------------------------------------
+    // - Searchable
+    // -----------------------------------------------------------
+
+    @Override
+    public boolean matches(ilarkesto.core.search.SearchText search) {
+         return search.matches(getName(), getPublicName(), getFullName(), getEmail());
+    }
+
+    // -----------------------------------------------------------
+    // - name
+    // -----------------------------------------------------------
+
+    private java.lang.String name;
 
     public final java.lang.String getName() {
-        return this.name ;
+        return name;
     }
 
-    public final User setName(java.lang.String name) {
-        if (isName(name)) return (User)this;
-        if (name != null && getDao().getUserByName(name) != null) throw new RuntimeException("\"" + name + "\" already exists.");
-        this.name = name ;
-        propertyChanged("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
-        return (User)this;
+    public final void setName(java.lang.String name) {
+        name = prepareName(name);
+        if (isName(name)) return;
+        if (name != null) {
+            Object existing = User.getByName(name);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
+        }
+        this.name = name;
+            updateLastModified();
+            fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+    }
+
+    private final void updateName(java.lang.String name) {
+        if (isName(name)) return;
+        if (name != null) {
+            Object existing = User.getByName(name);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"name", name);
+        }
+        this.name = name;
+            updateLastModified();
+            fireModified("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+    }
+
+    protected java.lang.String prepareName(java.lang.String name) {
+        // name = Str.removeUnreadableChars(name);
+        return name;
+    }
+
+    public final boolean isNameSet() {
+        return this.name != null;
     }
 
     public final boolean isName(java.lang.String name) {
-        return ilarkesto.core.base.Utl.equals(this.name, name);
+        if (this.name == null && name == null) return true;
+        return this.name != null && this.name.equals(name);
     }
+
+    protected final void updateName(Object value) {
+        setName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - publicName
+    // -----------------------------------------------------------
+
+    private java.lang.String publicName;
+
+    public final java.lang.String getPublicName() {
+        return publicName;
+    }
+
+    public final void setPublicName(java.lang.String publicName) {
+        publicName = preparePublicName(publicName);
+        if (isPublicName(publicName)) return;
+        this.publicName = publicName;
+            updateLastModified();
+            fireModified("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
+    }
+
+    private final void updatePublicName(java.lang.String publicName) {
+        if (isPublicName(publicName)) return;
+        this.publicName = publicName;
+            updateLastModified();
+            fireModified("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
+    }
+
+    protected java.lang.String preparePublicName(java.lang.String publicName) {
+        // publicName = Str.removeUnreadableChars(publicName);
+        return publicName;
+    }
+
+    public final boolean isPublicNameSet() {
+        return this.publicName != null;
+    }
+
+    public final boolean isPublicName(java.lang.String publicName) {
+        if (this.publicName == null && publicName == null) return true;
+        return this.publicName != null && this.publicName.equals(publicName);
+    }
+
+    protected final void updatePublicName(Object value) {
+        setPublicName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - fullName
+    // -----------------------------------------------------------
+
+    private java.lang.String fullName;
+
+    public final java.lang.String getFullName() {
+        return fullName;
+    }
+
+    public final void setFullName(java.lang.String fullName) {
+        fullName = prepareFullName(fullName);
+        if (isFullName(fullName)) return;
+        this.fullName = fullName;
+            updateLastModified();
+            fireModified("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
+    }
+
+    private final void updateFullName(java.lang.String fullName) {
+        if (isFullName(fullName)) return;
+        this.fullName = fullName;
+            updateLastModified();
+            fireModified("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
+    }
+
+    protected java.lang.String prepareFullName(java.lang.String fullName) {
+        // fullName = Str.removeUnreadableChars(fullName);
+        return fullName;
+    }
+
+    public final boolean isFullNameSet() {
+        return this.fullName != null;
+    }
+
+    public final boolean isFullName(java.lang.String fullName) {
+        if (this.fullName == null && fullName == null) return true;
+        return this.fullName != null && this.fullName.equals(fullName);
+    }
+
+    protected final void updateFullName(Object value) {
+        setFullName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - admin
+    // -----------------------------------------------------------
+
+    private boolean admin;
+
+    public final boolean isAdmin() {
+        return admin;
+    }
+
+    public final void setAdmin(boolean admin) {
+        admin = prepareAdmin(admin);
+        if (isAdmin(admin)) return;
+        this.admin = admin;
+            updateLastModified();
+            fireModified("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
+    }
+
+    private final void updateAdmin(boolean admin) {
+        if (isAdmin(admin)) return;
+        this.admin = admin;
+            updateLastModified();
+            fireModified("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
+    }
+
+    protected boolean prepareAdmin(boolean admin) {
+        return admin;
+    }
+
+    public final boolean isAdmin(boolean admin) {
+        return this.admin == admin;
+    }
+
+    protected final void updateAdmin(Object value) {
+        setAdmin((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - emailVerified
+    // -----------------------------------------------------------
+
+    private boolean emailVerified;
+
+    public final boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public final void setEmailVerified(boolean emailVerified) {
+        emailVerified = prepareEmailVerified(emailVerified);
+        if (isEmailVerified(emailVerified)) return;
+        this.emailVerified = emailVerified;
+            updateLastModified();
+            fireModified("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
+    }
+
+    private final void updateEmailVerified(boolean emailVerified) {
+        if (isEmailVerified(emailVerified)) return;
+        this.emailVerified = emailVerified;
+            updateLastModified();
+            fireModified("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
+    }
+
+    protected boolean prepareEmailVerified(boolean emailVerified) {
+        return emailVerified;
+    }
+
+    public final boolean isEmailVerified(boolean emailVerified) {
+        return this.emailVerified == emailVerified;
+    }
+
+    protected final void updateEmailVerified(Object value) {
+        setEmailVerified((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - email
+    // -----------------------------------------------------------
+
+    private java.lang.String email;
+
+    public final java.lang.String getEmail() {
+        return email;
+    }
+
+    public final void setEmail(java.lang.String email) {
+        email = prepareEmail(email);
+        if (isEmail(email)) return;
+        if (email != null) {
+            Object existing = User.getByEmail(email);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
+        }
+        this.email = email;
+            updateLastModified();
+            fireModified("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
+    }
+
+    private final void updateEmail(java.lang.String email) {
+        if (isEmail(email)) return;
+        if (email != null) {
+            Object existing = User.getByEmail(email);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"email", email);
+        }
+        this.email = email;
+            updateLastModified();
+            fireModified("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
+    }
+
+    protected java.lang.String prepareEmail(java.lang.String email) {
+        // email = Str.removeUnreadableChars(email);
+        return email;
+    }
+
+    public final boolean isEmailSet() {
+        return this.email != null;
+    }
+
+    public final boolean isEmail(java.lang.String email) {
+        if (this.email == null && email == null) return true;
+        return this.email != null && this.email.equals(email);
+    }
+
+    protected final void updateEmail(Object value) {
+        setEmail((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - currentProject
+    // -----------------------------------------------------------
+
+    private String currentProjectId;
+
+    public final String getCurrentProjectId() {
+        return this.currentProjectId;
+    }
+
+    public final scrum.client.project.Project getCurrentProject() {
+        try {
+            return this.currentProjectId == null ? null : (scrum.client.project.Project) AEntity.getById(this.currentProjectId);
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            throw ex.setCallerInfo("User.currentProject");
+        }
+    }
+
+    public final void setCurrentProject(scrum.client.project.Project currentProject) {
+        currentProject = prepareCurrentProject(currentProject);
+        if (isCurrentProject(currentProject)) return;
+        setCurrentProjectId(currentProject == null ? null : currentProject.getId());
+    }
+
+    public final void setCurrentProjectId(String id) {
+        if (Utl.equals(currentProjectId, id)) return;
+        clearCurrentProjectBackReferenceCache(id, this.currentProjectId);
+        this.currentProjectId = id;
+            updateLastModified();
+            fireModified("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
+    }
+
+    private void clearCurrentProjectBackReferenceCache(String oldId, String newId) {
+        currentProjectBackReferencesCache.clear(oldId);
+        currentProjectBackReferencesCache.clear(newId);
+    }
+
+    private final void updateCurrentProjectId(String id) {
+        setCurrentProjectId(id);
+    }
+
+    protected scrum.client.project.Project prepareCurrentProject(scrum.client.project.Project currentProject) {
+        return currentProject;
+    }
+
+    protected void repairDeadCurrentProjectReference(String entityId) {
+        if (!isPersisted()) return;
+        if (this.currentProjectId == null || entityId.equals(this.currentProjectId)) {
+            setCurrentProject(null);
+        }
+    }
+
+    public final boolean isCurrentProjectSet() {
+        return this.currentProjectId != null;
+    }
+
+    public final boolean isCurrentProject(scrum.client.project.Project currentProject) {
+        if (this.currentProjectId == null && currentProject == null) return true;
+        return currentProject != null && currentProject.getId().equals(this.currentProjectId);
+    }
+
+
+    // -----------------------------------------------------------
+    // - color
+    // -----------------------------------------------------------
+
+    private java.lang.String color;
+
+    public final java.lang.String getColor() {
+        return color;
+    }
+
+    public final void setColor(java.lang.String color) {
+        color = prepareColor(color);
+        if (isColor(color)) return;
+        this.color = color;
+            updateLastModified();
+            fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+    }
+
+    private final void updateColor(java.lang.String color) {
+        if (isColor(color)) return;
+        this.color = color;
+            updateLastModified();
+            fireModified("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
+    }
+
+    protected java.lang.String prepareColor(java.lang.String color) {
+        // color = Str.removeUnreadableChars(color);
+        return color;
+    }
+
+    public final boolean isColorSet() {
+        return this.color != null;
+    }
+
+    public final boolean isColor(java.lang.String color) {
+        if (this.color == null && color == null) return true;
+        return this.color != null && this.color.equals(color);
+    }
+
+    protected final void updateColor(Object value) {
+        setColor((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - lastLoginDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.core.time.DateAndTime lastLoginDateAndTime;
+
+    public final ilarkesto.core.time.DateAndTime getLastLoginDateAndTime() {
+        return lastLoginDateAndTime;
+    }
+
+    public final void setLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
+        lastLoginDateAndTime = prepareLastLoginDateAndTime(lastLoginDateAndTime);
+        if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
+        this.lastLoginDateAndTime = lastLoginDateAndTime;
+            updateLastModified();
+            fireModified("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
+    }
+
+    private final void updateLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
+        if (isLastLoginDateAndTime(lastLoginDateAndTime)) return;
+        this.lastLoginDateAndTime = lastLoginDateAndTime;
+            updateLastModified();
+            fireModified("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
+    }
+
+    protected ilarkesto.core.time.DateAndTime prepareLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
+        return lastLoginDateAndTime;
+    }
+
+    public final boolean isLastLoginDateAndTimeSet() {
+        return this.lastLoginDateAndTime != null;
+    }
+
+    public final boolean isLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
+        if (this.lastLoginDateAndTime == null && lastLoginDateAndTime == null) return true;
+        return this.lastLoginDateAndTime != null && this.lastLoginDateAndTime.equals(lastLoginDateAndTime);
+    }
+
+    protected final void updateLastLoginDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.core.time.DateAndTime((String)value);
+        setLastLoginDateAndTime((ilarkesto.core.time.DateAndTime)value);
+    }
+
+    // -----------------------------------------------------------
+    // - registrationDateAndTime
+    // -----------------------------------------------------------
+
+    private ilarkesto.core.time.DateAndTime registrationDateAndTime;
+
+    public final ilarkesto.core.time.DateAndTime getRegistrationDateAndTime() {
+        return registrationDateAndTime;
+    }
+
+    public final void setRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
+        registrationDateAndTime = prepareRegistrationDateAndTime(registrationDateAndTime);
+        if (isRegistrationDateAndTime(registrationDateAndTime)) return;
+        this.registrationDateAndTime = registrationDateAndTime;
+            updateLastModified();
+            fireModified("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
+    }
+
+    private final void updateRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
+        if (isRegistrationDateAndTime(registrationDateAndTime)) return;
+        this.registrationDateAndTime = registrationDateAndTime;
+            updateLastModified();
+            fireModified("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
+    }
+
+    protected ilarkesto.core.time.DateAndTime prepareRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
+        return registrationDateAndTime;
+    }
+
+    public final boolean isRegistrationDateAndTimeSet() {
+        return this.registrationDateAndTime != null;
+    }
+
+    public final boolean isRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
+        if (this.registrationDateAndTime == null && registrationDateAndTime == null) return true;
+        return this.registrationDateAndTime != null && this.registrationDateAndTime.equals(registrationDateAndTime);
+    }
+
+    protected final void updateRegistrationDateAndTime(Object value) {
+        value = value == null ? null : new ilarkesto.core.time.DateAndTime((String)value);
+        setRegistrationDateAndTime((ilarkesto.core.time.DateAndTime)value);
+    }
+
+    // -----------------------------------------------------------
+    // - disabled
+    // -----------------------------------------------------------
+
+    private boolean disabled;
+
+    public final boolean isDisabled() {
+        return disabled;
+    }
+
+    public final void setDisabled(boolean disabled) {
+        disabled = prepareDisabled(disabled);
+        if (isDisabled(disabled)) return;
+        this.disabled = disabled;
+            updateLastModified();
+            fireModified("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
+    }
+
+    private final void updateDisabled(boolean disabled) {
+        if (isDisabled(disabled)) return;
+        this.disabled = disabled;
+            updateLastModified();
+            fireModified("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
+    }
+
+    protected boolean prepareDisabled(boolean disabled) {
+        return disabled;
+    }
+
+    public final boolean isDisabled(boolean disabled) {
+        return this.disabled == disabled;
+    }
+
+    protected final void updateDisabled(Object value) {
+        setDisabled((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideBlog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideBlog;
+
+    public final boolean isHideUserGuideBlog() {
+        return hideUserGuideBlog;
+    }
+
+    public final void setHideUserGuideBlog(boolean hideUserGuideBlog) {
+        hideUserGuideBlog = prepareHideUserGuideBlog(hideUserGuideBlog);
+        if (isHideUserGuideBlog(hideUserGuideBlog)) return;
+        this.hideUserGuideBlog = hideUserGuideBlog;
+            updateLastModified();
+            fireModified("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
+    }
+
+    private final void updateHideUserGuideBlog(boolean hideUserGuideBlog) {
+        if (isHideUserGuideBlog(hideUserGuideBlog)) return;
+        this.hideUserGuideBlog = hideUserGuideBlog;
+            updateLastModified();
+            fireModified("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
+    }
+
+    protected boolean prepareHideUserGuideBlog(boolean hideUserGuideBlog) {
+        return hideUserGuideBlog;
+    }
+
+    public final boolean isHideUserGuideBlog(boolean hideUserGuideBlog) {
+        return this.hideUserGuideBlog == hideUserGuideBlog;
+    }
+
+    protected final void updateHideUserGuideBlog(Object value) {
+        setHideUserGuideBlog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCalendar
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideCalendar;
+
+    public final boolean isHideUserGuideCalendar() {
+        return hideUserGuideCalendar;
+    }
+
+    public final void setHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        hideUserGuideCalendar = prepareHideUserGuideCalendar(hideUserGuideCalendar);
+        if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
+        this.hideUserGuideCalendar = hideUserGuideCalendar;
+            updateLastModified();
+            fireModified("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
+    }
+
+    private final void updateHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        if (isHideUserGuideCalendar(hideUserGuideCalendar)) return;
+        this.hideUserGuideCalendar = hideUserGuideCalendar;
+            updateLastModified();
+            fireModified("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
+    }
+
+    protected boolean prepareHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        return hideUserGuideCalendar;
+    }
+
+    public final boolean isHideUserGuideCalendar(boolean hideUserGuideCalendar) {
+        return this.hideUserGuideCalendar == hideUserGuideCalendar;
+    }
+
+    protected final void updateHideUserGuideCalendar(Object value) {
+        setHideUserGuideCalendar((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideFiles
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideFiles;
+
+    public final boolean isHideUserGuideFiles() {
+        return hideUserGuideFiles;
+    }
+
+    public final void setHideUserGuideFiles(boolean hideUserGuideFiles) {
+        hideUserGuideFiles = prepareHideUserGuideFiles(hideUserGuideFiles);
+        if (isHideUserGuideFiles(hideUserGuideFiles)) return;
+        this.hideUserGuideFiles = hideUserGuideFiles;
+            updateLastModified();
+            fireModified("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
+    }
+
+    private final void updateHideUserGuideFiles(boolean hideUserGuideFiles) {
+        if (isHideUserGuideFiles(hideUserGuideFiles)) return;
+        this.hideUserGuideFiles = hideUserGuideFiles;
+            updateLastModified();
+            fireModified("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
+    }
+
+    protected boolean prepareHideUserGuideFiles(boolean hideUserGuideFiles) {
+        return hideUserGuideFiles;
+    }
+
+    public final boolean isHideUserGuideFiles(boolean hideUserGuideFiles) {
+        return this.hideUserGuideFiles == hideUserGuideFiles;
+    }
+
+    protected final void updateHideUserGuideFiles(Object value) {
+        setHideUserGuideFiles((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideForum
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideForum;
+
+    public final boolean isHideUserGuideForum() {
+        return hideUserGuideForum;
+    }
+
+    public final void setHideUserGuideForum(boolean hideUserGuideForum) {
+        hideUserGuideForum = prepareHideUserGuideForum(hideUserGuideForum);
+        if (isHideUserGuideForum(hideUserGuideForum)) return;
+        this.hideUserGuideForum = hideUserGuideForum;
+            updateLastModified();
+            fireModified("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
+    }
+
+    private final void updateHideUserGuideForum(boolean hideUserGuideForum) {
+        if (isHideUserGuideForum(hideUserGuideForum)) return;
+        this.hideUserGuideForum = hideUserGuideForum;
+            updateLastModified();
+            fireModified("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
+    }
+
+    protected boolean prepareHideUserGuideForum(boolean hideUserGuideForum) {
+        return hideUserGuideForum;
+    }
+
+    public final boolean isHideUserGuideForum(boolean hideUserGuideForum) {
+        return this.hideUserGuideForum == hideUserGuideForum;
+    }
+
+    protected final void updateHideUserGuideForum(Object value) {
+        setHideUserGuideForum((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideImpediments
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideImpediments;
+
+    public final boolean isHideUserGuideImpediments() {
+        return hideUserGuideImpediments;
+    }
+
+    public final void setHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        hideUserGuideImpediments = prepareHideUserGuideImpediments(hideUserGuideImpediments);
+        if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
+        this.hideUserGuideImpediments = hideUserGuideImpediments;
+            updateLastModified();
+            fireModified("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
+    }
+
+    private final void updateHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        if (isHideUserGuideImpediments(hideUserGuideImpediments)) return;
+        this.hideUserGuideImpediments = hideUserGuideImpediments;
+            updateLastModified();
+            fireModified("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
+    }
+
+    protected boolean prepareHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        return hideUserGuideImpediments;
+    }
+
+    public final boolean isHideUserGuideImpediments(boolean hideUserGuideImpediments) {
+        return this.hideUserGuideImpediments == hideUserGuideImpediments;
+    }
+
+    protected final void updateHideUserGuideImpediments(Object value) {
+        setHideUserGuideImpediments((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideIssues
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideIssues;
+
+    public final boolean isHideUserGuideIssues() {
+        return hideUserGuideIssues;
+    }
+
+    public final void setHideUserGuideIssues(boolean hideUserGuideIssues) {
+        hideUserGuideIssues = prepareHideUserGuideIssues(hideUserGuideIssues);
+        if (isHideUserGuideIssues(hideUserGuideIssues)) return;
+        this.hideUserGuideIssues = hideUserGuideIssues;
+            updateLastModified();
+            fireModified("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
+    }
+
+    private final void updateHideUserGuideIssues(boolean hideUserGuideIssues) {
+        if (isHideUserGuideIssues(hideUserGuideIssues)) return;
+        this.hideUserGuideIssues = hideUserGuideIssues;
+            updateLastModified();
+            fireModified("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
+    }
+
+    protected boolean prepareHideUserGuideIssues(boolean hideUserGuideIssues) {
+        return hideUserGuideIssues;
+    }
+
+    public final boolean isHideUserGuideIssues(boolean hideUserGuideIssues) {
+        return this.hideUserGuideIssues == hideUserGuideIssues;
+    }
+
+    protected final void updateHideUserGuideIssues(Object value) {
+        setHideUserGuideIssues((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideJournal
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideJournal;
+
+    public final boolean isHideUserGuideJournal() {
+        return hideUserGuideJournal;
+    }
+
+    public final void setHideUserGuideJournal(boolean hideUserGuideJournal) {
+        hideUserGuideJournal = prepareHideUserGuideJournal(hideUserGuideJournal);
+        if (isHideUserGuideJournal(hideUserGuideJournal)) return;
+        this.hideUserGuideJournal = hideUserGuideJournal;
+            updateLastModified();
+            fireModified("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
+    }
+
+    private final void updateHideUserGuideJournal(boolean hideUserGuideJournal) {
+        if (isHideUserGuideJournal(hideUserGuideJournal)) return;
+        this.hideUserGuideJournal = hideUserGuideJournal;
+            updateLastModified();
+            fireModified("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
+    }
+
+    protected boolean prepareHideUserGuideJournal(boolean hideUserGuideJournal) {
+        return hideUserGuideJournal;
+    }
+
+    public final boolean isHideUserGuideJournal(boolean hideUserGuideJournal) {
+        return this.hideUserGuideJournal == hideUserGuideJournal;
+    }
+
+    protected final void updateHideUserGuideJournal(Object value) {
+        setHideUserGuideJournal((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideNextSprint
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideNextSprint;
+
+    public final boolean isHideUserGuideNextSprint() {
+        return hideUserGuideNextSprint;
+    }
+
+    public final void setHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        hideUserGuideNextSprint = prepareHideUserGuideNextSprint(hideUserGuideNextSprint);
+        if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
+        this.hideUserGuideNextSprint = hideUserGuideNextSprint;
+            updateLastModified();
+            fireModified("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
+    }
+
+    private final void updateHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return;
+        this.hideUserGuideNextSprint = hideUserGuideNextSprint;
+            updateLastModified();
+            fireModified("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
+    }
+
+    protected boolean prepareHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        return hideUserGuideNextSprint;
+    }
+
+    public final boolean isHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
+        return this.hideUserGuideNextSprint == hideUserGuideNextSprint;
+    }
+
+    protected final void updateHideUserGuideNextSprint(Object value) {
+        setHideUserGuideNextSprint((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideProductBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideProductBacklog;
+
+    public final boolean isHideUserGuideProductBacklog() {
+        return hideUserGuideProductBacklog;
+    }
+
+    public final void setHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        hideUserGuideProductBacklog = prepareHideUserGuideProductBacklog(hideUserGuideProductBacklog);
+        if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
+        this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
+    }
+
+    private final void updateHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return;
+        this.hideUserGuideProductBacklog = hideUserGuideProductBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
+    }
+
+    protected boolean prepareHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        return hideUserGuideProductBacklog;
+    }
+
+    public final boolean isHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
+        return this.hideUserGuideProductBacklog == hideUserGuideProductBacklog;
+    }
+
+    protected final void updateHideUserGuideProductBacklog(Object value) {
+        setHideUserGuideProductBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideCourtroom
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideCourtroom;
+
+    public final boolean isHideUserGuideCourtroom() {
+        return hideUserGuideCourtroom;
+    }
+
+    public final void setHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        hideUserGuideCourtroom = prepareHideUserGuideCourtroom(hideUserGuideCourtroom);
+        if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
+        this.hideUserGuideCourtroom = hideUserGuideCourtroom;
+            updateLastModified();
+            fireModified("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
+    }
+
+    private final void updateHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return;
+        this.hideUserGuideCourtroom = hideUserGuideCourtroom;
+            updateLastModified();
+            fireModified("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
+    }
+
+    protected boolean prepareHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        return hideUserGuideCourtroom;
+    }
+
+    public final boolean isHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
+        return this.hideUserGuideCourtroom == hideUserGuideCourtroom;
+    }
+
+    protected final void updateHideUserGuideCourtroom(Object value) {
+        setHideUserGuideCourtroom((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideQualityBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideQualityBacklog;
+
+    public final boolean isHideUserGuideQualityBacklog() {
+        return hideUserGuideQualityBacklog;
+    }
+
+    public final void setHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        hideUserGuideQualityBacklog = prepareHideUserGuideQualityBacklog(hideUserGuideQualityBacklog);
+        if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
+        this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
+    }
+
+    private final void updateHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return;
+        this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
+    }
+
+    protected boolean prepareHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        return hideUserGuideQualityBacklog;
+    }
+
+    public final boolean isHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
+        return this.hideUserGuideQualityBacklog == hideUserGuideQualityBacklog;
+    }
+
+    protected final void updateHideUserGuideQualityBacklog(Object value) {
+        setHideUserGuideQualityBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideReleases
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideReleases;
+
+    public final boolean isHideUserGuideReleases() {
+        return hideUserGuideReleases;
+    }
+
+    public final void setHideUserGuideReleases(boolean hideUserGuideReleases) {
+        hideUserGuideReleases = prepareHideUserGuideReleases(hideUserGuideReleases);
+        if (isHideUserGuideReleases(hideUserGuideReleases)) return;
+        this.hideUserGuideReleases = hideUserGuideReleases;
+            updateLastModified();
+            fireModified("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
+    }
+
+    private final void updateHideUserGuideReleases(boolean hideUserGuideReleases) {
+        if (isHideUserGuideReleases(hideUserGuideReleases)) return;
+        this.hideUserGuideReleases = hideUserGuideReleases;
+            updateLastModified();
+            fireModified("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
+    }
+
+    protected boolean prepareHideUserGuideReleases(boolean hideUserGuideReleases) {
+        return hideUserGuideReleases;
+    }
+
+    public final boolean isHideUserGuideReleases(boolean hideUserGuideReleases) {
+        return this.hideUserGuideReleases == hideUserGuideReleases;
+    }
+
+    protected final void updateHideUserGuideReleases(Object value) {
+        setHideUserGuideReleases((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideRisks
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideRisks;
+
+    public final boolean isHideUserGuideRisks() {
+        return hideUserGuideRisks;
+    }
+
+    public final void setHideUserGuideRisks(boolean hideUserGuideRisks) {
+        hideUserGuideRisks = prepareHideUserGuideRisks(hideUserGuideRisks);
+        if (isHideUserGuideRisks(hideUserGuideRisks)) return;
+        this.hideUserGuideRisks = hideUserGuideRisks;
+            updateLastModified();
+            fireModified("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
+    }
+
+    private final void updateHideUserGuideRisks(boolean hideUserGuideRisks) {
+        if (isHideUserGuideRisks(hideUserGuideRisks)) return;
+        this.hideUserGuideRisks = hideUserGuideRisks;
+            updateLastModified();
+            fireModified("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
+    }
+
+    protected boolean prepareHideUserGuideRisks(boolean hideUserGuideRisks) {
+        return hideUserGuideRisks;
+    }
+
+    public final boolean isHideUserGuideRisks(boolean hideUserGuideRisks) {
+        return this.hideUserGuideRisks == hideUserGuideRisks;
+    }
+
+    protected final void updateHideUserGuideRisks(Object value) {
+        setHideUserGuideRisks((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideSprintBacklog
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideSprintBacklog;
+
+    public final boolean isHideUserGuideSprintBacklog() {
+        return hideUserGuideSprintBacklog;
+    }
+
+    public final void setHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        hideUserGuideSprintBacklog = prepareHideUserGuideSprintBacklog(hideUserGuideSprintBacklog);
+        if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
+        this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
+    }
+
+    private final void updateHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return;
+        this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog;
+            updateLastModified();
+            fireModified("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
+    }
+
+    protected boolean prepareHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        return hideUserGuideSprintBacklog;
+    }
+
+    public final boolean isHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
+        return this.hideUserGuideSprintBacklog == hideUserGuideSprintBacklog;
+    }
+
+    protected final void updateHideUserGuideSprintBacklog(Object value) {
+        setHideUserGuideSprintBacklog((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - hideUserGuideWhiteboard
+    // -----------------------------------------------------------
+
+    private boolean hideUserGuideWhiteboard;
+
+    public final boolean isHideUserGuideWhiteboard() {
+        return hideUserGuideWhiteboard;
+    }
+
+    public final void setHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        hideUserGuideWhiteboard = prepareHideUserGuideWhiteboard(hideUserGuideWhiteboard);
+        if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
+        this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
+            updateLastModified();
+            fireModified("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
+    }
+
+    private final void updateHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return;
+        this.hideUserGuideWhiteboard = hideUserGuideWhiteboard;
+            updateLastModified();
+            fireModified("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
+    }
+
+    protected boolean prepareHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        return hideUserGuideWhiteboard;
+    }
+
+    public final boolean isHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
+        return this.hideUserGuideWhiteboard == hideUserGuideWhiteboard;
+    }
+
+    protected final void updateHideUserGuideWhiteboard(Object value) {
+        setHideUserGuideWhiteboard((Boolean)value);
+    }
+
+    // -----------------------------------------------------------
+    // - loginToken
+    // -----------------------------------------------------------
+
+    private java.lang.String loginToken;
+
+    public final java.lang.String getLoginToken() {
+        return loginToken;
+    }
+
+    public final void setLoginToken(java.lang.String loginToken) {
+        loginToken = prepareLoginToken(loginToken);
+        if (isLoginToken(loginToken)) return;
+        if (loginToken != null) {
+            Object existing = User.getByLoginToken(loginToken);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
+        }
+        this.loginToken = loginToken;
+            updateLastModified();
+            fireModified("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
+    }
+
+    private final void updateLoginToken(java.lang.String loginToken) {
+        if (isLoginToken(loginToken)) return;
+        if (loginToken != null) {
+            Object existing = User.getByLoginToken(loginToken);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"loginToken", loginToken);
+        }
+        this.loginToken = loginToken;
+            updateLastModified();
+            fireModified("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
+    }
+
+    protected java.lang.String prepareLoginToken(java.lang.String loginToken) {
+        // loginToken = Str.removeUnreadableChars(loginToken);
+        return loginToken;
+    }
+
+    public final boolean isLoginTokenSet() {
+        return this.loginToken != null;
+    }
+
+    public final boolean isLoginToken(java.lang.String loginToken) {
+        if (this.loginToken == null && loginToken == null) return true;
+        return this.loginToken != null && this.loginToken.equals(loginToken);
+    }
+
+    protected final void updateLoginToken(Object value) {
+        setLoginToken((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - openId
+    // -----------------------------------------------------------
+
+    private java.lang.String openId;
+
+    public final java.lang.String getOpenId() {
+        return openId;
+    }
+
+    public final void setOpenId(java.lang.String openId) {
+        openId = prepareOpenId(openId);
+        if (isOpenId(openId)) return;
+        if (openId != null) {
+            Object existing = User.getByOpenId(openId);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
+        }
+        this.openId = openId;
+            updateLastModified();
+            fireModified("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
+    }
+
+    private final void updateOpenId(java.lang.String openId) {
+        if (isOpenId(openId)) return;
+        if (openId != null) {
+            Object existing = User.getByOpenId(openId);
+            if (existing != null && existing != this) throw new ilarkesto.core.persistance.UniqueFieldConstraintException("User" ,"openId", openId);
+        }
+        this.openId = openId;
+            updateLastModified();
+            fireModified("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
+    }
+
+    protected java.lang.String prepareOpenId(java.lang.String openId) {
+        // openId = Str.removeUnreadableChars(openId);
+        return openId;
+    }
+
+    public final boolean isOpenIdSet() {
+        return this.openId != null;
+    }
+
+    public final boolean isOpenId(java.lang.String openId) {
+        if (this.openId == null && openId == null) return true;
+        return this.openId != null && this.openId.equals(openId);
+    }
+
+    protected final void updateOpenId(Object value) {
+        setOpenId((java.lang.String)value);
+    }
+
+    public void updateProperties(Map<String, String> properties) {
+        super.updateProperties(properties);
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            String property = entry.getKey();
+            if (property.equals("id")) continue;
+            String value = entry.getValue();
+            if (property.equals("name")) updateName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("publicName")) updatePublicName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("fullName")) updateFullName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("admin")) updateAdmin(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("emailVerified")) updateEmailVerified(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("email")) updateEmail(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("currentProjectId")) updateCurrentProjectId(ilarkesto.core.persistance.Persistence.parsePropertyReference(value));
+            if (property.equals("color")) updateColor(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("lastLoginDateAndTime")) updateLastLoginDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("registrationDateAndTime")) updateRegistrationDateAndTime(ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value));
+            if (property.equals("disabled")) updateDisabled(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideBlog")) updateHideUserGuideBlog(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideCalendar")) updateHideUserGuideCalendar(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideFiles")) updateHideUserGuideFiles(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideForum")) updateHideUserGuideForum(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideImpediments")) updateHideUserGuideImpediments(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideIssues")) updateHideUserGuideIssues(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideJournal")) updateHideUserGuideJournal(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideNextSprint")) updateHideUserGuideNextSprint(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideProductBacklog")) updateHideUserGuideProductBacklog(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideCourtroom")) updateHideUserGuideCourtroom(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideQualityBacklog")) updateHideUserGuideQualityBacklog(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideReleases")) updateHideUserGuideReleases(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideRisks")) updateHideUserGuideRisks(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideSprintBacklog")) updateHideUserGuideSprintBacklog(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("hideUserGuideWhiteboard")) updateHideUserGuideWhiteboard(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));
+            if (property.equals("loginToken")) updateLoginToken(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("openId")) updateOpenId(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+        }
+    }
+
+    // --- ensure integrity ---
+    @Override
+    public void onEnsureIntegrity() {
+        super.onEnsureIntegrity();
+        try {
+            getCurrentProject();
+        } catch (ilarkesto.core.persistance.EntityDoesNotExistException ex) {
+            LOG.info("Repairing dead currentProject reference");
+            repairDeadCurrentProjectReference(this.currentProjectId);
+        }
+        Collection<scrum.client.project.Project> project = getProjects();
+        Collection<scrum.client.project.Project> projectWithAdmins = getProjectWithAdminss();
+        Collection<scrum.client.project.Project> projectWithProductOwners = getProjectWithProductOwnerss();
+        Collection<scrum.client.project.Project> projectWithScrumMasters = getProjectWithScrumMasterss();
+        Collection<scrum.client.project.Project> projectWithTeamMembers = getProjectWithTeamMemberss();
+        Collection<scrum.client.sprint.Sprint> sprint = getSprints();
+        Collection<scrum.client.sprint.Sprint> sprintWithScrumMasters = getSprintWithScrumMasterss();
+        Collection<scrum.client.sprint.Sprint> sprintWithTeamMembers = getSprintWithTeamMemberss();
+        Collection<scrum.client.collaboration.Emoticon> emoticon = getEmoticons();
+        Collection<scrum.client.admin.ProjectUserConfig> projectUserConfig = getProjectUserConfigs();
+        Collection<scrum.client.issues.Issue> issue = getIssues();
+        Collection<scrum.client.issues.Issue> issueWithOwner = getIssueWithOwners();
+        Collection<scrum.client.sprint.Task> task = getTasks();
+        Collection<scrum.client.journal.Change> change = getChanges();
+        Collection<scrum.client.collaboration.Comment> comment = getComments();
+        Collection<scrum.client.collaboration.ChatMessage> chatMessage = getChatMessages();
+        Collection<scrum.client.pr.BlogEntry> blogEntry = getBlogEntrys();
+        Collection<scrum.client.estimation.RequirementEstimationVote> requirementEstimationVote = getRequirementEstimationVotes();
+        Collection<scrum.client.collaboration.Emoticon> emoticonWithOwner = getEmoticonWithOwners();
+    }
+
+    // --- PLUGIN: GwtEntityPropertyEditorClassGeneratorPlugin ---
 
     private transient NameModel nameModel;
 
@@ -105,25 +1826,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- publicName ---
-
-    private java.lang.String publicName ;
-
-    public final java.lang.String getPublicName() {
-        return this.publicName ;
-    }
-
-    public final User setPublicName(java.lang.String publicName) {
-        if (isPublicName(publicName)) return (User)this;
-        this.publicName = publicName ;
-        propertyChanged("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
-        return (User)this;
-    }
-
-    public final boolean isPublicName(java.lang.String publicName) {
-        return ilarkesto.core.base.Utl.equals(this.publicName, publicName);
     }
 
     private transient PublicNameModel publicNameModel;
@@ -162,25 +1864,6 @@ public abstract class GUser
 
     }
 
-    // --- fullName ---
-
-    private java.lang.String fullName ;
-
-    public final java.lang.String getFullName() {
-        return this.fullName ;
-    }
-
-    public final User setFullName(java.lang.String fullName) {
-        if (isFullName(fullName)) return (User)this;
-        this.fullName = fullName ;
-        propertyChanged("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
-        return (User)this;
-    }
-
-    public final boolean isFullName(java.lang.String fullName) {
-        return ilarkesto.core.base.Utl.equals(this.fullName, fullName);
-    }
-
     private transient FullNameModel fullNameModel;
 
     public FullNameModel getFullNameModel() {
@@ -215,25 +1898,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- admin ---
-
-    private boolean admin ;
-
-    public final boolean isAdmin() {
-        return this.admin ;
-    }
-
-    public final User setAdmin(boolean admin) {
-        if (isAdmin(admin)) return (User)this;
-        this.admin = admin ;
-        propertyChanged("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
-        return (User)this;
-    }
-
-    public final boolean isAdmin(boolean admin) {
-        return ilarkesto.core.base.Utl.equals(this.admin, admin);
     }
 
     private transient AdminModel adminModel;
@@ -274,25 +1938,6 @@ public abstract class GUser
 
     }
 
-    // --- emailVerified ---
-
-    private boolean emailVerified ;
-
-    public final boolean isEmailVerified() {
-        return this.emailVerified ;
-    }
-
-    public final User setEmailVerified(boolean emailVerified) {
-        if (isEmailVerified(emailVerified)) return (User)this;
-        this.emailVerified = emailVerified ;
-        propertyChanged("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
-        return (User)this;
-    }
-
-    public final boolean isEmailVerified(boolean emailVerified) {
-        return ilarkesto.core.base.Utl.equals(this.emailVerified, emailVerified);
-    }
-
     private transient EmailVerifiedModel emailVerifiedModel;
 
     public EmailVerifiedModel getEmailVerifiedModel() {
@@ -331,26 +1976,6 @@ public abstract class GUser
 
     }
 
-    // --- email ---
-
-    private java.lang.String email ;
-
-    public final java.lang.String getEmail() {
-        return this.email ;
-    }
-
-    public final User setEmail(java.lang.String email) {
-        if (isEmail(email)) return (User)this;
-        if (email != null && getDao().getUserByEmail(email) != null) throw new RuntimeException("\"" + email + "\" already exists.");
-        this.email = email ;
-        propertyChanged("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
-        return (User)this;
-    }
-
-    public final boolean isEmail(java.lang.String email) {
-        return ilarkesto.core.base.Utl.equals(this.email, email);
-    }
-
     private transient EmailModel emailModel;
 
     public EmailModel getEmailModel() {
@@ -383,51 +2008,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- currentProject ---
-
-    private String currentProjectId;
-
-    public final scrum.client.project.Project getCurrentProject() {
-        if (currentProjectId == null) return null;
-        return getDao().getProject(this.currentProjectId);
-    }
-
-    public final boolean isCurrentProjectSet() {
-        return currentProjectId != null;
-    }
-
-    public final User setCurrentProject(scrum.client.project.Project currentProject) {
-        String id = currentProject == null ? null : currentProject.getId();
-        if (ilarkesto.core.base.Utl.equals(this.currentProjectId, id)) return (User) this;
-        this.currentProjectId = id;
-        propertyChanged("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
-        return (User)this;
-    }
-
-    public final boolean isCurrentProject(scrum.client.project.Project currentProject) {
-        String id = currentProject==null ? null : currentProject.getId();
-        return ilarkesto.core.base.Utl.equals(this.currentProjectId, id);
-    }
-
-    // --- color ---
-
-    private java.lang.String color ;
-
-    public final java.lang.String getColor() {
-        return this.color ;
-    }
-
-    public final User setColor(java.lang.String color) {
-        if (isColor(color)) return (User)this;
-        this.color = color ;
-        propertyChanged("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
-        return (User)this;
-    }
-
-    public final boolean isColor(java.lang.String color) {
-        return ilarkesto.core.base.Utl.equals(this.color, color);
     }
 
     private transient ColorModel colorModel;
@@ -464,25 +2044,6 @@ public abstract class GUser
 
     }
 
-    // --- lastLoginDateAndTime ---
-
-    private ilarkesto.core.time.DateAndTime lastLoginDateAndTime ;
-
-    public final ilarkesto.core.time.DateAndTime getLastLoginDateAndTime() {
-        return this.lastLoginDateAndTime ;
-    }
-
-    public final User setLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
-        if (isLastLoginDateAndTime(lastLoginDateAndTime)) return (User)this;
-        this.lastLoginDateAndTime = lastLoginDateAndTime ;
-        propertyChanged("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
-        return (User)this;
-    }
-
-    public final boolean isLastLoginDateAndTime(ilarkesto.core.time.DateAndTime lastLoginDateAndTime) {
-        return ilarkesto.core.base.Utl.equals(this.lastLoginDateAndTime, lastLoginDateAndTime);
-    }
-
     private transient LastLoginDateAndTimeModel lastLoginDateAndTimeModel;
 
     public LastLoginDateAndTimeModel getLastLoginDateAndTimeModel() {
@@ -517,25 +2078,6 @@ public abstract class GUser
 
     }
 
-    // --- registrationDateAndTime ---
-
-    private ilarkesto.core.time.DateAndTime registrationDateAndTime ;
-
-    public final ilarkesto.core.time.DateAndTime getRegistrationDateAndTime() {
-        return this.registrationDateAndTime ;
-    }
-
-    public final User setRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
-        if (isRegistrationDateAndTime(registrationDateAndTime)) return (User)this;
-        this.registrationDateAndTime = registrationDateAndTime ;
-        propertyChanged("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
-        return (User)this;
-    }
-
-    public final boolean isRegistrationDateAndTime(ilarkesto.core.time.DateAndTime registrationDateAndTime) {
-        return ilarkesto.core.base.Utl.equals(this.registrationDateAndTime, registrationDateAndTime);
-    }
-
     private transient RegistrationDateAndTimeModel registrationDateAndTimeModel;
 
     public RegistrationDateAndTimeModel getRegistrationDateAndTimeModel() {
@@ -568,25 +2110,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- disabled ---
-
-    private boolean disabled ;
-
-    public final boolean isDisabled() {
-        return this.disabled ;
-    }
-
-    public final User setDisabled(boolean disabled) {
-        if (isDisabled(disabled)) return (User)this;
-        this.disabled = disabled ;
-        propertyChanged("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
-        return (User)this;
-    }
-
-    public final boolean isDisabled(boolean disabled) {
-        return ilarkesto.core.base.Utl.equals(this.disabled, disabled);
     }
 
     private transient DisabledModel disabledModel;
@@ -627,25 +2150,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideBlog ---
-
-    private boolean hideUserGuideBlog ;
-
-    public final boolean isHideUserGuideBlog() {
-        return this.hideUserGuideBlog ;
-    }
-
-    public final User setHideUserGuideBlog(boolean hideUserGuideBlog) {
-        if (isHideUserGuideBlog(hideUserGuideBlog)) return (User)this;
-        this.hideUserGuideBlog = hideUserGuideBlog ;
-        propertyChanged("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideBlog(boolean hideUserGuideBlog) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideBlog, hideUserGuideBlog);
-    }
-
     private transient HideUserGuideBlogModel hideUserGuideBlogModel;
 
     public HideUserGuideBlogModel getHideUserGuideBlogModel() {
@@ -682,25 +2186,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideCalendar ---
-
-    private boolean hideUserGuideCalendar ;
-
-    public final boolean isHideUserGuideCalendar() {
-        return this.hideUserGuideCalendar ;
-    }
-
-    public final User setHideUserGuideCalendar(boolean hideUserGuideCalendar) {
-        if (isHideUserGuideCalendar(hideUserGuideCalendar)) return (User)this;
-        this.hideUserGuideCalendar = hideUserGuideCalendar ;
-        propertyChanged("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideCalendar(boolean hideUserGuideCalendar) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideCalendar, hideUserGuideCalendar);
     }
 
     private transient HideUserGuideCalendarModel hideUserGuideCalendarModel;
@@ -741,25 +2226,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideFiles ---
-
-    private boolean hideUserGuideFiles ;
-
-    public final boolean isHideUserGuideFiles() {
-        return this.hideUserGuideFiles ;
-    }
-
-    public final User setHideUserGuideFiles(boolean hideUserGuideFiles) {
-        if (isHideUserGuideFiles(hideUserGuideFiles)) return (User)this;
-        this.hideUserGuideFiles = hideUserGuideFiles ;
-        propertyChanged("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideFiles(boolean hideUserGuideFiles) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideFiles, hideUserGuideFiles);
-    }
-
     private transient HideUserGuideFilesModel hideUserGuideFilesModel;
 
     public HideUserGuideFilesModel getHideUserGuideFilesModel() {
@@ -796,25 +2262,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideForum ---
-
-    private boolean hideUserGuideForum ;
-
-    public final boolean isHideUserGuideForum() {
-        return this.hideUserGuideForum ;
-    }
-
-    public final User setHideUserGuideForum(boolean hideUserGuideForum) {
-        if (isHideUserGuideForum(hideUserGuideForum)) return (User)this;
-        this.hideUserGuideForum = hideUserGuideForum ;
-        propertyChanged("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideForum(boolean hideUserGuideForum) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideForum, hideUserGuideForum);
     }
 
     private transient HideUserGuideForumModel hideUserGuideForumModel;
@@ -855,25 +2302,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideImpediments ---
-
-    private boolean hideUserGuideImpediments ;
-
-    public final boolean isHideUserGuideImpediments() {
-        return this.hideUserGuideImpediments ;
-    }
-
-    public final User setHideUserGuideImpediments(boolean hideUserGuideImpediments) {
-        if (isHideUserGuideImpediments(hideUserGuideImpediments)) return (User)this;
-        this.hideUserGuideImpediments = hideUserGuideImpediments ;
-        propertyChanged("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideImpediments(boolean hideUserGuideImpediments) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideImpediments, hideUserGuideImpediments);
-    }
-
     private transient HideUserGuideImpedimentsModel hideUserGuideImpedimentsModel;
 
     public HideUserGuideImpedimentsModel getHideUserGuideImpedimentsModel() {
@@ -910,25 +2338,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideIssues ---
-
-    private boolean hideUserGuideIssues ;
-
-    public final boolean isHideUserGuideIssues() {
-        return this.hideUserGuideIssues ;
-    }
-
-    public final User setHideUserGuideIssues(boolean hideUserGuideIssues) {
-        if (isHideUserGuideIssues(hideUserGuideIssues)) return (User)this;
-        this.hideUserGuideIssues = hideUserGuideIssues ;
-        propertyChanged("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideIssues(boolean hideUserGuideIssues) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideIssues, hideUserGuideIssues);
     }
 
     private transient HideUserGuideIssuesModel hideUserGuideIssuesModel;
@@ -969,25 +2378,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideJournal ---
-
-    private boolean hideUserGuideJournal ;
-
-    public final boolean isHideUserGuideJournal() {
-        return this.hideUserGuideJournal ;
-    }
-
-    public final User setHideUserGuideJournal(boolean hideUserGuideJournal) {
-        if (isHideUserGuideJournal(hideUserGuideJournal)) return (User)this;
-        this.hideUserGuideJournal = hideUserGuideJournal ;
-        propertyChanged("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideJournal(boolean hideUserGuideJournal) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideJournal, hideUserGuideJournal);
-    }
-
     private transient HideUserGuideJournalModel hideUserGuideJournalModel;
 
     public HideUserGuideJournalModel getHideUserGuideJournalModel() {
@@ -1024,25 +2414,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideNextSprint ---
-
-    private boolean hideUserGuideNextSprint ;
-
-    public final boolean isHideUserGuideNextSprint() {
-        return this.hideUserGuideNextSprint ;
-    }
-
-    public final User setHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
-        if (isHideUserGuideNextSprint(hideUserGuideNextSprint)) return (User)this;
-        this.hideUserGuideNextSprint = hideUserGuideNextSprint ;
-        propertyChanged("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideNextSprint(boolean hideUserGuideNextSprint) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideNextSprint, hideUserGuideNextSprint);
     }
 
     private transient HideUserGuideNextSprintModel hideUserGuideNextSprintModel;
@@ -1083,25 +2454,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideProductBacklog ---
-
-    private boolean hideUserGuideProductBacklog ;
-
-    public final boolean isHideUserGuideProductBacklog() {
-        return this.hideUserGuideProductBacklog ;
-    }
-
-    public final User setHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
-        if (isHideUserGuideProductBacklog(hideUserGuideProductBacklog)) return (User)this;
-        this.hideUserGuideProductBacklog = hideUserGuideProductBacklog ;
-        propertyChanged("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideProductBacklog(boolean hideUserGuideProductBacklog) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideProductBacklog, hideUserGuideProductBacklog);
-    }
-
     private transient HideUserGuideProductBacklogModel hideUserGuideProductBacklogModel;
 
     public HideUserGuideProductBacklogModel getHideUserGuideProductBacklogModel() {
@@ -1138,25 +2490,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideCourtroom ---
-
-    private boolean hideUserGuideCourtroom ;
-
-    public final boolean isHideUserGuideCourtroom() {
-        return this.hideUserGuideCourtroom ;
-    }
-
-    public final User setHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
-        if (isHideUserGuideCourtroom(hideUserGuideCourtroom)) return (User)this;
-        this.hideUserGuideCourtroom = hideUserGuideCourtroom ;
-        propertyChanged("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideCourtroom(boolean hideUserGuideCourtroom) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideCourtroom, hideUserGuideCourtroom);
     }
 
     private transient HideUserGuideCourtroomModel hideUserGuideCourtroomModel;
@@ -1197,25 +2530,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideQualityBacklog ---
-
-    private boolean hideUserGuideQualityBacklog ;
-
-    public final boolean isHideUserGuideQualityBacklog() {
-        return this.hideUserGuideQualityBacklog ;
-    }
-
-    public final User setHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
-        if (isHideUserGuideQualityBacklog(hideUserGuideQualityBacklog)) return (User)this;
-        this.hideUserGuideQualityBacklog = hideUserGuideQualityBacklog ;
-        propertyChanged("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideQualityBacklog(boolean hideUserGuideQualityBacklog) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideQualityBacklog, hideUserGuideQualityBacklog);
-    }
-
     private transient HideUserGuideQualityBacklogModel hideUserGuideQualityBacklogModel;
 
     public HideUserGuideQualityBacklogModel getHideUserGuideQualityBacklogModel() {
@@ -1252,25 +2566,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideReleases ---
-
-    private boolean hideUserGuideReleases ;
-
-    public final boolean isHideUserGuideReleases() {
-        return this.hideUserGuideReleases ;
-    }
-
-    public final User setHideUserGuideReleases(boolean hideUserGuideReleases) {
-        if (isHideUserGuideReleases(hideUserGuideReleases)) return (User)this;
-        this.hideUserGuideReleases = hideUserGuideReleases ;
-        propertyChanged("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideReleases(boolean hideUserGuideReleases) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideReleases, hideUserGuideReleases);
     }
 
     private transient HideUserGuideReleasesModel hideUserGuideReleasesModel;
@@ -1311,25 +2606,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideRisks ---
-
-    private boolean hideUserGuideRisks ;
-
-    public final boolean isHideUserGuideRisks() {
-        return this.hideUserGuideRisks ;
-    }
-
-    public final User setHideUserGuideRisks(boolean hideUserGuideRisks) {
-        if (isHideUserGuideRisks(hideUserGuideRisks)) return (User)this;
-        this.hideUserGuideRisks = hideUserGuideRisks ;
-        propertyChanged("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideRisks(boolean hideUserGuideRisks) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideRisks, hideUserGuideRisks);
-    }
-
     private transient HideUserGuideRisksModel hideUserGuideRisksModel;
 
     public HideUserGuideRisksModel getHideUserGuideRisksModel() {
@@ -1366,25 +2642,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- hideUserGuideSprintBacklog ---
-
-    private boolean hideUserGuideSprintBacklog ;
-
-    public final boolean isHideUserGuideSprintBacklog() {
-        return this.hideUserGuideSprintBacklog ;
-    }
-
-    public final User setHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
-        if (isHideUserGuideSprintBacklog(hideUserGuideSprintBacklog)) return (User)this;
-        this.hideUserGuideSprintBacklog = hideUserGuideSprintBacklog ;
-        propertyChanged("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideSprintBacklog(boolean hideUserGuideSprintBacklog) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideSprintBacklog, hideUserGuideSprintBacklog);
     }
 
     private transient HideUserGuideSprintBacklogModel hideUserGuideSprintBacklogModel;
@@ -1425,25 +2682,6 @@ public abstract class GUser
 
     }
 
-    // --- hideUserGuideWhiteboard ---
-
-    private boolean hideUserGuideWhiteboard ;
-
-    public final boolean isHideUserGuideWhiteboard() {
-        return this.hideUserGuideWhiteboard ;
-    }
-
-    public final User setHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
-        if (isHideUserGuideWhiteboard(hideUserGuideWhiteboard)) return (User)this;
-        this.hideUserGuideWhiteboard = hideUserGuideWhiteboard ;
-        propertyChanged("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
-        return (User)this;
-    }
-
-    public final boolean isHideUserGuideWhiteboard(boolean hideUserGuideWhiteboard) {
-        return ilarkesto.core.base.Utl.equals(this.hideUserGuideWhiteboard, hideUserGuideWhiteboard);
-    }
-
     private transient HideUserGuideWhiteboardModel hideUserGuideWhiteboardModel;
 
     public HideUserGuideWhiteboardModel getHideUserGuideWhiteboardModel() {
@@ -1482,26 +2720,6 @@ public abstract class GUser
 
     }
 
-    // --- loginToken ---
-
-    private java.lang.String loginToken ;
-
-    public final java.lang.String getLoginToken() {
-        return this.loginToken ;
-    }
-
-    public final User setLoginToken(java.lang.String loginToken) {
-        if (isLoginToken(loginToken)) return (User)this;
-        if (loginToken != null && getDao().getUserByLoginToken(loginToken) != null) throw new RuntimeException("\"" + loginToken + "\" already exists.");
-        this.loginToken = loginToken ;
-        propertyChanged("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
-        return (User)this;
-    }
-
-    public final boolean isLoginToken(java.lang.String loginToken) {
-        return ilarkesto.core.base.Utl.equals(this.loginToken, loginToken);
-    }
-
     private transient LoginTokenModel loginTokenModel;
 
     public LoginTokenModel getLoginTokenModel() {
@@ -1536,26 +2754,6 @@ public abstract class GUser
 
     }
 
-    // --- openId ---
-
-    private java.lang.String openId ;
-
-    public final java.lang.String getOpenId() {
-        return this.openId ;
-    }
-
-    public final User setOpenId(java.lang.String openId) {
-        if (isOpenId(openId)) return (User)this;
-        if (openId != null && getDao().getUserByOpenId(openId) != null) throw new RuntimeException("\"" + openId + "\" already exists.");
-        this.openId = openId ;
-        propertyChanged("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
-        return (User)this;
-    }
-
-    public final boolean isOpenId(java.lang.String openId) {
-        return ilarkesto.core.base.Utl.equals(this.openId, openId);
-    }
-
     private transient OpenIdModel openIdModel;
 
     public OpenIdModel getOpenIdModel() {
@@ -1588,164 +2786,6 @@ public abstract class GUser
             addUndo(this, oldValue);
         }
 
-    }
-
-    // --- update properties by map ---
-
-    public void updateProperties(Map<String, String> properties) {
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            String property = entry.getKey();
-            if (property.equals("id")) continue;
-            String value = entry.getValue();
-            if (property.equals("name")) name = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("publicName")) publicName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("fullName")) fullName = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("admin")) admin = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("emailVerified")) emailVerified = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("email")) email = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("currentProjectId")) currentProjectId = ilarkesto.core.persistance.Persistence.parsePropertyReference(value);
-            if (property.equals("color")) color = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("lastLoginDateAndTime")) lastLoginDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
-            if (property.equals("registrationDateAndTime")) registrationDateAndTime = ilarkesto.core.persistance.Persistence.parsePropertyDateAndTime(value);
-            if (property.equals("disabled")) disabled = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideBlog")) hideUserGuideBlog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideCalendar")) hideUserGuideCalendar = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideFiles")) hideUserGuideFiles = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideForum")) hideUserGuideForum = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideImpediments")) hideUserGuideImpediments = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideIssues")) hideUserGuideIssues = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideJournal")) hideUserGuideJournal = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideNextSprint")) hideUserGuideNextSprint = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideProductBacklog")) hideUserGuideProductBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideCourtroom")) hideUserGuideCourtroom = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideQualityBacklog")) hideUserGuideQualityBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideReleases")) hideUserGuideReleases = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideRisks")) hideUserGuideRisks = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideSprintBacklog")) hideUserGuideSprintBacklog = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("hideUserGuideWhiteboard")) hideUserGuideWhiteboard = ilarkesto.core.persistance.Persistence.parsePropertyboolean(value);
-            if (property.equals("loginToken")) loginToken = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-            if (property.equals("openId")) openId = ilarkesto.core.persistance.Persistence.parsePropertyString(value);
-        }
-        updateLastModified();
-    }
-
-    @Override
-    public void storeProperties(Map<String, String> properties) {
-        super.storeProperties(properties);
-        properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
-        properties.put("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
-        properties.put("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
-        properties.put("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
-        properties.put("emailVerified", ilarkesto.core.persistance.Persistence.propertyAsString(this.emailVerified));
-        properties.put("email", ilarkesto.core.persistance.Persistence.propertyAsString(this.email));
-        properties.put("currentProjectId", ilarkesto.core.persistance.Persistence.propertyAsString(this.currentProjectId));
-        properties.put("color", ilarkesto.core.persistance.Persistence.propertyAsString(this.color));
-        properties.put("lastLoginDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.lastLoginDateAndTime));
-        properties.put("registrationDateAndTime", ilarkesto.core.persistance.Persistence.propertyAsString(this.registrationDateAndTime));
-        properties.put("disabled", ilarkesto.core.persistance.Persistence.propertyAsString(this.disabled));
-        properties.put("hideUserGuideBlog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideBlog));
-        properties.put("hideUserGuideCalendar", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCalendar));
-        properties.put("hideUserGuideFiles", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideFiles));
-        properties.put("hideUserGuideForum", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideForum));
-        properties.put("hideUserGuideImpediments", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideImpediments));
-        properties.put("hideUserGuideIssues", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideIssues));
-        properties.put("hideUserGuideJournal", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideJournal));
-        properties.put("hideUserGuideNextSprint", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideNextSprint));
-        properties.put("hideUserGuideProductBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideProductBacklog));
-        properties.put("hideUserGuideCourtroom", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideCourtroom));
-        properties.put("hideUserGuideQualityBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideQualityBacklog));
-        properties.put("hideUserGuideReleases", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideReleases));
-        properties.put("hideUserGuideRisks", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideRisks));
-        properties.put("hideUserGuideSprintBacklog", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideSprintBacklog));
-        properties.put("hideUserGuideWhiteboard", ilarkesto.core.persistance.Persistence.propertyAsString(this.hideUserGuideWhiteboard));
-        properties.put("loginToken", ilarkesto.core.persistance.Persistence.propertyAsString(this.loginToken));
-        properties.put("openId", ilarkesto.core.persistance.Persistence.propertyAsString(this.openId));
-    }
-
-    public final java.util.List<scrum.client.project.Project> getProjects() {
-        return getDao().getProjectsByParticipant((User)this);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getProjectWithAdminss() {
-        return getDao().getProjectsByAdmin((User)this);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getProjectWithProductOwnerss() {
-        return getDao().getProjectsByProductOwner((User)this);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getProjectWithScrumMasterss() {
-        return getDao().getProjectsByScrumMaster((User)this);
-    }
-
-    public final java.util.List<scrum.client.project.Project> getProjectWithTeamMemberss() {
-        return getDao().getProjectsByTeamMember((User)this);
-    }
-
-    public final java.util.List<scrum.client.sprint.Sprint> getSprints() {
-        return getDao().getSprintsByProductOwner((User)this);
-    }
-
-    public final java.util.List<scrum.client.sprint.Sprint> getSprintWithScrumMasterss() {
-        return getDao().getSprintsByScrumMaster((User)this);
-    }
-
-    public final java.util.List<scrum.client.sprint.Sprint> getSprintWithTeamMemberss() {
-        return getDao().getSprintsByTeamMember((User)this);
-    }
-
-    public final java.util.List<scrum.client.collaboration.Emoticon> getEmoticons() {
-        return getDao().getEmoticonsByOwner((User)this);
-    }
-
-    public final java.util.List<scrum.client.admin.ProjectUserConfig> getProjectUserConfigs() {
-        return getDao().getProjectUserConfigsByUser((User)this);
-    }
-
-    public final java.util.List<scrum.client.issues.Issue> getIssues() {
-        return getDao().getIssuesByCreator((User)this);
-    }
-
-    public final java.util.List<scrum.client.issues.Issue> getIssueWithOwners() {
-        return getDao().getIssuesByOwner((User)this);
-    }
-
-    public final java.util.List<scrum.client.sprint.Task> getTasks() {
-        return getDao().getTasksByOwner((User)this);
-    }
-
-    public final java.util.List<scrum.client.journal.Change> getChanges() {
-        return getDao().getChangesByUser((User)this);
-    }
-
-    public final java.util.List<scrum.client.collaboration.Comment> getComments() {
-        return getDao().getCommentsByAuthor((User)this);
-    }
-
-    public final java.util.List<scrum.client.collaboration.ChatMessage> getChatMessages() {
-        return getDao().getChatMessagesByAuthor((User)this);
-    }
-
-    public final java.util.List<scrum.client.pr.BlogEntry> getBlogEntrys() {
-        return getDao().getBlogEntrysByAuthor((User)this);
-    }
-
-    public final java.util.List<scrum.client.estimation.RequirementEstimationVote> getRequirementEstimationVotes() {
-        return getDao().getRequirementEstimationVotesByUser((User)this);
-    }
-
-    public final java.util.List<scrum.client.collaboration.Emoticon> getEmoticonWithOwners() {
-        return getDao().getEmoticonsByOwner((User)this);
-    }
-
-    @Override
-    public boolean matchesKey(String key) {
-        if (super.matchesKey(key)) return true;
-        if (matchesKey(getName(), key)) return true;
-        if (matchesKey(getPublicName(), key)) return true;
-        if (matchesKey(getFullName(), key)) return true;
-        if (matchesKey(getEmail(), key)) return true;
-        return false;
     }
 
 }

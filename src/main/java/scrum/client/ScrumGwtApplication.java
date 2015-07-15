@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -19,26 +19,33 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.core.persistance.AEntity;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtApplication;
-import ilarkesto.gwt.client.AGwtDao;
 import ilarkesto.gwt.client.ErrorWrapper;
 import ilarkesto.gwt.client.persistence.AGwtEntityFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import scrum.client.admin.Auth;
 import scrum.client.admin.LogoutServiceCall;
 import scrum.client.admin.SystemMessageManager;
+import scrum.client.base.UpdateEntitiesServiceCall;
 import scrum.client.calendar.SimpleEvent;
+import scrum.client.collaboration.Chat;
+import scrum.client.collaboration.ChatMessage;
+import scrum.client.collaboration.Comment;
 import scrum.client.collaboration.Subject;
 import scrum.client.communication.Pinger;
 import scrum.client.communication.ServerErrorManager;
 import scrum.client.communication.StartConversationServiceCall;
+import scrum.client.core.EventBus;
 import scrum.client.core.RichtextAutosaver;
 import scrum.client.files.File;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
+import scrum.client.journal.Change;
 import scrum.client.pr.BlogEntry;
 import scrum.client.project.Quality;
 import scrum.client.project.Requirement;
@@ -59,9 +66,9 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	public static final String LOGIN_TOKEN_COOKIE = "kunagiLoginToken";
 
 	public static final String[] REFERENCE_PREFIXES = new String[] { Requirement.REFERENCE_PREFIX,
-			Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
-			Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX, SimpleEvent.REFERENCE_PREFIX,
-			Release.REFERENCE_PREFIX, BlogEntry.REFERENCE_PREFIX, Sprint.REFERENCE_PREFIX };
+		Task.REFERENCE_PREFIX, Quality.REFERENCE_PREFIX, Issue.REFERENCE_PREFIX, Impediment.REFERENCE_PREFIX,
+		Risk.REFERENCE_PREFIX, File.REFERENCE_PREFIX, Subject.REFERENCE_PREFIX, SimpleEvent.REFERENCE_PREFIX,
+		Release.REFERENCE_PREFIX, BlogEntry.REFERENCE_PREFIX, Sprint.REFERENCE_PREFIX };
 
 	private final Log log = Log.get(getClass());
 
@@ -113,7 +120,9 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 			assert applicationInfo != null;
 		}
 
-		Scope.get().getComponent(Dao.class).handleDataFromServer(data);
+		if (data.containsEntities() || data.containsDeletedEntities()) {
+			EventBus.get().visibleDataChanged();
+		}
 
 		String userId = data.getUserId();
 		if (userId != null) {
@@ -123,6 +132,25 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 		Scope.get().getComponent(Pinger.class).dataReceived();
 		Scope.get().getComponent(ServerErrorManager.class).handleErrors(data.getErrors());
 		Scope.get().getComponent(SystemMessageManager.class).updateMessage(data.systemMessage);
+	}
+
+	@Override
+	protected void onEntitiesReceived(Set<AEntity> entities) {
+		super.onEntitiesReceived(entities);
+		for (AEntity entity : entities) {
+			if (entity instanceof ChatMessage) {
+				Scope.get().getComponent(Chat.class).addChatMessage((ChatMessage) entity);
+			}
+			if (entity instanceof File) {
+				EventBus.get().fileReceived((File) entity);
+			}
+			if (entity instanceof Comment) {
+				((Comment) entity).getParent().updateLastModified();
+			}
+			if (entity instanceof Change) {
+				((Change) entity).getParent().updateLastModified();
+			}
+		}
 	}
 
 	public ApplicationInfo getApplicationInfo() {
@@ -137,7 +165,6 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 		Scope.get().getComponent(Ui.class).lock("Logging out...");
 		Scope.get().getComponent(Auth.class).logout();
 		Scope.get().getComponent(Pinger.class).shutdown();
-		Scope.get().getComponent(Dao.class).clearAllEntities();
 
 		new LogoutServiceCall().execute(new Runnable() {
 
@@ -171,7 +198,6 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	protected void onAborted(String message) {
 		super.onAborted(message);
 		Scope.get().getComponent(Pinger.class).shutdown();
-		Scope.get().getComponent(Dao.class).clearAllEntities();
 		Scope.get().getComponent(Ui.class).getWorkspace().abort(message);
 	}
 
@@ -185,19 +211,15 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	}
 
 	@Override
-	protected AGwtDao getDao() {
-		return Dao.get();
-	}
-
-	@Override
-	protected AGwtEntityFactory getEntityFactory() {
-		return null;
+	protected AGwtEntityFactory createEntityFactory() {
+		return new GwtEntityFactory();
 	}
 
 	@Override
 	public void sendChangesToServer(Collection<AEntity> modified, Collection<String> deleted,
 			Map<String, Map<String, String>> modifiedProperties, Runnable callback) {
-		throw new IllegalStateException();
+		new UpdateEntitiesServiceCall(modifiedProperties == null ? null : new ArrayList<Map<String, String>>(
+				modifiedProperties.values()), deleted).execute(callback);
 	}
 
 	public static ScrumGwtApplication get() {

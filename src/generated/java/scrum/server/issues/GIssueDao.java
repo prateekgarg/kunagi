@@ -1071,6 +1071,12 @@ public abstract class GIssueDao
         this.requirementDao = requirementDao;
     }
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     scrum.server.release.ReleaseDao releaseDao;
 
     public void setReleaseDao(scrum.server.release.ReleaseDao releaseDao) {

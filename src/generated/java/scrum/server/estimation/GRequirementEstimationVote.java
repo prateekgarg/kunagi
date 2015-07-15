@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -70,6 +70,7 @@ public abstract class GRequirementEstimationVote
         properties.put("estimatedWork", ilarkesto.core.persistance.Persistence.propertyAsString(this.estimatedWork));
     }
 
+    @Override
     public int compareTo(RequirementEstimationVote other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -290,6 +291,12 @@ public abstract class GRequirementEstimationVote
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GRequirementEstimationVote.requirementDao = requirementDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GRequirementEstimationVote.userDao = userDao;
     }
 
     static scrum.server.estimation.RequirementEstimationVoteDao requirementEstimationVoteDao;

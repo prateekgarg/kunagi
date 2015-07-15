@@ -14,6 +14,7 @@
  */
 package scrum.client.common;
 
+import ilarkesto.core.persistance.Entity;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
 
@@ -91,7 +92,7 @@ public abstract class ABlockWidget<O> extends AScrumWidget {
 	protected String getUpdateSignature() {
 		updateHref();
 		if (isExtended()) return null;
-		if (object instanceof AGwtEntity) return String.valueOf(((AGwtEntity) object).getLocalModificationTime());
+		if (object instanceof Entity) return String.valueOf(((Entity) object).getModificationTime());
 		return super.getUpdateSignature();
 	}
 

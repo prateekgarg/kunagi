@@ -14,12 +14,12 @@
  */
 package scrum.client.collaboration;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.LabelProvider;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import scrum.client.admin.Auth;
 import scrum.client.admin.User;
@@ -27,14 +27,17 @@ import scrum.client.common.AScrumGwtEntity;
 
 public class Emoticon extends GEmoticon {
 
-	public Emoticon(AScrumGwtEntity parent, String emotion) {
-		setOwner(Scope.get().getComponent(Auth.class).getUser());
-		setParent(parent);
-		setEmotion(emotion);
-	}
+	public static Emoticon post(AScrumGwtEntity parent, String emotion) {
+		Args.assertNotNull(parent, "parent");
+		Args.assertNotBlank(emotion, "emotion");
 
-	public Emoticon(Map data) {
-		super(data);
+		Emoticon emoticon = new Emoticon();
+		emoticon.setOwner(Scope.get().getComponent(Auth.class).getUser());
+		emoticon.setParent(parent);
+		emoticon.setEmotion(emotion);
+
+		emoticon.persist();
+		return emoticon;
 	}
 
 	public String getEmotionLabel() {

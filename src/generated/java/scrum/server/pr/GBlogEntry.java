@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -80,6 +80,7 @@ public abstract class GBlogEntry
         properties.put("published", ilarkesto.core.persistance.Persistence.propertyAsString(this.published));
     }
 
+    @Override
     public int compareTo(BlogEntry other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -683,6 +684,12 @@ public abstract class GBlogEntry
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GBlogEntry.projectDao = projectDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GBlogEntry.userDao = userDao;
     }
 
     static scrum.server.release.ReleaseDao releaseDao;

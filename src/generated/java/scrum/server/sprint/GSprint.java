@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -101,6 +101,7 @@ public abstract class GSprint
         properties.put("teamMembersIds", ilarkesto.core.persistance.Persistence.propertyAsString(this.teamMembersIds));
     }
 
+    @Override
     public int compareTo(Sprint other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -307,6 +308,8 @@ public abstract class GSprint
             updateLastModified();
             fireModified("goal", ilarkesto.core.persistance.Persistence.propertyAsString(this.goal));
     }
+
+    public abstract String getGoalTemplate();
 
     private final void updateGoal(java.lang.String goal) {
         if (isGoal(goal)) return;
@@ -608,6 +611,8 @@ public abstract class GSprint
             fireModified("planningNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.planningNote));
     }
 
+    public abstract String getPlanningNoteTemplate();
+
     private final void updatePlanningNote(java.lang.String planningNote) {
         if (isPlanningNote(planningNote)) return;
         this.planningNote = planningNote;
@@ -651,6 +656,8 @@ public abstract class GSprint
             fireModified("reviewNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.reviewNote));
     }
 
+    public abstract String getReviewNoteTemplate();
+
     private final void updateReviewNote(java.lang.String reviewNote) {
         if (isReviewNote(reviewNote)) return;
         this.reviewNote = reviewNote;
@@ -693,6 +700,8 @@ public abstract class GSprint
             updateLastModified();
             fireModified("retrospectiveNote", ilarkesto.core.persistance.Persistence.propertyAsString(this.retrospectiveNote));
     }
+
+    public abstract String getRetrospectiveNoteTemplate();
 
     private final void updateRetrospectiveNote(java.lang.String retrospectiveNote) {
         if (isRetrospectiveNote(retrospectiveNote)) return;
@@ -1313,6 +1322,12 @@ public abstract class GSprint
 
     public static final void setProjectDao(scrum.server.project.ProjectDao projectDao) {
         GSprint.projectDao = projectDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GSprint.userDao = userDao;
     }
 
     static scrum.server.sprint.SprintDao sprintDao;

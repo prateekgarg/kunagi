@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -74,6 +74,7 @@ public abstract class GRisk
         properties.put("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
     }
 
+    @Override
     public int compareTo(Risk other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -378,6 +379,8 @@ public abstract class GRisk
             fireModified("probability", ilarkesto.core.persistance.Persistence.propertyAsString(this.probability));
     }
 
+    public abstract List<java.lang.Integer> getProbabilityOptions();
+
     private final void updateProbability(int probability) {
         if (isProbability(probability)) return;
         this.probability = probability;
@@ -414,6 +417,8 @@ public abstract class GRisk
             updateLastModified();
             fireModified("impact", ilarkesto.core.persistance.Persistence.propertyAsString(this.impact));
     }
+
+    public abstract List<java.lang.Integer> getImpactOptions();
 
     private final void updateImpact(int impact) {
         if (isImpact(impact)) return;

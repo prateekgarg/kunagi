@@ -1,19 +1,20 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client.project;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
@@ -24,12 +25,10 @@ import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import scrum.client.ScrumGwt;
@@ -54,22 +53,24 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 
 	public static final String REFERENCE_PREFIX = "sto";
 	public static String[] WORK_ESTIMATION_VALUES = new String[] { "", "0", "0.5", "1", "2", "3", "5", "8", "13", "20",
-			"40", "100" };
+		"40", "100" };
 	public static Float[] WORK_ESTIMATION_FLOAT_VALUES = new Float[] { 0.5f, 0f, 1f, 2f, 3f, 5f, 8f, 13f, 20f, 40f,
-			100f };
+		100f };
 
 	private transient EstimationBar estimationBar;
 	private transient AFieldModel<String> taskStatusLabelModel;
 	private transient AFieldModel<String> themesAsStringModel;
 	private transient AFieldModel<String> estimatedWorkWithUnitModel;
 
-	public Requirement(Project project) {
-		setProject(project);
-		setDirty(true);
-	}
+	public static Requirement post(Project project) {
+		Args.assertNotNull(project, "project");
 
-	public Requirement(Map data) {
-		super(data);
+		Requirement story = new Requirement();
+		story.setProject(project);
+		story.setDirty(true);
+
+		story.persist();
+		return story;
 	}
 
 	public String getBlockingImpedimentLabelsAsText() {
@@ -90,8 +91,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public String getHistoryLabel(final Sprint sprint) {
-		List<Change> changes = getDao().getChangesByParent(Requirement.this);
-		for (Change change : changes) {
+		for (Change change : Change.listByParent(this)) {
 			String key = change.getKey();
 			if (!change.isNewValue(sprint.getId())) continue;
 			if (Change.REQ_COMPLETED_IN_SPRINT.equals(key) || Change.REQ_REJECTED_IN_SPRINT.equals(key))
@@ -118,12 +118,6 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 			impediments.addAll(task.getBlockingImpediments());
 		}
 		return impediments;
-	}
-
-	public void addTheme(String theme) {
-		List<String> themes = getThemes();
-		if (!themes.contains(theme)) themes.add(theme);
-		setThemes(themes);
 	}
 
 	@Override
@@ -159,12 +153,12 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		}
 	}
 
-	public List<Task> getTasksInSprint() {
+	public Set<Task> getTasksInSprint() {
 		return getTasksInSprint(getProject().getCurrentSprint());
 	}
 
-	public List<Task> getTasksInSprint(Sprint sprint) {
-		List<Task> tasks = getTasks();
+	public Set<Task> getTasksInSprint(Sprint sprint) {
+		Set<Task> tasks = getTasks();
 		Iterator<Task> iterator = tasks.iterator();
 		while (iterator.hasNext()) {
 			Task task = iterator.next();
@@ -201,19 +195,15 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		return ScrumGwt.getEstimationAsString(getEstimatedWork(), getProject().getEffortUnit());
 	}
 
-	public List<RequirementEstimationVote> getEstimationVotes() {
-		return getDao().getRequirementEstimationVotesByRequirement(this);
-	}
-
 	public boolean containsWorkEstimationVotes() {
-		for (RequirementEstimationVote vote : getEstimationVotes()) {
+		for (RequirementEstimationVote vote : getRequirementEstimationVotes()) {
 			if (vote.getEstimatedWork() != null) return true;
 		}
 		return false;
 	}
 
 	public RequirementEstimationVote getEstimationVote(User user) {
-		for (RequirementEstimationVote vote : getEstimationVotes()) {
+		for (RequirementEstimationVote vote : getRequirementEstimationVotes()) {
 			if (vote.isUser(user)) return vote;
 		}
 		return null;
@@ -224,7 +214,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 		if (vote == null) throw new IllegalStateException("vote == null");
 		vote.setEstimatedWork(estimatedWork);
 		if (estimatedWork != null && isWorkEstimationVotingComplete()) activateWorkEstimationVotingShowoff();
-		updateLocalModificationTime();
+		updateLastModified();
 	}
 
 	public boolean isWorkEstimationVotingComplete() {
@@ -244,7 +234,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public String getTaskStatusLabel() {
-		List<Task> tasks = getTasksInSprint();
+		Set<Task> tasks = getTasksInSprint();
 		int burned = Task.sumBurnedWork(tasks);
 		int remaining = Task.sumRemainingWork(getTasksInSprint());
 		if (remaining == 0)
@@ -256,7 +246,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	public void setEstimationBar(EstimationBar estimationBar) {
 		if (Utl.equals(this.estimationBar, estimationBar)) return;
 		this.estimationBar = estimationBar;
-		updateLocalModificationTime();
+		updateLastModified();
 	}
 
 	public EstimationBar getEstimationBar() {
@@ -419,14 +409,9 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	public Task createNewTask() {
-		Task task = new Task(this);
-		getDao().createTask(task);
+		Task task = Task.post(this);
 		updateTasksOrder();
 		return task;
-	}
-
-	public void deleteTask(Task task) {
-		getDao().deleteTask(task);
 	}
 
 	@Override
@@ -454,9 +439,7 @@ public class Requirement extends GRequirement implements ReferenceSupport, Label
 	}
 
 	private void updateTasksOrder() {
-		List<Task> tasks = getTasksInSprint();
-		Collections.sort(tasks, getTasksOrderComparator());
-		updateTasksOrder(tasks);
+		updateTasksOrder(Utl.sort(getTasksInSprint(), getTasksOrderComparator()));
 	}
 
 	public void updateTasksOrder(List<Task> tasks) {

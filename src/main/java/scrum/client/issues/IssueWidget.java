@@ -15,6 +15,7 @@
 package scrum.client.issues;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.base.Utl;
 import ilarkesto.gwt.client.AMultiSelectionViewEditWidget;
 import ilarkesto.gwt.client.AOutputViewEditWidget;
 import ilarkesto.gwt.client.ButtonWidget;
@@ -133,8 +134,7 @@ public class IssueWidget extends AScrumWidget {
 
 			@Override
 			protected void onEditorUpdate() {
-				List<Release> releases = issue.getProject().getReleases();
-				Collections.sort(releases, Release.DATE_REVERSE_COMPARATOR);
+				List<Release> releases = Utl.sort(issue.getProject().getReleases(), Release.DATE_REVERSE_COMPARATOR);
 				setEditorItems(releases);
 				setEditorSelectedItems(issue.getFixReleases());
 			}

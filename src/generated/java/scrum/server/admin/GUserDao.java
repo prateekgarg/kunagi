@@ -22,7 +22,7 @@ import ilarkesto.persistence.EntityEvent;
 import ilarkesto.core.fp.Predicate;
 
 public abstract class GUserDao
-            extends ilarkesto.auth.AUserDao<User> {
+            extends ilarkesto.persistence.ADao<User> {
 
     public final String getEntityName() {
         return User.TYPE;

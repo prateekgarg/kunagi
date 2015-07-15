@@ -1,26 +1,26 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client.calendar;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.Time;
 import ilarkesto.core.time.TimePeriod;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import scrum.client.collaboration.ForumSupport;
 import scrum.client.common.LabelSupport;
@@ -34,14 +34,14 @@ public class SimpleEvent extends GSimpleEvent implements ForumSupport, Reference
 
 	public static final String REFERENCE_PREFIX = "evt";
 
-	public SimpleEvent(Project project, Date date) {
-		super();
-		setDate(date);
-		setProject(project);
-	}
+	public static SimpleEvent post(Project project, Date date) {
+		Args.assertNotNull(project, "project", date, "date");
+		SimpleEvent event = new SimpleEvent();
+		event.setDate(date);
+		event.setProject(project);
 
-	public SimpleEvent(Map data) {
-		super(data);
+		event.persist();
+		return event;
 	}
 
 	public String getTimeAsString() {

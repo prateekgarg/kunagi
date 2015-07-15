@@ -369,4 +369,10 @@ public abstract class GChangeDao
 
     // --- dependencies ---
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 }

@@ -14,11 +14,11 @@
  */
 package scrum.client.collaboration;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Utl;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import scrum.client.common.ShowEntityAction;
 import scrum.client.project.Project;
@@ -27,14 +27,16 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Wikipage extends GWikipage implements ForumSupport {
 
-	public Wikipage(Project project, String name) {
-		setProject(project);
-		setName(name);
-		if (name != null) setText("= " + name + " =\n\n...");
-	}
+	public static Wikipage post(Project project, String name) {
+		Args.assertNotNull(project, "project");
 
-	public Wikipage(Map data) {
-		super(data);
+		Wikipage page = new Wikipage();
+		page.setProject(project);
+		page.setName(name);
+		if (name != null) page.setText("= " + name + " =\n\n...");
+
+		page.persist();
+		return page;
 	}
 
 	@Override

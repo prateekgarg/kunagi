@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -101,6 +101,7 @@ public abstract class GIssue
         properties.put("externalTrackerId", ilarkesto.core.persistance.Persistence.propertyAsString(this.externalTrackerId));
     }
 
+    @Override
     public int compareTo(Issue other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -295,6 +296,8 @@ public abstract class GIssue
             updateLastModified();
             fireModified("type", ilarkesto.core.persistance.Persistence.propertyAsString(this.type));
     }
+
+    public abstract List<java.lang.String> getTypeOptions();
 
     private final void updateType(java.lang.String type) {
         if (isType(type)) return;
@@ -780,6 +783,8 @@ public abstract class GIssue
             updateLastModified();
             fireModified("severity", ilarkesto.core.persistance.Persistence.propertyAsString(this.severity));
     }
+
+    public abstract List<java.lang.Integer> getSeverityOptions();
 
     private final void updateSeverity(int severity) {
         if (isSeverity(severity)) return;
@@ -1552,6 +1557,12 @@ public abstract class GIssue
 
     public static final void setRequirementDao(scrum.server.project.RequirementDao requirementDao) {
         GIssue.requirementDao = requirementDao;
+    }
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GIssue.userDao = userDao;
     }
 
     static scrum.server.release.ReleaseDao releaseDao;

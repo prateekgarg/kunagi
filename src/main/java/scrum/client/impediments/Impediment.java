@@ -14,11 +14,11 @@
  */
 package scrum.client.impediments;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.time.Date;
 import ilarkesto.gwt.client.HyperlinkWidget;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.ForumSupport;
@@ -33,13 +33,15 @@ public class Impediment extends GImpediment implements ReferenceSupport, LabelSu
 
 	public static final String REFERENCE_PREFIX = "imp";
 
-	public Impediment(Project project) {
-		setDate(Date.today());
-		setProject(project);
-	}
+	public static Impediment post(Project project) {
+		Args.assertNotNull(project, "project");
 
-	public Impediment(Map data) {
-		super(data);
+		Impediment impediment = new Impediment();
+		impediment.setDate(Date.today());
+		impediment.setProject(project);
+
+		impediment.persist();
+		return impediment;
 	}
 
 	public boolean isBlockingTasksFromCurrentSprint() {

@@ -14,13 +14,13 @@
  */
 package scrum.client.sprint;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.HyperlinkWidget;
 import ilarkesto.gwt.client.editor.AFieldModel;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import scrum.client.ScrumGwt;
@@ -42,6 +42,17 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 	public static final int INIT_EFFORT = 1;
 	public static final String REFERENCE_PREFIX = "tsk";
 
+	public static Task post(Requirement requirement) {
+		Args.assertNotNull(requirement, "requirement");
+
+		Task task = new Task();
+		task.setRequirement(requirement);
+		task.setRemainingWork(INIT_EFFORT);
+
+		task.persist();
+		return task;
+	}
+
 	public String getBlockingImpedimentLabelsAsText() {
 		StringBuilder sb = new StringBuilder();
 		for (Impediment impediment : getBlockingImpediments()) {
@@ -55,26 +66,17 @@ public class Task extends GTask implements ReferenceSupport, LabelSupport, Forum
 		return getRequirement().getSprint();
 	}
 
-	public Task(Requirement requirement) {
-		setRequirement(requirement);
-		// setLabel("New Task");
-		setRemainingWork(INIT_EFFORT);
-	}
-
-	public Task(Map data) {
-		super(data);
-	}
-
 	public boolean isInCurrentSprint() {
 		return getRequirement().isInCurrentSprint();
 	}
 
 	@Override
-	public void updateLocalModificationTime() {
-		super.updateLocalModificationTime();
+	protected void onAfterUpdateLastModified() {
+		super.onAfterUpdateLastModified();
+
 		try {
 			Requirement requirement = getRequirement();
-			if (requirement != null) requirement.updateLocalModificationTime();
+			if (requirement != null) requirement.updateLastModified();
 		} catch (EntityDoesNotExistException ex) {
 			return;
 		}

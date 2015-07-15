@@ -1933,6 +1933,12 @@ public abstract class GProjectDao
 
     // --- dependencies ---
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     scrum.server.sprint.SprintDao sprintDao;
 
     public void setSprintDao(scrum.server.sprint.SprintDao sprintDao) {

@@ -1,19 +1,20 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client.release;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
@@ -24,7 +25,7 @@ import ilarkesto.gwt.client.editor.AFieldModel;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import scrum.client.ScrumGwt;
 import scrum.client.collaboration.ForumSupport;
@@ -41,13 +42,15 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public static final String REFERENCE_PREFIX = "rel";
 
-	public Release(Project project, Date date) {
-		setProject(project);
-		setReleaseDate(date);
-	}
+	public static Release post(Project project, Date date) {
+		Args.assertNotNull(project, "project", date, "date");
 
-	public Release(Map data) {
-		super(data);
+		Release release = new Release();
+		release.setProject(project);
+		release.setReleaseDate(date);
+
+		release.persist();
+		return release;
 	}
 
 	public DateAndTime getReleaseDateAndTime() {
@@ -66,13 +69,13 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 		return isParentReleaseSet();
 	}
 
-	public List<Release> getBugfixReleases() {
-		return getDao().getReleasesByParentRelease(this);
+	public Set<Release> getBugfixReleases() {
+		return Release.listByParentRelease(this);
 	}
 
 	public List<Issue> getAffectedByIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
-		for (Issue issue : getDao().getIssues()) {
+		for (Issue issue : Issue.listAll()) {
 			if (issue.getAffectedReleases().contains(this)) ret.add(issue);
 		}
 		return ret;
@@ -80,7 +83,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public List<Issue> getFixedIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
-		for (Issue issue : getDao().getIssues()) {
+		for (Issue issue : Issue.listAll()) {
 			if (issue.isClosed() && issue.containsFixRelease(this)) ret.add(issue);
 		}
 		return ret;
@@ -88,7 +91,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 
 	public List<Issue> getPlannedIssues() {
 		List<Issue> ret = new ArrayList<Issue>();
-		for (Issue issue : getDao().getIssues()) {
+		for (Issue issue : Issue.listAll()) {
 			if (!issue.isClosed() && issue.getFixReleases().contains(this)) ret.add(issue);
 		}
 		return ret;
@@ -116,7 +119,7 @@ public class Release extends GRelease implements ReferenceSupport, ForumSupport 
 			for (Sprint sprint : getSprints()) {
 				for (Requirement story : sprint.getRequirements()) {
 					sb.append("* " + (story.isClosed() ? "" : "(UNFINISHED) ")).append(story.getReferenceAndLabel())
-					.append("\n");
+							.append("\n");
 				}
 			}
 			sb.append("\n\n");

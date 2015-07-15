@@ -54,7 +54,6 @@ import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
-import scrum.server.admin.UserDao;
 import scrum.server.common.BurndownChart;
 import scrum.server.journal.ProjectEvent;
 import scrum.server.pr.EmailSender;
@@ -318,18 +317,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		return url == null ? "http://localhost:8080/kunagi/" : url;
 	}
 
-	private UserDao userDao;
-
-	public UserDao getUserDao() {
-		if (userDao == null) {
-			userDao = new UserDao();
-			autowire(userDao);
-		}
-		return userDao;
-	}
-
 	public boolean isAdminPasswordDefault() {
-		User admin = userDao.getUserByName("admin");
+		User admin = getUserDao().getUserByName("admin");
 		if (admin == null) return false;
 		return admin.matchesPassword(getSystemConfig().getDefaultUserPassword());
 	}

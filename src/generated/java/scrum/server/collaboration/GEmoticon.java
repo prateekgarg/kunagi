@@ -19,7 +19,7 @@ import ilarkesto.core.logging.Log;
 import ilarkesto.persistence.ADatob;
 import ilarkesto.persistence.AEntity;
 import ilarkesto.persistence.AStructure;
-import ilarkesto.auth.AUser;
+import ilarkesto.auth.AuthUser;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 
@@ -70,6 +70,7 @@ public abstract class GEmoticon
         properties.put("emotion", ilarkesto.core.persistance.Persistence.propertyAsString(this.emotion));
     }
 
+    @Override
     public int compareTo(Emoticon other) {
         return ilarkesto.core.localization.GermanComparator.INSTANCE.compare(toString(), other.toString());
     }
@@ -280,6 +281,17 @@ public abstract class GEmoticon
             LOG.info("Repairing dead owner reference");
             repairDeadOwnerReference(this.ownerId);
         }
+    }
+
+
+    // -----------------------------------------------------------
+    // - dependencies
+    // -----------------------------------------------------------
+
+    static scrum.server.admin.UserDao userDao;
+
+    public static final void setUserDao(scrum.server.admin.UserDao userDao) {
+        GEmoticon.userDao = userDao;
     }
 
     static scrum.server.collaboration.EmoticonDao emoticonDao;

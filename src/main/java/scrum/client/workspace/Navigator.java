@@ -15,6 +15,7 @@
 package scrum.client.workspace;
 
 import ilarkesto.core.base.Str;
+import ilarkesto.core.persistance.AEntity;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.Gwt;
@@ -111,17 +112,40 @@ public class Navigator extends GNavigator {
 	private void showProject(String projectId, String page, String entityId) {
 		Project project = Scope.get().getComponent(Project.class);
 		if (project != null && !projectId.equals(project.getId())) {
-			project = null;
+			// currently other project selected
+
+			ScrumScopeManager.destroyProjectScope();
+			History.newItem(createToken(projectId, page, entityId), true);
+			return;
 		}
 
 		if (project == null) {
-			project = dao.getProject(projectId);
+			project = Project.getById(projectId);
 			if (project == null) throw new RuntimeException("Project does not exist: " + projectId);
 			acitvateProjectMode(project, page, entityId);
 			return;
 		}
 
 		showPageAndEntity(page, entityId);
+	}
+
+	private void acitvateProjectMode(final Project project, final String page, final String entityId) {
+		assert project != null;
+
+		if (currentMode == Mode.PROJECT) ScrumScopeManager.destroyProjectScope();
+
+		log.info("Activating PROJECT mode");
+		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
+		new SelectProjectServiceCall(project.getId()).execute(new Runnable() {
+
+			@Override
+			public void run() {
+				ScrumScopeManager.createProjectScope(project);
+				currentMode = Mode.PROJECT;
+				Scope.get().getComponent(ProjectWorkspaceWidgets.class).projectDataReceived();
+				showPageAndEntity(page, entityId);
+			}
+		});
 	}
 
 	private void showPageAndEntity() {
@@ -141,7 +165,7 @@ public class Navigator extends GNavigator {
 				workspace.showEntityByReference(entityId);
 			} else {
 				if ("Forum".equals(historyToken.getPage())) {
-					ForumSupport entity = (ForumSupport) dao.getEntity(entityId);
+					ForumSupport entity = (ForumSupport) AEntity.getById(entityId);
 					workspace.showForum(entity);
 				} else {
 					workspace.showEntityById(entityId);
@@ -163,25 +187,6 @@ public class Navigator extends GNavigator {
 		UsersWorkspaceWidgets usersWorkspaceWidgets = Scope.get().getComponent(UsersWorkspaceWidgets.class);
 		usersWorkspaceWidgets.activate(page);
 		currentMode = Mode.USER;
-	}
-
-	private void acitvateProjectMode(final Project project, final String page, final String entityId) {
-		assert project != null;
-
-		if (currentMode == Mode.PROJECT) ScrumScopeManager.destroyProjectScope();
-
-		log.info("Activating PROJECT mode");
-		Scope.get().getComponent(Ui.class).lock("Loading " + project.getLabel() + "...");
-		new SelectProjectServiceCall(project.getId()).execute(new Runnable() {
-
-			@Override
-			public void run() {
-				ScrumScopeManager.createProjectScope(project);
-				currentMode = Mode.PROJECT;
-				Scope.get().getComponent(ProjectWorkspaceWidgets.class).projectDataReceived();
-				showPageAndEntity(page, entityId);
-			}
-		});
 	}
 
 	public static String getPageHref(String page) {

@@ -459,6 +459,12 @@ public abstract class GTaskDao
         this.requirementDao = requirementDao;
     }
 
+    scrum.server.admin.UserDao userDao;
+
+    public void setUserDao(scrum.server.admin.UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     scrum.server.impediments.ImpedimentDao impedimentDao;
 
     public void setImpedimentDao(scrum.server.impediments.ImpedimentDao impedimentDao) {

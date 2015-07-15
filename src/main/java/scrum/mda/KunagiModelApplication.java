@@ -18,11 +18,11 @@ import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.core.time.Time;
 import ilarkesto.mda.legacy.AGeneratorApplication;
+import ilarkesto.mda.legacy.generator.EntityGenerator;
 import ilarkesto.mda.legacy.generator.GwtActionGenerator;
 import ilarkesto.mda.legacy.generator.GwtActionTemplateGenerator;
-import ilarkesto.mda.legacy.generator.GwtDaoGenerator;
-import ilarkesto.mda.legacy.generator.GwtEntityGenerator;
-import ilarkesto.mda.legacy.generator.GwtEntityTemplateGenerator;
+import ilarkesto.mda.legacy.generator.GwtEntityFactoryGenerator;
+import ilarkesto.mda.legacy.generator.GwtEntityPropertyEditorClassGeneratorPlugin;
 import ilarkesto.mda.legacy.generator.GwtImageBundleGenerator;
 import ilarkesto.mda.legacy.generator.GwtServiceAsyncInterfaceGenerator;
 import ilarkesto.mda.legacy.generator.GwtServiceCallGenerator;
@@ -31,12 +31,13 @@ import ilarkesto.mda.legacy.generator.GwtServiceInterfaceGenerator;
 import ilarkesto.mda.legacy.model.ActionModel;
 import ilarkesto.mda.legacy.model.ApplicationModel;
 import ilarkesto.mda.legacy.model.BeanModel;
-import ilarkesto.mda.legacy.model.DatobModel;
 import ilarkesto.mda.legacy.model.EntityModel;
 import ilarkesto.mda.legacy.model.GwtServiceModel;
 import ilarkesto.mda.legacy.model.MethodModel;
 
 import java.util.List;
+
+import scrum.client.common.AScrumGwtEntity;
 
 public class KunagiModelApplication extends AGeneratorApplication {
 
@@ -74,6 +75,10 @@ public class KunagiModelApplication extends AGeneratorApplication {
 	public GwtServiceModel getGwtServiceModel() {
 		if (gwtServiceModel == null) {
 			gwtServiceModel = new GwtServiceModel("Scrum", "scrum.server");
+			gwtServiceModel.addMethod("updateEntities", "base")
+					.addParameter("modified", "java.util.Collection<java.util.Map<String, String>>")
+					.addParameter("deleted", "java.util.Collection<String>");
+			gwtServiceModel.addMethod("exception");
 			gwtServiceModel.addMethod("changePassword").addParameter("newPassword").addParameter("oldPassword")
 			.setPackageName("admin");
 			gwtServiceModel.addMethod("logout").setPackageName("admin");
@@ -89,14 +94,12 @@ public class KunagiModelApplication extends AGeneratorApplication {
 			gwtServiceModel.addMethod("ping").setDispensable(true).setPackageName("communication").setSync(false);
 			gwtServiceModel.addMethod("startConversation").setPackageName("communication");
 			gwtServiceModel.addMethod("touchLastActivity").setPackageName("communication");
-			// gwtServiceModel.addMethod("updateEntities", "base")
-			// .addParameter("modified", "java.util.Collection<java.util.Map<String, String>>")
-			// .addParameter("deleted", "java.util.Collection<String>").setPackageName("core");
-			gwtServiceModel.addMethod("changeProperties").addParameter("properties", "java.util.Map<String, String>")
-					.setPackageName("core");
-			gwtServiceModel.addMethod("createEntity").addParameter("type")
-			.addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
-			gwtServiceModel.addMethod("deleteEntity").addParameter("entityId").setPackageName("core");
+			// gwtServiceModel.addMethod("changeProperties").addParameter("properties",
+			// "java.util.Map<String, String>")
+			// .setPackageName("core");
+			// gwtServiceModel.addMethod("createEntity").addParameter("type")
+			// .addParameter("properties", "java.util.Map<String, String>").setPackageName("core");
+			// gwtServiceModel.addMethod("deleteEntity").addParameter("entityId").setPackageName("core");
 			gwtServiceModel.addMethod("requestEntity").addParameter("entityId").setPackageName("core").setSync(false);
 			gwtServiceModel.addMethod("requestEntityByReference").addParameter("reference").setPackageName("core")
 			.setSync(false);
@@ -148,6 +151,7 @@ public class KunagiModelApplication extends AGeneratorApplication {
 			systemConfigModel = createEntityModel("SystemConfig", "admin");
 			systemConfigModel.setGwtSupport(true);
 			systemConfigModel.setEditProtected(true);
+			systemConfigModel.setSingleton(true);
 			systemConfigModel.addStringProperty("url").setTooltip(
 					"URL, on which this Kunagi instance is installed. It will be used in emails.");
 			systemConfigModel.addStringProperty("adminEmail").setTooltip(
@@ -802,12 +806,10 @@ public class KunagiModelApplication extends AGeneratorApplication {
 
 	private EntityModel userModel;
 
-	@Override
 	public EntityModel getUserModel() {
 		if (userModel == null) {
 			userModel = createEntityModel("User", "admin");
 			userModel.setGwtSupport(true);
-			userModel.setSuperbean(super.getUserModel());
 			userModel.setEditProtected(true);
 			userModel.addStringProperty("name").setSearchable(true).setUnique(true).setTooltip("Login name.");
 			userModel.addStringProperty("publicName").setSearchable(true)
@@ -1118,6 +1120,11 @@ public class KunagiModelApplication extends AGeneratorApplication {
 	@Override
 	protected EntityModel createEntityModel(String name, String packageName) {
 		EntityModel model = super.createEntityModel(name, packageName);
+		if (name.equals("User")) {
+			model.setUserModel(model);
+		} else {
+			model.setUserModel(getUserModel());
+		}
 		model.setViewProtected(true);
 		// model.setEditProtected(true);
 		return model;
@@ -1126,15 +1133,36 @@ public class KunagiModelApplication extends AGeneratorApplication {
 	@Override
 	protected void onBeanGeneration(BeanModel beanModel) {
 		super.onBeanGeneration(beanModel);
-		if (beanModel instanceof DatobModel) {
-			DatobModel datobModel = (DatobModel) beanModel;
-		}
 		if (beanModel instanceof EntityModel) {
 			EntityModel entityModel = (EntityModel) beanModel;
-			if (entityModel.isGwtSupport()) {
-				new GwtEntityGenerator(entityModel, getApplicationModel()).generate();
-				new GwtEntityTemplateGenerator(entityModel).generate();
-			}
+
+			new EntityGenerator(entityModel) {
+
+				@Override
+				protected String getPackage() {
+					return bean.getGwtPackageName();
+				}
+
+				@Override
+				protected String getSuperclass() {
+					return AScrumGwtEntity.class.getName();
+				}
+
+				@Override
+				protected String getBeanClass(BeanModel bean) {
+					if (bean.getName().equals("AEntity")) return AScrumGwtEntity.class.getName();
+					return bean.getBeanClass().replace(".server", ".client");
+				}
+
+				@Override
+				public boolean isLegacyBean(BeanModel model) {
+					return false;
+				}
+
+			}.addPlugin(new GwtEntityPropertyEditorClassGeneratorPlugin()).generate();
+
+			// new GwtEntityGenerator(entityModel, getApplicationModel()).generate();
+			// new GwtEntityTemplateGenerator(entityModel).generate();
 			generateActions(entityModel.getActions());
 		}
 	}
@@ -1143,11 +1171,11 @@ public class KunagiModelApplication extends AGeneratorApplication {
 	protected void onGeneration() {
 		super.onGeneration();
 		generateActions(getApplicationModel().getActions());
-		new GwtDaoGenerator(getApplicationModel(), getFinalEntityModels(false)).generate();
 		new GwtImageBundleGenerator("scrum.client.img").generate();
 		new GwtServiceInterfaceGenerator(getGwtServiceModel()).generate();
 		new GwtServiceImplGenerator(getGwtServiceModel()).generate();
 		new GwtServiceAsyncInterfaceGenerator(getGwtServiceModel()).generate();
+		new GwtEntityFactoryGenerator(getEntityModels(false), "scrum.client").generate();
 		for (MethodModel method : getGwtServiceModel().getMethods()) {
 			new GwtServiceCallGenerator(getGwtServiceModel(), method).generate();
 		}

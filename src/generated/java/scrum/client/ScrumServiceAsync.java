@@ -18,6 +18,10 @@ import java.util.*;
 @com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
 public interface ScrumServiceAsync {
 
+    void updateEntities(int conversationNumber, java.util.Collection<java.util.Map<String, String>> modified, java.util.Collection<String> deleted,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
+    void exception(int conversationNumber,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
+
     void changePassword(int conversationNumber, java.lang.String newPassword, java.lang.String oldPassword,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void logout(int conversationNumber,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
@@ -39,12 +43,6 @@ public interface ScrumServiceAsync {
     void startConversation(int conversationNumber,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void touchLastActivity(int conversationNumber,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
-    void changeProperties(int conversationNumber, java.util.Map<String, String> properties,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
-    void createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
-
-    void deleteEntity(int conversationNumber, java.lang.String entityId,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 
     void requestEntity(int conversationNumber, java.lang.String entityId,  com.google.gwt.user.client.rpc.AsyncCallback<scrum.client.DataTransferObject> callback);
 

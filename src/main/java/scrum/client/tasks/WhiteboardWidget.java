@@ -14,6 +14,7 @@
  */
 package scrum.client.tasks;
 
+import ilarkesto.core.base.Utl;
 import ilarkesto.gwt.client.ButtonWidget;
 import ilarkesto.gwt.client.Gwt;
 
@@ -110,8 +111,7 @@ public class WhiteboardWidget extends AScrumWidget implements TaskBlockContainer
 				+ " to do, " + hours(sprint.getBurnedWorkInClaimedTasks()) + " done)");
 		doneLabel.setHTML("<strong>Completed Tasks</strong> (" + hours(sprint.getBurnedWorkInClosedTasks()) + " done)");
 
-		List<Requirement> requirements = sprint.getRequirements();
-		Collections.sort(requirements, sprint.getRequirementsOrderComparator());
+		List<Requirement> requirements = Utl.sort(sprint.getRequirements(), sprint.getRequirementsOrderComparator());
 
 		if (requirements.equals(knownRequirements)) {
 			// quick update without recreating whole gui

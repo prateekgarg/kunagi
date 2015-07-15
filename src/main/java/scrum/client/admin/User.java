@@ -1,19 +1,20 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client.admin;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.base.Utl;
 import ilarkesto.core.scope.Scope;
@@ -21,7 +22,6 @@ import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.ATextEditorModel;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.ScrumScopeManager;
@@ -32,12 +32,16 @@ public class User extends GUser implements LabelSupport, Comparable<User> {
 
 	public static final String INITIAL_NAME = "newuser";
 
-	public User() {
-		setName(getNextNewUserName());
+	public static User post(String name) {
+		Args.assertNotBlank(name, "name");
+		User user = new User();
+		user.setName(name);
+		user.persist();
+		return user;
 	}
 
-	public User(Map data) {
-		super(data);
+	public static User post() {
+		return post(getNextNewUserName());
 	}
 
 	@Override
@@ -51,11 +55,11 @@ public class User extends GUser implements LabelSupport, Comparable<User> {
 		return getName() + " (" + fullName + ")";
 	}
 
-	private String getNextNewUserName() {
+	private static String getNextNewUserName() {
 		int index = 1;
 		while (true) {
 			String name = "newuser" + index;
-			if (getDao().getUserByName(name) == null) return name;
+			if (User.getByName(name) == null) return name;
 			index++;
 		}
 	}

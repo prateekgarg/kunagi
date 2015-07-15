@@ -14,19 +14,21 @@
  */
 package scrum.client.journal;
 
+import ilarkesto.core.base.Args;
 import ilarkesto.core.base.Str;
 import ilarkesto.core.diff.HtmlDiffMarker;
 import ilarkesto.core.diff.TokenDiff;
+import ilarkesto.core.persistance.AEntity;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.Scope;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.gwt.client.AGwtEntity;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import scrum.client.ScrumGwt;
 import scrum.client.admin.User;
+import scrum.client.common.AScrumGwtEntity;
 import scrum.client.core.RequestEntityServiceCall;
 import scrum.client.impediments.Impediment;
 import scrum.client.issues.Issue;
@@ -42,15 +44,17 @@ public class Change extends GChange {
 	public static final String REQ_REJECTED_IN_SPRINT = "@rejectedInSprint";
 	public static final String NOTIFICATION_EMAILS_SENT = "@notificationEmailsSent";
 
-	public Change(Map data) {
-		super(data);
-	}
+	public static Change post(AScrumGwtEntity parent, String key) {
+		Args.assertNotNull(parent, "parent", key, "key");
 
-	public Change(AGwtEntity parent, String key) {
-		setParent(parent);
-		setKey(key);
-		setDateAndTime(DateAndTime.now());
-		setUser(Scope.get().getComponent(User.class));
+		Change change = new Change();
+		change.setParent(parent);
+		change.setKey(key);
+		change.setDateAndTime(DateAndTime.now());
+		change.setUser(Scope.get().getComponent(User.class));
+
+		change.persist();
+		return change;
 	}
 
 	public String getLabel() {
@@ -105,7 +109,7 @@ public class Change extends GChange {
 	private String getEntityReferenceAndLabel(String id) {
 		if (id == null) return null;
 		try {
-			return ScrumGwt.getReferenceAndLabel(getDao().getEntity(id));
+			return ScrumGwt.getReferenceAndLabel(AEntity.getById(id));
 		} catch (EntityDoesNotExistException ex) {
 			new RequestEntityServiceCall(id).execute();
 			return id;

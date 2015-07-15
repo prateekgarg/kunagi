@@ -19,6 +19,10 @@ import java.util.*;
 public interface ScrumService
             extends com.google.gwt.user.client.rpc.RemoteService {
 
+    scrum.client.DataTransferObject updateEntities(int conversationNumber, java.util.Collection<java.util.Map<String, String>> modified, java.util.Collection<String> deleted);
+
+    scrum.client.DataTransferObject exception(int conversationNumber);
+
     scrum.client.DataTransferObject changePassword(int conversationNumber, java.lang.String newPassword, java.lang.String oldPassword);
 
     scrum.client.DataTransferObject logout(int conversationNumber);
@@ -40,12 +44,6 @@ public interface ScrumService
     scrum.client.DataTransferObject startConversation(int conversationNumber);
 
     scrum.client.DataTransferObject touchLastActivity(int conversationNumber);
-
-    scrum.client.DataTransferObject changeProperties(int conversationNumber, java.util.Map<String, String> properties);
-
-    scrum.client.DataTransferObject createEntity(int conversationNumber, java.lang.String type, java.util.Map<String, String> properties);
-
-    scrum.client.DataTransferObject deleteEntity(int conversationNumber, java.lang.String entityId);
 
     scrum.client.DataTransferObject requestEntity(int conversationNumber, java.lang.String entityId);
 

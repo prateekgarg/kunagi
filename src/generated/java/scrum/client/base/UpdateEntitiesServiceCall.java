@@ -11,22 +11,22 @@
 
 
 
-package scrum.client.core;
+package scrum.client.base;
 
 import java.util.*;
 
 @com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
-public class CreateEntityServiceCall
+public class UpdateEntitiesServiceCall
             extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
 
     private static scrum.client.ScrumServiceAsync service;
 
-    java.lang.String type;
-    java.util.Map<String, String> properties;
+    java.util.Collection<java.util.Map<String, String>> modified;
+    java.util.Collection<String> deleted;
 
-    public CreateEntityServiceCall(java.lang.String type, java.util.Map<String, String> properties) {
-        this.type = type;
-        this.properties = properties;
+    public UpdateEntitiesServiceCall(java.util.Collection<java.util.Map<String, String>> modified, java.util.Collection<String> deleted) {
+        this.modified = modified;
+        this.deleted = deleted;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class CreateEntityServiceCall
             service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
             initializeService(service, "scrum");
         }
-        service.createEntity(conversationNumber, type, properties, callback);
+        service.updateEntities(conversationNumber, modified, deleted, callback);
     }
 
     @Override
     public String toString() {
-        return "createEntity";
+        return "updateEntities";
     }
 
 }

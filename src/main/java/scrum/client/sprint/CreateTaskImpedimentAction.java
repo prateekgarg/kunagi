@@ -51,8 +51,9 @@ public class CreateTaskImpedimentAction extends GCreateTaskImpedimentAction {
 
 	@Override
 	protected void onExecute() {
-		Impediment impediment = getCurrentProject().createNewImpediment();
+		Impediment impediment = Impediment.post(getCurrentProject());
 		task.addImpediment(impediment);
 		Scope.get().getComponent(ProjectWorkspaceWidgets.class).showEntity(impediment);
 	}
+
 }

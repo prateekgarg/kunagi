@@ -11,20 +11,18 @@
 
 
 
-package scrum.client.core;
+package scrum.client.base;
 
 import java.util.*;
 
 @com.google.gwt.user.client.rpc.RemoteServiceRelativePath("scrum")
-public class DeleteEntityServiceCall
+public class ExceptionServiceCall
             extends ilarkesto.gwt.client.AServiceCall<scrum.client.DataTransferObject> {
 
     private static scrum.client.ScrumServiceAsync service;
 
-    java.lang.String entityId;
 
-    public DeleteEntityServiceCall(java.lang.String entityId) {
-        this.entityId = entityId;
+    public ExceptionServiceCall() {
     }
 
     @Override
@@ -33,12 +31,12 @@ public class DeleteEntityServiceCall
             service = (scrum.client.ScrumServiceAsync) com.google.gwt.core.client.GWT.create(scrum.client.ScrumService.class);
             initializeService(service, "scrum");
         }
-        service.deleteEntity(conversationNumber, entityId, callback);
+        service.exception(conversationNumber, callback);
     }
 
     @Override
     public String toString() {
-        return "deleteEntity";
+        return "exception";
     }
 
 }
