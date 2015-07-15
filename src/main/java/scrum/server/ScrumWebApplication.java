@@ -1,16 +1,16 @@
 /*
  * Copyright 2008, 2009, 2010 Witoslaw Koczewski, Artjom Kochtchi, Fabian Hager, Kacper Grubalski.
- * 
+ *
  * This file is part of Kunagi.
- * 
+ *
  * Kunagi is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General
  * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
- * 
+ *
  * Kunagi is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -122,7 +122,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public ApplicationInfo getApplicationInfo() {
 		boolean defaultAdminPassword = isAdminPasswordDefault();
 		return new ApplicationInfo(getApplicationLabel(), getBuildProperties().getReleaseLabel(), getBuildProperties()
-				.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
+			.getBuild(), defaultAdminPassword, getCurrentRelease(), getApplicationDataDir());
 	}
 
 	@Override
@@ -153,15 +153,27 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	@Override
 	protected void onPreStart() {
 		super.onPreStart();
+
 		if (getConfig().isStartupDelete()) {
 			log.warn("DELETING ALL ENTITIES (set startup.delete=false in config.properties to prevent this behavior)");
 			IO.delete(getApplicationDataDir() + "/entities");
 		}
+
+		Log.setDebugEnabled(isDevelopmentMode() || getConfig().isLoggingDebug());
+
+		String httpProxy = getConfig().getHttpProxyHost();
+		if (!Str.isBlank(httpProxy)) {
+			int httpProxyPort = getConfig().getHttpProxyPort();
+			log.info("Setting HTTP proxy:", httpProxy + ":" + httpProxyPort);
+			Sys.setHttpProxy(httpProxy, httpProxyPort);
+			OpenId.setHttpProxy(httpProxy, httpProxyPort);
+		}
+
 	}
 
 	@Override
-	protected void onStartWebApplication() {
-		Log.setDebugEnabled(isDevelopmentMode() || getConfig().isLoggingDebug());
+	protected void ensureIntegrity() {
+		super.ensureIntegrity();
 
 		String url = getConfig().getUrl();
 		if (!Str.isBlank(url)) getSystemConfig().setUrl(url);
@@ -177,20 +189,19 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		getReleaseDao().resetScripts();
 		getProjectDao().scanFiles();
 
-		String httpProxy = getConfig().getHttpProxyHost();
-		if (!Str.isBlank(httpProxy)) {
-			int httpProxyPort = getConfig().getHttpProxyPort();
-			log.info("Setting HTTP proxy:", httpProxy + ":" + httpProxyPort);
-			Sys.setHttpProxy(httpProxy, httpProxyPort);
-			OpenId.setHttpProxy(httpProxy, httpProxyPort);
-		}
-
 		// test data
-		if (getConfig().isCreateTestData() && getProjectDao().getEntities().isEmpty()) createTestData();
+		if (getConfig().isCreateTestData() && getProjectDao().getEntities().isEmpty() && !isUnitTestMode()) {
+			createTestData();
+		}
 
 		for (ProjectUserConfig config : getProjectUserConfigDao().getEntities()) {
 			config.reset();
 		}
+	}
+
+	@Override
+	protected void onStartWebApplication() {
+
 	}
 
 	@Override
@@ -199,7 +210,7 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (!nocachefile.exists()) {
 			IO.copyFile(new File("etc/" + nocachefile.getName()), nocachefile);
 			throw new IllegalStateException("GWT file " + nocachefile.getPath()
-					+ " was missing. It is created now. Just restart your web application server.");
+				+ " was missing. It is created now. Just restart your web application server.");
 		}
 
 		GwtSuperDevMode sdm = new GwtSuperDevMode();
