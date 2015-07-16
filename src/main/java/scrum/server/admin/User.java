@@ -1,25 +1,24 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.server.admin;
 
+import ilarkesto.auth.Auth;
 import ilarkesto.auth.AuthUser;
-import ilarkesto.auth.PasswordHasher;
-import ilarkesto.base.CryptOneWay;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
-import ilarkesto.core.base.Uuid;
+import ilarkesto.core.base.UserInputException;
 import ilarkesto.core.logging.Log;
 import ilarkesto.integration.gravatar.Gravatar;
 import ilarkesto.integration.gravatar.Profile;
@@ -92,13 +91,13 @@ public class User extends GUser implements AuthUser {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 			"You have created an account for " + webApplication.getSystemConfig().getInstanceNameWithApplicationLabel())
-			.append(urlBase).append("\n");
+				.append(urlBase).append("\n");
 		sb.append("\n");
 		sb.append("Please visit the following link, to confirm your email: ").append(urlBase)
-		.append("confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
+				.append("confirmEmail?user=").append(getId()).append("&email=").append(getEmail()).append("\n");
 		sb.append("\n");
 		sb.append("Please confirm your email within " + HOURS_FOR_EMAIL_VERIFICATION
-			+ " hours, otherwise your account will be deleted.\n");
+				+ " hours, otherwise your account will be deleted.\n");
 		try {
 			emailSender.sendEmail((String) null, getEmail(), "Kunagi email verification: " + getEmail(), sb.toString());
 		} catch (Exception ex) {
@@ -121,8 +120,11 @@ public class User extends GUser implements AuthUser {
 		}
 
 		String newPassword = Str.generatePassword(8);
-		setPassword(newPassword);
-		log.info("Password changed for", this);
+		try {
+			Auth.setPassword(newPassword, this, new KunagiAuthenticationContext());
+		} catch (UserInputException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(reason + " for your Kunagi account on ").append(webApplication.createUrl(null)).append("\n");
@@ -141,34 +143,6 @@ public class User extends GUser implements AuthUser {
 	}
 
 	@Override
-	public boolean matchesPassword(String passwordToCheck) {
-		if (Str.isBlank(passwordToCheck)) return false;
-		if (!isPasswordSet()) return false;
-
-		String password = getPassword();
-
-		// legacy check
-		if (password.startsWith(CryptOneWay.DEFAULT_SALT)) {
-			boolean success = CryptOneWay.cryptWebPassword(passwordToCheck).equals(password);
-			if (!success) return false;
-			log.warn("Converting old password hash into new:", this);
-			setPassword(passwordToCheck);
-			return true;
-		}
-
-		return hashPassword(passwordToCheck).equals(password);
-	}
-
-	@Override
-	protected String preparePassword(String password) {
-		return super.preparePassword(hashPassword(password));
-	}
-
-	private String hashPassword(String password) {
-		return PasswordHasher.hashPassword(password, getPasswordSalt(), "SHA-256:");
-	}
-
-	@Override
 	public String getAutoLoginString() {
 		return getLoginToken();
 	}
@@ -181,8 +155,7 @@ public class User extends GUser implements AuthUser {
 	public void onEnsureIntegrity() {
 		super.onEnsureIntegrity();
 
-		if (!isPasswordSaltSet()) setPasswordSalt(Uuid.create());
-		if (!isPasswordSet()) setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
+		if (!isPasswordSet()) Auth.resetPasswordToDefault(this, new KunagiAuthenticationContext());
 
 		if (!isPublicNameSet()) setPublicName(getName());
 		if (!isColorSet()) setColor(getDefaultColor());

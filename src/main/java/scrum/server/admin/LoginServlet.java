@@ -14,10 +14,12 @@
  */
 package scrum.server.admin;
 
+import ilarkesto.auth.Auth;
 import ilarkesto.auth.AuthenticationFailedException;
 import ilarkesto.auth.OpenId;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
+import ilarkesto.core.base.UserInputException;
 import ilarkesto.core.logging.Log;
 import ilarkesto.core.time.DateAndTime;
 import ilarkesto.integration.ldap.Ldap;
@@ -177,7 +179,14 @@ public class LoginServlet extends AKunagiServlet {
 			return;
 		}
 
-		User user = userDao.postUser(email, username, password);
+		User user;
+		try {
+			user = userDao.postUser(email, username, password);
+		} catch (UserInputException ex) {
+			renderLoginPage(req, username, email, historyToken,
+				"Creating account failed. Password rejected: " + ex.getMessage() + ".", false, true);
+			return;
+		}
 		user.setLastLoginDateAndTime(DateAndTime.now());
 		user.triggerEmailVerification();
 		webApplication.triggerRegisterNotification(user, req.getRemoteHost());
@@ -354,7 +363,7 @@ public class LoginServlet extends AKunagiServlet {
 			}
 		} else {
 			// default password authentication
-			authenticated = user != null && user.matchesPassword(password);
+			authenticated = user != null && Auth.isPasswordMatching(password, user, new KunagiAuthenticationContext());
 		}
 
 		if (!authenticated || user == null) {

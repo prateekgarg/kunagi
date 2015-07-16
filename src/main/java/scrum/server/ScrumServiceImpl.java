@@ -1,30 +1,31 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.server;
 
 import ilarkesto.auth.Auth;
-import ilarkesto.auth.AuthenticationFailedException;
-import ilarkesto.auth.WrongPasswordException;
+import ilarkesto.auth.WrongPasswordInputException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Reflect;
 import ilarkesto.base.Utl;
 import ilarkesto.core.base.Str;
+import ilarkesto.core.base.UserInputException;
 import ilarkesto.core.persistance.EntityDoesNotExistException;
 import ilarkesto.core.scope.In;
 import ilarkesto.core.time.Date;
 import ilarkesto.core.time.DateAndTime;
+import ilarkesto.gwt.client.ErrorWrapper;
 import ilarkesto.integration.ldap.Ldap;
 import ilarkesto.persistence.ADao;
 import ilarkesto.persistence.AEntity;
@@ -39,6 +40,7 @@ import java.util.Set;
 
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.KunagiAuthenticationContext;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
@@ -255,7 +257,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sprint.pullStory(story, currentUser);
 
 		postProjectEvent(conversation, currentUser.getName() + " pulled " + story.getReferenceAndLabel()
-			+ " to current sprint", story);
+				+ " to current sprint", story);
 
 		sendToClients(conversation, sprint);
 		sendToClients(conversation, story);
@@ -272,7 +274,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		sprint.kickRequirement(story, currentUser);
 
 		postProjectEvent(conversation, currentUser.getName() + " kicked " + story.getReferenceAndLabel()
-			+ " from current sprint", story);
+				+ " from current sprint", story);
 
 		sendToClients(conversation, story.getTasksInSprint());
 		sendToClients(conversation, story);
@@ -338,18 +340,18 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		if (webApplication.getSystemConfig().isSmtpServerSet() && user.isEmailSet() && user.isEmailVerified()) {
 			user.triggerPasswordReset();
 		} else {
-			user.setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
+			Auth.resetPasswordToDefault(user, new KunagiAuthenticationContext());
 		}
 	}
 
 	@Override
 	public void onChangePassword(GwtConversation conversation, String oldPassword, String newPassword) {
 		User user = conversation.getSession().getUser();
-		if (!user.matchesPassword(oldPassword)) throw new WrongPasswordException();
-
-		user.setPassword(newPassword);
-
-		log.info("password changed by", user);
+		try {
+			Auth.changePasswordWithCheck(oldPassword, newPassword, user, new KunagiAuthenticationContext());
+		} catch (UserInputException ex) {
+			conversation.getNextData().addError(ErrorWrapper.createUserInput(ex.getMessage()));
+		}
 	}
 
 	private void onEntityCreatedOnClient(GwtConversation conversation, AEntity entity, Map<String, String> properties) {
@@ -826,7 +828,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 				} else {
 					postProjectEvent(conversation,
 						currentUser.getName() + " kicked " + requirement.getReferenceAndLabel()
-						+ " from current sprint", requirement);
+								+ " from current sprint", requirement);
 					subscriptionService.notifySubscribers(requirement, "Story kicked from current Sprint",
 						conversation.getProject(), null);
 				}
@@ -1128,7 +1130,7 @@ public class ScrumServiceImpl extends GScrumServiceImpl {
 		try {
 			Ldap.authenticateUserGetEmail(config.getLdapUrl(), config.getLdapUser(), config.getLdapPassword(),
 				config.getLdapBaseDn(), config.getLdapUserFilterRegex(), "dummyUser", "dummyPassword");
-		} catch (AuthenticationFailedException ex) {}
+		} catch (WrongPasswordInputException ex) {}
 	}
 
 	@Override

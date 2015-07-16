@@ -1,20 +1,21 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- *
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.server;
 
-import ilarkesto.auth.WrongPasswordException;
+import ilarkesto.auth.Auth;
+import ilarkesto.auth.WrongPasswordInputException;
 import ilarkesto.base.PermissionDeniedException;
 import ilarkesto.base.Str;
 import ilarkesto.core.persistance.Persistence;
@@ -35,6 +36,7 @@ import org.testng.annotations.Test;
 import scrum.TestUtil;
 import scrum.client.DataTransferObject;
 import scrum.client.admin.SystemMessage;
+import scrum.server.admin.KunagiAuthenticationContext;
 import scrum.server.admin.User;
 import scrum.server.collaboration.Comment;
 import scrum.server.collaboration.Subject;
@@ -156,12 +158,12 @@ public class ScrumServiceImplTest extends ATest {
 		service.onChangePassword(conversation, "geheim", "supergeheim");
 	}
 
-	@Test(expectedExceptions = WrongPasswordException.class)
+	@Test(expectedExceptions = WrongPasswordInputException.class)
 	public void changePasswordFail() {
 		duke.setPassword("geheim");
 		service.onChangePassword(conversation, "wrong", "supergeheim");
 		assertConversationWithoutErrors(conversation);
-		assertTrue(duke.matchesPassword("supergeheim"));
+		assertTrue(Auth.isPasswordMatching("supergeheim", duke, new KunagiAuthenticationContext()));
 	}
 
 	// @Test
@@ -397,7 +399,7 @@ public class ScrumServiceImplTest extends ATest {
 	private static void assertConversationError(GwtConversation conversation, ErrorWrapper error) {
 		List<ErrorWrapper> errors = conversation.getNextData().getErrors();
 		assertTrue(errors != null && errors.contains(error),
-				"Conversation error not found: <" + error + "> in " + Str.format(errors));
+			"Conversation error not found: <" + error + "> in " + Str.format(errors));
 	}
 
 	private static void assertConversationWithoutErrors(GwtConversation conversation) {

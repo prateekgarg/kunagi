@@ -17,6 +17,7 @@
 
 package scrum.server;
 
+import ilarkesto.auth.Auth;
 import ilarkesto.auth.OpenId;
 import ilarkesto.base.Sys;
 import ilarkesto.base.Tm;
@@ -51,6 +52,7 @@ import scrum.client.workspace.Navigator;
 import scrum.server.admin.DeleteDisabledUsersTask;
 import scrum.server.admin.DisableInactiveUsersTask;
 import scrum.server.admin.DisableUsersWithUnverifiedEmailsTask;
+import scrum.server.admin.KunagiAuthenticationContext;
 import scrum.server.admin.ProjectUserConfig;
 import scrum.server.admin.SystemConfig;
 import scrum.server.admin.User;
@@ -178,10 +180,9 @@ public class ScrumWebApplication extends GScrumWebApplication {
 		if (!Str.isBlank(url)) getSystemConfig().setUrl(url);
 
 		if (getUserDao().getEntities().isEmpty()) {
-			String password = getSystemConfig().getDefaultUserPassword();
-			log.warn("No users. Creating initial user <admin> with password <" + password + ">");
-			User admin = getUserDao().postUserWithDefaultPassword("admin");
-			admin.setPassword(password);
+			log.warn("No users. Creating initial user <admin> with default password <"
+					+ getSystemConfig().getDefaultUserPassword() + ">");
+			User admin = getUserDao().postUser("admin");
 			admin.setAdmin(true);
 		}
 
@@ -244,10 +245,10 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	private void createTestData() {
 		log.warn("Creating test data");
 
-		getUserDao().postUserWithDefaultPassword("homer");
-		getUserDao().postUserWithDefaultPassword("cartman");
-		getUserDao().postUserWithDefaultPassword("duke");
-		getUserDao().postUserWithDefaultPassword("spinne");
+		getUserDao().postUser("homer");
+		getUserDao().postUser("cartman");
+		getUserDao().postUser("duke");
+		getUserDao().postUser("spinne");
 
 		getProjectDao().postExampleProject(getUserDao().getUserByName("admin"), getUserDao().getUserByName("cartman"),
 			getUserDao().getUserByName("admin"));
@@ -320,7 +321,8 @@ public class ScrumWebApplication extends GScrumWebApplication {
 	public boolean isAdminPasswordDefault() {
 		User admin = getUserDao().getUserByName("admin");
 		if (admin == null) return false;
-		return admin.matchesPassword(getSystemConfig().getDefaultUserPassword());
+
+		return Auth.isPasswordMatchingDefaultPassword(admin, new KunagiAuthenticationContext());
 	}
 
 	public synchronized void postProjectEvent(Project project, String message, AEntity subject) {
