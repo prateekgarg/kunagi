@@ -812,6 +812,8 @@ public class KunagiModelApplication extends AGeneratorApplication {
 			userModel.setGwtSupport(true);
 			userModel.setEditProtected(true);
 			userModel.addStringProperty("name").setSearchable(true).setUnique(true).setTooltip("Login name.");
+			userModel.addStringProperty("password");
+			userModel.addStringProperty("passwordSalt");
 			userModel.addStringProperty("publicName").setSearchable(true)
 			.setTooltip("Name, which is displayed to the public on blog entries or emails.");
 			userModel.addStringProperty("fullName").setSearchable(true).setTooltip("Full name of the person.");

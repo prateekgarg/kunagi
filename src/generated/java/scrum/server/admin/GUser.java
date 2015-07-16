@@ -85,6 +85,8 @@ public abstract class GUser
     public void storeProperties(Map<String, String> properties) {
         super.storeProperties(properties);
         properties.put("name", ilarkesto.core.persistance.Persistence.propertyAsString(this.name));
+        properties.put("password", ilarkesto.core.persistance.Persistence.propertyAsString(this.password));
+        properties.put("passwordSalt", ilarkesto.core.persistance.Persistence.propertyAsString(this.passwordSalt));
         properties.put("publicName", ilarkesto.core.persistance.Persistence.propertyAsString(this.publicName));
         properties.put("fullName", ilarkesto.core.persistance.Persistence.propertyAsString(this.fullName));
         properties.put("admin", ilarkesto.core.persistance.Persistence.propertyAsString(this.admin));
@@ -258,6 +260,92 @@ public abstract class GUser
 
     protected final void updateName(Object value) {
         setName((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - password
+    // -----------------------------------------------------------
+
+    private java.lang.String password;
+
+    public final java.lang.String getPassword() {
+        return password;
+    }
+
+    public final void setPassword(java.lang.String password) {
+        password = preparePassword(password);
+        if (isPassword(password)) return;
+        this.password = password;
+            updateLastModified();
+            fireModified("password", ilarkesto.core.persistance.Persistence.propertyAsString(this.password));
+    }
+
+    private final void updatePassword(java.lang.String password) {
+        if (isPassword(password)) return;
+        this.password = password;
+            updateLastModified();
+            fireModified("password", ilarkesto.core.persistance.Persistence.propertyAsString(this.password));
+    }
+
+    protected java.lang.String preparePassword(java.lang.String password) {
+        // password = Str.removeUnreadableChars(password);
+        return password;
+    }
+
+    public final boolean isPasswordSet() {
+        return this.password != null;
+    }
+
+    public final boolean isPassword(java.lang.String password) {
+        if (this.password == null && password == null) return true;
+        return this.password != null && this.password.equals(password);
+    }
+
+    protected final void updatePassword(Object value) {
+        setPassword((java.lang.String)value);
+    }
+
+    // -----------------------------------------------------------
+    // - passwordSalt
+    // -----------------------------------------------------------
+
+    private java.lang.String passwordSalt;
+
+    public final java.lang.String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public final void setPasswordSalt(java.lang.String passwordSalt) {
+        passwordSalt = preparePasswordSalt(passwordSalt);
+        if (isPasswordSalt(passwordSalt)) return;
+        this.passwordSalt = passwordSalt;
+            updateLastModified();
+            fireModified("passwordSalt", ilarkesto.core.persistance.Persistence.propertyAsString(this.passwordSalt));
+    }
+
+    private final void updatePasswordSalt(java.lang.String passwordSalt) {
+        if (isPasswordSalt(passwordSalt)) return;
+        this.passwordSalt = passwordSalt;
+            updateLastModified();
+            fireModified("passwordSalt", ilarkesto.core.persistance.Persistence.propertyAsString(this.passwordSalt));
+    }
+
+    protected java.lang.String preparePasswordSalt(java.lang.String passwordSalt) {
+        // passwordSalt = Str.removeUnreadableChars(passwordSalt);
+        return passwordSalt;
+    }
+
+    public final boolean isPasswordSaltSet() {
+        return this.passwordSalt != null;
+    }
+
+    public final boolean isPasswordSalt(java.lang.String passwordSalt) {
+        if (this.passwordSalt == null && passwordSalt == null) return true;
+        return this.passwordSalt != null && this.passwordSalt.equals(passwordSalt);
+    }
+
+    protected final void updatePasswordSalt(Object value) {
+        setPasswordSalt((java.lang.String)value);
     }
 
     // -----------------------------------------------------------
@@ -1360,6 +1448,8 @@ public abstract class GUser
             if (property.equals("id")) continue;
             String value = entry.getValue();
             if (property.equals("name")) updateName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("password")) updatePassword(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
+            if (property.equals("passwordSalt")) updatePasswordSalt(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("publicName")) updatePublicName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("fullName")) updateFullName(ilarkesto.core.persistance.Persistence.parsePropertyString(value));
             if (property.equals("admin")) updateAdmin(ilarkesto.core.persistance.Persistence.parsePropertyboolean(value));

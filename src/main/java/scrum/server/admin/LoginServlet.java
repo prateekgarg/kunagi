@@ -1,14 +1,14 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
@@ -84,7 +84,7 @@ public class LoginServlet extends AKunagiServlet {
 		}
 
 		renderLoginPage(req, null, null, historyToken, null, req.get("showPasswordRequest") != null,
-			req.get("showCreateAccount") != null);
+				req.get("showCreateAccount") != null);
 	}
 
 	private void passwordRequest(String login, String historyToken, RequestWrapper<WebSession> req)
@@ -114,7 +114,7 @@ public class LoginServlet extends AKunagiServlet {
 
 		if (!user.isEmailVerified()) {
 			renderLoginPage(req, login, login, historyToken, "User '" + login
-					+ "' has no verified email. Please contact the admin: " + systemConfig.getAdminEmail(), true, false);
+				+ "' has no verified email. Please contact the admin: " + systemConfig.getAdminEmail(), true, false);
 			return;
 		}
 
@@ -153,7 +153,7 @@ public class LoginServlet extends AKunagiServlet {
 
 		if (Str.containsNonLetterOrDigit(username)) {
 			renderLoginPage(req, username, email, historyToken, "Creating account failed. Name '" + username
-					+ "' contains an illegal character. Only letters and digits allowed.", false, true);
+				+ "' contains an illegal character. Only letters and digits allowed.", false, true);
 			return;
 		}
 
@@ -165,14 +165,14 @@ public class LoginServlet extends AKunagiServlet {
 
 		if (userDao.getUserByName(username) != null) {
 			renderLoginPage(req, username, email, historyToken, "Creating account failed. Name '" + username
-					+ "' is already used.", false, true);
+				+ "' is already used.", false, true);
 			log.warn("Registration failed. User name already exists:", username);
 			return;
 		}
 
 		if (email != null && userDao.getUserByEmail(email) != null) {
 			renderLoginPage(req, username, email, historyToken, "Creating account failed. Email '" + email
-					+ "' is already used.", false, true);
+				+ "' is already used.", false, true);
 			log.warn("Registration failed. User email already exists:", email);
 			return;
 		}
@@ -223,7 +223,7 @@ public class LoginServlet extends AKunagiServlet {
 		if (user == null) {
 			if (webApplication.getSystemConfig().isRegistrationDisabled()) {
 				renderLoginPage(req, null, null, historyToken, "There is no user with the OpenID " + openId
-						+ " and creating new users is disabled.", false, false);
+					+ " and creating new users is disabled.", false, false);
 				return;
 			}
 
@@ -231,14 +231,14 @@ public class LoginServlet extends AKunagiServlet {
 				renderLoginPage(req, null, null, historyToken, "Registration failed. OpenID domains are limited to: "
 						+ webApplication.getSystemConfig().getOpenIdDomains(), false, false);
 				log.warn("Registration failed. OpenID domains are limited to:", webApplication.getSystemConfig()
-						.getOpenIdDomains());
+					.getOpenIdDomains());
 				return;
 			}
 
 			if (email != null) {
 				if (userDao.getUserByEmail(email) != null) {
 					renderLoginPage(req, null, null, historyToken, "Creating account failed. Email '" + email
-							+ "' is already used.", false, false);
+						+ "' is already used.", false, false);
 					log.warn("Registration failed. Email already exists:", email);
 					return;
 				}
@@ -331,7 +331,7 @@ public class LoginServlet extends AKunagiServlet {
 			if (authenticated && user == null) {
 				if (webApplication.getSystemConfig().isRegistrationDisabled()) {
 					renderLoginPage(req, null, null, historyToken, "There is no user " + username
-							+ " and creating new users is disabled.", false, false);
+						+ " and creating new users is disabled.", false, false);
 					return;
 				}
 
@@ -346,7 +346,7 @@ public class LoginServlet extends AKunagiServlet {
 				} catch (Exception ex) {
 					log.warn(ex);
 					renderLoginPage(req, username, null, historyToken, "Creating a new user <" + username
-							+ "> with email <" + email + "> failed: " + Utl.getRootCauseMessage(ex), false, false);
+						+ "> with email <" + email + "> failed: " + Utl.getRootCauseMessage(ex), false, false);
 					return;
 				}
 				if (Str.isEmail(email)) user.setEmail(email);
@@ -363,7 +363,7 @@ public class LoginServlet extends AKunagiServlet {
 		}
 
 		if (user.isDisabled()) {
-			renderLoginPage(req, username, null, historyToken, "User is disabled.", false, false);
+			renderLoginPage(req, username, null, historyToken, "Login failed.", false, false);
 			return;
 		}
 

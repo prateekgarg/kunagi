@@ -19,6 +19,7 @@ import ilarkesto.auth.PasswordHasher;
 import ilarkesto.base.CryptOneWay;
 import ilarkesto.base.Str;
 import ilarkesto.base.Utl;
+import ilarkesto.core.base.Uuid;
 import ilarkesto.core.logging.Log;
 import ilarkesto.integration.gravatar.Gravatar;
 import ilarkesto.integration.gravatar.Profile;
@@ -38,8 +39,6 @@ public class User extends GUser implements AuthUser {
 	private static final int DAYS_FOR_INACTIVITY = 7;
 
 	private static Log log = Log.get(User.class);
-
-	private String passwordSalt;
 
 	// --- dependencies ---
 
@@ -82,8 +81,6 @@ public class User extends GUser implements AuthUser {
 		if (isEmailSet()) return getName() + " (" + getEmail() + ")";
 		return getName();
 	}
-
-	private String password;
 
 	public void triggerEmailVerification() {
 		if (!isEmailSet()) {
@@ -144,29 +141,31 @@ public class User extends GUser implements AuthUser {
 	}
 
 	@Override
-	public boolean matchesPassword(String password) {
-		if (this.password != null && this.password.startsWith(CryptOneWay.DEFAULT_SALT)) {
-			boolean success = CryptOneWay.cryptWebPassword(password).equals(this.password);
+	public boolean matchesPassword(String passwordToCheck) {
+		if (Str.isBlank(passwordToCheck)) return false;
+		if (!isPasswordSet()) return false;
+
+		String password = getPassword();
+
+		// legacy check
+		if (password.startsWith(CryptOneWay.DEFAULT_SALT)) {
+			boolean success = CryptOneWay.cryptWebPassword(passwordToCheck).equals(password);
 			if (!success) return false;
 			log.warn("Converting old password hash into new:", this);
-			setPassword(password);
+			setPassword(passwordToCheck);
 			return true;
 		}
-		return hashPassword(password).equals(this.password);
+
+		return hashPassword(passwordToCheck).equals(password);
 	}
 
 	@Override
-	public void setPassword(String value) {
-		this.password = hashPassword(value);
-		fireModified("password", "xxx");
+	protected String preparePassword(String password) {
+		return super.preparePassword(hashPassword(password));
 	}
 
 	private String hashPassword(String password) {
-		if (passwordSalt == null) {
-			passwordSalt = Str.generatePassword(32);
-			fireModified("passwordSalt", this.passwordSalt);
-		}
-		return PasswordHasher.hashPassword(password, this.passwordSalt, "SHA-256:");
+		return PasswordHasher.hashPassword(password, getPasswordSalt(), "SHA-256:");
 	}
 
 	@Override
@@ -181,11 +180,15 @@ public class User extends GUser implements AuthUser {
 	@Override
 	public void onEnsureIntegrity() {
 		super.onEnsureIntegrity();
-		if (Str.isBlank(this.password)) setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
+
+		if (!isPasswordSaltSet()) setPasswordSalt(Uuid.create());
+		if (!isPasswordSet()) setPassword(webApplication.getSystemConfig().getDefaultUserPassword());
+
 		if (!isPublicNameSet()) setPublicName(getName());
 		if (!isColorSet()) setColor(getDefaultColor());
 		if (!isLoginTokenSet()) createLoginToken();
 		if (isCurrentProjectSet() && !getCurrentProject().containsParticipant(this)) setCurrentProject(null);
+
 	}
 
 	@Override
