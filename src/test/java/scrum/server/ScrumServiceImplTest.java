@@ -22,7 +22,6 @@ import ilarkesto.core.persistance.Persistence;
 import ilarkesto.core.time.Date;
 import ilarkesto.gwt.client.ErrorWrapper;
 import ilarkesto.persistence.AEntity;
-import ilarkesto.testng.ATest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +48,7 @@ import scrum.server.project.Requirement;
 import scrum.server.release.Release;
 import scrum.server.sprint.Sprint;
 
-public class ScrumServiceImplTest extends ATest {
+public class ScrumServiceImplTest extends AKunagiTest {
 
 	ScrumWebApplication app;
 	ScrumServiceImpl service;
@@ -63,8 +62,7 @@ public class ScrumServiceImplTest extends ATest {
 
 	@BeforeTest
 	public void init() {
-		TestUtil.initialize();
-		app = TestUtil.getApp();
+		app = getWebApplication();
 		Persistence.runInTransaction(getClass().getSimpleName() + ".init()", new Runnable() {
 
 			@Override
@@ -75,7 +73,7 @@ public class ScrumServiceImplTest extends ATest {
 
 				service = new ScrumServiceImpl();
 				service.setWebApplication(app);
-				app.autowire(service);
+				getWebApplication().autowire(service);
 
 				session = (WebSession) app.createWebSession(null);
 				session.setUser(duke);
