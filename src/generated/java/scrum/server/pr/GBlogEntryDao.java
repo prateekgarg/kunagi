@@ -68,8 +68,8 @@ public abstract class GBlogEntryDao
     }
 
     @Override
-    public void entitySaved(EntityEvent event) {
-        super.entitySaved(event);
+    public void entityModified(EntityEvent event) {
+        super.entityModified(event);
         if (event.getEntity() instanceof BlogEntry) {
             clearCaches();
         }

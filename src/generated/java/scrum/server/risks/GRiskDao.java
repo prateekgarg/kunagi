@@ -69,8 +69,8 @@ public abstract class GRiskDao
     }
 
     @Override
-    public void entitySaved(EntityEvent event) {
-        super.entitySaved(event);
+    public void entityModified(EntityEvent event) {
+        super.entityModified(event);
         if (event.getEntity() instanceof Risk) {
             clearCaches();
         }

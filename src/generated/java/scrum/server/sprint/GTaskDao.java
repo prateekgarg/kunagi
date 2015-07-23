@@ -71,8 +71,8 @@ public abstract class GTaskDao
     }
 
     @Override
-    public void entitySaved(EntityEvent event) {
-        super.entitySaved(event);
+    public void entityModified(EntityEvent event) {
+        super.entityModified(event);
         if (event.getEntity() instanceof Task) {
             clearCaches();
         }
