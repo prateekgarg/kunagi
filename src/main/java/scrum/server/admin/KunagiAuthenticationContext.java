@@ -38,13 +38,11 @@ public class KunagiAuthenticationContext implements AuthenticationContext<User> 
 
 	@Override
 	public void setPasswordSalt(User user, String passwordSalt) {
-		log.info(user, "passwordSalt:", passwordSalt);
 		user.setPasswordSalt(passwordSalt);
 	}
 
 	@Override
 	public void setPasswordHash(User user, String passwordHash) {
-		log.info(user, "passwordHash:", passwordHash);
 		user.setPassword(passwordHash);
 	}
 
@@ -66,7 +64,6 @@ public class KunagiAuthenticationContext implements AuthenticationContext<User> 
 	@Override
 	public String getDefaultPassword(User user) {
 		String defaultPassword = ScrumWebApplication.get().getSystemConfig().getDefaultUserPassword();
-		log.debug("Providing default password:", defaultPassword);
 		return defaultPassword;
 	}
 
