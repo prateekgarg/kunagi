@@ -25,7 +25,6 @@ import ilarkesto.gwt.client.editor.AFieldModel;
 import ilarkesto.gwt.client.editor.AOptionEditorModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -53,7 +52,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 	public AScrumGwtEntity() {}
 
 	public Set<Comment> getComments() {
-		return Collections.emptySet();
+		return Comment.listByParent(this);
 	}
 
 	public Comment getLatestComment() {
@@ -70,7 +69,7 @@ public abstract class AScrumGwtEntity extends AGwtEntity implements ToHtmlSuppor
 	}
 
 	public Set<Emoticon> getEmoticons() {
-		return Collections.emptySet();
+		return Emoticon.listByParent(this);
 	}
 
 	public void setCurrentUserEmoticon(String emotion) {
