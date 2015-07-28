@@ -66,7 +66,9 @@ public class ScrumEntityfilePreparator implements EntityfilePreparator {
 		String impedimentId = eImpediment.getChildText("impedimentId");
 		if (Str.isBlank(impedimentId)) return;
 
-		Element eImpedimentIds = JDom.addElement(eImpediment, "impedimentIds");
+		eImpediment.removeChild("impedimentId");
+
+		Element eImpedimentIds = JDom.addElement(eImpediment, "impedimentsIds");
 		JDom.addTextElement(eImpedimentIds, "string", impedimentId);
 
 		save(doc, file);
