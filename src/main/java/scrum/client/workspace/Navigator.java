@@ -174,9 +174,10 @@ public class Navigator extends GNavigator {
 			}
 		}
 
-		if (search != null && !Page.getPageName(SearchResultsWidget.class).equals(historyToken.getPage())) {
-			search.clear();
-		}
+		// if (search != null && !Page.getPageName(SearchResultsWidget.class).equals(historyToken.getPage()))
+		// {
+		// search.clear();
+		// }
 	}
 
 	private void showUserMode(String page) {
