@@ -94,6 +94,13 @@ public abstract class GProjectEvent
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+        subjectBackReferencesCache.clear(getSubjectId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<ProjectEvent> listByIsEditable() {
@@ -109,11 +116,21 @@ public abstract class GProjectEvent
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
-        subjectBackReferencesCache.clear(getSubjectId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<ProjectEvent> listByIsNotEditable() {
+        return new AProjectEventQuery() {
+            @Override
+            public boolean test(ProjectEvent entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "ProjectEvent:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class AProjectEventQuery extends ilarkesto.core.persistance.AEntityQuery<ProjectEvent> {

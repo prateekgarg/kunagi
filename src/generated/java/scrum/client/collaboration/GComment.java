@@ -146,6 +146,13 @@ public abstract class GComment
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        parentBackReferencesCache.clear(getParentId());
+        authorBackReferencesCache.clear(getAuthorId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Comment> listByIsEditable() {
@@ -161,11 +168,21 @@ public abstract class GComment
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        parentBackReferencesCache.clear(getParentId());
-        authorBackReferencesCache.clear(getAuthorId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Comment> listByIsNotEditable() {
+        return new ACommentQuery() {
+            @Override
+            public boolean test(Comment entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Comment:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class ACommentQuery extends ilarkesto.core.persistance.AEntityQuery<Comment> {

@@ -175,6 +175,15 @@ public abstract class GTask
         return closedInPastSprintBackReferencesCache.getById(closedInPastSprint.getId());
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        requirementBackReferencesCache.clear(getRequirementId());
+        ownerBackReferencesCache.clear(getOwnerId());
+        impedimentsBackReferencesCache.clear(getImpedimentsIds());
+        closedInPastSprintBackReferencesCache.clear(getClosedInPastSprintId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Task> listByIsEditable() {
@@ -190,13 +199,21 @@ public abstract class GTask
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        requirementBackReferencesCache.clear(getRequirementId());
-        ownerBackReferencesCache.clear(getOwnerId());
-        impedimentsBackReferencesCache.clear(getImpedimentsIds());
-        closedInPastSprintBackReferencesCache.clear(getClosedInPastSprintId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Task> listByIsNotEditable() {
+        return new ATaskQuery() {
+            @Override
+            public boolean test(Task entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Task:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class ATaskQuery extends ilarkesto.core.persistance.AEntityQuery<Task> {

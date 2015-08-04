@@ -279,6 +279,15 @@ public abstract class GSprint
         return teamMembersBackReferencesCache.getById(teamMember.getId());
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+        productOwnersBackReferencesCache.clear(getProductOwnersIds());
+        scrumMastersBackReferencesCache.clear(getScrumMastersIds());
+        teamMembersBackReferencesCache.clear(getTeamMembersIds());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Sprint> listByIsEditable() {
@@ -290,6 +299,23 @@ public abstract class GSprint
             @Override
             public String toString() {
                 return "Sprint:byIsEditable";
+            }
+        }.list();
+    }
+
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Sprint> listByIsNotEditable() {
+        return new ASprintQuery() {
+            @Override
+            public boolean test(Sprint entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Sprint:byIsNotEditable";
             }
         }.list();
     }
@@ -309,6 +335,23 @@ public abstract class GSprint
         }.list();
     }
 
+    public final boolean isNotPlanningEditable() {
+        return !isPlanningEditable();
+    }
+
+    public static Set<Sprint> listByIsNotPlanningEditable() {
+        return new ASprintQuery() {
+            @Override
+            public boolean test(Sprint entity) {
+                return entity.isNotPlanningEditable();
+            }
+            @Override
+            public String toString() {
+                return "Sprint:byIsNotPlanningEditable";
+            }
+        }.list();
+    }
+
     public abstract boolean isReviewEditable();
 
     public static Set<Sprint> listByIsReviewEditable() {
@@ -320,6 +363,23 @@ public abstract class GSprint
             @Override
             public String toString() {
                 return "Sprint:byIsReviewEditable";
+            }
+        }.list();
+    }
+
+    public final boolean isNotReviewEditable() {
+        return !isReviewEditable();
+    }
+
+    public static Set<Sprint> listByIsNotReviewEditable() {
+        return new ASprintQuery() {
+            @Override
+            public boolean test(Sprint entity) {
+                return entity.isNotReviewEditable();
+            }
+            @Override
+            public String toString() {
+                return "Sprint:byIsNotReviewEditable";
             }
         }.list();
     }
@@ -339,6 +399,23 @@ public abstract class GSprint
         }.list();
     }
 
+    public final boolean isNotRetrospectiveEditable() {
+        return !isRetrospectiveEditable();
+    }
+
+    public static Set<Sprint> listByIsNotRetrospectiveEditable() {
+        return new ASprintQuery() {
+            @Override
+            public boolean test(Sprint entity) {
+                return entity.isNotRetrospectiveEditable();
+            }
+            @Override
+            public String toString() {
+                return "Sprint:byIsNotRetrospectiveEditable";
+            }
+        }.list();
+    }
+
     public abstract boolean isDatesEditable();
 
     public static Set<Sprint> listByIsDatesEditable() {
@@ -354,13 +431,21 @@ public abstract class GSprint
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
-        productOwnersBackReferencesCache.clear(getProductOwnersIds());
-        scrumMastersBackReferencesCache.clear(getScrumMastersIds());
-        teamMembersBackReferencesCache.clear(getTeamMembersIds());
+    public final boolean isNotDatesEditable() {
+        return !isDatesEditable();
+    }
+
+    public static Set<Sprint> listByIsNotDatesEditable() {
+        return new ASprintQuery() {
+            @Override
+            public boolean test(Sprint entity) {
+                return entity.isNotDatesEditable();
+            }
+            @Override
+            public String toString() {
+                return "Sprint:byIsNotDatesEditable";
+            }
+        }.list();
     }
 
     public abstract static class ASprintQuery extends ilarkesto.core.persistance.AEntityQuery<Sprint> {

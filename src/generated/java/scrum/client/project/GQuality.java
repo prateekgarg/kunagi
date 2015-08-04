@@ -112,6 +112,12 @@ public abstract class GQuality
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Quality> listByIsEditable() {
@@ -127,10 +133,21 @@ public abstract class GQuality
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Quality> listByIsNotEditable() {
+        return new AQualityQuery() {
+            @Override
+            public boolean test(Quality entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Quality:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class AQualityQuery extends ilarkesto.core.persistance.AEntityQuery<Quality> {

@@ -667,6 +667,18 @@ public abstract class GProject
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        participantsBackReferencesCache.clear(getParticipantsIds());
+        adminsBackReferencesCache.clear(getAdminsIds());
+        productOwnersBackReferencesCache.clear(getProductOwnersIds());
+        scrumMastersBackReferencesCache.clear(getScrumMastersIds());
+        teamMembersBackReferencesCache.clear(getTeamMembersIds());
+        currentSprintBackReferencesCache.clear(getCurrentSprintId());
+        nextSprintBackReferencesCache.clear(getNextSprintId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Project> listByIsEditable() {
@@ -682,16 +694,21 @@ public abstract class GProject
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        participantsBackReferencesCache.clear(getParticipantsIds());
-        adminsBackReferencesCache.clear(getAdminsIds());
-        productOwnersBackReferencesCache.clear(getProductOwnersIds());
-        scrumMastersBackReferencesCache.clear(getScrumMastersIds());
-        teamMembersBackReferencesCache.clear(getTeamMembersIds());
-        currentSprintBackReferencesCache.clear(getCurrentSprintId());
-        nextSprintBackReferencesCache.clear(getNextSprintId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Project> listByIsNotEditable() {
+        return new AProjectQuery() {
+            @Override
+            public boolean test(Project entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Project:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class AProjectQuery extends ilarkesto.core.persistance.AEntityQuery<Project> {

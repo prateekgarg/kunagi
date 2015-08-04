@@ -313,6 +313,16 @@ public abstract class GRequirement
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+        sprintBackReferencesCache.clear(getSprintId());
+        issueBackReferencesCache.clear(getIssueId());
+        qualitysBackReferencesCache.clear(getQualitysIds());
+        epicBackReferencesCache.clear(getEpicId());
+    }
+
     public abstract boolean isEditable();
 
     public static Set<Requirement> listByIsEditable() {
@@ -328,14 +338,21 @@ public abstract class GRequirement
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
-        sprintBackReferencesCache.clear(getSprintId());
-        issueBackReferencesCache.clear(getIssueId());
-        qualitysBackReferencesCache.clear(getQualitysIds());
-        epicBackReferencesCache.clear(getEpicId());
+    public final boolean isNotEditable() {
+        return !isEditable();
+    }
+
+    public static Set<Requirement> listByIsNotEditable() {
+        return new ARequirementQuery() {
+            @Override
+            public boolean test(Requirement entity) {
+                return entity.isNotEditable();
+            }
+            @Override
+            public String toString() {
+                return "Requirement:byIsNotEditable";
+            }
+        }.list();
     }
 
     public abstract static class ARequirementQuery extends ilarkesto.core.persistance.AEntityQuery<Requirement> {

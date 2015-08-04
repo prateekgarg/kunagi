@@ -138,6 +138,12 @@ public abstract class GRisk
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+    }
+
     public abstract boolean isPriorityEditable();
 
     public static Set<Risk> listByIsPriorityEditable() {
@@ -153,10 +159,21 @@ public abstract class GRisk
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
+    public final boolean isNotPriorityEditable() {
+        return !isPriorityEditable();
+    }
+
+    public static Set<Risk> listByIsNotPriorityEditable() {
+        return new ARiskQuery() {
+            @Override
+            public boolean test(Risk entity) {
+                return entity.isNotPriorityEditable();
+            }
+            @Override
+            public String toString() {
+                return "Risk:byIsNotPriorityEditable";
+            }
+        }.list();
     }
 
     public abstract static class ARiskQuery extends ilarkesto.core.persistance.AEntityQuery<Risk> {

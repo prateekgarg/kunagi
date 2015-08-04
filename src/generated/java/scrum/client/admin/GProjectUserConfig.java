@@ -271,6 +271,14 @@ public abstract class GProjectUserConfig
         }.list();
     }
 
+    @Override
+    protected void onAfterPersist() {
+        super.onAfterPersist();
+        projectBackReferencesCache.clear(getProjectId());
+        userBackReferencesCache.clear(getUserId());
+        pblFilterQualitysBackReferencesCache.clear(getPblFilterQualitysIds());
+    }
+
     public abstract boolean isMisconductsEditable();
 
     public static Set<ProjectUserConfig> listByIsMisconductsEditable() {
@@ -286,12 +294,21 @@ public abstract class GProjectUserConfig
         }.list();
     }
 
-    @Override
-    protected void onAfterPersist() {
-        super.onAfterPersist();
-        projectBackReferencesCache.clear(getProjectId());
-        userBackReferencesCache.clear(getUserId());
-        pblFilterQualitysBackReferencesCache.clear(getPblFilterQualitysIds());
+    public final boolean isNotMisconductsEditable() {
+        return !isMisconductsEditable();
+    }
+
+    public static Set<ProjectUserConfig> listByIsNotMisconductsEditable() {
+        return new AProjectUserConfigQuery() {
+            @Override
+            public boolean test(ProjectUserConfig entity) {
+                return entity.isNotMisconductsEditable();
+            }
+            @Override
+            public String toString() {
+                return "ProjectUserConfig:byIsNotMisconductsEditable";
+            }
+        }.list();
     }
 
     public abstract static class AProjectUserConfigQuery extends ilarkesto.core.persistance.AEntityQuery<ProjectUserConfig> {
