@@ -111,8 +111,9 @@ public class ScrumScopeManager {
 
 	public static void destroyProjectScope() {
 		Scope.get().getComponent(Ui.class).lock("Closing project...");
+		Scope.get().removeComponent("project");
 		new CloseProjectServiceCall().execute();
-		ScrumGwtApplication.get().abort("Project closed");
+		// ScrumGwtApplication.get().abort("Project closed");
 		projectScope = null;
 	}
 
