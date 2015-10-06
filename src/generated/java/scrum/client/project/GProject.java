@@ -24,6 +24,798 @@ public abstract class GProject
             extends scrum.client.common.AScrumGwtEntity
             implements java.lang.Comparable<Project> {
 
+    public static class ProjectMetadata implements ilarkesto.core.persistance.meta.EntityMetadata {
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata label = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "label";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLabel();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata vision = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "vision";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getVision();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata productLabel = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "productLabel";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getProductLabel();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata shortDescription = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "shortDescription";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getShortDescription();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata description = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "description";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getDescription();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata longDescription = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "longDescription";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLongDescription();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata begin = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "begin";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getBegin();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata end = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "end";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getEnd();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata participants = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "participants";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getParticipants();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata admins = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "admins";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getAdmins();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata productOwners = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "productOwners";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getProductOwners();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata scrumMasters = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "scrumMasters";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getScrumMasters();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata teamMembers = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "teamMembers";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getTeamMembers();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata currentSprint = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "currentSprint";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getCurrentSprint();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata nextSprint = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "nextSprint";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getNextSprint();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata velocity = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "velocity";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getVelocity();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata requirementsOrderIds = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "requirementsOrderIds";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getRequirementsOrderIds();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata urgentIssuesOrderIds = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "urgentIssuesOrderIds";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getUrgentIssuesOrderIds();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastSprintNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastSprintNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastSprintNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastTaskNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastTaskNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastTaskNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastRequirementNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastRequirementNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastRequirementNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastQualityNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastQualityNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastQualityNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastRiskNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastRiskNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastRiskNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastIssueNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastIssueNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastIssueNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastImpedimentNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastImpedimentNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastImpedimentNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastFileNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastFileNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastFileNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastSubjectNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastSubjectNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastSubjectNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastEventNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastEventNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastEventNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastReleaseNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastReleaseNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastReleaseNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastBlogEntryNumber = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastBlogEntryNumber";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastBlogEntryNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata punishmentUnit = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "punishmentUnit";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getPunishmentUnit();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata punishmentFactor = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "punishmentFactor";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getPunishmentFactor();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata homepageDir = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "homepageDir";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getHomepageDir();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata homepageUrl = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "homepageUrl";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getHomepageUrl();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata autoUpdateHomepage = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "autoUpdateHomepage";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).isAutoUpdateHomepage();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata releaseScriptPath = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "releaseScriptPath";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getReleaseScriptPath();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata supportEmail = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "supportEmail";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getSupportEmail();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata issueReplyTemplate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "issueReplyTemplate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getIssueReplyTemplate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata subscriberNotificationTemplate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "subscriberNotificationTemplate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getSubscriberNotificationTemplate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastOpenedDateAndTime = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastOpenedDateAndTime";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getLastOpenedDateAndTime();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata freeDays = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "freeDays";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getFreeDays();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata autoCreateTasksFromQualities = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "autoCreateTasksFromQualities";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).isAutoCreateTasksFromQualities();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata releasingInfo = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "releasingInfo";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getReleasingInfo();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata externalTrackerUrlTemplate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "externalTrackerUrlTemplate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getExternalTrackerUrlTemplate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata externalTrackerLabel = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "externalTrackerLabel";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Project)entity).getExternalTrackerLabel();
+            }
+
+        };
+
+        public static transient ilarkesto.core.persistance.meta.EntityFieldMetadata[] fields = new ilarkesto.core.persistance.meta.EntityFieldMetadata[] {
+            label
+            ,vision
+            ,productLabel
+            ,shortDescription
+            ,description
+            ,longDescription
+            ,begin
+            ,end
+            ,participants
+            ,admins
+            ,productOwners
+            ,scrumMasters
+            ,teamMembers
+            ,currentSprint
+            ,nextSprint
+            ,velocity
+            ,requirementsOrderIds
+            ,urgentIssuesOrderIds
+            ,lastSprintNumber
+            ,lastTaskNumber
+            ,lastRequirementNumber
+            ,lastQualityNumber
+            ,lastRiskNumber
+            ,lastIssueNumber
+            ,lastImpedimentNumber
+            ,lastFileNumber
+            ,lastSubjectNumber
+            ,lastEventNumber
+            ,lastReleaseNumber
+            ,lastBlogEntryNumber
+            ,punishmentUnit
+            ,punishmentFactor
+            ,homepageDir
+            ,homepageUrl
+            ,autoUpdateHomepage
+            ,releaseScriptPath
+            ,supportEmail
+            ,issueReplyTemplate
+            ,subscriberNotificationTemplate
+            ,lastOpenedDateAndTime
+            ,freeDays
+            ,autoCreateTasksFromQualities
+            ,releasingInfo
+            ,externalTrackerUrlTemplate
+            ,externalTrackerLabel
+        };
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata[] getFields() {
+            return fields;
+        }
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata getField(String fieldName) {
+            if ("label".equals(fieldName)) return label;
+            if ("vision".equals(fieldName)) return vision;
+            if ("productLabel".equals(fieldName)) return productLabel;
+            if ("shortDescription".equals(fieldName)) return shortDescription;
+            if ("description".equals(fieldName)) return description;
+            if ("longDescription".equals(fieldName)) return longDescription;
+            if ("begin".equals(fieldName)) return begin;
+            if ("end".equals(fieldName)) return end;
+            if ("participants".equals(fieldName)) return participants;
+            if ("participantsIds".equals(fieldName)) return participants;
+            if ("admins".equals(fieldName)) return admins;
+            if ("adminsIds".equals(fieldName)) return admins;
+            if ("productOwners".equals(fieldName)) return productOwners;
+            if ("productOwnersIds".equals(fieldName)) return productOwners;
+            if ("scrumMasters".equals(fieldName)) return scrumMasters;
+            if ("scrumMastersIds".equals(fieldName)) return scrumMasters;
+            if ("teamMembers".equals(fieldName)) return teamMembers;
+            if ("teamMembersIds".equals(fieldName)) return teamMembers;
+            if ("currentSprint".equals(fieldName)) return currentSprint;
+            if ("currentSprintId".equals(fieldName)) return currentSprint;
+            if ("nextSprint".equals(fieldName)) return nextSprint;
+            if ("nextSprintId".equals(fieldName)) return nextSprint;
+            if ("velocity".equals(fieldName)) return velocity;
+            if ("requirementsOrderIds".equals(fieldName)) return requirementsOrderIds;
+            if ("urgentIssuesOrderIds".equals(fieldName)) return urgentIssuesOrderIds;
+            if ("lastSprintNumber".equals(fieldName)) return lastSprintNumber;
+            if ("lastTaskNumber".equals(fieldName)) return lastTaskNumber;
+            if ("lastRequirementNumber".equals(fieldName)) return lastRequirementNumber;
+            if ("lastQualityNumber".equals(fieldName)) return lastQualityNumber;
+            if ("lastRiskNumber".equals(fieldName)) return lastRiskNumber;
+            if ("lastIssueNumber".equals(fieldName)) return lastIssueNumber;
+            if ("lastImpedimentNumber".equals(fieldName)) return lastImpedimentNumber;
+            if ("lastFileNumber".equals(fieldName)) return lastFileNumber;
+            if ("lastSubjectNumber".equals(fieldName)) return lastSubjectNumber;
+            if ("lastEventNumber".equals(fieldName)) return lastEventNumber;
+            if ("lastReleaseNumber".equals(fieldName)) return lastReleaseNumber;
+            if ("lastBlogEntryNumber".equals(fieldName)) return lastBlogEntryNumber;
+            if ("punishmentUnit".equals(fieldName)) return punishmentUnit;
+            if ("punishmentFactor".equals(fieldName)) return punishmentFactor;
+            if ("homepageDir".equals(fieldName)) return homepageDir;
+            if ("homepageUrl".equals(fieldName)) return homepageUrl;
+            if ("autoUpdateHomepage".equals(fieldName)) return autoUpdateHomepage;
+            if ("releaseScriptPath".equals(fieldName)) return releaseScriptPath;
+            if ("supportEmail".equals(fieldName)) return supportEmail;
+            if ("issueReplyTemplate".equals(fieldName)) return issueReplyTemplate;
+            if ("subscriberNotificationTemplate".equals(fieldName)) return subscriberNotificationTemplate;
+            if ("lastOpenedDateAndTime".equals(fieldName)) return lastOpenedDateAndTime;
+            if ("freeDays".equals(fieldName)) return freeDays;
+            if ("autoCreateTasksFromQualities".equals(fieldName)) return autoCreateTasksFromQualities;
+            if ("releasingInfo".equals(fieldName)) return releasingInfo;
+            if ("externalTrackerUrlTemplate".equals(fieldName)) return externalTrackerUrlTemplate;
+            if ("externalTrackerLabel".equals(fieldName)) return externalTrackerLabel;
+            return null;
+        }
+
+    }
+
+    public static transient final ProjectMetadata metadata = new ProjectMetadata();
+
+    @Override
+    public ProjectMetadata getMetadata() { return metadata; };
+
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Project.class);
 
     public static Project getByLabel(final java.lang.String label) {

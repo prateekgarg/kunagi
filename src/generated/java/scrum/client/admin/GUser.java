@@ -24,6 +24,537 @@ public abstract class GUser
             extends scrum.client.common.AScrumGwtEntity
             implements java.lang.Comparable<User> {
 
+    public static class UserMetadata implements ilarkesto.core.persistance.meta.EntityMetadata {
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata name = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "name";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getName();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata password = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "password";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getPassword();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata passwordSalt = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "passwordSalt";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getPasswordSalt();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata publicName = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "publicName";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getPublicName();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata fullName = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "fullName";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getFullName();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata admin = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "admin";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isAdmin();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata emailVerified = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "emailVerified";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isEmailVerified();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata email = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "email";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getEmail();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata currentProject = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "currentProject";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getCurrentProject();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata color = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "color";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getColor();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata lastLoginDateAndTime = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "lastLoginDateAndTime";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getLastLoginDateAndTime();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata registrationDateAndTime = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "registrationDateAndTime";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getRegistrationDateAndTime();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata disabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "disabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isDisabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideBlog = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideBlog";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideBlog();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideCalendar = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideCalendar";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideCalendar();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideFiles = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideFiles";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideFiles();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideForum = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideForum";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideForum();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideImpediments = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideImpediments";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideImpediments();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideIssues = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideIssues";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideIssues();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideJournal = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideJournal";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideJournal();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideNextSprint = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideNextSprint";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideNextSprint();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideProductBacklog = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideProductBacklog";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideProductBacklog();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideCourtroom = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideCourtroom";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideCourtroom();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideQualityBacklog = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideQualityBacklog";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideQualityBacklog();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideReleases = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideReleases";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideReleases();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideRisks = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideRisks";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideRisks();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideSprintBacklog = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideSprintBacklog";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideSprintBacklog();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata hideUserGuideWhiteboard = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "hideUserGuideWhiteboard";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).isHideUserGuideWhiteboard();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata loginToken = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "loginToken";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getLoginToken();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata openId = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "openId";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((User)entity).getOpenId();
+            }
+
+        };
+
+        public static transient ilarkesto.core.persistance.meta.EntityFieldMetadata[] fields = new ilarkesto.core.persistance.meta.EntityFieldMetadata[] {
+            name
+            ,password
+            ,passwordSalt
+            ,publicName
+            ,fullName
+            ,admin
+            ,emailVerified
+            ,email
+            ,currentProject
+            ,color
+            ,lastLoginDateAndTime
+            ,registrationDateAndTime
+            ,disabled
+            ,hideUserGuideBlog
+            ,hideUserGuideCalendar
+            ,hideUserGuideFiles
+            ,hideUserGuideForum
+            ,hideUserGuideImpediments
+            ,hideUserGuideIssues
+            ,hideUserGuideJournal
+            ,hideUserGuideNextSprint
+            ,hideUserGuideProductBacklog
+            ,hideUserGuideCourtroom
+            ,hideUserGuideQualityBacklog
+            ,hideUserGuideReleases
+            ,hideUserGuideRisks
+            ,hideUserGuideSprintBacklog
+            ,hideUserGuideWhiteboard
+            ,loginToken
+            ,openId
+        };
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata[] getFields() {
+            return fields;
+        }
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata getField(String fieldName) {
+            if ("name".equals(fieldName)) return name;
+            if ("password".equals(fieldName)) return password;
+            if ("passwordSalt".equals(fieldName)) return passwordSalt;
+            if ("publicName".equals(fieldName)) return publicName;
+            if ("fullName".equals(fieldName)) return fullName;
+            if ("admin".equals(fieldName)) return admin;
+            if ("emailVerified".equals(fieldName)) return emailVerified;
+            if ("email".equals(fieldName)) return email;
+            if ("currentProject".equals(fieldName)) return currentProject;
+            if ("currentProjectId".equals(fieldName)) return currentProject;
+            if ("color".equals(fieldName)) return color;
+            if ("lastLoginDateAndTime".equals(fieldName)) return lastLoginDateAndTime;
+            if ("registrationDateAndTime".equals(fieldName)) return registrationDateAndTime;
+            if ("disabled".equals(fieldName)) return disabled;
+            if ("hideUserGuideBlog".equals(fieldName)) return hideUserGuideBlog;
+            if ("hideUserGuideCalendar".equals(fieldName)) return hideUserGuideCalendar;
+            if ("hideUserGuideFiles".equals(fieldName)) return hideUserGuideFiles;
+            if ("hideUserGuideForum".equals(fieldName)) return hideUserGuideForum;
+            if ("hideUserGuideImpediments".equals(fieldName)) return hideUserGuideImpediments;
+            if ("hideUserGuideIssues".equals(fieldName)) return hideUserGuideIssues;
+            if ("hideUserGuideJournal".equals(fieldName)) return hideUserGuideJournal;
+            if ("hideUserGuideNextSprint".equals(fieldName)) return hideUserGuideNextSprint;
+            if ("hideUserGuideProductBacklog".equals(fieldName)) return hideUserGuideProductBacklog;
+            if ("hideUserGuideCourtroom".equals(fieldName)) return hideUserGuideCourtroom;
+            if ("hideUserGuideQualityBacklog".equals(fieldName)) return hideUserGuideQualityBacklog;
+            if ("hideUserGuideReleases".equals(fieldName)) return hideUserGuideReleases;
+            if ("hideUserGuideRisks".equals(fieldName)) return hideUserGuideRisks;
+            if ("hideUserGuideSprintBacklog".equals(fieldName)) return hideUserGuideSprintBacklog;
+            if ("hideUserGuideWhiteboard".equals(fieldName)) return hideUserGuideWhiteboard;
+            if ("loginToken".equals(fieldName)) return loginToken;
+            if ("openId".equals(fieldName)) return openId;
+            return null;
+        }
+
+    }
+
+    public static transient final UserMetadata metadata = new UserMetadata();
+
+    @Override
+    public UserMetadata getMetadata() { return metadata; };
+
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(User.class);
 
     public static User getByName(final java.lang.String name) {

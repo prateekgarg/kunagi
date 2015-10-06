@@ -51,6 +51,24 @@ public class StartServlet extends AKunagiServlet {
 		String charset = IO.UTF_8;
 		req.setContentTypeHtml();
 
+		req.write(new AKunagiHtmlPageBuilder() {
+
+			@Override
+			protected void headerContent(HtmlBuilder html) {
+				super.headerContent(html);
+				html.SCRIPTjavascript("codemirror/js/codemirror.js", null);
+			}
+
+			@Override
+			protected void workspaceContainer(HtmlBuilder html) {}
+
+			@Override
+			protected String getGwtName() {
+				return "scrum.ScrumGwtApplication";
+			}
+
+		}.toString());
+
 		HtmlBuilder html = new HtmlBuilder(req.getWriter(), charset);
 		html.startHTMLstandard();
 
@@ -63,7 +81,7 @@ public class StartServlet extends AKunagiServlet {
 		html.startSTYLEcss();
 		html.html(getCss());
 		html.endSTYLE();
-		html.SCRIPTjavascript("scrum.ScrumGwtApplication/scrum.ScrumGwtApplication.nocache.js", null);
+		html.SCRIPTjavascript("/scrum.ScrumGwtApplication.nocache.js", null);
 		html.SCRIPTjavascript("codemirror/js/codemirror.js", null);
 		html.endHEAD();
 

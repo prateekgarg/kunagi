@@ -24,6 +24,519 @@ public abstract class GSystemConfig
             extends scrum.client.common.AScrumGwtEntity
             implements java.lang.Comparable<SystemConfig> {
 
+    public static class SystemConfigMetadata implements ilarkesto.core.persistance.meta.EntityMetadata {
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata url = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "url";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getUrl();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata adminEmail = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "adminEmail";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getAdminEmail();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata googleAnalyticsId = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "googleAnalyticsId";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getGoogleAnalyticsId();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpServer = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpServer";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSmtpServer();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpPort = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpPort";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSmtpPort();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpTls = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpTls";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isSmtpTls();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpUser = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpUser";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSmtpUser();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpPassword = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpPassword";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSmtpPassword();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata smtpFrom = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "smtpFrom";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSmtpFrom();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata instanceName = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "instanceName";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getInstanceName();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata loginPageLogoUrl = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "loginPageLogoUrl";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLoginPageLogoUrl();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata loginPageMessage = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "loginPageMessage";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLoginPageMessage();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata registerPageMessage = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "registerPageMessage";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getRegisterPageMessage();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata aboutPageMessage = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "aboutPageMessage";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getAboutPageMessage();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata userEmailMandatory = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "userEmailMandatory";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isUserEmailMandatory();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata registrationDisabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "registrationDisabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isRegistrationDisabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata projectCreationDisabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "projectCreationDisabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isProjectCreationDisabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata defaultUserPassword = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "defaultUserPassword";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getDefaultUserPassword();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata openIdDisabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "openIdDisabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isOpenIdDisabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata openIdDomains = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "openIdDomains";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getOpenIdDomains();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata versionCheckEnabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "versionCheckEnabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isVersionCheckEnabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapEnabled = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapEnabled";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).isLdapEnabled();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapUrl = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapUrl";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLdapUrl();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapUser = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapUser";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLdapUser();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapPassword = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapPassword";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLdapPassword();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapBaseDn = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapBaseDn";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLdapBaseDn();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata ldapUserFilterRegex = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "ldapUserFilterRegex";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getLdapUserFilterRegex();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata maxFileSize = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "maxFileSize";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getMaxFileSize();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata subscriptionKeySeed = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "subscriptionKeySeed";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((SystemConfig)entity).getSubscriptionKeySeed();
+            }
+
+        };
+
+        public static transient ilarkesto.core.persistance.meta.EntityFieldMetadata[] fields = new ilarkesto.core.persistance.meta.EntityFieldMetadata[] {
+            url
+            ,adminEmail
+            ,googleAnalyticsId
+            ,smtpServer
+            ,smtpPort
+            ,smtpTls
+            ,smtpUser
+            ,smtpPassword
+            ,smtpFrom
+            ,instanceName
+            ,loginPageLogoUrl
+            ,loginPageMessage
+            ,registerPageMessage
+            ,aboutPageMessage
+            ,userEmailMandatory
+            ,registrationDisabled
+            ,projectCreationDisabled
+            ,defaultUserPassword
+            ,openIdDisabled
+            ,openIdDomains
+            ,versionCheckEnabled
+            ,ldapEnabled
+            ,ldapUrl
+            ,ldapUser
+            ,ldapPassword
+            ,ldapBaseDn
+            ,ldapUserFilterRegex
+            ,maxFileSize
+            ,subscriptionKeySeed
+        };
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata[] getFields() {
+            return fields;
+        }
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata getField(String fieldName) {
+            if ("url".equals(fieldName)) return url;
+            if ("adminEmail".equals(fieldName)) return adminEmail;
+            if ("googleAnalyticsId".equals(fieldName)) return googleAnalyticsId;
+            if ("smtpServer".equals(fieldName)) return smtpServer;
+            if ("smtpPort".equals(fieldName)) return smtpPort;
+            if ("smtpTls".equals(fieldName)) return smtpTls;
+            if ("smtpUser".equals(fieldName)) return smtpUser;
+            if ("smtpPassword".equals(fieldName)) return smtpPassword;
+            if ("smtpFrom".equals(fieldName)) return smtpFrom;
+            if ("instanceName".equals(fieldName)) return instanceName;
+            if ("loginPageLogoUrl".equals(fieldName)) return loginPageLogoUrl;
+            if ("loginPageMessage".equals(fieldName)) return loginPageMessage;
+            if ("registerPageMessage".equals(fieldName)) return registerPageMessage;
+            if ("aboutPageMessage".equals(fieldName)) return aboutPageMessage;
+            if ("userEmailMandatory".equals(fieldName)) return userEmailMandatory;
+            if ("registrationDisabled".equals(fieldName)) return registrationDisabled;
+            if ("projectCreationDisabled".equals(fieldName)) return projectCreationDisabled;
+            if ("defaultUserPassword".equals(fieldName)) return defaultUserPassword;
+            if ("openIdDisabled".equals(fieldName)) return openIdDisabled;
+            if ("openIdDomains".equals(fieldName)) return openIdDomains;
+            if ("versionCheckEnabled".equals(fieldName)) return versionCheckEnabled;
+            if ("ldapEnabled".equals(fieldName)) return ldapEnabled;
+            if ("ldapUrl".equals(fieldName)) return ldapUrl;
+            if ("ldapUser".equals(fieldName)) return ldapUser;
+            if ("ldapPassword".equals(fieldName)) return ldapPassword;
+            if ("ldapBaseDn".equals(fieldName)) return ldapBaseDn;
+            if ("ldapUserFilterRegex".equals(fieldName)) return ldapUserFilterRegex;
+            if ("maxFileSize".equals(fieldName)) return maxFileSize;
+            if ("subscriptionKeySeed".equals(fieldName)) return subscriptionKeySeed;
+            return null;
+        }
+
+    }
+
+    public static transient final SystemConfigMetadata metadata = new SystemConfigMetadata();
+
+    @Override
+    public SystemConfigMetadata getMetadata() { return metadata; };
+
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(SystemConfig.class);
 
     public static Set< SystemConfig> listByUrl(final java.lang.String url) {

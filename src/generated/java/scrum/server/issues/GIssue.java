@@ -26,6 +26,440 @@ public abstract class GIssue
             extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<Issue>, ilarkesto.core.search.Searchable {
 
+    public static class IssueMetadata implements ilarkesto.core.persistance.meta.EntityMetadata {
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata project = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "project";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getProject();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata story = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "story";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getStory();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata number = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "number";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getNumber();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata type = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "type";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getType();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata date = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "date";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getDate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata creator = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "creator";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getCreator();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata label = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "label";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getLabel();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata description = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "description";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getDescription();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata additionalInfo = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "additionalInfo";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getAdditionalInfo();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata statement = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "statement";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getStatement();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata issuerName = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "issuerName";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getIssuerName();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata issuerEmail = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "issuerEmail";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getIssuerEmail();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata acceptDate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "acceptDate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getAcceptDate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata urgent = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "urgent";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).isUrgent();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata severity = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "severity";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getSeverity();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata owner = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "owner";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getOwner();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata fixDate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "fixDate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getFixDate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata closeDate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "closeDate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getCloseDate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata suspendedUntilDate = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "suspendedUntilDate";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getSuspendedUntilDate();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata affectedReleases = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "affectedReleases";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getAffectedReleases();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata fixReleases = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "fixReleases";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getFixReleases();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata published = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "published";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).isPublished();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata themes = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "themes";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getThemes();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata externalTrackerId = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "externalTrackerId";
+            public static final String label = "External ID";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((Issue)entity).getExternalTrackerId();
+            }
+
+        };
+
+        public static transient ilarkesto.core.persistance.meta.EntityFieldMetadata[] fields = new ilarkesto.core.persistance.meta.EntityFieldMetadata[] {
+            project
+            ,story
+            ,number
+            ,type
+            ,date
+            ,creator
+            ,label
+            ,description
+            ,additionalInfo
+            ,statement
+            ,issuerName
+            ,issuerEmail
+            ,acceptDate
+            ,urgent
+            ,severity
+            ,owner
+            ,fixDate
+            ,closeDate
+            ,suspendedUntilDate
+            ,affectedReleases
+            ,fixReleases
+            ,published
+            ,themes
+            ,externalTrackerId
+        };
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata[] getFields() {
+            return fields;
+        }
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata getField(String fieldName) {
+            if ("project".equals(fieldName)) return project;
+            if ("projectId".equals(fieldName)) return project;
+            if ("story".equals(fieldName)) return story;
+            if ("storyId".equals(fieldName)) return story;
+            if ("number".equals(fieldName)) return number;
+            if ("type".equals(fieldName)) return type;
+            if ("date".equals(fieldName)) return date;
+            if ("creator".equals(fieldName)) return creator;
+            if ("creatorId".equals(fieldName)) return creator;
+            if ("label".equals(fieldName)) return label;
+            if ("description".equals(fieldName)) return description;
+            if ("additionalInfo".equals(fieldName)) return additionalInfo;
+            if ("statement".equals(fieldName)) return statement;
+            if ("issuerName".equals(fieldName)) return issuerName;
+            if ("issuerEmail".equals(fieldName)) return issuerEmail;
+            if ("acceptDate".equals(fieldName)) return acceptDate;
+            if ("urgent".equals(fieldName)) return urgent;
+            if ("severity".equals(fieldName)) return severity;
+            if ("owner".equals(fieldName)) return owner;
+            if ("ownerId".equals(fieldName)) return owner;
+            if ("fixDate".equals(fieldName)) return fixDate;
+            if ("closeDate".equals(fieldName)) return closeDate;
+            if ("suspendedUntilDate".equals(fieldName)) return suspendedUntilDate;
+            if ("affectedReleases".equals(fieldName)) return affectedReleases;
+            if ("affectedReleasesIds".equals(fieldName)) return affectedReleases;
+            if ("fixReleases".equals(fieldName)) return fixReleases;
+            if ("fixReleasesIds".equals(fieldName)) return fixReleases;
+            if ("published".equals(fieldName)) return published;
+            if ("themes".equals(fieldName)) return themes;
+            if ("externalTrackerId".equals(fieldName)) return externalTrackerId;
+            return null;
+        }
+
+    }
+
+    public static transient final IssueMetadata metadata = new IssueMetadata();
+
+    @Override
+    public IssueMetadata getMetadata() { return metadata; };
+
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(Issue.class);
 
     // --- AEntity ---

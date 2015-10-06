@@ -26,6 +26,79 @@ public abstract class GRequirementEstimationVote
             extends ilarkesto.persistence.AEntity
             implements ilarkesto.auth.ViewProtected<scrum.server.admin.User>, java.lang.Comparable<RequirementEstimationVote> {
 
+    public static class RequirementEstimationVoteMetadata implements ilarkesto.core.persistance.meta.EntityMetadata {
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata requirement = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "requirement";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((RequirementEstimationVote)entity).getRequirement();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata user = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "user";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((RequirementEstimationVote)entity).getUser();
+            }
+
+        };
+
+        public static transient final ilarkesto.core.persistance.meta.EntityFieldMetadata estimatedWork = new ilarkesto.core.persistance.meta.EntityFieldMetadata() {
+
+            public static final String name = "estimatedWork";
+            public static final String label = "null";
+
+            public String getName() { return name; };
+
+            public String getLabel() { return label; };
+
+            public Object getValue(ilarkesto.core.persistance.Entity entity) {
+                return ((RequirementEstimationVote)entity).getEstimatedWork();
+            }
+
+        };
+
+        public static transient ilarkesto.core.persistance.meta.EntityFieldMetadata[] fields = new ilarkesto.core.persistance.meta.EntityFieldMetadata[] {
+            requirement
+            ,user
+            ,estimatedWork
+        };
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata[] getFields() {
+            return fields;
+        }
+
+        public ilarkesto.core.persistance.meta.EntityFieldMetadata getField(String fieldName) {
+            if ("requirement".equals(fieldName)) return requirement;
+            if ("requirementId".equals(fieldName)) return requirement;
+            if ("user".equals(fieldName)) return user;
+            if ("userId".equals(fieldName)) return user;
+            if ("estimatedWork".equals(fieldName)) return estimatedWork;
+            return null;
+        }
+
+    }
+
+    public static transient final RequirementEstimationVoteMetadata metadata = new RequirementEstimationVoteMetadata();
+
+    @Override
+    public RequirementEstimationVoteMetadata getMetadata() { return metadata; };
+
     protected static final ilarkesto.core.logging.Log log = ilarkesto.core.logging.Log.get(RequirementEstimationVote.class);
 
     // --- AEntity ---
