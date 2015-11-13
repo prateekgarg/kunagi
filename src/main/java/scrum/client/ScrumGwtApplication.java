@@ -1,18 +1,28 @@
 /*
  * Copyright 2011 Witoslaw Koczewsi <wi@koczewski.de>, Artjom Kochtchi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
  * General Public License as published by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
  * License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
 package scrum.client;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import ilarkesto.core.base.Str;
 import ilarkesto.core.logging.Log;
@@ -22,14 +32,8 @@ import ilarkesto.core.scope.Scope;
 import ilarkesto.gwt.client.AGwtApplication;
 import ilarkesto.gwt.client.AGwtEntity;
 import ilarkesto.gwt.client.ErrorWrapper;
+import ilarkesto.gwt.client.desktop.AActivityCatalog;
 import ilarkesto.gwt.client.persistence.AGwtEntityFactory;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import scrum.client.admin.Auth;
 import scrum.client.admin.LogoutServiceCall;
 import scrum.client.admin.SystemMessageManager;
@@ -58,10 +62,6 @@ import scrum.client.sprint.Task;
 import scrum.client.workspace.Navigator;
 import scrum.client.workspace.Ui;
 import scrum.client.workspace.WorkspaceWidget;
-
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootPanel;
 
 public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 
@@ -225,12 +225,19 @@ public class ScrumGwtApplication extends AGwtApplication<DataTransferObject> {
 	@Override
 	public void sendChangesToServer(Collection<AEntity> modified, Collection<String> deleted,
 			Map<String, Map<String, String>> modifiedProperties, Runnable callback) {
-		new UpdateEntitiesServiceCall(modifiedProperties == null ? null : new ArrayList<Map<String, String>>(
-				modifiedProperties.values()), deleted).execute(callback);
+		new UpdateEntitiesServiceCall(
+				modifiedProperties == null ? null : new ArrayList<Map<String, String>>(modifiedProperties.values()),
+				deleted).execute(callback);
 	}
 
 	public static ScrumGwtApplication get() {
 		return (ScrumGwtApplication) AGwtApplication.get();
+	}
+
+	@Override
+	public AActivityCatalog createActivityCatalog() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
